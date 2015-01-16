@@ -6,6 +6,6 @@ python:
   - "3.3"
   - "3.4"
 # command to install dependencies
-install: "pip install poster setuptools"
+install: "pip install poster setuptools discover"
 # command to run tests
 script: cd python && python -m unittest discover 
