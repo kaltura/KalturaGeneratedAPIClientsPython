@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -251,32 +251,7 @@ class KalturaDistributionProviderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDistributionProviderType(object):
-    ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
-    AVN = "avnDistribution.AVN"
-    COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
-    CROSS_KALTURA = "crossKalturaDistribution.CROSS_KALTURA"
-    DAILYMOTION = "dailymotionDistribution.DAILYMOTION"
-    DOUBLECLICK = "doubleClickDistribution.DOUBLECLICK"
-    FREEWHEEL = "freewheelDistribution.FREEWHEEL"
-    FREEWHEEL_GENERIC = "freewheelGenericDistribution.FREEWHEEL_GENERIC"
-    FTP = "ftpDistribution.FTP"
-    FTP_SCHEDULED = "ftpDistribution.FTP_SCHEDULED"
-    HULU = "huluDistribution.HULU"
     IDETIC = "ideticDistribution.IDETIC"
-    METRO_PCS = "metroPcsDistribution.METRO_PCS"
-    MSN = "msnDistribution.MSN"
-    NDN = "ndnDistribution.NDN"
-    PODCAST = "podcastDistribution.PODCAST"
-    QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
-    SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
-    TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
-    TVCOM = "tvComDistribution.TVCOM"
-    TVINCI = "tvinciDistribution.TVINCI"
-    UVERSE_CLICK_TO_ORDER = "uverseClickToOrderDistribution.UVERSE_CLICK_TO_ORDER"
-    UVERSE = "uverseDistribution.UVERSE"
-    VERIZON_VCAST = "verizonVcastDistribution.VERIZON_VCAST"
-    YAHOO = "yahooDistribution.YAHOO"
-    YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"
     GENERIC = "1"
     SYNDICATION = "2"

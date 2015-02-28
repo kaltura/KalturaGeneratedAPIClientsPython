@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -78,6 +78,9 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             createFileLink=NotImplemented,
             rules=NotImplemented,
             deliveryProfileIds=NotImplemented,
+            privateKey=NotImplemented,
+            publicKey=NotImplemented,
+            passPhrase=NotImplemented,
             serviceToken=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
@@ -107,7 +110,10 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             allowAutoDelete,
             createFileLink,
             rules,
-            deliveryProfileIds)
+            deliveryProfileIds,
+            privateKey,
+            publicKey,
+            passPhrase)
 
         # @var string
         self.serviceToken = serviceToken
@@ -141,6 +147,9 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
             serverUrl=NotImplemented,
             serverUsername=NotImplemented,
             serverPassword=NotImplemented,
+            serverPrivateKey=NotImplemented,
+            serverPublicKey=NotImplemented,
+            serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
             srcFileSyncId=NotImplemented,
@@ -151,6 +160,9 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
             serverUrl,
             serverUsername,
             serverPassword,
+            serverPrivateKey,
+            serverPublicKey,
+            serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
             srcFileSyncId,
@@ -200,6 +212,9 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             serverUrl=NotImplemented,
             serverUsername=NotImplemented,
             serverPassword=NotImplemented,
+            serverPrivateKey=NotImplemented,
+            serverPublicKey=NotImplemented,
+            serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
             srcFileSyncId=NotImplemented,
@@ -213,6 +228,9 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             serverUrl,
             serverUsername,
             serverPassword,
+            serverPrivateKey,
+            serverPublicKey,
+            serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
             srcFileSyncId,

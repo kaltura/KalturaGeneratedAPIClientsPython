@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -259,6 +259,7 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             parentIdEqual=NotImplemented,
             parentIdIn=NotImplemented,
             textLike=NotImplemented,
@@ -298,7 +299,8 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             partnerSortValueLessThanOrEqual,
             forceStopEqual,
             systemNameEqual,
-            systemNameIn)
+            systemNameIn,
+            freeText)
 
         # @var string
         self.parentIdEqual = parentIdEqual
@@ -447,6 +449,7 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             parentIdEqual=NotImplemented,
             parentIdIn=NotImplemented,
             textLike=NotImplemented,
@@ -487,6 +490,7 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
+            freeText,
             parentIdEqual,
             parentIdIn,
             textLike,

@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -37,18 +37,7 @@ class KalturaCuePointStatus(object):
     READY = 1
     DELETED = 2
     HANDLED = 3
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbCuePointSubType(object):
-    SLIDE = 1
-    CHAPTER = 2
+    PENDING = 4
 
     def __init__(self, value):
         self.value = value
@@ -83,7 +72,6 @@ class KalturaCuePointType(object):
     ANNOTATION = "annotation.Annotation"
     CODE = "codeCuePoint.Code"
     EVENT = "eventCuePoint.Event"
-    THUMB = "thumbCuePoint.Thumb"
 
     def __init__(self, value):
         self.value = value
@@ -716,7 +704,8 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
             partnerSortValueLessThanOrEqual=NotImplemented,
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented):
+            systemNameIn=NotImplemented,
+            freeText=NotImplemented):
         KalturaCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -749,8 +738,12 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
             systemNameEqual,
             systemNameIn)
 
+        # @var string
+        self.freeText = freeText
+
 
     PROPERTY_LOADERS = {
+        'freeText': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -760,7 +753,14 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
     def toParams(self):
         kparams = KalturaCuePointBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaCuePointFilter")
+        kparams.addStringIfDefined("freeText", self.freeText)
         return kparams
+
+    def getFreeText(self):
+        return self.freeText
+
+    def setFreeText(self, newFreeText):
+        self.freeText = newFreeText
 
 
 ########## services ##########
@@ -882,7 +882,6 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaCuePointStatus': KalturaCuePointStatus,
-            'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,
             'KalturaCuePointType': KalturaCuePointType,
         }

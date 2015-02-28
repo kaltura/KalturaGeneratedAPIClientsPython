@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -163,6 +163,7 @@ class KalturaEventCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             eventTypeEqual=NotImplemented,
             eventTypeIn=NotImplemented):
         KalturaCuePointFilter.__init__(self,
@@ -195,7 +196,8 @@ class KalturaEventCuePointBaseFilter(KalturaCuePointFilter):
             partnerSortValueLessThanOrEqual,
             forceStopEqual,
             systemNameEqual,
-            systemNameIn)
+            systemNameIn,
+            freeText)
 
         # @var KalturaEventType
         self.eventTypeEqual = eventTypeEqual
@@ -267,6 +269,7 @@ class KalturaEventCuePointFilter(KalturaEventCuePointBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             eventTypeEqual=NotImplemented,
             eventTypeIn=NotImplemented):
         KalturaEventCuePointBaseFilter.__init__(self,
@@ -300,6 +303,7 @@ class KalturaEventCuePointFilter(KalturaEventCuePointBaseFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
+            freeText,
             eventTypeEqual,
             eventTypeIn)
 

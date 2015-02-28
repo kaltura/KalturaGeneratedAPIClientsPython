@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -189,6 +189,7 @@ class KalturaCodeCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             codeLike=NotImplemented,
             codeMultiLikeOr=NotImplemented,
             codeMultiLikeAnd=NotImplemented,
@@ -231,7 +232,8 @@ class KalturaCodeCuePointBaseFilter(KalturaCuePointFilter):
             partnerSortValueLessThanOrEqual,
             forceStopEqual,
             systemNameEqual,
-            systemNameIn)
+            systemNameIn,
+            freeText)
 
         # @var string
         self.codeLike = codeLike
@@ -413,6 +415,7 @@ class KalturaCodeCuePointFilter(KalturaCodeCuePointBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
             codeLike=NotImplemented,
             codeMultiLikeOr=NotImplemented,
             codeMultiLikeAnd=NotImplemented,
@@ -456,6 +459,7 @@ class KalturaCodeCuePointFilter(KalturaCodeCuePointBaseFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
+            freeText,
             codeLike,
             codeMultiLikeOr,
             codeMultiLikeAnd,
