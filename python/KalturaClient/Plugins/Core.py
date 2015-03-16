@@ -517,6 +517,18 @@ class KalturaLiveReportExportType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveStatsEventType(object):
+    LIVE = 1
+    DVR = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMailJobStatus(object):
     PENDING = 1
     SENT = 2
@@ -755,7 +767,8 @@ class KalturaPrivacyType(object):
 # @subpackage Client
 class KalturaRecordStatus(object):
     DISABLED = 0
-    ENABLED = 1
+    APPENDED = 1
+    PER_SESSION = 2
 
     def __init__(self, value):
         self.value = value
@@ -2150,6 +2163,7 @@ class KalturaDeliveryProfileType(object):
     LIMELIGHT_HTTP = "44"
     LIMELIGHT_RTMP = "45"
     LOCAL_PATH_APPLE_HTTP = "51"
+    LOCAL_PATH_HDS = "53"
     LOCAL_PATH_HTTP = "54"
     LOCAL_PATH_RTMP = "55"
     VOD_PACKAGER_HLS = "61"
@@ -5257,11 +5271,11 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @var string
         self.adminTags = adminTags
 
-        # Categories with no entitlement that this entry belongs to.
+        # Comma separated list of full names of categories to which this entry belongs. Only categories that don't have entitlement (privacy context) are listed, to retrieve the full list of categories, use the categoryEntry.list action.
         # @var string
         self.categories = categories
 
-        # Categories Ids of categories with no entitlement that this entry belongs to
+        # Comma separated list of ids of categories to which this entry belongs. Only categories that don't have entitlement (privacy context) are listed, to retrieve the full list of categories, use the categoryEntry.list action.
         # @var string
         self.categoriesIds = categoriesIds
 
@@ -12201,7 +12215,8 @@ class KalturaLiveReportExportParams(KalturaObjectBase):
     def __init__(self,
             entryIds=NotImplemented,
             recpientEmail=NotImplemented,
-            timeZoneOffset=NotImplemented):
+            timeZoneOffset=NotImplemented,
+            applicationUrlTemplate=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -12214,11 +12229,16 @@ class KalturaLiveReportExportParams(KalturaObjectBase):
         # @var int
         self.timeZoneOffset = timeZoneOffset
 
+        # Optional argument that allows controlling the prefix of the exported csv url
+        # @var string
+        self.applicationUrlTemplate = applicationUrlTemplate
+
 
     PROPERTY_LOADERS = {
         'entryIds': getXmlNodeText, 
         'recpientEmail': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
+        'applicationUrlTemplate': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -12231,6 +12251,7 @@ class KalturaLiveReportExportParams(KalturaObjectBase):
         kparams.addStringIfDefined("entryIds", self.entryIds)
         kparams.addStringIfDefined("recpientEmail", self.recpientEmail)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
+        kparams.addStringIfDefined("applicationUrlTemplate", self.applicationUrlTemplate)
         return kparams
 
     def getEntryIds(self):
@@ -12250,6 +12271,12 @@ class KalturaLiveReportExportParams(KalturaObjectBase):
 
     def setTimeZoneOffset(self, newTimeZoneOffset):
         self.timeZoneOffset = newTimeZoneOffset
+
+    def getApplicationUrlTemplate(self):
+        return self.applicationUrlTemplate
+
+    def setApplicationUrlTemplate(self, newApplicationUrlTemplate):
+        self.applicationUrlTemplate = newApplicationUrlTemplate
 
 
 # @package Kaltura
@@ -12381,6 +12408,7 @@ class KalturaLiveReportInputFilter(KalturaObjectBase):
 class KalturaLiveStats(KalturaObjectBase):
     def __init__(self,
             audience=NotImplemented,
+            dvrAudience=NotImplemented,
             avgBitrate=NotImplemented,
             bufferTime=NotImplemented,
             plays=NotImplemented,
@@ -12391,6 +12419,9 @@ class KalturaLiveStats(KalturaObjectBase):
 
         # @var int
         self.audience = audience
+
+        # @var int
+        self.dvrAudience = dvrAudience
 
         # @var float
         self.avgBitrate = avgBitrate
@@ -12413,6 +12444,7 @@ class KalturaLiveStats(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'audience': getXmlNodeInt, 
+        'dvrAudience': getXmlNodeInt, 
         'avgBitrate': getXmlNodeFloat, 
         'bufferTime': getXmlNodeInt, 
         'plays': getXmlNodeInt, 
@@ -12429,6 +12461,7 @@ class KalturaLiveStats(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaLiveStats")
         kparams.addIntIfDefined("audience", self.audience)
+        kparams.addIntIfDefined("dvrAudience", self.dvrAudience)
         kparams.addFloatIfDefined("avgBitrate", self.avgBitrate)
         kparams.addIntIfDefined("bufferTime", self.bufferTime)
         kparams.addIntIfDefined("plays", self.plays)
@@ -12442,6 +12475,12 @@ class KalturaLiveStats(KalturaObjectBase):
 
     def setAudience(self, newAudience):
         self.audience = newAudience
+
+    def getDvrAudience(self):
+        return self.dvrAudience
+
+    def setDvrAudience(self, newDvrAudience):
+        self.dvrAudience = newDvrAudience
 
     def getAvgBitrate(self):
         return self.avgBitrate
@@ -12495,6 +12534,7 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
             bitrate=NotImplemented,
             referrer=NotImplemented,
             isLive=NotImplemented,
+            startTime=NotImplemented,
             deliveryType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -12504,7 +12544,8 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
         # @var string
         self.entryId = entryId
 
-        # @var KalturaStatsEventType
+        # an integer representing the type of event being sent from the player
+        # @var KalturaLiveStatsEventType
         self.eventType = eventType
 
         # a unique string generated by the client that will represent the client-side session: the primary component will pass it on to other components that sprout from it
@@ -12530,6 +12571,10 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
         # @var bool
         self.isLive = isLive
 
+        # the event start time as string
+        # @var string
+        self.startTime = startTime
+
         # delivery type used for this stream
         # @var KalturaPlaybackProtocol
         self.deliveryType = deliveryType
@@ -12538,13 +12583,14 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'partnerId': getXmlNodeInt, 
         'entryId': getXmlNodeText, 
-        'eventType': (KalturaEnumsFactory.createInt, "KalturaStatsEventType"), 
+        'eventType': (KalturaEnumsFactory.createInt, "KalturaLiveStatsEventType"), 
         'sessionId': getXmlNodeText, 
         'eventIndex': getXmlNodeInt, 
         'bufferTime': getXmlNodeInt, 
         'bitrate': getXmlNodeInt, 
         'referrer': getXmlNodeText, 
         'isLive': getXmlNodeBool, 
+        'startTime': getXmlNodeText, 
         'deliveryType': (KalturaEnumsFactory.createString, "KalturaPlaybackProtocol"), 
     }
 
@@ -12564,6 +12610,7 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
         kparams.addIntIfDefined("bitrate", self.bitrate)
         kparams.addStringIfDefined("referrer", self.referrer)
         kparams.addBoolIfDefined("isLive", self.isLive)
+        kparams.addStringIfDefined("startTime", self.startTime)
         kparams.addStringEnumIfDefined("deliveryType", self.deliveryType)
         return kparams
 
@@ -12620,6 +12667,12 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
 
     def setIsLive(self, newIsLive):
         self.isLive = newIsLive
+
+    def getStartTime(self):
+        return self.startTime
+
+    def setStartTime(self, newStartTime):
+        self.startTime = newStartTime
 
     def getDeliveryType(self):
         return self.deliveryType
@@ -29646,6 +29699,7 @@ class KalturaEntryIdentifier(KalturaObjectIdentifier):
 class KalturaEntryLiveStats(KalturaLiveStats):
     def __init__(self,
             audience=NotImplemented,
+            dvrAudience=NotImplemented,
             avgBitrate=NotImplemented,
             bufferTime=NotImplemented,
             plays=NotImplemented,
@@ -29653,9 +29707,11 @@ class KalturaEntryLiveStats(KalturaLiveStats):
             startEvent=NotImplemented,
             timestamp=NotImplemented,
             entryId=NotImplemented,
-            peakAudience=NotImplemented):
+            peakAudience=NotImplemented,
+            peakDvrAudience=NotImplemented):
         KalturaLiveStats.__init__(self,
             audience,
+            dvrAudience,
             avgBitrate,
             bufferTime,
             plays,
@@ -29669,10 +29725,14 @@ class KalturaEntryLiveStats(KalturaLiveStats):
         # @var int
         self.peakAudience = peakAudience
 
+        # @var int
+        self.peakDvrAudience = peakDvrAudience
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
         'peakAudience': getXmlNodeInt, 
+        'peakDvrAudience': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -29684,6 +29744,7 @@ class KalturaEntryLiveStats(KalturaLiveStats):
         kparams.put("objectType", "KalturaEntryLiveStats")
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addIntIfDefined("peakAudience", self.peakAudience)
+        kparams.addIntIfDefined("peakDvrAudience", self.peakDvrAudience)
         return kparams
 
     def getEntryId(self):
@@ -29697,6 +29758,12 @@ class KalturaEntryLiveStats(KalturaLiveStats):
 
     def setPeakAudience(self, newPeakAudience):
         self.peakAudience = newPeakAudience
+
+    def getPeakDvrAudience(self):
+        return self.peakDvrAudience
+
+    def setPeakDvrAudience(self, newPeakDvrAudience):
+        self.peakDvrAudience = newPeakDvrAudience
 
 
 # @package Kaltura
@@ -36363,6 +36430,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
 class KalturaEntryReferrerLiveStats(KalturaEntryLiveStats):
     def __init__(self,
             audience=NotImplemented,
+            dvrAudience=NotImplemented,
             avgBitrate=NotImplemented,
             bufferTime=NotImplemented,
             plays=NotImplemented,
@@ -36371,9 +36439,11 @@ class KalturaEntryReferrerLiveStats(KalturaEntryLiveStats):
             timestamp=NotImplemented,
             entryId=NotImplemented,
             peakAudience=NotImplemented,
+            peakDvrAudience=NotImplemented,
             referrer=NotImplemented):
         KalturaEntryLiveStats.__init__(self,
             audience,
+            dvrAudience,
             avgBitrate,
             bufferTime,
             plays,
@@ -36381,7 +36451,8 @@ class KalturaEntryReferrerLiveStats(KalturaEntryLiveStats):
             startEvent,
             timestamp,
             entryId,
-            peakAudience)
+            peakAudience,
+            peakDvrAudience)
 
         # @var string
         self.referrer = referrer
@@ -36902,6 +36973,7 @@ class KalturaGeoDistanceCondition(KalturaMatchCondition):
 class KalturaGeoTimeLiveStats(KalturaEntryLiveStats):
     def __init__(self,
             audience=NotImplemented,
+            dvrAudience=NotImplemented,
             avgBitrate=NotImplemented,
             bufferTime=NotImplemented,
             plays=NotImplemented,
@@ -36910,10 +36982,12 @@ class KalturaGeoTimeLiveStats(KalturaEntryLiveStats):
             timestamp=NotImplemented,
             entryId=NotImplemented,
             peakAudience=NotImplemented,
+            peakDvrAudience=NotImplemented,
             city=NotImplemented,
             country=NotImplemented):
         KalturaEntryLiveStats.__init__(self,
             audience,
+            dvrAudience,
             avgBitrate,
             bufferTime,
             plays,
@@ -36921,7 +36995,8 @@ class KalturaGeoTimeLiveStats(KalturaEntryLiveStats):
             startEvent,
             timestamp,
             entryId,
-            peakAudience)
+            peakAudience,
+            peakDvrAudience)
 
         # @var KalturaCoordinate
         self.city = city
@@ -50270,6 +50345,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLimitFlavorsRestrictionType': KalturaLimitFlavorsRestrictionType,
             'KalturaLivePublishStatus': KalturaLivePublishStatus,
             'KalturaLiveReportExportType': KalturaLiveReportExportType,
+            'KalturaLiveStatsEventType': KalturaLiveStatsEventType,
             'KalturaMailJobStatus': KalturaMailJobStatus,
             'KalturaMediaServerIndex': KalturaMediaServerIndex,
             'KalturaMediaType': KalturaMediaType,
