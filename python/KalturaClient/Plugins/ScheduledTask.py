@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -85,6 +85,7 @@ class KalturaObjectFilterEngineType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaObjectTaskType(object):
+    DISTRIBUTE = "scheduledTaskContentDistribution.Distribute"
     DISPATCH_EVENT_NOTIFICATION = "scheduledTaskEventNotification.DispatchEventNotification"
     EXECUTE_METADATA_XSLT = "scheduledTaskMetadata.ExecuteMetadataXslt"
     DELETE_ENTRY = "1"
@@ -92,6 +93,7 @@ class KalturaObjectTaskType(object):
     DELETE_ENTRY_FLAVORS = "3"
     CONVERT_ENTRY_FLAVORS = "4"
     DELETE_LOCAL_CONTENT = "5"
+    STORAGE_EXPORT = "6"
 
     def __init__(self, value):
         self.value = value
@@ -122,16 +124,21 @@ class KalturaScheduledTaskProfileOrderBy(object):
 # @subpackage Client
 class KalturaObjectTask(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented):
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaObjectTaskType
         # @readonly
         self.type = type
 
+        # @var bool
+        self.stopProcessingOnError = stopProcessingOnError
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createString, "KalturaObjectTaskType"), 
+        'stopProcessingOnError': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -141,10 +148,17 @@ class KalturaObjectTask(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaObjectTask")
+        kparams.addBoolIfDefined("stopProcessingOnError", self.stopProcessingOnError)
         return kparams
 
     def getType(self):
         return self.type
+
+    def getStopProcessingOnError(self):
+        return self.stopProcessingOnError
+
+    def setStopProcessingOnError(self, newStopProcessingOnError):
+        self.stopProcessingOnError = newStopProcessingOnError
 
 
 # @package Kaltura
@@ -358,10 +372,12 @@ class KalturaScheduledTaskProfileListResponse(KalturaObjectBase):
 class KalturaConvertEntryFlavorsObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
             flavorParamsIds=NotImplemented,
             reconvert=NotImplemented):
         KalturaObjectTask.__init__(self,
-            type)
+            type,
+            stopProcessingOnError)
 
         # Comma separated list of flavor param ids to convert
         # @var string
@@ -406,10 +422,12 @@ class KalturaConvertEntryFlavorsObjectTask(KalturaObjectTask):
 class KalturaDeleteEntryFlavorsObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
             deleteType=NotImplemented,
             flavorParamsIds=NotImplemented):
         KalturaObjectTask.__init__(self,
-            type)
+            type,
+            stopProcessingOnError)
 
         # The logic to use to choose the flavors for deletion
         # @var KalturaDeleteFlavorsLogicType
@@ -453,9 +471,11 @@ class KalturaDeleteEntryFlavorsObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaDeleteEntryObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented):
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented):
         KalturaObjectTask.__init__(self,
-            type)
+            type,
+            stopProcessingOnError)
 
 
     PROPERTY_LOADERS = {
@@ -475,9 +495,11 @@ class KalturaDeleteEntryObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaDeleteLocalContentObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented):
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented):
         KalturaObjectTask.__init__(self,
-            type)
+            type,
+            stopProcessingOnError)
 
 
     PROPERTY_LOADERS = {
@@ -498,10 +520,12 @@ class KalturaDeleteLocalContentObjectTask(KalturaObjectTask):
 class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
             addRemoveType=NotImplemented,
             categoryIds=NotImplemented):
         KalturaObjectTask.__init__(self,
-            type)
+            type,
+            stopProcessingOnError)
 
         # Should the object task add or remove categories?
         # @var KalturaScheduledTaskAddOrRemoveType
@@ -791,6 +815,43 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaStorageExportObjectTask(KalturaObjectTask):
+    def __init__(self,
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
+            storageId=NotImplemented):
+        KalturaObjectTask.__init__(self,
+            type,
+            stopProcessingOnError)
+
+        # Storage profile id
+        # @var string
+        self.storageId = storageId
+
+
+    PROPERTY_LOADERS = {
+        'storageId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectTask.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaStorageExportObjectTask.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectTask.toParams(self)
+        kparams.put("objectType", "KalturaStorageExportObjectTask")
+        kparams.addStringIfDefined("storageId", self.storageId)
+        return kparams
+
+    def getStorageId(self):
+        return self.storageId
+
+    def setStorageId(self, newStorageId):
+        self.storageId = newStorageId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduledTaskProfileFilter(KalturaScheduledTaskProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -966,6 +1027,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
             'KalturaModifyCategoriesObjectTask': KalturaModifyCategoriesObjectTask,
             'KalturaScheduledTaskJobData': KalturaScheduledTaskJobData,
             'KalturaScheduledTaskProfileBaseFilter': KalturaScheduledTaskProfileBaseFilter,
+            'KalturaStorageExportObjectTask': KalturaStorageExportObjectTask,
             'KalturaScheduledTaskProfileFilter': KalturaScheduledTaskProfileFilter,
         }
 
