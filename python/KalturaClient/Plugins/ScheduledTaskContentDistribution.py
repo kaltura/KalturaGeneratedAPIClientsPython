@@ -29,86 +29,60 @@
 # @subpackage Client
 from Core import *
 from ScheduledTask import *
-from Metadata import *
+from ContentDistribution import *
 from ..Base import *
 
 ########## enums ##########
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
-class KalturaExecuteMetadataXsltObjectTask(KalturaObjectTask):
+class KalturaDistributeObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
             stopProcessingOnError=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataObjectType=NotImplemented,
-            xslt=NotImplemented):
+            distributionProfileId=NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
 
-        # Metadata profile id to lookup the metadata object
-        # @var int
-        self.metadataProfileId = metadataProfileId
-
-        # Metadata object type to lookup the metadata object
-        # @var KalturaMetadataObjectType
-        self.metadataObjectType = metadataObjectType
-
-        # The XSLT to execute
+        # Distribution profile id
         # @var string
-        self.xslt = xslt
+        self.distributionProfileId = distributionProfileId
 
 
     PROPERTY_LOADERS = {
-        'metadataProfileId': getXmlNodeInt, 
-        'metadataObjectType': (KalturaEnumsFactory.createString, "KalturaMetadataObjectType"), 
-        'xslt': getXmlNodeText, 
+        'distributionProfileId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
         KalturaObjectTask.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaExecuteMetadataXsltObjectTask.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaDistributeObjectTask.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaObjectTask.toParams(self)
-        kparams.put("objectType", "KalturaExecuteMetadataXsltObjectTask")
-        kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
-        kparams.addStringEnumIfDefined("metadataObjectType", self.metadataObjectType)
-        kparams.addStringIfDefined("xslt", self.xslt)
+        kparams.put("objectType", "KalturaDistributeObjectTask")
+        kparams.addStringIfDefined("distributionProfileId", self.distributionProfileId)
         return kparams
 
-    def getMetadataProfileId(self):
-        return self.metadataProfileId
+    def getDistributionProfileId(self):
+        return self.distributionProfileId
 
-    def setMetadataProfileId(self, newMetadataProfileId):
-        self.metadataProfileId = newMetadataProfileId
-
-    def getMetadataObjectType(self):
-        return self.metadataObjectType
-
-    def setMetadataObjectType(self, newMetadataObjectType):
-        self.metadataObjectType = newMetadataObjectType
-
-    def getXslt(self):
-        return self.xslt
-
-    def setXslt(self, newXslt):
-        self.xslt = newXslt
+    def setDistributionProfileId(self, newDistributionProfileId):
+        self.distributionProfileId = newDistributionProfileId
 
 
 ########## services ##########
 ########## main ##########
-class KalturaScheduledTaskMetadataClientPlugin(KalturaClientPlugin):
-    # KalturaScheduledTaskMetadataClientPlugin
+class KalturaScheduledTaskContentDistributionClientPlugin(KalturaClientPlugin):
+    # KalturaScheduledTaskContentDistributionClientPlugin
     instance = None
 
-    # @return KalturaScheduledTaskMetadataClientPlugin
+    # @return KalturaScheduledTaskContentDistributionClientPlugin
     @staticmethod
     def get():
-        if KalturaScheduledTaskMetadataClientPlugin.instance == None:
-            KalturaScheduledTaskMetadataClientPlugin.instance = KalturaScheduledTaskMetadataClientPlugin()
-        return KalturaScheduledTaskMetadataClientPlugin.instance
+        if KalturaScheduledTaskContentDistributionClientPlugin.instance == None:
+            KalturaScheduledTaskContentDistributionClientPlugin.instance = KalturaScheduledTaskContentDistributionClientPlugin()
+        return KalturaScheduledTaskContentDistributionClientPlugin.instance
 
     # @return array<KalturaServiceBase>
     def getServices(self):
@@ -121,10 +95,10 @@ class KalturaScheduledTaskMetadataClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaExecuteMetadataXsltObjectTask': KalturaExecuteMetadataXsltObjectTask,
+            'KalturaDistributeObjectTask': KalturaDistributeObjectTask,
         }
 
     # @return string
     def getName(self):
-        return 'scheduledTaskMetadata'
+        return 'scheduledTaskContentDistribution'
 

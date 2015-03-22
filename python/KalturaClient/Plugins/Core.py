@@ -1582,18 +1582,19 @@ class KalturaBatchJobOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBatchJobType(object):
+    CONVERT = "0"
     PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
     DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
     DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
     DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
     DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
-    CONVERT = "0"
     DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
+    SCHEDULED_TASK = "scheduledTask.ScheduledTask"
     INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
     TAG_RESOLVE = "tagSearch.TagResolve"
     VIRUS_SCAN = "virusScan.VirusScan"
@@ -11203,6 +11204,42 @@ class KalturaObject(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaIntegerValue(KalturaValue):
+    """An int representation to return an array of ints"""
+
+    def __init__(self,
+            description=NotImplemented,
+            value=NotImplemented):
+        KalturaValue.__init__(self,
+            description)
+
+        # @var int
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'value': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaValue.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaIntegerValue.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaValue.toParams(self)
+        kparams.put("objectType", "KalturaIntegerValue")
+        kparams.addIntIfDefined("value", self.value)
+        return kparams
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaJobData(KalturaObjectBase):
     def __init__(self):
         KalturaObjectBase.__init__(self)
@@ -16560,6 +16597,44 @@ class KalturaModerationFlagListResponse(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaModerationFlagListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+    def getTotalCount(self):
+        return self.totalCount
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaObjectListResponse(KalturaObjectBase):
+    def __init__(self,
+            objects=NotImplemented,
+            totalCount=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var array of KalturaObject
+        # @readonly
+        self.objects = objects
+
+        # @var int
+        # @readonly
+        self.totalCount = totalCount
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaObject), 
+        'totalCount': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaObjectListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaObjectListResponse")
         return kparams
 
     def getObjects(self):
@@ -26714,42 +26789,6 @@ class KalturaClipAttributes(KalturaOperationAttributes):
 
     def setDuration(self, newDuration):
         self.duration = newDuration
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaIntegerValue(KalturaValue):
-    """An int representation to return an array of ints"""
-
-    def __init__(self,
-            description=NotImplemented,
-            value=NotImplemented):
-        KalturaValue.__init__(self,
-            description)
-
-        # @var int
-        self.value = value
-
-
-    PROPERTY_LOADERS = {
-        'value': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaValue.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaIntegerValue.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaValue.toParams(self)
-        kparams.put("objectType", "KalturaIntegerValue")
-        kparams.addIntIfDefined("value", self.value)
-        return kparams
-
-    def getValue(self):
-        return self.value
-
-    def setValue(self, newValue):
-        self.value = newValue
 
 
 # @package Kaltura
@@ -50602,6 +50641,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGroupUser': KalturaGroupUser,
             'KalturaGroupUserListResponse': KalturaGroupUserListResponse,
             'KalturaObject': KalturaObject,
+            'KalturaIntegerValue': KalturaIntegerValue,
             'KalturaJobData': KalturaJobData,
             'KalturaKeyBooleanValue': KalturaKeyBooleanValue,
             'KalturaLiveStreamConfiguration': KalturaLiveStreamConfiguration,
@@ -50637,6 +50677,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMixListResponse': KalturaMixListResponse,
             'KalturaModerationFlag': KalturaModerationFlag,
             'KalturaModerationFlagListResponse': KalturaModerationFlagListResponse,
+            'KalturaObjectListResponse': KalturaObjectListResponse,
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
             'KalturaPlayerEmbedCodeType': KalturaPlayerEmbedCodeType,
             'KalturaPartner': KalturaPartner,
@@ -50734,7 +50775,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryUserAdvancedFilter': KalturaCategoryUserAdvancedFilter,
             'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaClipAttributes': KalturaClipAttributes,
-            'KalturaIntegerValue': KalturaIntegerValue,
             'KalturaCompareCondition': KalturaCompareCondition,
             'KalturaDataCenterContentResource': KalturaDataCenterContentResource,
             'KalturaConcatAttributes': KalturaConcatAttributes,
