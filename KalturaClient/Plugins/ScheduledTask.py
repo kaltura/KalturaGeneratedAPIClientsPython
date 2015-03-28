@@ -331,44 +331,6 @@ class KalturaScheduledTaskProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaScheduledTaskProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaScheduledTaskProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduledTaskProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaScheduledTaskProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaScheduledTaskProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaConvertEntryFlavorsObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
@@ -815,6 +777,37 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaScheduledTaskProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaScheduledTaskProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaScheduledTaskProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduledTaskProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaScheduledTaskProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaStorageExportObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
@@ -1019,7 +1012,6 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
         return {
             'KalturaObjectTask': KalturaObjectTask,
             'KalturaScheduledTaskProfile': KalturaScheduledTaskProfile,
-            'KalturaScheduledTaskProfileListResponse': KalturaScheduledTaskProfileListResponse,
             'KalturaConvertEntryFlavorsObjectTask': KalturaConvertEntryFlavorsObjectTask,
             'KalturaDeleteEntryFlavorsObjectTask': KalturaDeleteEntryFlavorsObjectTask,
             'KalturaDeleteEntryObjectTask': KalturaDeleteEntryObjectTask,
@@ -1027,6 +1019,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
             'KalturaModifyCategoriesObjectTask': KalturaModifyCategoriesObjectTask,
             'KalturaScheduledTaskJobData': KalturaScheduledTaskJobData,
             'KalturaScheduledTaskProfileBaseFilter': KalturaScheduledTaskProfileBaseFilter,
+            'KalturaScheduledTaskProfileListResponse': KalturaScheduledTaskProfileListResponse,
             'KalturaStorageExportObjectTask': KalturaStorageExportObjectTask,
             'KalturaScheduledTaskProfileFilter': KalturaScheduledTaskProfileFilter,
         }

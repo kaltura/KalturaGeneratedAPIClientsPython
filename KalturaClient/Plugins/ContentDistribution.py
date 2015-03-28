@@ -338,16 +338,6 @@ class KalturaSyndicationDistributionProfileOrderBy(object):
     def getValue(self):
         return self.value
 
-# @package Kaltura
-# @subpackage Client
-class KalturaSyndicationDistributionProviderOrderBy(object):
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -906,44 +896,6 @@ class KalturaDistributionProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDistributionProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDistributionProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDistributionProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDistributionProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDistributionProvider(KalturaObjectBase):
     def __init__(self,
             type=NotImplemented,
@@ -1065,44 +1017,6 @@ class KalturaDistributionProvider(KalturaObjectBase):
 
     def setUpdateRequiredMetadataXPaths(self, newUpdateRequiredMetadataXPaths):
         self.updateRequiredMetadataXPaths = newUpdateRequiredMetadataXPaths
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDistributionProviderListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDistributionProvider
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProvider), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDistributionProviderListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDistributionProviderListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -1529,44 +1443,6 @@ class KalturaEntryDistribution(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryDistributionListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaEntryDistribution
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaEntryDistribution), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryDistributionListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaEntryDistributionListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaGenericDistributionProfileAction(KalturaObjectBase):
     def __init__(self,
             protocol=NotImplemented,
@@ -1891,44 +1767,6 @@ class KalturaGenericDistributionProviderAction(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGenericDistributionProviderActionListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaGenericDistributionProviderAction
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProviderAction), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGenericDistributionProviderActionListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaGenericDistributionProviderActionListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaGenericDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
             type=NotImplemented,
@@ -2095,44 +1933,6 @@ class KalturaGenericDistributionProvider(KalturaDistributionProvider):
 
     def setMandatoryFields(self, newMandatoryFields):
         self.mandatoryFields = newMandatoryFields
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaGenericDistributionProviderListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaGenericDistributionProvider
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProvider), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGenericDistributionProviderListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaGenericDistributionProviderListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -2681,6 +2481,37 @@ class KalturaDistributionProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDistributionProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDistributionProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDistributionProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDistributionProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDistributionProviderBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -2725,6 +2556,37 @@ class KalturaDistributionProviderBaseFilter(KalturaFilter):
 
     def setTypeIn(self, newTypeIn):
         self.typeIn = newTypeIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDistributionProviderListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDistributionProvider
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProvider), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDistributionProviderListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDistributionProviderListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -2983,266 +2845,33 @@ class KalturaDistributionValidationErrorMissingThumbnail(KalturaDistributionVali
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryDistributionBaseFilter(KalturaFilter):
+class KalturaEntryDistributionListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            submittedAtGreaterThanOrEqual=NotImplemented,
-            submittedAtLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            distributionProfileIdEqual=NotImplemented,
-            distributionProfileIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            dirtyStatusEqual=NotImplemented,
-            dirtyStatusIn=NotImplemented,
-            sunriseGreaterThanOrEqual=NotImplemented,
-            sunriseLessThanOrEqual=NotImplemented,
-            sunsetGreaterThanOrEqual=NotImplemented,
-            sunsetLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var int
-        self.submittedAtGreaterThanOrEqual = submittedAtGreaterThanOrEqual
-
-        # @var int
-        self.submittedAtLessThanOrEqual = submittedAtLessThanOrEqual
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var string
-        self.entryIdIn = entryIdIn
-
-        # @var int
-        self.distributionProfileIdEqual = distributionProfileIdEqual
-
-        # @var string
-        self.distributionProfileIdIn = distributionProfileIdIn
-
-        # @var KalturaEntryDistributionStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var KalturaEntryDistributionFlag
-        self.dirtyStatusEqual = dirtyStatusEqual
-
-        # @var string
-        self.dirtyStatusIn = dirtyStatusIn
-
-        # @var int
-        self.sunriseGreaterThanOrEqual = sunriseGreaterThanOrEqual
-
-        # @var int
-        self.sunriseLessThanOrEqual = sunriseLessThanOrEqual
-
-        # @var int
-        self.sunsetGreaterThanOrEqual = sunsetGreaterThanOrEqual
-
-        # @var int
-        self.sunsetLessThanOrEqual = sunsetLessThanOrEqual
+        # @var array of KalturaEntryDistribution
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'submittedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'submittedAtLessThanOrEqual': getXmlNodeInt, 
-        'entryIdEqual': getXmlNodeText, 
-        'entryIdIn': getXmlNodeText, 
-        'distributionProfileIdEqual': getXmlNodeInt, 
-        'distributionProfileIdIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryDistributionStatus"), 
-        'statusIn': getXmlNodeText, 
-        'dirtyStatusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryDistributionFlag"), 
-        'dirtyStatusIn': getXmlNodeText, 
-        'sunriseGreaterThanOrEqual': getXmlNodeInt, 
-        'sunriseLessThanOrEqual': getXmlNodeInt, 
-        'sunsetGreaterThanOrEqual': getXmlNodeInt, 
-        'sunsetLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaEntryDistribution), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryDistributionBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryDistributionListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryDistributionBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntIfDefined("submittedAtGreaterThanOrEqual", self.submittedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("submittedAtLessThanOrEqual", self.submittedAtLessThanOrEqual)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
-        kparams.addIntIfDefined("distributionProfileIdEqual", self.distributionProfileIdEqual)
-        kparams.addStringIfDefined("distributionProfileIdIn", self.distributionProfileIdIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntEnumIfDefined("dirtyStatusEqual", self.dirtyStatusEqual)
-        kparams.addStringIfDefined("dirtyStatusIn", self.dirtyStatusIn)
-        kparams.addIntIfDefined("sunriseGreaterThanOrEqual", self.sunriseGreaterThanOrEqual)
-        kparams.addIntIfDefined("sunriseLessThanOrEqual", self.sunriseLessThanOrEqual)
-        kparams.addIntIfDefined("sunsetGreaterThanOrEqual", self.sunsetGreaterThanOrEqual)
-        kparams.addIntIfDefined("sunsetLessThanOrEqual", self.sunsetLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaEntryDistributionListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getSubmittedAtGreaterThanOrEqual(self):
-        return self.submittedAtGreaterThanOrEqual
-
-    def setSubmittedAtGreaterThanOrEqual(self, newSubmittedAtGreaterThanOrEqual):
-        self.submittedAtGreaterThanOrEqual = newSubmittedAtGreaterThanOrEqual
-
-    def getSubmittedAtLessThanOrEqual(self):
-        return self.submittedAtLessThanOrEqual
-
-    def setSubmittedAtLessThanOrEqual(self, newSubmittedAtLessThanOrEqual):
-        self.submittedAtLessThanOrEqual = newSubmittedAtLessThanOrEqual
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
-
-    def getDistributionProfileIdEqual(self):
-        return self.distributionProfileIdEqual
-
-    def setDistributionProfileIdEqual(self, newDistributionProfileIdEqual):
-        self.distributionProfileIdEqual = newDistributionProfileIdEqual
-
-    def getDistributionProfileIdIn(self):
-        return self.distributionProfileIdIn
-
-    def setDistributionProfileIdIn(self, newDistributionProfileIdIn):
-        self.distributionProfileIdIn = newDistributionProfileIdIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getDirtyStatusEqual(self):
-        return self.dirtyStatusEqual
-
-    def setDirtyStatusEqual(self, newDirtyStatusEqual):
-        self.dirtyStatusEqual = newDirtyStatusEqual
-
-    def getDirtyStatusIn(self):
-        return self.dirtyStatusIn
-
-    def setDirtyStatusIn(self, newDirtyStatusIn):
-        self.dirtyStatusIn = newDirtyStatusIn
-
-    def getSunriseGreaterThanOrEqual(self):
-        return self.sunriseGreaterThanOrEqual
-
-    def setSunriseGreaterThanOrEqual(self, newSunriseGreaterThanOrEqual):
-        self.sunriseGreaterThanOrEqual = newSunriseGreaterThanOrEqual
-
-    def getSunriseLessThanOrEqual(self):
-        return self.sunriseLessThanOrEqual
-
-    def setSunriseLessThanOrEqual(self, newSunriseLessThanOrEqual):
-        self.sunriseLessThanOrEqual = newSunriseLessThanOrEqual
-
-    def getSunsetGreaterThanOrEqual(self):
-        return self.sunsetGreaterThanOrEqual
-
-    def setSunsetGreaterThanOrEqual(self, newSunsetGreaterThanOrEqual):
-        self.sunsetGreaterThanOrEqual = newSunsetGreaterThanOrEqual
-
-    def getSunsetLessThanOrEqual(self):
-        return self.sunsetLessThanOrEqual
-
-    def setSunsetLessThanOrEqual(self, newSunsetLessThanOrEqual):
-        self.sunsetLessThanOrEqual = newSunsetLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -3596,6 +3225,68 @@ class KalturaGenericDistributionProviderActionBaseFilter(KalturaFilter):
 
     def setActionIn(self, newActionIn):
         self.actionIn = newActionIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGenericDistributionProviderActionListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaGenericDistributionProviderAction
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProviderAction), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericDistributionProviderActionListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaGenericDistributionProviderActionListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGenericDistributionProviderListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaGenericDistributionProvider
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProvider), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericDistributionProviderListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaGenericDistributionProviderListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -4023,7 +3714,7 @@ class KalturaDistributionValidationErrorInvalidMetadata(KalturaDistributionValid
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryDistributionFilter(KalturaEntryDistributionBaseFilter):
+class KalturaEntryDistributionBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -4047,42 +3738,242 @@ class KalturaEntryDistributionFilter(KalturaEntryDistributionBaseFilter):
             sunriseLessThanOrEqual=NotImplemented,
             sunsetGreaterThanOrEqual=NotImplemented,
             sunsetLessThanOrEqual=NotImplemented):
-        KalturaEntryDistributionBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            submittedAtGreaterThanOrEqual,
-            submittedAtLessThanOrEqual,
-            entryIdEqual,
-            entryIdIn,
-            distributionProfileIdEqual,
-            distributionProfileIdIn,
-            statusEqual,
-            statusIn,
-            dirtyStatusEqual,
-            dirtyStatusIn,
-            sunriseGreaterThanOrEqual,
-            sunriseLessThanOrEqual,
-            sunsetGreaterThanOrEqual,
-            sunsetLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.submittedAtGreaterThanOrEqual = submittedAtGreaterThanOrEqual
+
+        # @var int
+        self.submittedAtLessThanOrEqual = submittedAtLessThanOrEqual
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var int
+        self.distributionProfileIdEqual = distributionProfileIdEqual
+
+        # @var string
+        self.distributionProfileIdIn = distributionProfileIdIn
+
+        # @var KalturaEntryDistributionStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var KalturaEntryDistributionFlag
+        self.dirtyStatusEqual = dirtyStatusEqual
+
+        # @var string
+        self.dirtyStatusIn = dirtyStatusIn
+
+        # @var int
+        self.sunriseGreaterThanOrEqual = sunriseGreaterThanOrEqual
+
+        # @var int
+        self.sunriseLessThanOrEqual = sunriseLessThanOrEqual
+
+        # @var int
+        self.sunsetGreaterThanOrEqual = sunsetGreaterThanOrEqual
+
+        # @var int
+        self.sunsetLessThanOrEqual = sunsetLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'submittedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'submittedAtLessThanOrEqual': getXmlNodeInt, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'distributionProfileIdEqual': getXmlNodeInt, 
+        'distributionProfileIdIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryDistributionStatus"), 
+        'statusIn': getXmlNodeText, 
+        'dirtyStatusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryDistributionFlag"), 
+        'dirtyStatusIn': getXmlNodeText, 
+        'sunriseGreaterThanOrEqual': getXmlNodeInt, 
+        'sunriseLessThanOrEqual': getXmlNodeInt, 
+        'sunsetGreaterThanOrEqual': getXmlNodeInt, 
+        'sunsetLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaEntryDistributionBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryDistributionFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryDistributionBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaEntryDistributionBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryDistributionFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryDistributionBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("submittedAtGreaterThanOrEqual", self.submittedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("submittedAtLessThanOrEqual", self.submittedAtLessThanOrEqual)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addIntIfDefined("distributionProfileIdEqual", self.distributionProfileIdEqual)
+        kparams.addStringIfDefined("distributionProfileIdIn", self.distributionProfileIdIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntEnumIfDefined("dirtyStatusEqual", self.dirtyStatusEqual)
+        kparams.addStringIfDefined("dirtyStatusIn", self.dirtyStatusIn)
+        kparams.addIntIfDefined("sunriseGreaterThanOrEqual", self.sunriseGreaterThanOrEqual)
+        kparams.addIntIfDefined("sunriseLessThanOrEqual", self.sunriseLessThanOrEqual)
+        kparams.addIntIfDefined("sunsetGreaterThanOrEqual", self.sunsetGreaterThanOrEqual)
+        kparams.addIntIfDefined("sunsetLessThanOrEqual", self.sunsetLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getSubmittedAtGreaterThanOrEqual(self):
+        return self.submittedAtGreaterThanOrEqual
+
+    def setSubmittedAtGreaterThanOrEqual(self, newSubmittedAtGreaterThanOrEqual):
+        self.submittedAtGreaterThanOrEqual = newSubmittedAtGreaterThanOrEqual
+
+    def getSubmittedAtLessThanOrEqual(self):
+        return self.submittedAtLessThanOrEqual
+
+    def setSubmittedAtLessThanOrEqual(self, newSubmittedAtLessThanOrEqual):
+        self.submittedAtLessThanOrEqual = newSubmittedAtLessThanOrEqual
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getDistributionProfileIdEqual(self):
+        return self.distributionProfileIdEqual
+
+    def setDistributionProfileIdEqual(self, newDistributionProfileIdEqual):
+        self.distributionProfileIdEqual = newDistributionProfileIdEqual
+
+    def getDistributionProfileIdIn(self):
+        return self.distributionProfileIdIn
+
+    def setDistributionProfileIdIn(self, newDistributionProfileIdIn):
+        self.distributionProfileIdIn = newDistributionProfileIdIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getDirtyStatusEqual(self):
+        return self.dirtyStatusEqual
+
+    def setDirtyStatusEqual(self, newDirtyStatusEqual):
+        self.dirtyStatusEqual = newDirtyStatusEqual
+
+    def getDirtyStatusIn(self):
+        return self.dirtyStatusIn
+
+    def setDirtyStatusIn(self, newDirtyStatusIn):
+        self.dirtyStatusIn = newDirtyStatusIn
+
+    def getSunriseGreaterThanOrEqual(self):
+        return self.sunriseGreaterThanOrEqual
+
+    def setSunriseGreaterThanOrEqual(self, newSunriseGreaterThanOrEqual):
+        self.sunriseGreaterThanOrEqual = newSunriseGreaterThanOrEqual
+
+    def getSunriseLessThanOrEqual(self):
+        return self.sunriseLessThanOrEqual
+
+    def setSunriseLessThanOrEqual(self, newSunriseLessThanOrEqual):
+        self.sunriseLessThanOrEqual = newSunriseLessThanOrEqual
+
+    def getSunsetGreaterThanOrEqual(self):
+        return self.sunsetGreaterThanOrEqual
+
+    def setSunsetGreaterThanOrEqual(self, newSunsetGreaterThanOrEqual):
+        self.sunsetGreaterThanOrEqual = newSunsetGreaterThanOrEqual
+
+    def getSunsetLessThanOrEqual(self):
+        return self.sunsetLessThanOrEqual
+
+    def setSunsetLessThanOrEqual(self, newSunsetLessThanOrEqual):
+        self.sunsetLessThanOrEqual = newSunsetLessThanOrEqual
 
 
 # @package Kaltura
@@ -4246,6 +4137,70 @@ class KalturaDistributionEnableJobData(KalturaDistributionUpdateJobData):
     def toParams(self):
         kparams = KalturaDistributionUpdateJobData.toParams(self)
         kparams.put("objectType", "KalturaDistributionEnableJobData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryDistributionFilter(KalturaEntryDistributionBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            submittedAtGreaterThanOrEqual=NotImplemented,
+            submittedAtLessThanOrEqual=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            distributionProfileIdEqual=NotImplemented,
+            distributionProfileIdIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            dirtyStatusEqual=NotImplemented,
+            dirtyStatusIn=NotImplemented,
+            sunriseGreaterThanOrEqual=NotImplemented,
+            sunriseLessThanOrEqual=NotImplemented,
+            sunsetGreaterThanOrEqual=NotImplemented,
+            sunsetLessThanOrEqual=NotImplemented):
+        KalturaEntryDistributionBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            submittedAtGreaterThanOrEqual,
+            submittedAtLessThanOrEqual,
+            entryIdEqual,
+            entryIdIn,
+            distributionProfileIdEqual,
+            distributionProfileIdIn,
+            statusEqual,
+            statusIn,
+            dirtyStatusEqual,
+            dirtyStatusIn,
+            sunriseGreaterThanOrEqual,
+            sunriseLessThanOrEqual,
+            sunsetGreaterThanOrEqual,
+            sunsetLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryDistributionBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryDistributionFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryDistributionBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryDistributionFilter")
         return kparams
 
 
@@ -4698,34 +4653,6 @@ class KalturaSyndicationDistributionProfileFilter(KalturaSyndicationDistribution
     def toParams(self):
         kparams = KalturaSyndicationDistributionProfileBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaSyndicationDistributionProfileFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSyndicationDistributionProviderFilter(KalturaSyndicationDistributionProviderBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
-        KalturaSyndicationDistributionProviderBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            typeEqual,
-            typeIn)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaSyndicationDistributionProviderBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaSyndicationDistributionProviderFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaSyndicationDistributionProviderBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaSyndicationDistributionProviderFilter")
         return kparams
 
 
@@ -5274,7 +5201,6 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProviderActionOrderBy': KalturaGenericDistributionProviderActionOrderBy,
             'KalturaGenericDistributionProviderOrderBy': KalturaGenericDistributionProviderOrderBy,
             'KalturaSyndicationDistributionProfileOrderBy': KalturaSyndicationDistributionProfileOrderBy,
-            'KalturaSyndicationDistributionProviderOrderBy': KalturaSyndicationDistributionProviderOrderBy,
         }
 
     def getTypes(self):
@@ -5285,35 +5211,34 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaDistributionJobProviderData': KalturaDistributionJobProviderData,
             'KalturaDistributionThumbDimensions': KalturaDistributionThumbDimensions,
             'KalturaDistributionProfile': KalturaDistributionProfile,
-            'KalturaDistributionProfileListResponse': KalturaDistributionProfileListResponse,
             'KalturaDistributionProvider': KalturaDistributionProvider,
-            'KalturaDistributionProviderListResponse': KalturaDistributionProviderListResponse,
             'KalturaDistributionRemoteMediaFile': KalturaDistributionRemoteMediaFile,
             'KalturaDistributionValidationError': KalturaDistributionValidationError,
             'KalturaEntryDistribution': KalturaEntryDistribution,
-            'KalturaEntryDistributionListResponse': KalturaEntryDistributionListResponse,
             'KalturaGenericDistributionProfileAction': KalturaGenericDistributionProfileAction,
             'KalturaGenericDistributionProviderAction': KalturaGenericDistributionProviderAction,
-            'KalturaGenericDistributionProviderActionListResponse': KalturaGenericDistributionProviderActionListResponse,
             'KalturaGenericDistributionProvider': KalturaGenericDistributionProvider,
-            'KalturaGenericDistributionProviderListResponse': KalturaGenericDistributionProviderListResponse,
             'KalturaAssetDistributionPropertyCondition': KalturaAssetDistributionPropertyCondition,
             'KalturaConfigurableDistributionJobProviderData': KalturaConfigurableDistributionJobProviderData,
             'KalturaConfigurableDistributionProfile': KalturaConfigurableDistributionProfile,
             'KalturaContentDistributionSearchItem': KalturaContentDistributionSearchItem,
             'KalturaDistributionJobData': KalturaDistributionJobData,
             'KalturaDistributionProfileBaseFilter': KalturaDistributionProfileBaseFilter,
+            'KalturaDistributionProfileListResponse': KalturaDistributionProfileListResponse,
             'KalturaDistributionProviderBaseFilter': KalturaDistributionProviderBaseFilter,
+            'KalturaDistributionProviderListResponse': KalturaDistributionProviderListResponse,
             'KalturaDistributionValidationErrorConditionNotMet': KalturaDistributionValidationErrorConditionNotMet,
             'KalturaDistributionValidationErrorInvalidData': KalturaDistributionValidationErrorInvalidData,
             'KalturaDistributionValidationErrorMissingAsset': KalturaDistributionValidationErrorMissingAsset,
             'KalturaDistributionValidationErrorMissingFlavor': KalturaDistributionValidationErrorMissingFlavor,
             'KalturaDistributionValidationErrorMissingMetadata': KalturaDistributionValidationErrorMissingMetadata,
             'KalturaDistributionValidationErrorMissingThumbnail': KalturaDistributionValidationErrorMissingThumbnail,
-            'KalturaEntryDistributionBaseFilter': KalturaEntryDistributionBaseFilter,
+            'KalturaEntryDistributionListResponse': KalturaEntryDistributionListResponse,
             'KalturaGenericDistributionJobProviderData': KalturaGenericDistributionJobProviderData,
             'KalturaGenericDistributionProfile': KalturaGenericDistributionProfile,
             'KalturaGenericDistributionProviderActionBaseFilter': KalturaGenericDistributionProviderActionBaseFilter,
+            'KalturaGenericDistributionProviderActionListResponse': KalturaGenericDistributionProviderActionListResponse,
+            'KalturaGenericDistributionProviderListResponse': KalturaGenericDistributionProviderListResponse,
             'KalturaSyndicationDistributionProfile': KalturaSyndicationDistributionProfile,
             'KalturaSyndicationDistributionProvider': KalturaSyndicationDistributionProvider,
             'KalturaDistributionDeleteJobData': KalturaDistributionDeleteJobData,
@@ -5323,11 +5248,12 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaDistributionSubmitJobData': KalturaDistributionSubmitJobData,
             'KalturaDistributionUpdateJobData': KalturaDistributionUpdateJobData,
             'KalturaDistributionValidationErrorInvalidMetadata': KalturaDistributionValidationErrorInvalidMetadata,
-            'KalturaEntryDistributionFilter': KalturaEntryDistributionFilter,
+            'KalturaEntryDistributionBaseFilter': KalturaEntryDistributionBaseFilter,
             'KalturaGenericDistributionProviderActionFilter': KalturaGenericDistributionProviderActionFilter,
             'KalturaConfigurableDistributionProfileBaseFilter': KalturaConfigurableDistributionProfileBaseFilter,
             'KalturaDistributionDisableJobData': KalturaDistributionDisableJobData,
             'KalturaDistributionEnableJobData': KalturaDistributionEnableJobData,
+            'KalturaEntryDistributionFilter': KalturaEntryDistributionFilter,
             'KalturaGenericDistributionProfileBaseFilter': KalturaGenericDistributionProfileBaseFilter,
             'KalturaGenericDistributionProviderBaseFilter': KalturaGenericDistributionProviderBaseFilter,
             'KalturaSyndicationDistributionProfileBaseFilter': KalturaSyndicationDistributionProfileBaseFilter,
@@ -5336,7 +5262,6 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProfileFilter': KalturaGenericDistributionProfileFilter,
             'KalturaGenericDistributionProviderFilter': KalturaGenericDistributionProviderFilter,
             'KalturaSyndicationDistributionProfileFilter': KalturaSyndicationDistributionProfileFilter,
-            'KalturaSyndicationDistributionProviderFilter': KalturaSyndicationDistributionProviderFilter,
         }
 
     # @return string

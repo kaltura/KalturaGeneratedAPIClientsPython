@@ -1191,50 +1191,6 @@ class KalturaSystemPartnerUsageItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaSystemPartnerUsageListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaSystemPartnerUsageItem
-        self.objects = objects
-
-        # @var int
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaSystemPartnerUsageItem), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaSystemPartnerUsageListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaSystemPartnerUsageListResponse")
-        kparams.addArrayIfDefined("objects", self.objects)
-        kparams.addIntIfDefined("totalCount", self.totalCount)
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def setObjects(self, newObjects):
-        self.objects = newObjects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-    def setTotalCount(self, newTotalCount):
-        self.totalCount = newTotalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaSystemPartnerOveragedLimit(KalturaSystemPartnerLimit):
     def __init__(self,
             type=NotImplemented,
@@ -1342,6 +1298,40 @@ class KalturaSystemPartnerUsageFilter(KalturaFilter):
 
     def setTimezoneOffset(self, newTimezoneOffset):
         self.timezoneOffset = newTimezoneOffset
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSystemPartnerUsageListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaSystemPartnerUsageItem
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaSystemPartnerUsageItem), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSystemPartnerUsageListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaSystemPartnerUsageListResponse")
+        kparams.addArrayIfDefined("objects", self.objects)
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+    def setObjects(self, newObjects):
+        self.objects = newObjects
 
 
 # @package Kaltura
@@ -1590,9 +1580,9 @@ class KalturaSystemPartnerClientPlugin(KalturaClientPlugin):
             'KalturaSystemPartnerConfiguration': KalturaSystemPartnerConfiguration,
             'KalturaSystemPartnerPackage': KalturaSystemPartnerPackage,
             'KalturaSystemPartnerUsageItem': KalturaSystemPartnerUsageItem,
-            'KalturaSystemPartnerUsageListResponse': KalturaSystemPartnerUsageListResponse,
             'KalturaSystemPartnerOveragedLimit': KalturaSystemPartnerOveragedLimit,
             'KalturaSystemPartnerUsageFilter': KalturaSystemPartnerUsageFilter,
+            'KalturaSystemPartnerUsageListResponse': KalturaSystemPartnerUsageListResponse,
             'KalturaSystemPartnerFilter': KalturaSystemPartnerFilter,
         }
 

@@ -275,45 +275,38 @@ class KalturaCuePoint(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCuePointListResponse(KalturaObjectBase):
+class KalturaCuePointListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
         # @var array of KalturaCuePoint
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, KalturaCuePoint), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaListResponse.fromXml(self, node)
         self.fromXmlImpl(node, KalturaCuePointListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaCuePointListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
 
-    def getTotalCount(self):
-        return self.totalCount
-
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCuePointBaseFilter(KalturaFilter):
+class KalturaCuePointBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -345,7 +338,7 @@ class KalturaCuePointBaseFilter(KalturaFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -466,11 +459,11 @@ class KalturaCuePointBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaCuePointBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaCuePointBaseFilter")
         kparams.addStringIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)

@@ -84,6 +84,233 @@ class KalturaFileSyncOrderBy(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaFileSync(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            fileObjectType=NotImplemented,
+            objectId=NotImplemented,
+            version=NotImplemented,
+            objectSubType=NotImplemented,
+            dc=NotImplemented,
+            original=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            readyAt=NotImplemented,
+            syncTime=NotImplemented,
+            status=NotImplemented,
+            fileType=NotImplemented,
+            linkedId=NotImplemented,
+            linkCount=NotImplemented,
+            fileRoot=NotImplemented,
+            filePath=NotImplemented,
+            fileSize=NotImplemented,
+            fileUrl=NotImplemented,
+            fileContent=NotImplemented,
+            fileDiscSize=NotImplemented,
+            isCurrentDc=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        # @readonly
+        self.id = id
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var KalturaFileSyncObjectType
+        # @readonly
+        self.fileObjectType = fileObjectType
+
+        # @var string
+        # @readonly
+        self.objectId = objectId
+
+        # @var string
+        # @readonly
+        self.version = version
+
+        # @var int
+        # @readonly
+        self.objectSubType = objectSubType
+
+        # @var string
+        # @readonly
+        self.dc = dc
+
+        # @var int
+        # @readonly
+        self.original = original
+
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # @var int
+        # @readonly
+        self.readyAt = readyAt
+
+        # @var int
+        # @readonly
+        self.syncTime = syncTime
+
+        # @var KalturaFileSyncStatus
+        # @readonly
+        self.status = status
+
+        # @var KalturaFileSyncType
+        # @readonly
+        self.fileType = fileType
+
+        # @var int
+        # @readonly
+        self.linkedId = linkedId
+
+        # @var int
+        # @readonly
+        self.linkCount = linkCount
+
+        # @var string
+        # @readonly
+        self.fileRoot = fileRoot
+
+        # @var string
+        # @readonly
+        self.filePath = filePath
+
+        # @var float
+        # @readonly
+        self.fileSize = fileSize
+
+        # @var string
+        # @readonly
+        self.fileUrl = fileUrl
+
+        # @var string
+        # @readonly
+        self.fileContent = fileContent
+
+        # @var float
+        # @readonly
+        self.fileDiscSize = fileDiscSize
+
+        # @var bool
+        # @readonly
+        self.isCurrentDc = isCurrentDc
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'partnerId': getXmlNodeInt, 
+        'fileObjectType': (KalturaEnumsFactory.createString, "KalturaFileSyncObjectType"), 
+        'objectId': getXmlNodeText, 
+        'version': getXmlNodeText, 
+        'objectSubType': getXmlNodeInt, 
+        'dc': getXmlNodeText, 
+        'original': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'readyAt': getXmlNodeInt, 
+        'syncTime': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaFileSyncStatus"), 
+        'fileType': (KalturaEnumsFactory.createInt, "KalturaFileSyncType"), 
+        'linkedId': getXmlNodeInt, 
+        'linkCount': getXmlNodeInt, 
+        'fileRoot': getXmlNodeText, 
+        'filePath': getXmlNodeText, 
+        'fileSize': getXmlNodeFloat, 
+        'fileUrl': getXmlNodeText, 
+        'fileContent': getXmlNodeText, 
+        'fileDiscSize': getXmlNodeFloat, 
+        'isCurrentDc': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileSync.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFileSync")
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getFileObjectType(self):
+        return self.fileObjectType
+
+    def getObjectId(self):
+        return self.objectId
+
+    def getVersion(self):
+        return self.version
+
+    def getObjectSubType(self):
+        return self.objectSubType
+
+    def getDc(self):
+        return self.dc
+
+    def getOriginal(self):
+        return self.original
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getReadyAt(self):
+        return self.readyAt
+
+    def getSyncTime(self):
+        return self.syncTime
+
+    def getStatus(self):
+        return self.status
+
+    def getFileType(self):
+        return self.fileType
+
+    def getLinkedId(self):
+        return self.linkedId
+
+    def getLinkCount(self):
+        return self.linkCount
+
+    def getFileRoot(self):
+        return self.fileRoot
+
+    def getFilePath(self):
+        return self.filePath
+
+    def getFileSize(self):
+        return self.fileSize
+
+    def getFileUrl(self):
+        return self.fileUrl
+
+    def getFileContent(self):
+        return self.fileContent
+
+    def getFileDiscSize(self):
+        return self.fileDiscSize
+
+    def getIsCurrentDc(self):
+        return self.isCurrentDc
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFileSyncBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -456,6 +683,37 @@ class KalturaFileSyncBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFileSyncListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFileSync
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFileSync), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileSyncListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFileSyncListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFileSyncFilter(KalturaFileSyncBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -575,7 +833,9 @@ class KalturaFileSyncClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaFileSync': KalturaFileSync,
             'KalturaFileSyncBaseFilter': KalturaFileSyncBaseFilter,
+            'KalturaFileSyncListResponse': KalturaFileSyncListResponse,
             'KalturaFileSyncFilter': KalturaFileSyncFilter,
         }
 

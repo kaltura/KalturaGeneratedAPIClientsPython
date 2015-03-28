@@ -285,40 +285,33 @@ class KalturaDocumentEntry(KalturaBaseEntry):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDocumentListResponse(KalturaObjectBase):
+class KalturaDocumentListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
         # @var array of KalturaDocumentEntry
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, KalturaDocumentEntry), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaListResponse.fromXml(self, node)
         self.fromXmlImpl(node, KalturaDocumentListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaDocumentListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -879,238 +872,6 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
 
     def setPoly2Bitmap(self, newPoly2Bitmap):
         self.poly2Bitmap = newPoly2Bitmap
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDocumentEntryBaseFilter(KalturaBaseEntryFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            nameLike=NotImplemented,
-            nameMultiLikeOr=NotImplemented,
-            nameMultiLikeAnd=NotImplemented,
-            nameEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            creatorIdEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            adminTagsLike=NotImplemented,
-            adminTagsMultiLikeOr=NotImplemented,
-            adminTagsMultiLikeAnd=NotImplemented,
-            categoriesMatchAnd=NotImplemented,
-            categoriesMatchOr=NotImplemented,
-            categoriesNotContains=NotImplemented,
-            categoriesIdsMatchAnd=NotImplemented,
-            categoriesIdsMatchOr=NotImplemented,
-            categoriesIdsNotContains=NotImplemented,
-            categoriesIdsEmpty=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            moderationStatusEqual=NotImplemented,
-            moderationStatusNotEqual=NotImplemented,
-            moderationStatusIn=NotImplemented,
-            moderationStatusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            totalRankLessThanOrEqual=NotImplemented,
-            totalRankGreaterThanOrEqual=NotImplemented,
-            groupIdEqual=NotImplemented,
-            searchTextMatchAnd=NotImplemented,
-            searchTextMatchOr=NotImplemented,
-            accessControlIdEqual=NotImplemented,
-            accessControlIdIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            startDateGreaterThanOrEqualOrNull=NotImplemented,
-            startDateLessThanOrEqualOrNull=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqualOrNull=NotImplemented,
-            endDateLessThanOrEqualOrNull=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            replacingEntryIdEqual=NotImplemented,
-            replacingEntryIdIn=NotImplemented,
-            replacedEntryIdEqual=NotImplemented,
-            replacedEntryIdIn=NotImplemented,
-            replacementStatusEqual=NotImplemented,
-            replacementStatusIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            rootEntryIdEqual=NotImplemented,
-            rootEntryIdIn=NotImplemented,
-            parentEntryIdEqual=NotImplemented,
-            entitledUsersEditMatchAnd=NotImplemented,
-            entitledUsersPublishMatchAnd=NotImplemented,
-            tagsNameMultiLikeOr=NotImplemented,
-            tagsAdminTagsMultiLikeOr=NotImplemented,
-            tagsAdminTagsNameMultiLikeOr=NotImplemented,
-            tagsNameMultiLikeAnd=NotImplemented,
-            tagsAdminTagsMultiLikeAnd=NotImplemented,
-            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
-            freeText=NotImplemented,
-            isRoot=NotImplemented,
-            categoriesFullNameIn=NotImplemented,
-            categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented,
-            documentTypeEqual=NotImplemented,
-            documentTypeIn=NotImplemented,
-            assetParamsIdsMatchOr=NotImplemented,
-            assetParamsIdsMatchAnd=NotImplemented):
-        KalturaBaseEntryFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            idNotIn,
-            nameLike,
-            nameMultiLikeOr,
-            nameMultiLikeAnd,
-            nameEqual,
-            partnerIdEqual,
-            partnerIdIn,
-            userIdEqual,
-            userIdIn,
-            creatorIdEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            adminTagsLike,
-            adminTagsMultiLikeOr,
-            adminTagsMultiLikeAnd,
-            categoriesMatchAnd,
-            categoriesMatchOr,
-            categoriesNotContains,
-            categoriesIdsMatchAnd,
-            categoriesIdsMatchOr,
-            categoriesIdsNotContains,
-            categoriesIdsEmpty,
-            statusEqual,
-            statusNotEqual,
-            statusIn,
-            statusNotIn,
-            moderationStatusEqual,
-            moderationStatusNotEqual,
-            moderationStatusIn,
-            moderationStatusNotIn,
-            typeEqual,
-            typeIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            totalRankLessThanOrEqual,
-            totalRankGreaterThanOrEqual,
-            groupIdEqual,
-            searchTextMatchAnd,
-            searchTextMatchOr,
-            accessControlIdEqual,
-            accessControlIdIn,
-            startDateGreaterThanOrEqual,
-            startDateLessThanOrEqual,
-            startDateGreaterThanOrEqualOrNull,
-            startDateLessThanOrEqualOrNull,
-            endDateGreaterThanOrEqual,
-            endDateLessThanOrEqual,
-            endDateGreaterThanOrEqualOrNull,
-            endDateLessThanOrEqualOrNull,
-            referenceIdEqual,
-            referenceIdIn,
-            replacingEntryIdEqual,
-            replacingEntryIdIn,
-            replacedEntryIdEqual,
-            replacedEntryIdIn,
-            replacementStatusEqual,
-            replacementStatusIn,
-            partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual,
-            rootEntryIdEqual,
-            rootEntryIdIn,
-            parentEntryIdEqual,
-            entitledUsersEditMatchAnd,
-            entitledUsersPublishMatchAnd,
-            tagsNameMultiLikeOr,
-            tagsAdminTagsMultiLikeOr,
-            tagsAdminTagsNameMultiLikeOr,
-            tagsNameMultiLikeAnd,
-            tagsAdminTagsMultiLikeAnd,
-            tagsAdminTagsNameMultiLikeAnd,
-            freeText,
-            isRoot,
-            categoriesFullNameIn,
-            categoryAncestorIdIn,
-            redirectFromEntryId)
-
-        # @var KalturaDocumentType
-        self.documentTypeEqual = documentTypeEqual
-
-        # @var string
-        self.documentTypeIn = documentTypeIn
-
-        # @var string
-        self.assetParamsIdsMatchOr = assetParamsIdsMatchOr
-
-        # @var string
-        self.assetParamsIdsMatchAnd = assetParamsIdsMatchAnd
-
-
-    PROPERTY_LOADERS = {
-        'documentTypeEqual': (KalturaEnumsFactory.createInt, "KalturaDocumentType"), 
-        'documentTypeIn': getXmlNodeText, 
-        'assetParamsIdsMatchOr': getXmlNodeText, 
-        'assetParamsIdsMatchAnd': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaBaseEntryFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDocumentEntryBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaBaseEntryFilter.toParams(self)
-        kparams.put("objectType", "KalturaDocumentEntryBaseFilter")
-        kparams.addIntEnumIfDefined("documentTypeEqual", self.documentTypeEqual)
-        kparams.addStringIfDefined("documentTypeIn", self.documentTypeIn)
-        kparams.addStringIfDefined("assetParamsIdsMatchOr", self.assetParamsIdsMatchOr)
-        kparams.addStringIfDefined("assetParamsIdsMatchAnd", self.assetParamsIdsMatchAnd)
-        return kparams
-
-    def getDocumentTypeEqual(self):
-        return self.documentTypeEqual
-
-    def setDocumentTypeEqual(self, newDocumentTypeEqual):
-        self.documentTypeEqual = newDocumentTypeEqual
-
-    def getDocumentTypeIn(self):
-        return self.documentTypeIn
-
-    def setDocumentTypeIn(self, newDocumentTypeIn):
-        self.documentTypeIn = newDocumentTypeIn
-
-    def getAssetParamsIdsMatchOr(self):
-        return self.assetParamsIdsMatchOr
-
-    def setAssetParamsIdsMatchOr(self, newAssetParamsIdsMatchOr):
-        self.assetParamsIdsMatchOr = newAssetParamsIdsMatchOr
-
-    def getAssetParamsIdsMatchAnd(self):
-        return self.assetParamsIdsMatchAnd
-
-    def setAssetParamsIdsMatchAnd(self, newAssetParamsIdsMatchAnd):
-        self.assetParamsIdsMatchAnd = newAssetParamsIdsMatchAnd
 
 
 # @package Kaltura
@@ -1719,6 +1480,238 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
 
     def setPoly2Bitmap(self, newPoly2Bitmap):
         self.poly2Bitmap = newPoly2Bitmap
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDocumentEntryBaseFilter(KalturaBaseEntryFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            nameLike=NotImplemented,
+            nameMultiLikeOr=NotImplemented,
+            nameMultiLikeAnd=NotImplemented,
+            nameEqual=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            creatorIdEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            adminTagsLike=NotImplemented,
+            adminTagsMultiLikeOr=NotImplemented,
+            adminTagsMultiLikeAnd=NotImplemented,
+            categoriesMatchAnd=NotImplemented,
+            categoriesMatchOr=NotImplemented,
+            categoriesNotContains=NotImplemented,
+            categoriesIdsMatchAnd=NotImplemented,
+            categoriesIdsMatchOr=NotImplemented,
+            categoriesIdsNotContains=NotImplemented,
+            categoriesIdsEmpty=NotImplemented,
+            statusEqual=NotImplemented,
+            statusNotEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented,
+            moderationStatusEqual=NotImplemented,
+            moderationStatusNotEqual=NotImplemented,
+            moderationStatusIn=NotImplemented,
+            moderationStatusNotIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            totalRankLessThanOrEqual=NotImplemented,
+            totalRankGreaterThanOrEqual=NotImplemented,
+            groupIdEqual=NotImplemented,
+            searchTextMatchAnd=NotImplemented,
+            searchTextMatchOr=NotImplemented,
+            accessControlIdEqual=NotImplemented,
+            accessControlIdIn=NotImplemented,
+            startDateGreaterThanOrEqual=NotImplemented,
+            startDateLessThanOrEqual=NotImplemented,
+            startDateGreaterThanOrEqualOrNull=NotImplemented,
+            startDateLessThanOrEqualOrNull=NotImplemented,
+            endDateGreaterThanOrEqual=NotImplemented,
+            endDateLessThanOrEqual=NotImplemented,
+            endDateGreaterThanOrEqualOrNull=NotImplemented,
+            endDateLessThanOrEqualOrNull=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdIn=NotImplemented,
+            replacingEntryIdEqual=NotImplemented,
+            replacingEntryIdIn=NotImplemented,
+            replacedEntryIdEqual=NotImplemented,
+            replacedEntryIdIn=NotImplemented,
+            replacementStatusEqual=NotImplemented,
+            replacementStatusIn=NotImplemented,
+            partnerSortValueGreaterThanOrEqual=NotImplemented,
+            partnerSortValueLessThanOrEqual=NotImplemented,
+            rootEntryIdEqual=NotImplemented,
+            rootEntryIdIn=NotImplemented,
+            parentEntryIdEqual=NotImplemented,
+            entitledUsersEditMatchAnd=NotImplemented,
+            entitledUsersPublishMatchAnd=NotImplemented,
+            tagsNameMultiLikeOr=NotImplemented,
+            tagsAdminTagsMultiLikeOr=NotImplemented,
+            tagsAdminTagsNameMultiLikeOr=NotImplemented,
+            tagsNameMultiLikeAnd=NotImplemented,
+            tagsAdminTagsMultiLikeAnd=NotImplemented,
+            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            freeText=NotImplemented,
+            isRoot=NotImplemented,
+            categoriesFullNameIn=NotImplemented,
+            categoryAncestorIdIn=NotImplemented,
+            redirectFromEntryId=NotImplemented,
+            documentTypeEqual=NotImplemented,
+            documentTypeIn=NotImplemented,
+            assetParamsIdsMatchOr=NotImplemented,
+            assetParamsIdsMatchAnd=NotImplemented):
+        KalturaBaseEntryFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            nameLike,
+            nameMultiLikeOr,
+            nameMultiLikeAnd,
+            nameEqual,
+            partnerIdEqual,
+            partnerIdIn,
+            userIdEqual,
+            userIdIn,
+            creatorIdEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            adminTagsLike,
+            adminTagsMultiLikeOr,
+            adminTagsMultiLikeAnd,
+            categoriesMatchAnd,
+            categoriesMatchOr,
+            categoriesNotContains,
+            categoriesIdsMatchAnd,
+            categoriesIdsMatchOr,
+            categoriesIdsNotContains,
+            categoriesIdsEmpty,
+            statusEqual,
+            statusNotEqual,
+            statusIn,
+            statusNotIn,
+            moderationStatusEqual,
+            moderationStatusNotEqual,
+            moderationStatusIn,
+            moderationStatusNotIn,
+            typeEqual,
+            typeIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            totalRankLessThanOrEqual,
+            totalRankGreaterThanOrEqual,
+            groupIdEqual,
+            searchTextMatchAnd,
+            searchTextMatchOr,
+            accessControlIdEqual,
+            accessControlIdIn,
+            startDateGreaterThanOrEqual,
+            startDateLessThanOrEqual,
+            startDateGreaterThanOrEqualOrNull,
+            startDateLessThanOrEqualOrNull,
+            endDateGreaterThanOrEqual,
+            endDateLessThanOrEqual,
+            endDateGreaterThanOrEqualOrNull,
+            endDateLessThanOrEqualOrNull,
+            referenceIdEqual,
+            referenceIdIn,
+            replacingEntryIdEqual,
+            replacingEntryIdIn,
+            replacedEntryIdEqual,
+            replacedEntryIdIn,
+            replacementStatusEqual,
+            replacementStatusIn,
+            partnerSortValueGreaterThanOrEqual,
+            partnerSortValueLessThanOrEqual,
+            rootEntryIdEqual,
+            rootEntryIdIn,
+            parentEntryIdEqual,
+            entitledUsersEditMatchAnd,
+            entitledUsersPublishMatchAnd,
+            tagsNameMultiLikeOr,
+            tagsAdminTagsMultiLikeOr,
+            tagsAdminTagsNameMultiLikeOr,
+            tagsNameMultiLikeAnd,
+            tagsAdminTagsMultiLikeAnd,
+            tagsAdminTagsNameMultiLikeAnd,
+            freeText,
+            isRoot,
+            categoriesFullNameIn,
+            categoryAncestorIdIn,
+            redirectFromEntryId)
+
+        # @var KalturaDocumentType
+        self.documentTypeEqual = documentTypeEqual
+
+        # @var string
+        self.documentTypeIn = documentTypeIn
+
+        # @var string
+        self.assetParamsIdsMatchOr = assetParamsIdsMatchOr
+
+        # @var string
+        self.assetParamsIdsMatchAnd = assetParamsIdsMatchAnd
+
+
+    PROPERTY_LOADERS = {
+        'documentTypeEqual': (KalturaEnumsFactory.createInt, "KalturaDocumentType"), 
+        'documentTypeIn': getXmlNodeText, 
+        'assetParamsIdsMatchOr': getXmlNodeText, 
+        'assetParamsIdsMatchAnd': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseEntryFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDocumentEntryBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseEntryFilter.toParams(self)
+        kparams.put("objectType", "KalturaDocumentEntryBaseFilter")
+        kparams.addIntEnumIfDefined("documentTypeEqual", self.documentTypeEqual)
+        kparams.addStringIfDefined("documentTypeIn", self.documentTypeIn)
+        kparams.addStringIfDefined("assetParamsIdsMatchOr", self.assetParamsIdsMatchOr)
+        kparams.addStringIfDefined("assetParamsIdsMatchAnd", self.assetParamsIdsMatchAnd)
+        return kparams
+
+    def getDocumentTypeEqual(self):
+        return self.documentTypeEqual
+
+    def setDocumentTypeEqual(self, newDocumentTypeEqual):
+        self.documentTypeEqual = newDocumentTypeEqual
+
+    def getDocumentTypeIn(self):
+        return self.documentTypeIn
+
+    def setDocumentTypeIn(self, newDocumentTypeIn):
+        self.documentTypeIn = newDocumentTypeIn
+
+    def getAssetParamsIdsMatchOr(self):
+        return self.assetParamsIdsMatchOr
+
+    def setAssetParamsIdsMatchOr(self, newAssetParamsIdsMatchOr):
+        self.assetParamsIdsMatchOr = newAssetParamsIdsMatchOr
+
+    def getAssetParamsIdsMatchAnd(self):
+        return self.assetParamsIdsMatchAnd
+
+    def setAssetParamsIdsMatchAnd(self, newAssetParamsIdsMatchAnd):
+        self.assetParamsIdsMatchAnd = newAssetParamsIdsMatchAnd
 
 
 # @package Kaltura
@@ -2746,11 +2739,11 @@ class KalturaDocumentClientPlugin(KalturaClientPlugin):
             'KalturaImageFlavorParams': KalturaImageFlavorParams,
             'KalturaPdfFlavorParams': KalturaPdfFlavorParams,
             'KalturaSwfFlavorParams': KalturaSwfFlavorParams,
-            'KalturaDocumentEntryBaseFilter': KalturaDocumentEntryBaseFilter,
             'KalturaDocumentFlavorParamsOutput': KalturaDocumentFlavorParamsOutput,
             'KalturaImageFlavorParamsOutput': KalturaImageFlavorParamsOutput,
             'KalturaPdfFlavorParamsOutput': KalturaPdfFlavorParamsOutput,
             'KalturaSwfFlavorParamsOutput': KalturaSwfFlavorParamsOutput,
+            'KalturaDocumentEntryBaseFilter': KalturaDocumentEntryBaseFilter,
             'KalturaDocumentEntryFilter': KalturaDocumentEntryFilter,
             'KalturaDocumentFlavorParamsBaseFilter': KalturaDocumentFlavorParamsBaseFilter,
             'KalturaImageFlavorParamsBaseFilter': KalturaImageFlavorParamsBaseFilter,

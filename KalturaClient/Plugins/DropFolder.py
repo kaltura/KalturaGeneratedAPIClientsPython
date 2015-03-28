@@ -971,82 +971,6 @@ class KalturaDropFolderFile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDropFolderFileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDropFolderFile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDropFolderFile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDropFolderFileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDropFolderFileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDropFolderListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDropFolder
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDropFolder), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDropFolderListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDropFolderListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDropFolderBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -1905,6 +1829,68 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDropFolderFileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDropFolderFile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDropFolderFile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDropFolderFileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDropFolderFileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDropFolderListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDropFolder
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDropFolder), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDropFolderListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDropFolderListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -3739,12 +3725,12 @@ class KalturaDropFolderClientPlugin(KalturaClientPlugin):
             'KalturaDropFolderFileHandlerConfig': KalturaDropFolderFileHandlerConfig,
             'KalturaDropFolder': KalturaDropFolder,
             'KalturaDropFolderFile': KalturaDropFolderFile,
-            'KalturaDropFolderFileListResponse': KalturaDropFolderFileListResponse,
-            'KalturaDropFolderListResponse': KalturaDropFolderListResponse,
             'KalturaDropFolderBaseFilter': KalturaDropFolderBaseFilter,
             'KalturaDropFolderContentFileHandlerConfig': KalturaDropFolderContentFileHandlerConfig,
             'KalturaDropFolderContentProcessorJobData': KalturaDropFolderContentProcessorJobData,
             'KalturaDropFolderFileBaseFilter': KalturaDropFolderFileBaseFilter,
+            'KalturaDropFolderFileListResponse': KalturaDropFolderFileListResponse,
+            'KalturaDropFolderListResponse': KalturaDropFolderListResponse,
             'KalturaRemoteDropFolder': KalturaRemoteDropFolder,
             'KalturaDropFolderFileFilter': KalturaDropFolderFileFilter,
             'KalturaDropFolderFilter': KalturaDropFolderFilter,

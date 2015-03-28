@@ -191,44 +191,6 @@ class KalturaShortLink(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaShortLinkListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaShortLink
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaShortLink), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaShortLinkListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaShortLinkListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaShortLinkBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -445,6 +407,37 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaShortLinkListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaShortLink
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaShortLink), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaShortLinkListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaShortLinkListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaShortLinkFilter(KalturaShortLinkBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -602,8 +595,8 @@ class KalturaShortLinkClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaShortLink': KalturaShortLink,
-            'KalturaShortLinkListResponse': KalturaShortLinkListResponse,
             'KalturaShortLinkBaseFilter': KalturaShortLinkBaseFilter,
+            'KalturaShortLinkListResponse': KalturaShortLinkListResponse,
             'KalturaShortLinkFilter': KalturaShortLinkFilter,
         }
 

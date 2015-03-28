@@ -117,44 +117,6 @@ class KalturaTag(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTagListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaTag
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaTag), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTagListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaTagListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaIndexTagsByPrivacyContextJobData(KalturaJobData):
     def __init__(self,
             changedCategoryId=NotImplemented,
@@ -293,6 +255,37 @@ class KalturaTagFilter(KalturaFilter):
         self.instanceCountIn = newInstanceCountIn
 
 
+# @package Kaltura
+# @subpackage Client
+class KalturaTagListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaTag
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaTag), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTagListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaTagListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
 ########## services ##########
 
 # @package Kaltura
@@ -358,9 +351,9 @@ class KalturaTagSearchClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaTag': KalturaTag,
-            'KalturaTagListResponse': KalturaTagListResponse,
             'KalturaIndexTagsByPrivacyContextJobData': KalturaIndexTagsByPrivacyContextJobData,
             'KalturaTagFilter': KalturaTagFilter,
+            'KalturaTagListResponse': KalturaTagListResponse,
         }
 
     # @return string

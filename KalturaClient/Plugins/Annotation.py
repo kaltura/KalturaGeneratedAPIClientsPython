@@ -189,40 +189,33 @@ class KalturaAnnotation(KalturaCuePoint):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAnnotationListResponse(KalturaObjectBase):
+class KalturaAnnotationListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
         # @var array of KalturaAnnotation
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, KalturaAnnotation), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaListResponse.fromXml(self, node)
         self.fromXmlImpl(node, KalturaAnnotationListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaAnnotationListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura

@@ -216,44 +216,6 @@ class KalturaVirusScanProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaVirusScanProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaVirusScanProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaVirusScanProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaVirusScanProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaVirusScanProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaParseCaptionAssetJobData(KalturaJobData):
     def __init__(self,
             captionAssetId=NotImplemented):
@@ -546,6 +508,37 @@ class KalturaVirusScanProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVirusScanProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaVirusScanProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaVirusScanProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVirusScanProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaVirusScanProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVirusScanProfileFilter(KalturaVirusScanProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -705,10 +698,10 @@ class KalturaVirusScanClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaVirusScanProfile': KalturaVirusScanProfile,
-            'KalturaVirusScanProfileListResponse': KalturaVirusScanProfileListResponse,
             'KalturaParseCaptionAssetJobData': KalturaParseCaptionAssetJobData,
             'KalturaVirusScanJobData': KalturaVirusScanJobData,
             'KalturaVirusScanProfileBaseFilter': KalturaVirusScanProfileBaseFilter,
+            'KalturaVirusScanProfileListResponse': KalturaVirusScanProfileListResponse,
             'KalturaVirusScanProfileFilter': KalturaVirusScanProfileFilter,
         }
 

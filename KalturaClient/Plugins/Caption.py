@@ -226,44 +226,6 @@ class KalturaCaptionAsset(KalturaAsset):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCaptionAssetListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaCaptionAsset
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCaptionAsset), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCaptionAssetListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaCaptionAssetListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCaptionParams(KalturaAssetParams):
     def __init__(self,
             id=NotImplemented,
@@ -377,40 +339,64 @@ class KalturaCaptionParams(KalturaAssetParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCaptionParamsListResponse(KalturaObjectBase):
+class KalturaCaptionAssetListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var array of KalturaCaptionParams
+        # @var array of KalturaCaptionAsset
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCaptionParams), 
-        'totalCount': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaCaptionAsset), 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCaptionParamsListResponse.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCaptionAssetListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaCaptionParamsListResponse")
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaCaptionAssetListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
 
-    def getTotalCount(self):
-        return self.totalCount
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCaptionParamsListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaCaptionParams
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaCaptionParams), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCaptionParamsListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaCaptionParamsListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -950,8 +936,8 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaCaptionAsset': KalturaCaptionAsset,
-            'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParams': KalturaCaptionParams,
+            'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParamsListResponse': KalturaCaptionParamsListResponse,
             'KalturaCaptionAssetBaseFilter': KalturaCaptionAssetBaseFilter,
             'KalturaCaptionParamsBaseFilter': KalturaCaptionParamsBaseFilter,

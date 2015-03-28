@@ -241,44 +241,6 @@ class KalturaMetadata(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMetadataListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMetadata
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMetadata), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMetadataListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMetadataProfile(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -496,82 +458,6 @@ class KalturaMetadataProfileField(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMetadataProfileFieldListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMetadataProfileField
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMetadataProfileField), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataProfileFieldListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMetadataProfileFieldListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMetadataProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMetadataProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMetadataProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMetadataProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaImportMetadataJobData(KalturaJobData):
     def __init__(self,
             srcFileUrl=NotImplemented,
@@ -628,230 +514,33 @@ class KalturaImportMetadataJobData(KalturaJobData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMetadataBaseFilter(KalturaFilter):
+class KalturaMetadataListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataProfileIdEqual=NotImplemented,
-            metadataProfileVersionEqual=NotImplemented,
-            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
-            metadataProfileVersionLessThanOrEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionGreaterThanOrEqual=NotImplemented,
-            versionLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var int
-        self.metadataProfileIdEqual = metadataProfileIdEqual
-
-        # @var int
-        self.metadataProfileVersionEqual = metadataProfileVersionEqual
-
-        # @var int
-        self.metadataProfileVersionGreaterThanOrEqual = metadataProfileVersionGreaterThanOrEqual
-
-        # @var int
-        self.metadataProfileVersionLessThanOrEqual = metadataProfileVersionLessThanOrEqual
-
-        # @var KalturaMetadataObjectType
-        self.metadataObjectTypeEqual = metadataObjectTypeEqual
-
-        # @var string
-        self.objectIdEqual = objectIdEqual
-
-        # @var string
-        self.objectIdIn = objectIdIn
-
-        # @var int
-        self.versionEqual = versionEqual
-
-        # @var int
-        self.versionGreaterThanOrEqual = versionGreaterThanOrEqual
-
-        # @var int
-        self.versionLessThanOrEqual = versionLessThanOrEqual
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaMetadataStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
+        # @var array of KalturaMetadata
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'partnerIdEqual': getXmlNodeInt, 
-        'metadataProfileIdEqual': getXmlNodeInt, 
-        'metadataProfileVersionEqual': getXmlNodeInt, 
-        'metadataProfileVersionGreaterThanOrEqual': getXmlNodeInt, 
-        'metadataProfileVersionLessThanOrEqual': getXmlNodeInt, 
-        'metadataObjectTypeEqual': (KalturaEnumsFactory.createString, "KalturaMetadataObjectType"), 
-        'objectIdEqual': getXmlNodeText, 
-        'objectIdIn': getXmlNodeText, 
-        'versionEqual': getXmlNodeInt, 
-        'versionGreaterThanOrEqual': getXmlNodeInt, 
-        'versionLessThanOrEqual': getXmlNodeInt, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaMetadataStatus"), 
-        'statusIn': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaMetadata), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaMetadataBaseFilter")
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addIntIfDefined("metadataProfileIdEqual", self.metadataProfileIdEqual)
-        kparams.addIntIfDefined("metadataProfileVersionEqual", self.metadataProfileVersionEqual)
-        kparams.addIntIfDefined("metadataProfileVersionGreaterThanOrEqual", self.metadataProfileVersionGreaterThanOrEqual)
-        kparams.addIntIfDefined("metadataProfileVersionLessThanOrEqual", self.metadataProfileVersionLessThanOrEqual)
-        kparams.addStringEnumIfDefined("metadataObjectTypeEqual", self.metadataObjectTypeEqual)
-        kparams.addStringIfDefined("objectIdEqual", self.objectIdEqual)
-        kparams.addStringIfDefined("objectIdIn", self.objectIdIn)
-        kparams.addIntIfDefined("versionEqual", self.versionEqual)
-        kparams.addIntIfDefined("versionGreaterThanOrEqual", self.versionGreaterThanOrEqual)
-        kparams.addIntIfDefined("versionLessThanOrEqual", self.versionLessThanOrEqual)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMetadataListResponse")
         return kparams
 
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getMetadataProfileIdEqual(self):
-        return self.metadataProfileIdEqual
-
-    def setMetadataProfileIdEqual(self, newMetadataProfileIdEqual):
-        self.metadataProfileIdEqual = newMetadataProfileIdEqual
-
-    def getMetadataProfileVersionEqual(self):
-        return self.metadataProfileVersionEqual
-
-    def setMetadataProfileVersionEqual(self, newMetadataProfileVersionEqual):
-        self.metadataProfileVersionEqual = newMetadataProfileVersionEqual
-
-    def getMetadataProfileVersionGreaterThanOrEqual(self):
-        return self.metadataProfileVersionGreaterThanOrEqual
-
-    def setMetadataProfileVersionGreaterThanOrEqual(self, newMetadataProfileVersionGreaterThanOrEqual):
-        self.metadataProfileVersionGreaterThanOrEqual = newMetadataProfileVersionGreaterThanOrEqual
-
-    def getMetadataProfileVersionLessThanOrEqual(self):
-        return self.metadataProfileVersionLessThanOrEqual
-
-    def setMetadataProfileVersionLessThanOrEqual(self, newMetadataProfileVersionLessThanOrEqual):
-        self.metadataProfileVersionLessThanOrEqual = newMetadataProfileVersionLessThanOrEqual
-
-    def getMetadataObjectTypeEqual(self):
-        return self.metadataObjectTypeEqual
-
-    def setMetadataObjectTypeEqual(self, newMetadataObjectTypeEqual):
-        self.metadataObjectTypeEqual = newMetadataObjectTypeEqual
-
-    def getObjectIdEqual(self):
-        return self.objectIdEqual
-
-    def setObjectIdEqual(self, newObjectIdEqual):
-        self.objectIdEqual = newObjectIdEqual
-
-    def getObjectIdIn(self):
-        return self.objectIdIn
-
-    def setObjectIdIn(self, newObjectIdIn):
-        self.objectIdIn = newObjectIdIn
-
-    def getVersionEqual(self):
-        return self.versionEqual
-
-    def setVersionEqual(self, newVersionEqual):
-        self.versionEqual = newVersionEqual
-
-    def getVersionGreaterThanOrEqual(self):
-        return self.versionGreaterThanOrEqual
-
-    def setVersionGreaterThanOrEqual(self, newVersionGreaterThanOrEqual):
-        self.versionGreaterThanOrEqual = newVersionGreaterThanOrEqual
-
-    def getVersionLessThanOrEqual(self):
-        return self.versionLessThanOrEqual
-
-    def setVersionLessThanOrEqual(self, newVersionLessThanOrEqual):
-        self.versionLessThanOrEqual = newVersionLessThanOrEqual
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -1096,6 +785,68 @@ class KalturaMetadataProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataProfileFieldListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMetadataProfileField
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMetadataProfileField), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataProfileFieldListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMetadataProfileFieldListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMetadataProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMetadataProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMetadataProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMetadataProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaTransformMetadataJobData(KalturaJobData):
     def __init__(self,
             srcXslPath=NotImplemented,
@@ -1318,6 +1069,234 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            metadataProfileIdEqual=NotImplemented,
+            metadataProfileVersionEqual=NotImplemented,
+            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
+            metadataProfileVersionLessThanOrEqual=NotImplemented,
+            metadataObjectTypeEqual=NotImplemented,
+            objectIdEqual=NotImplemented,
+            objectIdIn=NotImplemented,
+            versionEqual=NotImplemented,
+            versionGreaterThanOrEqual=NotImplemented,
+            versionLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var int
+        self.metadataProfileIdEqual = metadataProfileIdEqual
+
+        # @var int
+        self.metadataProfileVersionEqual = metadataProfileVersionEqual
+
+        # @var int
+        self.metadataProfileVersionGreaterThanOrEqual = metadataProfileVersionGreaterThanOrEqual
+
+        # @var int
+        self.metadataProfileVersionLessThanOrEqual = metadataProfileVersionLessThanOrEqual
+
+        # @var KalturaMetadataObjectType
+        self.metadataObjectTypeEqual = metadataObjectTypeEqual
+
+        # @var string
+        self.objectIdEqual = objectIdEqual
+
+        # @var string
+        self.objectIdIn = objectIdIn
+
+        # @var int
+        self.versionEqual = versionEqual
+
+        # @var int
+        self.versionGreaterThanOrEqual = versionGreaterThanOrEqual
+
+        # @var int
+        self.versionLessThanOrEqual = versionLessThanOrEqual
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaMetadataStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+
+    PROPERTY_LOADERS = {
+        'partnerIdEqual': getXmlNodeInt, 
+        'metadataProfileIdEqual': getXmlNodeInt, 
+        'metadataProfileVersionEqual': getXmlNodeInt, 
+        'metadataProfileVersionGreaterThanOrEqual': getXmlNodeInt, 
+        'metadataProfileVersionLessThanOrEqual': getXmlNodeInt, 
+        'metadataObjectTypeEqual': (KalturaEnumsFactory.createString, "KalturaMetadataObjectType"), 
+        'objectIdEqual': getXmlNodeText, 
+        'objectIdIn': getXmlNodeText, 
+        'versionEqual': getXmlNodeInt, 
+        'versionGreaterThanOrEqual': getXmlNodeInt, 
+        'versionLessThanOrEqual': getXmlNodeInt, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaMetadataStatus"), 
+        'statusIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaMetadataBaseFilter")
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addIntIfDefined("metadataProfileIdEqual", self.metadataProfileIdEqual)
+        kparams.addIntIfDefined("metadataProfileVersionEqual", self.metadataProfileVersionEqual)
+        kparams.addIntIfDefined("metadataProfileVersionGreaterThanOrEqual", self.metadataProfileVersionGreaterThanOrEqual)
+        kparams.addIntIfDefined("metadataProfileVersionLessThanOrEqual", self.metadataProfileVersionLessThanOrEqual)
+        kparams.addStringEnumIfDefined("metadataObjectTypeEqual", self.metadataObjectTypeEqual)
+        kparams.addStringIfDefined("objectIdEqual", self.objectIdEqual)
+        kparams.addStringIfDefined("objectIdIn", self.objectIdIn)
+        kparams.addIntIfDefined("versionEqual", self.versionEqual)
+        kparams.addIntIfDefined("versionGreaterThanOrEqual", self.versionGreaterThanOrEqual)
+        kparams.addIntIfDefined("versionLessThanOrEqual", self.versionLessThanOrEqual)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        return kparams
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getMetadataProfileIdEqual(self):
+        return self.metadataProfileIdEqual
+
+    def setMetadataProfileIdEqual(self, newMetadataProfileIdEqual):
+        self.metadataProfileIdEqual = newMetadataProfileIdEqual
+
+    def getMetadataProfileVersionEqual(self):
+        return self.metadataProfileVersionEqual
+
+    def setMetadataProfileVersionEqual(self, newMetadataProfileVersionEqual):
+        self.metadataProfileVersionEqual = newMetadataProfileVersionEqual
+
+    def getMetadataProfileVersionGreaterThanOrEqual(self):
+        return self.metadataProfileVersionGreaterThanOrEqual
+
+    def setMetadataProfileVersionGreaterThanOrEqual(self, newMetadataProfileVersionGreaterThanOrEqual):
+        self.metadataProfileVersionGreaterThanOrEqual = newMetadataProfileVersionGreaterThanOrEqual
+
+    def getMetadataProfileVersionLessThanOrEqual(self):
+        return self.metadataProfileVersionLessThanOrEqual
+
+    def setMetadataProfileVersionLessThanOrEqual(self, newMetadataProfileVersionLessThanOrEqual):
+        self.metadataProfileVersionLessThanOrEqual = newMetadataProfileVersionLessThanOrEqual
+
+    def getMetadataObjectTypeEqual(self):
+        return self.metadataObjectTypeEqual
+
+    def setMetadataObjectTypeEqual(self, newMetadataObjectTypeEqual):
+        self.metadataObjectTypeEqual = newMetadataObjectTypeEqual
+
+    def getObjectIdEqual(self):
+        return self.objectIdEqual
+
+    def setObjectIdEqual(self, newObjectIdEqual):
+        self.objectIdEqual = newObjectIdEqual
+
+    def getObjectIdIn(self):
+        return self.objectIdIn
+
+    def setObjectIdIn(self, newObjectIdIn):
+        self.objectIdIn = newObjectIdIn
+
+    def getVersionEqual(self):
+        return self.versionEqual
+
+    def setVersionEqual(self, newVersionEqual):
+        self.versionEqual = newVersionEqual
+
+    def getVersionGreaterThanOrEqual(self):
+        return self.versionGreaterThanOrEqual
+
+    def setVersionGreaterThanOrEqual(self, newVersionGreaterThanOrEqual):
+        self.versionGreaterThanOrEqual = newVersionGreaterThanOrEqual
+
+    def getVersionLessThanOrEqual(self):
+        return self.versionLessThanOrEqual
+
+    def setVersionLessThanOrEqual(self, newVersionLessThanOrEqual):
+        self.versionLessThanOrEqual = newVersionLessThanOrEqual
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
     def __init__(self,
             type=NotImplemented,
@@ -1408,64 +1387,6 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
 
     def setVersionB(self, newVersionB):
         self.versionB = newVersionB
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMetadataFilter(KalturaMetadataBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataProfileIdEqual=NotImplemented,
-            metadataProfileVersionEqual=NotImplemented,
-            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
-            metadataProfileVersionLessThanOrEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionGreaterThanOrEqual=NotImplemented,
-            versionLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaMetadataBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            partnerIdEqual,
-            metadataProfileIdEqual,
-            metadataProfileVersionEqual,
-            metadataProfileVersionGreaterThanOrEqual,
-            metadataProfileVersionLessThanOrEqual,
-            metadataObjectTypeEqual,
-            objectIdEqual,
-            objectIdIn,
-            versionEqual,
-            versionGreaterThanOrEqual,
-            versionLessThanOrEqual,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            statusEqual,
-            statusIn)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaMetadataBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaMetadataBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaMetadataFilter")
-        return kparams
 
 
 # @package Kaltura
@@ -1574,6 +1495,64 @@ class KalturaMetadataSearchItem(KalturaSearchOperator):
 
     def setOrderBy(self, newOrderBy):
         self.orderBy = newOrderBy
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMetadataFilter(KalturaMetadataBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            metadataProfileIdEqual=NotImplemented,
+            metadataProfileVersionEqual=NotImplemented,
+            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
+            metadataProfileVersionLessThanOrEqual=NotImplemented,
+            metadataObjectTypeEqual=NotImplemented,
+            objectIdEqual=NotImplemented,
+            objectIdIn=NotImplemented,
+            versionEqual=NotImplemented,
+            versionGreaterThanOrEqual=NotImplemented,
+            versionLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaMetadataBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            metadataProfileIdEqual,
+            metadataProfileVersionEqual,
+            metadataProfileVersionGreaterThanOrEqual,
+            metadataProfileVersionLessThanOrEqual,
+            metadataObjectTypeEqual,
+            objectIdEqual,
+            objectIdIn,
+            versionEqual,
+            versionGreaterThanOrEqual,
+            versionLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaMetadataBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMetadataBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaMetadataFilter")
+        return kparams
 
 
 ########## services ##########
@@ -1929,21 +1908,21 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaMetadata': KalturaMetadata,
-            'KalturaMetadataListResponse': KalturaMetadataListResponse,
             'KalturaMetadataProfile': KalturaMetadataProfile,
             'KalturaMetadataProfileField': KalturaMetadataProfileField,
+            'KalturaImportMetadataJobData': KalturaImportMetadataJobData,
+            'KalturaMetadataListResponse': KalturaMetadataListResponse,
+            'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,
             'KalturaMetadataProfileFieldListResponse': KalturaMetadataProfileFieldListResponse,
             'KalturaMetadataProfileListResponse': KalturaMetadataProfileListResponse,
-            'KalturaImportMetadataJobData': KalturaImportMetadataJobData,
-            'KalturaMetadataBaseFilter': KalturaMetadataBaseFilter,
-            'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,
             'KalturaTransformMetadataJobData': KalturaTransformMetadataJobData,
             'KalturaCompareMetadataCondition': KalturaCompareMetadataCondition,
             'KalturaMatchMetadataCondition': KalturaMatchMetadataCondition,
+            'KalturaMetadataBaseFilter': KalturaMetadataBaseFilter,
             'KalturaMetadataFieldChangedCondition': KalturaMetadataFieldChangedCondition,
-            'KalturaMetadataFilter': KalturaMetadataFilter,
             'KalturaMetadataProfileFilter': KalturaMetadataProfileFilter,
             'KalturaMetadataSearchItem': KalturaMetadataSearchItem,
+            'KalturaMetadataFilter': KalturaMetadataFilter,
         }
 
     # @return string

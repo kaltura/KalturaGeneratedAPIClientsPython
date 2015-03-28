@@ -340,12 +340,13 @@ class KalturaVarPartnerUsageItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPartnerUsageListResponse(KalturaObjectBase):
+class KalturaPartnerUsageListResponse(KalturaListResponse):
     def __init__(self,
+            totalCount=NotImplemented,
             total=NotImplemented,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
         # @var KalturaVarPartnerUsageItem
         self.total = total
@@ -353,26 +354,21 @@ class KalturaPartnerUsageListResponse(KalturaObjectBase):
         # @var array of KalturaVarPartnerUsageItem
         self.objects = objects
 
-        # @var int
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
         'total': (KalturaObjectFactory.create, KalturaVarPartnerUsageItem), 
         'objects': (KalturaObjectFactory.createArray, KalturaVarPartnerUsageItem), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaListResponse.fromXml(self, node)
         self.fromXmlImpl(node, KalturaPartnerUsageListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaPartnerUsageListResponse")
         kparams.addObjectIfDefined("total", self.total)
         kparams.addArrayIfDefined("objects", self.objects)
-        kparams.addIntIfDefined("totalCount", self.totalCount)
         return kparams
 
     def getTotal(self):
@@ -386,12 +382,6 @@ class KalturaPartnerUsageListResponse(KalturaObjectBase):
 
     def setObjects(self, newObjects):
         self.objects = newObjects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-    def setTotalCount(self, newTotalCount):
-        self.totalCount = newTotalCount
 
 
 # @package Kaltura

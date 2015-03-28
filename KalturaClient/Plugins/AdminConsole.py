@@ -289,44 +289,6 @@ class KalturaTrackEntry(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTrackEntryListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaTrackEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaTrackEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTrackEntryListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaTrackEntryListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaUiConfAdmin(KalturaUiConf):
     def __init__(self,
             id=NotImplemented,
@@ -407,40 +369,64 @@ class KalturaUiConfAdmin(KalturaUiConf):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUiConfAdminListResponse(KalturaObjectBase):
+class KalturaTrackEntryListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var array of KalturaUiConfAdmin
+        # @var array of KalturaTrackEntry
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUiConfAdmin), 
-        'totalCount': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaTrackEntry), 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUiConfAdminListResponse.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTrackEntryListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUiConfAdminListResponse")
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaTrackEntryListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
 
-    def getTotalCount(self):
-        return self.totalCount
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUiConfAdminListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaUiConfAdmin
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaUiConfAdmin), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUiConfAdminListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUiConfAdminListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -792,8 +778,8 @@ class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaTrackEntry': KalturaTrackEntry,
-            'KalturaTrackEntryListResponse': KalturaTrackEntryListResponse,
             'KalturaUiConfAdmin': KalturaUiConfAdmin,
+            'KalturaTrackEntryListResponse': KalturaTrackEntryListResponse,
             'KalturaUiConfAdminListResponse': KalturaUiConfAdminListResponse,
             'KalturaUiConfAdminBaseFilter': KalturaUiConfAdminBaseFilter,
             'KalturaUiConfAdminFilter': KalturaUiConfAdminFilter,

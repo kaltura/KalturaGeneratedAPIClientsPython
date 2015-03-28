@@ -29,7 +29,7 @@
 # @subpackage Client
 from ..Base import *
 
-API_VERSION = '3.1.6'
+API_VERSION = '3.2.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -811,6 +811,31 @@ class KalturaReportType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaResponseProfileStatus(object):
+    DISABLED = 1
+    ENABLED = 2
+    DELETED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileType(object):
+    INCLUDE_FIELDS = 1
+    EXCLUDE_FIELDS = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaResponseType(object):
     RESPONSE_TYPE_JSON = 1
     RESPONSE_TYPE_XML = 2
@@ -819,6 +844,23 @@ class KalturaResponseType(object):
     RESPONSE_TYPE_HTML = 7
     RESPONSE_TYPE_MRSS = 8
     RESPONSE_TYPE_JSONP = 9
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerStatusType(object):
+    RUNNING_BATCHES_COUNT = 1
+    RUNNING_BATCHES_CPU = 2
+    RUNNING_BATCHES_MEMORY = 3
+    RUNNING_BATCHES_NETWORK = 4
+    RUNNING_BATCHES_DISC_IO = 5
+    RUNNING_BATCHES_DISC_SPACE = 6
+    RUNNING_BATCHES_IS_RUNNING = 7
 
     def __init__(self, value):
         self.value = value
@@ -3322,20 +3364,6 @@ class KalturaMediaParserType(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaServerOrderBy(object):
-    CREATED_AT_ASC = "+createdAt"
-    UPDATED_AT_ASC = "+updatedAt"
-    CREATED_AT_DESC = "-createdAt"
-    UPDATED_AT_DESC = "-updatedAt"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMixEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3579,6 +3607,20 @@ class KalturaReportInterval(object):
 class KalturaReportOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     CREATED_AT_DESC = "-createdAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
         self.value = value
@@ -3971,6 +4013,35 @@ class KalturaYahooSyndicationFeedOrderBy(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaListResponse(KalturaObjectBase):
+    def __init__(self,
+            totalCount=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        # @readonly
+        self.totalCount = totalCount
+
+
+    PROPERTY_LOADERS = {
+        'totalCount': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaListResponse")
+        return kparams
+
+    def getTotalCount(self):
+        return self.totalCount
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBaseRestriction(KalturaObjectBase):
     def __init__(self):
         KalturaObjectBase.__init__(self)
@@ -4166,44 +4237,6 @@ class KalturaAccessControlContextTypeHolder(KalturaContextTypeHolder):
         kparams = KalturaContextTypeHolder.toParams(self)
         kparams.put("objectType", "KalturaAccessControlContextTypeHolder")
         return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAccessControlListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaAccessControl
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaAccessControl), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -4497,44 +4530,6 @@ class KalturaAccessControlProfile(KalturaObjectBase):
 
     def setRules(self, newRules):
         self.rules = newRules
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAccessControlProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaAccessControlProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaAccessControlProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -5694,40 +5689,22 @@ class KalturaBaseEntry(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBaseEntryListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
+class KalturaBaseResponseProfile(KalturaObjectBase):
+    def __init__(self):
         KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaBaseEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaBaseEntry), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
         KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBaseEntryListResponse.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaBaseResponseProfile.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBaseEntryListResponse")
+        kparams.put("objectType", "KalturaBaseResponseProfile")
         return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -5991,40 +5968,604 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBaseSyndicationFeedListResponse(KalturaObjectBase):
+class KalturaBatchHistoryData(KalturaObjectBase):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
+            schedulerId=NotImplemented,
+            workerId=NotImplemented,
+            batchIndex=NotImplemented,
+            timeStamp=NotImplemented,
+            message=NotImplemented,
+            errType=NotImplemented,
+            errNumber=NotImplemented,
+            hostName=NotImplemented,
+            sessionId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaBaseSyndicationFeed
-        # @readonly
-        self.objects = objects
+        # @var int
+        self.schedulerId = schedulerId
 
         # @var int
-        # @readonly
-        self.totalCount = totalCount
+        self.workerId = workerId
+
+        # @var int
+        self.batchIndex = batchIndex
+
+        # @var int
+        self.timeStamp = timeStamp
+
+        # @var string
+        self.message = message
+
+        # @var int
+        self.errType = errType
+
+        # @var int
+        self.errNumber = errNumber
+
+        # @var string
+        self.hostName = hostName
+
+        # @var string
+        self.sessionId = sessionId
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaBaseSyndicationFeed), 
-        'totalCount': getXmlNodeInt, 
+        'schedulerId': getXmlNodeInt, 
+        'workerId': getXmlNodeInt, 
+        'batchIndex': getXmlNodeInt, 
+        'timeStamp': getXmlNodeInt, 
+        'message': getXmlNodeText, 
+        'errType': getXmlNodeInt, 
+        'errNumber': getXmlNodeInt, 
+        'hostName': getXmlNodeText, 
+        'sessionId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
         KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBaseSyndicationFeedListResponse.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaBatchHistoryData.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBaseSyndicationFeedListResponse")
+        kparams.put("objectType", "KalturaBatchHistoryData")
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addIntIfDefined("batchIndex", self.batchIndex)
+        kparams.addIntIfDefined("timeStamp", self.timeStamp)
+        kparams.addStringIfDefined("message", self.message)
+        kparams.addIntIfDefined("errType", self.errType)
+        kparams.addIntIfDefined("errNumber", self.errNumber)
+        kparams.addStringIfDefined("hostName", self.hostName)
+        kparams.addStringIfDefined("sessionId", self.sessionId)
         return kparams
 
-    def getObjects(self):
-        return self.objects
+    def getSchedulerId(self):
+        return self.schedulerId
 
-    def getTotalCount(self):
-        return self.totalCount
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getBatchIndex(self):
+        return self.batchIndex
+
+    def setBatchIndex(self, newBatchIndex):
+        self.batchIndex = newBatchIndex
+
+    def getTimeStamp(self):
+        return self.timeStamp
+
+    def setTimeStamp(self, newTimeStamp):
+        self.timeStamp = newTimeStamp
+
+    def getMessage(self):
+        return self.message
+
+    def setMessage(self, newMessage):
+        self.message = newMessage
+
+    def getErrType(self):
+        return self.errType
+
+    def setErrType(self, newErrType):
+        self.errType = newErrType
+
+    def getErrNumber(self):
+        return self.errNumber
+
+    def setErrNumber(self, newErrNumber):
+        self.errNumber = newErrNumber
+
+    def getHostName(self):
+        return self.hostName
+
+    def setHostName(self, newHostName):
+        self.hostName = newHostName
+
+    def getSessionId(self):
+        return self.sessionId
+
+    def setSessionId(self, newSessionId):
+        self.sessionId = newSessionId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaJobData(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaJobData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBatchJob(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            lockExpiration=NotImplemented,
+            executionAttempts=NotImplemented,
+            lockVersion=NotImplemented,
+            entryId=NotImplemented,
+            entryName=NotImplemented,
+            jobType=NotImplemented,
+            jobSubType=NotImplemented,
+            data=NotImplemented,
+            status=NotImplemented,
+            abort=NotImplemented,
+            checkAgainTimeout=NotImplemented,
+            message=NotImplemented,
+            description=NotImplemented,
+            priority=NotImplemented,
+            history=NotImplemented,
+            bulkJobId=NotImplemented,
+            batchVersion=NotImplemented,
+            parentJobId=NotImplemented,
+            rootJobId=NotImplemented,
+            queueTime=NotImplemented,
+            finishTime=NotImplemented,
+            errType=NotImplemented,
+            errNumber=NotImplemented,
+            estimatedEffort=NotImplemented,
+            urgency=NotImplemented,
+            schedulerId=NotImplemented,
+            workerId=NotImplemented,
+            batchIndex=NotImplemented,
+            lastSchedulerId=NotImplemented,
+            lastWorkerId=NotImplemented,
+            dc=NotImplemented,
+            jobObjectId=NotImplemented,
+            jobObjectType=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        # @readonly
+        self.id = id
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # @var int
+        # @readonly
+        self.deletedAt = deletedAt
+
+        # @var int
+        # @readonly
+        self.lockExpiration = lockExpiration
+
+        # @var int
+        # @readonly
+        self.executionAttempts = executionAttempts
+
+        # @var int
+        # @readonly
+        self.lockVersion = lockVersion
+
+        # @var string
+        self.entryId = entryId
+
+        # @var string
+        self.entryName = entryName
+
+        # @var KalturaBatchJobType
+        # @readonly
+        self.jobType = jobType
+
+        # @var int
+        self.jobSubType = jobSubType
+
+        # @var KalturaJobData
+        self.data = data
+
+        # @var KalturaBatchJobStatus
+        self.status = status
+
+        # @var int
+        self.abort = abort
+
+        # @var int
+        self.checkAgainTimeout = checkAgainTimeout
+
+        # @var string
+        self.message = message
+
+        # @var string
+        self.description = description
+
+        # @var int
+        self.priority = priority
+
+        # @var array of KalturaBatchHistoryData
+        self.history = history
+
+        # The id of the bulk upload job that initiated this job
+        # @var int
+        self.bulkJobId = bulkJobId
+
+        # @var int
+        self.batchVersion = batchVersion
+
+        # When one job creates another - the parent should set this parentJobId to be its own id.
+        # @var int
+        self.parentJobId = parentJobId
+
+        # The id of the root parent job
+        # @var int
+        self.rootJobId = rootJobId
+
+        # The time that the job was pulled from the queue
+        # @var int
+        self.queueTime = queueTime
+
+        # The time that the job was finished or closed as failed
+        # @var int
+        self.finishTime = finishTime
+
+        # @var KalturaBatchJobErrorTypes
+        self.errType = errType
+
+        # @var int
+        self.errNumber = errNumber
+
+        # @var int
+        self.estimatedEffort = estimatedEffort
+
+        # @var int
+        self.urgency = urgency
+
+        # @var int
+        self.schedulerId = schedulerId
+
+        # @var int
+        self.workerId = workerId
+
+        # @var int
+        self.batchIndex = batchIndex
+
+        # @var int
+        self.lastSchedulerId = lastSchedulerId
+
+        # @var int
+        self.lastWorkerId = lastWorkerId
+
+        # @var int
+        self.dc = dc
+
+        # @var string
+        self.jobObjectId = jobObjectId
+
+        # @var int
+        self.jobObjectType = jobObjectType
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'partnerId': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'deletedAt': getXmlNodeInt, 
+        'lockExpiration': getXmlNodeInt, 
+        'executionAttempts': getXmlNodeInt, 
+        'lockVersion': getXmlNodeInt, 
+        'entryId': getXmlNodeText, 
+        'entryName': getXmlNodeText, 
+        'jobType': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'jobSubType': getXmlNodeInt, 
+        'data': (KalturaObjectFactory.create, KalturaJobData), 
+        'status': (KalturaEnumsFactory.createInt, "KalturaBatchJobStatus"), 
+        'abort': getXmlNodeInt, 
+        'checkAgainTimeout': getXmlNodeInt, 
+        'message': getXmlNodeText, 
+        'description': getXmlNodeText, 
+        'priority': getXmlNodeInt, 
+        'history': (KalturaObjectFactory.createArray, KalturaBatchHistoryData), 
+        'bulkJobId': getXmlNodeInt, 
+        'batchVersion': getXmlNodeInt, 
+        'parentJobId': getXmlNodeInt, 
+        'rootJobId': getXmlNodeInt, 
+        'queueTime': getXmlNodeInt, 
+        'finishTime': getXmlNodeInt, 
+        'errType': (KalturaEnumsFactory.createInt, "KalturaBatchJobErrorTypes"), 
+        'errNumber': getXmlNodeInt, 
+        'estimatedEffort': getXmlNodeInt, 
+        'urgency': getXmlNodeInt, 
+        'schedulerId': getXmlNodeInt, 
+        'workerId': getXmlNodeInt, 
+        'batchIndex': getXmlNodeInt, 
+        'lastSchedulerId': getXmlNodeInt, 
+        'lastWorkerId': getXmlNodeInt, 
+        'dc': getXmlNodeInt, 
+        'jobObjectId': getXmlNodeText, 
+        'jobObjectType': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchJob.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaBatchJob")
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addStringIfDefined("entryName", self.entryName)
+        kparams.addIntIfDefined("jobSubType", self.jobSubType)
+        kparams.addObjectIfDefined("data", self.data)
+        kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addIntIfDefined("abort", self.abort)
+        kparams.addIntIfDefined("checkAgainTimeout", self.checkAgainTimeout)
+        kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addIntIfDefined("priority", self.priority)
+        kparams.addArrayIfDefined("history", self.history)
+        kparams.addIntIfDefined("bulkJobId", self.bulkJobId)
+        kparams.addIntIfDefined("batchVersion", self.batchVersion)
+        kparams.addIntIfDefined("parentJobId", self.parentJobId)
+        kparams.addIntIfDefined("rootJobId", self.rootJobId)
+        kparams.addIntIfDefined("queueTime", self.queueTime)
+        kparams.addIntIfDefined("finishTime", self.finishTime)
+        kparams.addIntEnumIfDefined("errType", self.errType)
+        kparams.addIntIfDefined("errNumber", self.errNumber)
+        kparams.addIntIfDefined("estimatedEffort", self.estimatedEffort)
+        kparams.addIntIfDefined("urgency", self.urgency)
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addIntIfDefined("batchIndex", self.batchIndex)
+        kparams.addIntIfDefined("lastSchedulerId", self.lastSchedulerId)
+        kparams.addIntIfDefined("lastWorkerId", self.lastWorkerId)
+        kparams.addIntIfDefined("dc", self.dc)
+        kparams.addStringIfDefined("jobObjectId", self.jobObjectId)
+        kparams.addIntIfDefined("jobObjectType", self.jobObjectType)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getDeletedAt(self):
+        return self.deletedAt
+
+    def getLockExpiration(self):
+        return self.lockExpiration
+
+    def getExecutionAttempts(self):
+        return self.executionAttempts
+
+    def getLockVersion(self):
+        return self.lockVersion
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getEntryName(self):
+        return self.entryName
+
+    def setEntryName(self, newEntryName):
+        self.entryName = newEntryName
+
+    def getJobType(self):
+        return self.jobType
+
+    def getJobSubType(self):
+        return self.jobSubType
+
+    def setJobSubType(self, newJobSubType):
+        self.jobSubType = newJobSubType
+
+    def getData(self):
+        return self.data
+
+    def setData(self, newData):
+        self.data = newData
+
+    def getStatus(self):
+        return self.status
+
+    def setStatus(self, newStatus):
+        self.status = newStatus
+
+    def getAbort(self):
+        return self.abort
+
+    def setAbort(self, newAbort):
+        self.abort = newAbort
+
+    def getCheckAgainTimeout(self):
+        return self.checkAgainTimeout
+
+    def setCheckAgainTimeout(self, newCheckAgainTimeout):
+        self.checkAgainTimeout = newCheckAgainTimeout
+
+    def getMessage(self):
+        return self.message
+
+    def setMessage(self, newMessage):
+        self.message = newMessage
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getPriority(self):
+        return self.priority
+
+    def setPriority(self, newPriority):
+        self.priority = newPriority
+
+    def getHistory(self):
+        return self.history
+
+    def setHistory(self, newHistory):
+        self.history = newHistory
+
+    def getBulkJobId(self):
+        return self.bulkJobId
+
+    def setBulkJobId(self, newBulkJobId):
+        self.bulkJobId = newBulkJobId
+
+    def getBatchVersion(self):
+        return self.batchVersion
+
+    def setBatchVersion(self, newBatchVersion):
+        self.batchVersion = newBatchVersion
+
+    def getParentJobId(self):
+        return self.parentJobId
+
+    def setParentJobId(self, newParentJobId):
+        self.parentJobId = newParentJobId
+
+    def getRootJobId(self):
+        return self.rootJobId
+
+    def setRootJobId(self, newRootJobId):
+        self.rootJobId = newRootJobId
+
+    def getQueueTime(self):
+        return self.queueTime
+
+    def setQueueTime(self, newQueueTime):
+        self.queueTime = newQueueTime
+
+    def getFinishTime(self):
+        return self.finishTime
+
+    def setFinishTime(self, newFinishTime):
+        self.finishTime = newFinishTime
+
+    def getErrType(self):
+        return self.errType
+
+    def setErrType(self, newErrType):
+        self.errType = newErrType
+
+    def getErrNumber(self):
+        return self.errNumber
+
+    def setErrNumber(self, newErrNumber):
+        self.errNumber = newErrNumber
+
+    def getEstimatedEffort(self):
+        return self.estimatedEffort
+
+    def setEstimatedEffort(self, newEstimatedEffort):
+        self.estimatedEffort = newEstimatedEffort
+
+    def getUrgency(self):
+        return self.urgency
+
+    def setUrgency(self, newUrgency):
+        self.urgency = newUrgency
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getBatchIndex(self):
+        return self.batchIndex
+
+    def setBatchIndex(self, newBatchIndex):
+        self.batchIndex = newBatchIndex
+
+    def getLastSchedulerId(self):
+        return self.lastSchedulerId
+
+    def setLastSchedulerId(self, newLastSchedulerId):
+        self.lastSchedulerId = newLastSchedulerId
+
+    def getLastWorkerId(self):
+        return self.lastWorkerId
+
+    def setLastWorkerId(self, newLastWorkerId):
+        self.lastWorkerId = newLastWorkerId
+
+    def getDc(self):
+        return self.dc
+
+    def setDc(self, newDc):
+        self.dc = newDc
+
+    def getJobObjectId(self):
+        return self.jobObjectId
+
+    def setJobObjectId(self, newJobObjectId):
+        self.jobObjectId = newJobObjectId
+
+    def getJobObjectType(self):
+        return self.jobObjectType
+
+    def setJobObjectType(self, newJobObjectType):
+        self.jobObjectType = newJobObjectType
 
 
 # @package Kaltura
@@ -6518,44 +7059,6 @@ class KalturaBulkUpload(KalturaObjectBase):
 
     def setBulkUploadObjectType(self, newBulkUploadObjectType):
         self.bulkUploadObjectType = newBulkUploadObjectType
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBulkUploadListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaBulkUpload
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaBulkUpload), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBulkUploadListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBulkUploadListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -7191,82 +7694,6 @@ class KalturaCategoryEntry(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryEntryListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaCategoryEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCategoryEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryEntryListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaCategoryEntryListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaCategoryListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaCategory
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCategory), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaCategoryListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCategoryUser(KalturaObjectBase):
     def __init__(self,
             categoryId=NotImplemented,
@@ -7403,40 +7830,49 @@ class KalturaCategoryUser(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryUserListResponse(KalturaObjectBase):
+class KalturaClientConfiguration(KalturaObjectBase):
+    """Define client optional configurations
+     /"""
+
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
+            clientTag=NotImplemented,
+            apiVersion=NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaCategoryUser
-        # @readonly
-        self.objects = objects
+        # @var string
+        self.clientTag = clientTag
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
+        # @var string
+        self.apiVersion = apiVersion
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCategoryUser), 
-        'totalCount': getXmlNodeInt, 
+        'clientTag': getXmlNodeText, 
+        'apiVersion': getXmlNodeText, 
     }
 
     def fromXml(self, node):
         KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryUserListResponse.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaClientConfiguration.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaCategoryUserListResponse")
+        kparams.put("objectType", "KalturaClientConfiguration")
+        kparams.addStringIfDefined("clientTag", self.clientTag)
+        kparams.addStringIfDefined("apiVersion", self.apiVersion)
         return kparams
 
-    def getObjects(self):
-        return self.objects
+    def getClientTag(self):
+        return self.clientTag
 
-    def getTotalCount(self):
-        return self.totalCount
+    def setClientTag(self, newClientTag):
+        self.clientTag = newClientTag
+
+    def getApiVersion(self):
+        return self.apiVersion
+
+    def setApiVersion(self, newApiVersion):
+        self.apiVersion = newApiVersion
 
 
 # @package Kaltura
@@ -7551,6 +7987,238 @@ class KalturaContextDataResult(KalturaObjectBase):
 
     def setActions(self, newActions):
         self.actions = newActions
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaControlPanelCommand(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            createdAt=NotImplemented,
+            createdBy=NotImplemented,
+            updatedAt=NotImplemented,
+            updatedBy=NotImplemented,
+            createdById=NotImplemented,
+            schedulerId=NotImplemented,
+            workerId=NotImplemented,
+            workerConfiguredId=NotImplemented,
+            workerName=NotImplemented,
+            batchIndex=NotImplemented,
+            type=NotImplemented,
+            targetType=NotImplemented,
+            status=NotImplemented,
+            cause=NotImplemented,
+            description=NotImplemented,
+            errorDescription=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the Category
+        # @var int
+        # @readonly
+        self.id = id
+
+        # Creation date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # Creator name
+        # @var string
+        self.createdBy = createdBy
+
+        # Update date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # Updater name
+        # @var string
+        self.updatedBy = updatedBy
+
+        # Creator id
+        # @var int
+        self.createdById = createdById
+
+        # The id of the scheduler that the command refers to
+        # @var int
+        self.schedulerId = schedulerId
+
+        # The id of the scheduler worker that the command refers to
+        # @var int
+        self.workerId = workerId
+
+        # The id of the scheduler worker as configured in the ini file
+        # @var int
+        self.workerConfiguredId = workerConfiguredId
+
+        # The name of the scheduler worker that the command refers to
+        # @var int
+        self.workerName = workerName
+
+        # The index of the batch process that the command refers to
+        # @var int
+        self.batchIndex = batchIndex
+
+        # The command type - stop / start / config
+        # @var KalturaControlPanelCommandType
+        self.type = type
+
+        # The command target type - data center / scheduler / job / job type
+        # @var KalturaControlPanelCommandTargetType
+        self.targetType = targetType
+
+        # The command status
+        # @var KalturaControlPanelCommandStatus
+        self.status = status
+
+        # The reason for the command
+        # @var string
+        self.cause = cause
+
+        # Command description
+        # @var string
+        self.description = description
+
+        # Error description
+        # @var string
+        self.errorDescription = errorDescription
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'createdBy': getXmlNodeText, 
+        'updatedAt': getXmlNodeInt, 
+        'updatedBy': getXmlNodeText, 
+        'createdById': getXmlNodeInt, 
+        'schedulerId': getXmlNodeInt, 
+        'workerId': getXmlNodeInt, 
+        'workerConfiguredId': getXmlNodeInt, 
+        'workerName': getXmlNodeInt, 
+        'batchIndex': getXmlNodeInt, 
+        'type': (KalturaEnumsFactory.createInt, "KalturaControlPanelCommandType"), 
+        'targetType': (KalturaEnumsFactory.createInt, "KalturaControlPanelCommandTargetType"), 
+        'status': (KalturaEnumsFactory.createInt, "KalturaControlPanelCommandStatus"), 
+        'cause': getXmlNodeText, 
+        'description': getXmlNodeText, 
+        'errorDescription': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaControlPanelCommand.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaControlPanelCommand")
+        kparams.addStringIfDefined("createdBy", self.createdBy)
+        kparams.addStringIfDefined("updatedBy", self.updatedBy)
+        kparams.addIntIfDefined("createdById", self.createdById)
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addIntIfDefined("workerConfiguredId", self.workerConfiguredId)
+        kparams.addIntIfDefined("workerName", self.workerName)
+        kparams.addIntIfDefined("batchIndex", self.batchIndex)
+        kparams.addIntEnumIfDefined("type", self.type)
+        kparams.addIntEnumIfDefined("targetType", self.targetType)
+        kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addStringIfDefined("cause", self.cause)
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addStringIfDefined("errorDescription", self.errorDescription)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getCreatedBy(self):
+        return self.createdBy
+
+    def setCreatedBy(self, newCreatedBy):
+        self.createdBy = newCreatedBy
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getUpdatedBy(self):
+        return self.updatedBy
+
+    def setUpdatedBy(self, newUpdatedBy):
+        self.updatedBy = newUpdatedBy
+
+    def getCreatedById(self):
+        return self.createdById
+
+    def setCreatedById(self, newCreatedById):
+        self.createdById = newCreatedById
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getWorkerConfiguredId(self):
+        return self.workerConfiguredId
+
+    def setWorkerConfiguredId(self, newWorkerConfiguredId):
+        self.workerConfiguredId = newWorkerConfiguredId
+
+    def getWorkerName(self):
+        return self.workerName
+
+    def setWorkerName(self, newWorkerName):
+        self.workerName = newWorkerName
+
+    def getBatchIndex(self):
+        return self.batchIndex
+
+    def setBatchIndex(self, newBatchIndex):
+        self.batchIndex = newBatchIndex
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getTargetType(self):
+        return self.targetType
+
+    def setTargetType(self, newTargetType):
+        self.targetType = newTargetType
+
+    def getStatus(self):
+        return self.status
+
+    def setStatus(self, newStatus):
+        self.status = newStatus
+
+    def getCause(self):
+        return self.cause
+
+    def setCause(self, newCause):
+        self.cause = newCause
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getErrorDescription(self):
+        return self.errorDescription
+
+    def setErrorDescription(self, newErrorDescription):
+        self.errorDescription = newErrorDescription
 
 
 # @package Kaltura
@@ -8044,82 +8712,6 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaConversionProfileAssetParamsListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaConversionProfileAssetParams
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaConversionProfileAssetParams), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileAssetParamsListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaConversionProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaConversionProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaConversionProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaConvertCollectionFlavorData(KalturaObjectBase):
     def __init__(self,
             flavorAssetId=NotImplemented,
@@ -8405,44 +8997,6 @@ class KalturaDataEntry(KalturaBaseEntry):
 
     def setRetrieveDataContentByGet(self, newRetrieveDataContentByGet):
         self.retrieveDataContentByGet = newRetrieveDataContentByGet
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDataListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDataEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDataEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDataListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDataListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -8753,44 +9307,6 @@ class KalturaDeliveryProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaDeliveryProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDeliveryProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFileSyncDescriptor(KalturaObjectBase):
     def __init__(self,
             fileSyncLocalPath=NotImplemented,
@@ -8870,6 +9386,292 @@ class KalturaDestFileSyncDescriptor(KalturaFileSyncDescriptor):
         kparams = KalturaFileSyncDescriptor.toParams(self)
         kparams.put("objectType", "KalturaDestFileSyncDescriptor")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSearchItem(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaSearchItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFilter(KalturaObjectBase):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.orderBy = orderBy
+
+        # @var KalturaSearchItem
+        self.advancedSearch = advancedSearch
+
+
+    PROPERTY_LOADERS = {
+        'orderBy': getXmlNodeText, 
+        'advancedSearch': (KalturaObjectFactory.create, KalturaSearchItem), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFilter")
+        kparams.addStringIfDefined("orderBy", self.orderBy)
+        kparams.addObjectIfDefined("advancedSearch", self.advancedSearch)
+        return kparams
+
+    def getOrderBy(self):
+        return self.orderBy
+
+    def setOrderBy(self, newOrderBy):
+        self.orderBy = newOrderBy
+
+    def getAdvancedSearch(self):
+        return self.advancedSearch
+
+    def setAdvancedSearch(self, newAdvancedSearch):
+        self.advancedSearch = newAdvancedSearch
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRelatedFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRelatedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaRelatedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFilterPager(KalturaObjectBase):
+    """The KalturaFilterPager object enables paging management to be applied upon service list actions."""
+
+    def __init__(self,
+            pageSize=NotImplemented,
+            pageIndex=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The number of objects to retrieve. (Default is 30, maximum page size is 500).
+        # @var int
+        self.pageSize = pageSize
+
+        # The page number for which {pageSize} of objects should be retrieved (Default is 1).
+        # @var int
+        self.pageIndex = pageIndex
+
+
+    PROPERTY_LOADERS = {
+        'pageSize': getXmlNodeInt, 
+        'pageIndex': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFilterPager.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFilterPager")
+        kparams.addIntIfDefined("pageSize", self.pageSize)
+        kparams.addIntIfDefined("pageIndex", self.pageIndex)
+        return kparams
+
+    def getPageSize(self):
+        return self.pageSize
+
+    def setPageSize(self, newPageSize):
+        self.pageSize = newPageSize
+
+    def getPageIndex(self):
+        return self.pageIndex
+
+    def setPageIndex(self, newPageIndex):
+        self.pageIndex = newPageIndex
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileMapping(KalturaObjectBase):
+    def __init__(self,
+            parentProperty=NotImplemented,
+            filterProperty=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.parentProperty = parentProperty
+
+        # @var string
+        self.filterProperty = filterProperty
+
+
+    PROPERTY_LOADERS = {
+        'parentProperty': getXmlNodeText, 
+        'filterProperty': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileMapping.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileMapping")
+        kparams.addStringIfDefined("parentProperty", self.parentProperty)
+        kparams.addStringIfDefined("filterProperty", self.filterProperty)
+        return kparams
+
+    def getParentProperty(self):
+        return self.parentProperty
+
+    def setParentProperty(self, newParentProperty):
+        self.parentProperty = newParentProperty
+
+    def getFilterProperty(self):
+        return self.filterProperty
+
+    def setFilterProperty(self, newFilterProperty):
+        self.filterProperty = newFilterProperty
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDetachedResponseProfile(KalturaBaseResponseProfile):
+    def __init__(self,
+            name=NotImplemented,
+            type=NotImplemented,
+            fields=NotImplemented,
+            filter=NotImplemented,
+            pager=NotImplemented,
+            relatedProfiles=NotImplemented,
+            mappings=NotImplemented):
+        KalturaBaseResponseProfile.__init__(self)
+
+        # Friendly name
+        # @var string
+        self.name = name
+
+        # @var KalturaResponseProfileType
+        self.type = type
+
+        # Comma separated fields list to be included or excluded
+        # @var string
+        self.fields = fields
+
+        # @var KalturaRelatedFilter
+        self.filter = filter
+
+        # @var KalturaFilterPager
+        self.pager = pager
+
+        # @var array of KalturaDetachedResponseProfile
+        self.relatedProfiles = relatedProfiles
+
+        # @var array of KalturaResponseProfileMapping
+        self.mappings = mappings
+
+
+    PROPERTY_LOADERS = {
+        'name': getXmlNodeText, 
+        'type': (KalturaEnumsFactory.createInt, "KalturaResponseProfileType"), 
+        'fields': getXmlNodeText, 
+        'filter': (KalturaObjectFactory.create, KalturaRelatedFilter), 
+        'pager': (KalturaObjectFactory.create, KalturaFilterPager), 
+        'relatedProfiles': (KalturaObjectFactory.createArray, KalturaDetachedResponseProfile), 
+        'mappings': (KalturaObjectFactory.createArray, KalturaResponseProfileMapping), 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseResponseProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDetachedResponseProfile.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseResponseProfile.toParams(self)
+        kparams.put("objectType", "KalturaDetachedResponseProfile")
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addIntEnumIfDefined("type", self.type)
+        kparams.addStringIfDefined("fields", self.fields)
+        kparams.addObjectIfDefined("filter", self.filter)
+        kparams.addObjectIfDefined("pager", self.pager)
+        kparams.addArrayIfDefined("relatedProfiles", self.relatedProfiles)
+        kparams.addArrayIfDefined("mappings", self.mappings)
+        return kparams
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getFields(self):
+        return self.fields
+
+    def setFields(self, newFields):
+        self.fields = newFields
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
+
+    def getPager(self):
+        return self.pager
+
+    def setPager(self, newPager):
+        self.pager = newPager
+
+    def getRelatedProfiles(self):
+        return self.relatedProfiles
+
+    def setRelatedProfiles(self, newRelatedProfiles):
+        self.relatedProfiles = newRelatedProfiles
+
+    def getMappings(self):
+        return self.mappings
+
+    def setMappings(self, newMappings):
+        self.mappings = newMappings
 
 
 # @package Kaltura
@@ -9746,44 +10548,6 @@ class KalturaFeatureStatus(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFeatureStatusListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaFeatureStatus
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFeatureStatus), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFeatureStatusListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFeatureStatusListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFileAsset(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -9916,156 +10680,6 @@ class KalturaFileAsset(KalturaObjectBase):
 
     def getStatus(self):
         return self.status
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFileAssetListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaFileAsset
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFileAsset), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFileAssetListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFileAssetListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSearchItem(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaSearchItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaSearchItem")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFilter(KalturaObjectBase):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.orderBy = orderBy
-
-        # @var KalturaSearchItem
-        self.advancedSearch = advancedSearch
-
-
-    PROPERTY_LOADERS = {
-        'orderBy': getXmlNodeText, 
-        'advancedSearch': (KalturaObjectFactory.create, KalturaSearchItem), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFilter")
-        kparams.addStringIfDefined("orderBy", self.orderBy)
-        kparams.addObjectIfDefined("advancedSearch", self.advancedSearch)
-        return kparams
-
-    def getOrderBy(self):
-        return self.orderBy
-
-    def setOrderBy(self, newOrderBy):
-        self.orderBy = newOrderBy
-
-    def getAdvancedSearch(self):
-        return self.advancedSearch
-
-    def setAdvancedSearch(self, newAdvancedSearch):
-        self.advancedSearch = newAdvancedSearch
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFilterPager(KalturaObjectBase):
-    """The KalturaFilterPager object enables paging management to be applied upon service list actions."""
-
-    def __init__(self,
-            pageSize=NotImplemented,
-            pageIndex=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # The number of objects to retrieve. (Default is 30, maximum page size is 500).
-        # @var int
-        self.pageSize = pageSize
-
-        # The page number for which {pageSize} of objects should be retrieved (Default is 1).
-        # @var int
-        self.pageIndex = pageIndex
-
-
-    PROPERTY_LOADERS = {
-        'pageSize': getXmlNodeInt, 
-        'pageIndex': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFilterPager.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFilterPager")
-        kparams.addIntIfDefined("pageSize", self.pageSize)
-        kparams.addIntIfDefined("pageIndex", self.pageIndex)
-        return kparams
-
-    def getPageSize(self):
-        return self.pageSize
-
-    def setPageSize(self, newPageSize):
-        self.pageSize = newPageSize
-
-    def getPageIndex(self):
-        return self.pageIndex
-
-    def setPageIndex(self, newPageIndex):
-        self.pageIndex = newPageIndex
 
 
 # @package Kaltura
@@ -10218,44 +10832,6 @@ class KalturaFlavorAsset(KalturaAsset):
 
     def getStatus(self):
         return self.status
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFlavorAssetListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaFlavorAsset
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorAssetListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFlavorAssetListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -10798,44 +11374,6 @@ class KalturaFlavorAssetWithParams(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFlavorParamsListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaFlavorParams
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParams), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorParamsListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFlavorParamsListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFlavorParamsOutput(KalturaFlavorParams):
     def __init__(self,
             id=NotImplemented,
@@ -11024,44 +11562,6 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFlavorParamsOutputListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaFlavorParamsOutput
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParamsOutput), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaGroupUser(KalturaObjectBase):
     def __init__(self,
             userId=NotImplemented,
@@ -11146,50 +11646,17 @@ class KalturaGroupUser(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGroupUserListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaGroupUser
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaGroupUser), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGroupUserListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaGroupUserListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaObject(KalturaObjectBase):
-    def __init__(self):
+    def __init__(self,
+            relatedObjects=NotImplemented):
         KalturaObjectBase.__init__(self)
+
+        # @var map
+        self.relatedObjects = relatedObjects
 
 
     PROPERTY_LOADERS = {
+        'relatedObjects': (KalturaObjectFactory.create, map), 
     }
 
     def fromXml(self, node):
@@ -11199,7 +11666,14 @@ class KalturaObject(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaObject")
+        kparams.addObjectIfDefined("relatedObjects", self.relatedObjects)
         return kparams
+
+    def getRelatedObjects(self):
+        return self.relatedObjects
+
+    def setRelatedObjects(self, newRelatedObjects):
+        self.relatedObjects = newRelatedObjects
 
 
 # @package Kaltura
@@ -11236,26 +11710,6 @@ class KalturaIntegerValue(KalturaValue):
 
     def setValue(self, newValue):
         self.value = newValue
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaJobData(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaJobData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaJobData")
-        return kparams
 
 
 # @package Kaltura
@@ -11974,44 +12428,6 @@ class KalturaLiveChannel(KalturaLiveEntry):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveChannelListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaLiveChannel
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaLiveChannel), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveChannelListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaLiveChannelListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaLiveChannelSegment(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -12206,44 +12622,6 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
 
     def setDuration(self, newDuration):
         self.duration = newDuration
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaLiveChannelSegmentListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaLiveChannelSegment
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaLiveChannelSegment), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveChannelSegmentListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaLiveChannelSegmentListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -12720,50 +13098,6 @@ class KalturaLiveStatsEvent(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveStatsListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var KalturaLiveStats
-        self.objects = objects
-
-        # @var int
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.create, KalturaLiveStats), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveStatsListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaLiveStatsListResponse")
-        kparams.addObjectIfDefined("objects", self.objects)
-        kparams.addIntIfDefined("totalCount", self.totalCount)
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def setObjects(self, newObjects):
-        self.objects = newObjects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-    def setTotalCount(self, newTotalCount):
-        self.totalCount = newTotalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaLiveStreamBitrate(KalturaObjectBase):
     def __init__(self,
             bitrate=NotImplemented,
@@ -13177,45 +13511,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveStreamListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaLiveStreamEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaLiveStreamEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveStreamListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaLiveStreamListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBaseEntryBaseFilter(KalturaFilter):
+class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -13294,7 +13590,7 @@ class KalturaBaseEntryBaseFilter(KalturaFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -13630,11 +13926,11 @@ class KalturaBaseEntryBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaBaseEntryBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaBaseEntryBaseFilter")
         kparams.addStringIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
@@ -16074,82 +16370,6 @@ class KalturaMediaInfo(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaInfoListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMediaInfo
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMediaInfo), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaInfoListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMediaEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMediaEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMediaServer(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -16394,44 +16614,6 @@ class KalturaMixEntry(KalturaPlayableEntry):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMixListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaMixEntry
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMixEntry), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMixListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMixListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaModerationFlag(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -16566,82 +16748,6 @@ class KalturaModerationFlag(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaModerationFlagListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaModerationFlag
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaModerationFlag), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaModerationFlagListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaModerationFlagListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaObjectListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaObject
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaObject), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaObjectListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaObjectListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -17375,44 +17481,6 @@ class KalturaPartner(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPartnerListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaPartner
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaPartner), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPartnerListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPartnerListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaPartnerStatistics(KalturaObjectBase):
     def __init__(self,
             packageBandwidthAndStorage=NotImplemented,
@@ -17813,82 +17881,6 @@ class KalturaPermissionItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPermissionItemListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaPermissionItem
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaPermissionItem), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionItemListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPermissionItemListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaPermissionListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaPermission
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaPermission), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPermissionListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaPlaylist(KalturaBaseEntry):
     def __init__(self,
             id=NotImplemented,
@@ -18085,44 +18077,6 @@ class KalturaPlaylist(KalturaBaseEntry):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPlaylistListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaPlaylist
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaPlaylist), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPlaylistListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPlaylistListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaRemotePath(KalturaObjectBase):
     def __init__(self,
             storageProfileId=NotImplemented,
@@ -18157,44 +18111,6 @@ class KalturaRemotePath(KalturaObjectBase):
 
     def getUri(self):
         return self.uri
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaRemotePathListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaRemotePath
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaRemotePath), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaRemotePathListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaRemotePathListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -18561,44 +18477,6 @@ class KalturaReportInputBaseFilter(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaReportListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaReport
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaReport), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaReportListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaReportListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaReportResponse(KalturaObjectBase):
     def __init__(self,
             columns=NotImplemented,
@@ -18730,6 +18608,805 @@ class KalturaReportTotal(KalturaObjectBase):
 
     def setData(self, newData):
         self.data = newData
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRequestConfiguration(KalturaObjectBase):
+    """Define client request optional configurations
+     /"""
+
+    def __init__(self,
+            partnerId=NotImplemented,
+            ks=NotImplemented,
+            responseProfile=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Impersonated partner id
+        # @var int
+        self.partnerId = partnerId
+
+        # Kaltura API session
+        # @var string
+        self.ks = ks
+
+        # Response profile
+        # @var KalturaBaseResponseProfile
+        self.responseProfile = responseProfile
+
+
+    PROPERTY_LOADERS = {
+        'partnerId': getXmlNodeInt, 
+        'ks': getXmlNodeText, 
+        'responseProfile': (KalturaObjectFactory.create, KalturaBaseResponseProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRequestConfiguration.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaRequestConfiguration")
+        kparams.addIntIfDefined("partnerId", self.partnerId)
+        kparams.addStringIfDefined("ks", self.ks)
+        kparams.addObjectIfDefined("responseProfile", self.responseProfile)
+        return kparams
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def setPartnerId(self, newPartnerId):
+        self.partnerId = newPartnerId
+
+    def getKs(self):
+        return self.ks
+
+    def setKs(self, newKs):
+        self.ks = newKs
+
+    def getResponseProfile(self):
+        return self.responseProfile
+
+    def setResponseProfile(self, newResponseProfile):
+        self.responseProfile = newResponseProfile
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfile(KalturaDetachedResponseProfile):
+    def __init__(self,
+            name=NotImplemented,
+            type=NotImplemented,
+            fields=NotImplemented,
+            filter=NotImplemented,
+            pager=NotImplemented,
+            relatedProfiles=NotImplemented,
+            mappings=NotImplemented,
+            id=NotImplemented,
+            systemName=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented):
+        KalturaDetachedResponseProfile.__init__(self,
+            name,
+            type,
+            fields,
+            filter,
+            pager,
+            relatedProfiles,
+            mappings)
+
+        # Auto generated numeric identifier
+        # @var int
+        # @readonly
+        self.id = id
+
+        # Unique system name
+        # @var string
+        self.systemName = systemName
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # Creation time as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # Update time as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # @var KalturaResponseProfileStatus
+        # @readonly
+        self.status = status
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'systemName': getXmlNodeText, 
+        'partnerId': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaResponseProfileStatus"), 
+    }
+
+    def fromXml(self, node):
+        KalturaDetachedResponseProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfile.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDetachedResponseProfile.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfile")
+        kparams.addStringIfDefined("systemName", self.systemName)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getSystemName(self):
+        return self.systemName
+
+    def setSystemName(self, newSystemName):
+        self.systemName = newSystemName
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getStatus(self):
+        return self.status
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerStatus(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            schedulerConfiguredId=NotImplemented,
+            workerConfiguredId=NotImplemented,
+            workerType=NotImplemented,
+            type=NotImplemented,
+            value=NotImplemented,
+            schedulerId=NotImplemented,
+            workerId=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the Category
+        # @var int
+        # @readonly
+        self.id = id
+
+        # The configured id of the scheduler
+        # @var int
+        self.schedulerConfiguredId = schedulerConfiguredId
+
+        # The configured id of the job worker
+        # @var int
+        self.workerConfiguredId = workerConfiguredId
+
+        # The type of the job worker.
+        # @var KalturaBatchJobType
+        self.workerType = workerType
+
+        # The status type
+        # @var KalturaSchedulerStatusType
+        self.type = type
+
+        # The status value
+        # @var int
+        self.value = value
+
+        # The id of the scheduler
+        # @var int
+        # @readonly
+        self.schedulerId = schedulerId
+
+        # The id of the worker
+        # @var int
+        # @readonly
+        self.workerId = workerId
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'schedulerConfiguredId': getXmlNodeInt, 
+        'workerConfiguredId': getXmlNodeInt, 
+        'workerType': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'type': (KalturaEnumsFactory.createInt, "KalturaSchedulerStatusType"), 
+        'value': getXmlNodeInt, 
+        'schedulerId': getXmlNodeInt, 
+        'workerId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSchedulerStatus.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaSchedulerStatus")
+        kparams.addIntIfDefined("schedulerConfiguredId", self.schedulerConfiguredId)
+        kparams.addIntIfDefined("workerConfiguredId", self.workerConfiguredId)
+        kparams.addStringEnumIfDefined("workerType", self.workerType)
+        kparams.addIntEnumIfDefined("type", self.type)
+        kparams.addIntIfDefined("value", self.value)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getSchedulerConfiguredId(self):
+        return self.schedulerConfiguredId
+
+    def setSchedulerConfiguredId(self, newSchedulerConfiguredId):
+        self.schedulerConfiguredId = newSchedulerConfiguredId
+
+    def getWorkerConfiguredId(self):
+        return self.workerConfiguredId
+
+    def setWorkerConfiguredId(self, newWorkerConfiguredId):
+        self.workerConfiguredId = newWorkerConfiguredId
+
+    def getWorkerType(self):
+        return self.workerType
+
+    def setWorkerType(self, newWorkerType):
+        self.workerType = newWorkerType
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def getWorkerId(self):
+        return self.workerId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerConfig(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            createdBy=NotImplemented,
+            updatedBy=NotImplemented,
+            commandId=NotImplemented,
+            commandStatus=NotImplemented,
+            schedulerId=NotImplemented,
+            schedulerConfiguredId=NotImplemented,
+            schedulerName=NotImplemented,
+            workerId=NotImplemented,
+            workerConfiguredId=NotImplemented,
+            workerName=NotImplemented,
+            variable=NotImplemented,
+            variablePart=NotImplemented,
+            value=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the Category
+        # @var int
+        # @readonly
+        self.id = id
+
+        # Creator name
+        # @var string
+        self.createdBy = createdBy
+
+        # Updater name
+        # @var string
+        self.updatedBy = updatedBy
+
+        # Id of the control panel command that created this config item
+        # @var string
+        self.commandId = commandId
+
+        # The status of the control panel command
+        # @var string
+        self.commandStatus = commandStatus
+
+        # The id of the scheduler
+        # @var int
+        self.schedulerId = schedulerId
+
+        # The configured id of the scheduler
+        # @var int
+        self.schedulerConfiguredId = schedulerConfiguredId
+
+        # The name of the scheduler
+        # @var string
+        self.schedulerName = schedulerName
+
+        # The id of the job worker
+        # @var int
+        self.workerId = workerId
+
+        # The configured id of the job worker
+        # @var int
+        self.workerConfiguredId = workerConfiguredId
+
+        # The name of the job worker
+        # @var string
+        self.workerName = workerName
+
+        # The name of the variable
+        # @var string
+        self.variable = variable
+
+        # The part of the variable
+        # @var string
+        self.variablePart = variablePart
+
+        # The value of the variable
+        # @var string
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'createdBy': getXmlNodeText, 
+        'updatedBy': getXmlNodeText, 
+        'commandId': getXmlNodeText, 
+        'commandStatus': getXmlNodeText, 
+        'schedulerId': getXmlNodeInt, 
+        'schedulerConfiguredId': getXmlNodeInt, 
+        'schedulerName': getXmlNodeText, 
+        'workerId': getXmlNodeInt, 
+        'workerConfiguredId': getXmlNodeInt, 
+        'workerName': getXmlNodeText, 
+        'variable': getXmlNodeText, 
+        'variablePart': getXmlNodeText, 
+        'value': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSchedulerConfig.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaSchedulerConfig")
+        kparams.addStringIfDefined("createdBy", self.createdBy)
+        kparams.addStringIfDefined("updatedBy", self.updatedBy)
+        kparams.addStringIfDefined("commandId", self.commandId)
+        kparams.addStringIfDefined("commandStatus", self.commandStatus)
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("schedulerConfiguredId", self.schedulerConfiguredId)
+        kparams.addStringIfDefined("schedulerName", self.schedulerName)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addIntIfDefined("workerConfiguredId", self.workerConfiguredId)
+        kparams.addStringIfDefined("workerName", self.workerName)
+        kparams.addStringIfDefined("variable", self.variable)
+        kparams.addStringIfDefined("variablePart", self.variablePart)
+        kparams.addStringIfDefined("value", self.value)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getCreatedBy(self):
+        return self.createdBy
+
+    def setCreatedBy(self, newCreatedBy):
+        self.createdBy = newCreatedBy
+
+    def getUpdatedBy(self):
+        return self.updatedBy
+
+    def setUpdatedBy(self, newUpdatedBy):
+        self.updatedBy = newUpdatedBy
+
+    def getCommandId(self):
+        return self.commandId
+
+    def setCommandId(self, newCommandId):
+        self.commandId = newCommandId
+
+    def getCommandStatus(self):
+        return self.commandStatus
+
+    def setCommandStatus(self, newCommandStatus):
+        self.commandStatus = newCommandStatus
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getSchedulerConfiguredId(self):
+        return self.schedulerConfiguredId
+
+    def setSchedulerConfiguredId(self, newSchedulerConfiguredId):
+        self.schedulerConfiguredId = newSchedulerConfiguredId
+
+    def getSchedulerName(self):
+        return self.schedulerName
+
+    def setSchedulerName(self, newSchedulerName):
+        self.schedulerName = newSchedulerName
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getWorkerConfiguredId(self):
+        return self.workerConfiguredId
+
+    def setWorkerConfiguredId(self, newWorkerConfiguredId):
+        self.workerConfiguredId = newWorkerConfiguredId
+
+    def getWorkerName(self):
+        return self.workerName
+
+    def setWorkerName(self, newWorkerName):
+        self.workerName = newWorkerName
+
+    def getVariable(self):
+        return self.variable
+
+    def setVariable(self, newVariable):
+        self.variable = newVariable
+
+    def getVariablePart(self):
+        return self.variablePart
+
+    def setVariablePart(self, newVariablePart):
+        self.variablePart = newVariablePart
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerWorker(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            configuredId=NotImplemented,
+            schedulerId=NotImplemented,
+            schedulerConfiguredId=NotImplemented,
+            type=NotImplemented,
+            typeName=NotImplemented,
+            name=NotImplemented,
+            statuses=NotImplemented,
+            configs=NotImplemented,
+            lockedJobs=NotImplemented,
+            avgWait=NotImplemented,
+            avgWork=NotImplemented,
+            lastStatus=NotImplemented,
+            lastStatusStr=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the Worker
+        # @var int
+        # @readonly
+        self.id = id
+
+        # The id as configured in the batch config
+        # @var int
+        self.configuredId = configuredId
+
+        # The id of the Scheduler
+        # @var int
+        self.schedulerId = schedulerId
+
+        # The id of the scheduler as configured in the batch config
+        # @var int
+        self.schedulerConfiguredId = schedulerConfiguredId
+
+        # The worker type
+        # @var KalturaBatchJobType
+        self.type = type
+
+        # The friendly name of the type
+        # @var string
+        self.typeName = typeName
+
+        # The scheduler name
+        # @var string
+        self.name = name
+
+        # Array of the last statuses
+        # @var array of KalturaSchedulerStatus
+        self.statuses = statuses
+
+        # Array of the last configs
+        # @var array of KalturaSchedulerConfig
+        self.configs = configs
+
+        # Array of jobs that locked to this worker
+        # @var array of KalturaBatchJob
+        self.lockedJobs = lockedJobs
+
+        # Avarage time between creation and queue time
+        # @var int
+        self.avgWait = avgWait
+
+        # Avarage time between queue time end finish time
+        # @var int
+        self.avgWork = avgWork
+
+        # last status time
+        # @var int
+        self.lastStatus = lastStatus
+
+        # last status formated
+        # @var string
+        self.lastStatusStr = lastStatusStr
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'configuredId': getXmlNodeInt, 
+        'schedulerId': getXmlNodeInt, 
+        'schedulerConfiguredId': getXmlNodeInt, 
+        'type': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'typeName': getXmlNodeText, 
+        'name': getXmlNodeText, 
+        'statuses': (KalturaObjectFactory.createArray, KalturaSchedulerStatus), 
+        'configs': (KalturaObjectFactory.createArray, KalturaSchedulerConfig), 
+        'lockedJobs': (KalturaObjectFactory.createArray, KalturaBatchJob), 
+        'avgWait': getXmlNodeInt, 
+        'avgWork': getXmlNodeInt, 
+        'lastStatus': getXmlNodeInt, 
+        'lastStatusStr': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSchedulerWorker.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaSchedulerWorker")
+        kparams.addIntIfDefined("configuredId", self.configuredId)
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("schedulerConfiguredId", self.schedulerConfiguredId)
+        kparams.addStringEnumIfDefined("type", self.type)
+        kparams.addStringIfDefined("typeName", self.typeName)
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addArrayIfDefined("statuses", self.statuses)
+        kparams.addArrayIfDefined("configs", self.configs)
+        kparams.addArrayIfDefined("lockedJobs", self.lockedJobs)
+        kparams.addIntIfDefined("avgWait", self.avgWait)
+        kparams.addIntIfDefined("avgWork", self.avgWork)
+        kparams.addIntIfDefined("lastStatus", self.lastStatus)
+        kparams.addStringIfDefined("lastStatusStr", self.lastStatusStr)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getConfiguredId(self):
+        return self.configuredId
+
+    def setConfiguredId(self, newConfiguredId):
+        self.configuredId = newConfiguredId
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getSchedulerConfiguredId(self):
+        return self.schedulerConfiguredId
+
+    def setSchedulerConfiguredId(self, newSchedulerConfiguredId):
+        self.schedulerConfiguredId = newSchedulerConfiguredId
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getTypeName(self):
+        return self.typeName
+
+    def setTypeName(self, newTypeName):
+        self.typeName = newTypeName
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getStatuses(self):
+        return self.statuses
+
+    def setStatuses(self, newStatuses):
+        self.statuses = newStatuses
+
+    def getConfigs(self):
+        return self.configs
+
+    def setConfigs(self, newConfigs):
+        self.configs = newConfigs
+
+    def getLockedJobs(self):
+        return self.lockedJobs
+
+    def setLockedJobs(self, newLockedJobs):
+        self.lockedJobs = newLockedJobs
+
+    def getAvgWait(self):
+        return self.avgWait
+
+    def setAvgWait(self, newAvgWait):
+        self.avgWait = newAvgWait
+
+    def getAvgWork(self):
+        return self.avgWork
+
+    def setAvgWork(self, newAvgWork):
+        self.avgWork = newAvgWork
+
+    def getLastStatus(self):
+        return self.lastStatus
+
+    def setLastStatus(self, newLastStatus):
+        self.lastStatus = newLastStatus
+
+    def getLastStatusStr(self):
+        return self.lastStatusStr
+
+    def setLastStatusStr(self, newLastStatusStr):
+        self.lastStatusStr = newLastStatusStr
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaScheduler(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            configuredId=NotImplemented,
+            name=NotImplemented,
+            host=NotImplemented,
+            statuses=NotImplemented,
+            configs=NotImplemented,
+            workers=NotImplemented,
+            createdAt=NotImplemented,
+            lastStatus=NotImplemented,
+            lastStatusStr=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the Scheduler
+        # @var int
+        # @readonly
+        self.id = id
+
+        # The id as configured in the batch config
+        # @var int
+        self.configuredId = configuredId
+
+        # The scheduler name
+        # @var string
+        self.name = name
+
+        # The host name
+        # @var string
+        self.host = host
+
+        # Array of the last statuses
+        # @var array of KalturaSchedulerStatus
+        # @readonly
+        self.statuses = statuses
+
+        # Array of the last configs
+        # @var array of KalturaSchedulerConfig
+        # @readonly
+        self.configs = configs
+
+        # Array of the workers
+        # @var array of KalturaSchedulerWorker
+        # @readonly
+        self.workers = workers
+
+        # creation time
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # last status time
+        # @var int
+        # @readonly
+        self.lastStatus = lastStatus
+
+        # last status formated
+        # @var string
+        # @readonly
+        self.lastStatusStr = lastStatusStr
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'configuredId': getXmlNodeInt, 
+        'name': getXmlNodeText, 
+        'host': getXmlNodeText, 
+        'statuses': (KalturaObjectFactory.createArray, KalturaSchedulerStatus), 
+        'configs': (KalturaObjectFactory.createArray, KalturaSchedulerConfig), 
+        'workers': (KalturaObjectFactory.createArray, KalturaSchedulerWorker), 
+        'createdAt': getXmlNodeInt, 
+        'lastStatus': getXmlNodeInt, 
+        'lastStatusStr': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduler.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaScheduler")
+        kparams.addIntIfDefined("configuredId", self.configuredId)
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addStringIfDefined("host", self.host)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getConfiguredId(self):
+        return self.configuredId
+
+    def setConfiguredId(self, newConfiguredId):
+        self.configuredId = newConfiguredId
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getHost(self):
+        return self.host
+
+    def setHost(self, newHost):
+        self.host = newHost
+
+    def getStatuses(self):
+        return self.statuses
+
+    def getConfigs(self):
+        return self.configs
+
+    def getWorkers(self):
+        return self.workers
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getLastStatus(self):
+        return self.lastStatus
+
+    def getLastStatusStr(self):
+        return self.lastStatusStr
 
 
 # @package Kaltura
@@ -20118,44 +20795,6 @@ class KalturaStorageProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaStorageProfileListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaStorageProfile
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaStorageProfile), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaStorageProfileListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaStorageProfileListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaSyndicationFeedEntryCount(KalturaObjectBase):
     def __init__(self,
             totalEntryCount=NotImplemented,
@@ -20303,44 +20942,6 @@ class KalturaThumbAsset(KalturaAsset):
 
     def getStatus(self):
         return self.status
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbAssetListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaThumbAsset
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaThumbAsset), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbAssetListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaThumbAssetListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -20601,44 +21202,6 @@ class KalturaThumbParams(KalturaAssetParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaThumbParamsListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaThumbParams
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaThumbParams), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaThumbParamsOutput(KalturaThumbParams):
     def __init__(self,
             id=NotImplemented,
@@ -20775,44 +21338,6 @@ class KalturaThumbParamsOutput(KalturaThumbParams):
 
     def setRotate(self, newRotate):
         self.rotate = newRotate
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParamsOutputListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaThumbParamsOutput
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaThumbParamsOutput), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -21140,44 +21665,6 @@ class KalturaUiConf(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUiConfListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaUiConf
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUiConf), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUiConfListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUiConfListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaUiConfTypeInfo(KalturaObjectBase):
     """Info about uiconf type"""
 
@@ -21434,44 +21921,6 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUploadTokenListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaUploadToken
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUploadToken), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUploadTokenListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUploadTokenListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -21915,44 +22364,6 @@ class KalturaUser(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaUser
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUser), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUserListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaUserLoginData(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -21993,44 +22404,6 @@ class KalturaUserLoginData(KalturaObjectBase):
 
     def setLoginEmail(self, newLoginEmail):
         self.loginEmail = newLoginEmail
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUserLoginDataListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaUserLoginData
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUserLoginData), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserLoginDataListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUserLoginDataListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -22159,44 +22532,6 @@ class KalturaUserRole(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUserRoleListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaUserRole
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUserRole), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserRoleListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUserRoleListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
@@ -22387,140 +22722,6 @@ class KalturaWidget(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaWidgetListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaWidget
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaWidget), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaWidgetListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaWidgetListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAccessControlBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAccessControlBlockAction(KalturaRuleAction):
     def __init__(self,
             type=NotImplemented):
@@ -22590,6 +22791,37 @@ class KalturaAccessControlLimitFlavorsAction(KalturaRuleAction):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAccessControlListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaAccessControl
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaAccessControl), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAccessControlPreviewAction(KalturaRuleAction):
     def __init__(self,
             type=NotImplemented,
@@ -22624,122 +22856,33 @@ class KalturaAccessControlPreviewAction(KalturaRuleAction):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAccessControlProfileBaseFilter(KalturaFilter):
+class KalturaAccessControlProfileListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+        # @var array of KalturaAccessControlProfile
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaAccessControlProfile), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlProfileBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlProfileListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlProfileBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlProfileListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -23056,306 +23199,6 @@ class KalturaApiParameterPermissionItem(KalturaPermissionItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAssetBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var string
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var string
-        self.entryIdIn = entryIdIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var int
-        self.sizeGreaterThanOrEqual = sizeGreaterThanOrEqual
-
-        # @var int
-        self.sizeLessThanOrEqual = sizeLessThanOrEqual
-
-        # @var string
-        self.tagsLike = tagsLike
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var int
-        self.deletedAtGreaterThanOrEqual = deletedAtGreaterThanOrEqual
-
-        # @var int
-        self.deletedAtLessThanOrEqual = deletedAtLessThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeText, 
-        'idIn': getXmlNodeText, 
-        'entryIdEqual': getXmlNodeText, 
-        'entryIdIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'sizeGreaterThanOrEqual': getXmlNodeInt, 
-        'sizeLessThanOrEqual': getXmlNodeInt, 
-        'tagsLike': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'deletedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'deletedAtLessThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetBaseFilter")
-        kparams.addStringIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addIntIfDefined("sizeGreaterThanOrEqual", self.sizeGreaterThanOrEqual)
-        kparams.addIntIfDefined("sizeLessThanOrEqual", self.sizeLessThanOrEqual)
-        kparams.addStringIfDefined("tagsLike", self.tagsLike)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntIfDefined("deletedAtGreaterThanOrEqual", self.deletedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("deletedAtLessThanOrEqual", self.deletedAtLessThanOrEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
-
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
-
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
-
-    def getSizeGreaterThanOrEqual(self):
-        return self.sizeGreaterThanOrEqual
-
-    def setSizeGreaterThanOrEqual(self, newSizeGreaterThanOrEqual):
-        self.sizeGreaterThanOrEqual = newSizeGreaterThanOrEqual
-
-    def getSizeLessThanOrEqual(self):
-        return self.sizeLessThanOrEqual
-
-    def setSizeLessThanOrEqual(self, newSizeLessThanOrEqual):
-        self.sizeLessThanOrEqual = newSizeLessThanOrEqual
-
-    def getTagsLike(self):
-        return self.tagsLike
-
-    def setTagsLike(self, newTagsLike):
-        self.tagsLike = newTagsLike
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getDeletedAtGreaterThanOrEqual(self):
-        return self.deletedAtGreaterThanOrEqual
-
-    def setDeletedAtGreaterThanOrEqual(self, newDeletedAtGreaterThanOrEqual):
-        self.deletedAtGreaterThanOrEqual = newDeletedAtGreaterThanOrEqual
-
-    def getDeletedAtLessThanOrEqual(self):
-        return self.deletedAtLessThanOrEqual
-
-    def setDeletedAtLessThanOrEqual(self, newDeletedAtLessThanOrEqual):
-        self.deletedAtLessThanOrEqual = newDeletedAtLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAssetParamsBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            isSystemDefaultEqual=NotImplemented,
-            tagsEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var KalturaNullableBoolean
-        self.isSystemDefaultEqual = isSystemDefaultEqual
-
-        # @var string
-        self.tagsEqual = tagsEqual
-
-
-    PROPERTY_LOADERS = {
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'isSystemDefaultEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'tagsEqual': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetParamsBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetParamsBaseFilter")
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addIntEnumIfDefined("isSystemDefaultEqual", self.isSystemDefaultEqual)
-        kparams.addStringIfDefined("tagsEqual", self.tagsEqual)
-        return kparams
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getIsSystemDefaultEqual(self):
-        return self.isSystemDefaultEqual
-
-    def setIsSystemDefaultEqual(self, newIsSystemDefaultEqual):
-        self.isSystemDefaultEqual = newIsSystemDefaultEqual
-
-    def getTagsEqual(self):
-        return self.tagsEqual
-
-    def setTagsEqual(self, newTagsEqual):
-        self.tagsEqual = newTagsEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAssetParamsOutput(KalturaAssetParams):
     def __init__(self,
             id=NotImplemented,
@@ -23586,6 +23429,37 @@ class KalturaAuthenticatedCondition(KalturaCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBaseEntryListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaBaseEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaBaseEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseEntryListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaBaseEntryListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBaseSyndicationFeedBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -23606,6 +23480,37 @@ class KalturaBaseSyndicationFeedBaseFilter(KalturaFilter):
         kparams = KalturaFilter.toParams(self)
         kparams.put("objectType", "KalturaBaseSyndicationFeedBaseFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseSyndicationFeedListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaBaseSyndicationFeed
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaBaseSyndicationFeed), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseSyndicationFeedListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaBaseSyndicationFeedListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -24174,6 +24079,37 @@ class KalturaBatchJobBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBatchJobListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaBatchJob
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaBatchJob), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchJobListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaBatchJobListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBooleanValue(KalturaValue):
     """A boolean representation to return an array of booleans"""
 
@@ -24646,6 +24582,37 @@ class KalturaBulkUploadJobData(KalturaJobData):
 
     def setNumOfErrorObjects(self, newNumOfErrorObjects):
         self.numOfErrorObjects = newNumOfErrorObjects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBulkUploadListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaBulkUpload
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaBulkUpload), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBulkUploadListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaBulkUploadListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -25722,474 +25689,6 @@ class KalturaCaptureThumbJobData(KalturaJobData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            depthEqual=NotImplemented,
-            fullNameEqual=NotImplemented,
-            fullNameStartsWith=NotImplemented,
-            fullNameIn=NotImplemented,
-            fullIdsEqual=NotImplemented,
-            fullIdsStartsWith=NotImplemented,
-            fullIdsMatchOr=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            appearInListEqual=NotImplemented,
-            privacyEqual=NotImplemented,
-            privacyIn=NotImplemented,
-            inheritanceTypeEqual=NotImplemented,
-            inheritanceTypeIn=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdEmpty=NotImplemented,
-            contributionPolicyEqual=NotImplemented,
-            membersCountGreaterThanOrEqual=NotImplemented,
-            membersCountLessThanOrEqual=NotImplemented,
-            pendingMembersCountGreaterThanOrEqual=NotImplemented,
-            pendingMembersCountLessThanOrEqual=NotImplemented,
-            privacyContextEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            inheritedParentIdEqual=NotImplemented,
-            inheritedParentIdIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var int
-        self.parentIdEqual = parentIdEqual
-
-        # @var string
-        self.parentIdIn = parentIdIn
-
-        # @var int
-        self.depthEqual = depthEqual
-
-        # @var string
-        self.fullNameEqual = fullNameEqual
-
-        # @var string
-        self.fullNameStartsWith = fullNameStartsWith
-
-        # @var string
-        self.fullNameIn = fullNameIn
-
-        # @var string
-        self.fullIdsEqual = fullIdsEqual
-
-        # @var string
-        self.fullIdsStartsWith = fullIdsStartsWith
-
-        # @var string
-        self.fullIdsMatchOr = fullIdsMatchOr
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var string
-        self.tagsLike = tagsLike
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var KalturaAppearInListType
-        self.appearInListEqual = appearInListEqual
-
-        # @var KalturaPrivacyType
-        self.privacyEqual = privacyEqual
-
-        # @var string
-        self.privacyIn = privacyIn
-
-        # @var KalturaInheritanceType
-        self.inheritanceTypeEqual = inheritanceTypeEqual
-
-        # @var string
-        self.inheritanceTypeIn = inheritanceTypeIn
-
-        # @var string
-        self.referenceIdEqual = referenceIdEqual
-
-        # @var KalturaNullableBoolean
-        self.referenceIdEmpty = referenceIdEmpty
-
-        # @var KalturaContributionPolicyType
-        self.contributionPolicyEqual = contributionPolicyEqual
-
-        # @var int
-        self.membersCountGreaterThanOrEqual = membersCountGreaterThanOrEqual
-
-        # @var int
-        self.membersCountLessThanOrEqual = membersCountLessThanOrEqual
-
-        # @var int
-        self.pendingMembersCountGreaterThanOrEqual = pendingMembersCountGreaterThanOrEqual
-
-        # @var int
-        self.pendingMembersCountLessThanOrEqual = pendingMembersCountLessThanOrEqual
-
-        # @var string
-        self.privacyContextEqual = privacyContextEqual
-
-        # @var KalturaCategoryStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.inheritedParentIdEqual = inheritedParentIdEqual
-
-        # @var string
-        self.inheritedParentIdIn = inheritedParentIdIn
-
-        # @var int
-        self.partnerSortValueGreaterThanOrEqual = partnerSortValueGreaterThanOrEqual
-
-        # @var int
-        self.partnerSortValueLessThanOrEqual = partnerSortValueLessThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'parentIdEqual': getXmlNodeInt, 
-        'parentIdIn': getXmlNodeText, 
-        'depthEqual': getXmlNodeInt, 
-        'fullNameEqual': getXmlNodeText, 
-        'fullNameStartsWith': getXmlNodeText, 
-        'fullNameIn': getXmlNodeText, 
-        'fullIdsEqual': getXmlNodeText, 
-        'fullIdsStartsWith': getXmlNodeText, 
-        'fullIdsMatchOr': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'tagsLike': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'appearInListEqual': (KalturaEnumsFactory.createInt, "KalturaAppearInListType"), 
-        'privacyEqual': (KalturaEnumsFactory.createInt, "KalturaPrivacyType"), 
-        'privacyIn': getXmlNodeText, 
-        'inheritanceTypeEqual': (KalturaEnumsFactory.createInt, "KalturaInheritanceType"), 
-        'inheritanceTypeIn': getXmlNodeText, 
-        'referenceIdEqual': getXmlNodeText, 
-        'referenceIdEmpty': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'contributionPolicyEqual': (KalturaEnumsFactory.createInt, "KalturaContributionPolicyType"), 
-        'membersCountGreaterThanOrEqual': getXmlNodeInt, 
-        'membersCountLessThanOrEqual': getXmlNodeInt, 
-        'pendingMembersCountGreaterThanOrEqual': getXmlNodeInt, 
-        'pendingMembersCountLessThanOrEqual': getXmlNodeInt, 
-        'privacyContextEqual': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryStatus"), 
-        'statusIn': getXmlNodeText, 
-        'inheritedParentIdEqual': getXmlNodeInt, 
-        'inheritedParentIdIn': getXmlNodeText, 
-        'partnerSortValueGreaterThanOrEqual': getXmlNodeInt, 
-        'partnerSortValueLessThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntIfDefined("parentIdEqual", self.parentIdEqual)
-        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
-        kparams.addIntIfDefined("depthEqual", self.depthEqual)
-        kparams.addStringIfDefined("fullNameEqual", self.fullNameEqual)
-        kparams.addStringIfDefined("fullNameStartsWith", self.fullNameStartsWith)
-        kparams.addStringIfDefined("fullNameIn", self.fullNameIn)
-        kparams.addStringIfDefined("fullIdsEqual", self.fullIdsEqual)
-        kparams.addStringIfDefined("fullIdsStartsWith", self.fullIdsStartsWith)
-        kparams.addStringIfDefined("fullIdsMatchOr", self.fullIdsMatchOr)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addStringIfDefined("tagsLike", self.tagsLike)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntEnumIfDefined("appearInListEqual", self.appearInListEqual)
-        kparams.addIntEnumIfDefined("privacyEqual", self.privacyEqual)
-        kparams.addStringIfDefined("privacyIn", self.privacyIn)
-        kparams.addIntEnumIfDefined("inheritanceTypeEqual", self.inheritanceTypeEqual)
-        kparams.addStringIfDefined("inheritanceTypeIn", self.inheritanceTypeIn)
-        kparams.addStringIfDefined("referenceIdEqual", self.referenceIdEqual)
-        kparams.addIntEnumIfDefined("referenceIdEmpty", self.referenceIdEmpty)
-        kparams.addIntEnumIfDefined("contributionPolicyEqual", self.contributionPolicyEqual)
-        kparams.addIntIfDefined("membersCountGreaterThanOrEqual", self.membersCountGreaterThanOrEqual)
-        kparams.addIntIfDefined("membersCountLessThanOrEqual", self.membersCountLessThanOrEqual)
-        kparams.addIntIfDefined("pendingMembersCountGreaterThanOrEqual", self.pendingMembersCountGreaterThanOrEqual)
-        kparams.addIntIfDefined("pendingMembersCountLessThanOrEqual", self.pendingMembersCountLessThanOrEqual)
-        kparams.addStringIfDefined("privacyContextEqual", self.privacyContextEqual)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("inheritedParentIdEqual", self.inheritedParentIdEqual)
-        kparams.addStringIfDefined("inheritedParentIdIn", self.inheritedParentIdIn)
-        kparams.addIntIfDefined("partnerSortValueGreaterThanOrEqual", self.partnerSortValueGreaterThanOrEqual)
-        kparams.addIntIfDefined("partnerSortValueLessThanOrEqual", self.partnerSortValueLessThanOrEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getParentIdEqual(self):
-        return self.parentIdEqual
-
-    def setParentIdEqual(self, newParentIdEqual):
-        self.parentIdEqual = newParentIdEqual
-
-    def getParentIdIn(self):
-        return self.parentIdIn
-
-    def setParentIdIn(self, newParentIdIn):
-        self.parentIdIn = newParentIdIn
-
-    def getDepthEqual(self):
-        return self.depthEqual
-
-    def setDepthEqual(self, newDepthEqual):
-        self.depthEqual = newDepthEqual
-
-    def getFullNameEqual(self):
-        return self.fullNameEqual
-
-    def setFullNameEqual(self, newFullNameEqual):
-        self.fullNameEqual = newFullNameEqual
-
-    def getFullNameStartsWith(self):
-        return self.fullNameStartsWith
-
-    def setFullNameStartsWith(self, newFullNameStartsWith):
-        self.fullNameStartsWith = newFullNameStartsWith
-
-    def getFullNameIn(self):
-        return self.fullNameIn
-
-    def setFullNameIn(self, newFullNameIn):
-        self.fullNameIn = newFullNameIn
-
-    def getFullIdsEqual(self):
-        return self.fullIdsEqual
-
-    def setFullIdsEqual(self, newFullIdsEqual):
-        self.fullIdsEqual = newFullIdsEqual
-
-    def getFullIdsStartsWith(self):
-        return self.fullIdsStartsWith
-
-    def setFullIdsStartsWith(self, newFullIdsStartsWith):
-        self.fullIdsStartsWith = newFullIdsStartsWith
-
-    def getFullIdsMatchOr(self):
-        return self.fullIdsMatchOr
-
-    def setFullIdsMatchOr(self, newFullIdsMatchOr):
-        self.fullIdsMatchOr = newFullIdsMatchOr
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getTagsLike(self):
-        return self.tagsLike
-
-    def setTagsLike(self, newTagsLike):
-        self.tagsLike = newTagsLike
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getAppearInListEqual(self):
-        return self.appearInListEqual
-
-    def setAppearInListEqual(self, newAppearInListEqual):
-        self.appearInListEqual = newAppearInListEqual
-
-    def getPrivacyEqual(self):
-        return self.privacyEqual
-
-    def setPrivacyEqual(self, newPrivacyEqual):
-        self.privacyEqual = newPrivacyEqual
-
-    def getPrivacyIn(self):
-        return self.privacyIn
-
-    def setPrivacyIn(self, newPrivacyIn):
-        self.privacyIn = newPrivacyIn
-
-    def getInheritanceTypeEqual(self):
-        return self.inheritanceTypeEqual
-
-    def setInheritanceTypeEqual(self, newInheritanceTypeEqual):
-        self.inheritanceTypeEqual = newInheritanceTypeEqual
-
-    def getInheritanceTypeIn(self):
-        return self.inheritanceTypeIn
-
-    def setInheritanceTypeIn(self, newInheritanceTypeIn):
-        self.inheritanceTypeIn = newInheritanceTypeIn
-
-    def getReferenceIdEqual(self):
-        return self.referenceIdEqual
-
-    def setReferenceIdEqual(self, newReferenceIdEqual):
-        self.referenceIdEqual = newReferenceIdEqual
-
-    def getReferenceIdEmpty(self):
-        return self.referenceIdEmpty
-
-    def setReferenceIdEmpty(self, newReferenceIdEmpty):
-        self.referenceIdEmpty = newReferenceIdEmpty
-
-    def getContributionPolicyEqual(self):
-        return self.contributionPolicyEqual
-
-    def setContributionPolicyEqual(self, newContributionPolicyEqual):
-        self.contributionPolicyEqual = newContributionPolicyEqual
-
-    def getMembersCountGreaterThanOrEqual(self):
-        return self.membersCountGreaterThanOrEqual
-
-    def setMembersCountGreaterThanOrEqual(self, newMembersCountGreaterThanOrEqual):
-        self.membersCountGreaterThanOrEqual = newMembersCountGreaterThanOrEqual
-
-    def getMembersCountLessThanOrEqual(self):
-        return self.membersCountLessThanOrEqual
-
-    def setMembersCountLessThanOrEqual(self, newMembersCountLessThanOrEqual):
-        self.membersCountLessThanOrEqual = newMembersCountLessThanOrEqual
-
-    def getPendingMembersCountGreaterThanOrEqual(self):
-        return self.pendingMembersCountGreaterThanOrEqual
-
-    def setPendingMembersCountGreaterThanOrEqual(self, newPendingMembersCountGreaterThanOrEqual):
-        self.pendingMembersCountGreaterThanOrEqual = newPendingMembersCountGreaterThanOrEqual
-
-    def getPendingMembersCountLessThanOrEqual(self):
-        return self.pendingMembersCountLessThanOrEqual
-
-    def setPendingMembersCountLessThanOrEqual(self, newPendingMembersCountLessThanOrEqual):
-        self.pendingMembersCountLessThanOrEqual = newPendingMembersCountLessThanOrEqual
-
-    def getPrivacyContextEqual(self):
-        return self.privacyContextEqual
-
-    def setPrivacyContextEqual(self, newPrivacyContextEqual):
-        self.privacyContextEqual = newPrivacyContextEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getInheritedParentIdEqual(self):
-        return self.inheritedParentIdEqual
-
-    def setInheritedParentIdEqual(self, newInheritedParentIdEqual):
-        self.inheritedParentIdEqual = newInheritedParentIdEqual
-
-    def getInheritedParentIdIn(self):
-        return self.inheritedParentIdIn
-
-    def setInheritedParentIdIn(self, newInheritedParentIdIn):
-        self.inheritedParentIdIn = newInheritedParentIdIn
-
-    def getPartnerSortValueGreaterThanOrEqual(self):
-        return self.partnerSortValueGreaterThanOrEqual
-
-    def setPartnerSortValueGreaterThanOrEqual(self, newPartnerSortValueGreaterThanOrEqual):
-        self.partnerSortValueGreaterThanOrEqual = newPartnerSortValueGreaterThanOrEqual
-
-    def getPartnerSortValueLessThanOrEqual(self):
-        return self.partnerSortValueLessThanOrEqual
-
-    def setPartnerSortValueLessThanOrEqual(self, newPartnerSortValueLessThanOrEqual):
-        self.partnerSortValueLessThanOrEqual = newPartnerSortValueLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCategoryEntryAdvancedFilter(KalturaSearchItem):
     def __init__(self,
             categoriesMatchOr=NotImplemented,
@@ -26258,134 +25757,33 @@ class KalturaCategoryEntryAdvancedFilter(KalturaSearchItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryEntryBaseFilter(KalturaFilter):
+class KalturaCategoryEntryListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            categoryIdEqual=NotImplemented,
-            categoryIdIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            categoryFullIdsStartsWith=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.categoryIdEqual = categoryIdEqual
-
-        # @var string
-        self.categoryIdIn = categoryIdIn
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var string
-        self.entryIdIn = entryIdIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var string
-        self.categoryFullIdsStartsWith = categoryFullIdsStartsWith
-
-        # @var KalturaCategoryEntryStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
+        # @var array of KalturaCategoryEntry
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'categoryIdEqual': getXmlNodeInt, 
-        'categoryIdIn': getXmlNodeText, 
-        'entryIdEqual': getXmlNodeText, 
-        'entryIdIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'categoryFullIdsStartsWith': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryEntryStatus"), 
-        'statusIn': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaCategoryEntry), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryEntryBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryEntryListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryEntryBaseFilter")
-        kparams.addIntIfDefined("categoryIdEqual", self.categoryIdEqual)
-        kparams.addStringIfDefined("categoryIdIn", self.categoryIdIn)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addStringIfDefined("categoryFullIdsStartsWith", self.categoryFullIdsStartsWith)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaCategoryEntryListResponse")
         return kparams
 
-    def getCategoryIdEqual(self):
-        return self.categoryIdEqual
-
-    def setCategoryIdEqual(self, newCategoryIdEqual):
-        self.categoryIdEqual = newCategoryIdEqual
-
-    def getCategoryIdIn(self):
-        return self.categoryIdIn
-
-    def setCategoryIdIn(self, newCategoryIdIn):
-        self.categoryIdIn = newCategoryIdIn
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getCategoryFullIdsStartsWith(self):
-        return self.categoryFullIdsStartsWith
-
-    def setCategoryFullIdsStartsWith(self, newCategoryFullIdsStartsWith):
-        self.categoryFullIdsStartsWith = newCategoryFullIdsStartsWith
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -26421,6 +25819,37 @@ class KalturaCategoryIdentifier(KalturaObjectIdentifier):
 
     def setIdentifier(self, newIdentifier):
         self.identifier = newIdentifier
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoryListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaCategory
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaCategory), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaCategoryListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -26493,254 +25922,33 @@ class KalturaCategoryUserAdvancedFilter(KalturaSearchItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryUserBaseFilter(KalturaFilter):
+class KalturaCategoryUserListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            categoryIdEqual=NotImplemented,
-            categoryIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            permissionLevelEqual=NotImplemented,
-            permissionLevelIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updateMethodEqual=NotImplemented,
-            updateMethodIn=NotImplemented,
-            categoryFullIdsStartsWith=NotImplemented,
-            categoryFullIdsEqual=NotImplemented,
-            permissionNamesMatchAnd=NotImplemented,
-            permissionNamesMatchOr=NotImplemented,
-            permissionNamesNotContains=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.categoryIdEqual = categoryIdEqual
-
-        # @var string
-        self.categoryIdIn = categoryIdIn
-
-        # @var string
-        self.userIdEqual = userIdEqual
-
-        # @var string
-        self.userIdIn = userIdIn
-
-        # @var KalturaCategoryUserPermissionLevel
-        self.permissionLevelEqual = permissionLevelEqual
-
-        # @var string
-        self.permissionLevelIn = permissionLevelIn
-
-        # @var KalturaCategoryUserStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaUpdateMethodType
-        self.updateMethodEqual = updateMethodEqual
-
-        # @var string
-        self.updateMethodIn = updateMethodIn
-
-        # @var string
-        self.categoryFullIdsStartsWith = categoryFullIdsStartsWith
-
-        # @var string
-        self.categoryFullIdsEqual = categoryFullIdsEqual
-
-        # @var string
-        self.permissionNamesMatchAnd = permissionNamesMatchAnd
-
-        # @var string
-        self.permissionNamesMatchOr = permissionNamesMatchOr
-
-        # @var string
-        self.permissionNamesNotContains = permissionNamesNotContains
+        # @var array of KalturaCategoryUser
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'categoryIdEqual': getXmlNodeInt, 
-        'categoryIdIn': getXmlNodeText, 
-        'userIdEqual': getXmlNodeText, 
-        'userIdIn': getXmlNodeText, 
-        'permissionLevelEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryUserPermissionLevel"), 
-        'permissionLevelIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryUserStatus"), 
-        'statusIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'updateMethodEqual': (KalturaEnumsFactory.createInt, "KalturaUpdateMethodType"), 
-        'updateMethodIn': getXmlNodeText, 
-        'categoryFullIdsStartsWith': getXmlNodeText, 
-        'categoryFullIdsEqual': getXmlNodeText, 
-        'permissionNamesMatchAnd': getXmlNodeText, 
-        'permissionNamesMatchOr': getXmlNodeText, 
-        'permissionNamesNotContains': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaCategoryUser), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryUserBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryUserListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryUserBaseFilter")
-        kparams.addIntIfDefined("categoryIdEqual", self.categoryIdEqual)
-        kparams.addStringIfDefined("categoryIdIn", self.categoryIdIn)
-        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
-        kparams.addStringIfDefined("userIdIn", self.userIdIn)
-        kparams.addIntEnumIfDefined("permissionLevelEqual", self.permissionLevelEqual)
-        kparams.addStringIfDefined("permissionLevelIn", self.permissionLevelIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntEnumIfDefined("updateMethodEqual", self.updateMethodEqual)
-        kparams.addStringIfDefined("updateMethodIn", self.updateMethodIn)
-        kparams.addStringIfDefined("categoryFullIdsStartsWith", self.categoryFullIdsStartsWith)
-        kparams.addStringIfDefined("categoryFullIdsEqual", self.categoryFullIdsEqual)
-        kparams.addStringIfDefined("permissionNamesMatchAnd", self.permissionNamesMatchAnd)
-        kparams.addStringIfDefined("permissionNamesMatchOr", self.permissionNamesMatchOr)
-        kparams.addStringIfDefined("permissionNamesNotContains", self.permissionNamesNotContains)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaCategoryUserListResponse")
         return kparams
 
-    def getCategoryIdEqual(self):
-        return self.categoryIdEqual
-
-    def setCategoryIdEqual(self, newCategoryIdEqual):
-        self.categoryIdEqual = newCategoryIdEqual
-
-    def getCategoryIdIn(self):
-        return self.categoryIdIn
-
-    def setCategoryIdIn(self, newCategoryIdIn):
-        self.categoryIdIn = newCategoryIdIn
-
-    def getUserIdEqual(self):
-        return self.userIdEqual
-
-    def setUserIdEqual(self, newUserIdEqual):
-        self.userIdEqual = newUserIdEqual
-
-    def getUserIdIn(self):
-        return self.userIdIn
-
-    def setUserIdIn(self, newUserIdIn):
-        self.userIdIn = newUserIdIn
-
-    def getPermissionLevelEqual(self):
-        return self.permissionLevelEqual
-
-    def setPermissionLevelEqual(self, newPermissionLevelEqual):
-        self.permissionLevelEqual = newPermissionLevelEqual
-
-    def getPermissionLevelIn(self):
-        return self.permissionLevelIn
-
-    def setPermissionLevelIn(self, newPermissionLevelIn):
-        self.permissionLevelIn = newPermissionLevelIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getUpdateMethodEqual(self):
-        return self.updateMethodEqual
-
-    def setUpdateMethodEqual(self, newUpdateMethodEqual):
-        self.updateMethodEqual = newUpdateMethodEqual
-
-    def getUpdateMethodIn(self):
-        return self.updateMethodIn
-
-    def setUpdateMethodIn(self, newUpdateMethodIn):
-        self.updateMethodIn = newUpdateMethodIn
-
-    def getCategoryFullIdsStartsWith(self):
-        return self.categoryFullIdsStartsWith
-
-    def setCategoryFullIdsStartsWith(self, newCategoryFullIdsStartsWith):
-        self.categoryFullIdsStartsWith = newCategoryFullIdsStartsWith
-
-    def getCategoryFullIdsEqual(self):
-        return self.categoryFullIdsEqual
-
-    def setCategoryFullIdsEqual(self, newCategoryFullIdsEqual):
-        self.categoryFullIdsEqual = newCategoryFullIdsEqual
-
-    def getPermissionNamesMatchAnd(self):
-        return self.permissionNamesMatchAnd
-
-    def setPermissionNamesMatchAnd(self, newPermissionNamesMatchAnd):
-        self.permissionNamesMatchAnd = newPermissionNamesMatchAnd
-
-    def getPermissionNamesMatchOr(self):
-        return self.permissionNamesMatchOr
-
-    def setPermissionNamesMatchOr(self, newPermissionNamesMatchOr):
-        self.permissionNamesMatchOr = newPermissionNamesMatchOr
-
-    def getPermissionNamesNotContains(self):
-        return self.permissionNamesNotContains
-
-    def setPermissionNamesNotContains(self, newPermissionNamesNotContains):
-        self.permissionNamesNotContains = newPermissionNamesNotContains
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -27141,6 +26349,37 @@ class KalturaControlPanelCommandBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaControlPanelCommandListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaControlPanelCommand
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaControlPanelCommand), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaControlPanelCommandListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaControlPanelCommandListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaConvartableJobData(KalturaJobData):
     def __init__(self,
             srcFileSyncLocalPath=NotImplemented,
@@ -27294,326 +26533,64 @@ class KalturaConvartableJobData(KalturaJobData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaConversionProfileAssetParamsBaseFilter(KalturaFilter):
+class KalturaConversionProfileAssetParamsListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            assetParamsIdEqual=NotImplemented,
-            assetParamsIdIn=NotImplemented,
-            readyBehaviorEqual=NotImplemented,
-            readyBehaviorIn=NotImplemented,
-            originEqual=NotImplemented,
-            originIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.conversionProfileIdEqual = conversionProfileIdEqual
-
-        # @var string
-        self.conversionProfileIdIn = conversionProfileIdIn
-
-        # @var int
-        self.assetParamsIdEqual = assetParamsIdEqual
-
-        # @var string
-        self.assetParamsIdIn = assetParamsIdIn
-
-        # @var KalturaFlavorReadyBehaviorType
-        self.readyBehaviorEqual = readyBehaviorEqual
-
-        # @var string
-        self.readyBehaviorIn = readyBehaviorIn
-
-        # @var KalturaAssetParamsOrigin
-        self.originEqual = originEqual
-
-        # @var string
-        self.originIn = originIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
+        # @var array of KalturaConversionProfileAssetParams
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'conversionProfileIdEqual': getXmlNodeInt, 
-        'conversionProfileIdIn': getXmlNodeText, 
-        'assetParamsIdEqual': getXmlNodeInt, 
-        'assetParamsIdIn': getXmlNodeText, 
-        'readyBehaviorEqual': (KalturaEnumsFactory.createInt, "KalturaFlavorReadyBehaviorType"), 
-        'readyBehaviorIn': getXmlNodeText, 
-        'originEqual': (KalturaEnumsFactory.createInt, "KalturaAssetParamsOrigin"), 
-        'originIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaConversionProfileAssetParams), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileAssetParamsBaseFilter")
-        kparams.addIntIfDefined("conversionProfileIdEqual", self.conversionProfileIdEqual)
-        kparams.addStringIfDefined("conversionProfileIdIn", self.conversionProfileIdIn)
-        kparams.addIntIfDefined("assetParamsIdEqual", self.assetParamsIdEqual)
-        kparams.addStringIfDefined("assetParamsIdIn", self.assetParamsIdIn)
-        kparams.addIntEnumIfDefined("readyBehaviorEqual", self.readyBehaviorEqual)
-        kparams.addStringIfDefined("readyBehaviorIn", self.readyBehaviorIn)
-        kparams.addIntEnumIfDefined("originEqual", self.originEqual)
-        kparams.addStringIfDefined("originIn", self.originIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileAssetParamsListResponse")
         return kparams
 
-    def getConversionProfileIdEqual(self):
-        return self.conversionProfileIdEqual
-
-    def setConversionProfileIdEqual(self, newConversionProfileIdEqual):
-        self.conversionProfileIdEqual = newConversionProfileIdEqual
-
-    def getConversionProfileIdIn(self):
-        return self.conversionProfileIdIn
-
-    def setConversionProfileIdIn(self, newConversionProfileIdIn):
-        self.conversionProfileIdIn = newConversionProfileIdIn
-
-    def getAssetParamsIdEqual(self):
-        return self.assetParamsIdEqual
-
-    def setAssetParamsIdEqual(self, newAssetParamsIdEqual):
-        self.assetParamsIdEqual = newAssetParamsIdEqual
-
-    def getAssetParamsIdIn(self):
-        return self.assetParamsIdIn
-
-    def setAssetParamsIdIn(self, newAssetParamsIdIn):
-        self.assetParamsIdIn = newAssetParamsIdIn
-
-    def getReadyBehaviorEqual(self):
-        return self.readyBehaviorEqual
-
-    def setReadyBehaviorEqual(self, newReadyBehaviorEqual):
-        self.readyBehaviorEqual = newReadyBehaviorEqual
-
-    def getReadyBehaviorIn(self):
-        return self.readyBehaviorIn
-
-    def setReadyBehaviorIn(self, newReadyBehaviorIn):
-        self.readyBehaviorIn = newReadyBehaviorIn
-
-    def getOriginEqual(self):
-        return self.originEqual
-
-    def setOriginEqual(self, newOriginEqual):
-        self.originEqual = newOriginEqual
-
-    def getOriginIn(self):
-        return self.originIn
-
-    def setOriginIn(self, newOriginIn):
-        self.originIn = newOriginIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaConversionProfileBaseFilter(KalturaFilter):
+class KalturaConversionProfileListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            defaultEntryIdEqual=NotImplemented,
-            defaultEntryIdIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var KalturaConversionProfileStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var KalturaConversionProfileType
-        self.typeEqual = typeEqual
-
-        # @var string
-        self.typeIn = typeIn
-
-        # @var string
-        self.nameEqual = nameEqual
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var string
-        self.defaultEntryIdEqual = defaultEntryIdEqual
-
-        # @var string
-        self.defaultEntryIdIn = defaultEntryIdIn
+        # @var array of KalturaConversionProfile
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createString, "KalturaConversionProfileStatus"), 
-        'statusIn': getXmlNodeText, 
-        'typeEqual': (KalturaEnumsFactory.createString, "KalturaConversionProfileType"), 
-        'typeIn': getXmlNodeText, 
-        'nameEqual': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'defaultEntryIdEqual': getXmlNodeText, 
-        'defaultEntryIdIn': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaConversionProfile), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
-        kparams.addStringIfDefined("typeIn", self.typeIn)
-        kparams.addStringIfDefined("nameEqual", self.nameEqual)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addStringIfDefined("defaultEntryIdEqual", self.defaultEntryIdEqual)
-        kparams.addStringIfDefined("defaultEntryIdIn", self.defaultEntryIdIn)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getTypeEqual(self):
-        return self.typeEqual
-
-    def setTypeEqual(self, newTypeEqual):
-        self.typeEqual = newTypeEqual
-
-    def getTypeIn(self):
-        return self.typeIn
-
-    def setTypeIn(self, newTypeIn):
-        self.typeIn = newTypeIn
-
-    def getNameEqual(self):
-        return self.nameEqual
-
-    def setNameEqual(self, newNameEqual):
-        self.nameEqual = newNameEqual
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getDefaultEntryIdEqual(self):
-        return self.defaultEntryIdEqual
-
-    def setDefaultEntryIdEqual(self, newDefaultEntryIdEqual):
-        self.defaultEntryIdEqual = newDefaultEntryIdEqual
-
-    def getDefaultEntryIdIn(self):
-        return self.defaultEntryIdIn
-
-    def setDefaultEntryIdIn(self, newDefaultEntryIdIn):
-        self.defaultEntryIdIn = newDefaultEntryIdIn
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -27874,6 +26851,37 @@ class KalturaCountryRestriction(KalturaBaseRestriction):
 
     def setCountryList(self, newCountryList):
         self.countryList = newCountryList
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDataListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDataEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDataEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDataListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDataListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -28627,6 +27635,37 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaDeliveryProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaDeliveryProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
     def __init__(self,
             id=NotImplemented,
@@ -28785,6 +27824,150 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDetachedResponseProfileFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaResponseProfileStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaResponseProfileStatus"), 
+        'statusIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDetachedResponseProfileFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaDetachedResponseProfileFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDirectoryRestriction(KalturaBaseRestriction):
     def __init__(self,
             directoryRestrictionType=NotImplemented):
@@ -28814,6 +27997,258 @@ class KalturaDirectoryRestriction(KalturaBaseRestriction):
 
     def setDirectoryRestrictionType(self, newDirectoryRestrictionType):
         self.directoryRestrictionType = newDirectoryRestrictionType
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoryUserBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            categoryIdEqual=NotImplemented,
+            categoryIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            permissionLevelEqual=NotImplemented,
+            permissionLevelIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updateMethodEqual=NotImplemented,
+            updateMethodIn=NotImplemented,
+            categoryFullIdsStartsWith=NotImplemented,
+            categoryFullIdsEqual=NotImplemented,
+            permissionNamesMatchAnd=NotImplemented,
+            permissionNamesMatchOr=NotImplemented,
+            permissionNamesNotContains=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.categoryIdEqual = categoryIdEqual
+
+        # @var string
+        self.categoryIdIn = categoryIdIn
+
+        # @var string
+        self.userIdEqual = userIdEqual
+
+        # @var string
+        self.userIdIn = userIdIn
+
+        # @var KalturaCategoryUserPermissionLevel
+        self.permissionLevelEqual = permissionLevelEqual
+
+        # @var string
+        self.permissionLevelIn = permissionLevelIn
+
+        # @var KalturaCategoryUserStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaUpdateMethodType
+        self.updateMethodEqual = updateMethodEqual
+
+        # @var string
+        self.updateMethodIn = updateMethodIn
+
+        # @var string
+        self.categoryFullIdsStartsWith = categoryFullIdsStartsWith
+
+        # @var string
+        self.categoryFullIdsEqual = categoryFullIdsEqual
+
+        # @var string
+        self.permissionNamesMatchAnd = permissionNamesMatchAnd
+
+        # @var string
+        self.permissionNamesMatchOr = permissionNamesMatchOr
+
+        # @var string
+        self.permissionNamesNotContains = permissionNamesNotContains
+
+
+    PROPERTY_LOADERS = {
+        'categoryIdEqual': getXmlNodeInt, 
+        'categoryIdIn': getXmlNodeText, 
+        'userIdEqual': getXmlNodeText, 
+        'userIdIn': getXmlNodeText, 
+        'permissionLevelEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryUserPermissionLevel"), 
+        'permissionLevelIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryUserStatus"), 
+        'statusIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'updateMethodEqual': (KalturaEnumsFactory.createInt, "KalturaUpdateMethodType"), 
+        'updateMethodIn': getXmlNodeText, 
+        'categoryFullIdsStartsWith': getXmlNodeText, 
+        'categoryFullIdsEqual': getXmlNodeText, 
+        'permissionNamesMatchAnd': getXmlNodeText, 
+        'permissionNamesMatchOr': getXmlNodeText, 
+        'permissionNamesNotContains': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryUserBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryUserBaseFilter")
+        kparams.addIntIfDefined("categoryIdEqual", self.categoryIdEqual)
+        kparams.addStringIfDefined("categoryIdIn", self.categoryIdIn)
+        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addStringIfDefined("userIdIn", self.userIdIn)
+        kparams.addIntEnumIfDefined("permissionLevelEqual", self.permissionLevelEqual)
+        kparams.addStringIfDefined("permissionLevelIn", self.permissionLevelIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntEnumIfDefined("updateMethodEqual", self.updateMethodEqual)
+        kparams.addStringIfDefined("updateMethodIn", self.updateMethodIn)
+        kparams.addStringIfDefined("categoryFullIdsStartsWith", self.categoryFullIdsStartsWith)
+        kparams.addStringIfDefined("categoryFullIdsEqual", self.categoryFullIdsEqual)
+        kparams.addStringIfDefined("permissionNamesMatchAnd", self.permissionNamesMatchAnd)
+        kparams.addStringIfDefined("permissionNamesMatchOr", self.permissionNamesMatchOr)
+        kparams.addStringIfDefined("permissionNamesNotContains", self.permissionNamesNotContains)
+        return kparams
+
+    def getCategoryIdEqual(self):
+        return self.categoryIdEqual
+
+    def setCategoryIdEqual(self, newCategoryIdEqual):
+        self.categoryIdEqual = newCategoryIdEqual
+
+    def getCategoryIdIn(self):
+        return self.categoryIdIn
+
+    def setCategoryIdIn(self, newCategoryIdIn):
+        self.categoryIdIn = newCategoryIdIn
+
+    def getUserIdEqual(self):
+        return self.userIdEqual
+
+    def setUserIdEqual(self, newUserIdEqual):
+        self.userIdEqual = newUserIdEqual
+
+    def getUserIdIn(self):
+        return self.userIdIn
+
+    def setUserIdIn(self, newUserIdIn):
+        self.userIdIn = newUserIdIn
+
+    def getPermissionLevelEqual(self):
+        return self.permissionLevelEqual
+
+    def setPermissionLevelEqual(self, newPermissionLevelEqual):
+        self.permissionLevelEqual = newPermissionLevelEqual
+
+    def getPermissionLevelIn(self):
+        return self.permissionLevelIn
+
+    def setPermissionLevelIn(self, newPermissionLevelIn):
+        self.permissionLevelIn = newPermissionLevelIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getUpdateMethodEqual(self):
+        return self.updateMethodEqual
+
+    def setUpdateMethodEqual(self, newUpdateMethodEqual):
+        self.updateMethodEqual = newUpdateMethodEqual
+
+    def getUpdateMethodIn(self):
+        return self.updateMethodIn
+
+    def setUpdateMethodIn(self, newUpdateMethodIn):
+        self.updateMethodIn = newUpdateMethodIn
+
+    def getCategoryFullIdsStartsWith(self):
+        return self.categoryFullIdsStartsWith
+
+    def setCategoryFullIdsStartsWith(self, newCategoryFullIdsStartsWith):
+        self.categoryFullIdsStartsWith = newCategoryFullIdsStartsWith
+
+    def getCategoryFullIdsEqual(self):
+        return self.categoryFullIdsEqual
+
+    def setCategoryFullIdsEqual(self, newCategoryFullIdsEqual):
+        self.categoryFullIdsEqual = newCategoryFullIdsEqual
+
+    def getPermissionNamesMatchAnd(self):
+        return self.permissionNamesMatchAnd
+
+    def setPermissionNamesMatchAnd(self, newPermissionNamesMatchAnd):
+        self.permissionNamesMatchAnd = newPermissionNamesMatchAnd
+
+    def getPermissionNamesMatchOr(self):
+        return self.permissionNamesMatchOr
+
+    def setPermissionNamesMatchOr(self, newPermissionNamesMatchOr):
+        self.permissionNamesMatchOr = newPermissionNamesMatchOr
+
+    def getPermissionNamesNotContains(self):
+        return self.permissionNamesNotContains
+
+    def setPermissionNamesNotContains(self, newPermissionNamesNotContains):
+        self.permissionNamesNotContains = newPermissionNamesNotContains
 
 
 # @package Kaltura
@@ -28919,7 +28354,7 @@ class KalturaCategoryUserFilter(KalturaCategoryUserBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserBaseFilter(KalturaFilter):
+class KalturaUserBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -28939,7 +28374,7 @@ class KalturaUserBaseFilter(KalturaFilter):
             firstNameStartsWith=NotImplemented,
             lastNameStartsWith=NotImplemented,
             isAdminEqual=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -29012,11 +28447,11 @@ class KalturaUserBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaUserBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaUserBaseFilter")
         kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
         kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
@@ -29833,170 +29268,64 @@ class KalturaBooleanField(KalturaBooleanValue):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFileAssetBaseFilter(KalturaFilter):
+class KalturaFeatureStatusListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            fileAssetObjectTypeEqual=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var KalturaFileAssetObjectType
-        self.fileAssetObjectTypeEqual = fileAssetObjectTypeEqual
-
-        # @var string
-        self.objectIdEqual = objectIdEqual
-
-        # @var string
-        self.objectIdIn = objectIdIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaFileAssetStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
+        # @var array of KalturaFeatureStatus
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'fileAssetObjectTypeEqual': (KalturaEnumsFactory.createString, "KalturaFileAssetObjectType"), 
-        'objectIdEqual': getXmlNodeText, 
-        'objectIdIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'statusEqual': (KalturaEnumsFactory.createString, "KalturaFileAssetStatus"), 
-        'statusIn': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaFeatureStatus), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFileAssetBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFeatureStatusListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaFileAssetBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringEnumIfDefined("fileAssetObjectTypeEqual", self.fileAssetObjectTypeEqual)
-        kparams.addStringIfDefined("objectIdEqual", self.objectIdEqual)
-        kparams.addStringIfDefined("objectIdIn", self.objectIdIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFeatureStatusListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
+    def getObjects(self):
+        return self.objects
 
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
 
-    def getIdIn(self):
-        return self.idIn
+# @package Kaltura
+# @subpackage Client
+class KalturaFileAssetListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
+        # @var array of KalturaFileAsset
+        # @readonly
+        self.objects = objects
 
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
 
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFileAsset), 
+    }
 
-    def getFileAssetObjectTypeEqual(self):
-        return self.fileAssetObjectTypeEqual
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileAssetListResponse.PROPERTY_LOADERS)
 
-    def setFileAssetObjectTypeEqual(self, newFileAssetObjectTypeEqual):
-        self.fileAssetObjectTypeEqual = newFileAssetObjectTypeEqual
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFileAssetListResponse")
+        return kparams
 
-    def getObjectIdEqual(self):
-        return self.objectIdEqual
-
-    def setObjectIdEqual(self, newObjectIdEqual):
-        self.objectIdEqual = newObjectIdEqual
-
-    def getObjectIdIn(self):
-        return self.objectIdIn
-
-    def setObjectIdIn(self, newObjectIdIn):
-        self.objectIdIn = newObjectIdIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -30017,6 +29346,99 @@ class KalturaFlattenJobData(KalturaJobData):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaFlattenJobData")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFlavorAssetListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFlavorAsset
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorAssetListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFlavorAssetListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFlavorParamsListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFlavorParams
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParams), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorParamsListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFlavorParamsListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFlavorParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFlavorParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParamsOutput), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -30179,146 +29601,33 @@ class KalturaGoogleVideoSyndicationFeed(KalturaBaseSyndicationFeed):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGroupUserBaseFilter(KalturaFilter):
+class KalturaGroupUserListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            groupIdEqual=NotImplemented,
-            groupIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var string
-        self.userIdEqual = userIdEqual
-
-        # @var string
-        self.userIdIn = userIdIn
-
-        # @var string
-        self.groupIdEqual = groupIdEqual
-
-        # @var string
-        self.groupIdIn = groupIdIn
-
-        # @var KalturaGroupUserStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+        # @var array of KalturaGroupUser
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'userIdEqual': getXmlNodeText, 
-        'userIdIn': getXmlNodeText, 
-        'groupIdEqual': getXmlNodeText, 
-        'groupIdIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaGroupUserStatus"), 
-        'statusIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaGroupUser), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGroupUserBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGroupUserListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaGroupUserBaseFilter")
-        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
-        kparams.addStringIfDefined("userIdIn", self.userIdIn)
-        kparams.addStringIfDefined("groupIdEqual", self.groupIdEqual)
-        kparams.addStringIfDefined("groupIdIn", self.groupIdIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaGroupUserListResponse")
         return kparams
 
-    def getUserIdEqual(self):
-        return self.userIdEqual
-
-    def setUserIdEqual(self, newUserIdEqual):
-        self.userIdEqual = newUserIdEqual
-
-    def getUserIdIn(self):
-        return self.userIdIn
-
-    def setUserIdIn(self, newUserIdIn):
-        self.userIdIn = newUserIdIn
-
-    def getGroupIdEqual(self):
-        return self.groupIdEqual
-
-    def setGroupIdEqual(self, newGroupIdEqual):
-        self.groupIdEqual = newGroupIdEqual
-
-    def getGroupIdIn(self):
-        return self.groupIdIn
-
-    def setGroupIdIn(self, newGroupIdIn):
-        self.groupIdIn = newGroupIdIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -30758,146 +30067,64 @@ class KalturaLimitFlavorsRestriction(KalturaBaseRestriction):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveChannelSegmentBaseFilter(KalturaFilter):
+class KalturaLiveChannelListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            channelIdEqual=NotImplemented,
-            channelIdIn=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaLiveChannelSegmentStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var string
-        self.channelIdEqual = channelIdEqual
-
-        # @var string
-        self.channelIdIn = channelIdIn
-
-        # @var float
-        self.startTimeGreaterThanOrEqual = startTimeGreaterThanOrEqual
-
-        # @var float
-        self.startTimeLessThanOrEqual = startTimeLessThanOrEqual
+        # @var array of KalturaLiveChannel
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'statusEqual': (KalturaEnumsFactory.createString, "KalturaLiveChannelSegmentStatus"), 
-        'statusIn': getXmlNodeText, 
-        'channelIdEqual': getXmlNodeText, 
-        'channelIdIn': getXmlNodeText, 
-        'startTimeGreaterThanOrEqual': getXmlNodeFloat, 
-        'startTimeLessThanOrEqual': getXmlNodeFloat, 
+        'objects': (KalturaObjectFactory.createArray, KalturaLiveChannel), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveChannelSegmentBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaLiveChannelSegmentBaseFilter")
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringIfDefined("channelIdEqual", self.channelIdEqual)
-        kparams.addStringIfDefined("channelIdIn", self.channelIdIn)
-        kparams.addFloatIfDefined("startTimeGreaterThanOrEqual", self.startTimeGreaterThanOrEqual)
-        kparams.addFloatIfDefined("startTimeLessThanOrEqual", self.startTimeLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelListResponse")
         return kparams
 
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
+    def getObjects(self):
+        return self.objects
 
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
 
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveChannelSegmentListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+        # @var array of KalturaLiveChannelSegment
+        # @readonly
+        self.objects = objects
 
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
 
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaLiveChannelSegment), 
+    }
 
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelSegmentListResponse.PROPERTY_LOADERS)
 
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelSegmentListResponse")
+        return kparams
 
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getChannelIdEqual(self):
-        return self.channelIdEqual
-
-    def setChannelIdEqual(self, newChannelIdEqual):
-        self.channelIdEqual = newChannelIdEqual
-
-    def getChannelIdIn(self):
-        return self.channelIdIn
-
-    def setChannelIdIn(self, newChannelIdIn):
-        self.channelIdIn = newChannelIdIn
-
-    def getStartTimeGreaterThanOrEqual(self):
-        return self.startTimeGreaterThanOrEqual
-
-    def setStartTimeGreaterThanOrEqual(self, newStartTimeGreaterThanOrEqual):
-        self.startTimeGreaterThanOrEqual = newStartTimeGreaterThanOrEqual
-
-    def getStartTimeLessThanOrEqual(self):
-        return self.startTimeLessThanOrEqual
-
-    def setStartTimeLessThanOrEqual(self, newStartTimeLessThanOrEqual):
-        self.startTimeLessThanOrEqual = newStartTimeLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -30978,6 +30205,71 @@ class KalturaLiveReportExportJobData(KalturaJobData):
 
     def setRecipientEmail(self, newRecipientEmail):
         self.recipientEmail = newRecipientEmail
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStatsListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var KalturaLiveStats
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.create, KalturaLiveStats), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStatsListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaLiveStatsListResponse")
+        kparams.addObjectIfDefined("objects", self.objects)
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+    def setObjects(self, newObjects):
+        self.objects = newObjects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaLiveStreamEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaLiveStreamEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -31345,6 +30637,68 @@ class KalturaMediaInfoBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaInfoListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMediaInfo
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMediaInfo), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMediaInfoListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMediaEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMediaEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMediaListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaServerBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -31413,6 +30767,68 @@ class KalturaMediaServerBaseFilter(KalturaFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMixListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMixEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMixEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMixListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMixListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaModerationFlagListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaModerationFlag
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaModerationFlag), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaModerationFlagListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaModerationFlagListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -31672,6 +31088,37 @@ class KalturaNotificationJobData(KalturaJobData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaObjectListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaObject
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaObject), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaObjectListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaObjectListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaOrCondition(KalturaCondition):
     def __init__(self,
             type=NotImplemented,
@@ -31902,434 +31349,126 @@ class KalturaPartnerBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPermissionBaseFilter(KalturaFilter):
+class KalturaPartnerListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            friendlyNameLike=NotImplemented,
-            descriptionLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            dependsOnPermissionNamesMultiLikeOr=NotImplemented,
-            dependsOnPermissionNamesMultiLikeAnd=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var KalturaPermissionType
-        self.typeEqual = typeEqual
-
-        # @var string
-        self.typeIn = typeIn
-
-        # @var string
-        self.nameEqual = nameEqual
-
-        # @var string
-        self.nameIn = nameIn
-
-        # @var string
-        self.friendlyNameLike = friendlyNameLike
-
-        # @var string
-        self.descriptionLike = descriptionLike
-
-        # @var KalturaPermissionStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var string
-        self.dependsOnPermissionNamesMultiLikeOr = dependsOnPermissionNamesMultiLikeOr
-
-        # @var string
-        self.dependsOnPermissionNamesMultiLikeAnd = dependsOnPermissionNamesMultiLikeAnd
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+        # @var array of KalturaPartner
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'typeEqual': (KalturaEnumsFactory.createInt, "KalturaPermissionType"), 
-        'typeIn': getXmlNodeText, 
-        'nameEqual': getXmlNodeText, 
-        'nameIn': getXmlNodeText, 
-        'friendlyNameLike': getXmlNodeText, 
-        'descriptionLike': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaPermissionStatus"), 
-        'statusIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'dependsOnPermissionNamesMultiLikeOr': getXmlNodeText, 
-        'dependsOnPermissionNamesMultiLikeAnd': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaPartner), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPartnerListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaPermissionBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
-        kparams.addStringIfDefined("typeIn", self.typeIn)
-        kparams.addStringIfDefined("nameEqual", self.nameEqual)
-        kparams.addStringIfDefined("nameIn", self.nameIn)
-        kparams.addStringIfDefined("friendlyNameLike", self.friendlyNameLike)
-        kparams.addStringIfDefined("descriptionLike", self.descriptionLike)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addStringIfDefined("dependsOnPermissionNamesMultiLikeOr", self.dependsOnPermissionNamesMultiLikeOr)
-        kparams.addStringIfDefined("dependsOnPermissionNamesMultiLikeAnd", self.dependsOnPermissionNamesMultiLikeAnd)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaPartnerListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getTypeEqual(self):
-        return self.typeEqual
-
-    def setTypeEqual(self, newTypeEqual):
-        self.typeEqual = newTypeEqual
-
-    def getTypeIn(self):
-        return self.typeIn
-
-    def setTypeIn(self, newTypeIn):
-        self.typeIn = newTypeIn
-
-    def getNameEqual(self):
-        return self.nameEqual
-
-    def setNameEqual(self, newNameEqual):
-        self.nameEqual = newNameEqual
-
-    def getNameIn(self):
-        return self.nameIn
-
-    def setNameIn(self, newNameIn):
-        self.nameIn = newNameIn
-
-    def getFriendlyNameLike(self):
-        return self.friendlyNameLike
-
-    def setFriendlyNameLike(self, newFriendlyNameLike):
-        self.friendlyNameLike = newFriendlyNameLike
-
-    def getDescriptionLike(self):
-        return self.descriptionLike
-
-    def setDescriptionLike(self, newDescriptionLike):
-        self.descriptionLike = newDescriptionLike
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
-
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
-
-    def getDependsOnPermissionNamesMultiLikeOr(self):
-        return self.dependsOnPermissionNamesMultiLikeOr
-
-    def setDependsOnPermissionNamesMultiLikeOr(self, newDependsOnPermissionNamesMultiLikeOr):
-        self.dependsOnPermissionNamesMultiLikeOr = newDependsOnPermissionNamesMultiLikeOr
-
-    def getDependsOnPermissionNamesMultiLikeAnd(self):
-        return self.dependsOnPermissionNamesMultiLikeAnd
-
-    def setDependsOnPermissionNamesMultiLikeAnd(self, newDependsOnPermissionNamesMultiLikeAnd):
-        self.dependsOnPermissionNamesMultiLikeAnd = newDependsOnPermissionNamesMultiLikeAnd
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPermissionItemBaseFilter(KalturaFilter):
+class KalturaPermissionItemListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var KalturaPermissionItemType
-        self.typeEqual = typeEqual
-
-        # @var string
-        self.typeIn = typeIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+        # @var array of KalturaPermissionItem
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'typeEqual': (KalturaEnumsFactory.createString, "KalturaPermissionItemType"), 
-        'typeIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaPermissionItem), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionItemBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionItemListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaPermissionItemBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
-        kparams.addStringIfDefined("typeIn", self.typeIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaPermissionItemListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
+    def getObjects(self):
+        return self.objects
 
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
 
-    def getIdIn(self):
-        return self.idIn
+# @package Kaltura
+# @subpackage Client
+class KalturaPermissionListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
+        # @var array of KalturaPermission
+        # @readonly
+        self.objects = objects
 
-    def getTypeEqual(self):
-        return self.typeEqual
 
-    def setTypeEqual(self, newTypeEqual):
-        self.typeEqual = newTypeEqual
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaPermission), 
+    }
 
-    def getTypeIn(self):
-        return self.typeIn
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionListResponse.PROPERTY_LOADERS)
 
-    def setTypeIn(self, newTypeIn):
-        self.typeIn = newTypeIn
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaPermissionListResponse")
+        return kparams
 
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
+    def getObjects(self):
+        return self.objects
 
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
 
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
+        # @var array of KalturaPlaylist
+        # @readonly
+        self.objects = objects
 
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
 
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaPlaylist), 
+    }
 
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaylistListResponse.PROPERTY_LOADERS)
 
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaPlaylistListResponse")
+        return kparams
 
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -32506,6 +31645,37 @@ class KalturaProvisionJobData(KalturaJobData):
 
     def setStreamName(self, newStreamName):
         self.streamName = newStreamName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRemotePathListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaRemotePath
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaRemotePath), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRemotePathListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaRemotePathListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -32708,6 +31878,176 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setInterval(self, newInterval):
         self.interval = newInterval
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaReport
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaReport), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaReportListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileHolder(KalturaBaseResponseProfile):
+    def __init__(self,
+            id=NotImplemented,
+            systemName=NotImplemented):
+        KalturaBaseResponseProfile.__init__(self)
+
+        # Auto generated numeric identifier
+        # @var int
+        self.id = id
+
+        # Unique system name
+        # @var string
+        self.systemName = systemName
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'systemName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseResponseProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileHolder.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseResponseProfile.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileHolder")
+        kparams.addIntIfDefined("id", self.id)
+        kparams.addStringIfDefined("systemName", self.systemName)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
+
+    def getSystemName(self):
+        return self.systemName
+
+    def setSystemName(self, newSystemName):
+        self.systemName = newSystemName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaResponseProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaResponseProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaScheduler
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaScheduler), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSchedulerListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaSchedulerListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSchedulerWorkerListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaSchedulerWorker
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaSchedulerWorker), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSchedulerWorkerListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaSchedulerWorkerListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -33220,6 +32560,37 @@ class KalturaStorageProfileBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaStorageProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaStorageProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaStorageProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaStorageProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaStorageProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSyncCategoryPrivacyContextJobData(KalturaJobData):
     def __init__(self,
             categoryId=NotImplemented,
@@ -33277,6 +32648,99 @@ class KalturaSyncCategoryPrivacyContextJobData(KalturaJobData):
 
     def setLastUpdatedCategoryCreatedAt(self, newLastUpdatedCategoryCreatedAt):
         self.lastUpdatedCategoryCreatedAt = newLastUpdatedCategoryCreatedAt
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbAssetListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaThumbAsset
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaThumbAsset), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbAssetListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaThumbAssetListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaThumbParams
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaThumbParams), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaThumbParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaThumbParamsOutput), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -33614,6 +33078,37 @@ class KalturaUiConfBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUiConfListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaUiConf
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaUiConf), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUiConfListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUiConfListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUploadTokenBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -33718,6 +33213,37 @@ class KalturaUploadTokenBaseFilter(KalturaFilter):
 
     def setFileSizeEqual(self, newFileSizeEqual):
         self.fileSizeEqual = newFileSizeEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUploadTokenListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaUploadToken
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaUploadToken), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUploadTokenListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUploadTokenListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -34288,266 +33814,64 @@ class KalturaUserAgentRestriction(KalturaBaseRestriction):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserLoginDataBaseFilter(KalturaFilter):
+class KalturaUserListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            loginEmailEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var string
-        self.loginEmailEqual = loginEmailEqual
+        # @var array of KalturaUser
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'loginEmailEqual': getXmlNodeText, 
+        'objects': (KalturaObjectFactory.createArray, KalturaUser), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserLoginDataBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaUserLoginDataBaseFilter")
-        kparams.addStringIfDefined("loginEmailEqual", self.loginEmailEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUserListResponse")
         return kparams
 
-    def getLoginEmailEqual(self):
-        return self.loginEmailEqual
-
-    def setLoginEmailEqual(self, newLoginEmailEqual):
-        self.loginEmailEqual = newLoginEmailEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserRoleBaseFilter(KalturaFilter):
+class KalturaUserLoginDataListResponse(KalturaListResponse):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            descriptionLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.nameEqual = nameEqual
-
-        # @var string
-        self.nameIn = nameIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var string
-        self.descriptionLike = descriptionLike
-
-        # @var KalturaUserRoleStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+        # @var array of KalturaUserLoginData
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'nameEqual': getXmlNodeText, 
-        'nameIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'descriptionLike': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaUserRoleStatus"), 
-        'statusIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'objects': (KalturaObjectFactory.createArray, KalturaUserLoginData), 
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserRoleBaseFilter.PROPERTY_LOADERS)
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserLoginDataListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaUserRoleBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("nameEqual", self.nameEqual)
-        kparams.addStringIfDefined("nameIn", self.nameIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addStringIfDefined("descriptionLike", self.descriptionLike)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUserLoginDataListResponse")
         return kparams
 
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getNameEqual(self):
-        return self.nameEqual
-
-    def setNameEqual(self, newNameEqual):
-        self.nameEqual = newNameEqual
-
-    def getNameIn(self):
-        return self.nameIn
-
-    def setNameIn(self, newNameIn):
-        self.nameIn = newNameIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getDescriptionLike(self):
-        return self.descriptionLike
-
-    def setDescriptionLike(self, newDescriptionLike):
-        self.descriptionLike = newDescriptionLike
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
-
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -34587,6 +33911,37 @@ class KalturaUserRoleCondition(KalturaCondition):
 
     def setRoleIds(self, newRoleIds):
         self.roleIds = newRoleIds
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserRoleListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaUserRole
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaUserRole), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserRoleListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUserRoleListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -34759,6 +34114,37 @@ class KalturaWidgetBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaWidgetListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaWidget
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaWidget), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaWidgetListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaWidgetListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
     def __init__(self,
             id=NotImplemented,
@@ -34866,7 +34252,7 @@ class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAccessControlFilter(KalturaAccessControlBaseFilter):
+class KalturaAccessControlBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -34876,33 +34262,93 @@ class KalturaAccessControlFilter(KalturaAccessControlBaseFilter):
             systemNameIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented):
-        KalturaAccessControlBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            systemNameEqual,
-            systemNameIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaAccessControlBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAccessControlBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAccessControlProfileFilter(KalturaAccessControlProfileBaseFilter):
+class KalturaAccessControlProfileBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -34914,30 +34360,110 @@ class KalturaAccessControlProfileFilter(KalturaAccessControlProfileBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaAccessControlProfileBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            systemNameEqual,
-            systemNameIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaAccessControlProfileBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAccessControlProfileFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlProfileBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAccessControlProfileBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAccessControlProfileFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlProfileBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
 
 
 # @package Kaltura
@@ -35226,7 +34752,7 @@ class KalturaAkamaiUniversalProvisionJobData(KalturaProvisionJobData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAssetFilter(KalturaAssetBaseFilter):
+class KalturaAssetBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -35247,44 +34773,214 @@ class KalturaAssetFilter(KalturaAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented):
-        KalturaAssetBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            entryIdEqual,
-            entryIdIn,
-            partnerIdEqual,
-            partnerIdIn,
-            sizeGreaterThanOrEqual,
-            sizeLessThanOrEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var string
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var int
+        self.sizeGreaterThanOrEqual = sizeGreaterThanOrEqual
+
+        # @var int
+        self.sizeLessThanOrEqual = sizeLessThanOrEqual
+
+        # @var string
+        self.tagsLike = tagsLike
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.deletedAtGreaterThanOrEqual = deletedAtGreaterThanOrEqual
+
+        # @var int
+        self.deletedAtLessThanOrEqual = deletedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeText, 
+        'idIn': getXmlNodeText, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'sizeGreaterThanOrEqual': getXmlNodeInt, 
+        'sizeLessThanOrEqual': getXmlNodeInt, 
+        'tagsLike': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'deletedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'deletedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaAssetBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAssetBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetBaseFilter")
+        kparams.addStringIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addIntIfDefined("sizeGreaterThanOrEqual", self.sizeGreaterThanOrEqual)
+        kparams.addIntIfDefined("sizeLessThanOrEqual", self.sizeLessThanOrEqual)
+        kparams.addStringIfDefined("tagsLike", self.tagsLike)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("deletedAtGreaterThanOrEqual", self.deletedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("deletedAtLessThanOrEqual", self.deletedAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getSizeGreaterThanOrEqual(self):
+        return self.sizeGreaterThanOrEqual
+
+    def setSizeGreaterThanOrEqual(self, newSizeGreaterThanOrEqual):
+        self.sizeGreaterThanOrEqual = newSizeGreaterThanOrEqual
+
+    def getSizeLessThanOrEqual(self):
+        return self.sizeLessThanOrEqual
+
+    def setSizeLessThanOrEqual(self, newSizeLessThanOrEqual):
+        self.sizeLessThanOrEqual = newSizeLessThanOrEqual
+
+    def getTagsLike(self):
+        return self.tagsLike
+
+    def setTagsLike(self, newTagsLike):
+        self.tagsLike = newTagsLike
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getDeletedAtGreaterThanOrEqual(self):
+        return self.deletedAtGreaterThanOrEqual
+
+    def setDeletedAtGreaterThanOrEqual(self, newDeletedAtGreaterThanOrEqual):
+        self.deletedAtGreaterThanOrEqual = newDeletedAtGreaterThanOrEqual
+
+    def getDeletedAtLessThanOrEqual(self):
+        return self.deletedAtLessThanOrEqual
+
+    def setDeletedAtLessThanOrEqual(self, newDeletedAtLessThanOrEqual):
+        self.deletedAtLessThanOrEqual = newDeletedAtLessThanOrEqual
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
+class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -35292,26 +34988,66 @@ class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
             tagsEqual=NotImplemented):
-        KalturaAssetParamsBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            systemNameEqual,
-            systemNameIn,
-            isSystemDefaultEqual,
-            tagsEqual)
+            advancedSearch)
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var KalturaNullableBoolean
+        self.isSystemDefaultEqual = isSystemDefaultEqual
+
+        # @var string
+        self.tagsEqual = tagsEqual
 
 
     PROPERTY_LOADERS = {
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'isSystemDefaultEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'tagsEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaAssetParamsBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetParamsFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetParamsBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAssetParamsBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetParamsFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetParamsBaseFilter")
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addIntEnumIfDefined("isSystemDefaultEqual", self.isSystemDefaultEqual)
+        kparams.addStringIfDefined("tagsEqual", self.tagsEqual)
         return kparams
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getIsSystemDefaultEqual(self):
+        return self.isSystemDefaultEqual
+
+    def setIsSystemDefaultEqual(self, newIsSystemDefaultEqual):
+        self.isSystemDefaultEqual = newIsSystemDefaultEqual
+
+    def getTagsEqual(self):
+        return self.tagsEqual
+
+    def setTagsEqual(self, newTagsEqual):
+        self.tagsEqual = newTagsEqual
 
 
 # @package Kaltura
@@ -35527,49 +35263,7 @@ class KalturaBulkUploadFilter(KalturaBulkUploadBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            categoryIdEqual=NotImplemented,
-            categoryIdIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            categoryFullIdsStartsWith=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaCategoryEntryBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            categoryIdEqual,
-            categoryIdIn,
-            entryIdEqual,
-            entryIdIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            categoryFullIdsStartsWith,
-            statusEqual,
-            statusIn)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaCategoryEntryBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryEntryFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaCategoryEntryBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryEntryFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaCategoryFilter(KalturaCategoryBaseFilter):
+class KalturaCategoryBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -35609,157 +35303,562 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
             inheritedParentIdEqual=NotImplemented,
             inheritedParentIdIn=NotImplemented,
             partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            freeText=NotImplemented,
-            membersIn=NotImplemented,
-            nameOrReferenceIdStartsWith=NotImplemented,
-            managerEqual=NotImplemented,
-            memberEqual=NotImplemented,
-            fullNameStartsWithIn=NotImplemented,
-            ancestorIdIn=NotImplemented,
-            idOrInheritedParentIdIn=NotImplemented):
-        KalturaCategoryBaseFilter.__init__(self,
+            partnerSortValueLessThanOrEqual=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            parentIdEqual,
-            parentIdIn,
-            depthEqual,
-            fullNameEqual,
-            fullNameStartsWith,
-            fullNameIn,
-            fullIdsEqual,
-            fullIdsStartsWith,
-            fullIdsMatchOr,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            appearInListEqual,
-            privacyEqual,
-            privacyIn,
-            inheritanceTypeEqual,
-            inheritanceTypeIn,
-            referenceIdEqual,
-            referenceIdEmpty,
-            contributionPolicyEqual,
-            membersCountGreaterThanOrEqual,
-            membersCountLessThanOrEqual,
-            pendingMembersCountGreaterThanOrEqual,
-            pendingMembersCountLessThanOrEqual,
-            privacyContextEqual,
-            statusEqual,
-            statusIn,
-            inheritedParentIdEqual,
-            inheritedParentIdIn,
-            partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
 
         # @var string
-        self.freeText = freeText
+        self.idIn = idIn
+
+        # @var int
+        self.parentIdEqual = parentIdEqual
 
         # @var string
-        self.membersIn = membersIn
+        self.parentIdIn = parentIdIn
+
+        # @var int
+        self.depthEqual = depthEqual
 
         # @var string
-        self.nameOrReferenceIdStartsWith = nameOrReferenceIdStartsWith
+        self.fullNameEqual = fullNameEqual
 
         # @var string
-        self.managerEqual = managerEqual
+        self.fullNameStartsWith = fullNameStartsWith
 
         # @var string
-        self.memberEqual = memberEqual
+        self.fullNameIn = fullNameIn
 
         # @var string
-        self.fullNameStartsWithIn = fullNameStartsWithIn
-
-        # not includes the category itself (only sub categories)
-        # @var string
-        self.ancestorIdIn = ancestorIdIn
+        self.fullIdsEqual = fullIdsEqual
 
         # @var string
-        self.idOrInheritedParentIdIn = idOrInheritedParentIdIn
+        self.fullIdsStartsWith = fullIdsStartsWith
+
+        # @var string
+        self.fullIdsMatchOr = fullIdsMatchOr
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var string
+        self.tagsLike = tagsLike
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var KalturaAppearInListType
+        self.appearInListEqual = appearInListEqual
+
+        # @var KalturaPrivacyType
+        self.privacyEqual = privacyEqual
+
+        # @var string
+        self.privacyIn = privacyIn
+
+        # @var KalturaInheritanceType
+        self.inheritanceTypeEqual = inheritanceTypeEqual
+
+        # @var string
+        self.inheritanceTypeIn = inheritanceTypeIn
+
+        # @var string
+        self.referenceIdEqual = referenceIdEqual
+
+        # @var KalturaNullableBoolean
+        self.referenceIdEmpty = referenceIdEmpty
+
+        # @var KalturaContributionPolicyType
+        self.contributionPolicyEqual = contributionPolicyEqual
+
+        # @var int
+        self.membersCountGreaterThanOrEqual = membersCountGreaterThanOrEqual
+
+        # @var int
+        self.membersCountLessThanOrEqual = membersCountLessThanOrEqual
+
+        # @var int
+        self.pendingMembersCountGreaterThanOrEqual = pendingMembersCountGreaterThanOrEqual
+
+        # @var int
+        self.pendingMembersCountLessThanOrEqual = pendingMembersCountLessThanOrEqual
+
+        # @var string
+        self.privacyContextEqual = privacyContextEqual
+
+        # @var KalturaCategoryStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.inheritedParentIdEqual = inheritedParentIdEqual
+
+        # @var string
+        self.inheritedParentIdIn = inheritedParentIdIn
+
+        # @var int
+        self.partnerSortValueGreaterThanOrEqual = partnerSortValueGreaterThanOrEqual
+
+        # @var int
+        self.partnerSortValueLessThanOrEqual = partnerSortValueLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
-        'freeText': getXmlNodeText, 
-        'membersIn': getXmlNodeText, 
-        'nameOrReferenceIdStartsWith': getXmlNodeText, 
-        'managerEqual': getXmlNodeText, 
-        'memberEqual': getXmlNodeText, 
-        'fullNameStartsWithIn': getXmlNodeText, 
-        'ancestorIdIn': getXmlNodeText, 
-        'idOrInheritedParentIdIn': getXmlNodeText, 
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'parentIdEqual': getXmlNodeInt, 
+        'parentIdIn': getXmlNodeText, 
+        'depthEqual': getXmlNodeInt, 
+        'fullNameEqual': getXmlNodeText, 
+        'fullNameStartsWith': getXmlNodeText, 
+        'fullNameIn': getXmlNodeText, 
+        'fullIdsEqual': getXmlNodeText, 
+        'fullIdsStartsWith': getXmlNodeText, 
+        'fullIdsMatchOr': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'tagsLike': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'appearInListEqual': (KalturaEnumsFactory.createInt, "KalturaAppearInListType"), 
+        'privacyEqual': (KalturaEnumsFactory.createInt, "KalturaPrivacyType"), 
+        'privacyIn': getXmlNodeText, 
+        'inheritanceTypeEqual': (KalturaEnumsFactory.createInt, "KalturaInheritanceType"), 
+        'inheritanceTypeIn': getXmlNodeText, 
+        'referenceIdEqual': getXmlNodeText, 
+        'referenceIdEmpty': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'contributionPolicyEqual': (KalturaEnumsFactory.createInt, "KalturaContributionPolicyType"), 
+        'membersCountGreaterThanOrEqual': getXmlNodeInt, 
+        'membersCountLessThanOrEqual': getXmlNodeInt, 
+        'pendingMembersCountGreaterThanOrEqual': getXmlNodeInt, 
+        'pendingMembersCountLessThanOrEqual': getXmlNodeInt, 
+        'privacyContextEqual': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryStatus"), 
+        'statusIn': getXmlNodeText, 
+        'inheritedParentIdEqual': getXmlNodeInt, 
+        'inheritedParentIdIn': getXmlNodeText, 
+        'partnerSortValueGreaterThanOrEqual': getXmlNodeInt, 
+        'partnerSortValueLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaCategoryBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaCategoryBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryFilter")
-        kparams.addStringIfDefined("freeText", self.freeText)
-        kparams.addStringIfDefined("membersIn", self.membersIn)
-        kparams.addStringIfDefined("nameOrReferenceIdStartsWith", self.nameOrReferenceIdStartsWith)
-        kparams.addStringIfDefined("managerEqual", self.managerEqual)
-        kparams.addStringIfDefined("memberEqual", self.memberEqual)
-        kparams.addStringIfDefined("fullNameStartsWithIn", self.fullNameStartsWithIn)
-        kparams.addStringIfDefined("ancestorIdIn", self.ancestorIdIn)
-        kparams.addStringIfDefined("idOrInheritedParentIdIn", self.idOrInheritedParentIdIn)
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("parentIdEqual", self.parentIdEqual)
+        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
+        kparams.addIntIfDefined("depthEqual", self.depthEqual)
+        kparams.addStringIfDefined("fullNameEqual", self.fullNameEqual)
+        kparams.addStringIfDefined("fullNameStartsWith", self.fullNameStartsWith)
+        kparams.addStringIfDefined("fullNameIn", self.fullNameIn)
+        kparams.addStringIfDefined("fullIdsEqual", self.fullIdsEqual)
+        kparams.addStringIfDefined("fullIdsStartsWith", self.fullIdsStartsWith)
+        kparams.addStringIfDefined("fullIdsMatchOr", self.fullIdsMatchOr)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addStringIfDefined("tagsLike", self.tagsLike)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntEnumIfDefined("appearInListEqual", self.appearInListEqual)
+        kparams.addIntEnumIfDefined("privacyEqual", self.privacyEqual)
+        kparams.addStringIfDefined("privacyIn", self.privacyIn)
+        kparams.addIntEnumIfDefined("inheritanceTypeEqual", self.inheritanceTypeEqual)
+        kparams.addStringIfDefined("inheritanceTypeIn", self.inheritanceTypeIn)
+        kparams.addStringIfDefined("referenceIdEqual", self.referenceIdEqual)
+        kparams.addIntEnumIfDefined("referenceIdEmpty", self.referenceIdEmpty)
+        kparams.addIntEnumIfDefined("contributionPolicyEqual", self.contributionPolicyEqual)
+        kparams.addIntIfDefined("membersCountGreaterThanOrEqual", self.membersCountGreaterThanOrEqual)
+        kparams.addIntIfDefined("membersCountLessThanOrEqual", self.membersCountLessThanOrEqual)
+        kparams.addIntIfDefined("pendingMembersCountGreaterThanOrEqual", self.pendingMembersCountGreaterThanOrEqual)
+        kparams.addIntIfDefined("pendingMembersCountLessThanOrEqual", self.pendingMembersCountLessThanOrEqual)
+        kparams.addStringIfDefined("privacyContextEqual", self.privacyContextEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("inheritedParentIdEqual", self.inheritedParentIdEqual)
+        kparams.addStringIfDefined("inheritedParentIdIn", self.inheritedParentIdIn)
+        kparams.addIntIfDefined("partnerSortValueGreaterThanOrEqual", self.partnerSortValueGreaterThanOrEqual)
+        kparams.addIntIfDefined("partnerSortValueLessThanOrEqual", self.partnerSortValueLessThanOrEqual)
         return kparams
 
-    def getFreeText(self):
-        return self.freeText
+    def getIdEqual(self):
+        return self.idEqual
 
-    def setFreeText(self, newFreeText):
-        self.freeText = newFreeText
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
 
-    def getMembersIn(self):
-        return self.membersIn
+    def getIdIn(self):
+        return self.idIn
 
-    def setMembersIn(self, newMembersIn):
-        self.membersIn = newMembersIn
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
 
-    def getNameOrReferenceIdStartsWith(self):
-        return self.nameOrReferenceIdStartsWith
+    def getParentIdEqual(self):
+        return self.parentIdEqual
 
-    def setNameOrReferenceIdStartsWith(self, newNameOrReferenceIdStartsWith):
-        self.nameOrReferenceIdStartsWith = newNameOrReferenceIdStartsWith
+    def setParentIdEqual(self, newParentIdEqual):
+        self.parentIdEqual = newParentIdEqual
 
-    def getManagerEqual(self):
-        return self.managerEqual
+    def getParentIdIn(self):
+        return self.parentIdIn
 
-    def setManagerEqual(self, newManagerEqual):
-        self.managerEqual = newManagerEqual
+    def setParentIdIn(self, newParentIdIn):
+        self.parentIdIn = newParentIdIn
 
-    def getMemberEqual(self):
-        return self.memberEqual
+    def getDepthEqual(self):
+        return self.depthEqual
 
-    def setMemberEqual(self, newMemberEqual):
-        self.memberEqual = newMemberEqual
+    def setDepthEqual(self, newDepthEqual):
+        self.depthEqual = newDepthEqual
 
-    def getFullNameStartsWithIn(self):
-        return self.fullNameStartsWithIn
+    def getFullNameEqual(self):
+        return self.fullNameEqual
 
-    def setFullNameStartsWithIn(self, newFullNameStartsWithIn):
-        self.fullNameStartsWithIn = newFullNameStartsWithIn
+    def setFullNameEqual(self, newFullNameEqual):
+        self.fullNameEqual = newFullNameEqual
 
-    def getAncestorIdIn(self):
-        return self.ancestorIdIn
+    def getFullNameStartsWith(self):
+        return self.fullNameStartsWith
 
-    def setAncestorIdIn(self, newAncestorIdIn):
-        self.ancestorIdIn = newAncestorIdIn
+    def setFullNameStartsWith(self, newFullNameStartsWith):
+        self.fullNameStartsWith = newFullNameStartsWith
 
-    def getIdOrInheritedParentIdIn(self):
-        return self.idOrInheritedParentIdIn
+    def getFullNameIn(self):
+        return self.fullNameIn
 
-    def setIdOrInheritedParentIdIn(self, newIdOrInheritedParentIdIn):
-        self.idOrInheritedParentIdIn = newIdOrInheritedParentIdIn
+    def setFullNameIn(self, newFullNameIn):
+        self.fullNameIn = newFullNameIn
+
+    def getFullIdsEqual(self):
+        return self.fullIdsEqual
+
+    def setFullIdsEqual(self, newFullIdsEqual):
+        self.fullIdsEqual = newFullIdsEqual
+
+    def getFullIdsStartsWith(self):
+        return self.fullIdsStartsWith
+
+    def setFullIdsStartsWith(self, newFullIdsStartsWith):
+        self.fullIdsStartsWith = newFullIdsStartsWith
+
+    def getFullIdsMatchOr(self):
+        return self.fullIdsMatchOr
+
+    def setFullIdsMatchOr(self, newFullIdsMatchOr):
+        self.fullIdsMatchOr = newFullIdsMatchOr
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getTagsLike(self):
+        return self.tagsLike
+
+    def setTagsLike(self, newTagsLike):
+        self.tagsLike = newTagsLike
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getAppearInListEqual(self):
+        return self.appearInListEqual
+
+    def setAppearInListEqual(self, newAppearInListEqual):
+        self.appearInListEqual = newAppearInListEqual
+
+    def getPrivacyEqual(self):
+        return self.privacyEqual
+
+    def setPrivacyEqual(self, newPrivacyEqual):
+        self.privacyEqual = newPrivacyEqual
+
+    def getPrivacyIn(self):
+        return self.privacyIn
+
+    def setPrivacyIn(self, newPrivacyIn):
+        self.privacyIn = newPrivacyIn
+
+    def getInheritanceTypeEqual(self):
+        return self.inheritanceTypeEqual
+
+    def setInheritanceTypeEqual(self, newInheritanceTypeEqual):
+        self.inheritanceTypeEqual = newInheritanceTypeEqual
+
+    def getInheritanceTypeIn(self):
+        return self.inheritanceTypeIn
+
+    def setInheritanceTypeIn(self, newInheritanceTypeIn):
+        self.inheritanceTypeIn = newInheritanceTypeIn
+
+    def getReferenceIdEqual(self):
+        return self.referenceIdEqual
+
+    def setReferenceIdEqual(self, newReferenceIdEqual):
+        self.referenceIdEqual = newReferenceIdEqual
+
+    def getReferenceIdEmpty(self):
+        return self.referenceIdEmpty
+
+    def setReferenceIdEmpty(self, newReferenceIdEmpty):
+        self.referenceIdEmpty = newReferenceIdEmpty
+
+    def getContributionPolicyEqual(self):
+        return self.contributionPolicyEqual
+
+    def setContributionPolicyEqual(self, newContributionPolicyEqual):
+        self.contributionPolicyEqual = newContributionPolicyEqual
+
+    def getMembersCountGreaterThanOrEqual(self):
+        return self.membersCountGreaterThanOrEqual
+
+    def setMembersCountGreaterThanOrEqual(self, newMembersCountGreaterThanOrEqual):
+        self.membersCountGreaterThanOrEqual = newMembersCountGreaterThanOrEqual
+
+    def getMembersCountLessThanOrEqual(self):
+        return self.membersCountLessThanOrEqual
+
+    def setMembersCountLessThanOrEqual(self, newMembersCountLessThanOrEqual):
+        self.membersCountLessThanOrEqual = newMembersCountLessThanOrEqual
+
+    def getPendingMembersCountGreaterThanOrEqual(self):
+        return self.pendingMembersCountGreaterThanOrEqual
+
+    def setPendingMembersCountGreaterThanOrEqual(self, newPendingMembersCountGreaterThanOrEqual):
+        self.pendingMembersCountGreaterThanOrEqual = newPendingMembersCountGreaterThanOrEqual
+
+    def getPendingMembersCountLessThanOrEqual(self):
+        return self.pendingMembersCountLessThanOrEqual
+
+    def setPendingMembersCountLessThanOrEqual(self, newPendingMembersCountLessThanOrEqual):
+        self.pendingMembersCountLessThanOrEqual = newPendingMembersCountLessThanOrEqual
+
+    def getPrivacyContextEqual(self):
+        return self.privacyContextEqual
+
+    def setPrivacyContextEqual(self, newPrivacyContextEqual):
+        self.privacyContextEqual = newPrivacyContextEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getInheritedParentIdEqual(self):
+        return self.inheritedParentIdEqual
+
+    def setInheritedParentIdEqual(self, newInheritedParentIdEqual):
+        self.inheritedParentIdEqual = newInheritedParentIdEqual
+
+    def getInheritedParentIdIn(self):
+        return self.inheritedParentIdIn
+
+    def setInheritedParentIdIn(self, newInheritedParentIdIn):
+        self.inheritedParentIdIn = newInheritedParentIdIn
+
+    def getPartnerSortValueGreaterThanOrEqual(self):
+        return self.partnerSortValueGreaterThanOrEqual
+
+    def setPartnerSortValueGreaterThanOrEqual(self, newPartnerSortValueGreaterThanOrEqual):
+        self.partnerSortValueGreaterThanOrEqual = newPartnerSortValueGreaterThanOrEqual
+
+    def getPartnerSortValueLessThanOrEqual(self):
+        return self.partnerSortValueLessThanOrEqual
+
+    def setPartnerSortValueLessThanOrEqual(self, newPartnerSortValueLessThanOrEqual):
+        self.partnerSortValueLessThanOrEqual = newPartnerSortValueLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            categoryIdEqual=NotImplemented,
+            categoryIdIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            categoryFullIdsStartsWith=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.categoryIdEqual = categoryIdEqual
+
+        # @var string
+        self.categoryIdIn = categoryIdIn
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var string
+        self.categoryFullIdsStartsWith = categoryFullIdsStartsWith
+
+        # @var KalturaCategoryEntryStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+
+    PROPERTY_LOADERS = {
+        'categoryIdEqual': getXmlNodeInt, 
+        'categoryIdIn': getXmlNodeText, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'categoryFullIdsStartsWith': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryEntryStatus"), 
+        'statusIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryEntryBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryEntryBaseFilter")
+        kparams.addIntIfDefined("categoryIdEqual", self.categoryIdEqual)
+        kparams.addStringIfDefined("categoryIdIn", self.categoryIdIn)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addStringIfDefined("categoryFullIdsStartsWith", self.categoryFullIdsStartsWith)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        return kparams
+
+    def getCategoryIdEqual(self):
+        return self.categoryIdEqual
+
+    def setCategoryIdEqual(self, newCategoryIdEqual):
+        self.categoryIdEqual = newCategoryIdEqual
+
+    def getCategoryIdIn(self):
+        return self.categoryIdIn
+
+    def setCategoryIdIn(self, newCategoryIdIn):
+        self.categoryIdIn = newCategoryIdIn
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getCategoryFullIdsStartsWith(self):
+        return self.categoryFullIdsStartsWith
+
+    def setCategoryFullIdsStartsWith(self, newCategoryFullIdsStartsWith):
+        self.categoryFullIdsStartsWith = newCategoryFullIdsStartsWith
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
 
 
 # @package Kaltura
@@ -35810,7 +35909,151 @@ class KalturaControlPanelCommandFilter(KalturaControlPanelCommandBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaConversionProfileFilter(KalturaConversionProfileBaseFilter):
+class KalturaConversionProfileAssetParamsBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
+            conversionProfileIdIn=NotImplemented,
+            assetParamsIdEqual=NotImplemented,
+            assetParamsIdIn=NotImplemented,
+            readyBehaviorEqual=NotImplemented,
+            readyBehaviorIn=NotImplemented,
+            originEqual=NotImplemented,
+            originIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.conversionProfileIdEqual = conversionProfileIdEqual
+
+        # @var string
+        self.conversionProfileIdIn = conversionProfileIdIn
+
+        # @var int
+        self.assetParamsIdEqual = assetParamsIdEqual
+
+        # @var string
+        self.assetParamsIdIn = assetParamsIdIn
+
+        # @var KalturaFlavorReadyBehaviorType
+        self.readyBehaviorEqual = readyBehaviorEqual
+
+        # @var string
+        self.readyBehaviorIn = readyBehaviorIn
+
+        # @var KalturaAssetParamsOrigin
+        self.originEqual = originEqual
+
+        # @var string
+        self.originIn = originIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+
+    PROPERTY_LOADERS = {
+        'conversionProfileIdEqual': getXmlNodeInt, 
+        'conversionProfileIdIn': getXmlNodeText, 
+        'assetParamsIdEqual': getXmlNodeInt, 
+        'assetParamsIdIn': getXmlNodeText, 
+        'readyBehaviorEqual': (KalturaEnumsFactory.createInt, "KalturaFlavorReadyBehaviorType"), 
+        'readyBehaviorIn': getXmlNodeText, 
+        'originEqual': (KalturaEnumsFactory.createInt, "KalturaAssetParamsOrigin"), 
+        'originIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileAssetParamsBaseFilter")
+        kparams.addIntIfDefined("conversionProfileIdEqual", self.conversionProfileIdEqual)
+        kparams.addStringIfDefined("conversionProfileIdIn", self.conversionProfileIdIn)
+        kparams.addIntIfDefined("assetParamsIdEqual", self.assetParamsIdEqual)
+        kparams.addStringIfDefined("assetParamsIdIn", self.assetParamsIdIn)
+        kparams.addIntEnumIfDefined("readyBehaviorEqual", self.readyBehaviorEqual)
+        kparams.addStringIfDefined("readyBehaviorIn", self.readyBehaviorIn)
+        kparams.addIntEnumIfDefined("originEqual", self.originEqual)
+        kparams.addStringIfDefined("originIn", self.originIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        return kparams
+
+    def getConversionProfileIdEqual(self):
+        return self.conversionProfileIdEqual
+
+    def setConversionProfileIdEqual(self, newConversionProfileIdEqual):
+        self.conversionProfileIdEqual = newConversionProfileIdEqual
+
+    def getConversionProfileIdIn(self):
+        return self.conversionProfileIdIn
+
+    def setConversionProfileIdIn(self, newConversionProfileIdIn):
+        self.conversionProfileIdIn = newConversionProfileIdIn
+
+    def getAssetParamsIdEqual(self):
+        return self.assetParamsIdEqual
+
+    def setAssetParamsIdEqual(self, newAssetParamsIdEqual):
+        self.assetParamsIdEqual = newAssetParamsIdEqual
+
+    def getAssetParamsIdIn(self):
+        return self.assetParamsIdIn
+
+    def setAssetParamsIdIn(self, newAssetParamsIdIn):
+        self.assetParamsIdIn = newAssetParamsIdIn
+
+    def getReadyBehaviorEqual(self):
+        return self.readyBehaviorEqual
+
+    def setReadyBehaviorEqual(self, newReadyBehaviorEqual):
+        self.readyBehaviorEqual = newReadyBehaviorEqual
+
+    def getReadyBehaviorIn(self):
+        return self.readyBehaviorIn
+
+    def setReadyBehaviorIn(self, newReadyBehaviorIn):
+        self.readyBehaviorIn = newReadyBehaviorIn
+
+    def getOriginEqual(self):
+        return self.originEqual
+
+    def setOriginEqual(self, newOriginEqual):
+        self.originEqual = newOriginEqual
+
+    def getOriginIn(self):
+        return self.originIn
+
+    def setOriginIn(self, newOriginIn):
+        self.originIn = newOriginIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaConversionProfileBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -35827,103 +36070,165 @@ class KalturaConversionProfileFilter(KalturaConversionProfileBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             defaultEntryIdEqual=NotImplemented,
             defaultEntryIdIn=NotImplemented):
-        KalturaConversionProfileBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            statusEqual,
-            statusIn,
-            typeEqual,
-            typeIn,
-            nameEqual,
-            systemNameEqual,
-            systemNameIn,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            defaultEntryIdEqual,
-            defaultEntryIdIn)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var KalturaConversionProfileStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var KalturaConversionProfileType
+        self.typeEqual = typeEqual
+
+        # @var string
+        self.typeIn = typeIn
+
+        # @var string
+        self.nameEqual = nameEqual
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var string
+        self.defaultEntryIdEqual = defaultEntryIdEqual
+
+        # @var string
+        self.defaultEntryIdIn = defaultEntryIdIn
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createString, "KalturaConversionProfileStatus"), 
+        'statusIn': getXmlNodeText, 
+        'typeEqual': (KalturaEnumsFactory.createString, "KalturaConversionProfileType"), 
+        'typeIn': getXmlNodeText, 
+        'nameEqual': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'defaultEntryIdEqual': getXmlNodeText, 
+        'defaultEntryIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaConversionProfileBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaConversionProfileBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringIfDefined("typeIn", self.typeIn)
+        kparams.addStringIfDefined("nameEqual", self.nameEqual)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addStringIfDefined("defaultEntryIdEqual", self.defaultEntryIdEqual)
+        kparams.addStringIfDefined("defaultEntryIdIn", self.defaultEntryIdIn)
         return kparams
 
+    def getIdEqual(self):
+        return self.idEqual
 
-# @package Kaltura
-# @subpackage Client
-class KalturaConversionProfileAssetParamsFilter(KalturaConversionProfileAssetParamsBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            assetParamsIdEqual=NotImplemented,
-            assetParamsIdIn=NotImplemented,
-            readyBehaviorEqual=NotImplemented,
-            readyBehaviorIn=NotImplemented,
-            originEqual=NotImplemented,
-            originIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            conversionProfileIdFilter=NotImplemented,
-            assetParamsIdFilter=NotImplemented):
-        KalturaConversionProfileAssetParamsBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            conversionProfileIdEqual,
-            conversionProfileIdIn,
-            assetParamsIdEqual,
-            assetParamsIdIn,
-            readyBehaviorEqual,
-            readyBehaviorIn,
-            originEqual,
-            originIn,
-            systemNameEqual,
-            systemNameIn)
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
 
-        # @var KalturaConversionProfileFilter
-        self.conversionProfileIdFilter = conversionProfileIdFilter
+    def getIdIn(self):
+        return self.idIn
 
-        # @var KalturaAssetParamsFilter
-        self.assetParamsIdFilter = assetParamsIdFilter
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
 
+    def getStatusEqual(self):
+        return self.statusEqual
 
-    PROPERTY_LOADERS = {
-        'conversionProfileIdFilter': (KalturaObjectFactory.create, KalturaConversionProfileFilter), 
-        'assetParamsIdFilter': (KalturaObjectFactory.create, KalturaAssetParamsFilter), 
-    }
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
 
-    def fromXml(self, node):
-        KalturaConversionProfileAssetParamsBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsFilter.PROPERTY_LOADERS)
+    def getStatusIn(self):
+        return self.statusIn
 
-    def toParams(self):
-        kparams = KalturaConversionProfileAssetParamsBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaConversionProfileAssetParamsFilter")
-        kparams.addObjectIfDefined("conversionProfileIdFilter", self.conversionProfileIdFilter)
-        kparams.addObjectIfDefined("assetParamsIdFilter", self.assetParamsIdFilter)
-        return kparams
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
 
-    def getConversionProfileIdFilter(self):
-        return self.conversionProfileIdFilter
+    def getTypeEqual(self):
+        return self.typeEqual
 
-    def setConversionProfileIdFilter(self, newConversionProfileIdFilter):
-        self.conversionProfileIdFilter = newConversionProfileIdFilter
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
 
-    def getAssetParamsIdFilter(self):
-        return self.assetParamsIdFilter
+    def getTypeIn(self):
+        return self.typeIn
 
-    def setAssetParamsIdFilter(self, newAssetParamsIdFilter):
-        self.assetParamsIdFilter = newAssetParamsIdFilter
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
+
+    def getNameEqual(self):
+        return self.nameEqual
+
+    def setNameEqual(self, newNameEqual):
+        self.nameEqual = newNameEqual
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getDefaultEntryIdEqual(self):
+        return self.defaultEntryIdEqual
+
+    def setDefaultEntryIdEqual(self, newDefaultEntryIdEqual):
+        self.defaultEntryIdEqual = newDefaultEntryIdEqual
+
+    def getDefaultEntryIdIn(self):
+        return self.defaultEntryIdIn
+
+    def setDefaultEntryIdIn(self, newDefaultEntryIdIn):
+        self.defaultEntryIdIn = newDefaultEntryIdIn
 
 
 # @package Kaltura
@@ -36758,7 +37063,7 @@ class KalturaFieldMatchCondition(KalturaMatchCondition):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFileAssetFilter(KalturaFileAssetBaseFilter):
+class KalturaFileAssetBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -36774,34 +37079,154 @@ class KalturaFileAssetFilter(KalturaFileAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented):
-        KalturaFileAssetBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            partnerIdEqual,
-            fileAssetObjectTypeEqual,
-            objectIdEqual,
-            objectIdIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            statusEqual,
-            statusIn)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var KalturaFileAssetObjectType
+        self.fileAssetObjectTypeEqual = fileAssetObjectTypeEqual
+
+        # @var string
+        self.objectIdEqual = objectIdEqual
+
+        # @var string
+        self.objectIdIn = objectIdIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaFileAssetStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'fileAssetObjectTypeEqual': (KalturaEnumsFactory.createString, "KalturaFileAssetObjectType"), 
+        'objectIdEqual': getXmlNodeText, 
+        'objectIdIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createString, "KalturaFileAssetStatus"), 
+        'statusIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaFileAssetBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFileAssetFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileAssetBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFileAssetBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaFileAssetFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaFileAssetBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringEnumIfDefined("fileAssetObjectTypeEqual", self.fileAssetObjectTypeEqual)
+        kparams.addStringIfDefined("objectIdEqual", self.objectIdEqual)
+        kparams.addStringIfDefined("objectIdIn", self.objectIdIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getFileAssetObjectTypeEqual(self):
+        return self.fileAssetObjectTypeEqual
+
+    def setFileAssetObjectTypeEqual(self, newFileAssetObjectTypeEqual):
+        self.fileAssetObjectTypeEqual = newFileAssetObjectTypeEqual
+
+    def getObjectIdEqual(self):
+        return self.objectIdEqual
+
+    def setObjectIdEqual(self, newObjectIdEqual):
+        self.objectIdEqual = newObjectIdEqual
+
+    def getObjectIdIn(self):
+        return self.objectIdIn
+
+    def setObjectIdIn(self, newObjectIdIn):
+        self.objectIdIn = newObjectIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
 
 
 # @package Kaltura
@@ -37075,7 +37500,7 @@ class KalturaGeoTimeLiveStats(KalturaEntryLiveStats):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
+class KalturaGroupUserBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -37089,32 +37514,132 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaGroupUserBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            userIdEqual,
-            userIdIn,
-            groupIdEqual,
-            groupIdIn,
-            statusEqual,
-            statusIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var string
+        self.userIdEqual = userIdEqual
+
+        # @var string
+        self.userIdIn = userIdIn
+
+        # @var string
+        self.groupIdEqual = groupIdEqual
+
+        # @var string
+        self.groupIdIn = groupIdIn
+
+        # @var KalturaGroupUserStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'userIdEqual': getXmlNodeText, 
+        'userIdIn': getXmlNodeText, 
+        'groupIdEqual': getXmlNodeText, 
+        'groupIdIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaGroupUserStatus"), 
+        'statusIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaGroupUserBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGroupUserFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGroupUserBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaGroupUserBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaGroupUserFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaGroupUserBaseFilter")
+        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addStringIfDefined("userIdIn", self.userIdIn)
+        kparams.addStringIfDefined("groupIdEqual", self.groupIdEqual)
+        kparams.addStringIfDefined("groupIdIn", self.groupIdIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
+
+    def getUserIdEqual(self):
+        return self.userIdEqual
+
+    def setUserIdEqual(self, newUserIdEqual):
+        self.userIdEqual = newUserIdEqual
+
+    def getUserIdIn(self):
+        return self.userIdIn
+
+    def setUserIdIn(self, newUserIdIn):
+        self.userIdIn = newUserIdIn
+
+    def getGroupIdEqual(self):
+        return self.groupIdEqual
+
+    def setGroupIdEqual(self, newGroupIdEqual):
+        self.groupIdEqual = newGroupIdEqual
+
+    def getGroupIdIn(self):
+        return self.groupIdIn
+
+    def setGroupIdIn(self, newGroupIdIn):
+        self.groupIdIn = newGroupIdIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
 
 
 # @package Kaltura
@@ -37239,7 +37764,7 @@ class KalturaLiveAsset(KalturaFlavorAsset):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveChannelSegmentFilter(KalturaLiveChannelSegmentBaseFilter):
+class KalturaLiveChannelSegmentBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -37253,32 +37778,132 @@ class KalturaLiveChannelSegmentFilter(KalturaLiveChannelSegmentBaseFilter):
             channelIdIn=NotImplemented,
             startTimeGreaterThanOrEqual=NotImplemented,
             startTimeLessThanOrEqual=NotImplemented):
-        KalturaLiveChannelSegmentBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            statusEqual,
-            statusIn,
-            channelIdEqual,
-            channelIdIn,
-            startTimeGreaterThanOrEqual,
-            startTimeLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaLiveChannelSegmentStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var string
+        self.channelIdEqual = channelIdEqual
+
+        # @var string
+        self.channelIdIn = channelIdIn
+
+        # @var float
+        self.startTimeGreaterThanOrEqual = startTimeGreaterThanOrEqual
+
+        # @var float
+        self.startTimeLessThanOrEqual = startTimeLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createString, "KalturaLiveChannelSegmentStatus"), 
+        'statusIn': getXmlNodeText, 
+        'channelIdEqual': getXmlNodeText, 
+        'channelIdIn': getXmlNodeText, 
+        'startTimeGreaterThanOrEqual': getXmlNodeFloat, 
+        'startTimeLessThanOrEqual': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
-        KalturaLiveChannelSegmentBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveChannelSegmentFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelSegmentBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaLiveChannelSegmentBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaLiveChannelSegmentFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelSegmentBaseFilter")
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("channelIdEqual", self.channelIdEqual)
+        kparams.addStringIfDefined("channelIdIn", self.channelIdIn)
+        kparams.addFloatIfDefined("startTimeGreaterThanOrEqual", self.startTimeGreaterThanOrEqual)
+        kparams.addFloatIfDefined("startTimeLessThanOrEqual", self.startTimeLessThanOrEqual)
         return kparams
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getChannelIdEqual(self):
+        return self.channelIdEqual
+
+    def setChannelIdEqual(self, newChannelIdEqual):
+        self.channelIdEqual = newChannelIdEqual
+
+    def getChannelIdIn(self):
+        return self.channelIdIn
+
+    def setChannelIdIn(self, newChannelIdIn):
+        self.channelIdIn = newChannelIdIn
+
+    def getStartTimeGreaterThanOrEqual(self):
+        return self.startTimeGreaterThanOrEqual
+
+    def setStartTimeGreaterThanOrEqual(self, newStartTimeGreaterThanOrEqual):
+        self.startTimeGreaterThanOrEqual = newStartTimeGreaterThanOrEqual
+
+    def getStartTimeLessThanOrEqual(self):
+        return self.startTimeLessThanOrEqual
+
+    def setStartTimeLessThanOrEqual(self, newStartTimeLessThanOrEqual):
+        self.startTimeLessThanOrEqual = newStartTimeLessThanOrEqual
 
 
 # @package Kaltura
@@ -37554,38 +38179,6 @@ class KalturaMediaInfoFilter(KalturaMediaInfoBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaServerFilter(KalturaMediaServerBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaMediaServerBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaMediaServerBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaServerFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaMediaServerBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaMediaServerFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaOperationResource(KalturaContentResource):
     """A resource that perform operation (transcoding, clipping, cropping) before the flavor is ready."""
 
@@ -37698,7 +38291,7 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPermissionFilter(KalturaPermissionBaseFilter):
+class KalturaPermissionBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -37722,47 +38315,247 @@ class KalturaPermissionFilter(KalturaPermissionBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaPermissionBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            typeEqual,
-            typeIn,
-            nameEqual,
-            nameIn,
-            friendlyNameLike,
-            descriptionLike,
-            statusEqual,
-            statusIn,
-            partnerIdEqual,
-            partnerIdIn,
-            dependsOnPermissionNamesMultiLikeOr,
-            dependsOnPermissionNamesMultiLikeAnd,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var KalturaPermissionType
+        self.typeEqual = typeEqual
+
+        # @var string
+        self.typeIn = typeIn
+
+        # @var string
+        self.nameEqual = nameEqual
+
+        # @var string
+        self.nameIn = nameIn
+
+        # @var string
+        self.friendlyNameLike = friendlyNameLike
+
+        # @var string
+        self.descriptionLike = descriptionLike
+
+        # @var KalturaPermissionStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var string
+        self.dependsOnPermissionNamesMultiLikeOr = dependsOnPermissionNamesMultiLikeOr
+
+        # @var string
+        self.dependsOnPermissionNamesMultiLikeAnd = dependsOnPermissionNamesMultiLikeAnd
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'typeEqual': (KalturaEnumsFactory.createInt, "KalturaPermissionType"), 
+        'typeIn': getXmlNodeText, 
+        'nameEqual': getXmlNodeText, 
+        'nameIn': getXmlNodeText, 
+        'friendlyNameLike': getXmlNodeText, 
+        'descriptionLike': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaPermissionStatus"), 
+        'statusIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'dependsOnPermissionNamesMultiLikeOr': getXmlNodeText, 
+        'dependsOnPermissionNamesMultiLikeAnd': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaPermissionBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaPermissionBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaPermissionFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaPermissionBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringIfDefined("typeIn", self.typeIn)
+        kparams.addStringIfDefined("nameEqual", self.nameEqual)
+        kparams.addStringIfDefined("nameIn", self.nameIn)
+        kparams.addStringIfDefined("friendlyNameLike", self.friendlyNameLike)
+        kparams.addStringIfDefined("descriptionLike", self.descriptionLike)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addStringIfDefined("dependsOnPermissionNamesMultiLikeOr", self.dependsOnPermissionNamesMultiLikeOr)
+        kparams.addStringIfDefined("dependsOnPermissionNamesMultiLikeAnd", self.dependsOnPermissionNamesMultiLikeAnd)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getTypeEqual(self):
+        return self.typeEqual
+
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
+
+    def getTypeIn(self):
+        return self.typeIn
+
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
+
+    def getNameEqual(self):
+        return self.nameEqual
+
+    def setNameEqual(self, newNameEqual):
+        self.nameEqual = newNameEqual
+
+    def getNameIn(self):
+        return self.nameIn
+
+    def setNameIn(self, newNameIn):
+        self.nameIn = newNameIn
+
+    def getFriendlyNameLike(self):
+        return self.friendlyNameLike
+
+    def setFriendlyNameLike(self, newFriendlyNameLike):
+        self.friendlyNameLike = newFriendlyNameLike
+
+    def getDescriptionLike(self):
+        return self.descriptionLike
+
+    def setDescriptionLike(self, newDescriptionLike):
+        self.descriptionLike = newDescriptionLike
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getDependsOnPermissionNamesMultiLikeOr(self):
+        return self.dependsOnPermissionNamesMultiLikeOr
+
+    def setDependsOnPermissionNamesMultiLikeOr(self, newDependsOnPermissionNamesMultiLikeOr):
+        self.dependsOnPermissionNamesMultiLikeOr = newDependsOnPermissionNamesMultiLikeOr
+
+    def getDependsOnPermissionNamesMultiLikeAnd(self):
+        return self.dependsOnPermissionNamesMultiLikeAnd
+
+    def setDependsOnPermissionNamesMultiLikeAnd(self, newDependsOnPermissionNamesMultiLikeAnd):
+        self.dependsOnPermissionNamesMultiLikeAnd = newDependsOnPermissionNamesMultiLikeAnd
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPermissionItemFilter(KalturaPermissionItemBaseFilter):
+class KalturaPermissionItemBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -37778,34 +38571,154 @@ class KalturaPermissionItemFilter(KalturaPermissionItemBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaPermissionItemBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            typeEqual,
-            typeIn,
-            partnerIdEqual,
-            partnerIdIn,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var KalturaPermissionItemType
+        self.typeEqual = typeEqual
+
+        # @var string
+        self.typeIn = typeIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'typeEqual': (KalturaEnumsFactory.createString, "KalturaPermissionItemType"), 
+        'typeIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaPermissionItemBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPermissionItemFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionItemBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaPermissionItemBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaPermissionItemFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaPermissionItemBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringIfDefined("typeIn", self.typeIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getTypeEqual(self):
+        return self.typeEqual
+
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
+
+    def getTypeIn(self):
+        return self.typeIn
+
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
 
 
 # @package Kaltura
@@ -38068,6 +38981,50 @@ class KalturaReportFilter(KalturaReportBaseFilter):
     def toParams(self):
         kparams = KalturaReportBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaReportFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileFilter(KalturaDetachedResponseProfileFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaDetachedResponseProfileFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            systemNameEqual,
+            systemNameIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDetachedResponseProfileFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDetachedResponseProfileFilter.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileFilter")
         return kparams
 
 
@@ -38494,33 +39451,43 @@ class KalturaUploadTokenFilter(KalturaUploadTokenBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserLoginDataFilter(KalturaUserLoginDataBaseFilter):
+class KalturaUserLoginDataBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             loginEmailEqual=NotImplemented):
-        KalturaUserLoginDataBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            loginEmailEqual)
+            advancedSearch)
+
+        # @var string
+        self.loginEmailEqual = loginEmailEqual
 
 
     PROPERTY_LOADERS = {
+        'loginEmailEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaUserLoginDataBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserLoginDataFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserLoginDataBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaUserLoginDataBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaUserLoginDataFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserLoginDataBaseFilter")
+        kparams.addStringIfDefined("loginEmailEqual", self.loginEmailEqual)
         return kparams
+
+    def getLoginEmailEqual(self):
+        return self.loginEmailEqual
+
+    def setLoginEmailEqual(self, newLoginEmailEqual):
+        self.loginEmailEqual = newLoginEmailEqual
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserRoleFilter(KalturaUserRoleBaseFilter):
+class KalturaUserRoleBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -38541,39 +39508,209 @@ class KalturaUserRoleFilter(KalturaUserRoleBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaUserRoleBaseFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            nameEqual,
-            nameIn,
-            systemNameEqual,
-            systemNameIn,
-            descriptionLike,
-            statusEqual,
-            statusIn,
-            partnerIdEqual,
-            partnerIdIn,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.nameEqual = nameEqual
+
+        # @var string
+        self.nameIn = nameIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var string
+        self.descriptionLike = descriptionLike
+
+        # @var KalturaUserRoleStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'nameEqual': getXmlNodeText, 
+        'nameIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'descriptionLike': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaUserRoleStatus"), 
+        'statusIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaUserRoleBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserRoleFilter.PROPERTY_LOADERS)
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserRoleBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaUserRoleBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaUserRoleFilter")
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserRoleBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("nameEqual", self.nameEqual)
+        kparams.addStringIfDefined("nameIn", self.nameIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addStringIfDefined("descriptionLike", self.descriptionLike)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getNameEqual(self):
+        return self.nameEqual
+
+    def setNameEqual(self, newNameEqual):
+        self.nameEqual = newNameEqual
+
+    def getNameIn(self):
+        return self.nameIn
+
+    def setNameIn(self, newNameIn):
+        self.nameIn = newNameIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getDescriptionLike(self):
+        return self.descriptionLike
+
+    def setDescriptionLike(self, newDescriptionLike):
+        self.descriptionLike = newDescriptionLike
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
 
 
 # @package Kaltura
@@ -38626,77 +39763,77 @@ class KalturaWidgetFilter(KalturaWidgetBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAdminUserBaseFilter(KalturaUserFilter):
+class KalturaAccessControlFilter(KalturaAccessControlBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            screenNameLike=NotImplemented,
-            screenNameStartsWith=NotImplemented,
-            emailLike=NotImplemented,
-            emailStartsWith=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            firstNameStartsWith=NotImplemented,
-            lastNameStartsWith=NotImplemented,
-            isAdminEqual=NotImplemented,
-            idOrScreenNameStartsWith=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
-            loginEnabledEqual=NotImplemented,
-            roleIdEqual=NotImplemented,
-            roleIdsEqual=NotImplemented,
-            roleIdsIn=NotImplemented,
-            firstNameOrLastNameStartsWith=NotImplemented,
-            permissionNamesMultiLikeOr=NotImplemented,
-            permissionNamesMultiLikeAnd=NotImplemented):
-        KalturaUserFilter.__init__(self,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented):
+        KalturaAccessControlBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
-            partnerIdEqual,
-            typeEqual,
-            typeIn,
-            screenNameLike,
-            screenNameStartsWith,
-            emailLike,
-            emailStartsWith,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            statusEqual,
-            statusIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            firstNameStartsWith,
-            lastNameStartsWith,
-            isAdminEqual,
-            idOrScreenNameStartsWith,
             idEqual,
             idIn,
-            loginEnabledEqual,
-            roleIdEqual,
-            roleIdsEqual,
-            roleIdsIn,
-            firstNameOrLastNameStartsWith,
-            permissionNamesMultiLikeOr,
-            permissionNamesMultiLikeAnd)
+            systemNameEqual,
+            systemNameIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual)
 
 
     PROPERTY_LOADERS = {
     }
 
     def fromXml(self, node):
-        KalturaUserFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAdminUserBaseFilter.PROPERTY_LOADERS)
+        KalturaAccessControlBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaUserFilter.toParams(self)
-        kparams.put("objectType", "KalturaAdminUserBaseFilter")
+        kparams = KalturaAccessControlBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlProfileFilter(KalturaAccessControlProfileBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaAccessControlProfileBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            systemNameEqual,
+            systemNameIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAccessControlProfileBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlProfileFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAccessControlProfileBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlProfileFilter")
         return kparams
 
 
@@ -38810,103 +39947,65 @@ class KalturaAmazonS3StorageProfileBaseFilter(KalturaStorageProfileFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaApiActionPermissionItemBaseFilter(KalturaPermissionItemFilter):
+class KalturaAssetFilter(KalturaAssetBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
             partnerIdEqual=NotImplemented,
             partnerIdIn=NotImplemented,
+            sizeGreaterThanOrEqual=NotImplemented,
+            sizeLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
             tagsMultiLikeAnd=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaPermissionItemFilter.__init__(self,
+            updatedAtLessThanOrEqual=NotImplemented,
+            deletedAtGreaterThanOrEqual=NotImplemented,
+            deletedAtLessThanOrEqual=NotImplemented):
+        KalturaAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
             idIn,
-            typeEqual,
-            typeIn,
+            entryIdEqual,
+            entryIdIn,
             partnerIdEqual,
             partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
             tagsMultiLikeOr,
             tagsMultiLikeAnd,
             createdAtGreaterThanOrEqual,
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual)
 
 
     PROPERTY_LOADERS = {
     }
 
     def fromXml(self, node):
-        KalturaPermissionItemFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaApiActionPermissionItemBaseFilter.PROPERTY_LOADERS)
+        KalturaAssetBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaPermissionItemFilter.toParams(self)
-        kparams.put("objectType", "KalturaApiActionPermissionItemBaseFilter")
+        kparams = KalturaAssetBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaApiParameterPermissionItemBaseFilter(KalturaPermissionItemFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaPermissionItemFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            typeEqual,
-            typeIn,
-            partnerIdEqual,
-            partnerIdIn,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaPermissionItemFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaApiParameterPermissionItemBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaPermissionItemFilter.toParams(self)
-        kparams.put("objectType", "KalturaApiParameterPermissionItemBaseFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
+class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -38914,7 +40013,7 @@ class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
             tagsEqual=NotImplemented):
-        KalturaAssetParamsFilter.__init__(self,
+        KalturaAssetParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             systemNameEqual,
@@ -38927,12 +40026,12 @@ class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
     }
 
     def fromXml(self, node):
-        KalturaAssetParamsFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetParamsOutputBaseFilter.PROPERTY_LOADERS)
+        KalturaAssetParamsBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetParamsFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAssetParamsFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetParamsOutputBaseFilter")
+        kparams = KalturaAssetParamsBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetParamsFilter")
         return kparams
 
 
@@ -39064,6 +40163,361 @@ class KalturaBatchJobFilterExt(KalturaBatchJobFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            categoryIdEqual=NotImplemented,
+            categoryIdIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            categoryFullIdsStartsWith=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaCategoryEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            categoryIdEqual,
+            categoryIdIn,
+            entryIdEqual,
+            entryIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            categoryFullIdsStartsWith,
+            statusEqual,
+            statusIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaCategoryEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCategoryEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryEntryFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoryFilter(KalturaCategoryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            depthEqual=NotImplemented,
+            fullNameEqual=NotImplemented,
+            fullNameStartsWith=NotImplemented,
+            fullNameIn=NotImplemented,
+            fullIdsEqual=NotImplemented,
+            fullIdsStartsWith=NotImplemented,
+            fullIdsMatchOr=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            appearInListEqual=NotImplemented,
+            privacyEqual=NotImplemented,
+            privacyIn=NotImplemented,
+            inheritanceTypeEqual=NotImplemented,
+            inheritanceTypeIn=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdEmpty=NotImplemented,
+            contributionPolicyEqual=NotImplemented,
+            membersCountGreaterThanOrEqual=NotImplemented,
+            membersCountLessThanOrEqual=NotImplemented,
+            pendingMembersCountGreaterThanOrEqual=NotImplemented,
+            pendingMembersCountLessThanOrEqual=NotImplemented,
+            privacyContextEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            inheritedParentIdEqual=NotImplemented,
+            inheritedParentIdIn=NotImplemented,
+            partnerSortValueGreaterThanOrEqual=NotImplemented,
+            partnerSortValueLessThanOrEqual=NotImplemented,
+            freeText=NotImplemented,
+            membersIn=NotImplemented,
+            nameOrReferenceIdStartsWith=NotImplemented,
+            managerEqual=NotImplemented,
+            memberEqual=NotImplemented,
+            fullNameStartsWithIn=NotImplemented,
+            ancestorIdIn=NotImplemented,
+            idOrInheritedParentIdIn=NotImplemented):
+        KalturaCategoryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            parentIdEqual,
+            parentIdIn,
+            depthEqual,
+            fullNameEqual,
+            fullNameStartsWith,
+            fullNameIn,
+            fullIdsEqual,
+            fullIdsStartsWith,
+            fullIdsMatchOr,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            appearInListEqual,
+            privacyEqual,
+            privacyIn,
+            inheritanceTypeEqual,
+            inheritanceTypeIn,
+            referenceIdEqual,
+            referenceIdEmpty,
+            contributionPolicyEqual,
+            membersCountGreaterThanOrEqual,
+            membersCountLessThanOrEqual,
+            pendingMembersCountGreaterThanOrEqual,
+            pendingMembersCountLessThanOrEqual,
+            privacyContextEqual,
+            statusEqual,
+            statusIn,
+            inheritedParentIdEqual,
+            inheritedParentIdIn,
+            partnerSortValueGreaterThanOrEqual,
+            partnerSortValueLessThanOrEqual)
+
+        # @var string
+        self.freeText = freeText
+
+        # @var string
+        self.membersIn = membersIn
+
+        # @var string
+        self.nameOrReferenceIdStartsWith = nameOrReferenceIdStartsWith
+
+        # @var string
+        self.managerEqual = managerEqual
+
+        # @var string
+        self.memberEqual = memberEqual
+
+        # @var string
+        self.fullNameStartsWithIn = fullNameStartsWithIn
+
+        # not includes the category itself (only sub categories)
+        # @var string
+        self.ancestorIdIn = ancestorIdIn
+
+        # @var string
+        self.idOrInheritedParentIdIn = idOrInheritedParentIdIn
+
+
+    PROPERTY_LOADERS = {
+        'freeText': getXmlNodeText, 
+        'membersIn': getXmlNodeText, 
+        'nameOrReferenceIdStartsWith': getXmlNodeText, 
+        'managerEqual': getXmlNodeText, 
+        'memberEqual': getXmlNodeText, 
+        'fullNameStartsWithIn': getXmlNodeText, 
+        'ancestorIdIn': getXmlNodeText, 
+        'idOrInheritedParentIdIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaCategoryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCategoryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryFilter")
+        kparams.addStringIfDefined("freeText", self.freeText)
+        kparams.addStringIfDefined("membersIn", self.membersIn)
+        kparams.addStringIfDefined("nameOrReferenceIdStartsWith", self.nameOrReferenceIdStartsWith)
+        kparams.addStringIfDefined("managerEqual", self.managerEqual)
+        kparams.addStringIfDefined("memberEqual", self.memberEqual)
+        kparams.addStringIfDefined("fullNameStartsWithIn", self.fullNameStartsWithIn)
+        kparams.addStringIfDefined("ancestorIdIn", self.ancestorIdIn)
+        kparams.addStringIfDefined("idOrInheritedParentIdIn", self.idOrInheritedParentIdIn)
+        return kparams
+
+    def getFreeText(self):
+        return self.freeText
+
+    def setFreeText(self, newFreeText):
+        self.freeText = newFreeText
+
+    def getMembersIn(self):
+        return self.membersIn
+
+    def setMembersIn(self, newMembersIn):
+        self.membersIn = newMembersIn
+
+    def getNameOrReferenceIdStartsWith(self):
+        return self.nameOrReferenceIdStartsWith
+
+    def setNameOrReferenceIdStartsWith(self, newNameOrReferenceIdStartsWith):
+        self.nameOrReferenceIdStartsWith = newNameOrReferenceIdStartsWith
+
+    def getManagerEqual(self):
+        return self.managerEqual
+
+    def setManagerEqual(self, newManagerEqual):
+        self.managerEqual = newManagerEqual
+
+    def getMemberEqual(self):
+        return self.memberEqual
+
+    def setMemberEqual(self, newMemberEqual):
+        self.memberEqual = newMemberEqual
+
+    def getFullNameStartsWithIn(self):
+        return self.fullNameStartsWithIn
+
+    def setFullNameStartsWithIn(self, newFullNameStartsWithIn):
+        self.fullNameStartsWithIn = newFullNameStartsWithIn
+
+    def getAncestorIdIn(self):
+        return self.ancestorIdIn
+
+    def setAncestorIdIn(self, newAncestorIdIn):
+        self.ancestorIdIn = newAncestorIdIn
+
+    def getIdOrInheritedParentIdIn(self):
+        return self.idOrInheritedParentIdIn
+
+    def setIdOrInheritedParentIdIn(self, newIdOrInheritedParentIdIn):
+        self.idOrInheritedParentIdIn = newIdOrInheritedParentIdIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaConversionProfileFilter(KalturaConversionProfileBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            nameEqual=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            defaultEntryIdEqual=NotImplemented,
+            defaultEntryIdIn=NotImplemented):
+        KalturaConversionProfileBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            nameEqual,
+            systemNameEqual,
+            systemNameIn,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            defaultEntryIdEqual,
+            defaultEntryIdIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaConversionProfileBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaConversionProfileBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaConversionProfileAssetParamsFilter(KalturaConversionProfileAssetParamsBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
+            conversionProfileIdIn=NotImplemented,
+            assetParamsIdEqual=NotImplemented,
+            assetParamsIdIn=NotImplemented,
+            readyBehaviorEqual=NotImplemented,
+            readyBehaviorIn=NotImplemented,
+            originEqual=NotImplemented,
+            originIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            conversionProfileIdFilter=NotImplemented,
+            assetParamsIdFilter=NotImplemented):
+        KalturaConversionProfileAssetParamsBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            conversionProfileIdEqual,
+            conversionProfileIdIn,
+            assetParamsIdEqual,
+            assetParamsIdIn,
+            readyBehaviorEqual,
+            readyBehaviorIn,
+            originEqual,
+            originIn,
+            systemNameEqual,
+            systemNameIn)
+
+        # @var KalturaConversionProfileFilter
+        self.conversionProfileIdFilter = conversionProfileIdFilter
+
+        # @var KalturaAssetParamsFilter
+        self.assetParamsIdFilter = assetParamsIdFilter
+
+
+    PROPERTY_LOADERS = {
+        'conversionProfileIdFilter': (KalturaObjectFactory.create, KalturaConversionProfileFilter), 
+        'assetParamsIdFilter': (KalturaObjectFactory.create, KalturaAssetParamsFilter), 
+    }
+
+    def fromXml(self, node):
+        KalturaConversionProfileAssetParamsBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConversionProfileAssetParamsFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaConversionProfileAssetParamsBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaConversionProfileAssetParamsFilter")
+        kparams.addObjectIfDefined("conversionProfileIdFilter", self.conversionProfileIdFilter)
+        kparams.addObjectIfDefined("assetParamsIdFilter", self.assetParamsIdFilter)
+        return kparams
+
+    def getConversionProfileIdFilter(self):
+        return self.conversionProfileIdFilter
+
+    def setConversionProfileIdFilter(self, newConversionProfileIdFilter):
+        self.conversionProfileIdFilter = newConversionProfileIdFilter
+
+    def getAssetParamsIdFilter(self):
+        return self.assetParamsIdFilter
+
+    def setAssetParamsIdFilter(self, newAssetParamsIdFilter):
+        self.assetParamsIdFilter = newAssetParamsIdFilter
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCoordinatesContextField(KalturaStringField):
     """Represents the current request country context as calculated based on the IP address"""
 
@@ -39138,190 +40592,6 @@ class KalturaCountryContextField(KalturaStringField):
 
     def setGeoCoderType(self, newGeoCoderType):
         self.geoCoderType = newGeoCoderType
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            nameLike=NotImplemented,
-            nameMultiLikeOr=NotImplemented,
-            nameMultiLikeAnd=NotImplemented,
-            nameEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            creatorIdEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            adminTagsLike=NotImplemented,
-            adminTagsMultiLikeOr=NotImplemented,
-            adminTagsMultiLikeAnd=NotImplemented,
-            categoriesMatchAnd=NotImplemented,
-            categoriesMatchOr=NotImplemented,
-            categoriesNotContains=NotImplemented,
-            categoriesIdsMatchAnd=NotImplemented,
-            categoriesIdsMatchOr=NotImplemented,
-            categoriesIdsNotContains=NotImplemented,
-            categoriesIdsEmpty=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            moderationStatusEqual=NotImplemented,
-            moderationStatusNotEqual=NotImplemented,
-            moderationStatusIn=NotImplemented,
-            moderationStatusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            totalRankLessThanOrEqual=NotImplemented,
-            totalRankGreaterThanOrEqual=NotImplemented,
-            groupIdEqual=NotImplemented,
-            searchTextMatchAnd=NotImplemented,
-            searchTextMatchOr=NotImplemented,
-            accessControlIdEqual=NotImplemented,
-            accessControlIdIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            startDateGreaterThanOrEqualOrNull=NotImplemented,
-            startDateLessThanOrEqualOrNull=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqualOrNull=NotImplemented,
-            endDateLessThanOrEqualOrNull=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            replacingEntryIdEqual=NotImplemented,
-            replacingEntryIdIn=NotImplemented,
-            replacedEntryIdEqual=NotImplemented,
-            replacedEntryIdIn=NotImplemented,
-            replacementStatusEqual=NotImplemented,
-            replacementStatusIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            rootEntryIdEqual=NotImplemented,
-            rootEntryIdIn=NotImplemented,
-            parentEntryIdEqual=NotImplemented,
-            entitledUsersEditMatchAnd=NotImplemented,
-            entitledUsersPublishMatchAnd=NotImplemented,
-            tagsNameMultiLikeOr=NotImplemented,
-            tagsAdminTagsMultiLikeOr=NotImplemented,
-            tagsAdminTagsNameMultiLikeOr=NotImplemented,
-            tagsNameMultiLikeAnd=NotImplemented,
-            tagsAdminTagsMultiLikeAnd=NotImplemented,
-            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
-            freeText=NotImplemented,
-            isRoot=NotImplemented,
-            categoriesFullNameIn=NotImplemented,
-            categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
-        KalturaBaseEntryFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            idNotIn,
-            nameLike,
-            nameMultiLikeOr,
-            nameMultiLikeAnd,
-            nameEqual,
-            partnerIdEqual,
-            partnerIdIn,
-            userIdEqual,
-            userIdIn,
-            creatorIdEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            adminTagsLike,
-            adminTagsMultiLikeOr,
-            adminTagsMultiLikeAnd,
-            categoriesMatchAnd,
-            categoriesMatchOr,
-            categoriesNotContains,
-            categoriesIdsMatchAnd,
-            categoriesIdsMatchOr,
-            categoriesIdsNotContains,
-            categoriesIdsEmpty,
-            statusEqual,
-            statusNotEqual,
-            statusIn,
-            statusNotIn,
-            moderationStatusEqual,
-            moderationStatusNotEqual,
-            moderationStatusIn,
-            moderationStatusNotIn,
-            typeEqual,
-            typeIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            totalRankLessThanOrEqual,
-            totalRankGreaterThanOrEqual,
-            groupIdEqual,
-            searchTextMatchAnd,
-            searchTextMatchOr,
-            accessControlIdEqual,
-            accessControlIdIn,
-            startDateGreaterThanOrEqual,
-            startDateLessThanOrEqual,
-            startDateGreaterThanOrEqualOrNull,
-            startDateLessThanOrEqualOrNull,
-            endDateGreaterThanOrEqual,
-            endDateLessThanOrEqual,
-            endDateGreaterThanOrEqualOrNull,
-            endDateLessThanOrEqualOrNull,
-            referenceIdEqual,
-            referenceIdIn,
-            replacingEntryIdEqual,
-            replacingEntryIdIn,
-            replacedEntryIdEqual,
-            replacedEntryIdIn,
-            replacementStatusEqual,
-            replacementStatusIn,
-            partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual,
-            rootEntryIdEqual,
-            rootEntryIdIn,
-            parentEntryIdEqual,
-            entitledUsersEditMatchAnd,
-            entitledUsersPublishMatchAnd,
-            tagsNameMultiLikeOr,
-            tagsAdminTagsMultiLikeOr,
-            tagsAdminTagsNameMultiLikeOr,
-            tagsNameMultiLikeAnd,
-            tagsAdminTagsMultiLikeAnd,
-            tagsAdminTagsNameMultiLikeAnd,
-            freeText,
-            isRoot,
-            categoriesFullNameIn,
-            categoryAncestorIdIn,
-            redirectFromEntryId)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaBaseEntryFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDataEntryBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaBaseEntryFilter.toParams(self)
-        kparams.put("objectType", "KalturaDataEntryBaseFilter")
-        return kparams
 
 
 # @package Kaltura
@@ -39854,164 +41124,50 @@ class KalturaEvalStringField(KalturaStringField):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFlavorAssetBaseFilter(KalturaAssetFilter):
+class KalturaFileAssetFilter(KalturaFileAssetBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
             partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
+            fileAssetObjectTypeEqual=NotImplemented,
+            objectIdEqual=NotImplemented,
+            objectIdIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            flavorParamsIdEqual=NotImplemented,
-            flavorParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
-        KalturaAssetFilter.__init__(self,
+            statusIn=NotImplemented):
+        KalturaFileAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
             idIn,
-            entryIdEqual,
-            entryIdIn,
             partnerIdEqual,
-            partnerIdIn,
-            sizeGreaterThanOrEqual,
-            sizeLessThanOrEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
+            fileAssetObjectTypeEqual,
+            objectIdEqual,
+            objectIdIn,
             createdAtGreaterThanOrEqual,
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
-            deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
-
-        # @var int
-        self.flavorParamsIdEqual = flavorParamsIdEqual
-
-        # @var string
-        self.flavorParamsIdIn = flavorParamsIdIn
-
-        # @var KalturaFlavorAssetStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var string
-        self.statusNotIn = statusNotIn
+            statusEqual,
+            statusIn)
 
 
     PROPERTY_LOADERS = {
-        'flavorParamsIdEqual': getXmlNodeInt, 
-        'flavorParamsIdIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaFlavorAssetStatus"), 
-        'statusIn': getXmlNodeText, 
-        'statusNotIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaAssetFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorAssetBaseFilter.PROPERTY_LOADERS)
+        KalturaFileAssetBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileAssetFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAssetFilter.toParams(self)
-        kparams.put("objectType", "KalturaFlavorAssetBaseFilter")
-        kparams.addIntIfDefined("flavorParamsIdEqual", self.flavorParamsIdEqual)
-        kparams.addStringIfDefined("flavorParamsIdIn", self.flavorParamsIdIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
+        kparams = KalturaFileAssetBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaFileAssetFilter")
         return kparams
-
-    def getFlavorParamsIdEqual(self):
-        return self.flavorParamsIdEqual
-
-    def setFlavorParamsIdEqual(self, newFlavorParamsIdEqual):
-        self.flavorParamsIdEqual = newFlavorParamsIdEqual
-
-    def getFlavorParamsIdIn(self):
-        return self.flavorParamsIdIn
-
-    def setFlavorParamsIdIn(self, newFlavorParamsIdIn):
-        self.flavorParamsIdIn = newFlavorParamsIdIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getStatusNotIn(self):
-        return self.statusNotIn
-
-    def setStatusNotIn(self, newStatusNotIn):
-        self.statusNotIn = newStatusNotIn
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            isSystemDefaultEqual=NotImplemented,
-            tagsEqual=NotImplemented,
-            formatEqual=NotImplemented):
-        KalturaAssetParamsFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            systemNameEqual,
-            systemNameIn,
-            isSystemDefaultEqual,
-            tagsEqual)
-
-        # @var KalturaContainerFormat
-        self.formatEqual = formatEqual
-
-
-    PROPERTY_LOADERS = {
-        'formatEqual': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
-    }
-
-    def fromXml(self, node):
-        KalturaAssetParamsFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorParamsBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetParamsFilter.toParams(self)
-        kparams.put("objectType", "KalturaFlavorParamsBaseFilter")
-        kparams.addStringEnumIfDefined("formatEqual", self.formatEqual)
-        return kparams
-
-    def getFormatEqual(self):
-        return self.formatEqual
-
-    def setFormatEqual(self, newFormatEqual):
-        self.formatEqual = newFormatEqual
 
 
 # @package Kaltura
@@ -40064,6 +41220,50 @@ class KalturaGoogleVideoSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilt
 
 # @package Kaltura
 # @subpackage Client
+class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            groupIdEqual=NotImplemented,
+            groupIdIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaGroupUserBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            userIdEqual,
+            userIdIn,
+            groupIdEqual,
+            groupIdIn,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaGroupUserBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGroupUserFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGroupUserBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaGroupUserFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaITunesSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -40109,6 +41309,50 @@ class KalturaIpAddressContextField(KalturaStringField):
     def toParams(self):
         kparams = KalturaStringField.toParams(self)
         kparams.put("objectType", "KalturaIpAddressContextField")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveChannelSegmentFilter(KalturaLiveChannelSegmentBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            channelIdEqual=NotImplemented,
+            channelIdIn=NotImplemented,
+            startTimeGreaterThanOrEqual=NotImplemented,
+            startTimeLessThanOrEqual=NotImplemented):
+        KalturaLiveChannelSegmentBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            channelIdEqual,
+            channelIdIn,
+            startTimeGreaterThanOrEqual,
+            startTimeLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaLiveChannelSegmentBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelSegmentFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLiveChannelSegmentBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelSegmentFilter")
         return kparams
 
 
@@ -40268,185 +41512,113 @@ class KalturaObjectIdField(KalturaStringField):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
+class KalturaPermissionFilter(KalturaPermissionBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            nameLike=NotImplemented,
-            nameMultiLikeOr=NotImplemented,
-            nameMultiLikeAnd=NotImplemented,
-            nameEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            creatorIdEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            adminTagsLike=NotImplemented,
-            adminTagsMultiLikeOr=NotImplemented,
-            adminTagsMultiLikeAnd=NotImplemented,
-            categoriesMatchAnd=NotImplemented,
-            categoriesMatchOr=NotImplemented,
-            categoriesNotContains=NotImplemented,
-            categoriesIdsMatchAnd=NotImplemented,
-            categoriesIdsMatchOr=NotImplemented,
-            categoriesIdsNotContains=NotImplemented,
-            categoriesIdsEmpty=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            moderationStatusEqual=NotImplemented,
-            moderationStatusNotEqual=NotImplemented,
-            moderationStatusIn=NotImplemented,
-            moderationStatusNotIn=NotImplemented,
             typeEqual=NotImplemented,
             typeIn=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            friendlyNameLike=NotImplemented,
+            descriptionLike=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            dependsOnPermissionNamesMultiLikeOr=NotImplemented,
+            dependsOnPermissionNamesMultiLikeAnd=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            totalRankLessThanOrEqual=NotImplemented,
-            totalRankGreaterThanOrEqual=NotImplemented,
-            groupIdEqual=NotImplemented,
-            searchTextMatchAnd=NotImplemented,
-            searchTextMatchOr=NotImplemented,
-            accessControlIdEqual=NotImplemented,
-            accessControlIdIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            startDateGreaterThanOrEqualOrNull=NotImplemented,
-            startDateLessThanOrEqualOrNull=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqualOrNull=NotImplemented,
-            endDateLessThanOrEqualOrNull=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            replacingEntryIdEqual=NotImplemented,
-            replacingEntryIdIn=NotImplemented,
-            replacedEntryIdEqual=NotImplemented,
-            replacedEntryIdIn=NotImplemented,
-            replacementStatusEqual=NotImplemented,
-            replacementStatusIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            rootEntryIdEqual=NotImplemented,
-            rootEntryIdIn=NotImplemented,
-            parentEntryIdEqual=NotImplemented,
-            entitledUsersEditMatchAnd=NotImplemented,
-            entitledUsersPublishMatchAnd=NotImplemented,
-            tagsNameMultiLikeOr=NotImplemented,
-            tagsAdminTagsMultiLikeOr=NotImplemented,
-            tagsAdminTagsNameMultiLikeOr=NotImplemented,
-            tagsNameMultiLikeAnd=NotImplemented,
-            tagsAdminTagsMultiLikeAnd=NotImplemented,
-            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
-            freeText=NotImplemented,
-            isRoot=NotImplemented,
-            categoriesFullNameIn=NotImplemented,
-            categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
-        KalturaBaseEntryFilter.__init__(self,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaPermissionBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
             idIn,
-            idNotIn,
-            nameLike,
-            nameMultiLikeOr,
-            nameMultiLikeAnd,
-            nameEqual,
-            partnerIdEqual,
-            partnerIdIn,
-            userIdEqual,
-            userIdIn,
-            creatorIdEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            adminTagsLike,
-            adminTagsMultiLikeOr,
-            adminTagsMultiLikeAnd,
-            categoriesMatchAnd,
-            categoriesMatchOr,
-            categoriesNotContains,
-            categoriesIdsMatchAnd,
-            categoriesIdsMatchOr,
-            categoriesIdsNotContains,
-            categoriesIdsEmpty,
-            statusEqual,
-            statusNotEqual,
-            statusIn,
-            statusNotIn,
-            moderationStatusEqual,
-            moderationStatusNotEqual,
-            moderationStatusIn,
-            moderationStatusNotIn,
             typeEqual,
             typeIn,
+            nameEqual,
+            nameIn,
+            friendlyNameLike,
+            descriptionLike,
+            statusEqual,
+            statusIn,
+            partnerIdEqual,
+            partnerIdIn,
+            dependsOnPermissionNamesMultiLikeOr,
+            dependsOnPermissionNamesMultiLikeAnd,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
             createdAtGreaterThanOrEqual,
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            totalRankLessThanOrEqual,
-            totalRankGreaterThanOrEqual,
-            groupIdEqual,
-            searchTextMatchAnd,
-            searchTextMatchOr,
-            accessControlIdEqual,
-            accessControlIdIn,
-            startDateGreaterThanOrEqual,
-            startDateLessThanOrEqual,
-            startDateGreaterThanOrEqualOrNull,
-            startDateLessThanOrEqualOrNull,
-            endDateGreaterThanOrEqual,
-            endDateLessThanOrEqual,
-            endDateGreaterThanOrEqualOrNull,
-            endDateLessThanOrEqualOrNull,
-            referenceIdEqual,
-            referenceIdIn,
-            replacingEntryIdEqual,
-            replacingEntryIdIn,
-            replacedEntryIdEqual,
-            replacedEntryIdIn,
-            replacementStatusEqual,
-            replacementStatusIn,
-            partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual,
-            rootEntryIdEqual,
-            rootEntryIdIn,
-            parentEntryIdEqual,
-            entitledUsersEditMatchAnd,
-            entitledUsersPublishMatchAnd,
-            tagsNameMultiLikeOr,
-            tagsAdminTagsMultiLikeOr,
-            tagsAdminTagsNameMultiLikeOr,
-            tagsNameMultiLikeAnd,
-            tagsAdminTagsMultiLikeAnd,
-            tagsAdminTagsNameMultiLikeAnd,
-            freeText,
-            isRoot,
-            categoriesFullNameIn,
-            categoryAncestorIdIn,
-            redirectFromEntryId)
+            updatedAtLessThanOrEqual)
 
 
     PROPERTY_LOADERS = {
     }
 
     def fromXml(self, node):
-        KalturaBaseEntryFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPlaylistBaseFilter.PROPERTY_LOADERS)
+        KalturaPermissionBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaBaseEntryFilter.toParams(self)
-        kparams.put("objectType", "KalturaPlaylistBaseFilter")
+        kparams = KalturaPermissionBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaPermissionFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPermissionItemFilter(KalturaPermissionItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaPermissionItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            typeEqual,
+            typeIn,
+            partnerIdEqual,
+            partnerIdIn,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaPermissionItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPermissionItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPermissionItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaPermissionItemFilter")
         return kparams
 
 
@@ -40548,168 +41720,6 @@ class KalturaSshUrlResource(KalturaUrlResource):
 
     def setKeyPassphrase(self, newKeyPassphrase):
         self.keyPassphrase = newKeyPassphrase
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            thumbParamsIdEqual=NotImplemented,
-            thumbParamsIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
-        KalturaAssetFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            entryIdEqual,
-            entryIdIn,
-            partnerIdEqual,
-            partnerIdIn,
-            sizeGreaterThanOrEqual,
-            sizeLessThanOrEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
-
-        # @var int
-        self.thumbParamsIdEqual = thumbParamsIdEqual
-
-        # @var string
-        self.thumbParamsIdIn = thumbParamsIdIn
-
-        # @var KalturaThumbAssetStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var string
-        self.statusNotIn = statusNotIn
-
-
-    PROPERTY_LOADERS = {
-        'thumbParamsIdEqual': getXmlNodeInt, 
-        'thumbParamsIdIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
-        'statusIn': getXmlNodeText, 
-        'statusNotIn': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaAssetFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbAssetBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetFilter.toParams(self)
-        kparams.put("objectType", "KalturaThumbAssetBaseFilter")
-        kparams.addIntIfDefined("thumbParamsIdEqual", self.thumbParamsIdEqual)
-        kparams.addStringIfDefined("thumbParamsIdIn", self.thumbParamsIdIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
-        return kparams
-
-    def getThumbParamsIdEqual(self):
-        return self.thumbParamsIdEqual
-
-    def setThumbParamsIdEqual(self, newThumbParamsIdEqual):
-        self.thumbParamsIdEqual = newThumbParamsIdEqual
-
-    def getThumbParamsIdIn(self):
-        return self.thumbParamsIdIn
-
-    def setThumbParamsIdIn(self, newThumbParamsIdIn):
-        self.thumbParamsIdIn = newThumbParamsIdIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getStatusNotIn(self):
-        return self.statusNotIn
-
-    def setStatusNotIn(self, newStatusNotIn):
-        self.statusNotIn = newStatusNotIn
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            isSystemDefaultEqual=NotImplemented,
-            tagsEqual=NotImplemented,
-            formatEqual=NotImplemented):
-        KalturaAssetParamsFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            systemNameEqual,
-            systemNameIn,
-            isSystemDefaultEqual,
-            tagsEqual)
-
-        # @var KalturaContainerFormat
-        self.formatEqual = formatEqual
-
-
-    PROPERTY_LOADERS = {
-        'formatEqual': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
-    }
-
-    def fromXml(self, node):
-        KalturaAssetParamsFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetParamsFilter.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsBaseFilter")
-        kparams.addStringEnumIfDefined("formatEqual", self.formatEqual)
-        return kparams
-
-    def getFormatEqual(self):
-        return self.formatEqual
-
-    def setFormatEqual(self, newFormatEqual):
-        self.formatEqual = newFormatEqual
 
 
 # @package Kaltura
@@ -40892,6 +41902,90 @@ class KalturaUserEmailContextField(KalturaStringField):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserLoginDataFilter(KalturaUserLoginDataBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            loginEmailEqual=NotImplemented):
+        KalturaUserLoginDataBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            loginEmailEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUserLoginDataBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserLoginDataFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserLoginDataBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserLoginDataFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserRoleFilter(KalturaUserRoleBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            descriptionLike=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaUserRoleBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            descriptionLike,
+            statusEqual,
+            statusIn,
+            partnerIdEqual,
+            partnerIdIn,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUserRoleBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserRoleFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserRoleBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserRoleFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaWebcamTokenResource(KalturaDataCenterContentResource):
     """Used to ingest media that streamed to the system and represented by token that returned from media server such as FMS or red5."""
 
@@ -40951,7 +42045,7 @@ class KalturaYahooSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
+class KalturaAdminUserBaseFilter(KalturaUserFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -40981,7 +42075,7 @@ class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
             firstNameOrLastNameStartsWith=NotImplemented,
             permissionNamesMultiLikeOr=NotImplemented,
             permissionNamesMultiLikeAnd=NotImplemented):
-        KalturaAdminUserBaseFilter.__init__(self,
+        KalturaUserFilter.__init__(self,
             orderBy,
             advancedSearch,
             partnerIdEqual,
@@ -41016,12 +42110,12 @@ class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
     }
 
     def fromXml(self, node):
-        KalturaAdminUserBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAdminUserFilter.PROPERTY_LOADERS)
+        KalturaUserFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAdminUserBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAdminUserBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAdminUserFilter")
+        kparams = KalturaUserFilter.toParams(self)
+        kparams.put("objectType", "KalturaAdminUserBaseFilter")
         return kparams
 
 
@@ -41079,7 +42173,7 @@ class KalturaAmazonS3StorageProfileFilter(KalturaAmazonS3StorageProfileBaseFilte
 
 # @package Kaltura
 # @subpackage Client
-class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFilter):
+class KalturaApiActionPermissionItemBaseFilter(KalturaPermissionItemFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -41095,7 +42189,7 @@ class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFil
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaApiActionPermissionItemBaseFilter.__init__(self,
+        KalturaPermissionItemFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -41116,18 +42210,18 @@ class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFil
     }
 
     def fromXml(self, node):
-        KalturaApiActionPermissionItemBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaApiActionPermissionItemFilter.PROPERTY_LOADERS)
+        KalturaPermissionItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaApiActionPermissionItemBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaApiActionPermissionItemBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaApiActionPermissionItemFilter")
+        kparams = KalturaPermissionItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaApiActionPermissionItemBaseFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaApiParameterPermissionItemFilter(KalturaApiParameterPermissionItemBaseFilter):
+class KalturaApiParameterPermissionItemBaseFilter(KalturaPermissionItemFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -41143,7 +42237,7 @@ class KalturaApiParameterPermissionItemFilter(KalturaApiParameterPermissionItemB
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaApiParameterPermissionItemBaseFilter.__init__(self,
+        KalturaPermissionItemFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -41164,18 +42258,18 @@ class KalturaApiParameterPermissionItemFilter(KalturaApiParameterPermissionItemB
     }
 
     def fromXml(self, node):
-        KalturaApiParameterPermissionItemBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaApiParameterPermissionItemFilter.PROPERTY_LOADERS)
+        KalturaPermissionItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaApiParameterPermissionItemBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaApiParameterPermissionItemBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaApiParameterPermissionItemFilter")
+        kparams = KalturaPermissionItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaApiParameterPermissionItemBaseFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
+class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -41183,7 +42277,7 @@ class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
             tagsEqual=NotImplemented):
-        KalturaAssetParamsOutputBaseFilter.__init__(self,
+        KalturaAssetParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
             systemNameEqual,
@@ -41196,18 +42290,18 @@ class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
     }
 
     def fromXml(self, node):
-        KalturaAssetParamsOutputBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetParamsOutputFilter.PROPERTY_LOADERS)
+        KalturaAssetParamsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetParamsOutputBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaAssetParamsOutputBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetParamsOutputFilter")
+        kparams = KalturaAssetParamsFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetParamsOutputBaseFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
+class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -41291,7 +42385,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented):
-        KalturaDataEntryBaseFilter.__init__(self,
+        KalturaBaseEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -41380,12 +42474,12 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
     }
 
     def fromXml(self, node):
-        KalturaDataEntryBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDataEntryFilter.PROPERTY_LOADERS)
+        KalturaBaseEntryFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDataEntryBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaDataEntryBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaDataEntryFilter")
+        kparams = KalturaBaseEntryFilter.toParams(self)
+        kparams.put("objectType", "KalturaDataEntryBaseFilter")
         return kparams
 
 
@@ -41841,6 +42935,1072 @@ class KalturaDeliveryProfileRtmpFilter(KalturaDeliveryProfileRtmpBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFlavorAssetBaseFilter(KalturaAssetFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            sizeGreaterThanOrEqual=NotImplemented,
+            sizeLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            deletedAtGreaterThanOrEqual=NotImplemented,
+            deletedAtLessThanOrEqual=NotImplemented,
+            flavorParamsIdEqual=NotImplemented,
+            flavorParamsIdIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented):
+        KalturaAssetFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            entryIdEqual,
+            entryIdIn,
+            partnerIdEqual,
+            partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual)
+
+        # @var int
+        self.flavorParamsIdEqual = flavorParamsIdEqual
+
+        # @var string
+        self.flavorParamsIdIn = flavorParamsIdIn
+
+        # @var KalturaFlavorAssetStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var string
+        self.statusNotIn = statusNotIn
+
+
+    PROPERTY_LOADERS = {
+        'flavorParamsIdEqual': getXmlNodeInt, 
+        'flavorParamsIdIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaFlavorAssetStatus"), 
+        'statusIn': getXmlNodeText, 
+        'statusNotIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorAssetBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetFilter.toParams(self)
+        kparams.put("objectType", "KalturaFlavorAssetBaseFilter")
+        kparams.addIntIfDefined("flavorParamsIdEqual", self.flavorParamsIdEqual)
+        kparams.addStringIfDefined("flavorParamsIdIn", self.flavorParamsIdIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
+        return kparams
+
+    def getFlavorParamsIdEqual(self):
+        return self.flavorParamsIdEqual
+
+    def setFlavorParamsIdEqual(self, newFlavorParamsIdEqual):
+        self.flavorParamsIdEqual = newFlavorParamsIdEqual
+
+    def getFlavorParamsIdIn(self):
+        return self.flavorParamsIdIn
+
+    def setFlavorParamsIdIn(self, newFlavorParamsIdIn):
+        self.flavorParamsIdIn = newFlavorParamsIdIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getStatusNotIn(self):
+        return self.statusNotIn
+
+    def setStatusNotIn(self, newStatusNotIn):
+        self.statusNotIn = newStatusNotIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            isSystemDefaultEqual=NotImplemented,
+            tagsEqual=NotImplemented,
+            formatEqual=NotImplemented):
+        KalturaAssetParamsFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            systemNameEqual,
+            systemNameIn,
+            isSystemDefaultEqual,
+            tagsEqual)
+
+        # @var KalturaContainerFormat
+        self.formatEqual = formatEqual
+
+
+    PROPERTY_LOADERS = {
+        'formatEqual': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetParamsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorParamsBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetParamsFilter.toParams(self)
+        kparams.put("objectType", "KalturaFlavorParamsBaseFilter")
+        kparams.addStringEnumIfDefined("formatEqual", self.formatEqual)
+        return kparams
+
+    def getFormatEqual(self):
+        return self.formatEqual
+
+    def setFormatEqual(self, newFormatEqual):
+        self.formatEqual = newFormatEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaGenericSyndicationFeedBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaGenericSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericSyndicationFeedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGenericSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaGenericSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGoogleVideoSyndicationFeedFilter(KalturaGoogleVideoSyndicationFeedBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaGoogleVideoSyndicationFeedBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaGoogleVideoSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGoogleVideoSyndicationFeedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGoogleVideoSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaGoogleVideoSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaITunesSyndicationFeedBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaITunesSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaITunesSyndicationFeedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaITunesSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaITunesSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            nameLike=NotImplemented,
+            nameMultiLikeOr=NotImplemented,
+            nameMultiLikeAnd=NotImplemented,
+            nameEqual=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            creatorIdEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            adminTagsLike=NotImplemented,
+            adminTagsMultiLikeOr=NotImplemented,
+            adminTagsMultiLikeAnd=NotImplemented,
+            categoriesMatchAnd=NotImplemented,
+            categoriesMatchOr=NotImplemented,
+            categoriesNotContains=NotImplemented,
+            categoriesIdsMatchAnd=NotImplemented,
+            categoriesIdsMatchOr=NotImplemented,
+            categoriesIdsNotContains=NotImplemented,
+            categoriesIdsEmpty=NotImplemented,
+            statusEqual=NotImplemented,
+            statusNotEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented,
+            moderationStatusEqual=NotImplemented,
+            moderationStatusNotEqual=NotImplemented,
+            moderationStatusIn=NotImplemented,
+            moderationStatusNotIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            totalRankLessThanOrEqual=NotImplemented,
+            totalRankGreaterThanOrEqual=NotImplemented,
+            groupIdEqual=NotImplemented,
+            searchTextMatchAnd=NotImplemented,
+            searchTextMatchOr=NotImplemented,
+            accessControlIdEqual=NotImplemented,
+            accessControlIdIn=NotImplemented,
+            startDateGreaterThanOrEqual=NotImplemented,
+            startDateLessThanOrEqual=NotImplemented,
+            startDateGreaterThanOrEqualOrNull=NotImplemented,
+            startDateLessThanOrEqualOrNull=NotImplemented,
+            endDateGreaterThanOrEqual=NotImplemented,
+            endDateLessThanOrEqual=NotImplemented,
+            endDateGreaterThanOrEqualOrNull=NotImplemented,
+            endDateLessThanOrEqualOrNull=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdIn=NotImplemented,
+            replacingEntryIdEqual=NotImplemented,
+            replacingEntryIdIn=NotImplemented,
+            replacedEntryIdEqual=NotImplemented,
+            replacedEntryIdIn=NotImplemented,
+            replacementStatusEqual=NotImplemented,
+            replacementStatusIn=NotImplemented,
+            partnerSortValueGreaterThanOrEqual=NotImplemented,
+            partnerSortValueLessThanOrEqual=NotImplemented,
+            rootEntryIdEqual=NotImplemented,
+            rootEntryIdIn=NotImplemented,
+            parentEntryIdEqual=NotImplemented,
+            entitledUsersEditMatchAnd=NotImplemented,
+            entitledUsersPublishMatchAnd=NotImplemented,
+            tagsNameMultiLikeOr=NotImplemented,
+            tagsAdminTagsMultiLikeOr=NotImplemented,
+            tagsAdminTagsNameMultiLikeOr=NotImplemented,
+            tagsNameMultiLikeAnd=NotImplemented,
+            tagsAdminTagsMultiLikeAnd=NotImplemented,
+            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            freeText=NotImplemented,
+            isRoot=NotImplemented,
+            categoriesFullNameIn=NotImplemented,
+            categoryAncestorIdIn=NotImplemented,
+            redirectFromEntryId=NotImplemented):
+        KalturaBaseEntryFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            nameLike,
+            nameMultiLikeOr,
+            nameMultiLikeAnd,
+            nameEqual,
+            partnerIdEqual,
+            partnerIdIn,
+            userIdEqual,
+            userIdIn,
+            creatorIdEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            adminTagsLike,
+            adminTagsMultiLikeOr,
+            adminTagsMultiLikeAnd,
+            categoriesMatchAnd,
+            categoriesMatchOr,
+            categoriesNotContains,
+            categoriesIdsMatchAnd,
+            categoriesIdsMatchOr,
+            categoriesIdsNotContains,
+            categoriesIdsEmpty,
+            statusEqual,
+            statusNotEqual,
+            statusIn,
+            statusNotIn,
+            moderationStatusEqual,
+            moderationStatusNotEqual,
+            moderationStatusIn,
+            moderationStatusNotIn,
+            typeEqual,
+            typeIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            totalRankLessThanOrEqual,
+            totalRankGreaterThanOrEqual,
+            groupIdEqual,
+            searchTextMatchAnd,
+            searchTextMatchOr,
+            accessControlIdEqual,
+            accessControlIdIn,
+            startDateGreaterThanOrEqual,
+            startDateLessThanOrEqual,
+            startDateGreaterThanOrEqualOrNull,
+            startDateLessThanOrEqualOrNull,
+            endDateGreaterThanOrEqual,
+            endDateLessThanOrEqual,
+            endDateGreaterThanOrEqualOrNull,
+            endDateLessThanOrEqualOrNull,
+            referenceIdEqual,
+            referenceIdIn,
+            replacingEntryIdEqual,
+            replacingEntryIdIn,
+            replacedEntryIdEqual,
+            replacedEntryIdIn,
+            replacementStatusEqual,
+            replacementStatusIn,
+            partnerSortValueGreaterThanOrEqual,
+            partnerSortValueLessThanOrEqual,
+            rootEntryIdEqual,
+            rootEntryIdIn,
+            parentEntryIdEqual,
+            entitledUsersEditMatchAnd,
+            entitledUsersPublishMatchAnd,
+            tagsNameMultiLikeOr,
+            tagsAdminTagsMultiLikeOr,
+            tagsAdminTagsNameMultiLikeOr,
+            tagsNameMultiLikeAnd,
+            tagsAdminTagsMultiLikeAnd,
+            tagsAdminTagsNameMultiLikeAnd,
+            freeText,
+            isRoot,
+            categoriesFullNameIn,
+            categoryAncestorIdIn,
+            redirectFromEntryId)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaBaseEntryFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaylistBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseEntryFilter.toParams(self)
+        kparams.put("objectType", "KalturaPlaylistBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            sizeGreaterThanOrEqual=NotImplemented,
+            sizeLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            deletedAtGreaterThanOrEqual=NotImplemented,
+            deletedAtLessThanOrEqual=NotImplemented,
+            thumbParamsIdEqual=NotImplemented,
+            thumbParamsIdIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented):
+        KalturaAssetFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            entryIdEqual,
+            entryIdIn,
+            partnerIdEqual,
+            partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual)
+
+        # @var int
+        self.thumbParamsIdEqual = thumbParamsIdEqual
+
+        # @var string
+        self.thumbParamsIdIn = thumbParamsIdIn
+
+        # @var KalturaThumbAssetStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var string
+        self.statusNotIn = statusNotIn
+
+
+    PROPERTY_LOADERS = {
+        'thumbParamsIdEqual': getXmlNodeInt, 
+        'thumbParamsIdIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
+        'statusIn': getXmlNodeText, 
+        'statusNotIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbAssetBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetFilter.toParams(self)
+        kparams.put("objectType", "KalturaThumbAssetBaseFilter")
+        kparams.addIntIfDefined("thumbParamsIdEqual", self.thumbParamsIdEqual)
+        kparams.addStringIfDefined("thumbParamsIdIn", self.thumbParamsIdIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
+        return kparams
+
+    def getThumbParamsIdEqual(self):
+        return self.thumbParamsIdEqual
+
+    def setThumbParamsIdEqual(self, newThumbParamsIdEqual):
+        self.thumbParamsIdEqual = newThumbParamsIdEqual
+
+    def getThumbParamsIdIn(self):
+        return self.thumbParamsIdIn
+
+    def setThumbParamsIdIn(self, newThumbParamsIdIn):
+        self.thumbParamsIdIn = newThumbParamsIdIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getStatusNotIn(self):
+        return self.statusNotIn
+
+    def setStatusNotIn(self, newStatusNotIn):
+        self.statusNotIn = newStatusNotIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            isSystemDefaultEqual=NotImplemented,
+            tagsEqual=NotImplemented,
+            formatEqual=NotImplemented):
+        KalturaAssetParamsFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            systemNameEqual,
+            systemNameIn,
+            isSystemDefaultEqual,
+            tagsEqual)
+
+        # @var KalturaContainerFormat
+        self.formatEqual = formatEqual
+
+
+    PROPERTY_LOADERS = {
+        'formatEqual': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetParamsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetParamsFilter.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsBaseFilter")
+        kparams.addStringEnumIfDefined("formatEqual", self.formatEqual)
+        return kparams
+
+    def getFormatEqual(self):
+        return self.formatEqual
+
+    def setFormatEqual(self, newFormatEqual):
+        self.formatEqual = newFormatEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaTubeMogulSyndicationFeedFilter(KalturaTubeMogulSyndicationFeedBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaTubeMogulSyndicationFeedBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaTubeMogulSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTubeMogulSyndicationFeedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaTubeMogulSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaTubeMogulSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaYahooSyndicationFeedFilter(KalturaYahooSyndicationFeedBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaYahooSyndicationFeedBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaYahooSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaYahooSyndicationFeedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaYahooSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaYahooSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            screenNameLike=NotImplemented,
+            screenNameStartsWith=NotImplemented,
+            emailLike=NotImplemented,
+            emailStartsWith=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            firstNameStartsWith=NotImplemented,
+            lastNameStartsWith=NotImplemented,
+            isAdminEqual=NotImplemented,
+            idOrScreenNameStartsWith=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            loginEnabledEqual=NotImplemented,
+            roleIdEqual=NotImplemented,
+            roleIdsEqual=NotImplemented,
+            roleIdsIn=NotImplemented,
+            firstNameOrLastNameStartsWith=NotImplemented,
+            permissionNamesMultiLikeOr=NotImplemented,
+            permissionNamesMultiLikeAnd=NotImplemented):
+        KalturaAdminUserBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            typeEqual,
+            typeIn,
+            screenNameLike,
+            screenNameStartsWith,
+            emailLike,
+            emailStartsWith,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            firstNameStartsWith,
+            lastNameStartsWith,
+            isAdminEqual,
+            idOrScreenNameStartsWith,
+            idEqual,
+            idIn,
+            loginEnabledEqual,
+            roleIdEqual,
+            roleIdsEqual,
+            roleIdsIn,
+            firstNameOrLastNameStartsWith,
+            permissionNamesMultiLikeOr,
+            permissionNamesMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAdminUserBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAdminUserFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAdminUserBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAdminUserFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaApiActionPermissionItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            typeEqual,
+            typeIn,
+            partnerIdEqual,
+            partnerIdIn,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaApiActionPermissionItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaApiActionPermissionItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaApiActionPermissionItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaApiActionPermissionItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaApiParameterPermissionItemFilter(KalturaApiParameterPermissionItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaApiParameterPermissionItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            typeEqual,
+            typeIn,
+            partnerIdEqual,
+            partnerIdIn,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaApiParameterPermissionItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaApiParameterPermissionItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaApiParameterPermissionItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaApiParameterPermissionItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            isSystemDefaultEqual=NotImplemented,
+            tagsEqual=NotImplemented):
+        KalturaAssetParamsOutputBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            systemNameEqual,
+            systemNameIn,
+            isSystemDefaultEqual,
+            tagsEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAssetParamsOutputBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetParamsOutputFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetParamsOutputBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetParamsOutputFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            nameLike=NotImplemented,
+            nameMultiLikeOr=NotImplemented,
+            nameMultiLikeAnd=NotImplemented,
+            nameEqual=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            creatorIdEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            adminTagsLike=NotImplemented,
+            adminTagsMultiLikeOr=NotImplemented,
+            adminTagsMultiLikeAnd=NotImplemented,
+            categoriesMatchAnd=NotImplemented,
+            categoriesMatchOr=NotImplemented,
+            categoriesNotContains=NotImplemented,
+            categoriesIdsMatchAnd=NotImplemented,
+            categoriesIdsMatchOr=NotImplemented,
+            categoriesIdsNotContains=NotImplemented,
+            categoriesIdsEmpty=NotImplemented,
+            statusEqual=NotImplemented,
+            statusNotEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented,
+            moderationStatusEqual=NotImplemented,
+            moderationStatusNotEqual=NotImplemented,
+            moderationStatusIn=NotImplemented,
+            moderationStatusNotIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            totalRankLessThanOrEqual=NotImplemented,
+            totalRankGreaterThanOrEqual=NotImplemented,
+            groupIdEqual=NotImplemented,
+            searchTextMatchAnd=NotImplemented,
+            searchTextMatchOr=NotImplemented,
+            accessControlIdEqual=NotImplemented,
+            accessControlIdIn=NotImplemented,
+            startDateGreaterThanOrEqual=NotImplemented,
+            startDateLessThanOrEqual=NotImplemented,
+            startDateGreaterThanOrEqualOrNull=NotImplemented,
+            startDateLessThanOrEqualOrNull=NotImplemented,
+            endDateGreaterThanOrEqual=NotImplemented,
+            endDateLessThanOrEqual=NotImplemented,
+            endDateGreaterThanOrEqualOrNull=NotImplemented,
+            endDateLessThanOrEqualOrNull=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdIn=NotImplemented,
+            replacingEntryIdEqual=NotImplemented,
+            replacingEntryIdIn=NotImplemented,
+            replacedEntryIdEqual=NotImplemented,
+            replacedEntryIdIn=NotImplemented,
+            replacementStatusEqual=NotImplemented,
+            replacementStatusIn=NotImplemented,
+            partnerSortValueGreaterThanOrEqual=NotImplemented,
+            partnerSortValueLessThanOrEqual=NotImplemented,
+            rootEntryIdEqual=NotImplemented,
+            rootEntryIdIn=NotImplemented,
+            parentEntryIdEqual=NotImplemented,
+            entitledUsersEditMatchAnd=NotImplemented,
+            entitledUsersPublishMatchAnd=NotImplemented,
+            tagsNameMultiLikeOr=NotImplemented,
+            tagsAdminTagsMultiLikeOr=NotImplemented,
+            tagsAdminTagsNameMultiLikeOr=NotImplemented,
+            tagsNameMultiLikeAnd=NotImplemented,
+            tagsAdminTagsMultiLikeAnd=NotImplemented,
+            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            freeText=NotImplemented,
+            isRoot=NotImplemented,
+            categoriesFullNameIn=NotImplemented,
+            categoryAncestorIdIn=NotImplemented,
+            redirectFromEntryId=NotImplemented):
+        KalturaDataEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            nameLike,
+            nameMultiLikeOr,
+            nameMultiLikeAnd,
+            nameEqual,
+            partnerIdEqual,
+            partnerIdIn,
+            userIdEqual,
+            userIdIn,
+            creatorIdEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            adminTagsLike,
+            adminTagsMultiLikeOr,
+            adminTagsMultiLikeAnd,
+            categoriesMatchAnd,
+            categoriesMatchOr,
+            categoriesNotContains,
+            categoriesIdsMatchAnd,
+            categoriesIdsMatchOr,
+            categoriesIdsNotContains,
+            categoriesIdsEmpty,
+            statusEqual,
+            statusNotEqual,
+            statusIn,
+            statusNotIn,
+            moderationStatusEqual,
+            moderationStatusNotEqual,
+            moderationStatusIn,
+            moderationStatusNotIn,
+            typeEqual,
+            typeIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            totalRankLessThanOrEqual,
+            totalRankGreaterThanOrEqual,
+            groupIdEqual,
+            searchTextMatchAnd,
+            searchTextMatchOr,
+            accessControlIdEqual,
+            accessControlIdIn,
+            startDateGreaterThanOrEqual,
+            startDateLessThanOrEqual,
+            startDateGreaterThanOrEqualOrNull,
+            startDateLessThanOrEqualOrNull,
+            endDateGreaterThanOrEqual,
+            endDateLessThanOrEqual,
+            endDateGreaterThanOrEqualOrNull,
+            endDateLessThanOrEqualOrNull,
+            referenceIdEqual,
+            referenceIdIn,
+            replacingEntryIdEqual,
+            replacingEntryIdIn,
+            replacedEntryIdEqual,
+            replacedEntryIdIn,
+            replacementStatusEqual,
+            replacementStatusIn,
+            partnerSortValueGreaterThanOrEqual,
+            partnerSortValueLessThanOrEqual,
+            rootEntryIdEqual,
+            rootEntryIdIn,
+            parentEntryIdEqual,
+            entitledUsersEditMatchAnd,
+            entitledUsersPublishMatchAnd,
+            tagsNameMultiLikeOr,
+            tagsAdminTagsMultiLikeOr,
+            tagsAdminTagsNameMultiLikeOr,
+            tagsNameMultiLikeAnd,
+            tagsAdminTagsMultiLikeAnd,
+            tagsAdminTagsNameMultiLikeAnd,
+            freeText,
+            isRoot,
+            categoriesFullNameIn,
+            categoryAncestorIdIn,
+            redirectFromEntryId)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDataEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDataEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDataEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaDataEntryFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            streamerTypeEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaDeliveryProfileRtmpFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            partnerIdEqual,
+            partnerIdIn,
+            systemNameEqual,
+            systemNameIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            streamerTypeEqual,
+            statusEqual,
+            statusIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileRtmpFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileGenericRtmpBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileRtmpFilter.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileGenericRtmpBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorAssetFilter(KalturaFlavorAssetBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -41943,11 +44103,11 @@ class KalturaFlavorParamsFilter(KalturaFlavorParamsBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilter):
+class KalturaGenericXsltSyndicationFeedBaseFilter(KalturaGenericSyndicationFeedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented):
-        KalturaGenericSyndicationFeedBaseFilter.__init__(self,
+        KalturaGenericSyndicationFeedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -41956,60 +44116,206 @@ class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilte
     }
 
     def fromXml(self, node):
-        KalturaGenericSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGenericSyndicationFeedFilter.PROPERTY_LOADERS)
+        KalturaGenericSyndicationFeedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericXsltSyndicationFeedBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaGenericSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaGenericSyndicationFeedFilter")
+        kparams = KalturaGenericSyndicationFeedFilter.toParams(self)
+        kparams.put("objectType", "KalturaGenericXsltSyndicationFeedBaseFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGoogleVideoSyndicationFeedFilter(KalturaGoogleVideoSyndicationFeedBaseFilter):
+class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaGoogleVideoSyndicationFeedBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch)
+            id=NotImplemented,
+            name=NotImplemented,
+            description=NotImplemented,
+            partnerId=NotImplemented,
+            userId=NotImplemented,
+            creatorId=NotImplemented,
+            tags=NotImplemented,
+            adminTags=NotImplemented,
+            categories=NotImplemented,
+            categoriesIds=NotImplemented,
+            status=NotImplemented,
+            moderationStatus=NotImplemented,
+            moderationCount=NotImplemented,
+            type=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            rank=NotImplemented,
+            totalRank=NotImplemented,
+            votes=NotImplemented,
+            groupId=NotImplemented,
+            partnerData=NotImplemented,
+            downloadUrl=NotImplemented,
+            searchText=NotImplemented,
+            licenseType=NotImplemented,
+            version=NotImplemented,
+            thumbnailUrl=NotImplemented,
+            accessControlId=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            replacingEntryId=NotImplemented,
+            replacedEntryId=NotImplemented,
+            replacementStatus=NotImplemented,
+            partnerSortValue=NotImplemented,
+            conversionProfileId=NotImplemented,
+            redirectEntryId=NotImplemented,
+            rootEntryId=NotImplemented,
+            parentEntryId=NotImplemented,
+            operationAttributes=NotImplemented,
+            entitledUsersEdit=NotImplemented,
+            entitledUsersPublish=NotImplemented,
+            plays=NotImplemented,
+            views=NotImplemented,
+            lastPlayedAt=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            duration=NotImplemented,
+            msDuration=NotImplemented,
+            durationType=NotImplemented,
+            mediaType=NotImplemented,
+            conversionQuality=NotImplemented,
+            sourceType=NotImplemented,
+            searchProviderType=NotImplemented,
+            searchProviderId=NotImplemented,
+            creditUserName=NotImplemented,
+            creditUrl=NotImplemented,
+            mediaDate=NotImplemented,
+            dataUrl=NotImplemented,
+            flavorParamsIds=NotImplemented,
+            offlineMessage=NotImplemented,
+            recordStatus=NotImplemented,
+            dvrStatus=NotImplemented,
+            dvrWindow=NotImplemented,
+            lastElapsedRecordingTime=NotImplemented,
+            liveStreamConfigurations=NotImplemented,
+            recordedEntryId=NotImplemented,
+            pushPublishEnabled=NotImplemented,
+            publishConfigurations=NotImplemented,
+            firstBroadcast=NotImplemented,
+            lastBroadcast=NotImplemented,
+            currentBroadcastStartTime=NotImplemented,
+            recordingOptions=NotImplemented,
+            streamRemoteId=NotImplemented,
+            streamRemoteBackupId=NotImplemented,
+            bitrates=NotImplemented,
+            primaryBroadcastingUrl=NotImplemented,
+            secondaryBroadcastingUrl=NotImplemented,
+            primaryRtspBroadcastingUrl=NotImplemented,
+            secondaryRtspBroadcastingUrl=NotImplemented,
+            streamName=NotImplemented,
+            streamUrl=NotImplemented,
+            hlsStreamUrl=NotImplemented,
+            urlManager=NotImplemented,
+            encodingIP1=NotImplemented,
+            encodingIP2=NotImplemented,
+            streamPassword=NotImplemented,
+            streamUsername=NotImplemented):
+        KalturaLiveStreamEntry.__init__(self,
+            id,
+            name,
+            description,
+            partnerId,
+            userId,
+            creatorId,
+            tags,
+            adminTags,
+            categories,
+            categoriesIds,
+            status,
+            moderationStatus,
+            moderationCount,
+            type,
+            createdAt,
+            updatedAt,
+            rank,
+            totalRank,
+            votes,
+            groupId,
+            partnerData,
+            downloadUrl,
+            searchText,
+            licenseType,
+            version,
+            thumbnailUrl,
+            accessControlId,
+            startDate,
+            endDate,
+            referenceId,
+            replacingEntryId,
+            replacedEntryId,
+            replacementStatus,
+            partnerSortValue,
+            conversionProfileId,
+            redirectEntryId,
+            rootEntryId,
+            parentEntryId,
+            operationAttributes,
+            entitledUsersEdit,
+            entitledUsersPublish,
+            plays,
+            views,
+            lastPlayedAt,
+            width,
+            height,
+            duration,
+            msDuration,
+            durationType,
+            mediaType,
+            conversionQuality,
+            sourceType,
+            searchProviderType,
+            searchProviderId,
+            creditUserName,
+            creditUrl,
+            mediaDate,
+            dataUrl,
+            flavorParamsIds,
+            offlineMessage,
+            recordStatus,
+            dvrStatus,
+            dvrWindow,
+            lastElapsedRecordingTime,
+            liveStreamConfigurations,
+            recordedEntryId,
+            pushPublishEnabled,
+            publishConfigurations,
+            firstBroadcast,
+            lastBroadcast,
+            currentBroadcastStartTime,
+            recordingOptions,
+            streamRemoteId,
+            streamRemoteBackupId,
+            bitrates,
+            primaryBroadcastingUrl,
+            secondaryBroadcastingUrl,
+            primaryRtspBroadcastingUrl,
+            secondaryRtspBroadcastingUrl,
+            streamName,
+            streamUrl,
+            hlsStreamUrl,
+            urlManager,
+            encodingIP1,
+            encodingIP2,
+            streamPassword,
+            streamUsername)
 
 
     PROPERTY_LOADERS = {
     }
 
     def fromXml(self, node):
-        KalturaGoogleVideoSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGoogleVideoSyndicationFeedFilter.PROPERTY_LOADERS)
+        KalturaLiveStreamEntry.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamAdminEntry.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaGoogleVideoSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaGoogleVideoSyndicationFeedFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaITunesSyndicationFeedBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaITunesSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaITunesSyndicationFeedFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaITunesSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaITunesSyndicationFeedFilter")
+        kparams = KalturaLiveStreamEntry.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamAdminEntry")
         return kparams
 
 
@@ -42313,55 +44619,7 @@ class KalturaThumbParamsFilter(KalturaThumbParamsBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTubeMogulSyndicationFeedFilter(KalturaTubeMogulSyndicationFeedBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaTubeMogulSyndicationFeedBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaTubeMogulSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTubeMogulSyndicationFeedFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaTubeMogulSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaTubeMogulSyndicationFeedFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaYahooSyndicationFeedFilter(KalturaYahooSyndicationFeedBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaYahooSyndicationFeedBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaYahooSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaYahooSyndicationFeedFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaYahooSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaYahooSyndicationFeedFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilter):
+class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -42378,7 +44636,7 @@ class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilt
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented):
-        KalturaDeliveryProfileRtmpFilter.__init__(self,
+        KalturaDeliveryProfileGenericRtmpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -42400,12 +44658,12 @@ class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilt
     }
 
     def fromXml(self, node):
-        KalturaDeliveryProfileRtmpFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileGenericRtmpBaseFilter.PROPERTY_LOADERS)
+        KalturaDeliveryProfileGenericRtmpBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileGenericRtmpFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaDeliveryProfileRtmpFilter.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileGenericRtmpBaseFilter")
+        kparams = KalturaDeliveryProfileGenericRtmpBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileGenericRtmpFilter")
         return kparams
 
 
@@ -42493,11 +44751,11 @@ class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaGenericXsltSyndicationFeedBaseFilter(KalturaGenericSyndicationFeedFilter):
+class KalturaGenericXsltSyndicationFeedFilter(KalturaGenericXsltSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented):
-        KalturaGenericSyndicationFeedFilter.__init__(self,
+        KalturaGenericXsltSyndicationFeedBaseFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -42506,12 +44764,12 @@ class KalturaGenericXsltSyndicationFeedBaseFilter(KalturaGenericSyndicationFeedF
     }
 
     def fromXml(self, node):
-        KalturaGenericSyndicationFeedFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGenericXsltSyndicationFeedBaseFilter.PROPERTY_LOADERS)
+        KalturaGenericXsltSyndicationFeedBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericXsltSyndicationFeedFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaGenericSyndicationFeedFilter.toParams(self)
-        kparams.put("objectType", "KalturaGenericXsltSyndicationFeedBaseFilter")
+        kparams = KalturaGenericXsltSyndicationFeedBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaGenericXsltSyndicationFeedFilter")
         return kparams
 
 
@@ -42614,200 +44872,6 @@ class KalturaLiveParamsBaseFilter(KalturaFlavorParamsFilter):
     def toParams(self):
         kparams = KalturaFlavorParamsFilter.toParams(self)
         kparams.put("objectType", "KalturaLiveParamsBaseFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
-    def __init__(self,
-            id=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            partnerId=NotImplemented,
-            userId=NotImplemented,
-            creatorId=NotImplemented,
-            tags=NotImplemented,
-            adminTags=NotImplemented,
-            categories=NotImplemented,
-            categoriesIds=NotImplemented,
-            status=NotImplemented,
-            moderationStatus=NotImplemented,
-            moderationCount=NotImplemented,
-            type=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            rank=NotImplemented,
-            totalRank=NotImplemented,
-            votes=NotImplemented,
-            groupId=NotImplemented,
-            partnerData=NotImplemented,
-            downloadUrl=NotImplemented,
-            searchText=NotImplemented,
-            licenseType=NotImplemented,
-            version=NotImplemented,
-            thumbnailUrl=NotImplemented,
-            accessControlId=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            replacingEntryId=NotImplemented,
-            replacedEntryId=NotImplemented,
-            replacementStatus=NotImplemented,
-            partnerSortValue=NotImplemented,
-            conversionProfileId=NotImplemented,
-            redirectEntryId=NotImplemented,
-            rootEntryId=NotImplemented,
-            parentEntryId=NotImplemented,
-            operationAttributes=NotImplemented,
-            entitledUsersEdit=NotImplemented,
-            entitledUsersPublish=NotImplemented,
-            plays=NotImplemented,
-            views=NotImplemented,
-            lastPlayedAt=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            duration=NotImplemented,
-            msDuration=NotImplemented,
-            durationType=NotImplemented,
-            mediaType=NotImplemented,
-            conversionQuality=NotImplemented,
-            sourceType=NotImplemented,
-            searchProviderType=NotImplemented,
-            searchProviderId=NotImplemented,
-            creditUserName=NotImplemented,
-            creditUrl=NotImplemented,
-            mediaDate=NotImplemented,
-            dataUrl=NotImplemented,
-            flavorParamsIds=NotImplemented,
-            offlineMessage=NotImplemented,
-            recordStatus=NotImplemented,
-            dvrStatus=NotImplemented,
-            dvrWindow=NotImplemented,
-            lastElapsedRecordingTime=NotImplemented,
-            liveStreamConfigurations=NotImplemented,
-            recordedEntryId=NotImplemented,
-            pushPublishEnabled=NotImplemented,
-            publishConfigurations=NotImplemented,
-            firstBroadcast=NotImplemented,
-            lastBroadcast=NotImplemented,
-            currentBroadcastStartTime=NotImplemented,
-            recordingOptions=NotImplemented,
-            streamRemoteId=NotImplemented,
-            streamRemoteBackupId=NotImplemented,
-            bitrates=NotImplemented,
-            primaryBroadcastingUrl=NotImplemented,
-            secondaryBroadcastingUrl=NotImplemented,
-            primaryRtspBroadcastingUrl=NotImplemented,
-            secondaryRtspBroadcastingUrl=NotImplemented,
-            streamName=NotImplemented,
-            streamUrl=NotImplemented,
-            hlsStreamUrl=NotImplemented,
-            urlManager=NotImplemented,
-            encodingIP1=NotImplemented,
-            encodingIP2=NotImplemented,
-            streamPassword=NotImplemented,
-            streamUsername=NotImplemented):
-        KalturaLiveStreamEntry.__init__(self,
-            id,
-            name,
-            description,
-            partnerId,
-            userId,
-            creatorId,
-            tags,
-            adminTags,
-            categories,
-            categoriesIds,
-            status,
-            moderationStatus,
-            moderationCount,
-            type,
-            createdAt,
-            updatedAt,
-            rank,
-            totalRank,
-            votes,
-            groupId,
-            partnerData,
-            downloadUrl,
-            searchText,
-            licenseType,
-            version,
-            thumbnailUrl,
-            accessControlId,
-            startDate,
-            endDate,
-            referenceId,
-            replacingEntryId,
-            replacedEntryId,
-            replacementStatus,
-            partnerSortValue,
-            conversionProfileId,
-            redirectEntryId,
-            rootEntryId,
-            parentEntryId,
-            operationAttributes,
-            entitledUsersEdit,
-            entitledUsersPublish,
-            plays,
-            views,
-            lastPlayedAt,
-            width,
-            height,
-            duration,
-            msDuration,
-            durationType,
-            mediaType,
-            conversionQuality,
-            sourceType,
-            searchProviderType,
-            searchProviderId,
-            creditUserName,
-            creditUrl,
-            mediaDate,
-            dataUrl,
-            flavorParamsIds,
-            offlineMessage,
-            recordStatus,
-            dvrStatus,
-            dvrWindow,
-            lastElapsedRecordingTime,
-            liveStreamConfigurations,
-            recordedEntryId,
-            pushPublishEnabled,
-            publishConfigurations,
-            firstBroadcast,
-            lastBroadcast,
-            currentBroadcastStartTime,
-            recordingOptions,
-            streamRemoteId,
-            streamRemoteBackupId,
-            bitrates,
-            primaryBroadcastingUrl,
-            secondaryBroadcastingUrl,
-            primaryRtspBroadcastingUrl,
-            secondaryRtspBroadcastingUrl,
-            streamName,
-            streamUrl,
-            hlsStreamUrl,
-            urlManager,
-            encodingIP1,
-            encodingIP2,
-            streamPassword,
-            streamUsername)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaLiveStreamEntry.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveStreamAdminEntry.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaLiveStreamEntry.toParams(self)
-        kparams.put("objectType", "KalturaLiveStreamAdminEntry")
         return kparams
 
 
@@ -43127,56 +45191,6 @@ class KalturaThumbParamsOutputBaseFilter(KalturaThumbParamsFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            streamerTypeEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaDeliveryProfileGenericRtmpBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            partnerIdEqual,
-            partnerIdIn,
-            systemNameEqual,
-            systemNameIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            streamerTypeEqual,
-            statusEqual,
-            statusIn)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaDeliveryProfileGenericRtmpBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileGenericRtmpFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDeliveryProfileGenericRtmpBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileGenericRtmpFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFlavorParamsOutputFilter(KalturaFlavorParamsOutputBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -43214,30 +45228,6 @@ class KalturaFlavorParamsOutputFilter(KalturaFlavorParamsOutputBaseFilter):
     def toParams(self):
         kparams = KalturaFlavorParamsOutputBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaFlavorParamsOutputFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaGenericXsltSyndicationFeedFilter(KalturaGenericXsltSyndicationFeedBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaGenericXsltSyndicationFeedBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaGenericXsltSyndicationFeedBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaGenericXsltSyndicationFeedFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaGenericXsltSyndicationFeedBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaGenericXsltSyndicationFeedFilter")
         return kparams
 
 
@@ -48966,6 +50956,83 @@ class KalturaReportService(KalturaServiceBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaResponseProfileService(KalturaServiceBase):
+    """Manage response profiles"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, addResponseProfile):
+        """Add new response profile"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("addResponseProfile", addResponseProfile)
+        self.client.queueServiceActionCall("responseprofile", "add", KalturaResponseProfile, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfile)
+
+    def get(self, id):
+        """Get response profile by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("responseprofile", "get", KalturaResponseProfile, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfile)
+
+    def update(self, id, updateResponseProfile):
+        """Update response profile by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("updateResponseProfile", updateResponseProfile)
+        self.client.queueServiceActionCall("responseprofile", "update", KalturaResponseProfile, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfile)
+
+    def updateStatus(self, id, status):
+        """Update response profile status by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addIntIfDefined("status", status);
+        self.client.queueServiceActionCall("responseprofile", "updateStatus", KalturaResponseProfile, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfile)
+
+    def delete(self, id):
+        """Delete response profile by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("responseprofile", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List response profiles by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("responseprofile", "list", KalturaResponseProfileListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfileListResponse)
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSchemaService(KalturaServiceBase):
     """Expose the schema definitions for syndication MRSS, bulk upload XML and other schema types."""
 
@@ -50329,6 +52396,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'permission': KalturaPermissionService,
             'playlist': KalturaPlaylistService,
             'report': KalturaReportService,
+            'responseProfile': KalturaResponseProfileService,
             'schema': KalturaSchemaService,
             'search': KalturaSearchService,
             'session': KalturaSessionService,
@@ -50403,7 +52471,10 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPrivacyType': KalturaPrivacyType,
             'KalturaRecordStatus': KalturaRecordStatus,
             'KalturaReportType': KalturaReportType,
+            'KalturaResponseProfileStatus': KalturaResponseProfileStatus,
+            'KalturaResponseProfileType': KalturaResponseProfileType,
             'KalturaResponseType': KalturaResponseType,
+            'KalturaSchedulerStatusType': KalturaSchedulerStatusType,
             'KalturaSearchOperatorType': KalturaSearchOperatorType,
             'KalturaSearchProviderType': KalturaSearchProviderType,
             'KalturaSessionType': KalturaSessionType,
@@ -50522,7 +52593,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaFlavorParamsOutputOrderBy': KalturaMediaFlavorParamsOutputOrderBy,
             'KalturaMediaInfoOrderBy': KalturaMediaInfoOrderBy,
             'KalturaMediaParserType': KalturaMediaParserType,
-            'KalturaMediaServerOrderBy': KalturaMediaServerOrderBy,
             'KalturaMixEntryOrderBy': KalturaMixEntryOrderBy,
             'KalturaModerationFlagStatus': KalturaModerationFlagStatus,
             'KalturaModerationObjectType': KalturaModerationObjectType,
@@ -50535,6 +52605,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistOrderBy': KalturaPlaylistOrderBy,
             'KalturaReportInterval': KalturaReportInterval,
             'KalturaReportOrderBy': KalturaReportOrderBy,
+            'KalturaResponseProfileOrderBy': KalturaResponseProfileOrderBy,
             'KalturaRuleActionType': KalturaRuleActionType,
             'KalturaSchemaType': KalturaSchemaType,
             'KalturaSearchConditionComparison': KalturaSearchConditionComparison,
@@ -50562,16 +52633,15 @@ class KalturaCoreClient(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaListResponse': KalturaListResponse,
             'KalturaBaseRestriction': KalturaBaseRestriction,
             'KalturaAccessControl': KalturaAccessControl,
             'KalturaContextTypeHolder': KalturaContextTypeHolder,
             'KalturaAccessControlContextTypeHolder': KalturaAccessControlContextTypeHolder,
-            'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
             'KalturaRuleAction': KalturaRuleAction,
             'KalturaCondition': KalturaCondition,
             'KalturaRule': KalturaRule,
             'KalturaAccessControlProfile': KalturaAccessControlProfile,
-            'KalturaAccessControlProfileListResponse': KalturaAccessControlProfileListResponse,
             'KalturaKeyValue': KalturaKeyValue,
             'KalturaAccessControlScope': KalturaAccessControlScope,
             'KalturaAsset': KalturaAsset,
@@ -50582,40 +52652,42 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
-            'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
+            'KalturaBaseResponseProfile': KalturaBaseResponseProfile,
             'KalturaBaseSyndicationFeed': KalturaBaseSyndicationFeed,
-            'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
+            'KalturaBatchHistoryData': KalturaBatchHistoryData,
+            'KalturaJobData': KalturaJobData,
+            'KalturaBatchJob': KalturaBatchJob,
             'KalturaBulkUploadPluginData': KalturaBulkUploadPluginData,
             'KalturaBulkUploadResult': KalturaBulkUploadResult,
             'KalturaBulkUpload': KalturaBulkUpload,
-            'KalturaBulkUploadListResponse': KalturaBulkUploadListResponse,
             'KalturaBulkUploadObjectData': KalturaBulkUploadObjectData,
             'KalturaCEError': KalturaCEError,
             'KalturaCategory': KalturaCategory,
             'KalturaCategoryEntry': KalturaCategoryEntry,
-            'KalturaCategoryEntryListResponse': KalturaCategoryEntryListResponse,
-            'KalturaCategoryListResponse': KalturaCategoryListResponse,
             'KalturaCategoryUser': KalturaCategoryUser,
-            'KalturaCategoryUserListResponse': KalturaCategoryUserListResponse,
+            'KalturaClientConfiguration': KalturaClientConfiguration,
             'KalturaClientNotification': KalturaClientNotification,
             'KalturaContext': KalturaContext,
             'KalturaContextDataResult': KalturaContextDataResult,
+            'KalturaControlPanelCommand': KalturaControlPanelCommand,
             'KalturaConversionAttribute': KalturaConversionAttribute,
             'KalturaCropDimensions': KalturaCropDimensions,
             'KalturaConversionProfile': KalturaConversionProfile,
             'KalturaConversionProfileAssetParams': KalturaConversionProfileAssetParams,
-            'KalturaConversionProfileAssetParamsListResponse': KalturaConversionProfileAssetParamsListResponse,
-            'KalturaConversionProfileListResponse': KalturaConversionProfileListResponse,
             'KalturaConvertCollectionFlavorData': KalturaConvertCollectionFlavorData,
             'KalturaCoordinate': KalturaCoordinate,
             'KalturaDataEntry': KalturaDataEntry,
-            'KalturaDataListResponse': KalturaDataListResponse,
             'KalturaUrlRecognizer': KalturaUrlRecognizer,
             'KalturaUrlTokenizer': KalturaUrlTokenizer,
             'KalturaDeliveryProfile': KalturaDeliveryProfile,
-            'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaFileSyncDescriptor': KalturaFileSyncDescriptor,
             'KalturaDestFileSyncDescriptor': KalturaDestFileSyncDescriptor,
+            'KalturaSearchItem': KalturaSearchItem,
+            'KalturaFilter': KalturaFilter,
+            'KalturaRelatedFilter': KalturaRelatedFilter,
+            'KalturaFilterPager': KalturaFilterPager,
+            'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
+            'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaValue': KalturaValue,
             'KalturaStringValue': KalturaStringValue,
@@ -50625,42 +52697,28 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlayableEntry': KalturaPlayableEntry,
             'KalturaMediaEntry': KalturaMediaEntry,
             'KalturaFeatureStatus': KalturaFeatureStatus,
-            'KalturaFeatureStatusListResponse': KalturaFeatureStatusListResponse,
             'KalturaFileAsset': KalturaFileAsset,
-            'KalturaFileAssetListResponse': KalturaFileAssetListResponse,
-            'KalturaSearchItem': KalturaSearchItem,
-            'KalturaFilter': KalturaFilter,
-            'KalturaFilterPager': KalturaFilterPager,
             'KalturaFlavorAsset': KalturaFlavorAsset,
-            'KalturaFlavorAssetListResponse': KalturaFlavorAssetListResponse,
             'KalturaFlavorParams': KalturaFlavorParams,
             'KalturaFlavorAssetWithParams': KalturaFlavorAssetWithParams,
-            'KalturaFlavorParamsListResponse': KalturaFlavorParamsListResponse,
             'KalturaFlavorParamsOutput': KalturaFlavorParamsOutput,
-            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
             'KalturaGroupUser': KalturaGroupUser,
-            'KalturaGroupUserListResponse': KalturaGroupUserListResponse,
             'KalturaObject': KalturaObject,
             'KalturaIntegerValue': KalturaIntegerValue,
-            'KalturaJobData': KalturaJobData,
             'KalturaKeyBooleanValue': KalturaKeyBooleanValue,
             'KalturaLiveStreamConfiguration': KalturaLiveStreamConfiguration,
             'KalturaLiveStreamPushPublishConfiguration': KalturaLiveStreamPushPublishConfiguration,
             'KalturaLiveEntryRecordingOptions': KalturaLiveEntryRecordingOptions,
             'KalturaLiveEntry': KalturaLiveEntry,
             'KalturaLiveChannel': KalturaLiveChannel,
-            'KalturaLiveChannelListResponse': KalturaLiveChannelListResponse,
             'KalturaLiveChannelSegment': KalturaLiveChannelSegment,
-            'KalturaLiveChannelSegmentListResponse': KalturaLiveChannelSegmentListResponse,
             'KalturaLiveReportExportParams': KalturaLiveReportExportParams,
             'KalturaLiveReportExportResponse': KalturaLiveReportExportResponse,
             'KalturaLiveReportInputFilter': KalturaLiveReportInputFilter,
             'KalturaLiveStats': KalturaLiveStats,
             'KalturaLiveStatsEvent': KalturaLiveStatsEvent,
-            'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
             'KalturaLiveStreamBitrate': KalturaLiveStreamBitrate,
             'KalturaLiveStreamEntry': KalturaLiveStreamEntry,
-            'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
             'KalturaBaseEntryBaseFilter': KalturaBaseEntryBaseFilter,
             'KalturaBaseEntryFilter': KalturaBaseEntryFilter,
             'KalturaPlayableEntryBaseFilter': KalturaPlayableEntryBaseFilter,
@@ -50669,39 +52727,34 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryFilter': KalturaMediaEntryFilter,
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
             'KalturaMediaInfo': KalturaMediaInfo,
-            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
-            'KalturaMediaListResponse': KalturaMediaListResponse,
             'KalturaMediaServer': KalturaMediaServer,
             'KalturaMediaServerStatus': KalturaMediaServerStatus,
             'KalturaMixEntry': KalturaMixEntry,
-            'KalturaMixListResponse': KalturaMixListResponse,
             'KalturaModerationFlag': KalturaModerationFlag,
-            'KalturaModerationFlagListResponse': KalturaModerationFlagListResponse,
-            'KalturaObjectListResponse': KalturaObjectListResponse,
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
             'KalturaPlayerEmbedCodeType': KalturaPlayerEmbedCodeType,
             'KalturaPartner': KalturaPartner,
-            'KalturaPartnerListResponse': KalturaPartnerListResponse,
             'KalturaPartnerStatistics': KalturaPartnerStatistics,
             'KalturaPartnerUsage': KalturaPartnerUsage,
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
-            'KalturaPermissionItemListResponse': KalturaPermissionItemListResponse,
-            'KalturaPermissionListResponse': KalturaPermissionListResponse,
             'KalturaPlaylist': KalturaPlaylist,
-            'KalturaPlaylistListResponse': KalturaPlaylistListResponse,
             'KalturaRemotePath': KalturaRemotePath,
-            'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaUrlResource': KalturaUrlResource,
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
             'KalturaReport': KalturaReport,
             'KalturaReportBaseTotal': KalturaReportBaseTotal,
             'KalturaReportGraph': KalturaReportGraph,
             'KalturaReportInputBaseFilter': KalturaReportInputBaseFilter,
-            'KalturaReportListResponse': KalturaReportListResponse,
             'KalturaReportResponse': KalturaReportResponse,
             'KalturaReportTable': KalturaReportTable,
             'KalturaReportTotal': KalturaReportTotal,
+            'KalturaRequestConfiguration': KalturaRequestConfiguration,
+            'KalturaResponseProfile': KalturaResponseProfile,
+            'KalturaSchedulerStatus': KalturaSchedulerStatus,
+            'KalturaSchedulerConfig': KalturaSchedulerConfig,
+            'KalturaSchedulerWorker': KalturaSchedulerWorker,
+            'KalturaScheduler': KalturaScheduler,
             'KalturaScope': KalturaScope,
             'KalturaSearch': KalturaSearch,
             'KalturaSearchAuthData': KalturaSearchAuthData,
@@ -50713,46 +52766,37 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsEvent': KalturaStatsEvent,
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
-            'KalturaStorageProfileListResponse': KalturaStorageProfileListResponse,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
             'KalturaThumbAsset': KalturaThumbAsset,
-            'KalturaThumbAssetListResponse': KalturaThumbAssetListResponse,
             'KalturaThumbParams': KalturaThumbParams,
-            'KalturaThumbParamsListResponse': KalturaThumbParamsListResponse,
             'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
-            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
             'KalturaUiConf': KalturaUiConf,
-            'KalturaUiConfListResponse': KalturaUiConfListResponse,
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
             'KalturaUploadToken': KalturaUploadToken,
-            'KalturaUploadTokenListResponse': KalturaUploadTokenListResponse,
             'KalturaUser': KalturaUser,
-            'KalturaUserListResponse': KalturaUserListResponse,
             'KalturaUserLoginData': KalturaUserLoginData,
-            'KalturaUserLoginDataListResponse': KalturaUserLoginDataListResponse,
             'KalturaUserRole': KalturaUserRole,
-            'KalturaUserRoleListResponse': KalturaUserRoleListResponse,
             'KalturaWidget': KalturaWidget,
-            'KalturaWidgetListResponse': KalturaWidgetListResponse,
-            'KalturaAccessControlBaseFilter': KalturaAccessControlBaseFilter,
             'KalturaAccessControlBlockAction': KalturaAccessControlBlockAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
+            'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
-            'KalturaAccessControlProfileBaseFilter': KalturaAccessControlProfileBaseFilter,
+            'KalturaAccessControlProfileListResponse': KalturaAccessControlProfileListResponse,
             'KalturaAdminUser': KalturaAdminUser,
             'KalturaAmazonS3StorageProfile': KalturaAmazonS3StorageProfile,
             'KalturaApiActionPermissionItem': KalturaApiActionPermissionItem,
             'KalturaApiParameterPermissionItem': KalturaApiParameterPermissionItem,
-            'KalturaAssetBaseFilter': KalturaAssetBaseFilter,
-            'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetParamsOutput': KalturaAssetParamsOutput,
             'KalturaAssetPropertiesCompareCondition': KalturaAssetPropertiesCompareCondition,
             'KalturaAssetsParamsResourceContainers': KalturaAssetsParamsResourceContainers,
             'KalturaAuthenticatedCondition': KalturaAuthenticatedCondition,
+            'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
+            'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
             'KalturaBatchJobBaseFilter': KalturaBatchJobBaseFilter,
+            'KalturaBatchJobListResponse': KalturaBatchJobListResponse,
             'KalturaBooleanValue': KalturaBooleanValue,
             'KalturaBulkDownloadJobData': KalturaBulkDownloadJobData,
             'KalturaBulkUploadBaseFilter': KalturaBulkUploadBaseFilter,
@@ -50761,6 +52805,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBulkUploadCategoryUserData': KalturaBulkUploadCategoryUserData,
             'KalturaBulkUploadEntryData': KalturaBulkUploadEntryData,
             'KalturaBulkUploadJobData': KalturaBulkUploadJobData,
+            'KalturaBulkUploadListResponse': KalturaBulkUploadListResponse,
             'KalturaBulkUploadResultCategory': KalturaBulkUploadResultCategory,
             'KalturaBulkUploadResultCategoryEntry': KalturaBulkUploadResultCategoryEntry,
             'KalturaBulkUploadResultCategoryUser': KalturaBulkUploadResultCategoryUser,
@@ -50768,25 +52813,27 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBulkUploadResultUser': KalturaBulkUploadResultUser,
             'KalturaBulkUploadUserData': KalturaBulkUploadUserData,
             'KalturaCaptureThumbJobData': KalturaCaptureThumbJobData,
-            'KalturaCategoryBaseFilter': KalturaCategoryBaseFilter,
             'KalturaCategoryEntryAdvancedFilter': KalturaCategoryEntryAdvancedFilter,
-            'KalturaCategoryEntryBaseFilter': KalturaCategoryEntryBaseFilter,
+            'KalturaCategoryEntryListResponse': KalturaCategoryEntryListResponse,
             'KalturaCategoryIdentifier': KalturaCategoryIdentifier,
+            'KalturaCategoryListResponse': KalturaCategoryListResponse,
             'KalturaCategoryUserAdvancedFilter': KalturaCategoryUserAdvancedFilter,
-            'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
+            'KalturaCategoryUserListResponse': KalturaCategoryUserListResponse,
             'KalturaClipAttributes': KalturaClipAttributes,
             'KalturaCompareCondition': KalturaCompareCondition,
             'KalturaDataCenterContentResource': KalturaDataCenterContentResource,
             'KalturaConcatAttributes': KalturaConcatAttributes,
             'KalturaConcatJobData': KalturaConcatJobData,
             'KalturaControlPanelCommandBaseFilter': KalturaControlPanelCommandBaseFilter,
+            'KalturaControlPanelCommandListResponse': KalturaControlPanelCommandListResponse,
             'KalturaConvartableJobData': KalturaConvartableJobData,
-            'KalturaConversionProfileAssetParamsBaseFilter': KalturaConversionProfileAssetParamsBaseFilter,
-            'KalturaConversionProfileBaseFilter': KalturaConversionProfileBaseFilter,
+            'KalturaConversionProfileAssetParamsListResponse': KalturaConversionProfileAssetParamsListResponse,
+            'KalturaConversionProfileListResponse': KalturaConversionProfileListResponse,
             'KalturaConvertLiveSegmentJobData': KalturaConvertLiveSegmentJobData,
             'KalturaConvertProfileJobData': KalturaConvertProfileJobData,
             'KalturaCopyPartnerJobData': KalturaCopyPartnerJobData,
             'KalturaCountryRestriction': KalturaCountryRestriction,
+            'KalturaDataListResponse': KalturaDataListResponse,
             'KalturaDeleteFileJobData': KalturaDeleteFileJobData,
             'KalturaDeleteJobData': KalturaDeleteJobData,
             'KalturaDeliveryProfileAkamaiAppleHttpManifest': KalturaDeliveryProfileAkamaiAppleHttpManifest,
@@ -50797,9 +52844,12 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericHds': KalturaDeliveryProfileGenericHds,
             'KalturaDeliveryProfileGenericHttp': KalturaDeliveryProfileGenericHttp,
             'KalturaDeliveryProfileGenericSilverLight': KalturaDeliveryProfileGenericSilverLight,
+            'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
+            'KalturaDetachedResponseProfileFilter': KalturaDetachedResponseProfileFilter,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
+            'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaCategoryUserFilter': KalturaCategoryUserFilter,
             'KalturaUserBaseFilter': KalturaUserBaseFilter,
             'KalturaUserFilter': KalturaUserFilter,
@@ -50810,33 +52860,53 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryIdentifier': KalturaEntryIdentifier,
             'KalturaEntryLiveStats': KalturaEntryLiveStats,
             'KalturaBooleanField': KalturaBooleanField,
-            'KalturaFileAssetBaseFilter': KalturaFileAssetBaseFilter,
+            'KalturaFeatureStatusListResponse': KalturaFeatureStatusListResponse,
+            'KalturaFileAssetListResponse': KalturaFileAssetListResponse,
             'KalturaFlattenJobData': KalturaFlattenJobData,
+            'KalturaFlavorAssetListResponse': KalturaFlavorAssetListResponse,
+            'KalturaFlavorParamsListResponse': KalturaFlavorParamsListResponse,
+            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
             'KalturaGenericSyndicationFeed': KalturaGenericSyndicationFeed,
             'KalturaGoogleVideoSyndicationFeed': KalturaGoogleVideoSyndicationFeed,
-            'KalturaGroupUserBaseFilter': KalturaGroupUserBaseFilter,
+            'KalturaGroupUserListResponse': KalturaGroupUserListResponse,
             'KalturaITunesSyndicationFeed': KalturaITunesSyndicationFeed,
             'KalturaImportJobData': KalturaImportJobData,
             'KalturaIndexAdvancedFilter': KalturaIndexAdvancedFilter,
             'KalturaIndexJobData': KalturaIndexJobData,
             'KalturaIpAddressRestriction': KalturaIpAddressRestriction,
             'KalturaLimitFlavorsRestriction': KalturaLimitFlavorsRestriction,
-            'KalturaLiveChannelSegmentBaseFilter': KalturaLiveChannelSegmentBaseFilter,
+            'KalturaLiveChannelListResponse': KalturaLiveChannelListResponse,
+            'KalturaLiveChannelSegmentListResponse': KalturaLiveChannelSegmentListResponse,
             'KalturaLiveReportExportJobData': KalturaLiveReportExportJobData,
+            'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
+            'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
             'KalturaLiveStreamPushPublishRTMPConfiguration': KalturaLiveStreamPushPublishRTMPConfiguration,
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,
+            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
+            'KalturaMediaListResponse': KalturaMediaListResponse,
             'KalturaMediaServerBaseFilter': KalturaMediaServerBaseFilter,
+            'KalturaMixListResponse': KalturaMixListResponse,
+            'KalturaModerationFlagListResponse': KalturaModerationFlagListResponse,
             'KalturaMoveCategoryEntriesJobData': KalturaMoveCategoryEntriesJobData,
             'KalturaNotificationJobData': KalturaNotificationJobData,
+            'KalturaObjectListResponse': KalturaObjectListResponse,
             'KalturaOrCondition': KalturaOrCondition,
             'KalturaPartnerBaseFilter': KalturaPartnerBaseFilter,
-            'KalturaPermissionBaseFilter': KalturaPermissionBaseFilter,
-            'KalturaPermissionItemBaseFilter': KalturaPermissionItemBaseFilter,
+            'KalturaPartnerListResponse': KalturaPartnerListResponse,
+            'KalturaPermissionItemListResponse': KalturaPermissionItemListResponse,
+            'KalturaPermissionListResponse': KalturaPermissionListResponse,
+            'KalturaPlaylistListResponse': KalturaPlaylistListResponse,
             'KalturaProvisionJobData': KalturaProvisionJobData,
+            'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportInputFilter': KalturaReportInputFilter,
+            'KalturaReportListResponse': KalturaReportListResponse,
+            'KalturaResponseProfileHolder': KalturaResponseProfileHolder,
+            'KalturaResponseProfileListResponse': KalturaResponseProfileListResponse,
+            'KalturaSchedulerListResponse': KalturaSchedulerListResponse,
+            'KalturaSchedulerWorkerListResponse': KalturaSchedulerWorkerListResponse,
             'KalturaSearchCondition': KalturaSearchCondition,
             'KalturaSearchOperator': KalturaSearchOperator,
             'KalturaSessionRestriction': KalturaSessionRestriction,
@@ -50844,10 +52914,16 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStorageAddAction': KalturaStorageAddAction,
             'KalturaStorageJobData': KalturaStorageJobData,
             'KalturaStorageProfileBaseFilter': KalturaStorageProfileBaseFilter,
+            'KalturaStorageProfileListResponse': KalturaStorageProfileListResponse,
             'KalturaSyncCategoryPrivacyContextJobData': KalturaSyncCategoryPrivacyContextJobData,
+            'KalturaThumbAssetListResponse': KalturaThumbAssetListResponse,
+            'KalturaThumbParamsListResponse': KalturaThumbParamsListResponse,
+            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaTubeMogulSyndicationFeed': KalturaTubeMogulSyndicationFeed,
             'KalturaUiConfBaseFilter': KalturaUiConfBaseFilter,
+            'KalturaUiConfListResponse': KalturaUiConfListResponse,
             'KalturaUploadTokenBaseFilter': KalturaUploadTokenBaseFilter,
+            'KalturaUploadTokenListResponse': KalturaUploadTokenListResponse,
             'KalturaUrlRecognizerAkamaiG2O': KalturaUrlRecognizerAkamaiG2O,
             'KalturaUrlTokenizerAkamaiHttp': KalturaUrlTokenizerAkamaiHttp,
             'KalturaUrlTokenizerAkamaiRtmp': KalturaUrlTokenizerAkamaiRtmp,
@@ -50858,26 +52934,28 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
             'KalturaUserAgentRestriction': KalturaUserAgentRestriction,
-            'KalturaUserLoginDataBaseFilter': KalturaUserLoginDataBaseFilter,
-            'KalturaUserRoleBaseFilter': KalturaUserRoleBaseFilter,
+            'KalturaUserListResponse': KalturaUserListResponse,
+            'KalturaUserLoginDataListResponse': KalturaUserLoginDataListResponse,
             'KalturaUserRoleCondition': KalturaUserRoleCondition,
+            'KalturaUserRoleListResponse': KalturaUserRoleListResponse,
             'KalturaWidgetBaseFilter': KalturaWidgetBaseFilter,
+            'KalturaWidgetListResponse': KalturaWidgetListResponse,
             'KalturaYahooSyndicationFeed': KalturaYahooSyndicationFeed,
-            'KalturaAccessControlFilter': KalturaAccessControlFilter,
-            'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
+            'KalturaAccessControlBaseFilter': KalturaAccessControlBaseFilter,
+            'KalturaAccessControlProfileBaseFilter': KalturaAccessControlProfileBaseFilter,
             'KalturaAkamaiProvisionJobData': KalturaAkamaiProvisionJobData,
             'KalturaAkamaiUniversalProvisionJobData': KalturaAkamaiUniversalProvisionJobData,
-            'KalturaAssetFilter': KalturaAssetFilter,
-            'KalturaAssetParamsFilter': KalturaAssetParamsFilter,
+            'KalturaAssetBaseFilter': KalturaAssetBaseFilter,
+            'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetResource': KalturaAssetResource,
             'KalturaBaseSyndicationFeedFilter': KalturaBaseSyndicationFeedFilter,
             'KalturaBatchJobFilter': KalturaBatchJobFilter,
             'KalturaBulkUploadFilter': KalturaBulkUploadFilter,
-            'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
-            'KalturaCategoryFilter': KalturaCategoryFilter,
+            'KalturaCategoryBaseFilter': KalturaCategoryBaseFilter,
+            'KalturaCategoryEntryBaseFilter': KalturaCategoryEntryBaseFilter,
             'KalturaControlPanelCommandFilter': KalturaControlPanelCommandFilter,
-            'KalturaConversionProfileFilter': KalturaConversionProfileFilter,
-            'KalturaConversionProfileAssetParamsFilter': KalturaConversionProfileAssetParamsFilter,
+            'KalturaConversionProfileAssetParamsBaseFilter': KalturaConversionProfileAssetParamsBaseFilter,
+            'KalturaConversionProfileBaseFilter': KalturaConversionProfileBaseFilter,
             'KalturaConvertCollectionJobData': KalturaConvertCollectionJobData,
             'KalturaConvertJobData': KalturaConvertJobData,
             'KalturaCountryCondition': KalturaCountryCondition,
@@ -50891,28 +52969,28 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFieldCompareCondition': KalturaFieldCompareCondition,
             'KalturaStringField': KalturaStringField,
             'KalturaFieldMatchCondition': KalturaFieldMatchCondition,
-            'KalturaFileAssetFilter': KalturaFileAssetFilter,
+            'KalturaFileAssetBaseFilter': KalturaFileAssetBaseFilter,
             'KalturaFileSyncResource': KalturaFileSyncResource,
             'KalturaGenericXsltSyndicationFeed': KalturaGenericXsltSyndicationFeed,
             'KalturaGeoDistanceCondition': KalturaGeoDistanceCondition,
             'KalturaGeoTimeLiveStats': KalturaGeoTimeLiveStats,
-            'KalturaGroupUserFilter': KalturaGroupUserFilter,
+            'KalturaGroupUserBaseFilter': KalturaGroupUserBaseFilter,
             'KalturaIpAddressCondition': KalturaIpAddressCondition,
             'KalturaLiveAsset': KalturaLiveAsset,
-            'KalturaLiveChannelSegmentFilter': KalturaLiveChannelSegmentFilter,
+            'KalturaLiveChannelSegmentBaseFilter': KalturaLiveChannelSegmentBaseFilter,
             'KalturaLiveParams': KalturaLiveParams,
             'KalturaMediaFlavorParams': KalturaMediaFlavorParams,
             'KalturaMediaInfoFilter': KalturaMediaInfoFilter,
-            'KalturaMediaServerFilter': KalturaMediaServerFilter,
             'KalturaOperationResource': KalturaOperationResource,
             'KalturaPartnerFilter': KalturaPartnerFilter,
-            'KalturaPermissionFilter': KalturaPermissionFilter,
-            'KalturaPermissionItemFilter': KalturaPermissionItemFilter,
+            'KalturaPermissionBaseFilter': KalturaPermissionBaseFilter,
+            'KalturaPermissionItemBaseFilter': KalturaPermissionItemBaseFilter,
             'KalturaPostConvertJobData': KalturaPostConvertJobData,
             'KalturaPreviewRestriction': KalturaPreviewRestriction,
             'KalturaRegexCondition': KalturaRegexCondition,
             'KalturaRemoteStorageResources': KalturaRemoteStorageResources,
             'KalturaReportFilter': KalturaReportFilter,
+            'KalturaResponseProfileFilter': KalturaResponseProfileFilter,
             'KalturaSearchComparableCondition': KalturaSearchComparableCondition,
             'KalturaSiteCondition': KalturaSiteCondition,
             'KalturaSshImportJobData': KalturaSshImportJobData,
@@ -50922,19 +53000,22 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStringResource': KalturaStringResource,
             'KalturaUiConfFilter': KalturaUiConfFilter,
             'KalturaUploadTokenFilter': KalturaUploadTokenFilter,
-            'KalturaUserLoginDataFilter': KalturaUserLoginDataFilter,
-            'KalturaUserRoleFilter': KalturaUserRoleFilter,
+            'KalturaUserLoginDataBaseFilter': KalturaUserLoginDataBaseFilter,
+            'KalturaUserRoleBaseFilter': KalturaUserRoleBaseFilter,
             'KalturaWidgetFilter': KalturaWidgetFilter,
-            'KalturaAdminUserBaseFilter': KalturaAdminUserBaseFilter,
+            'KalturaAccessControlFilter': KalturaAccessControlFilter,
+            'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
             'KalturaAmazonS3StorageExportJobData': KalturaAmazonS3StorageExportJobData,
             'KalturaAmazonS3StorageProfileBaseFilter': KalturaAmazonS3StorageProfileBaseFilter,
-            'KalturaApiActionPermissionItemBaseFilter': KalturaApiActionPermissionItemBaseFilter,
-            'KalturaApiParameterPermissionItemBaseFilter': KalturaApiParameterPermissionItemBaseFilter,
-            'KalturaAssetParamsOutputBaseFilter': KalturaAssetParamsOutputBaseFilter,
+            'KalturaAssetFilter': KalturaAssetFilter,
+            'KalturaAssetParamsFilter': KalturaAssetParamsFilter,
             'KalturaBatchJobFilterExt': KalturaBatchJobFilterExt,
+            'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
+            'KalturaCategoryFilter': KalturaCategoryFilter,
+            'KalturaConversionProfileFilter': KalturaConversionProfileFilter,
+            'KalturaConversionProfileAssetParamsFilter': KalturaConversionProfileAssetParamsFilter,
             'KalturaCoordinatesContextField': KalturaCoordinatesContextField,
             'KalturaCountryContextField': KalturaCountryContextField,
-            'KalturaDataEntryBaseFilter': KalturaDataEntryBaseFilter,
             'KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter': KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter,
             'KalturaDeliveryProfileAkamaiHdsBaseFilter': KalturaDeliveryProfileAkamaiHdsBaseFilter,
             'KalturaDeliveryProfileAkamaiHttpBaseFilter': KalturaDeliveryProfileAkamaiHttpBaseFilter,
@@ -50946,33 +53027,35 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileRtmpBaseFilter': KalturaDeliveryProfileRtmpBaseFilter,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
-            'KalturaFlavorAssetBaseFilter': KalturaFlavorAssetBaseFilter,
-            'KalturaFlavorParamsBaseFilter': KalturaFlavorParamsBaseFilter,
+            'KalturaFileAssetFilter': KalturaFileAssetFilter,
             'KalturaGenericSyndicationFeedBaseFilter': KalturaGenericSyndicationFeedBaseFilter,
             'KalturaGoogleVideoSyndicationFeedBaseFilter': KalturaGoogleVideoSyndicationFeedBaseFilter,
+            'KalturaGroupUserFilter': KalturaGroupUserFilter,
             'KalturaITunesSyndicationFeedBaseFilter': KalturaITunesSyndicationFeedBaseFilter,
             'KalturaIpAddressContextField': KalturaIpAddressContextField,
+            'KalturaLiveChannelSegmentFilter': KalturaLiveChannelSegmentFilter,
             'KalturaMediaFlavorParamsOutput': KalturaMediaFlavorParamsOutput,
             'KalturaObjectIdField': KalturaObjectIdField,
-            'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
+            'KalturaPermissionFilter': KalturaPermissionFilter,
+            'KalturaPermissionItemFilter': KalturaPermissionItemFilter,
             'KalturaServerFileResource': KalturaServerFileResource,
             'KalturaSshUrlResource': KalturaSshUrlResource,
-            'KalturaThumbAssetBaseFilter': KalturaThumbAssetBaseFilter,
-            'KalturaThumbParamsBaseFilter': KalturaThumbParamsBaseFilter,
             'KalturaTimeContextField': KalturaTimeContextField,
             'KalturaTubeMogulSyndicationFeedBaseFilter': KalturaTubeMogulSyndicationFeedBaseFilter,
             'KalturaUploadedFileTokenResource': KalturaUploadedFileTokenResource,
             'KalturaUserAgentCondition': KalturaUserAgentCondition,
             'KalturaUserAgentContextField': KalturaUserAgentContextField,
             'KalturaUserEmailContextField': KalturaUserEmailContextField,
+            'KalturaUserLoginDataFilter': KalturaUserLoginDataFilter,
+            'KalturaUserRoleFilter': KalturaUserRoleFilter,
             'KalturaWebcamTokenResource': KalturaWebcamTokenResource,
             'KalturaYahooSyndicationFeedBaseFilter': KalturaYahooSyndicationFeedBaseFilter,
-            'KalturaAdminUserFilter': KalturaAdminUserFilter,
+            'KalturaAdminUserBaseFilter': KalturaAdminUserBaseFilter,
             'KalturaAmazonS3StorageProfileFilter': KalturaAmazonS3StorageProfileFilter,
-            'KalturaApiActionPermissionItemFilter': KalturaApiActionPermissionItemFilter,
-            'KalturaApiParameterPermissionItemFilter': KalturaApiParameterPermissionItemFilter,
-            'KalturaAssetParamsOutputFilter': KalturaAssetParamsOutputFilter,
-            'KalturaDataEntryFilter': KalturaDataEntryFilter,
+            'KalturaApiActionPermissionItemBaseFilter': KalturaApiActionPermissionItemBaseFilter,
+            'KalturaApiParameterPermissionItemBaseFilter': KalturaApiParameterPermissionItemBaseFilter,
+            'KalturaAssetParamsOutputBaseFilter': KalturaAssetParamsOutputBaseFilter,
+            'KalturaDataEntryBaseFilter': KalturaDataEntryBaseFilter,
             'KalturaDeliveryProfileAkamaiAppleHttpManifestFilter': KalturaDeliveryProfileAkamaiAppleHttpManifestFilter,
             'KalturaDeliveryProfileAkamaiHdsFilter': KalturaDeliveryProfileAkamaiHdsFilter,
             'KalturaDeliveryProfileAkamaiHttpFilter': KalturaDeliveryProfileAkamaiHttpFilter,
@@ -50982,28 +53065,38 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLightFilter': KalturaDeliveryProfileGenericSilverLightFilter,
             'KalturaDeliveryProfileLiveAppleHttpFilter': KalturaDeliveryProfileLiveAppleHttpFilter,
             'KalturaDeliveryProfileRtmpFilter': KalturaDeliveryProfileRtmpFilter,
-            'KalturaFlavorAssetFilter': KalturaFlavorAssetFilter,
-            'KalturaFlavorParamsFilter': KalturaFlavorParamsFilter,
+            'KalturaFlavorAssetBaseFilter': KalturaFlavorAssetBaseFilter,
+            'KalturaFlavorParamsBaseFilter': KalturaFlavorParamsBaseFilter,
             'KalturaGenericSyndicationFeedFilter': KalturaGenericSyndicationFeedFilter,
             'KalturaGoogleVideoSyndicationFeedFilter': KalturaGoogleVideoSyndicationFeedFilter,
             'KalturaITunesSyndicationFeedFilter': KalturaITunesSyndicationFeedFilter,
+            'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
+            'KalturaThumbAssetBaseFilter': KalturaThumbAssetBaseFilter,
+            'KalturaThumbParamsBaseFilter': KalturaThumbParamsBaseFilter,
+            'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,
+            'KalturaYahooSyndicationFeedFilter': KalturaYahooSyndicationFeedFilter,
+            'KalturaAdminUserFilter': KalturaAdminUserFilter,
+            'KalturaApiActionPermissionItemFilter': KalturaApiActionPermissionItemFilter,
+            'KalturaApiParameterPermissionItemFilter': KalturaApiParameterPermissionItemFilter,
+            'KalturaAssetParamsOutputFilter': KalturaAssetParamsOutputFilter,
+            'KalturaDataEntryFilter': KalturaDataEntryFilter,
+            'KalturaDeliveryProfileGenericRtmpBaseFilter': KalturaDeliveryProfileGenericRtmpBaseFilter,
+            'KalturaFlavorAssetFilter': KalturaFlavorAssetFilter,
+            'KalturaFlavorParamsFilter': KalturaFlavorParamsFilter,
+            'KalturaGenericXsltSyndicationFeedBaseFilter': KalturaGenericXsltSyndicationFeedBaseFilter,
+            'KalturaLiveStreamAdminEntry': KalturaLiveStreamAdminEntry,
             'KalturaPlaylistFilter': KalturaPlaylistFilter,
             'KalturaThumbAssetFilter': KalturaThumbAssetFilter,
             'KalturaThumbParamsFilter': KalturaThumbParamsFilter,
-            'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,
-            'KalturaYahooSyndicationFeedFilter': KalturaYahooSyndicationFeedFilter,
-            'KalturaDeliveryProfileGenericRtmpBaseFilter': KalturaDeliveryProfileGenericRtmpBaseFilter,
+            'KalturaDeliveryProfileGenericRtmpFilter': KalturaDeliveryProfileGenericRtmpFilter,
             'KalturaFlavorParamsOutputBaseFilter': KalturaFlavorParamsOutputBaseFilter,
-            'KalturaGenericXsltSyndicationFeedBaseFilter': KalturaGenericXsltSyndicationFeedBaseFilter,
+            'KalturaGenericXsltSyndicationFeedFilter': KalturaGenericXsltSyndicationFeedFilter,
             'KalturaLiveAssetBaseFilter': KalturaLiveAssetBaseFilter,
             'KalturaLiveParamsBaseFilter': KalturaLiveParamsBaseFilter,
-            'KalturaLiveStreamAdminEntry': KalturaLiveStreamAdminEntry,
             'KalturaMediaFlavorParamsBaseFilter': KalturaMediaFlavorParamsBaseFilter,
             'KalturaMixEntryBaseFilter': KalturaMixEntryBaseFilter,
             'KalturaThumbParamsOutputBaseFilter': KalturaThumbParamsOutputBaseFilter,
-            'KalturaDeliveryProfileGenericRtmpFilter': KalturaDeliveryProfileGenericRtmpFilter,
             'KalturaFlavorParamsOutputFilter': KalturaFlavorParamsOutputFilter,
-            'KalturaGenericXsltSyndicationFeedFilter': KalturaGenericXsltSyndicationFeedFilter,
             'KalturaLiveAssetFilter': KalturaLiveAssetFilter,
             'KalturaLiveParamsFilter': KalturaLiveParamsFilter,
             'KalturaMediaFlavorParamsFilter': KalturaMediaFlavorParamsFilter,

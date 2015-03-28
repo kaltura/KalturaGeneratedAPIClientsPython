@@ -414,44 +414,6 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEventNotificationTemplateListResponse(KalturaObjectBase):
-    def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaEventNotificationTemplate
-        # @readonly
-        self.objects = objects
-
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaEventNotificationTemplate), 
-        'totalCount': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEventNotificationTemplateListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaEventNotificationTemplateListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEventFieldCondition(KalturaCondition):
     def __init__(self,
             type=NotImplemented,
@@ -823,6 +785,37 @@ class KalturaEventNotificationTemplateBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEventNotificationTemplateListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaEventNotificationTemplate
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaEventNotificationTemplate), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEventNotificationTemplateListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaEventNotificationTemplateListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEventObjectChangedCondition(KalturaCondition):
     def __init__(self,
             type=NotImplemented,
@@ -1067,12 +1060,12 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
         return {
             'KalturaEventNotificationParameter': KalturaEventNotificationParameter,
             'KalturaEventNotificationTemplate': KalturaEventNotificationTemplate,
-            'KalturaEventNotificationTemplateListResponse': KalturaEventNotificationTemplateListResponse,
             'KalturaEventFieldCondition': KalturaEventFieldCondition,
             'KalturaEventNotificationArrayParameter': KalturaEventNotificationArrayParameter,
             'KalturaEventNotificationDispatchJobData': KalturaEventNotificationDispatchJobData,
             'KalturaEventNotificationScope': KalturaEventNotificationScope,
             'KalturaEventNotificationTemplateBaseFilter': KalturaEventNotificationTemplateBaseFilter,
+            'KalturaEventNotificationTemplateListResponse': KalturaEventNotificationTemplateListResponse,
             'KalturaEventObjectChangedCondition': KalturaEventObjectChangedCondition,
             'KalturaEventNotificationTemplateFilter': KalturaEventNotificationTemplateFilter,
         }

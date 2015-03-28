@@ -178,40 +178,33 @@ class KalturaAttachmentAsset(KalturaAsset):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAttachmentAssetListResponse(KalturaObjectBase):
+class KalturaAttachmentAssetListResponse(KalturaListResponse):
     def __init__(self,
-            objects=NotImplemented,
-            totalCount=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
 
         # @var array of KalturaAttachmentAsset
         # @readonly
         self.objects = objects
 
-        # @var int
-        # @readonly
-        self.totalCount = totalCount
-
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, KalturaAttachmentAsset), 
-        'totalCount': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaListResponse.fromXml(self, node)
         self.fromXmlImpl(node, KalturaAttachmentAssetListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaAttachmentAssetListResponse")
         return kparams
 
     def getObjects(self):
         return self.objects
-
-    def getTotalCount(self):
-        return self.totalCount
 
 
 # @package Kaltura
