@@ -3109,6 +3109,7 @@ class KalturaLiveParamsOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaLiveReportOrderBy(object):
+    NAME_ASC = "+name"
     AUDIENCE_DESC = "-audience"
     EVENT_TIME_DESC = "-eventTime"
     PLAYS_DESC = "-plays"
@@ -9611,7 +9612,7 @@ class KalturaDetachedResponseProfile(KalturaBaseResponseProfile):
         'fields': getXmlNodeText, 
         'filter': (KalturaObjectFactory.create, KalturaRelatedFilter), 
         'pager': (KalturaObjectFactory.create, KalturaFilterPager), 
-        'relatedProfiles': (KalturaObjectFactory.createArray, KalturaDetachedResponseProfile), 
+        'relatedProfiles': (KalturaObjectFactory.createArray, KalturaObjectBase), 
         'mappings': (KalturaObjectFactory.createArray, KalturaResponseProfileMapping), 
     }
 
@@ -23014,7 +23015,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
-            filesPermissionInS3=NotImplemented):
+            filesPermissionInS3=NotImplemented,
+            s3Region=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
             createdAt,
@@ -23051,9 +23053,13 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
 
+        # @var string
+        self.s3Region = s3Region
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
+        's3Region': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -23064,6 +23070,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         kparams = KalturaStorageProfile.toParams(self)
         kparams.put("objectType", "KalturaAmazonS3StorageProfile")
         kparams.addStringEnumIfDefined("filesPermissionInS3", self.filesPermissionInS3)
+        kparams.addStringIfDefined("s3Region", self.s3Region)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -23071,6 +23078,12 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
 
     def setFilesPermissionInS3(self, newFilesPermissionInS3):
         self.filesPermissionInS3 = newFilesPermissionInS3
+
+    def getS3Region(self):
+        return self.s3Region
+
+    def setS3Region(self, newS3Region):
+        self.s3Region = newS3Region
 
 
 # @package Kaltura
@@ -39853,7 +39866,8 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
             createLink=NotImplemented,
-            filesPermissionInS3=NotImplemented):
+            filesPermissionInS3=NotImplemented,
+            s3Region=NotImplemented):
         KalturaStorageExportJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -39871,9 +39885,13 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
 
+        # @var string
+        self.s3Region = s3Region
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
+        's3Region': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -39884,6 +39902,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         kparams = KalturaStorageExportJobData.toParams(self)
         kparams.put("objectType", "KalturaAmazonS3StorageExportJobData")
         kparams.addStringEnumIfDefined("filesPermissionInS3", self.filesPermissionInS3)
+        kparams.addStringIfDefined("s3Region", self.s3Region)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -39891,6 +39910,12 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
 
     def setFilesPermissionInS3(self, newFilesPermissionInS3):
         self.filesPermissionInS3 = newFilesPermissionInS3
+
+    def getS3Region(self):
+        return self.s3Region
+
+    def setS3Region(self, newS3Region):
+        self.s3Region = newS3Region
 
 
 # @package Kaltura

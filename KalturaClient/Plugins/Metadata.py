@@ -80,6 +80,7 @@ class KalturaMetadataObjectType(object):
     CATEGORY = "2"
     USER = "3"
     PARTNER = "4"
+    DYNAMIC_OBJECT = "5"
 
     def __init__(self, value):
         self.value = value
@@ -1109,6 +1110,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
         # @var int
         self.metadataProfileVersionLessThanOrEqual = metadataProfileVersionLessThanOrEqual
 
+        # When null, default is KalturaMetadataObjectType::ENTRY
         # @var KalturaMetadataObjectType
         self.metadataObjectTypeEqual = metadataObjectTypeEqual
 
@@ -1693,6 +1695,18 @@ class KalturaMetadataService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def index(self, id, shouldUpdate):
+        """Index metadata by id, will also index the related object"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
+        self.client.queueServiceActionCall("metadata_metadata", "index", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
 
     def serve(self, id):
         """Serves metadata XML file"""
