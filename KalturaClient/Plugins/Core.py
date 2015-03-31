@@ -1885,6 +1885,7 @@ class KalturaContainerFormat(object):
     HLS = "hls"
     ISMV = "ismv"
     JPG = "jpg"
+    M2TS = "m2ts"
     M4V = "m4v"
     MKV = "mkv"
     MOV = "mov"
@@ -1892,6 +1893,7 @@ class KalturaContainerFormat(object):
     MP4 = "mp4"
     MPEG = "mpeg"
     MPEGTS = "mpegts"
+    MXF = "mxf"
     OGG = "ogg"
     OGV = "ogv"
     PDF = "pdf"
@@ -33631,6 +33633,54 @@ class KalturaUrlTokenizerBitGravity(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            keyPairId=NotImplemented,
+            rootDir=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key)
+
+        # @var string
+        self.keyPairId = keyPairId
+
+        # @var string
+        self.rootDir = rootDir
+
+
+    PROPERTY_LOADERS = {
+        'keyPairId': getXmlNodeText, 
+        'rootDir': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerCloudFront.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerCloudFront")
+        kparams.addStringIfDefined("keyPairId", self.keyPairId)
+        kparams.addStringIfDefined("rootDir", self.rootDir)
+        return kparams
+
+    def getKeyPairId(self):
+        return self.keyPairId
+
+    def setKeyPairId(self, newKeyPairId):
+        self.keyPairId = newKeyPairId
+
+    def getRootDir(self):
+        return self.rootDir
+
+    def setRootDir(self, newRootDir):
+        self.rootDir = newRootDir
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerLevel3(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -52955,6 +53005,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerAkamaiRtsp': KalturaUrlTokenizerAkamaiRtsp,
             'KalturaUrlTokenizerAkamaiSecureHd': KalturaUrlTokenizerAkamaiSecureHd,
             'KalturaUrlTokenizerBitGravity': KalturaUrlTokenizerBitGravity,
+            'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
