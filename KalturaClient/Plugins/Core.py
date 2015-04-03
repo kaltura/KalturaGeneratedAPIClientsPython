@@ -9532,7 +9532,8 @@ class KalturaFilterPager(KalturaObjectBase):
 class KalturaResponseProfileMapping(KalturaObjectBase):
     def __init__(self,
             parentProperty=NotImplemented,
-            filterProperty=NotImplemented):
+            filterProperty=NotImplemented,
+            allowNull=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -9541,10 +9542,14 @@ class KalturaResponseProfileMapping(KalturaObjectBase):
         # @var string
         self.filterProperty = filterProperty
 
+        # @var bool
+        self.allowNull = allowNull
+
 
     PROPERTY_LOADERS = {
         'parentProperty': getXmlNodeText, 
         'filterProperty': getXmlNodeText, 
+        'allowNull': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -9556,6 +9561,7 @@ class KalturaResponseProfileMapping(KalturaObjectBase):
         kparams.put("objectType", "KalturaResponseProfileMapping")
         kparams.addStringIfDefined("parentProperty", self.parentProperty)
         kparams.addStringIfDefined("filterProperty", self.filterProperty)
+        kparams.addBoolIfDefined("allowNull", self.allowNull)
         return kparams
 
     def getParentProperty(self):
@@ -9569,6 +9575,12 @@ class KalturaResponseProfileMapping(KalturaObjectBase):
 
     def setFilterProperty(self, newFilterProperty):
         self.filterProperty = newFilterProperty
+
+    def getAllowNull(self):
+        return self.allowNull
+
+    def setAllowNull(self, newAllowNull):
+        self.allowNull = newAllowNull
 
 
 # @package Kaltura

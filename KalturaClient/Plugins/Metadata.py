@@ -848,6 +848,32 @@ class KalturaMetadataProfileListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataResponseProfileMapping(KalturaResponseProfileMapping):
+    def __init__(self,
+            parentProperty=NotImplemented,
+            filterProperty=NotImplemented,
+            allowNull=NotImplemented):
+        KalturaResponseProfileMapping.__init__(self,
+            parentProperty,
+            filterProperty,
+            allowNull)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaResponseProfileMapping.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataResponseProfileMapping.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaResponseProfileMapping.toParams(self)
+        kparams.put("objectType", "KalturaMetadataResponseProfileMapping")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaTransformMetadataJobData(KalturaJobData):
     def __init__(self,
             srcXslPath=NotImplemented,
@@ -1929,6 +1955,7 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,
             'KalturaMetadataProfileFieldListResponse': KalturaMetadataProfileFieldListResponse,
             'KalturaMetadataProfileListResponse': KalturaMetadataProfileListResponse,
+            'KalturaMetadataResponseProfileMapping': KalturaMetadataResponseProfileMapping,
             'KalturaTransformMetadataJobData': KalturaTransformMetadataJobData,
             'KalturaCompareMetadataCondition': KalturaCompareMetadataCondition,
             'KalturaMatchMetadataCondition': KalturaMatchMetadataCondition,
