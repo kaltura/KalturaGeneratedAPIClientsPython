@@ -10851,6 +10851,39 @@ class KalturaFlavorAsset(KalturaAsset):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFlavorAssetUrlOptions(KalturaObjectBase):
+    def __init__(self,
+            fileName=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The name of the downloaded file
+        # @var string
+        self.fileName = fileName
+
+
+    PROPERTY_LOADERS = {
+        'fileName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorAssetUrlOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFlavorAssetUrlOptions")
+        kparams.addStringIfDefined("fileName", self.fileName)
+        return kparams
+
+    def getFileName(self):
+        return self.fileName
+
+    def setFileName(self, newFileName):
+        self.fileName = newFileName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorParams(KalturaAssetParams):
     def __init__(self,
             id=NotImplemented,
@@ -49206,13 +49239,14 @@ class KalturaFlavorAssetService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def getUrl(self, id, storageId = NotImplemented, forceProxy = False):
+    def getUrl(self, id, storageId = NotImplemented, forceProxy = False, options = NotImplemented):
         """Get download URL for the asset"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("storageId", storageId);
         kparams.addBoolIfDefined("forceProxy", forceProxy);
+        kparams.addObjectIfDefined("options", options)
         self.client.queueServiceActionCall("flavorasset", "getUrl", None, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -52786,6 +52820,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFeatureStatus': KalturaFeatureStatus,
             'KalturaFileAsset': KalturaFileAsset,
             'KalturaFlavorAsset': KalturaFlavorAsset,
+            'KalturaFlavorAssetUrlOptions': KalturaFlavorAssetUrlOptions,
             'KalturaFlavorParams': KalturaFlavorParams,
             'KalturaFlavorAssetWithParams': KalturaFlavorAssetWithParams,
             'KalturaFlavorParamsOutput': KalturaFlavorParamsOutput,
