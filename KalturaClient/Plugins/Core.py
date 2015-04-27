@@ -27884,150 +27884,6 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDetachedResponseProfileFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaResponseProfileStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaResponseProfileStatus"), 
-        'statusIn': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDetachedResponseProfileFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaDetachedResponseProfileFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDirectoryRestriction(KalturaBaseRestriction):
     def __init__(self,
             directoryRestrictionType=NotImplemented):
@@ -31969,6 +31825,150 @@ class KalturaReportListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaResponseProfileStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaResponseProfileStatus"), 
+        'statusIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
 
 
 # @package Kaltura
@@ -39094,7 +39094,7 @@ class KalturaReportFilter(KalturaReportBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaResponseProfileFilter(KalturaDetachedResponseProfileFilter):
+class KalturaResponseProfileFilter(KalturaResponseProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -39108,7 +39108,7 @@ class KalturaResponseProfileFilter(KalturaDetachedResponseProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented):
-        KalturaDetachedResponseProfileFilter.__init__(self,
+        KalturaResponseProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -39127,11 +39127,11 @@ class KalturaResponseProfileFilter(KalturaDetachedResponseProfileFilter):
     }
 
     def fromXml(self, node):
-        KalturaDetachedResponseProfileFilter.fromXml(self, node)
+        KalturaResponseProfileBaseFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaResponseProfileFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaDetachedResponseProfileFilter.toParams(self)
+        kparams = KalturaResponseProfileBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaResponseProfileFilter")
         return kparams
 
@@ -50902,7 +50902,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaPlaylistListResponse)
 
-    def execute(self, id, detailed = "", playlistContext = NotImplemented, filter = NotImplemented):
+    def execute(self, id, detailed = "", playlistContext = NotImplemented, filter = NotImplemented, pager = NotImplemented):
         """Retrieve playlist for playing purpose"""
 
         kparams = KalturaParams()
@@ -50910,32 +50910,35 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams.addStringIfDefined("detailed", detailed)
         kparams.addObjectIfDefined("playlistContext", playlistContext)
         kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
         self.client.queueServiceActionCall("playlist", "execute", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.createArray(resultNode, KalturaBaseEntry)
 
-    def executeFromContent(self, playlistType, playlistContent, detailed = ""):
+    def executeFromContent(self, playlistType, playlistContent, detailed = "", pager = NotImplemented):
         """Retrieve playlist for playing purpose, based on content"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("playlistType", playlistType);
         kparams.addStringIfDefined("playlistContent", playlistContent)
         kparams.addStringIfDefined("detailed", detailed)
+        kparams.addObjectIfDefined("pager", pager)
         self.client.queueServiceActionCall("playlist", "executeFromContent", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.createArray(resultNode, KalturaBaseEntry)
 
-    def executeFromFilters(self, filters, totalResults, detailed = ""):
+    def executeFromFilters(self, filters, totalResults, detailed = "1", pager = NotImplemented):
         """Revrieve playlist for playing purpose, based on media entry filters"""
 
         kparams = KalturaParams()
         kparams.addArrayIfDefined("filters", filters)
         kparams.addIntIfDefined("totalResults", totalResults);
         kparams.addStringIfDefined("detailed", detailed)
+        kparams.addObjectIfDefined("pager", pager)
         self.client.queueServiceActionCall("playlist", "executeFromFilters", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -52969,7 +52972,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
-            'KalturaDetachedResponseProfileFilter': KalturaDetachedResponseProfileFilter,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
             'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaCategoryUserFilter': KalturaCategoryUserFilter,
@@ -53025,6 +53027,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportInputFilter': KalturaReportInputFilter,
             'KalturaReportListResponse': KalturaReportListResponse,
+            'KalturaResponseProfileBaseFilter': KalturaResponseProfileBaseFilter,
             'KalturaResponseProfileHolder': KalturaResponseProfileHolder,
             'KalturaResponseProfileListResponse': KalturaResponseProfileListResponse,
             'KalturaSchedulerListResponse': KalturaSchedulerListResponse,
