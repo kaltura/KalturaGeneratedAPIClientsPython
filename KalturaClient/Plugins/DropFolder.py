@@ -202,6 +202,7 @@ class KalturaDropFolderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDropFolderType(object):
+    FEED = "FeedDropFolder.FEED"
     LOCAL = "1"
     FTP = "2"
     SCP = "3"

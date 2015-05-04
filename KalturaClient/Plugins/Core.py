@@ -4694,6 +4694,50 @@ class KalturaAccessControlScope(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaApiExceptionArg(KalturaObjectBase):
+    def __init__(self,
+            name=NotImplemented,
+            value=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.name = name
+
+        # @var string
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'name': getXmlNodeText, 
+        'value': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaApiExceptionArg.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaApiExceptionArg")
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addStringIfDefined("value", self.value)
+        return kparams
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAsset(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -9114,7 +9158,8 @@ class KalturaDeliveryProfile(KalturaObjectBase):
             tokenizer=NotImplemented,
             isDefault=NotImplemented,
             parentId=NotImplemented,
-            mediaProtocols=NotImplemented):
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Delivery
@@ -9186,6 +9231,10 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         # @var string
         self.mediaProtocols = mediaProtocols
 
+        # priority used for ordering similar delivery profiles
+        # @var int
+        self.priority = priority
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9205,6 +9254,7 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         'isDefault': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'parentId': getXmlNodeInt, 
         'mediaProtocols': getXmlNodeText, 
+        'priority': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -9224,6 +9274,7 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         kparams.addObjectIfDefined("recognizer", self.recognizer)
         kparams.addObjectIfDefined("tokenizer", self.tokenizer)
         kparams.addStringIfDefined("mediaProtocols", self.mediaProtocols)
+        kparams.addIntIfDefined("priority", self.priority)
         return kparams
 
     def getId(self):
@@ -9306,6 +9357,12 @@ class KalturaDeliveryProfile(KalturaObjectBase):
 
     def setMediaProtocols(self, newMediaProtocols):
         self.mediaProtocols = newMediaProtocols
+
+    def getPriority(self):
+        return self.priority
+
+    def setPriority(self, newPriority):
+        self.priority = newPriority
 
 
 # @package Kaltura
@@ -27030,6 +27087,7 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifest(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             supportClipping=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -27048,7 +27106,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifest(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # Should we use timing parameters - clipTo / seekFrom
         # @var bool
@@ -27097,6 +27156,7 @@ class KalturaDeliveryProfileAkamaiHds(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             supportClipping=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -27115,7 +27175,8 @@ class KalturaDeliveryProfileAkamaiHds(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # Should we use timing parameters - clipTo / seekFrom
         # @var bool
@@ -27164,6 +27225,7 @@ class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             useIntelliseek=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -27182,7 +27244,8 @@ class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # Should we use intelliseek
         # @var bool
@@ -27411,6 +27474,7 @@ class KalturaDeliveryProfileGenericAppleHttp(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             pattern=NotImplemented,
             rendererClass=NotImplemented,
             manifestRedirect=NotImplemented):
@@ -27431,7 +27495,8 @@ class KalturaDeliveryProfileGenericAppleHttp(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # @var string
         self.pattern = pattern
@@ -27503,6 +27568,7 @@ class KalturaDeliveryProfileGenericHds(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             pattern=NotImplemented,
             rendererClass=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -27522,7 +27588,8 @@ class KalturaDeliveryProfileGenericHds(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # @var string
         self.pattern = pattern
@@ -27582,6 +27649,7 @@ class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             pattern=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -27600,7 +27668,8 @@ class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # @var string
         self.pattern = pattern
@@ -27648,6 +27717,7 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             pattern=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -27666,7 +27736,8 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # @var string
         self.pattern = pattern
@@ -27745,6 +27816,7 @@ class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             disableExtraAttributes=NotImplemented,
             forceProxy=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -27764,7 +27836,8 @@ class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # @var bool
         self.disableExtraAttributes = disableExtraAttributes
@@ -27823,6 +27896,7 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             enforceRtmpe=NotImplemented,
             prefix=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -27842,7 +27916,8 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
             tokenizer,
             isDefault,
             parentId,
-            mediaProtocols)
+            mediaProtocols,
+            priority)
 
         # enforceRtmpe
         # @var bool
@@ -36727,6 +36802,7 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
             isDefault=NotImplemented,
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
+            priority=NotImplemented,
             enforceRtmpe=NotImplemented,
             prefix=NotImplemented,
             pattern=NotImplemented,
@@ -36749,6 +36825,7 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
             isDefault,
             parentId,
             mediaProtocols,
+            priority,
             enforceRtmpe,
             prefix)
 
@@ -52768,6 +52845,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfile': KalturaAccessControlProfile,
             'KalturaKeyValue': KalturaKeyValue,
             'KalturaAccessControlScope': KalturaAccessControlScope,
+            'KalturaApiExceptionArg': KalturaApiExceptionArg,
             'KalturaAsset': KalturaAsset,
             'KalturaString': KalturaString,
             'KalturaAssetParams': KalturaAssetParams,
