@@ -148,6 +148,62 @@ class KalturaCaptionAssetItemListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryCaptionAssetSearchItem(KalturaSearchItem):
+    def __init__(self,
+            contentLike=NotImplemented,
+            contentMultiLikeOr=NotImplemented,
+            contentMultiLikeAnd=NotImplemented):
+        KalturaSearchItem.__init__(self)
+
+        # @var string
+        self.contentLike = contentLike
+
+        # @var string
+        self.contentMultiLikeOr = contentMultiLikeOr
+
+        # @var string
+        self.contentMultiLikeAnd = contentMultiLikeAnd
+
+
+    PROPERTY_LOADERS = {
+        'contentLike': getXmlNodeText, 
+        'contentMultiLikeOr': getXmlNodeText, 
+        'contentMultiLikeAnd': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryCaptionAssetSearchItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchItem.toParams(self)
+        kparams.put("objectType", "KalturaEntryCaptionAssetSearchItem")
+        kparams.addStringIfDefined("contentLike", self.contentLike)
+        kparams.addStringIfDefined("contentMultiLikeOr", self.contentMultiLikeOr)
+        kparams.addStringIfDefined("contentMultiLikeAnd", self.contentMultiLikeAnd)
+        return kparams
+
+    def getContentLike(self):
+        return self.contentLike
+
+    def setContentLike(self, newContentLike):
+        self.contentLike = newContentLike
+
+    def getContentMultiLikeOr(self):
+        return self.contentMultiLikeOr
+
+    def setContentMultiLikeOr(self, newContentMultiLikeOr):
+        self.contentMultiLikeOr = newContentMultiLikeOr
+
+    def getContentMultiLikeAnd(self):
+        return self.contentMultiLikeAnd
+
+    def setContentMultiLikeAnd(self, newContentMultiLikeAnd):
+        self.contentMultiLikeAnd = newContentMultiLikeAnd
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCaptionAssetItemFilter(KalturaCaptionAssetFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -448,6 +504,7 @@ class KalturaCaptionSearchClientPlugin(KalturaClientPlugin):
         return {
             'KalturaCaptionAssetItem': KalturaCaptionAssetItem,
             'KalturaCaptionAssetItemListResponse': KalturaCaptionAssetItemListResponse,
+            'KalturaEntryCaptionAssetSearchItem': KalturaEntryCaptionAssetSearchItem,
             'KalturaCaptionAssetItemFilter': KalturaCaptionAssetItemFilter,
         }
 
