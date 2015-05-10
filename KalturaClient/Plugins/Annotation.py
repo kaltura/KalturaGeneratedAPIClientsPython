@@ -83,7 +83,9 @@ class KalturaAnnotation(KalturaCuePoint):
             duration=NotImplemented,
             depth=NotImplemented,
             childrenCount=NotImplemented,
-            directChildrenCount=NotImplemented):
+            directChildrenCount=NotImplemented,
+            isPublic=NotImplemented,
+            searchableOnEntry=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             cuePointType,
@@ -133,6 +135,14 @@ class KalturaAnnotation(KalturaCuePoint):
         # @readonly
         self.directChildrenCount = directChildrenCount
 
+        # Is the annotation public.
+        # @var KalturaNullableBoolean
+        self.isPublic = isPublic
+
+        # Should the cue point get indexed on the entry.
+        # @var KalturaNullableBoolean
+        self.searchableOnEntry = searchableOnEntry
+
 
     PROPERTY_LOADERS = {
         'parentId': getXmlNodeText, 
@@ -142,6 +152,8 @@ class KalturaAnnotation(KalturaCuePoint):
         'depth': getXmlNodeInt, 
         'childrenCount': getXmlNodeInt, 
         'directChildrenCount': getXmlNodeInt, 
+        'isPublic': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'searchableOnEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -154,6 +166,8 @@ class KalturaAnnotation(KalturaCuePoint):
         kparams.addStringIfDefined("parentId", self.parentId)
         kparams.addStringIfDefined("text", self.text)
         kparams.addIntIfDefined("endTime", self.endTime)
+        kparams.addIntEnumIfDefined("isPublic", self.isPublic)
+        kparams.addIntEnumIfDefined("searchableOnEntry", self.searchableOnEntry)
         return kparams
 
     def getParentId(self):
@@ -185,6 +199,18 @@ class KalturaAnnotation(KalturaCuePoint):
 
     def getDirectChildrenCount(self):
         return self.directChildrenCount
+
+    def getIsPublic(self):
+        return self.isPublic
+
+    def setIsPublic(self, newIsPublic):
+        self.isPublic = newIsPublic
+
+    def getSearchableOnEntry(self):
+        return self.searchableOnEntry
+
+    def setSearchableOnEntry(self, newSearchableOnEntry):
+        self.searchableOnEntry = newSearchableOnEntry
 
 
 # @package Kaltura
@@ -261,7 +287,8 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             endTimeGreaterThanOrEqual=NotImplemented,
             endTimeLessThanOrEqual=NotImplemented,
             durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented):
+            durationLessThanOrEqual=NotImplemented,
+            isPublicEqual=NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -322,6 +349,9 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
         # @var int
         self.durationLessThanOrEqual = durationLessThanOrEqual
 
+        # @var KalturaNullableBoolean
+        self.isPublicEqual = isPublicEqual
+
 
     PROPERTY_LOADERS = {
         'parentIdEqual': getXmlNodeText, 
@@ -333,6 +363,7 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
         'endTimeLessThanOrEqual': getXmlNodeInt, 
         'durationGreaterThanOrEqual': getXmlNodeInt, 
         'durationLessThanOrEqual': getXmlNodeInt, 
+        'isPublicEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -351,6 +382,7 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
         kparams.addIntIfDefined("endTimeLessThanOrEqual", self.endTimeLessThanOrEqual)
         kparams.addIntIfDefined("durationGreaterThanOrEqual", self.durationGreaterThanOrEqual)
         kparams.addIntIfDefined("durationLessThanOrEqual", self.durationLessThanOrEqual)
+        kparams.addIntEnumIfDefined("isPublicEqual", self.isPublicEqual)
         return kparams
 
     def getParentIdEqual(self):
@@ -407,6 +439,12 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
     def setDurationLessThanOrEqual(self, newDurationLessThanOrEqual):
         self.durationLessThanOrEqual = newDurationLessThanOrEqual
 
+    def getIsPublicEqual(self):
+        return self.isPublicEqual
+
+    def setIsPublicEqual(self, newIsPublicEqual):
+        self.isPublicEqual = newIsPublicEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -451,7 +489,8 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             endTimeGreaterThanOrEqual=NotImplemented,
             endTimeLessThanOrEqual=NotImplemented,
             durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented):
+            durationLessThanOrEqual=NotImplemented,
+            isPublicEqual=NotImplemented):
         KalturaAnnotationBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -492,7 +531,8 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             endTimeGreaterThanOrEqual,
             endTimeLessThanOrEqual,
             durationGreaterThanOrEqual,
-            durationLessThanOrEqual)
+            durationLessThanOrEqual,
+            isPublicEqual)
 
 
     PROPERTY_LOADERS = {
