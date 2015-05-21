@@ -5393,7 +5393,7 @@ class KalturaBaseEntry(KalturaObjectBase):
 
         # Thumbnail URL
         # @var string
-        # @insertonly
+        # @readonly
         self.thumbnailUrl = thumbnailUrl
 
         # The Access Control ID assigned to this entry (null when not set, send -1 to remove)
@@ -5524,7 +5524,6 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addIntIfDefined("groupId", self.groupId)
         kparams.addStringIfDefined("partnerData", self.partnerData)
         kparams.addIntEnumIfDefined("licenseType", self.licenseType)
-        kparams.addStringIfDefined("thumbnailUrl", self.thumbnailUrl)
         kparams.addIntIfDefined("accessControlId", self.accessControlId)
         kparams.addIntIfDefined("startDate", self.startDate)
         kparams.addIntIfDefined("endDate", self.endDate)
@@ -5651,9 +5650,6 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def getThumbnailUrl(self):
         return self.thumbnailUrl
-
-    def setThumbnailUrl(self, newThumbnailUrl):
-        self.thumbnailUrl = newThumbnailUrl
 
     def getAccessControlId(self):
         return self.accessControlId
@@ -18182,6 +18178,26 @@ class KalturaPlaylist(KalturaBaseEntry):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPluginData(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPluginData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaRemotePath(KalturaObjectBase):
     def __init__(self,
             storageProfileId=NotImplemented,
@@ -27992,6 +28008,40 @@ class KalturaDirectoryRestriction(KalturaBaseRestriction):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDrmEntryContextPluginData(KalturaPluginData):
+    def __init__(self,
+            flavorData=NotImplemented):
+        KalturaPluginData.__init__(self)
+
+        # For the uDRM we give the drm context data which is a json encoding of an array containing the uDRM data
+        #      for each flavor that is required from this getContextData request.
+        # @var string
+        self.flavorData = flavorData
+
+
+    PROPERTY_LOADERS = {
+        'flavorData': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaPluginData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDrmEntryContextPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPluginData.toParams(self)
+        kparams.put("objectType", "KalturaDrmEntryContextPluginData")
+        kparams.addStringIfDefined("flavorData", self.flavorData)
+        return kparams
+
+    def getFlavorData(self):
+        return self.flavorData
+
+    def setFlavorData(self, newFlavorData):
+        self.flavorData = newFlavorData
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCategoryUserBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -28890,7 +28940,8 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
             storageProfilesXML=NotImplemented,
             accessControlMessages=NotImplemented,
             accessControlActions=NotImplemented,
-            flavorAssets=NotImplemented):
+            flavorAssets=NotImplemented,
+            pluginData=NotImplemented):
         KalturaContextDataResult.__init__(self,
             messages,
             actions)
@@ -28942,6 +28993,10 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         # @var array of KalturaFlavorAsset
         self.flavorAssets = flavorAssets
 
+        # Array of allowed flavor assets according to access control limitations and requested tags
+        # @var map
+        self.pluginData = pluginData
+
 
     PROPERTY_LOADERS = {
         'isSiteRestricted': getXmlNodeBool, 
@@ -28958,6 +29013,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         'accessControlMessages': (KalturaObjectFactory.createArray, KalturaString), 
         'accessControlActions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
         'flavorAssets': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
+        'pluginData': (KalturaObjectFactory.create, map), 
     }
 
     def fromXml(self, node):
@@ -28981,6 +29037,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         kparams.addArrayIfDefined("accessControlMessages", self.accessControlMessages)
         kparams.addArrayIfDefined("accessControlActions", self.accessControlActions)
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
+        kparams.addObjectIfDefined("pluginData", self.pluginData)
         return kparams
 
     def getIsSiteRestricted(self):
@@ -29066,6 +29123,12 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
 
     def setFlavorAssets(self, newFlavorAssets):
         self.flavorAssets = newFlavorAssets
+
+    def getPluginData(self):
+        return self.pluginData
+
+    def setPluginData(self, newPluginData):
+        self.pluginData = newPluginData
 
 
 # @package Kaltura
@@ -52942,6 +53005,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
             'KalturaPlaylist': KalturaPlaylist,
+            'KalturaPluginData': KalturaPluginData,
             'KalturaRemotePath': KalturaRemotePath,
             'KalturaUrlResource': KalturaUrlResource,
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
@@ -53051,6 +53115,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
+            'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
             'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaCategoryUserFilter': KalturaCategoryUserFilter,
             'KalturaUserBaseFilter': KalturaUserBaseFilter,
