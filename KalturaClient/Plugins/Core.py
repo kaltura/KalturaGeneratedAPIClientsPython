@@ -3638,6 +3638,7 @@ class KalturaRuleActionType(object):
     PREVIEW = "2"
     LIMIT_FLAVORS = "3"
     ADD_TO_STORAGE = "4"
+    LIMIT_DELIVERY_PROFILES = "5"
 
     def __init__(self, value):
         self.value = value
@@ -22861,6 +22862,53 @@ class KalturaAccessControlBlockAction(KalturaRuleAction):
         kparams = KalturaRuleAction.toParams(self)
         kparams.put("objectType", "KalturaAccessControlBlockAction")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlLimitDeliveryProfilesAction(KalturaRuleAction):
+    def __init__(self,
+            type=NotImplemented,
+            deliveryProfileIds=NotImplemented,
+            isBlockedList=NotImplemented):
+        KalturaRuleAction.__init__(self,
+            type)
+
+        # Comma separated list of delivery profile ids
+        # @var string
+        self.deliveryProfileIds = deliveryProfileIds
+
+        # @var bool
+        self.isBlockedList = isBlockedList
+
+
+    PROPERTY_LOADERS = {
+        'deliveryProfileIds': getXmlNodeText, 
+        'isBlockedList': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaRuleAction.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlLimitDeliveryProfilesAction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRuleAction.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlLimitDeliveryProfilesAction")
+        kparams.addStringIfDefined("deliveryProfileIds", self.deliveryProfileIds)
+        kparams.addBoolIfDefined("isBlockedList", self.isBlockedList)
+        return kparams
+
+    def getDeliveryProfileIds(self):
+        return self.deliveryProfileIds
+
+    def setDeliveryProfileIds(self, newDeliveryProfileIds):
+        self.deliveryProfileIds = newDeliveryProfileIds
+
+    def getIsBlockedList(self):
+        return self.isBlockedList
+
+    def setIsBlockedList(self, newIsBlockedList):
+        self.isBlockedList = newIsBlockedList
 
 
 # @package Kaltura
@@ -53047,6 +53095,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserRole': KalturaUserRole,
             'KalturaWidget': KalturaWidget,
             'KalturaAccessControlBlockAction': KalturaAccessControlBlockAction,
+            'KalturaAccessControlLimitDeliveryProfilesAction': KalturaAccessControlLimitDeliveryProfilesAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
             'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
