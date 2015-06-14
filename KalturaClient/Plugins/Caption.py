@@ -113,7 +113,8 @@ class KalturaCaptionAsset(KalturaAsset):
             isDefault=NotImplemented,
             label=NotImplemented,
             format=NotImplemented,
-            status=NotImplemented):
+            status=NotImplemented,
+            parentId=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -162,6 +163,11 @@ class KalturaCaptionAsset(KalturaAsset):
         # @readonly
         self.status = status
 
+        # The parent id of the asset
+        # @var string
+        # @insertonly
+        self.parentId = parentId
+
 
     PROPERTY_LOADERS = {
         'captionParamsId': getXmlNodeInt, 
@@ -171,6 +177,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'label': getXmlNodeText, 
         'format': (KalturaEnumsFactory.createString, "KalturaCaptionType"), 
         'status': (KalturaEnumsFactory.createInt, "KalturaCaptionAssetStatus"), 
+        'parentId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -185,6 +192,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addIntEnumIfDefined("isDefault", self.isDefault)
         kparams.addStringIfDefined("label", self.label)
         kparams.addStringEnumIfDefined("format", self.format)
+        kparams.addStringIfDefined("parentId", self.parentId)
         return kparams
 
     def getCaptionParamsId(self):
@@ -222,6 +230,12 @@ class KalturaCaptionAsset(KalturaAsset):
 
     def getStatus(self):
         return self.status
+
+    def getParentId(self):
+        return self.parentId
+
+    def setParentId(self, newParentId):
+        self.parentId = newParentId
 
 
 # @package Kaltura
@@ -397,6 +411,62 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
+    def __init__(self,
+            multiLanaguageCaptionAssetId=NotImplemented,
+            entryId=NotImplemented,
+            fileLocation=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # @var string
+        self.multiLanaguageCaptionAssetId = multiLanaguageCaptionAssetId
+
+        # @var string
+        self.entryId = entryId
+
+        # @var string
+        self.fileLocation = fileLocation
+
+
+    PROPERTY_LOADERS = {
+        'multiLanaguageCaptionAssetId': getXmlNodeText, 
+        'entryId': getXmlNodeText, 
+        'fileLocation': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaParseMultiLanguageCaptionAssetJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaParseMultiLanguageCaptionAssetJobData")
+        kparams.addStringIfDefined("multiLanaguageCaptionAssetId", self.multiLanaguageCaptionAssetId)
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addStringIfDefined("fileLocation", self.fileLocation)
+        return kparams
+
+    def getMultiLanaguageCaptionAssetId(self):
+        return self.multiLanaguageCaptionAssetId
+
+    def setMultiLanaguageCaptionAssetId(self, newMultiLanaguageCaptionAssetId):
+        self.multiLanaguageCaptionAssetId = newMultiLanaguageCaptionAssetId
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getFileLocation(self):
+        return self.fileLocation
+
+    def setFileLocation(self, newFileLocation):
+        self.fileLocation = newFileLocation
 
 
 # @package Kaltura
@@ -939,6 +1009,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
             'KalturaCaptionParams': KalturaCaptionParams,
             'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParamsListResponse': KalturaCaptionParamsListResponse,
+            'KalturaParseMultiLanguageCaptionAssetJobData': KalturaParseMultiLanguageCaptionAssetJobData,
             'KalturaCaptionAssetBaseFilter': KalturaCaptionAssetBaseFilter,
             'KalturaCaptionParamsBaseFilter': KalturaCaptionParamsBaseFilter,
             'KalturaCaptionAssetFilter': KalturaCaptionAssetFilter,
