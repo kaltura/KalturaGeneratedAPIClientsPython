@@ -111,6 +111,7 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
             adminEmail=NotImplemented,
             host=NotImplemented,
             cdnHost=NotImplemented,
+            cdnHostWhiteList=NotImplemented,
             thumbnailHost=NotImplemented,
             partnerPackage=NotImplemented,
             monitorUsage=NotImplemented,
@@ -188,6 +189,9 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
 
         # @var string
         self.cdnHost = cdnHost
+
+        # @var string
+        self.cdnHostWhiteList = cdnHostWhiteList
 
         # @var string
         self.thumbnailHost = thumbnailHost
@@ -363,6 +367,7 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
         'adminEmail': getXmlNodeText, 
         'host': getXmlNodeText, 
         'cdnHost': getXmlNodeText, 
+        'cdnHostWhiteList': getXmlNodeText, 
         'thumbnailHost': getXmlNodeText, 
         'partnerPackage': getXmlNodeInt, 
         'monitorUsage': getXmlNodeInt, 
@@ -432,6 +437,7 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
         kparams.addStringIfDefined("adminEmail", self.adminEmail)
         kparams.addStringIfDefined("host", self.host)
         kparams.addStringIfDefined("cdnHost", self.cdnHost)
+        kparams.addStringIfDefined("cdnHostWhiteList", self.cdnHostWhiteList)
         kparams.addStringIfDefined("thumbnailHost", self.thumbnailHost)
         kparams.addIntIfDefined("partnerPackage", self.partnerPackage)
         kparams.addIntIfDefined("monitorUsage", self.monitorUsage)
@@ -526,6 +532,12 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
 
     def setCdnHost(self, newCdnHost):
         self.cdnHost = newCdnHost
+
+    def getCdnHostWhiteList(self):
+        return self.cdnHostWhiteList
+
+    def setCdnHostWhiteList(self, newCdnHostWhiteList):
+        self.cdnHostWhiteList = newCdnHostWhiteList
 
     def getThumbnailHost(self):
         return self.thumbnailHost
