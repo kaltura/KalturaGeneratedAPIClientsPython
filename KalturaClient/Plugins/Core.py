@@ -1351,6 +1351,21 @@ class KalturaWidgetSecurityType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAccessControlActionType(object):
+    BLOCK = "1"
+    PREVIEW = "2"
+    LIMIT_FLAVORS = "3"
+    ADD_TO_STORAGE = "4"
+    LIMIT_DELIVERY_PROFILES = "5"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAccessControlOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     CREATED_AT_DESC = "-createdAt"
@@ -3627,6 +3642,22 @@ class KalturaPlaylistOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaQuizUserEntryOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    SCORE_ASC = "+score"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    SCORE_DESC = "-score"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReportInterval(object):
     DAYS = "days"
     MONTHS = "months"
@@ -3889,6 +3920,32 @@ class KalturaUiConfOrderBy(object):
 class KalturaUploadTokenOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     CREATED_AT_DESC = "-createdAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserEntryOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserEntryStatus(object):
+    ACTIVE = "1"
+    DELETED = "2"
 
     def __init__(self, value):
         self.value = value
@@ -4218,6 +4275,36 @@ class KalturaAccessControl(KalturaObjectBase):
 
     def getContainsUnsuportedRestrictions(self):
         return self.containsUnsuportedRestrictions
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlAction(KalturaObjectBase):
+    def __init__(self,
+            type=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The type of the access control action
+        # @var KalturaAccessControlActionType
+        # @readonly
+        self.type = type
+
+
+    PROPERTY_LOADERS = {
+        'type': (KalturaEnumsFactory.createString, "KalturaAccessControlActionType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlAction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlAction")
+        return kparams
+
+    def getType(self):
+        return self.type
 
 
 # @package Kaltura
@@ -5310,7 +5397,8 @@ class KalturaBaseEntry(KalturaObjectBase):
             parentEntryId=NotImplemented,
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
-            entitledUsersPublish=NotImplemented):
+            entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated 10 characters alphanumeric string
@@ -5493,6 +5581,11 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @var string
         self.entitledUsersPublish = entitledUsersPublish
 
+        # Comma seperated string of the capabilities of the entry. Any capability needed can be added to this list.
+        # @var string
+        # @readonly
+        self.capabilities = capabilities
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -5536,6 +5629,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         'operationAttributes': (KalturaObjectFactory.createArray, KalturaOperationAttributes), 
         'entitledUsersEdit': getXmlNodeText, 
         'entitledUsersPublish': getXmlNodeText, 
+        'capabilities': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -5761,6 +5855,9 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setEntitledUsersPublish(self, newEntitledUsersPublish):
         self.entitledUsersPublish = newEntitledUsersPublish
+
+    def getCapabilities(self):
+        return self.capabilities
 
 
 # @package Kaltura
@@ -6642,6 +6739,160 @@ class KalturaBatchJob(KalturaObjectBase):
 
     def setJobObjectType(self, newJobObjectType):
         self.jobObjectType = newJobObjectType
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBatchQueuesStatus(KalturaObjectBase):
+    def __init__(self,
+            jobType=NotImplemented,
+            workerId=NotImplemented,
+            typeName=NotImplemented,
+            size=NotImplemented,
+            waitTime=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaBatchJobType
+        self.jobType = jobType
+
+        # The worker configured id
+        # @var int
+        self.workerId = workerId
+
+        # The friendly name of the type
+        # @var string
+        self.typeName = typeName
+
+        # The size of the queue
+        # @var int
+        self.size = size
+
+        # The avarage wait time
+        # @var int
+        self.waitTime = waitTime
+
+
+    PROPERTY_LOADERS = {
+        'jobType': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'workerId': getXmlNodeInt, 
+        'typeName': getXmlNodeText, 
+        'size': getXmlNodeInt, 
+        'waitTime': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchQueuesStatus.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaBatchQueuesStatus")
+        kparams.addStringEnumIfDefined("jobType", self.jobType)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addStringIfDefined("typeName", self.typeName)
+        kparams.addIntIfDefined("size", self.size)
+        kparams.addIntIfDefined("waitTime", self.waitTime)
+        return kparams
+
+    def getJobType(self):
+        return self.jobType
+
+    def setJobType(self, newJobType):
+        self.jobType = newJobType
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getTypeName(self):
+        return self.typeName
+
+    def setTypeName(self, newTypeName):
+        self.typeName = newTypeName
+
+    def getSize(self):
+        return self.size
+
+    def setSize(self, newSize):
+        self.size = newSize
+
+    def getWaitTime(self):
+        return self.waitTime
+
+    def setWaitTime(self, newWaitTime):
+        self.waitTime = newWaitTime
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaValue(KalturaObjectBase):
+    """A representation to return an array of values"""
+
+    def __init__(self,
+            description=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.description = description
+
+
+    PROPERTY_LOADERS = {
+        'description': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaValue.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaValue")
+        kparams.addStringIfDefined("description", self.description)
+        return kparams
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBooleanValue(KalturaValue):
+    """A boolean representation to return an array of booleans"""
+
+    def __init__(self,
+            description=NotImplemented,
+            value=NotImplemented):
+        KalturaValue.__init__(self,
+            description)
+
+        # @var bool
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'value': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaValue.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBooleanValue.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaValue.toParams(self)
+        kparams.put("objectType", "KalturaBooleanValue")
+        kparams.addBoolIfDefined("value", self.value)
+        return kparams
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
 
 
 # @package Kaltura
@@ -8991,6 +9242,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             dataContent=NotImplemented,
             retrieveDataContentByGet=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -9034,7 +9286,8 @@ class KalturaDataEntry(KalturaBaseEntry):
             parentEntryId,
             operationAttributes,
             entitledUsersEdit,
-            entitledUsersPublish)
+            entitledUsersPublish,
+            capabilities)
 
         # The data of the entry
         # @var string
@@ -10149,40 +10402,6 @@ class KalturaEmailIngestionProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaValue(KalturaObjectBase):
-    """A representation to return an array of values"""
-
-    def __init__(self,
-            description=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.description = description
-
-
-    PROPERTY_LOADERS = {
-        'description': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaValue.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaValue")
-        kparams.addStringIfDefined("description", self.description)
-        return kparams
-
-    def getDescription(self):
-        return self.description
-
-    def setDescription(self, newDescription):
-        self.description = newDescription
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaStringValue(KalturaValue):
     """A string representation to return an array of strings"""
 
@@ -10391,6 +10610,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -10440,7 +10660,8 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             parentEntryId,
             operationAttributes,
             entitledUsersEdit,
-            entitledUsersPublish)
+            entitledUsersPublish,
+            capabilities)
 
         # Number of plays
         # @var int
@@ -10576,6 +10797,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -10593,7 +10815,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             creditUrl=NotImplemented,
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
-            flavorParamsIds=NotImplemented):
+            flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
@@ -10636,6 +10859,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -10693,6 +10917,11 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         # @readonly
         self.flavorParamsIds = flavorParamsIds
 
+        # True if trim action is disabled for this entry
+        # @var KalturaNullableBoolean
+        # @readonly
+        self.isTrimDisabled = isTrimDisabled
+
 
     PROPERTY_LOADERS = {
         'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
@@ -10705,6 +10934,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         'mediaDate': getXmlNodeInt, 
         'dataUrl': getXmlNodeText, 
         'flavorParamsIds': getXmlNodeText, 
+        'isTrimDisabled': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -10773,6 +11003,9 @@ class KalturaMediaEntry(KalturaPlayableEntry):
 
     def getFlavorParamsIds(self):
         return self.flavorParamsIds
+
+    def getIsTrimDisabled(self):
+        return self.isTrimDisabled
 
 
 # @package Kaltura
@@ -12020,6 +12253,1027 @@ class KalturaIntegerValue(KalturaValue):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaInfo(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            flavorAssetId=NotImplemented,
+            fileSize=NotImplemented,
+            containerFormat=NotImplemented,
+            containerId=NotImplemented,
+            containerProfile=NotImplemented,
+            containerDuration=NotImplemented,
+            containerBitRate=NotImplemented,
+            videoFormat=NotImplemented,
+            videoCodecId=NotImplemented,
+            videoDuration=NotImplemented,
+            videoBitRate=NotImplemented,
+            videoBitRateMode=NotImplemented,
+            videoWidth=NotImplemented,
+            videoHeight=NotImplemented,
+            videoFrameRate=NotImplemented,
+            videoDar=NotImplemented,
+            videoRotation=NotImplemented,
+            audioFormat=NotImplemented,
+            audioCodecId=NotImplemented,
+            audioDuration=NotImplemented,
+            audioBitRate=NotImplemented,
+            audioBitRateMode=NotImplemented,
+            audioChannels=NotImplemented,
+            audioSamplingRate=NotImplemented,
+            audioResolution=NotImplemented,
+            writingLib=NotImplemented,
+            rawData=NotImplemented,
+            multiStreamInfo=NotImplemented,
+            scanType=NotImplemented,
+            multiStream=NotImplemented,
+            isFastStart=NotImplemented,
+            contentStreams=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the media info
+        # @var int
+        # @readonly
+        self.id = id
+
+        # The id of the related flavor asset
+        # @var string
+        self.flavorAssetId = flavorAssetId
+
+        # The file size
+        # @var int
+        self.fileSize = fileSize
+
+        # The container format
+        # @var string
+        self.containerFormat = containerFormat
+
+        # The container id
+        # @var string
+        self.containerId = containerId
+
+        # The container profile
+        # @var string
+        self.containerProfile = containerProfile
+
+        # The container duration
+        # @var int
+        self.containerDuration = containerDuration
+
+        # The container bit rate
+        # @var int
+        self.containerBitRate = containerBitRate
+
+        # The video format
+        # @var string
+        self.videoFormat = videoFormat
+
+        # The video codec id
+        # @var string
+        self.videoCodecId = videoCodecId
+
+        # The video duration
+        # @var int
+        self.videoDuration = videoDuration
+
+        # The video bit rate
+        # @var int
+        self.videoBitRate = videoBitRate
+
+        # The video bit rate mode
+        # @var KalturaBitRateMode
+        self.videoBitRateMode = videoBitRateMode
+
+        # The video width
+        # @var int
+        self.videoWidth = videoWidth
+
+        # The video height
+        # @var int
+        self.videoHeight = videoHeight
+
+        # The video frame rate
+        # @var float
+        self.videoFrameRate = videoFrameRate
+
+        # The video display aspect ratio (dar)
+        # @var float
+        self.videoDar = videoDar
+
+        # @var int
+        self.videoRotation = videoRotation
+
+        # The audio format
+        # @var string
+        self.audioFormat = audioFormat
+
+        # The audio codec id
+        # @var string
+        self.audioCodecId = audioCodecId
+
+        # The audio duration
+        # @var int
+        self.audioDuration = audioDuration
+
+        # The audio bit rate
+        # @var int
+        self.audioBitRate = audioBitRate
+
+        # The audio bit rate mode
+        # @var KalturaBitRateMode
+        self.audioBitRateMode = audioBitRateMode
+
+        # The number of audio channels
+        # @var int
+        self.audioChannels = audioChannels
+
+        # The audio sampling rate
+        # @var int
+        self.audioSamplingRate = audioSamplingRate
+
+        # The audio resolution
+        # @var int
+        self.audioResolution = audioResolution
+
+        # The writing library
+        # @var string
+        self.writingLib = writingLib
+
+        # The data as returned by the mediainfo command line
+        # @var string
+        self.rawData = rawData
+
+        # @var string
+        self.multiStreamInfo = multiStreamInfo
+
+        # @var int
+        self.scanType = scanType
+
+        # @var string
+        self.multiStream = multiStream
+
+        # @var int
+        self.isFastStart = isFastStart
+
+        # @var string
+        self.contentStreams = contentStreams
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'flavorAssetId': getXmlNodeText, 
+        'fileSize': getXmlNodeInt, 
+        'containerFormat': getXmlNodeText, 
+        'containerId': getXmlNodeText, 
+        'containerProfile': getXmlNodeText, 
+        'containerDuration': getXmlNodeInt, 
+        'containerBitRate': getXmlNodeInt, 
+        'videoFormat': getXmlNodeText, 
+        'videoCodecId': getXmlNodeText, 
+        'videoDuration': getXmlNodeInt, 
+        'videoBitRate': getXmlNodeInt, 
+        'videoBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
+        'videoWidth': getXmlNodeInt, 
+        'videoHeight': getXmlNodeInt, 
+        'videoFrameRate': getXmlNodeFloat, 
+        'videoDar': getXmlNodeFloat, 
+        'videoRotation': getXmlNodeInt, 
+        'audioFormat': getXmlNodeText, 
+        'audioCodecId': getXmlNodeText, 
+        'audioDuration': getXmlNodeInt, 
+        'audioBitRate': getXmlNodeInt, 
+        'audioBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
+        'audioChannels': getXmlNodeInt, 
+        'audioSamplingRate': getXmlNodeInt, 
+        'audioResolution': getXmlNodeInt, 
+        'writingLib': getXmlNodeText, 
+        'rawData': getXmlNodeText, 
+        'multiStreamInfo': getXmlNodeText, 
+        'scanType': getXmlNodeInt, 
+        'multiStream': getXmlNodeText, 
+        'isFastStart': getXmlNodeInt, 
+        'contentStreams': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaInfo.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaMediaInfo")
+        kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
+        kparams.addIntIfDefined("fileSize", self.fileSize)
+        kparams.addStringIfDefined("containerFormat", self.containerFormat)
+        kparams.addStringIfDefined("containerId", self.containerId)
+        kparams.addStringIfDefined("containerProfile", self.containerProfile)
+        kparams.addIntIfDefined("containerDuration", self.containerDuration)
+        kparams.addIntIfDefined("containerBitRate", self.containerBitRate)
+        kparams.addStringIfDefined("videoFormat", self.videoFormat)
+        kparams.addStringIfDefined("videoCodecId", self.videoCodecId)
+        kparams.addIntIfDefined("videoDuration", self.videoDuration)
+        kparams.addIntIfDefined("videoBitRate", self.videoBitRate)
+        kparams.addIntEnumIfDefined("videoBitRateMode", self.videoBitRateMode)
+        kparams.addIntIfDefined("videoWidth", self.videoWidth)
+        kparams.addIntIfDefined("videoHeight", self.videoHeight)
+        kparams.addFloatIfDefined("videoFrameRate", self.videoFrameRate)
+        kparams.addFloatIfDefined("videoDar", self.videoDar)
+        kparams.addIntIfDefined("videoRotation", self.videoRotation)
+        kparams.addStringIfDefined("audioFormat", self.audioFormat)
+        kparams.addStringIfDefined("audioCodecId", self.audioCodecId)
+        kparams.addIntIfDefined("audioDuration", self.audioDuration)
+        kparams.addIntIfDefined("audioBitRate", self.audioBitRate)
+        kparams.addIntEnumIfDefined("audioBitRateMode", self.audioBitRateMode)
+        kparams.addIntIfDefined("audioChannels", self.audioChannels)
+        kparams.addIntIfDefined("audioSamplingRate", self.audioSamplingRate)
+        kparams.addIntIfDefined("audioResolution", self.audioResolution)
+        kparams.addStringIfDefined("writingLib", self.writingLib)
+        kparams.addStringIfDefined("rawData", self.rawData)
+        kparams.addStringIfDefined("multiStreamInfo", self.multiStreamInfo)
+        kparams.addIntIfDefined("scanType", self.scanType)
+        kparams.addStringIfDefined("multiStream", self.multiStream)
+        kparams.addIntIfDefined("isFastStart", self.isFastStart)
+        kparams.addStringIfDefined("contentStreams", self.contentStreams)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getFlavorAssetId(self):
+        return self.flavorAssetId
+
+    def setFlavorAssetId(self, newFlavorAssetId):
+        self.flavorAssetId = newFlavorAssetId
+
+    def getFileSize(self):
+        return self.fileSize
+
+    def setFileSize(self, newFileSize):
+        self.fileSize = newFileSize
+
+    def getContainerFormat(self):
+        return self.containerFormat
+
+    def setContainerFormat(self, newContainerFormat):
+        self.containerFormat = newContainerFormat
+
+    def getContainerId(self):
+        return self.containerId
+
+    def setContainerId(self, newContainerId):
+        self.containerId = newContainerId
+
+    def getContainerProfile(self):
+        return self.containerProfile
+
+    def setContainerProfile(self, newContainerProfile):
+        self.containerProfile = newContainerProfile
+
+    def getContainerDuration(self):
+        return self.containerDuration
+
+    def setContainerDuration(self, newContainerDuration):
+        self.containerDuration = newContainerDuration
+
+    def getContainerBitRate(self):
+        return self.containerBitRate
+
+    def setContainerBitRate(self, newContainerBitRate):
+        self.containerBitRate = newContainerBitRate
+
+    def getVideoFormat(self):
+        return self.videoFormat
+
+    def setVideoFormat(self, newVideoFormat):
+        self.videoFormat = newVideoFormat
+
+    def getVideoCodecId(self):
+        return self.videoCodecId
+
+    def setVideoCodecId(self, newVideoCodecId):
+        self.videoCodecId = newVideoCodecId
+
+    def getVideoDuration(self):
+        return self.videoDuration
+
+    def setVideoDuration(self, newVideoDuration):
+        self.videoDuration = newVideoDuration
+
+    def getVideoBitRate(self):
+        return self.videoBitRate
+
+    def setVideoBitRate(self, newVideoBitRate):
+        self.videoBitRate = newVideoBitRate
+
+    def getVideoBitRateMode(self):
+        return self.videoBitRateMode
+
+    def setVideoBitRateMode(self, newVideoBitRateMode):
+        self.videoBitRateMode = newVideoBitRateMode
+
+    def getVideoWidth(self):
+        return self.videoWidth
+
+    def setVideoWidth(self, newVideoWidth):
+        self.videoWidth = newVideoWidth
+
+    def getVideoHeight(self):
+        return self.videoHeight
+
+    def setVideoHeight(self, newVideoHeight):
+        self.videoHeight = newVideoHeight
+
+    def getVideoFrameRate(self):
+        return self.videoFrameRate
+
+    def setVideoFrameRate(self, newVideoFrameRate):
+        self.videoFrameRate = newVideoFrameRate
+
+    def getVideoDar(self):
+        return self.videoDar
+
+    def setVideoDar(self, newVideoDar):
+        self.videoDar = newVideoDar
+
+    def getVideoRotation(self):
+        return self.videoRotation
+
+    def setVideoRotation(self, newVideoRotation):
+        self.videoRotation = newVideoRotation
+
+    def getAudioFormat(self):
+        return self.audioFormat
+
+    def setAudioFormat(self, newAudioFormat):
+        self.audioFormat = newAudioFormat
+
+    def getAudioCodecId(self):
+        return self.audioCodecId
+
+    def setAudioCodecId(self, newAudioCodecId):
+        self.audioCodecId = newAudioCodecId
+
+    def getAudioDuration(self):
+        return self.audioDuration
+
+    def setAudioDuration(self, newAudioDuration):
+        self.audioDuration = newAudioDuration
+
+    def getAudioBitRate(self):
+        return self.audioBitRate
+
+    def setAudioBitRate(self, newAudioBitRate):
+        self.audioBitRate = newAudioBitRate
+
+    def getAudioBitRateMode(self):
+        return self.audioBitRateMode
+
+    def setAudioBitRateMode(self, newAudioBitRateMode):
+        self.audioBitRateMode = newAudioBitRateMode
+
+    def getAudioChannels(self):
+        return self.audioChannels
+
+    def setAudioChannels(self, newAudioChannels):
+        self.audioChannels = newAudioChannels
+
+    def getAudioSamplingRate(self):
+        return self.audioSamplingRate
+
+    def setAudioSamplingRate(self, newAudioSamplingRate):
+        self.audioSamplingRate = newAudioSamplingRate
+
+    def getAudioResolution(self):
+        return self.audioResolution
+
+    def setAudioResolution(self, newAudioResolution):
+        self.audioResolution = newAudioResolution
+
+    def getWritingLib(self):
+        return self.writingLib
+
+    def setWritingLib(self, newWritingLib):
+        self.writingLib = newWritingLib
+
+    def getRawData(self):
+        return self.rawData
+
+    def setRawData(self, newRawData):
+        self.rawData = newRawData
+
+    def getMultiStreamInfo(self):
+        return self.multiStreamInfo
+
+    def setMultiStreamInfo(self, newMultiStreamInfo):
+        self.multiStreamInfo = newMultiStreamInfo
+
+    def getScanType(self):
+        return self.scanType
+
+    def setScanType(self, newScanType):
+        self.scanType = newScanType
+
+    def getMultiStream(self):
+        return self.multiStream
+
+    def setMultiStream(self, newMultiStream):
+        self.multiStream = newMultiStream
+
+    def getIsFastStart(self):
+        return self.isFastStart
+
+    def setIsFastStart(self, newIsFastStart):
+        self.isFastStart = newIsFastStart
+
+    def getContentStreams(self):
+        return self.contentStreams
+
+    def setContentStreams(self, newContentStreams):
+        self.contentStreams = newContentStreams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaInfoListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMediaInfo
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaMediaInfo), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMediaInfoListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFlavorParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFlavorParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParamsOutput), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbAsset(KalturaAsset):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            partnerId=NotImplemented,
+            version=NotImplemented,
+            size=NotImplemented,
+            tags=NotImplemented,
+            fileExt=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            description=NotImplemented,
+            partnerData=NotImplemented,
+            partnerDescription=NotImplemented,
+            actualSourceAssetParamsIds=NotImplemented,
+            thumbParamsId=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            status=NotImplemented):
+        KalturaAsset.__init__(self,
+            id,
+            entryId,
+            partnerId,
+            version,
+            size,
+            tags,
+            fileExt,
+            createdAt,
+            updatedAt,
+            deletedAt,
+            description,
+            partnerData,
+            partnerDescription,
+            actualSourceAssetParamsIds)
+
+        # The Flavor Params used to create this Flavor Asset
+        # @var int
+        # @insertonly
+        self.thumbParamsId = thumbParamsId
+
+        # The width of the Flavor Asset
+        # @var int
+        # @readonly
+        self.width = width
+
+        # The height of the Flavor Asset
+        # @var int
+        # @readonly
+        self.height = height
+
+        # The status of the asset
+        # @var KalturaThumbAssetStatus
+        # @readonly
+        self.status = status
+
+
+    PROPERTY_LOADERS = {
+        'thumbParamsId': getXmlNodeInt, 
+        'width': getXmlNodeInt, 
+        'height': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbAsset.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAsset.toParams(self)
+        kparams.put("objectType", "KalturaThumbAsset")
+        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
+        return kparams
+
+    def getThumbParamsId(self):
+        return self.thumbParamsId
+
+    def setThumbParamsId(self, newThumbParamsId):
+        self.thumbParamsId = newThumbParamsId
+
+    def getWidth(self):
+        return self.width
+
+    def getHeight(self):
+        return self.height
+
+    def getStatus(self):
+        return self.status
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParams(KalturaAssetParams):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            isSystemDefault=NotImplemented,
+            tags=NotImplemented,
+            requiredPermissions=NotImplemented,
+            sourceRemoteStorageProfileId=NotImplemented,
+            remoteStorageProfileIds=NotImplemented,
+            mediaParserType=NotImplemented,
+            sourceAssetParamsIds=NotImplemented,
+            cropType=NotImplemented,
+            quality=NotImplemented,
+            cropX=NotImplemented,
+            cropY=NotImplemented,
+            cropWidth=NotImplemented,
+            cropHeight=NotImplemented,
+            videoOffset=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            scaleWidth=NotImplemented,
+            scaleHeight=NotImplemented,
+            backgroundColor=NotImplemented,
+            sourceParamsId=NotImplemented,
+            format=NotImplemented,
+            density=NotImplemented,
+            stripProfiles=NotImplemented,
+            videoOffsetInPercentage=NotImplemented):
+        KalturaAssetParams.__init__(self,
+            id,
+            partnerId,
+            name,
+            systemName,
+            description,
+            createdAt,
+            isSystemDefault,
+            tags,
+            requiredPermissions,
+            sourceRemoteStorageProfileId,
+            remoteStorageProfileIds,
+            mediaParserType,
+            sourceAssetParamsIds)
+
+        # @var KalturaThumbCropType
+        self.cropType = cropType
+
+        # @var int
+        self.quality = quality
+
+        # @var int
+        self.cropX = cropX
+
+        # @var int
+        self.cropY = cropY
+
+        # @var int
+        self.cropWidth = cropWidth
+
+        # @var int
+        self.cropHeight = cropHeight
+
+        # @var float
+        self.videoOffset = videoOffset
+
+        # @var int
+        self.width = width
+
+        # @var int
+        self.height = height
+
+        # @var float
+        self.scaleWidth = scaleWidth
+
+        # @var float
+        self.scaleHeight = scaleHeight
+
+        # Hexadecimal value
+        # @var string
+        self.backgroundColor = backgroundColor
+
+        # Id of the flavor params or the thumbnail params to be used as source for the thumbnail creation
+        # @var int
+        self.sourceParamsId = sourceParamsId
+
+        # The container format of the Flavor Params
+        # @var KalturaContainerFormat
+        self.format = format
+
+        # The image density (dpi) for example: 72 or 96
+        # @var int
+        self.density = density
+
+        # Strip profiles and comments
+        # @var bool
+        self.stripProfiles = stripProfiles
+
+        # Create thumbnail from the videoLengthpercentage second
+        # @var int
+        self.videoOffsetInPercentage = videoOffsetInPercentage
+
+
+    PROPERTY_LOADERS = {
+        'cropType': (KalturaEnumsFactory.createInt, "KalturaThumbCropType"), 
+        'quality': getXmlNodeInt, 
+        'cropX': getXmlNodeInt, 
+        'cropY': getXmlNodeInt, 
+        'cropWidth': getXmlNodeInt, 
+        'cropHeight': getXmlNodeInt, 
+        'videoOffset': getXmlNodeFloat, 
+        'width': getXmlNodeInt, 
+        'height': getXmlNodeInt, 
+        'scaleWidth': getXmlNodeFloat, 
+        'scaleHeight': getXmlNodeFloat, 
+        'backgroundColor': getXmlNodeText, 
+        'sourceParamsId': getXmlNodeInt, 
+        'format': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
+        'density': getXmlNodeInt, 
+        'stripProfiles': getXmlNodeBool, 
+        'videoOffsetInPercentage': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetParams.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParams.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetParams.toParams(self)
+        kparams.put("objectType", "KalturaThumbParams")
+        kparams.addIntEnumIfDefined("cropType", self.cropType)
+        kparams.addIntIfDefined("quality", self.quality)
+        kparams.addIntIfDefined("cropX", self.cropX)
+        kparams.addIntIfDefined("cropY", self.cropY)
+        kparams.addIntIfDefined("cropWidth", self.cropWidth)
+        kparams.addIntIfDefined("cropHeight", self.cropHeight)
+        kparams.addFloatIfDefined("videoOffset", self.videoOffset)
+        kparams.addIntIfDefined("width", self.width)
+        kparams.addIntIfDefined("height", self.height)
+        kparams.addFloatIfDefined("scaleWidth", self.scaleWidth)
+        kparams.addFloatIfDefined("scaleHeight", self.scaleHeight)
+        kparams.addStringIfDefined("backgroundColor", self.backgroundColor)
+        kparams.addIntIfDefined("sourceParamsId", self.sourceParamsId)
+        kparams.addStringEnumIfDefined("format", self.format)
+        kparams.addIntIfDefined("density", self.density)
+        kparams.addBoolIfDefined("stripProfiles", self.stripProfiles)
+        kparams.addIntIfDefined("videoOffsetInPercentage", self.videoOffsetInPercentage)
+        return kparams
+
+    def getCropType(self):
+        return self.cropType
+
+    def setCropType(self, newCropType):
+        self.cropType = newCropType
+
+    def getQuality(self):
+        return self.quality
+
+    def setQuality(self, newQuality):
+        self.quality = newQuality
+
+    def getCropX(self):
+        return self.cropX
+
+    def setCropX(self, newCropX):
+        self.cropX = newCropX
+
+    def getCropY(self):
+        return self.cropY
+
+    def setCropY(self, newCropY):
+        self.cropY = newCropY
+
+    def getCropWidth(self):
+        return self.cropWidth
+
+    def setCropWidth(self, newCropWidth):
+        self.cropWidth = newCropWidth
+
+    def getCropHeight(self):
+        return self.cropHeight
+
+    def setCropHeight(self, newCropHeight):
+        self.cropHeight = newCropHeight
+
+    def getVideoOffset(self):
+        return self.videoOffset
+
+    def setVideoOffset(self, newVideoOffset):
+        self.videoOffset = newVideoOffset
+
+    def getWidth(self):
+        return self.width
+
+    def setWidth(self, newWidth):
+        self.width = newWidth
+
+    def getHeight(self):
+        return self.height
+
+    def setHeight(self, newHeight):
+        self.height = newHeight
+
+    def getScaleWidth(self):
+        return self.scaleWidth
+
+    def setScaleWidth(self, newScaleWidth):
+        self.scaleWidth = newScaleWidth
+
+    def getScaleHeight(self):
+        return self.scaleHeight
+
+    def setScaleHeight(self, newScaleHeight):
+        self.scaleHeight = newScaleHeight
+
+    def getBackgroundColor(self):
+        return self.backgroundColor
+
+    def setBackgroundColor(self, newBackgroundColor):
+        self.backgroundColor = newBackgroundColor
+
+    def getSourceParamsId(self):
+        return self.sourceParamsId
+
+    def setSourceParamsId(self, newSourceParamsId):
+        self.sourceParamsId = newSourceParamsId
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+    def getDensity(self):
+        return self.density
+
+    def setDensity(self, newDensity):
+        self.density = newDensity
+
+    def getStripProfiles(self):
+        return self.stripProfiles
+
+    def setStripProfiles(self, newStripProfiles):
+        self.stripProfiles = newStripProfiles
+
+    def getVideoOffsetInPercentage(self):
+        return self.videoOffsetInPercentage
+
+    def setVideoOffsetInPercentage(self, newVideoOffsetInPercentage):
+        self.videoOffsetInPercentage = newVideoOffsetInPercentage
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsOutput(KalturaThumbParams):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            isSystemDefault=NotImplemented,
+            tags=NotImplemented,
+            requiredPermissions=NotImplemented,
+            sourceRemoteStorageProfileId=NotImplemented,
+            remoteStorageProfileIds=NotImplemented,
+            mediaParserType=NotImplemented,
+            sourceAssetParamsIds=NotImplemented,
+            cropType=NotImplemented,
+            quality=NotImplemented,
+            cropX=NotImplemented,
+            cropY=NotImplemented,
+            cropWidth=NotImplemented,
+            cropHeight=NotImplemented,
+            videoOffset=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            scaleWidth=NotImplemented,
+            scaleHeight=NotImplemented,
+            backgroundColor=NotImplemented,
+            sourceParamsId=NotImplemented,
+            format=NotImplemented,
+            density=NotImplemented,
+            stripProfiles=NotImplemented,
+            videoOffsetInPercentage=NotImplemented,
+            thumbParamsId=NotImplemented,
+            thumbParamsVersion=NotImplemented,
+            thumbAssetId=NotImplemented,
+            thumbAssetVersion=NotImplemented,
+            rotate=NotImplemented):
+        KalturaThumbParams.__init__(self,
+            id,
+            partnerId,
+            name,
+            systemName,
+            description,
+            createdAt,
+            isSystemDefault,
+            tags,
+            requiredPermissions,
+            sourceRemoteStorageProfileId,
+            remoteStorageProfileIds,
+            mediaParserType,
+            sourceAssetParamsIds,
+            cropType,
+            quality,
+            cropX,
+            cropY,
+            cropWidth,
+            cropHeight,
+            videoOffset,
+            width,
+            height,
+            scaleWidth,
+            scaleHeight,
+            backgroundColor,
+            sourceParamsId,
+            format,
+            density,
+            stripProfiles,
+            videoOffsetInPercentage)
+
+        # @var int
+        self.thumbParamsId = thumbParamsId
+
+        # @var string
+        self.thumbParamsVersion = thumbParamsVersion
+
+        # @var string
+        self.thumbAssetId = thumbAssetId
+
+        # @var string
+        self.thumbAssetVersion = thumbAssetVersion
+
+        # @var int
+        self.rotate = rotate
+
+
+    PROPERTY_LOADERS = {
+        'thumbParamsId': getXmlNodeInt, 
+        'thumbParamsVersion': getXmlNodeText, 
+        'thumbAssetId': getXmlNodeText, 
+        'thumbAssetVersion': getXmlNodeText, 
+        'rotate': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaThumbParams.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsOutput.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaThumbParams.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsOutput")
+        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
+        kparams.addStringIfDefined("thumbParamsVersion", self.thumbParamsVersion)
+        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
+        kparams.addStringIfDefined("thumbAssetVersion", self.thumbAssetVersion)
+        kparams.addIntIfDefined("rotate", self.rotate)
+        return kparams
+
+    def getThumbParamsId(self):
+        return self.thumbParamsId
+
+    def setThumbParamsId(self, newThumbParamsId):
+        self.thumbParamsId = newThumbParamsId
+
+    def getThumbParamsVersion(self):
+        return self.thumbParamsVersion
+
+    def setThumbParamsVersion(self, newThumbParamsVersion):
+        self.thumbParamsVersion = newThumbParamsVersion
+
+    def getThumbAssetId(self):
+        return self.thumbAssetId
+
+    def setThumbAssetId(self, newThumbAssetId):
+        self.thumbAssetId = newThumbAssetId
+
+    def getThumbAssetVersion(self):
+        return self.thumbAssetVersion
+
+    def setThumbAssetVersion(self, newThumbAssetVersion):
+        self.thumbAssetVersion = newThumbAssetVersion
+
+    def getRotate(self):
+        return self.rotate
+
+    def setRotate(self, newRotate):
+        self.rotate = newRotate
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaThumbParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaThumbParamsOutput), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaKeyBooleanValue(KalturaObjectBase):
     """A key (boolean) value pair representation to return an array of key-(boolean)value pairs (associative array)"""
 
@@ -12283,6 +13537,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -12301,6 +13556,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -12356,6 +13612,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -12373,7 +13630,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             creditUrl,
             mediaDate,
             dataUrl,
-            flavorParamsIds)
+            flavorParamsIds,
+            isTrimDisabled)
 
         # The message to be presented when the stream is offline
         # @var string
@@ -12587,6 +13845,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -12605,6 +13864,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -12662,6 +13922,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -12680,6 +13941,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             mediaDate,
             dataUrl,
             flavorParamsIds,
+            isTrimDisabled,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -13515,6 +14777,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -13533,6 +14796,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -13603,6 +14867,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -13621,6 +14886,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             mediaDate,
             dataUrl,
             flavorParamsIds,
+            isTrimDisabled,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -16236,446 +17502,6 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaInfo(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            flavorAssetId=NotImplemented,
-            fileSize=NotImplemented,
-            containerFormat=NotImplemented,
-            containerId=NotImplemented,
-            containerProfile=NotImplemented,
-            containerDuration=NotImplemented,
-            containerBitRate=NotImplemented,
-            videoFormat=NotImplemented,
-            videoCodecId=NotImplemented,
-            videoDuration=NotImplemented,
-            videoBitRate=NotImplemented,
-            videoBitRateMode=NotImplemented,
-            videoWidth=NotImplemented,
-            videoHeight=NotImplemented,
-            videoFrameRate=NotImplemented,
-            videoDar=NotImplemented,
-            videoRotation=NotImplemented,
-            audioFormat=NotImplemented,
-            audioCodecId=NotImplemented,
-            audioDuration=NotImplemented,
-            audioBitRate=NotImplemented,
-            audioBitRateMode=NotImplemented,
-            audioChannels=NotImplemented,
-            audioSamplingRate=NotImplemented,
-            audioResolution=NotImplemented,
-            writingLib=NotImplemented,
-            rawData=NotImplemented,
-            multiStreamInfo=NotImplemented,
-            scanType=NotImplemented,
-            multiStream=NotImplemented,
-            isFastStart=NotImplemented,
-            contentStreams=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # The id of the media info
-        # @var int
-        # @readonly
-        self.id = id
-
-        # The id of the related flavor asset
-        # @var string
-        self.flavorAssetId = flavorAssetId
-
-        # The file size
-        # @var int
-        self.fileSize = fileSize
-
-        # The container format
-        # @var string
-        self.containerFormat = containerFormat
-
-        # The container id
-        # @var string
-        self.containerId = containerId
-
-        # The container profile
-        # @var string
-        self.containerProfile = containerProfile
-
-        # The container duration
-        # @var int
-        self.containerDuration = containerDuration
-
-        # The container bit rate
-        # @var int
-        self.containerBitRate = containerBitRate
-
-        # The video format
-        # @var string
-        self.videoFormat = videoFormat
-
-        # The video codec id
-        # @var string
-        self.videoCodecId = videoCodecId
-
-        # The video duration
-        # @var int
-        self.videoDuration = videoDuration
-
-        # The video bit rate
-        # @var int
-        self.videoBitRate = videoBitRate
-
-        # The video bit rate mode
-        # @var KalturaBitRateMode
-        self.videoBitRateMode = videoBitRateMode
-
-        # The video width
-        # @var int
-        self.videoWidth = videoWidth
-
-        # The video height
-        # @var int
-        self.videoHeight = videoHeight
-
-        # The video frame rate
-        # @var float
-        self.videoFrameRate = videoFrameRate
-
-        # The video display aspect ratio (dar)
-        # @var float
-        self.videoDar = videoDar
-
-        # @var int
-        self.videoRotation = videoRotation
-
-        # The audio format
-        # @var string
-        self.audioFormat = audioFormat
-
-        # The audio codec id
-        # @var string
-        self.audioCodecId = audioCodecId
-
-        # The audio duration
-        # @var int
-        self.audioDuration = audioDuration
-
-        # The audio bit rate
-        # @var int
-        self.audioBitRate = audioBitRate
-
-        # The audio bit rate mode
-        # @var KalturaBitRateMode
-        self.audioBitRateMode = audioBitRateMode
-
-        # The number of audio channels
-        # @var int
-        self.audioChannels = audioChannels
-
-        # The audio sampling rate
-        # @var int
-        self.audioSamplingRate = audioSamplingRate
-
-        # The audio resolution
-        # @var int
-        self.audioResolution = audioResolution
-
-        # The writing library
-        # @var string
-        self.writingLib = writingLib
-
-        # The data as returned by the mediainfo command line
-        # @var string
-        self.rawData = rawData
-
-        # @var string
-        self.multiStreamInfo = multiStreamInfo
-
-        # @var int
-        self.scanType = scanType
-
-        # @var string
-        self.multiStream = multiStream
-
-        # @var int
-        self.isFastStart = isFastStart
-
-        # @var string
-        self.contentStreams = contentStreams
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeInt, 
-        'flavorAssetId': getXmlNodeText, 
-        'fileSize': getXmlNodeInt, 
-        'containerFormat': getXmlNodeText, 
-        'containerId': getXmlNodeText, 
-        'containerProfile': getXmlNodeText, 
-        'containerDuration': getXmlNodeInt, 
-        'containerBitRate': getXmlNodeInt, 
-        'videoFormat': getXmlNodeText, 
-        'videoCodecId': getXmlNodeText, 
-        'videoDuration': getXmlNodeInt, 
-        'videoBitRate': getXmlNodeInt, 
-        'videoBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
-        'videoWidth': getXmlNodeInt, 
-        'videoHeight': getXmlNodeInt, 
-        'videoFrameRate': getXmlNodeFloat, 
-        'videoDar': getXmlNodeFloat, 
-        'videoRotation': getXmlNodeInt, 
-        'audioFormat': getXmlNodeText, 
-        'audioCodecId': getXmlNodeText, 
-        'audioDuration': getXmlNodeInt, 
-        'audioBitRate': getXmlNodeInt, 
-        'audioBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
-        'audioChannels': getXmlNodeInt, 
-        'audioSamplingRate': getXmlNodeInt, 
-        'audioResolution': getXmlNodeInt, 
-        'writingLib': getXmlNodeText, 
-        'rawData': getXmlNodeText, 
-        'multiStreamInfo': getXmlNodeText, 
-        'scanType': getXmlNodeInt, 
-        'multiStream': getXmlNodeText, 
-        'isFastStart': getXmlNodeInt, 
-        'contentStreams': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaInfo.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaInfo")
-        kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
-        kparams.addIntIfDefined("fileSize", self.fileSize)
-        kparams.addStringIfDefined("containerFormat", self.containerFormat)
-        kparams.addStringIfDefined("containerId", self.containerId)
-        kparams.addStringIfDefined("containerProfile", self.containerProfile)
-        kparams.addIntIfDefined("containerDuration", self.containerDuration)
-        kparams.addIntIfDefined("containerBitRate", self.containerBitRate)
-        kparams.addStringIfDefined("videoFormat", self.videoFormat)
-        kparams.addStringIfDefined("videoCodecId", self.videoCodecId)
-        kparams.addIntIfDefined("videoDuration", self.videoDuration)
-        kparams.addIntIfDefined("videoBitRate", self.videoBitRate)
-        kparams.addIntEnumIfDefined("videoBitRateMode", self.videoBitRateMode)
-        kparams.addIntIfDefined("videoWidth", self.videoWidth)
-        kparams.addIntIfDefined("videoHeight", self.videoHeight)
-        kparams.addFloatIfDefined("videoFrameRate", self.videoFrameRate)
-        kparams.addFloatIfDefined("videoDar", self.videoDar)
-        kparams.addIntIfDefined("videoRotation", self.videoRotation)
-        kparams.addStringIfDefined("audioFormat", self.audioFormat)
-        kparams.addStringIfDefined("audioCodecId", self.audioCodecId)
-        kparams.addIntIfDefined("audioDuration", self.audioDuration)
-        kparams.addIntIfDefined("audioBitRate", self.audioBitRate)
-        kparams.addIntEnumIfDefined("audioBitRateMode", self.audioBitRateMode)
-        kparams.addIntIfDefined("audioChannels", self.audioChannels)
-        kparams.addIntIfDefined("audioSamplingRate", self.audioSamplingRate)
-        kparams.addIntIfDefined("audioResolution", self.audioResolution)
-        kparams.addStringIfDefined("writingLib", self.writingLib)
-        kparams.addStringIfDefined("rawData", self.rawData)
-        kparams.addStringIfDefined("multiStreamInfo", self.multiStreamInfo)
-        kparams.addIntIfDefined("scanType", self.scanType)
-        kparams.addStringIfDefined("multiStream", self.multiStream)
-        kparams.addIntIfDefined("isFastStart", self.isFastStart)
-        kparams.addStringIfDefined("contentStreams", self.contentStreams)
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def getFlavorAssetId(self):
-        return self.flavorAssetId
-
-    def setFlavorAssetId(self, newFlavorAssetId):
-        self.flavorAssetId = newFlavorAssetId
-
-    def getFileSize(self):
-        return self.fileSize
-
-    def setFileSize(self, newFileSize):
-        self.fileSize = newFileSize
-
-    def getContainerFormat(self):
-        return self.containerFormat
-
-    def setContainerFormat(self, newContainerFormat):
-        self.containerFormat = newContainerFormat
-
-    def getContainerId(self):
-        return self.containerId
-
-    def setContainerId(self, newContainerId):
-        self.containerId = newContainerId
-
-    def getContainerProfile(self):
-        return self.containerProfile
-
-    def setContainerProfile(self, newContainerProfile):
-        self.containerProfile = newContainerProfile
-
-    def getContainerDuration(self):
-        return self.containerDuration
-
-    def setContainerDuration(self, newContainerDuration):
-        self.containerDuration = newContainerDuration
-
-    def getContainerBitRate(self):
-        return self.containerBitRate
-
-    def setContainerBitRate(self, newContainerBitRate):
-        self.containerBitRate = newContainerBitRate
-
-    def getVideoFormat(self):
-        return self.videoFormat
-
-    def setVideoFormat(self, newVideoFormat):
-        self.videoFormat = newVideoFormat
-
-    def getVideoCodecId(self):
-        return self.videoCodecId
-
-    def setVideoCodecId(self, newVideoCodecId):
-        self.videoCodecId = newVideoCodecId
-
-    def getVideoDuration(self):
-        return self.videoDuration
-
-    def setVideoDuration(self, newVideoDuration):
-        self.videoDuration = newVideoDuration
-
-    def getVideoBitRate(self):
-        return self.videoBitRate
-
-    def setVideoBitRate(self, newVideoBitRate):
-        self.videoBitRate = newVideoBitRate
-
-    def getVideoBitRateMode(self):
-        return self.videoBitRateMode
-
-    def setVideoBitRateMode(self, newVideoBitRateMode):
-        self.videoBitRateMode = newVideoBitRateMode
-
-    def getVideoWidth(self):
-        return self.videoWidth
-
-    def setVideoWidth(self, newVideoWidth):
-        self.videoWidth = newVideoWidth
-
-    def getVideoHeight(self):
-        return self.videoHeight
-
-    def setVideoHeight(self, newVideoHeight):
-        self.videoHeight = newVideoHeight
-
-    def getVideoFrameRate(self):
-        return self.videoFrameRate
-
-    def setVideoFrameRate(self, newVideoFrameRate):
-        self.videoFrameRate = newVideoFrameRate
-
-    def getVideoDar(self):
-        return self.videoDar
-
-    def setVideoDar(self, newVideoDar):
-        self.videoDar = newVideoDar
-
-    def getVideoRotation(self):
-        return self.videoRotation
-
-    def setVideoRotation(self, newVideoRotation):
-        self.videoRotation = newVideoRotation
-
-    def getAudioFormat(self):
-        return self.audioFormat
-
-    def setAudioFormat(self, newAudioFormat):
-        self.audioFormat = newAudioFormat
-
-    def getAudioCodecId(self):
-        return self.audioCodecId
-
-    def setAudioCodecId(self, newAudioCodecId):
-        self.audioCodecId = newAudioCodecId
-
-    def getAudioDuration(self):
-        return self.audioDuration
-
-    def setAudioDuration(self, newAudioDuration):
-        self.audioDuration = newAudioDuration
-
-    def getAudioBitRate(self):
-        return self.audioBitRate
-
-    def setAudioBitRate(self, newAudioBitRate):
-        self.audioBitRate = newAudioBitRate
-
-    def getAudioBitRateMode(self):
-        return self.audioBitRateMode
-
-    def setAudioBitRateMode(self, newAudioBitRateMode):
-        self.audioBitRateMode = newAudioBitRateMode
-
-    def getAudioChannels(self):
-        return self.audioChannels
-
-    def setAudioChannels(self, newAudioChannels):
-        self.audioChannels = newAudioChannels
-
-    def getAudioSamplingRate(self):
-        return self.audioSamplingRate
-
-    def setAudioSamplingRate(self, newAudioSamplingRate):
-        self.audioSamplingRate = newAudioSamplingRate
-
-    def getAudioResolution(self):
-        return self.audioResolution
-
-    def setAudioResolution(self, newAudioResolution):
-        self.audioResolution = newAudioResolution
-
-    def getWritingLib(self):
-        return self.writingLib
-
-    def setWritingLib(self, newWritingLib):
-        self.writingLib = newWritingLib
-
-    def getRawData(self):
-        return self.rawData
-
-    def setRawData(self, newRawData):
-        self.rawData = newRawData
-
-    def getMultiStreamInfo(self):
-        return self.multiStreamInfo
-
-    def setMultiStreamInfo(self, newMultiStreamInfo):
-        self.multiStreamInfo = newMultiStreamInfo
-
-    def getScanType(self):
-        return self.scanType
-
-    def setScanType(self, newScanType):
-        self.scanType = newScanType
-
-    def getMultiStream(self):
-        return self.multiStream
-
-    def setMultiStream(self, newMultiStream):
-        self.multiStream = newMultiStream
-
-    def getIsFastStart(self):
-        return self.isFastStart
-
-    def setIsFastStart(self, newIsFastStart):
-        self.isFastStart = newIsFastStart
-
-    def getContentStreams(self):
-        return self.contentStreams
-
-    def setContentStreams(self, newContentStreams):
-        self.contentStreams = newContentStreams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMediaServer(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -16809,6 +17635,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -16862,6 +17689,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -18230,6 +19058,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             playlistContent=NotImplemented,
             filters=NotImplemented,
             totalResults=NotImplemented,
@@ -18279,7 +19108,8 @@ class KalturaPlaylist(KalturaBaseEntry):
             parentEntryId,
             operationAttributes,
             entitledUsersEdit,
-            entitledUsersPublish)
+            entitledUsersPublish,
+            capabilities)
 
         # Content of the playlist - 
         # 	 XML if the playlistType is dynamic 
@@ -21180,494 +22010,6 @@ class KalturaSyndicationFeedEntryCount(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaThumbAsset(KalturaAsset):
-    def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            thumbParamsId=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            status=NotImplemented):
-        KalturaAsset.__init__(self,
-            id,
-            entryId,
-            partnerId,
-            version,
-            size,
-            tags,
-            fileExt,
-            createdAt,
-            updatedAt,
-            deletedAt,
-            description,
-            partnerData,
-            partnerDescription,
-            actualSourceAssetParamsIds)
-
-        # The Flavor Params used to create this Flavor Asset
-        # @var int
-        # @insertonly
-        self.thumbParamsId = thumbParamsId
-
-        # The width of the Flavor Asset
-        # @var int
-        # @readonly
-        self.width = width
-
-        # The height of the Flavor Asset
-        # @var int
-        # @readonly
-        self.height = height
-
-        # The status of the asset
-        # @var KalturaThumbAssetStatus
-        # @readonly
-        self.status = status
-
-
-    PROPERTY_LOADERS = {
-        'thumbParamsId': getXmlNodeInt, 
-        'width': getXmlNodeInt, 
-        'height': getXmlNodeInt, 
-        'status': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
-    }
-
-    def fromXml(self, node):
-        KalturaAsset.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbAsset.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAsset.toParams(self)
-        kparams.put("objectType", "KalturaThumbAsset")
-        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
-        return kparams
-
-    def getThumbParamsId(self):
-        return self.thumbParamsId
-
-    def setThumbParamsId(self, newThumbParamsId):
-        self.thumbParamsId = newThumbParamsId
-
-    def getWidth(self):
-        return self.width
-
-    def getHeight(self):
-        return self.height
-
-    def getStatus(self):
-        return self.status
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParams(KalturaAssetParams):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            isSystemDefault=NotImplemented,
-            tags=NotImplemented,
-            requiredPermissions=NotImplemented,
-            sourceRemoteStorageProfileId=NotImplemented,
-            remoteStorageProfileIds=NotImplemented,
-            mediaParserType=NotImplemented,
-            sourceAssetParamsIds=NotImplemented,
-            cropType=NotImplemented,
-            quality=NotImplemented,
-            cropX=NotImplemented,
-            cropY=NotImplemented,
-            cropWidth=NotImplemented,
-            cropHeight=NotImplemented,
-            videoOffset=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            scaleWidth=NotImplemented,
-            scaleHeight=NotImplemented,
-            backgroundColor=NotImplemented,
-            sourceParamsId=NotImplemented,
-            format=NotImplemented,
-            density=NotImplemented,
-            stripProfiles=NotImplemented,
-            videoOffsetInPercentage=NotImplemented):
-        KalturaAssetParams.__init__(self,
-            id,
-            partnerId,
-            name,
-            systemName,
-            description,
-            createdAt,
-            isSystemDefault,
-            tags,
-            requiredPermissions,
-            sourceRemoteStorageProfileId,
-            remoteStorageProfileIds,
-            mediaParserType,
-            sourceAssetParamsIds)
-
-        # @var KalturaThumbCropType
-        self.cropType = cropType
-
-        # @var int
-        self.quality = quality
-
-        # @var int
-        self.cropX = cropX
-
-        # @var int
-        self.cropY = cropY
-
-        # @var int
-        self.cropWidth = cropWidth
-
-        # @var int
-        self.cropHeight = cropHeight
-
-        # @var float
-        self.videoOffset = videoOffset
-
-        # @var int
-        self.width = width
-
-        # @var int
-        self.height = height
-
-        # @var float
-        self.scaleWidth = scaleWidth
-
-        # @var float
-        self.scaleHeight = scaleHeight
-
-        # Hexadecimal value
-        # @var string
-        self.backgroundColor = backgroundColor
-
-        # Id of the flavor params or the thumbnail params to be used as source for the thumbnail creation
-        # @var int
-        self.sourceParamsId = sourceParamsId
-
-        # The container format of the Flavor Params
-        # @var KalturaContainerFormat
-        self.format = format
-
-        # The image density (dpi) for example: 72 or 96
-        # @var int
-        self.density = density
-
-        # Strip profiles and comments
-        # @var bool
-        self.stripProfiles = stripProfiles
-
-        # Create thumbnail from the videoLengthpercentage second
-        # @var int
-        self.videoOffsetInPercentage = videoOffsetInPercentage
-
-
-    PROPERTY_LOADERS = {
-        'cropType': (KalturaEnumsFactory.createInt, "KalturaThumbCropType"), 
-        'quality': getXmlNodeInt, 
-        'cropX': getXmlNodeInt, 
-        'cropY': getXmlNodeInt, 
-        'cropWidth': getXmlNodeInt, 
-        'cropHeight': getXmlNodeInt, 
-        'videoOffset': getXmlNodeFloat, 
-        'width': getXmlNodeInt, 
-        'height': getXmlNodeInt, 
-        'scaleWidth': getXmlNodeFloat, 
-        'scaleHeight': getXmlNodeFloat, 
-        'backgroundColor': getXmlNodeText, 
-        'sourceParamsId': getXmlNodeInt, 
-        'format': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
-        'density': getXmlNodeInt, 
-        'stripProfiles': getXmlNodeBool, 
-        'videoOffsetInPercentage': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaAssetParams.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParams.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetParams.toParams(self)
-        kparams.put("objectType", "KalturaThumbParams")
-        kparams.addIntEnumIfDefined("cropType", self.cropType)
-        kparams.addIntIfDefined("quality", self.quality)
-        kparams.addIntIfDefined("cropX", self.cropX)
-        kparams.addIntIfDefined("cropY", self.cropY)
-        kparams.addIntIfDefined("cropWidth", self.cropWidth)
-        kparams.addIntIfDefined("cropHeight", self.cropHeight)
-        kparams.addFloatIfDefined("videoOffset", self.videoOffset)
-        kparams.addIntIfDefined("width", self.width)
-        kparams.addIntIfDefined("height", self.height)
-        kparams.addFloatIfDefined("scaleWidth", self.scaleWidth)
-        kparams.addFloatIfDefined("scaleHeight", self.scaleHeight)
-        kparams.addStringIfDefined("backgroundColor", self.backgroundColor)
-        kparams.addIntIfDefined("sourceParamsId", self.sourceParamsId)
-        kparams.addStringEnumIfDefined("format", self.format)
-        kparams.addIntIfDefined("density", self.density)
-        kparams.addBoolIfDefined("stripProfiles", self.stripProfiles)
-        kparams.addIntIfDefined("videoOffsetInPercentage", self.videoOffsetInPercentage)
-        return kparams
-
-    def getCropType(self):
-        return self.cropType
-
-    def setCropType(self, newCropType):
-        self.cropType = newCropType
-
-    def getQuality(self):
-        return self.quality
-
-    def setQuality(self, newQuality):
-        self.quality = newQuality
-
-    def getCropX(self):
-        return self.cropX
-
-    def setCropX(self, newCropX):
-        self.cropX = newCropX
-
-    def getCropY(self):
-        return self.cropY
-
-    def setCropY(self, newCropY):
-        self.cropY = newCropY
-
-    def getCropWidth(self):
-        return self.cropWidth
-
-    def setCropWidth(self, newCropWidth):
-        self.cropWidth = newCropWidth
-
-    def getCropHeight(self):
-        return self.cropHeight
-
-    def setCropHeight(self, newCropHeight):
-        self.cropHeight = newCropHeight
-
-    def getVideoOffset(self):
-        return self.videoOffset
-
-    def setVideoOffset(self, newVideoOffset):
-        self.videoOffset = newVideoOffset
-
-    def getWidth(self):
-        return self.width
-
-    def setWidth(self, newWidth):
-        self.width = newWidth
-
-    def getHeight(self):
-        return self.height
-
-    def setHeight(self, newHeight):
-        self.height = newHeight
-
-    def getScaleWidth(self):
-        return self.scaleWidth
-
-    def setScaleWidth(self, newScaleWidth):
-        self.scaleWidth = newScaleWidth
-
-    def getScaleHeight(self):
-        return self.scaleHeight
-
-    def setScaleHeight(self, newScaleHeight):
-        self.scaleHeight = newScaleHeight
-
-    def getBackgroundColor(self):
-        return self.backgroundColor
-
-    def setBackgroundColor(self, newBackgroundColor):
-        self.backgroundColor = newBackgroundColor
-
-    def getSourceParamsId(self):
-        return self.sourceParamsId
-
-    def setSourceParamsId(self, newSourceParamsId):
-        self.sourceParamsId = newSourceParamsId
-
-    def getFormat(self):
-        return self.format
-
-    def setFormat(self, newFormat):
-        self.format = newFormat
-
-    def getDensity(self):
-        return self.density
-
-    def setDensity(self, newDensity):
-        self.density = newDensity
-
-    def getStripProfiles(self):
-        return self.stripProfiles
-
-    def setStripProfiles(self, newStripProfiles):
-        self.stripProfiles = newStripProfiles
-
-    def getVideoOffsetInPercentage(self):
-        return self.videoOffsetInPercentage
-
-    def setVideoOffsetInPercentage(self, newVideoOffsetInPercentage):
-        self.videoOffsetInPercentage = newVideoOffsetInPercentage
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParamsOutput(KalturaThumbParams):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            isSystemDefault=NotImplemented,
-            tags=NotImplemented,
-            requiredPermissions=NotImplemented,
-            sourceRemoteStorageProfileId=NotImplemented,
-            remoteStorageProfileIds=NotImplemented,
-            mediaParserType=NotImplemented,
-            sourceAssetParamsIds=NotImplemented,
-            cropType=NotImplemented,
-            quality=NotImplemented,
-            cropX=NotImplemented,
-            cropY=NotImplemented,
-            cropWidth=NotImplemented,
-            cropHeight=NotImplemented,
-            videoOffset=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            scaleWidth=NotImplemented,
-            scaleHeight=NotImplemented,
-            backgroundColor=NotImplemented,
-            sourceParamsId=NotImplemented,
-            format=NotImplemented,
-            density=NotImplemented,
-            stripProfiles=NotImplemented,
-            videoOffsetInPercentage=NotImplemented,
-            thumbParamsId=NotImplemented,
-            thumbParamsVersion=NotImplemented,
-            thumbAssetId=NotImplemented,
-            thumbAssetVersion=NotImplemented,
-            rotate=NotImplemented):
-        KalturaThumbParams.__init__(self,
-            id,
-            partnerId,
-            name,
-            systemName,
-            description,
-            createdAt,
-            isSystemDefault,
-            tags,
-            requiredPermissions,
-            sourceRemoteStorageProfileId,
-            remoteStorageProfileIds,
-            mediaParserType,
-            sourceAssetParamsIds,
-            cropType,
-            quality,
-            cropX,
-            cropY,
-            cropWidth,
-            cropHeight,
-            videoOffset,
-            width,
-            height,
-            scaleWidth,
-            scaleHeight,
-            backgroundColor,
-            sourceParamsId,
-            format,
-            density,
-            stripProfiles,
-            videoOffsetInPercentage)
-
-        # @var int
-        self.thumbParamsId = thumbParamsId
-
-        # @var string
-        self.thumbParamsVersion = thumbParamsVersion
-
-        # @var string
-        self.thumbAssetId = thumbAssetId
-
-        # @var string
-        self.thumbAssetVersion = thumbAssetVersion
-
-        # @var int
-        self.rotate = rotate
-
-
-    PROPERTY_LOADERS = {
-        'thumbParamsId': getXmlNodeInt, 
-        'thumbParamsVersion': getXmlNodeText, 
-        'thumbAssetId': getXmlNodeText, 
-        'thumbAssetVersion': getXmlNodeText, 
-        'rotate': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaThumbParams.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsOutput.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaThumbParams.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsOutput")
-        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
-        kparams.addStringIfDefined("thumbParamsVersion", self.thumbParamsVersion)
-        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
-        kparams.addStringIfDefined("thumbAssetVersion", self.thumbAssetVersion)
-        kparams.addIntIfDefined("rotate", self.rotate)
-        return kparams
-
-    def getThumbParamsId(self):
-        return self.thumbParamsId
-
-    def setThumbParamsId(self, newThumbParamsId):
-        self.thumbParamsId = newThumbParamsId
-
-    def getThumbParamsVersion(self):
-        return self.thumbParamsVersion
-
-    def setThumbParamsVersion(self, newThumbParamsVersion):
-        self.thumbParamsVersion = newThumbParamsVersion
-
-    def getThumbAssetId(self):
-        return self.thumbAssetId
-
-    def setThumbAssetId(self, newThumbAssetId):
-        self.thumbAssetId = newThumbAssetId
-
-    def getThumbAssetVersion(self):
-        return self.thumbAssetVersion
-
-    def setThumbAssetVersion(self, newThumbAssetVersion):
-        self.thumbAssetVersion = newThumbAssetVersion
-
-    def getRotate(self):
-        return self.rotate
-
-    def setRotate(self, newRotate):
-        self.rotate = newRotate
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaThumbnailServeOptions(KalturaObjectBase):
     def __init__(self,
             download=NotImplemented):
@@ -21696,6 +22038,38 @@ class KalturaThumbnailServeOptions(KalturaObjectBase):
 
     def setDownload(self, newDownload):
         self.download = newDownload
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaTypedArray(KalturaObjectBase):
+    def __init__(self,
+            count=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        self.count = count
+
+
+    PROPERTY_LOADERS = {
+        'count': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTypedArray.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaTypedArray")
+        kparams.addIntIfDefined("count", self.count)
+        return kparams
+
+    def getCount(self):
+        return self.count
+
+    def setCount(self, newCount):
+        self.count = newCount
 
 
 # @package Kaltura
@@ -22690,6 +23064,98 @@ class KalturaUser(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserEntry(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            userId=NotImplemented,
+            partnerId=NotImplemented,
+            status=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # unique auto-generated identifier
+        # @var int
+        # @readonly
+        self.id = id
+
+        # @var string
+        # @insertonly
+        self.entryId = entryId
+
+        # @var int
+        # @insertonly
+        self.userId = userId
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var KalturaUserEntryStatus
+        # @readonly
+        self.status = status
+
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'entryId': getXmlNodeText, 
+        'userId': getXmlNodeInt, 
+        'partnerId': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserEntry.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaUserEntry")
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addIntIfDefined("userId", self.userId)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getUserId(self):
+        return self.userId
+
+    def setUserId(self, newUserId):
+        self.userId = newUserId
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getStatus(self):
+        return self.status
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserLoginData(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -23044,6 +23510,752 @@ class KalturaWidget(KalturaObjectBase):
 
     def setAddEmbedHtml5Support(self, newAddEmbedHtml5Support):
         self.addEmbedHtml5Support = newAddEmbedHtml5Support
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBatchJobBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idGreaterThanOrEqual=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            partnerIdNotIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            executionAttemptsGreaterThanOrEqual=NotImplemented,
+            executionAttemptsLessThanOrEqual=NotImplemented,
+            lockVersionGreaterThanOrEqual=NotImplemented,
+            lockVersionLessThanOrEqual=NotImplemented,
+            entryIdEqual=NotImplemented,
+            jobTypeEqual=NotImplemented,
+            jobTypeIn=NotImplemented,
+            jobTypeNotIn=NotImplemented,
+            jobSubTypeEqual=NotImplemented,
+            jobSubTypeIn=NotImplemented,
+            jobSubTypeNotIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented,
+            priorityGreaterThanOrEqual=NotImplemented,
+            priorityLessThanOrEqual=NotImplemented,
+            priorityEqual=NotImplemented,
+            priorityIn=NotImplemented,
+            priorityNotIn=NotImplemented,
+            batchVersionGreaterThanOrEqual=NotImplemented,
+            batchVersionLessThanOrEqual=NotImplemented,
+            batchVersionEqual=NotImplemented,
+            queueTimeGreaterThanOrEqual=NotImplemented,
+            queueTimeLessThanOrEqual=NotImplemented,
+            finishTimeGreaterThanOrEqual=NotImplemented,
+            finishTimeLessThanOrEqual=NotImplemented,
+            errTypeEqual=NotImplemented,
+            errTypeIn=NotImplemented,
+            errTypeNotIn=NotImplemented,
+            errNumberEqual=NotImplemented,
+            errNumberIn=NotImplemented,
+            errNumberNotIn=NotImplemented,
+            estimatedEffortLessThan=NotImplemented,
+            estimatedEffortGreaterThan=NotImplemented,
+            urgencyLessThanOrEqual=NotImplemented,
+            urgencyGreaterThanOrEqual=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var int
+        self.idGreaterThanOrEqual = idGreaterThanOrEqual
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var string
+        self.partnerIdNotIn = partnerIdNotIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.executionAttemptsGreaterThanOrEqual = executionAttemptsGreaterThanOrEqual
+
+        # @var int
+        self.executionAttemptsLessThanOrEqual = executionAttemptsLessThanOrEqual
+
+        # @var int
+        self.lockVersionGreaterThanOrEqual = lockVersionGreaterThanOrEqual
+
+        # @var int
+        self.lockVersionLessThanOrEqual = lockVersionLessThanOrEqual
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var KalturaBatchJobType
+        self.jobTypeEqual = jobTypeEqual
+
+        # @var string
+        self.jobTypeIn = jobTypeIn
+
+        # @var string
+        self.jobTypeNotIn = jobTypeNotIn
+
+        # @var int
+        self.jobSubTypeEqual = jobSubTypeEqual
+
+        # @var string
+        self.jobSubTypeIn = jobSubTypeIn
+
+        # @var string
+        self.jobSubTypeNotIn = jobSubTypeNotIn
+
+        # @var KalturaBatchJobStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var string
+        self.statusNotIn = statusNotIn
+
+        # @var int
+        self.priorityGreaterThanOrEqual = priorityGreaterThanOrEqual
+
+        # @var int
+        self.priorityLessThanOrEqual = priorityLessThanOrEqual
+
+        # @var int
+        self.priorityEqual = priorityEqual
+
+        # @var string
+        self.priorityIn = priorityIn
+
+        # @var string
+        self.priorityNotIn = priorityNotIn
+
+        # @var int
+        self.batchVersionGreaterThanOrEqual = batchVersionGreaterThanOrEqual
+
+        # @var int
+        self.batchVersionLessThanOrEqual = batchVersionLessThanOrEqual
+
+        # @var int
+        self.batchVersionEqual = batchVersionEqual
+
+        # @var int
+        self.queueTimeGreaterThanOrEqual = queueTimeGreaterThanOrEqual
+
+        # @var int
+        self.queueTimeLessThanOrEqual = queueTimeLessThanOrEqual
+
+        # @var int
+        self.finishTimeGreaterThanOrEqual = finishTimeGreaterThanOrEqual
+
+        # @var int
+        self.finishTimeLessThanOrEqual = finishTimeLessThanOrEqual
+
+        # @var KalturaBatchJobErrorTypes
+        self.errTypeEqual = errTypeEqual
+
+        # @var string
+        self.errTypeIn = errTypeIn
+
+        # @var string
+        self.errTypeNotIn = errTypeNotIn
+
+        # @var int
+        self.errNumberEqual = errNumberEqual
+
+        # @var string
+        self.errNumberIn = errNumberIn
+
+        # @var string
+        self.errNumberNotIn = errNumberNotIn
+
+        # @var int
+        self.estimatedEffortLessThan = estimatedEffortLessThan
+
+        # @var int
+        self.estimatedEffortGreaterThan = estimatedEffortGreaterThan
+
+        # @var int
+        self.urgencyLessThanOrEqual = urgencyLessThanOrEqual
+
+        # @var int
+        self.urgencyGreaterThanOrEqual = urgencyGreaterThanOrEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idGreaterThanOrEqual': getXmlNodeInt, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'partnerIdNotIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'executionAttemptsGreaterThanOrEqual': getXmlNodeInt, 
+        'executionAttemptsLessThanOrEqual': getXmlNodeInt, 
+        'lockVersionGreaterThanOrEqual': getXmlNodeInt, 
+        'lockVersionLessThanOrEqual': getXmlNodeInt, 
+        'entryIdEqual': getXmlNodeText, 
+        'jobTypeEqual': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'jobTypeIn': getXmlNodeText, 
+        'jobTypeNotIn': getXmlNodeText, 
+        'jobSubTypeEqual': getXmlNodeInt, 
+        'jobSubTypeIn': getXmlNodeText, 
+        'jobSubTypeNotIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaBatchJobStatus"), 
+        'statusIn': getXmlNodeText, 
+        'statusNotIn': getXmlNodeText, 
+        'priorityGreaterThanOrEqual': getXmlNodeInt, 
+        'priorityLessThanOrEqual': getXmlNodeInt, 
+        'priorityEqual': getXmlNodeInt, 
+        'priorityIn': getXmlNodeText, 
+        'priorityNotIn': getXmlNodeText, 
+        'batchVersionGreaterThanOrEqual': getXmlNodeInt, 
+        'batchVersionLessThanOrEqual': getXmlNodeInt, 
+        'batchVersionEqual': getXmlNodeInt, 
+        'queueTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'queueTimeLessThanOrEqual': getXmlNodeInt, 
+        'finishTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'finishTimeLessThanOrEqual': getXmlNodeInt, 
+        'errTypeEqual': (KalturaEnumsFactory.createInt, "KalturaBatchJobErrorTypes"), 
+        'errTypeIn': getXmlNodeText, 
+        'errTypeNotIn': getXmlNodeText, 
+        'errNumberEqual': getXmlNodeInt, 
+        'errNumberIn': getXmlNodeText, 
+        'errNumberNotIn': getXmlNodeText, 
+        'estimatedEffortLessThan': getXmlNodeInt, 
+        'estimatedEffortGreaterThan': getXmlNodeInt, 
+        'urgencyLessThanOrEqual': getXmlNodeInt, 
+        'urgencyGreaterThanOrEqual': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchJobBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaBatchJobBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addIntIfDefined("idGreaterThanOrEqual", self.idGreaterThanOrEqual)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addStringIfDefined("partnerIdNotIn", self.partnerIdNotIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("executionAttemptsGreaterThanOrEqual", self.executionAttemptsGreaterThanOrEqual)
+        kparams.addIntIfDefined("executionAttemptsLessThanOrEqual", self.executionAttemptsLessThanOrEqual)
+        kparams.addIntIfDefined("lockVersionGreaterThanOrEqual", self.lockVersionGreaterThanOrEqual)
+        kparams.addIntIfDefined("lockVersionLessThanOrEqual", self.lockVersionLessThanOrEqual)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringEnumIfDefined("jobTypeEqual", self.jobTypeEqual)
+        kparams.addStringIfDefined("jobTypeIn", self.jobTypeIn)
+        kparams.addStringIfDefined("jobTypeNotIn", self.jobTypeNotIn)
+        kparams.addIntIfDefined("jobSubTypeEqual", self.jobSubTypeEqual)
+        kparams.addStringIfDefined("jobSubTypeIn", self.jobSubTypeIn)
+        kparams.addStringIfDefined("jobSubTypeNotIn", self.jobSubTypeNotIn)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
+        kparams.addIntIfDefined("priorityGreaterThanOrEqual", self.priorityGreaterThanOrEqual)
+        kparams.addIntIfDefined("priorityLessThanOrEqual", self.priorityLessThanOrEqual)
+        kparams.addIntIfDefined("priorityEqual", self.priorityEqual)
+        kparams.addStringIfDefined("priorityIn", self.priorityIn)
+        kparams.addStringIfDefined("priorityNotIn", self.priorityNotIn)
+        kparams.addIntIfDefined("batchVersionGreaterThanOrEqual", self.batchVersionGreaterThanOrEqual)
+        kparams.addIntIfDefined("batchVersionLessThanOrEqual", self.batchVersionLessThanOrEqual)
+        kparams.addIntIfDefined("batchVersionEqual", self.batchVersionEqual)
+        kparams.addIntIfDefined("queueTimeGreaterThanOrEqual", self.queueTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("queueTimeLessThanOrEqual", self.queueTimeLessThanOrEqual)
+        kparams.addIntIfDefined("finishTimeGreaterThanOrEqual", self.finishTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("finishTimeLessThanOrEqual", self.finishTimeLessThanOrEqual)
+        kparams.addIntEnumIfDefined("errTypeEqual", self.errTypeEqual)
+        kparams.addStringIfDefined("errTypeIn", self.errTypeIn)
+        kparams.addStringIfDefined("errTypeNotIn", self.errTypeNotIn)
+        kparams.addIntIfDefined("errNumberEqual", self.errNumberEqual)
+        kparams.addStringIfDefined("errNumberIn", self.errNumberIn)
+        kparams.addStringIfDefined("errNumberNotIn", self.errNumberNotIn)
+        kparams.addIntIfDefined("estimatedEffortLessThan", self.estimatedEffortLessThan)
+        kparams.addIntIfDefined("estimatedEffortGreaterThan", self.estimatedEffortGreaterThan)
+        kparams.addIntIfDefined("urgencyLessThanOrEqual", self.urgencyLessThanOrEqual)
+        kparams.addIntIfDefined("urgencyGreaterThanOrEqual", self.urgencyGreaterThanOrEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdGreaterThanOrEqual(self):
+        return self.idGreaterThanOrEqual
+
+    def setIdGreaterThanOrEqual(self, newIdGreaterThanOrEqual):
+        self.idGreaterThanOrEqual = newIdGreaterThanOrEqual
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getPartnerIdNotIn(self):
+        return self.partnerIdNotIn
+
+    def setPartnerIdNotIn(self, newPartnerIdNotIn):
+        self.partnerIdNotIn = newPartnerIdNotIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getExecutionAttemptsGreaterThanOrEqual(self):
+        return self.executionAttemptsGreaterThanOrEqual
+
+    def setExecutionAttemptsGreaterThanOrEqual(self, newExecutionAttemptsGreaterThanOrEqual):
+        self.executionAttemptsGreaterThanOrEqual = newExecutionAttemptsGreaterThanOrEqual
+
+    def getExecutionAttemptsLessThanOrEqual(self):
+        return self.executionAttemptsLessThanOrEqual
+
+    def setExecutionAttemptsLessThanOrEqual(self, newExecutionAttemptsLessThanOrEqual):
+        self.executionAttemptsLessThanOrEqual = newExecutionAttemptsLessThanOrEqual
+
+    def getLockVersionGreaterThanOrEqual(self):
+        return self.lockVersionGreaterThanOrEqual
+
+    def setLockVersionGreaterThanOrEqual(self, newLockVersionGreaterThanOrEqual):
+        self.lockVersionGreaterThanOrEqual = newLockVersionGreaterThanOrEqual
+
+    def getLockVersionLessThanOrEqual(self):
+        return self.lockVersionLessThanOrEqual
+
+    def setLockVersionLessThanOrEqual(self, newLockVersionLessThanOrEqual):
+        self.lockVersionLessThanOrEqual = newLockVersionLessThanOrEqual
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getJobTypeEqual(self):
+        return self.jobTypeEqual
+
+    def setJobTypeEqual(self, newJobTypeEqual):
+        self.jobTypeEqual = newJobTypeEqual
+
+    def getJobTypeIn(self):
+        return self.jobTypeIn
+
+    def setJobTypeIn(self, newJobTypeIn):
+        self.jobTypeIn = newJobTypeIn
+
+    def getJobTypeNotIn(self):
+        return self.jobTypeNotIn
+
+    def setJobTypeNotIn(self, newJobTypeNotIn):
+        self.jobTypeNotIn = newJobTypeNotIn
+
+    def getJobSubTypeEqual(self):
+        return self.jobSubTypeEqual
+
+    def setJobSubTypeEqual(self, newJobSubTypeEqual):
+        self.jobSubTypeEqual = newJobSubTypeEqual
+
+    def getJobSubTypeIn(self):
+        return self.jobSubTypeIn
+
+    def setJobSubTypeIn(self, newJobSubTypeIn):
+        self.jobSubTypeIn = newJobSubTypeIn
+
+    def getJobSubTypeNotIn(self):
+        return self.jobSubTypeNotIn
+
+    def setJobSubTypeNotIn(self, newJobSubTypeNotIn):
+        self.jobSubTypeNotIn = newJobSubTypeNotIn
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getStatusNotIn(self):
+        return self.statusNotIn
+
+    def setStatusNotIn(self, newStatusNotIn):
+        self.statusNotIn = newStatusNotIn
+
+    def getPriorityGreaterThanOrEqual(self):
+        return self.priorityGreaterThanOrEqual
+
+    def setPriorityGreaterThanOrEqual(self, newPriorityGreaterThanOrEqual):
+        self.priorityGreaterThanOrEqual = newPriorityGreaterThanOrEqual
+
+    def getPriorityLessThanOrEqual(self):
+        return self.priorityLessThanOrEqual
+
+    def setPriorityLessThanOrEqual(self, newPriorityLessThanOrEqual):
+        self.priorityLessThanOrEqual = newPriorityLessThanOrEqual
+
+    def getPriorityEqual(self):
+        return self.priorityEqual
+
+    def setPriorityEqual(self, newPriorityEqual):
+        self.priorityEqual = newPriorityEqual
+
+    def getPriorityIn(self):
+        return self.priorityIn
+
+    def setPriorityIn(self, newPriorityIn):
+        self.priorityIn = newPriorityIn
+
+    def getPriorityNotIn(self):
+        return self.priorityNotIn
+
+    def setPriorityNotIn(self, newPriorityNotIn):
+        self.priorityNotIn = newPriorityNotIn
+
+    def getBatchVersionGreaterThanOrEqual(self):
+        return self.batchVersionGreaterThanOrEqual
+
+    def setBatchVersionGreaterThanOrEqual(self, newBatchVersionGreaterThanOrEqual):
+        self.batchVersionGreaterThanOrEqual = newBatchVersionGreaterThanOrEqual
+
+    def getBatchVersionLessThanOrEqual(self):
+        return self.batchVersionLessThanOrEqual
+
+    def setBatchVersionLessThanOrEqual(self, newBatchVersionLessThanOrEqual):
+        self.batchVersionLessThanOrEqual = newBatchVersionLessThanOrEqual
+
+    def getBatchVersionEqual(self):
+        return self.batchVersionEqual
+
+    def setBatchVersionEqual(self, newBatchVersionEqual):
+        self.batchVersionEqual = newBatchVersionEqual
+
+    def getQueueTimeGreaterThanOrEqual(self):
+        return self.queueTimeGreaterThanOrEqual
+
+    def setQueueTimeGreaterThanOrEqual(self, newQueueTimeGreaterThanOrEqual):
+        self.queueTimeGreaterThanOrEqual = newQueueTimeGreaterThanOrEqual
+
+    def getQueueTimeLessThanOrEqual(self):
+        return self.queueTimeLessThanOrEqual
+
+    def setQueueTimeLessThanOrEqual(self, newQueueTimeLessThanOrEqual):
+        self.queueTimeLessThanOrEqual = newQueueTimeLessThanOrEqual
+
+    def getFinishTimeGreaterThanOrEqual(self):
+        return self.finishTimeGreaterThanOrEqual
+
+    def setFinishTimeGreaterThanOrEqual(self, newFinishTimeGreaterThanOrEqual):
+        self.finishTimeGreaterThanOrEqual = newFinishTimeGreaterThanOrEqual
+
+    def getFinishTimeLessThanOrEqual(self):
+        return self.finishTimeLessThanOrEqual
+
+    def setFinishTimeLessThanOrEqual(self, newFinishTimeLessThanOrEqual):
+        self.finishTimeLessThanOrEqual = newFinishTimeLessThanOrEqual
+
+    def getErrTypeEqual(self):
+        return self.errTypeEqual
+
+    def setErrTypeEqual(self, newErrTypeEqual):
+        self.errTypeEqual = newErrTypeEqual
+
+    def getErrTypeIn(self):
+        return self.errTypeIn
+
+    def setErrTypeIn(self, newErrTypeIn):
+        self.errTypeIn = newErrTypeIn
+
+    def getErrTypeNotIn(self):
+        return self.errTypeNotIn
+
+    def setErrTypeNotIn(self, newErrTypeNotIn):
+        self.errTypeNotIn = newErrTypeNotIn
+
+    def getErrNumberEqual(self):
+        return self.errNumberEqual
+
+    def setErrNumberEqual(self, newErrNumberEqual):
+        self.errNumberEqual = newErrNumberEqual
+
+    def getErrNumberIn(self):
+        return self.errNumberIn
+
+    def setErrNumberIn(self, newErrNumberIn):
+        self.errNumberIn = newErrNumberIn
+
+    def getErrNumberNotIn(self):
+        return self.errNumberNotIn
+
+    def setErrNumberNotIn(self, newErrNumberNotIn):
+        self.errNumberNotIn = newErrNumberNotIn
+
+    def getEstimatedEffortLessThan(self):
+        return self.estimatedEffortLessThan
+
+    def setEstimatedEffortLessThan(self, newEstimatedEffortLessThan):
+        self.estimatedEffortLessThan = newEstimatedEffortLessThan
+
+    def getEstimatedEffortGreaterThan(self):
+        return self.estimatedEffortGreaterThan
+
+    def setEstimatedEffortGreaterThan(self, newEstimatedEffortGreaterThan):
+        self.estimatedEffortGreaterThan = newEstimatedEffortGreaterThan
+
+    def getUrgencyLessThanOrEqual(self):
+        return self.urgencyLessThanOrEqual
+
+    def setUrgencyLessThanOrEqual(self, newUrgencyLessThanOrEqual):
+        self.urgencyLessThanOrEqual = newUrgencyLessThanOrEqual
+
+    def getUrgencyGreaterThanOrEqual(self):
+        return self.urgencyGreaterThanOrEqual
+
+    def setUrgencyGreaterThanOrEqual(self, newUrgencyGreaterThanOrEqual):
+        self.urgencyGreaterThanOrEqual = newUrgencyGreaterThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBatchJobFilter(KalturaBatchJobBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idGreaterThanOrEqual=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            partnerIdNotIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            executionAttemptsGreaterThanOrEqual=NotImplemented,
+            executionAttemptsLessThanOrEqual=NotImplemented,
+            lockVersionGreaterThanOrEqual=NotImplemented,
+            lockVersionLessThanOrEqual=NotImplemented,
+            entryIdEqual=NotImplemented,
+            jobTypeEqual=NotImplemented,
+            jobTypeIn=NotImplemented,
+            jobTypeNotIn=NotImplemented,
+            jobSubTypeEqual=NotImplemented,
+            jobSubTypeIn=NotImplemented,
+            jobSubTypeNotIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            statusNotIn=NotImplemented,
+            priorityGreaterThanOrEqual=NotImplemented,
+            priorityLessThanOrEqual=NotImplemented,
+            priorityEqual=NotImplemented,
+            priorityIn=NotImplemented,
+            priorityNotIn=NotImplemented,
+            batchVersionGreaterThanOrEqual=NotImplemented,
+            batchVersionLessThanOrEqual=NotImplemented,
+            batchVersionEqual=NotImplemented,
+            queueTimeGreaterThanOrEqual=NotImplemented,
+            queueTimeLessThanOrEqual=NotImplemented,
+            finishTimeGreaterThanOrEqual=NotImplemented,
+            finishTimeLessThanOrEqual=NotImplemented,
+            errTypeEqual=NotImplemented,
+            errTypeIn=NotImplemented,
+            errTypeNotIn=NotImplemented,
+            errNumberEqual=NotImplemented,
+            errNumberIn=NotImplemented,
+            errNumberNotIn=NotImplemented,
+            estimatedEffortLessThan=NotImplemented,
+            estimatedEffortGreaterThan=NotImplemented,
+            urgencyLessThanOrEqual=NotImplemented,
+            urgencyGreaterThanOrEqual=NotImplemented):
+        KalturaBatchJobBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idGreaterThanOrEqual,
+            partnerIdEqual,
+            partnerIdIn,
+            partnerIdNotIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            executionAttemptsGreaterThanOrEqual,
+            executionAttemptsLessThanOrEqual,
+            lockVersionGreaterThanOrEqual,
+            lockVersionLessThanOrEqual,
+            entryIdEqual,
+            jobTypeEqual,
+            jobTypeIn,
+            jobTypeNotIn,
+            jobSubTypeEqual,
+            jobSubTypeIn,
+            jobSubTypeNotIn,
+            statusEqual,
+            statusIn,
+            statusNotIn,
+            priorityGreaterThanOrEqual,
+            priorityLessThanOrEqual,
+            priorityEqual,
+            priorityIn,
+            priorityNotIn,
+            batchVersionGreaterThanOrEqual,
+            batchVersionLessThanOrEqual,
+            batchVersionEqual,
+            queueTimeGreaterThanOrEqual,
+            queueTimeLessThanOrEqual,
+            finishTimeGreaterThanOrEqual,
+            finishTimeLessThanOrEqual,
+            errTypeEqual,
+            errTypeIn,
+            errTypeNotIn,
+            errNumberEqual,
+            errNumberIn,
+            errNumberNotIn,
+            estimatedEffortLessThan,
+            estimatedEffortGreaterThan,
+            urgencyLessThanOrEqual,
+            urgencyGreaterThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaBatchJobBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchJobFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBatchJobBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaBatchJobFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaWorkerQueueFilter(KalturaObjectBase):
+    def __init__(self,
+            schedulerId=NotImplemented,
+            workerId=NotImplemented,
+            jobType=NotImplemented,
+            filter=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        self.schedulerId = schedulerId
+
+        # @var int
+        self.workerId = workerId
+
+        # @var KalturaBatchJobType
+        self.jobType = jobType
+
+        # @var KalturaBatchJobFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'schedulerId': getXmlNodeInt, 
+        'workerId': getXmlNodeInt, 
+        'jobType': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
+        'filter': (KalturaObjectFactory.create, KalturaBatchJobFilter), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaWorkerQueueFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaWorkerQueueFilter")
+        kparams.addIntIfDefined("schedulerId", self.schedulerId)
+        kparams.addIntIfDefined("workerId", self.workerId)
+        kparams.addStringEnumIfDefined("jobType", self.jobType)
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getSchedulerId(self):
+        return self.schedulerId
+
+    def setSchedulerId(self, newSchedulerId):
+        self.schedulerId = newSchedulerId
+
+    def getWorkerId(self):
+        return self.workerId
+
+    def setWorkerId(self, newWorkerId):
+        self.workerId = newWorkerId
+
+    def getJobType(self):
+        return self.jobType
+
+    def setJobType(self, newJobType):
+        self.jobType = newJobType
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
 
 
 # @package Kaltura
@@ -23900,570 +25112,6 @@ class KalturaBaseSyndicationFeedListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBatchJobBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idGreaterThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            partnerIdNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            executionAttemptsGreaterThanOrEqual=NotImplemented,
-            executionAttemptsLessThanOrEqual=NotImplemented,
-            lockVersionGreaterThanOrEqual=NotImplemented,
-            lockVersionLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            jobTypeEqual=NotImplemented,
-            jobTypeIn=NotImplemented,
-            jobTypeNotIn=NotImplemented,
-            jobSubTypeEqual=NotImplemented,
-            jobSubTypeIn=NotImplemented,
-            jobSubTypeNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityNotIn=NotImplemented,
-            batchVersionGreaterThanOrEqual=NotImplemented,
-            batchVersionLessThanOrEqual=NotImplemented,
-            batchVersionEqual=NotImplemented,
-            queueTimeGreaterThanOrEqual=NotImplemented,
-            queueTimeLessThanOrEqual=NotImplemented,
-            finishTimeGreaterThanOrEqual=NotImplemented,
-            finishTimeLessThanOrEqual=NotImplemented,
-            errTypeEqual=NotImplemented,
-            errTypeIn=NotImplemented,
-            errTypeNotIn=NotImplemented,
-            errNumberEqual=NotImplemented,
-            errNumberIn=NotImplemented,
-            errNumberNotIn=NotImplemented,
-            estimatedEffortLessThan=NotImplemented,
-            estimatedEffortGreaterThan=NotImplemented,
-            urgencyLessThanOrEqual=NotImplemented,
-            urgencyGreaterThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var int
-        self.idGreaterThanOrEqual = idGreaterThanOrEqual
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var string
-        self.partnerIdNotIn = partnerIdNotIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var int
-        self.executionAttemptsGreaterThanOrEqual = executionAttemptsGreaterThanOrEqual
-
-        # @var int
-        self.executionAttemptsLessThanOrEqual = executionAttemptsLessThanOrEqual
-
-        # @var int
-        self.lockVersionGreaterThanOrEqual = lockVersionGreaterThanOrEqual
-
-        # @var int
-        self.lockVersionLessThanOrEqual = lockVersionLessThanOrEqual
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var KalturaBatchJobType
-        self.jobTypeEqual = jobTypeEqual
-
-        # @var string
-        self.jobTypeIn = jobTypeIn
-
-        # @var string
-        self.jobTypeNotIn = jobTypeNotIn
-
-        # @var int
-        self.jobSubTypeEqual = jobSubTypeEqual
-
-        # @var string
-        self.jobSubTypeIn = jobSubTypeIn
-
-        # @var string
-        self.jobSubTypeNotIn = jobSubTypeNotIn
-
-        # @var KalturaBatchJobStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var string
-        self.statusNotIn = statusNotIn
-
-        # @var int
-        self.priorityGreaterThanOrEqual = priorityGreaterThanOrEqual
-
-        # @var int
-        self.priorityLessThanOrEqual = priorityLessThanOrEqual
-
-        # @var int
-        self.priorityEqual = priorityEqual
-
-        # @var string
-        self.priorityIn = priorityIn
-
-        # @var string
-        self.priorityNotIn = priorityNotIn
-
-        # @var int
-        self.batchVersionGreaterThanOrEqual = batchVersionGreaterThanOrEqual
-
-        # @var int
-        self.batchVersionLessThanOrEqual = batchVersionLessThanOrEqual
-
-        # @var int
-        self.batchVersionEqual = batchVersionEqual
-
-        # @var int
-        self.queueTimeGreaterThanOrEqual = queueTimeGreaterThanOrEqual
-
-        # @var int
-        self.queueTimeLessThanOrEqual = queueTimeLessThanOrEqual
-
-        # @var int
-        self.finishTimeGreaterThanOrEqual = finishTimeGreaterThanOrEqual
-
-        # @var int
-        self.finishTimeLessThanOrEqual = finishTimeLessThanOrEqual
-
-        # @var KalturaBatchJobErrorTypes
-        self.errTypeEqual = errTypeEqual
-
-        # @var string
-        self.errTypeIn = errTypeIn
-
-        # @var string
-        self.errTypeNotIn = errTypeNotIn
-
-        # @var int
-        self.errNumberEqual = errNumberEqual
-
-        # @var string
-        self.errNumberIn = errNumberIn
-
-        # @var string
-        self.errNumberNotIn = errNumberNotIn
-
-        # @var int
-        self.estimatedEffortLessThan = estimatedEffortLessThan
-
-        # @var int
-        self.estimatedEffortGreaterThan = estimatedEffortGreaterThan
-
-        # @var int
-        self.urgencyLessThanOrEqual = urgencyLessThanOrEqual
-
-        # @var int
-        self.urgencyGreaterThanOrEqual = urgencyGreaterThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idGreaterThanOrEqual': getXmlNodeInt, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'partnerIdNotIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'executionAttemptsGreaterThanOrEqual': getXmlNodeInt, 
-        'executionAttemptsLessThanOrEqual': getXmlNodeInt, 
-        'lockVersionGreaterThanOrEqual': getXmlNodeInt, 
-        'lockVersionLessThanOrEqual': getXmlNodeInt, 
-        'entryIdEqual': getXmlNodeText, 
-        'jobTypeEqual': (KalturaEnumsFactory.createString, "KalturaBatchJobType"), 
-        'jobTypeIn': getXmlNodeText, 
-        'jobTypeNotIn': getXmlNodeText, 
-        'jobSubTypeEqual': getXmlNodeInt, 
-        'jobSubTypeIn': getXmlNodeText, 
-        'jobSubTypeNotIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaBatchJobStatus"), 
-        'statusIn': getXmlNodeText, 
-        'statusNotIn': getXmlNodeText, 
-        'priorityGreaterThanOrEqual': getXmlNodeInt, 
-        'priorityLessThanOrEqual': getXmlNodeInt, 
-        'priorityEqual': getXmlNodeInt, 
-        'priorityIn': getXmlNodeText, 
-        'priorityNotIn': getXmlNodeText, 
-        'batchVersionGreaterThanOrEqual': getXmlNodeInt, 
-        'batchVersionLessThanOrEqual': getXmlNodeInt, 
-        'batchVersionEqual': getXmlNodeInt, 
-        'queueTimeGreaterThanOrEqual': getXmlNodeInt, 
-        'queueTimeLessThanOrEqual': getXmlNodeInt, 
-        'finishTimeGreaterThanOrEqual': getXmlNodeInt, 
-        'finishTimeLessThanOrEqual': getXmlNodeInt, 
-        'errTypeEqual': (KalturaEnumsFactory.createInt, "KalturaBatchJobErrorTypes"), 
-        'errTypeIn': getXmlNodeText, 
-        'errTypeNotIn': getXmlNodeText, 
-        'errNumberEqual': getXmlNodeInt, 
-        'errNumberIn': getXmlNodeText, 
-        'errNumberNotIn': getXmlNodeText, 
-        'estimatedEffortLessThan': getXmlNodeInt, 
-        'estimatedEffortGreaterThan': getXmlNodeInt, 
-        'urgencyLessThanOrEqual': getXmlNodeInt, 
-        'urgencyGreaterThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBatchJobBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaBatchJobBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addIntIfDefined("idGreaterThanOrEqual", self.idGreaterThanOrEqual)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addStringIfDefined("partnerIdNotIn", self.partnerIdNotIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntIfDefined("executionAttemptsGreaterThanOrEqual", self.executionAttemptsGreaterThanOrEqual)
-        kparams.addIntIfDefined("executionAttemptsLessThanOrEqual", self.executionAttemptsLessThanOrEqual)
-        kparams.addIntIfDefined("lockVersionGreaterThanOrEqual", self.lockVersionGreaterThanOrEqual)
-        kparams.addIntIfDefined("lockVersionLessThanOrEqual", self.lockVersionLessThanOrEqual)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringEnumIfDefined("jobTypeEqual", self.jobTypeEqual)
-        kparams.addStringIfDefined("jobTypeIn", self.jobTypeIn)
-        kparams.addStringIfDefined("jobTypeNotIn", self.jobTypeNotIn)
-        kparams.addIntIfDefined("jobSubTypeEqual", self.jobSubTypeEqual)
-        kparams.addStringIfDefined("jobSubTypeIn", self.jobSubTypeIn)
-        kparams.addStringIfDefined("jobSubTypeNotIn", self.jobSubTypeNotIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringIfDefined("statusNotIn", self.statusNotIn)
-        kparams.addIntIfDefined("priorityGreaterThanOrEqual", self.priorityGreaterThanOrEqual)
-        kparams.addIntIfDefined("priorityLessThanOrEqual", self.priorityLessThanOrEqual)
-        kparams.addIntIfDefined("priorityEqual", self.priorityEqual)
-        kparams.addStringIfDefined("priorityIn", self.priorityIn)
-        kparams.addStringIfDefined("priorityNotIn", self.priorityNotIn)
-        kparams.addIntIfDefined("batchVersionGreaterThanOrEqual", self.batchVersionGreaterThanOrEqual)
-        kparams.addIntIfDefined("batchVersionLessThanOrEqual", self.batchVersionLessThanOrEqual)
-        kparams.addIntIfDefined("batchVersionEqual", self.batchVersionEqual)
-        kparams.addIntIfDefined("queueTimeGreaterThanOrEqual", self.queueTimeGreaterThanOrEqual)
-        kparams.addIntIfDefined("queueTimeLessThanOrEqual", self.queueTimeLessThanOrEqual)
-        kparams.addIntIfDefined("finishTimeGreaterThanOrEqual", self.finishTimeGreaterThanOrEqual)
-        kparams.addIntIfDefined("finishTimeLessThanOrEqual", self.finishTimeLessThanOrEqual)
-        kparams.addIntEnumIfDefined("errTypeEqual", self.errTypeEqual)
-        kparams.addStringIfDefined("errTypeIn", self.errTypeIn)
-        kparams.addStringIfDefined("errTypeNotIn", self.errTypeNotIn)
-        kparams.addIntIfDefined("errNumberEqual", self.errNumberEqual)
-        kparams.addStringIfDefined("errNumberIn", self.errNumberIn)
-        kparams.addStringIfDefined("errNumberNotIn", self.errNumberNotIn)
-        kparams.addIntIfDefined("estimatedEffortLessThan", self.estimatedEffortLessThan)
-        kparams.addIntIfDefined("estimatedEffortGreaterThan", self.estimatedEffortGreaterThan)
-        kparams.addIntIfDefined("urgencyLessThanOrEqual", self.urgencyLessThanOrEqual)
-        kparams.addIntIfDefined("urgencyGreaterThanOrEqual", self.urgencyGreaterThanOrEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdGreaterThanOrEqual(self):
-        return self.idGreaterThanOrEqual
-
-    def setIdGreaterThanOrEqual(self, newIdGreaterThanOrEqual):
-        self.idGreaterThanOrEqual = newIdGreaterThanOrEqual
-
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
-
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
-
-    def getPartnerIdNotIn(self):
-        return self.partnerIdNotIn
-
-    def setPartnerIdNotIn(self, newPartnerIdNotIn):
-        self.partnerIdNotIn = newPartnerIdNotIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getExecutionAttemptsGreaterThanOrEqual(self):
-        return self.executionAttemptsGreaterThanOrEqual
-
-    def setExecutionAttemptsGreaterThanOrEqual(self, newExecutionAttemptsGreaterThanOrEqual):
-        self.executionAttemptsGreaterThanOrEqual = newExecutionAttemptsGreaterThanOrEqual
-
-    def getExecutionAttemptsLessThanOrEqual(self):
-        return self.executionAttemptsLessThanOrEqual
-
-    def setExecutionAttemptsLessThanOrEqual(self, newExecutionAttemptsLessThanOrEqual):
-        self.executionAttemptsLessThanOrEqual = newExecutionAttemptsLessThanOrEqual
-
-    def getLockVersionGreaterThanOrEqual(self):
-        return self.lockVersionGreaterThanOrEqual
-
-    def setLockVersionGreaterThanOrEqual(self, newLockVersionGreaterThanOrEqual):
-        self.lockVersionGreaterThanOrEqual = newLockVersionGreaterThanOrEqual
-
-    def getLockVersionLessThanOrEqual(self):
-        return self.lockVersionLessThanOrEqual
-
-    def setLockVersionLessThanOrEqual(self, newLockVersionLessThanOrEqual):
-        self.lockVersionLessThanOrEqual = newLockVersionLessThanOrEqual
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getJobTypeEqual(self):
-        return self.jobTypeEqual
-
-    def setJobTypeEqual(self, newJobTypeEqual):
-        self.jobTypeEqual = newJobTypeEqual
-
-    def getJobTypeIn(self):
-        return self.jobTypeIn
-
-    def setJobTypeIn(self, newJobTypeIn):
-        self.jobTypeIn = newJobTypeIn
-
-    def getJobTypeNotIn(self):
-        return self.jobTypeNotIn
-
-    def setJobTypeNotIn(self, newJobTypeNotIn):
-        self.jobTypeNotIn = newJobTypeNotIn
-
-    def getJobSubTypeEqual(self):
-        return self.jobSubTypeEqual
-
-    def setJobSubTypeEqual(self, newJobSubTypeEqual):
-        self.jobSubTypeEqual = newJobSubTypeEqual
-
-    def getJobSubTypeIn(self):
-        return self.jobSubTypeIn
-
-    def setJobSubTypeIn(self, newJobSubTypeIn):
-        self.jobSubTypeIn = newJobSubTypeIn
-
-    def getJobSubTypeNotIn(self):
-        return self.jobSubTypeNotIn
-
-    def setJobSubTypeNotIn(self, newJobSubTypeNotIn):
-        self.jobSubTypeNotIn = newJobSubTypeNotIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getStatusNotIn(self):
-        return self.statusNotIn
-
-    def setStatusNotIn(self, newStatusNotIn):
-        self.statusNotIn = newStatusNotIn
-
-    def getPriorityGreaterThanOrEqual(self):
-        return self.priorityGreaterThanOrEqual
-
-    def setPriorityGreaterThanOrEqual(self, newPriorityGreaterThanOrEqual):
-        self.priorityGreaterThanOrEqual = newPriorityGreaterThanOrEqual
-
-    def getPriorityLessThanOrEqual(self):
-        return self.priorityLessThanOrEqual
-
-    def setPriorityLessThanOrEqual(self, newPriorityLessThanOrEqual):
-        self.priorityLessThanOrEqual = newPriorityLessThanOrEqual
-
-    def getPriorityEqual(self):
-        return self.priorityEqual
-
-    def setPriorityEqual(self, newPriorityEqual):
-        self.priorityEqual = newPriorityEqual
-
-    def getPriorityIn(self):
-        return self.priorityIn
-
-    def setPriorityIn(self, newPriorityIn):
-        self.priorityIn = newPriorityIn
-
-    def getPriorityNotIn(self):
-        return self.priorityNotIn
-
-    def setPriorityNotIn(self, newPriorityNotIn):
-        self.priorityNotIn = newPriorityNotIn
-
-    def getBatchVersionGreaterThanOrEqual(self):
-        return self.batchVersionGreaterThanOrEqual
-
-    def setBatchVersionGreaterThanOrEqual(self, newBatchVersionGreaterThanOrEqual):
-        self.batchVersionGreaterThanOrEqual = newBatchVersionGreaterThanOrEqual
-
-    def getBatchVersionLessThanOrEqual(self):
-        return self.batchVersionLessThanOrEqual
-
-    def setBatchVersionLessThanOrEqual(self, newBatchVersionLessThanOrEqual):
-        self.batchVersionLessThanOrEqual = newBatchVersionLessThanOrEqual
-
-    def getBatchVersionEqual(self):
-        return self.batchVersionEqual
-
-    def setBatchVersionEqual(self, newBatchVersionEqual):
-        self.batchVersionEqual = newBatchVersionEqual
-
-    def getQueueTimeGreaterThanOrEqual(self):
-        return self.queueTimeGreaterThanOrEqual
-
-    def setQueueTimeGreaterThanOrEqual(self, newQueueTimeGreaterThanOrEqual):
-        self.queueTimeGreaterThanOrEqual = newQueueTimeGreaterThanOrEqual
-
-    def getQueueTimeLessThanOrEqual(self):
-        return self.queueTimeLessThanOrEqual
-
-    def setQueueTimeLessThanOrEqual(self, newQueueTimeLessThanOrEqual):
-        self.queueTimeLessThanOrEqual = newQueueTimeLessThanOrEqual
-
-    def getFinishTimeGreaterThanOrEqual(self):
-        return self.finishTimeGreaterThanOrEqual
-
-    def setFinishTimeGreaterThanOrEqual(self, newFinishTimeGreaterThanOrEqual):
-        self.finishTimeGreaterThanOrEqual = newFinishTimeGreaterThanOrEqual
-
-    def getFinishTimeLessThanOrEqual(self):
-        return self.finishTimeLessThanOrEqual
-
-    def setFinishTimeLessThanOrEqual(self, newFinishTimeLessThanOrEqual):
-        self.finishTimeLessThanOrEqual = newFinishTimeLessThanOrEqual
-
-    def getErrTypeEqual(self):
-        return self.errTypeEqual
-
-    def setErrTypeEqual(self, newErrTypeEqual):
-        self.errTypeEqual = newErrTypeEqual
-
-    def getErrTypeIn(self):
-        return self.errTypeIn
-
-    def setErrTypeIn(self, newErrTypeIn):
-        self.errTypeIn = newErrTypeIn
-
-    def getErrTypeNotIn(self):
-        return self.errTypeNotIn
-
-    def setErrTypeNotIn(self, newErrTypeNotIn):
-        self.errTypeNotIn = newErrTypeNotIn
-
-    def getErrNumberEqual(self):
-        return self.errNumberEqual
-
-    def setErrNumberEqual(self, newErrNumberEqual):
-        self.errNumberEqual = newErrNumberEqual
-
-    def getErrNumberIn(self):
-        return self.errNumberIn
-
-    def setErrNumberIn(self, newErrNumberIn):
-        self.errNumberIn = newErrNumberIn
-
-    def getErrNumberNotIn(self):
-        return self.errNumberNotIn
-
-    def setErrNumberNotIn(self, newErrNumberNotIn):
-        self.errNumberNotIn = newErrNumberNotIn
-
-    def getEstimatedEffortLessThan(self):
-        return self.estimatedEffortLessThan
-
-    def setEstimatedEffortLessThan(self, newEstimatedEffortLessThan):
-        self.estimatedEffortLessThan = newEstimatedEffortLessThan
-
-    def getEstimatedEffortGreaterThan(self):
-        return self.estimatedEffortGreaterThan
-
-    def setEstimatedEffortGreaterThan(self, newEstimatedEffortGreaterThan):
-        self.estimatedEffortGreaterThan = newEstimatedEffortGreaterThan
-
-    def getUrgencyLessThanOrEqual(self):
-        return self.urgencyLessThanOrEqual
-
-    def setUrgencyLessThanOrEqual(self, newUrgencyLessThanOrEqual):
-        self.urgencyLessThanOrEqual = newUrgencyLessThanOrEqual
-
-    def getUrgencyGreaterThanOrEqual(self):
-        return self.urgencyGreaterThanOrEqual
-
-    def setUrgencyGreaterThanOrEqual(self, newUrgencyGreaterThanOrEqual):
-        self.urgencyGreaterThanOrEqual = newUrgencyGreaterThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaBatchJobListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -24491,42 +25139,6 @@ class KalturaBatchJobListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBooleanValue(KalturaValue):
-    """A boolean representation to return an array of booleans"""
-
-    def __init__(self,
-            description=NotImplemented,
-            value=NotImplemented):
-        KalturaValue.__init__(self,
-            description)
-
-        # @var bool
-        self.value = value
-
-
-    PROPERTY_LOADERS = {
-        'value': getXmlNodeBool, 
-    }
-
-    def fromXml(self, node):
-        KalturaValue.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBooleanValue.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaValue.toParams(self)
-        kparams.put("objectType", "KalturaBooleanValue")
-        kparams.addBoolIfDefined("value", self.value)
-        return kparams
-
-    def getValue(self):
-        return self.value
-
-    def setValue(self, newValue):
-        self.value = newValue
 
 
 # @package Kaltura
@@ -30049,37 +30661,6 @@ class KalturaFlavorParamsListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFlavorParamsOutputListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaFlavorParamsOutput
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFlavorParamsOutput), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
     def __init__(self,
             id=NotImplemented,
@@ -31326,37 +31907,6 @@ class KalturaMediaInfoBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaInfoListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaMediaInfo
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaMediaInfo), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaMediaInfoListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMediaListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -32334,6 +32884,49 @@ class KalturaProvisionJobData(KalturaJobData):
 
     def setStreamName(self, newStreamName):
         self.streamName = newStreamName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaQuizUserEntry(KalturaUserEntry):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            userId=NotImplemented,
+            partnerId=NotImplemented,
+            status=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            score=NotImplemented):
+        KalturaUserEntry.__init__(self,
+            id,
+            entryId,
+            userId,
+            partnerId,
+            status,
+            createdAt,
+            updatedAt)
+
+        # @var int
+        # @readonly
+        self.score = score
+
+
+    PROPERTY_LOADERS = {
+        'score': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaUserEntry.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaQuizUserEntry.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserEntry.toParams(self)
+        kparams.put("objectType", "KalturaQuizUserEntry")
+        return kparams
+
+    def getScore(self):
+        return self.score
 
 
 # @package Kaltura
@@ -33547,37 +34140,6 @@ class KalturaThumbParamsListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaThumbParamsOutputListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaThumbParamsOutput
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaThumbParamsOutput), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaTubeMogulSyndicationFeed(KalturaBaseSyndicationFeed):
     def __init__(self,
             id=NotImplemented,
@@ -34691,6 +35253,217 @@ class KalturaUserAgentRestriction(KalturaBaseRestriction):
 
     def setUserAgentRegexList(self, newUserAgentRegexList):
         self.userAgentRegexList = newUserAgentRegexList
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserEntryBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.idNotIn = idNotIn
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var string
+        self.entryIdNotIn = entryIdNotIn
+
+        # @var int
+        self.userIdEqual = userIdEqual
+
+        # @var string
+        self.userIdIn = userIdIn
+
+        # @var string
+        self.userIdNotIn = userIdNotIn
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'idNotIn': getXmlNodeText, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'entryIdNotIn': getXmlNodeText, 
+        'userIdEqual': getXmlNodeInt, 
+        'userIdIn': getXmlNodeText, 
+        'userIdNotIn': getXmlNodeText, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserEntryBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserEntryBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("idNotIn", self.idNotIn)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addStringIfDefined("entryIdNotIn", self.entryIdNotIn)
+        kparams.addIntIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addStringIfDefined("userIdIn", self.userIdIn)
+        kparams.addStringIfDefined("userIdNotIn", self.userIdNotIn)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getIdNotIn(self):
+        return self.idNotIn
+
+    def setIdNotIn(self, newIdNotIn):
+        self.idNotIn = newIdNotIn
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getEntryIdNotIn(self):
+        return self.entryIdNotIn
+
+    def setEntryIdNotIn(self, newEntryIdNotIn):
+        self.entryIdNotIn = newEntryIdNotIn
+
+    def getUserIdEqual(self):
+        return self.userIdEqual
+
+    def setUserIdEqual(self, newUserIdEqual):
+        self.userIdEqual = newUserIdEqual
+
+    def getUserIdIn(self):
+        return self.userIdIn
+
+    def setUserIdIn(self, newUserIdIn):
+        self.userIdIn = newUserIdIn
+
+    def getUserIdNotIn(self):
+        return self.userIdNotIn
+
+    def setUserIdNotIn(self, newUserIdNotIn):
+        self.userIdNotIn = newUserIdNotIn
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserEntryListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaUserEntry
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaUserEntry), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserEntryListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaUserEntryListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -35987,120 +36760,6 @@ class KalturaBaseSyndicationFeedFilter(KalturaBaseSyndicationFeedBaseFilter):
     def toParams(self):
         kparams = KalturaBaseSyndicationFeedBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaBaseSyndicationFeedFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBatchJobFilter(KalturaBatchJobBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idGreaterThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            partnerIdNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            executionAttemptsGreaterThanOrEqual=NotImplemented,
-            executionAttemptsLessThanOrEqual=NotImplemented,
-            lockVersionGreaterThanOrEqual=NotImplemented,
-            lockVersionLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            jobTypeEqual=NotImplemented,
-            jobTypeIn=NotImplemented,
-            jobTypeNotIn=NotImplemented,
-            jobSubTypeEqual=NotImplemented,
-            jobSubTypeIn=NotImplemented,
-            jobSubTypeNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityNotIn=NotImplemented,
-            batchVersionGreaterThanOrEqual=NotImplemented,
-            batchVersionLessThanOrEqual=NotImplemented,
-            batchVersionEqual=NotImplemented,
-            queueTimeGreaterThanOrEqual=NotImplemented,
-            queueTimeLessThanOrEqual=NotImplemented,
-            finishTimeGreaterThanOrEqual=NotImplemented,
-            finishTimeLessThanOrEqual=NotImplemented,
-            errTypeEqual=NotImplemented,
-            errTypeIn=NotImplemented,
-            errTypeNotIn=NotImplemented,
-            errNumberEqual=NotImplemented,
-            errNumberIn=NotImplemented,
-            errNumberNotIn=NotImplemented,
-            estimatedEffortLessThan=NotImplemented,
-            estimatedEffortGreaterThan=NotImplemented,
-            urgencyLessThanOrEqual=NotImplemented,
-            urgencyGreaterThanOrEqual=NotImplemented):
-        KalturaBatchJobBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idGreaterThanOrEqual,
-            partnerIdEqual,
-            partnerIdIn,
-            partnerIdNotIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            executionAttemptsGreaterThanOrEqual,
-            executionAttemptsLessThanOrEqual,
-            lockVersionGreaterThanOrEqual,
-            lockVersionLessThanOrEqual,
-            entryIdEqual,
-            jobTypeEqual,
-            jobTypeIn,
-            jobTypeNotIn,
-            jobSubTypeEqual,
-            jobSubTypeIn,
-            jobSubTypeNotIn,
-            statusEqual,
-            statusIn,
-            statusNotIn,
-            priorityGreaterThanOrEqual,
-            priorityLessThanOrEqual,
-            priorityEqual,
-            priorityIn,
-            priorityNotIn,
-            batchVersionGreaterThanOrEqual,
-            batchVersionLessThanOrEqual,
-            batchVersionEqual,
-            queueTimeGreaterThanOrEqual,
-            queueTimeLessThanOrEqual,
-            finishTimeGreaterThanOrEqual,
-            finishTimeLessThanOrEqual,
-            errTypeEqual,
-            errTypeIn,
-            errTypeNotIn,
-            errNumberEqual,
-            errNumberIn,
-            errNumberNotIn,
-            estimatedEffortLessThan,
-            estimatedEffortGreaterThan,
-            urgencyLessThanOrEqual,
-            urgencyGreaterThanOrEqual)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaBatchJobBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBatchJobFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaBatchJobBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaBatchJobFilter")
         return kparams
 
 
@@ -40404,6 +41063,56 @@ class KalturaUploadTokenFilter(KalturaUploadTokenBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented):
+        KalturaUserEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            entryIdEqual,
+            entryIdIn,
+            entryIdNotIn,
+            userIdEqual,
+            userIdIn,
+            userIdNotIn,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUserEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserEntryFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserLoginDataBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -42589,6 +43298,56 @@ class KalturaPermissionItemFilter(KalturaPermissionItemBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented):
+        KalturaUserEntryFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            entryIdEqual,
+            entryIdIn,
+            entryIdNotIn,
+            userIdEqual,
+            userIdIn,
+            userIdNotIn,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUserEntryFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaQuizUserEntryBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserEntryFilter.toParams(self)
+        kparams.put("objectType", "KalturaQuizUserEntryBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaServerFileResource(KalturaDataCenterContentResource):
     """Used to ingest media file that is already accessible on the shared disc."""
 
@@ -44318,6 +45077,56 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented):
+        KalturaQuizUserEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            entryIdEqual,
+            entryIdIn,
+            entryIdNotIn,
+            userIdEqual,
+            userIdIn,
+            userIdNotIn,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaQuizUserEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaQuizUserEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaQuizUserEntryFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -45135,6 +45944,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -45153,6 +45963,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -45223,6 +46034,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -45241,6 +46053,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             mediaDate,
             dataUrl,
             flavorParamsIds,
+            isTrimDisabled,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -52986,6 +53799,61 @@ class KalturaUploadTokenService(KalturaServiceBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserEntryService(KalturaServiceBase):
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, userEntry):
+        """Adds a user_entry to the Kaltura DB."""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("userEntry", userEntry)
+        self.client.queueServiceActionCall("userentry", "add", KalturaUserEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
+
+    def update(self, id, userEntry):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("userEntry", userEntry)
+        self.client.queueServiceActionCall("userentry", "update", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def delete(self, id):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("userentry", "delete", KalturaUserEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
+
+    def list(self, filter, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("userentry", "list", KalturaUserEntryListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaUserEntryListResponse)
+
+    def get(self, id):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("userentry", "get", KalturaUserEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserRoleService(KalturaServiceBase):
     """UserRole service lets you create and manage user roles"""
 
@@ -53443,6 +54311,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'uiConf': KalturaUiConfService,
             'upload': KalturaUploadService,
             'uploadToken': KalturaUploadTokenService,
+            'userEntry': KalturaUserEntryService,
             'userRole': KalturaUserRoleService,
             'user': KalturaUserService,
             'widget': KalturaWidgetService,
@@ -53535,6 +54404,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserStatus': KalturaUserStatus,
             'KalturaUserType': KalturaUserType,
             'KalturaWidgetSecurityType': KalturaWidgetSecurityType,
+            'KalturaAccessControlActionType': KalturaAccessControlActionType,
             'KalturaAccessControlOrderBy': KalturaAccessControlOrderBy,
             'KalturaAccessControlProfileOrderBy': KalturaAccessControlProfileOrderBy,
             'KalturaAdminUserOrderBy': KalturaAdminUserOrderBy,
@@ -53638,6 +54508,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlayableEntryOrderBy': KalturaPlayableEntryOrderBy,
             'KalturaPlaybackProtocol': KalturaPlaybackProtocol,
             'KalturaPlaylistOrderBy': KalturaPlaylistOrderBy,
+            'KalturaQuizUserEntryOrderBy': KalturaQuizUserEntryOrderBy,
             'KalturaReportInterval': KalturaReportInterval,
             'KalturaReportOrderBy': KalturaReportOrderBy,
             'KalturaResponseProfileOrderBy': KalturaResponseProfileOrderBy,
@@ -53656,6 +54527,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaTubeMogulSyndicationFeedOrderBy': KalturaTubeMogulSyndicationFeedOrderBy,
             'KalturaUiConfOrderBy': KalturaUiConfOrderBy,
             'KalturaUploadTokenOrderBy': KalturaUploadTokenOrderBy,
+            'KalturaUserEntryOrderBy': KalturaUserEntryOrderBy,
+            'KalturaUserEntryStatus': KalturaUserEntryStatus,
             'KalturaUserLoginDataOrderBy': KalturaUserLoginDataOrderBy,
             'KalturaUserOrderBy': KalturaUserOrderBy,
             'KalturaUserRoleOrderBy': KalturaUserRoleOrderBy,
@@ -53671,6 +54544,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaListResponse': KalturaListResponse,
             'KalturaBaseRestriction': KalturaBaseRestriction,
             'KalturaAccessControl': KalturaAccessControl,
+            'KalturaAccessControlAction': KalturaAccessControlAction,
             'KalturaContextTypeHolder': KalturaContextTypeHolder,
             'KalturaAccessControlContextTypeHolder': KalturaAccessControlContextTypeHolder,
             'KalturaRuleAction': KalturaRuleAction,
@@ -53693,6 +54567,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBatchHistoryData': KalturaBatchHistoryData,
             'KalturaJobData': KalturaJobData,
             'KalturaBatchJob': KalturaBatchJob,
+            'KalturaBatchQueuesStatus': KalturaBatchQueuesStatus,
+            'KalturaValue': KalturaValue,
+            'KalturaBooleanValue': KalturaBooleanValue,
             'KalturaBulkUploadPluginData': KalturaBulkUploadPluginData,
             'KalturaBulkUploadResult': KalturaBulkUploadResult,
             'KalturaBulkUpload': KalturaBulkUpload,
@@ -53726,7 +54603,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaEdgeServer': KalturaEdgeServer,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
-            'KalturaValue': KalturaValue,
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
@@ -53743,6 +54619,13 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGroupUser': KalturaGroupUser,
             'KalturaObject': KalturaObject,
             'KalturaIntegerValue': KalturaIntegerValue,
+            'KalturaMediaInfo': KalturaMediaInfo,
+            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
+            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
+            'KalturaThumbAsset': KalturaThumbAsset,
+            'KalturaThumbParams': KalturaThumbParams,
+            'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
+            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaKeyBooleanValue': KalturaKeyBooleanValue,
             'KalturaLiveStreamConfiguration': KalturaLiveStreamConfiguration,
             'KalturaLiveStreamPushPublishConfiguration': KalturaLiveStreamPushPublishConfiguration,
@@ -53764,7 +54647,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryBaseFilter': KalturaMediaEntryBaseFilter,
             'KalturaMediaEntryFilter': KalturaMediaEntryFilter,
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
-            'KalturaMediaInfo': KalturaMediaInfo,
             'KalturaMediaServer': KalturaMediaServer,
             'KalturaMediaServerStatus': KalturaMediaServerStatus,
             'KalturaMixEntry': KalturaMixEntry,
@@ -53806,18 +54688,20 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
-            'KalturaThumbAsset': KalturaThumbAsset,
-            'KalturaThumbParams': KalturaThumbParams,
-            'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
             'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
+            'KalturaTypedArray': KalturaTypedArray,
             'KalturaUiConf': KalturaUiConf,
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
             'KalturaUploadToken': KalturaUploadToken,
             'KalturaUser': KalturaUser,
+            'KalturaUserEntry': KalturaUserEntry,
             'KalturaUserLoginData': KalturaUserLoginData,
             'KalturaUserRole': KalturaUserRole,
             'KalturaWidget': KalturaWidget,
+            'KalturaBatchJobBaseFilter': KalturaBatchJobBaseFilter,
+            'KalturaBatchJobFilter': KalturaBatchJobFilter,
+            'KalturaWorkerQueueFilter': KalturaWorkerQueueFilter,
             'KalturaAccessControlBlockAction': KalturaAccessControlBlockAction,
             'KalturaAccessControlLimitDeliveryProfilesAction': KalturaAccessControlLimitDeliveryProfilesAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
@@ -53835,9 +54719,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
             'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
-            'KalturaBatchJobBaseFilter': KalturaBatchJobBaseFilter,
             'KalturaBatchJobListResponse': KalturaBatchJobListResponse,
-            'KalturaBooleanValue': KalturaBooleanValue,
             'KalturaBulkDownloadJobData': KalturaBulkDownloadJobData,
             'KalturaBulkUploadBaseFilter': KalturaBulkUploadBaseFilter,
             'KalturaBulkUploadCategoryData': KalturaBulkUploadCategoryData,
@@ -53907,7 +54789,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFlattenJobData': KalturaFlattenJobData,
             'KalturaFlavorAssetListResponse': KalturaFlavorAssetListResponse,
             'KalturaFlavorParamsListResponse': KalturaFlavorParamsListResponse,
-            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
             'KalturaGenericSyndicationFeed': KalturaGenericSyndicationFeed,
             'KalturaGoogleVideoSyndicationFeed': KalturaGoogleVideoSyndicationFeed,
             'KalturaGroupUserListResponse': KalturaGroupUserListResponse,
@@ -53927,7 +54808,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,
-            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
             'KalturaMediaListResponse': KalturaMediaListResponse,
             'KalturaMediaServerBaseFilter': KalturaMediaServerBaseFilter,
             'KalturaMixListResponse': KalturaMixListResponse,
@@ -53942,6 +54822,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionListResponse': KalturaPermissionListResponse,
             'KalturaPlaylistListResponse': KalturaPlaylistListResponse,
             'KalturaProvisionJobData': KalturaProvisionJobData,
+            'KalturaQuizUserEntry': KalturaQuizUserEntry,
             'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportInputFilter': KalturaReportInputFilter,
@@ -53962,7 +54843,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSyncCategoryPrivacyContextJobData': KalturaSyncCategoryPrivacyContextJobData,
             'KalturaThumbAssetListResponse': KalturaThumbAssetListResponse,
             'KalturaThumbParamsListResponse': KalturaThumbParamsListResponse,
-            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaTubeMogulSyndicationFeed': KalturaTubeMogulSyndicationFeed,
             'KalturaUiConfBaseFilter': KalturaUiConfBaseFilter,
             'KalturaUiConfListResponse': KalturaUiConfListResponse,
@@ -53979,6 +54859,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
             'KalturaUserAgentRestriction': KalturaUserAgentRestriction,
+            'KalturaUserEntryBaseFilter': KalturaUserEntryBaseFilter,
+            'KalturaUserEntryListResponse': KalturaUserEntryListResponse,
             'KalturaUserListResponse': KalturaUserListResponse,
             'KalturaUserLoginDataListResponse': KalturaUserLoginDataListResponse,
             'KalturaUserRoleCondition': KalturaUserRoleCondition,
@@ -53994,7 +54876,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetResource': KalturaAssetResource,
             'KalturaBaseSyndicationFeedFilter': KalturaBaseSyndicationFeedFilter,
-            'KalturaBatchJobFilter': KalturaBatchJobFilter,
             'KalturaBulkUploadFilter': KalturaBulkUploadFilter,
             'KalturaCategoryBaseFilter': KalturaCategoryBaseFilter,
             'KalturaCategoryEntryBaseFilter': KalturaCategoryEntryBaseFilter,
@@ -54046,6 +54927,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStringResource': KalturaStringResource,
             'KalturaUiConfFilter': KalturaUiConfFilter,
             'KalturaUploadTokenFilter': KalturaUploadTokenFilter,
+            'KalturaUserEntryFilter': KalturaUserEntryFilter,
             'KalturaUserLoginDataBaseFilter': KalturaUserLoginDataBaseFilter,
             'KalturaUserRoleBaseFilter': KalturaUserRoleBaseFilter,
             'KalturaWidgetFilter': KalturaWidgetFilter,
@@ -54084,6 +54966,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaObjectIdField': KalturaObjectIdField,
             'KalturaPermissionFilter': KalturaPermissionFilter,
             'KalturaPermissionItemFilter': KalturaPermissionItemFilter,
+            'KalturaQuizUserEntryBaseFilter': KalturaQuizUserEntryBaseFilter,
             'KalturaServerFileResource': KalturaServerFileResource,
             'KalturaSshUrlResource': KalturaSshUrlResource,
             'KalturaTimeContextField': KalturaTimeContextField,
@@ -54117,6 +55000,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGoogleVideoSyndicationFeedFilter': KalturaGoogleVideoSyndicationFeedFilter,
             'KalturaITunesSyndicationFeedFilter': KalturaITunesSyndicationFeedFilter,
             'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
+            'KalturaQuizUserEntryFilter': KalturaQuizUserEntryFilter,
             'KalturaThumbAssetBaseFilter': KalturaThumbAssetBaseFilter,
             'KalturaThumbParamsBaseFilter': KalturaThumbParamsBaseFilter,
             'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,

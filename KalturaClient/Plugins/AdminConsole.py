@@ -65,6 +65,127 @@ class KalturaUiConfAdminOrderBy(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaInvestigateFlavorAssetData(KalturaObjectBase):
+    def __init__(self,
+            flavorAsset=NotImplemented,
+            fileSyncs=NotImplemented,
+            mediaInfos=NotImplemented,
+            flavorParams=NotImplemented,
+            flavorParamsOutputs=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaFlavorAsset
+        # @readonly
+        self.flavorAsset = flavorAsset
+
+        # @var KalturaFileSyncListResponse
+        # @readonly
+        self.fileSyncs = fileSyncs
+
+        # @var KalturaMediaInfoListResponse
+        # @readonly
+        self.mediaInfos = mediaInfos
+
+        # @var KalturaFlavorParams
+        # @readonly
+        self.flavorParams = flavorParams
+
+        # @var KalturaFlavorParamsOutputListResponse
+        # @readonly
+        self.flavorParamsOutputs = flavorParamsOutputs
+
+
+    PROPERTY_LOADERS = {
+        'flavorAsset': (KalturaObjectFactory.create, KalturaFlavorAsset), 
+        'fileSyncs': (KalturaObjectFactory.create, KalturaFileSyncListResponse), 
+        'mediaInfos': (KalturaObjectFactory.create, KalturaMediaInfoListResponse), 
+        'flavorParams': (KalturaObjectFactory.create, KalturaFlavorParams), 
+        'flavorParamsOutputs': (KalturaObjectFactory.create, KalturaFlavorParamsOutputListResponse), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInvestigateFlavorAssetData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaInvestigateFlavorAssetData")
+        return kparams
+
+    def getFlavorAsset(self):
+        return self.flavorAsset
+
+    def getFileSyncs(self):
+        return self.fileSyncs
+
+    def getMediaInfos(self):
+        return self.mediaInfos
+
+    def getFlavorParams(self):
+        return self.flavorParams
+
+    def getFlavorParamsOutputs(self):
+        return self.flavorParamsOutputs
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaInvestigateThumbAssetData(KalturaObjectBase):
+    def __init__(self,
+            thumbAsset=NotImplemented,
+            fileSyncs=NotImplemented,
+            thumbParams=NotImplemented,
+            thumbParamsOutputs=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaThumbAsset
+        # @readonly
+        self.thumbAsset = thumbAsset
+
+        # @var KalturaFileSyncListResponse
+        # @readonly
+        self.fileSyncs = fileSyncs
+
+        # @var KalturaThumbParams
+        # @readonly
+        self.thumbParams = thumbParams
+
+        # @var KalturaThumbParamsOutputListResponse
+        # @readonly
+        self.thumbParamsOutputs = thumbParamsOutputs
+
+
+    PROPERTY_LOADERS = {
+        'thumbAsset': (KalturaObjectFactory.create, KalturaThumbAsset), 
+        'fileSyncs': (KalturaObjectFactory.create, KalturaFileSyncListResponse), 
+        'thumbParams': (KalturaObjectFactory.create, KalturaThumbParams), 
+        'thumbParamsOutputs': (KalturaObjectFactory.create, KalturaThumbParamsOutputListResponse), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInvestigateThumbAssetData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaInvestigateThumbAssetData")
+        return kparams
+
+    def getThumbAsset(self):
+        return self.thumbAsset
+
+    def getFileSyncs(self):
+        return self.fileSyncs
+
+    def getThumbParams(self):
+        return self.thumbParams
+
+    def getThumbParamsOutputs(self):
+        return self.thumbParamsOutputs
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaTrackEntry(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -777,6 +898,8 @@ class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaInvestigateFlavorAssetData': KalturaInvestigateFlavorAssetData,
+            'KalturaInvestigateThumbAssetData': KalturaInvestigateThumbAssetData,
             'KalturaTrackEntry': KalturaTrackEntry,
             'KalturaUiConfAdmin': KalturaUiConfAdmin,
             'KalturaTrackEntryListResponse': KalturaTrackEntryListResponse,

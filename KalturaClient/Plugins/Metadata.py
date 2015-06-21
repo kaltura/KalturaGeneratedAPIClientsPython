@@ -257,7 +257,8 @@ class KalturaMetadataProfile(KalturaObjectBase):
             xsd=NotImplemented,
             views=NotImplemented,
             xslt=NotImplemented,
-            createMode=NotImplemented):
+            createMode=NotImplemented,
+            disableReIndexing=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -311,6 +312,9 @@ class KalturaMetadataProfile(KalturaObjectBase):
         # @var KalturaMetadataProfileCreateMode
         self.createMode = createMode
 
+        # @var bool
+        self.disableReIndexing = disableReIndexing
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -327,6 +331,7 @@ class KalturaMetadataProfile(KalturaObjectBase):
         'views': getXmlNodeText, 
         'xslt': getXmlNodeText, 
         'createMode': (KalturaEnumsFactory.createInt, "KalturaMetadataProfileCreateMode"), 
+        'disableReIndexing': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -341,6 +346,7 @@ class KalturaMetadataProfile(KalturaObjectBase):
         kparams.addStringIfDefined("systemName", self.systemName)
         kparams.addStringIfDefined("description", self.description)
         kparams.addIntEnumIfDefined("createMode", self.createMode)
+        kparams.addBoolIfDefined("disableReIndexing", self.disableReIndexing)
         return kparams
 
     def getId(self):
@@ -399,6 +405,12 @@ class KalturaMetadataProfile(KalturaObjectBase):
 
     def setCreateMode(self, newCreateMode):
         self.createMode = newCreateMode
+
+    def getDisableReIndexing(self):
+        return self.disableReIndexing
+
+    def setDisableReIndexing(self, newDisableReIndexing):
+        self.disableReIndexing = newDisableReIndexing
 
 
 # @package Kaltura
@@ -1022,6 +1034,42 @@ class KalturaCompareMetadataCondition(KalturaCompareCondition):
 
     def setProfileSystemName(self, newProfileSystemName):
         self.profileSystemName = newProfileSystemName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDynamicObjectSearchItem(KalturaSearchOperator):
+    def __init__(self,
+            type=NotImplemented,
+            items=NotImplemented,
+            field=NotImplemented):
+        KalturaSearchOperator.__init__(self,
+            type,
+            items)
+
+        # @var string
+        self.field = field
+
+
+    PROPERTY_LOADERS = {
+        'field': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchOperator.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDynamicObjectSearchItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchOperator.toParams(self)
+        kparams.put("objectType", "KalturaDynamicObjectSearchItem")
+        kparams.addStringIfDefined("field", self.field)
+        return kparams
+
+    def getField(self):
+        return self.field
+
+    def setField(self, newField):
+        self.field = newField
 
 
 # @package Kaltura
@@ -1958,6 +2006,7 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadataResponseProfileMapping': KalturaMetadataResponseProfileMapping,
             'KalturaTransformMetadataJobData': KalturaTransformMetadataJobData,
             'KalturaCompareMetadataCondition': KalturaCompareMetadataCondition,
+            'KalturaDynamicObjectSearchItem': KalturaDynamicObjectSearchItem,
             'KalturaMatchMetadataCondition': KalturaMatchMetadataCondition,
             'KalturaMetadataBaseFilter': KalturaMetadataBaseFilter,
             'KalturaMetadataFieldChangedCondition': KalturaMetadataFieldChangedCondition,

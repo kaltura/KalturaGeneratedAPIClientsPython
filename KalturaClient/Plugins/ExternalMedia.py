@@ -131,6 +131,7 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            capabilities=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -149,6 +150,7 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
+            isTrimDisabled=NotImplemented,
             externalSourceType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaMediaEntry.__init__(self,
@@ -193,6 +195,7 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            capabilities,
             plays,
             views,
             lastPlayedAt,
@@ -210,7 +213,8 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             creditUrl,
             mediaDate,
             dataUrl,
-            flavorParamsIds)
+            flavorParamsIds,
+            isTrimDisabled)
 
         # The source type of the external media
         # @var KalturaExternalMediaSourceType
