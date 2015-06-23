@@ -1357,6 +1357,7 @@ class KalturaAccessControlActionType(object):
     LIMIT_FLAVORS = "3"
     ADD_TO_STORAGE = "4"
     LIMIT_DELIVERY_PROFILES = "5"
+    SERVE_FROM_REMOTE_SERVER = "6"
 
     def __init__(self, value):
         self.value = value
@@ -3644,10 +3645,8 @@ class KalturaPlaylistOrderBy(object):
 # @subpackage Client
 class KalturaQuizUserEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
-    SCORE_ASC = "+score"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
-    SCORE_DESC = "-score"
     UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
@@ -3702,6 +3701,7 @@ class KalturaRuleActionType(object):
     LIMIT_FLAVORS = "3"
     ADD_TO_STORAGE = "4"
     LIMIT_DELIVERY_PROFILES = "5"
+    SERVE_FROM_REMOTE_SERVER = "6"
 
     def __init__(self, value):
         self.value = value
@@ -3944,6 +3944,7 @@ class KalturaUserEntryOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaUserEntryStatus(object):
+    QUIZ_SUBMITTED = "quiz.3"
     ACTIVE = "1"
     DELETED = "2"
 
@@ -24468,6 +24469,41 @@ class KalturaAccessControlProfileListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
+    def __init__(self,
+            type=NotImplemented,
+            edgeServerIds=NotImplemented):
+        KalturaRuleAction.__init__(self,
+            type)
+
+        # Comma separated list of edge servers playBack should be done from
+        # @var string
+        self.edgeServerIds = edgeServerIds
+
+
+    PROPERTY_LOADERS = {
+        'edgeServerIds': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRuleAction.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlServeRemoteEdgeServerAction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRuleAction.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlServeRemoteEdgeServerAction")
+        kparams.addStringIfDefined("edgeServerIds", self.edgeServerIds)
+        return kparams
+
+    def getEdgeServerIds(self):
+        return self.edgeServerIds
+
+    def setEdgeServerIds(self, newEdgeServerIds):
+        self.edgeServerIds = newEdgeServerIds
 
 
 # @package Kaltura
@@ -53851,6 +53887,17 @@ class KalturaUserEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
 
+    def submitQuiz(self, id):
+        """Submits the quiz so that it's status will be submitted and calculates the score for the quiz"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("userentry", "submitQuiz", KalturaQuizUserEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuizUserEntry)
+
 
 # @package Kaltura
 # @subpackage Client
@@ -54708,6 +54755,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
             'KalturaAccessControlProfileListResponse': KalturaAccessControlProfileListResponse,
+            'KalturaAccessControlServeRemoteEdgeServerAction': KalturaAccessControlServeRemoteEdgeServerAction,
             'KalturaAdminUser': KalturaAdminUser,
             'KalturaAmazonS3StorageProfile': KalturaAmazonS3StorageProfile,
             'KalturaApiActionPermissionItem': KalturaApiActionPermissionItem,

@@ -36,13 +36,11 @@ from ..Base import *
 # @subpackage Client
 class KalturaAnswerCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
-    IS_CORRECT_ASC = "+isCorrect"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
     START_TIME_ASC = "+startTime"
     TRIGGERED_AT_ASC = "+triggeredAt"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
-    IS_CORRECT_DESC = "-isCorrect"
     PARTNER_SORT_VALUE_DESC = "-partnerSortValue"
     START_TIME_DESC = "-startTime"
     TRIGGERED_AT_DESC = "-triggeredAt"
@@ -59,13 +57,11 @@ class KalturaAnswerCuePointOrderBy(object):
 class KalturaQuestionCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
-    QUESTION_ASC = "+question"
     START_TIME_ASC = "+startTime"
     TRIGGERED_AT_ASC = "+triggeredAt"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
     PARTNER_SORT_VALUE_DESC = "-partnerSortValue"
-    QUESTION_DESC = "-question"
     START_TIME_DESC = "-startTime"
     TRIGGERED_AT_DESC = "-triggeredAt"
     UPDATED_AT_DESC = "-updatedAt"
@@ -940,6 +936,62 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaQuizService(KalturaServiceBase):
+    """Allows user to handle quizzes"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, entryId, quiz):
+        """Allows to add a quiz to an entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("quiz", quiz)
+        self.client.queueServiceActionCall("quiz_quiz", "add", KalturaQuiz, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+
+    def update(self, entryId, quiz):
+        """Allows to update a quiz"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("quiz", quiz)
+        self.client.queueServiceActionCall("quiz_quiz", "update", KalturaQuiz, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+
+    def get(self, entryId):
+        """Allows to get a quiz"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("quiz_quiz", "get", KalturaQuiz, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List quiz objects by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("quiz_quiz", "list", KalturaQuizListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuizListResponse)
+
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):
     # KalturaQuizClientPlugin
@@ -955,6 +1007,7 @@ class KalturaQuizClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'quiz': KalturaQuizService,
         }
 
     def getEnums(self):
