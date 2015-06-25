@@ -39297,15 +39297,27 @@ class KalturaIpAddressCondition(KalturaMatchCondition):
             type=NotImplemented,
             description=NotImplemented,
             not_=NotImplemented,
-            values=NotImplemented):
+            values=NotImplemented,
+            acceptInternalIps=NotImplemented,
+            httpHeader=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
             values)
 
+        # allow internal ips
+        # @var bool
+        self.acceptInternalIps = acceptInternalIps
+
+        # http header name for extracting the ip
+        # @var string
+        self.httpHeader = httpHeader
+
 
     PROPERTY_LOADERS = {
+        'acceptInternalIps': getXmlNodeBool, 
+        'httpHeader': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -39315,7 +39327,21 @@ class KalturaIpAddressCondition(KalturaMatchCondition):
     def toParams(self):
         kparams = KalturaMatchCondition.toParams(self)
         kparams.put("objectType", "KalturaIpAddressCondition")
+        kparams.addBoolIfDefined("acceptInternalIps", self.acceptInternalIps)
+        kparams.addStringIfDefined("httpHeader", self.httpHeader)
         return kparams
+
+    def getAcceptInternalIps(self):
+        return self.acceptInternalIps
+
+    def setAcceptInternalIps(self, newAcceptInternalIps):
+        self.acceptInternalIps = newAcceptInternalIps
+
+    def getHttpHeader(self):
+        return self.httpHeader
+
+    def setHttpHeader(self, newHttpHeader):
+        self.httpHeader = newHttpHeader
 
 
 # @package Kaltura
