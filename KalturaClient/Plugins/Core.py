@@ -34,6 +34,19 @@ API_VERSION = '3.2.0'
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaAppTokenStatus(object):
+    DISABLED = 1
+    ACTIVE = 2
+    DELETED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAppearInListType(object):
     PARTNER_ONLY = 1
     CATEGORY_MEMBERS_ONLY = 3
@@ -1493,6 +1506,20 @@ class KalturaApiParameterPermissionItemOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAppTokenOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAssetOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DELETED_AT_ASC = "+deletedAt"
@@ -1897,6 +1924,7 @@ class KalturaConditionType(object):
     GEO_DISTANCE = "10"
     OR_OPERATOR = "11"
     HASH = "12"
+    DELIVERY_PROFILE = "13"
 
     def __init__(self, value):
         self.value = value
@@ -1951,6 +1979,7 @@ class KalturaContextType(object):
     THUMBNAIL = "3"
     METADATA = "4"
     EXPORT = "5"
+    SERVE = "6"
 
     def __init__(self, value):
         self.value = value
@@ -3956,6 +3985,17 @@ class KalturaUserEntryStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserEntryType(object):
+    QUIZ = "quiz.QUIZ"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserLoginDataOrderBy(object):
 
     def __init__(self, value):
@@ -4855,6 +4895,150 @@ class KalturaApiExceptionArg(KalturaObjectBase):
 
     def setValue(self, newValue):
         self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAppToken(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            token=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            expiry=NotImplemented,
+            sessionType=NotImplemented,
+            sessionUserId=NotImplemented,
+            sessionDuration=NotImplemented,
+            sessionPrivileges=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the application token
+        # @var string
+        # @readonly
+        self.id = id
+
+        # The application token
+        # @var string
+        # @readonly
+        self.token = token
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # Creation time as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # Update time as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # Application token status
+        # @var KalturaAppTokenStatus
+        # @readonly
+        self.status = status
+
+        # Expiry time of current token (unix timestamp in seconds)
+        # @var int
+        self.expiry = expiry
+
+        # Type of KS (Kaltura Session) that created using the current token
+        # @var KalturaSessionType
+        self.sessionType = sessionType
+
+        # User id of KS (Kaltura Session) that created using the current token
+        # @var string
+        self.sessionUserId = sessionUserId
+
+        # Expiry duration of KS (Kaltura Session) that created using the current token (in seconds)
+        # @var int
+        self.sessionDuration = sessionDuration
+
+        # Comma separated privileges to be applied on KS (Kaltura Session) that created using the current token
+        # @var string
+        self.sessionPrivileges = sessionPrivileges
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
+        'token': getXmlNodeText, 
+        'partnerId': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaAppTokenStatus"), 
+        'expiry': getXmlNodeInt, 
+        'sessionType': (KalturaEnumsFactory.createInt, "KalturaSessionType"), 
+        'sessionUserId': getXmlNodeText, 
+        'sessionDuration': getXmlNodeInt, 
+        'sessionPrivileges': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAppToken.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAppToken")
+        kparams.addIntIfDefined("expiry", self.expiry)
+        kparams.addIntEnumIfDefined("sessionType", self.sessionType)
+        kparams.addStringIfDefined("sessionUserId", self.sessionUserId)
+        kparams.addIntIfDefined("sessionDuration", self.sessionDuration)
+        kparams.addStringIfDefined("sessionPrivileges", self.sessionPrivileges)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getToken(self):
+        return self.token
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getStatus(self):
+        return self.status
+
+    def getExpiry(self):
+        return self.expiry
+
+    def setExpiry(self, newExpiry):
+        self.expiry = newExpiry
+
+    def getSessionType(self):
+        return self.sessionType
+
+    def setSessionType(self, newSessionType):
+        self.sessionType = newSessionType
+
+    def getSessionUserId(self):
+        return self.sessionUserId
+
+    def setSessionUserId(self, newSessionUserId):
+        self.sessionUserId = newSessionUserId
+
+    def getSessionDuration(self):
+        return self.sessionDuration
+
+    def setSessionDuration(self, newSessionDuration):
+        self.sessionDuration = newSessionDuration
+
+    def getSessionPrivileges(self):
+        return self.sessionPrivileges
+
+    def setSessionPrivileges(self, newSessionPrivileges):
+        self.sessionPrivileges = newSessionPrivileges
 
 
 # @package Kaltura
@@ -12192,6 +12376,7 @@ class KalturaObject(KalturaObjectBase):
         KalturaObjectBase.__init__(self)
 
         # @var map
+        # @readonly
         self.relatedObjects = relatedObjects
 
 
@@ -12206,14 +12391,10 @@ class KalturaObject(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaObject")
-        kparams.addObjectIfDefined("relatedObjects", self.relatedObjects)
         return kparams
 
     def getRelatedObjects(self):
         return self.relatedObjects
-
-    def setRelatedObjects(self, newRelatedObjects):
-        self.relatedObjects = newRelatedObjects
 
 
 # @package Kaltura
@@ -23073,7 +23254,8 @@ class KalturaUserEntry(KalturaObjectBase):
             partnerId=NotImplemented,
             status=NotImplemented,
             createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            updatedAt=NotImplemented,
+            type=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # unique auto-generated identifier
@@ -23085,7 +23267,7 @@ class KalturaUserEntry(KalturaObjectBase):
         # @insertonly
         self.entryId = entryId
 
-        # @var int
+        # @var string
         # @insertonly
         self.userId = userId
 
@@ -23105,15 +23287,20 @@ class KalturaUserEntry(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
+        # @var KalturaUserEntryType
+        # @readonly
+        self.type = type
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
         'entryId': getXmlNodeText, 
-        'userId': getXmlNodeInt, 
+        'userId': getXmlNodeText, 
         'partnerId': getXmlNodeInt, 
         'status': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
+        'type': (KalturaEnumsFactory.createString, "KalturaUserEntryType"), 
     }
 
     def fromXml(self, node):
@@ -23124,7 +23311,7 @@ class KalturaUserEntry(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaUserEntry")
         kparams.addStringIfDefined("entryId", self.entryId)
-        kparams.addIntIfDefined("userId", self.userId)
+        kparams.addStringIfDefined("userId", self.userId)
         return kparams
 
     def getId(self):
@@ -23153,6 +23340,9 @@ class KalturaUserEntry(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+    def getType(self):
+        return self.type
 
 
 # @package Kaltura
@@ -24828,6 +25018,133 @@ class KalturaApiParameterPermissionItem(KalturaPermissionItem):
 
     def setAction(self, newAction):
         self.action = newAction
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAppTokenBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAppTokenBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaAppTokenBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAppTokenListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaAppToken
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaAppToken), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAppTokenListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaAppTokenListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -28367,6 +28684,45 @@ class KalturaDeliveryProfileBaseFilter(KalturaFilter):
 
     def setStatusIn(self, newStatusIn):
         self.statusIn = newStatusIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryProfileCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            deliveryProfileIds=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+        # The delivery ids that are accepted by this condition
+        # @var array of KalturaIntegerValue
+        self.deliveryProfileIds = deliveryProfileIds
+
+
+    PROPERTY_LOADERS = {
+        'deliveryProfileIds': (KalturaObjectFactory.createArray, KalturaIntegerValue), 
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileCondition")
+        kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
+        return kparams
+
+    def getDeliveryProfileIds(self):
+        return self.deliveryProfileIds
+
+    def setDeliveryProfileIds(self, newDeliveryProfileIds):
+        self.deliveryProfileIds = newDeliveryProfileIds
 
 
 # @package Kaltura
@@ -32933,6 +33289,7 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             status=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
+            type=NotImplemented,
             score=NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
@@ -32941,7 +33298,8 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             partnerId,
             status,
             createdAt,
-            updatedAt)
+            updatedAt,
+            type)
 
         # @var int
         # @readonly
@@ -35306,10 +35664,12 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
             userIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented):
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -35341,6 +35701,9 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         # @var string
         self.userIdNotIn = userIdNotIn
 
+        # @var KalturaUserEntryStatus
+        self.statusEqual = statusEqual
+
         # @var int
         self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
 
@@ -35353,6 +35716,9 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         # @var int
         self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
 
+        # @var KalturaUserEntryType
+        self.typeEqual = typeEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -35364,10 +35730,12 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         'userIdEqual': getXmlNodeInt, 
         'userIdIn': getXmlNodeText, 
         'userIdNotIn': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'typeEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryType"), 
     }
 
     def fromXml(self, node):
@@ -35386,10 +35754,12 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         kparams.addIntIfDefined("userIdEqual", self.userIdEqual)
         kparams.addStringIfDefined("userIdIn", self.userIdIn)
         kparams.addStringIfDefined("userIdNotIn", self.userIdNotIn)
+        kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
         return kparams
 
     def getIdEqual(self):
@@ -35446,6 +35816,12 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
     def setUserIdNotIn(self, newUserIdNotIn):
         self.userIdNotIn = newUserIdNotIn
 
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
     def getCreatedAtLessThanOrEqual(self):
         return self.createdAtLessThanOrEqual
 
@@ -35469,6 +35845,12 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
 
     def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
         self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getTypeEqual(self):
+        return self.typeEqual
+
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
 
 
 # @package Kaltura
@@ -36438,6 +36820,42 @@ class KalturaAkamaiUniversalProvisionJobData(KalturaProvisionJobData):
 
     def setNotificationEmail(self, newNotificationEmail):
         self.notificationEmail = newNotificationEmail
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAppTokenFilter(KalturaAppTokenBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaAppTokenBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAppTokenBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAppTokenFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAppTokenBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAppTokenFilter")
+        return kparams
 
 
 # @package Kaltura
@@ -41138,10 +41556,12 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
             userIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented):
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented):
         KalturaUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -41154,10 +41574,12 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             userIdEqual,
             userIdIn,
             userIdNotIn,
+            statusEqual,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual)
+            updatedAtGreaterThanOrEqual,
+            typeEqual)
 
 
     PROPERTY_LOADERS = {
@@ -43373,10 +43795,12 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
             userIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented):
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -43389,10 +43813,12 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             userIdEqual,
             userIdIn,
             userIdNotIn,
+            statusEqual,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual)
+            updatedAtGreaterThanOrEqual,
+            typeEqual)
 
 
     PROPERTY_LOADERS = {
@@ -45152,10 +45578,12 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
             userIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented):
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45168,10 +45596,12 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqual,
             userIdIn,
             userIdNotIn,
+            statusEqual,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual)
+            updatedAtGreaterThanOrEqual,
+            typeEqual)
 
 
     PROPERTY_LOADERS = {
@@ -49510,6 +49940,86 @@ class KalturaAdminUserService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAppTokenService(KalturaServiceBase):
+    """Manage application authentication tokens"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, appToken):
+        """Add new application authentication token"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("appToken", appToken)
+        self.client.queueServiceActionCall("apptoken", "add", KalturaAppToken, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAppToken)
+
+    def get(self, id):
+        """Get application authentication token by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("apptoken", "get", KalturaAppToken, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAppToken)
+
+    def update(self, id, appToken):
+        """Update application authentication token by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addObjectIfDefined("appToken", appToken)
+        self.client.queueServiceActionCall("apptoken", "update", KalturaAppToken, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAppToken)
+
+    def delete(self, id):
+        """Delete application authentication token by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("apptoken", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List application authentication tokens by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("apptoken", "list", KalturaAppTokenListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAppTokenListResponse)
+
+    def startSession(self, id, tokenHash, userId = NotImplemented, type = NotImplemented, expiry = NotImplemented):
+        """Starts a new KS (kaltura Session) based on application authentication token id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addStringIfDefined("tokenHash", tokenHash)
+        kparams.addStringIfDefined("userId", userId)
+        kparams.addIntIfDefined("type", type);
+        kparams.addIntIfDefined("expiry", expiry);
+        self.client.queueServiceActionCall("apptoken", "startSession", KalturaSessionInfo, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaSessionInfo)
 
 
 # @package Kaltura
@@ -54338,6 +54848,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'accessControlProfile': KalturaAccessControlProfileService,
             'accessControl': KalturaAccessControlService,
             'adminUser': KalturaAdminUserService,
+            'appToken': KalturaAppTokenService,
             'baseEntry': KalturaBaseEntryService,
             'bulkUpload': KalturaBulkUploadService,
             'categoryEntry': KalturaCategoryEntryService,
@@ -54393,6 +54904,7 @@ class KalturaCoreClient(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaAppTokenStatus': KalturaAppTokenStatus,
             'KalturaAppearInListType': KalturaAppearInListType,
             'KalturaAssetParamsDeletePolicy': KalturaAssetParamsDeletePolicy,
             'KalturaAssetParamsOrigin': KalturaAssetParamsOrigin,
@@ -54487,6 +54999,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaApiActionPermissionItemOrderBy': KalturaApiActionPermissionItemOrderBy,
             'KalturaApiParameterPermissionItemAction': KalturaApiParameterPermissionItemAction,
             'KalturaApiParameterPermissionItemOrderBy': KalturaApiParameterPermissionItemOrderBy,
+            'KalturaAppTokenOrderBy': KalturaAppTokenOrderBy,
             'KalturaAssetOrderBy': KalturaAssetOrderBy,
             'KalturaAssetParamsOrderBy': KalturaAssetParamsOrderBy,
             'KalturaAssetParamsOutputOrderBy': KalturaAssetParamsOutputOrderBy,
@@ -54602,6 +55115,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUploadTokenOrderBy': KalturaUploadTokenOrderBy,
             'KalturaUserEntryOrderBy': KalturaUserEntryOrderBy,
             'KalturaUserEntryStatus': KalturaUserEntryStatus,
+            'KalturaUserEntryType': KalturaUserEntryType,
             'KalturaUserLoginDataOrderBy': KalturaUserLoginDataOrderBy,
             'KalturaUserOrderBy': KalturaUserOrderBy,
             'KalturaUserRoleOrderBy': KalturaUserRoleOrderBy,
@@ -54627,6 +55141,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaKeyValue': KalturaKeyValue,
             'KalturaAccessControlScope': KalturaAccessControlScope,
             'KalturaApiExceptionArg': KalturaApiExceptionArg,
+            'KalturaAppToken': KalturaAppToken,
             'KalturaAsset': KalturaAsset,
             'KalturaString': KalturaString,
             'KalturaAssetParams': KalturaAssetParams,
@@ -54786,6 +55301,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAmazonS3StorageProfile': KalturaAmazonS3StorageProfile,
             'KalturaApiActionPermissionItem': KalturaApiActionPermissionItem,
             'KalturaApiParameterPermissionItem': KalturaApiParameterPermissionItem,
+            'KalturaAppTokenBaseFilter': KalturaAppTokenBaseFilter,
+            'KalturaAppTokenListResponse': KalturaAppTokenListResponse,
             'KalturaAssetParamsOutput': KalturaAssetParamsOutput,
             'KalturaAssetPropertiesCompareCondition': KalturaAssetPropertiesCompareCondition,
             'KalturaAssetsParamsResourceContainers': KalturaAssetsParamsResourceContainers,
@@ -54836,6 +55353,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileAkamaiHds': KalturaDeliveryProfileAkamaiHds,
             'KalturaDeliveryProfileAkamaiHttp': KalturaDeliveryProfileAkamaiHttp,
             'KalturaDeliveryProfileBaseFilter': KalturaDeliveryProfileBaseFilter,
+            'KalturaDeliveryProfileCondition': KalturaDeliveryProfileCondition,
             'KalturaDeliveryProfileGenericAppleHttp': KalturaDeliveryProfileGenericAppleHttp,
             'KalturaDeliveryProfileGenericHds': KalturaDeliveryProfileGenericHds,
             'KalturaDeliveryProfileGenericHttp': KalturaDeliveryProfileGenericHttp,
@@ -54946,6 +55464,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfileBaseFilter': KalturaAccessControlProfileBaseFilter,
             'KalturaAkamaiProvisionJobData': KalturaAkamaiProvisionJobData,
             'KalturaAkamaiUniversalProvisionJobData': KalturaAkamaiUniversalProvisionJobData,
+            'KalturaAppTokenFilter': KalturaAppTokenFilter,
             'KalturaAssetBaseFilter': KalturaAssetBaseFilter,
             'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetResource': KalturaAssetResource,
