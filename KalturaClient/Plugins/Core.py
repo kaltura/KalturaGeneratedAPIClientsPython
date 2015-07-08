@@ -2280,6 +2280,7 @@ class KalturaDeliveryProfileType(object):
     LIVE_HDS = "1002"
     LIVE_DASH = "1003"
     LIVE_RTMP = "1005"
+    LIVE_HLS_TO_MULTICAST = "1006"
     LIVE_AKAMAI_HDS = "1013"
 
     def __init__(self, value):
@@ -3620,6 +3621,7 @@ class KalturaPlayableEntryOrderBy(object):
 # @subpackage Client
 class KalturaPlaybackProtocol(object):
     APPLE_HTTP = "applehttp"
+    APPLE_HTTP_TO_MC = "applehttp_to_mc"
     AUTO = "auto"
     AKAMAI_HD = "hdnetwork"
     AKAMAI_HDS = "hdnetworkmanifest"

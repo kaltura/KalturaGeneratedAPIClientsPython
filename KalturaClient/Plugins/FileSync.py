@@ -108,7 +108,9 @@ class KalturaFileSync(KalturaObjectBase):
             fileUrl=NotImplemented,
             fileContent=NotImplemented,
             fileDiscSize=NotImplemented,
-            isCurrentDc=NotImplemented):
+            isCurrentDc=NotImplemented,
+            isDir=NotImplemented,
+            originalId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -160,7 +162,6 @@ class KalturaFileSync(KalturaObjectBase):
         self.syncTime = syncTime
 
         # @var KalturaFileSyncStatus
-        # @readonly
         self.status = status
 
         # @var KalturaFileSyncType
@@ -176,11 +177,9 @@ class KalturaFileSync(KalturaObjectBase):
         self.linkCount = linkCount
 
         # @var string
-        # @readonly
         self.fileRoot = fileRoot
 
         # @var string
-        # @readonly
         self.filePath = filePath
 
         # @var float
@@ -202,6 +201,14 @@ class KalturaFileSync(KalturaObjectBase):
         # @var bool
         # @readonly
         self.isCurrentDc = isCurrentDc
+
+        # @var bool
+        # @readonly
+        self.isDir = isDir
+
+        # @var int
+        # @readonly
+        self.originalId = originalId
 
 
     PROPERTY_LOADERS = {
@@ -228,6 +235,8 @@ class KalturaFileSync(KalturaObjectBase):
         'fileContent': getXmlNodeText, 
         'fileDiscSize': getXmlNodeFloat, 
         'isCurrentDc': getXmlNodeBool, 
+        'isDir': getXmlNodeBool, 
+        'originalId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -237,6 +246,9 @@ class KalturaFileSync(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaFileSync")
+        kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addStringIfDefined("fileRoot", self.fileRoot)
+        kparams.addStringIfDefined("filePath", self.filePath)
         return kparams
 
     def getId(self):
@@ -278,6 +290,9 @@ class KalturaFileSync(KalturaObjectBase):
     def getStatus(self):
         return self.status
 
+    def setStatus(self, newStatus):
+        self.status = newStatus
+
     def getFileType(self):
         return self.fileType
 
@@ -290,8 +305,14 @@ class KalturaFileSync(KalturaObjectBase):
     def getFileRoot(self):
         return self.fileRoot
 
+    def setFileRoot(self, newFileRoot):
+        self.fileRoot = newFileRoot
+
     def getFilePath(self):
         return self.filePath
+
+    def setFilePath(self, newFilePath):
+        self.filePath = newFilePath
 
     def getFileSize(self):
         return self.fileSize
@@ -307,6 +328,12 @@ class KalturaFileSync(KalturaObjectBase):
 
     def getIsCurrentDc(self):
         return self.isCurrentDc
+
+    def getIsDir(self):
+        return self.isDir
+
+    def getOriginalId(self):
+        return self.originalId
 
 
 # @package Kaltura
