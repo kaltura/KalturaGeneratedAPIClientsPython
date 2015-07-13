@@ -244,6 +244,8 @@ class KalturaAdCuePointBaseFilter(KalturaCuePointFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             protocolTypeEqual=NotImplemented,
             protocolTypeIn=NotImplemented,
             titleLike=NotImplemented,
@@ -284,7 +286,9 @@ class KalturaAdCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
         # @var KalturaAdProtocolType
         self.protocolTypeEqual = protocolTypeEqual
@@ -434,6 +438,8 @@ class KalturaAdCuePointFilter(KalturaAdCuePointBaseFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             protocolTypeEqual=NotImplemented,
             protocolTypeIn=NotImplemented,
             titleLike=NotImplemented,
@@ -475,6 +481,8 @@ class KalturaAdCuePointFilter(KalturaAdCuePointBaseFilter):
             systemNameEqual,
             systemNameIn,
             freeText,
+            userIdEqualCurrent,
+            userIdCurrent,
             protocolTypeEqual,
             protocolTypeIn,
             titleLike,

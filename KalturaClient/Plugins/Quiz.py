@@ -599,7 +599,9 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
-            freeText=NotImplemented):
+            freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -631,7 +633,9 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
 
     PROPERTY_LOADERS = {
@@ -682,6 +686,8 @@ class KalturaQuestionCuePointBaseFilter(KalturaCuePointFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             questionLike=NotImplemented,
             questionMultiLikeOr=NotImplemented,
             questionMultiLikeAnd=NotImplemented):
@@ -716,7 +722,9 @@ class KalturaQuestionCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
         # @var string
         self.questionLike = questionLike
@@ -799,7 +807,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
-            freeText=NotImplemented):
+            freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented):
         KalturaAnswerCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -831,7 +841,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
 
     PROPERTY_LOADERS = {
@@ -882,6 +894,8 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             questionLike=NotImplemented,
             questionMultiLikeOr=NotImplemented,
             questionMultiLikeAnd=NotImplemented):
@@ -917,6 +931,8 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
             systemNameEqual,
             systemNameIn,
             freeText,
+            userIdEqualCurrent,
+            userIdCurrent,
             questionLike,
             questionMultiLikeOr,
             questionMultiLikeAnd)

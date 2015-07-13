@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2011  Kaltura Inc.
+# Copyright (C) 2006-2015  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -276,6 +276,9 @@ class KalturaThumbCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             descriptionLike=NotImplemented,
             descriptionMultiLikeOr=NotImplemented,
             descriptionMultiLikeAnd=NotImplemented,
@@ -314,7 +317,10 @@ class KalturaThumbCuePointBaseFilter(KalturaCuePointFilter):
             partnerSortValueLessThanOrEqual,
             forceStopEqual,
             systemNameEqual,
-            systemNameIn)
+            systemNameIn,
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
         # @var string
         self.descriptionLike = descriptionLike
@@ -452,6 +458,9 @@ class KalturaThumbCuePointFilter(KalturaThumbCuePointBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
+            freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             descriptionLike=NotImplemented,
             descriptionMultiLikeOr=NotImplemented,
             descriptionMultiLikeAnd=NotImplemented,
@@ -491,6 +500,9 @@ class KalturaThumbCuePointFilter(KalturaThumbCuePointBaseFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent,
             descriptionLike,
             descriptionMultiLikeOr,
             descriptionMultiLikeAnd,

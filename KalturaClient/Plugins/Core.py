@@ -804,39 +804,6 @@ class KalturaRecordStatus(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaReportType(object):
-    TOP_CONTENT = 1
-    CONTENT_DROPOFF = 2
-    CONTENT_INTERACTIONS = 3
-    MAP_OVERLAY = 4
-    TOP_CONTRIBUTORS = 5
-    TOP_SYNDICATION = 6
-    CONTENT_CONTRIBUTIONS = 7
-    USER_ENGAGEMENT = 11
-    SPEFICIC_USER_ENGAGEMENT = 12
-    USER_TOP_CONTENT = 13
-    USER_CONTENT_DROPOFF = 14
-    USER_CONTENT_INTERACTIONS = 15
-    APPLICATIONS = 16
-    USER_USAGE = 17
-    SPECIFIC_USER_USAGE = 18
-    VAR_USAGE = 19
-    TOP_CREATORS = 20
-    PLATFORMS = 21
-    OPERATION_SYSTEM = 22
-    BROWSERS = 23
-    LIVE = 24
-    TOP_PLAYBACK_CONTEXT = 25
-    PARTNER_USAGE = 201
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaResponseProfileStatus(object):
     DISABLED = 1
     ENABLED = 2
@@ -1565,6 +1532,7 @@ class KalturaAssetType(object):
     IMAGE = "document.Image"
     PDF = "document.PDF"
     SWF = "document.SWF"
+    TIMED_THUMB_ASSET = "thumbCuePoint.timedThumb"
     FLAVOR = "1"
     THUMBNAIL = "2"
     LIVE = "3"
@@ -1733,6 +1701,7 @@ class KalturaBatchJobType(object):
     VALIDATE_LIVE_MEDIA_SERVERS = "38"
     SYNC_CATEGORY_PRIVACY_CONTEXT = "39"
     LIVE_REPORT_EXPORT = "40"
+    RECALCULATE_CACHE = "41"
 
     def __init__(self, value):
         self.value = value
@@ -3703,6 +3672,41 @@ class KalturaReportInterval(object):
 class KalturaReportOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     CREATED_AT_DESC = "-createdAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportType(object):
+    QUIZ = "quiz.QUIZ"
+    QUIZ_USER_PERCENTAGE = "quiz.self::QUIZ_USER_PERCENTAGE"
+    TOP_CONTENT = "1"
+    CONTENT_DROPOFF = "2"
+    CONTENT_INTERACTIONS = "3"
+    MAP_OVERLAY = "4"
+    TOP_CONTRIBUTORS = "5"
+    TOP_SYNDICATION = "6"
+    CONTENT_CONTRIBUTIONS = "7"
+    USER_ENGAGEMENT = "11"
+    SPEFICIC_USER_ENGAGEMENT = "12"
+    USER_TOP_CONTENT = "13"
+    USER_CONTENT_DROPOFF = "14"
+    USER_CONTENT_INTERACTIONS = "15"
+    APPLICATIONS = "16"
+    USER_USAGE = "17"
+    SPECIFIC_USER_USAGE = "18"
+    VAR_USAGE = "19"
+    TOP_CREATORS = "20"
+    PLATFORMS = "21"
+    OPERATION_SYSTEM = "22"
+    BROWSERS = "23"
+    LIVE = "24"
+    TOP_PLAYBACK_CONTEXT = "25"
+    PARTNER_USAGE = "201"
 
     def __init__(self, value):
         self.value = value
@@ -19970,7 +19974,7 @@ class KalturaRequestConfiguration(KalturaObjectBase):
         # @var string
         self.ks = ks
 
-        # Response profile
+        # Response profile - this attribute will be automatically unset after every API call.
         # @var KalturaBaseResponseProfile
         self.responseProfile = responseProfile
 
@@ -20028,7 +20032,8 @@ class KalturaResponseProfile(KalturaDetachedResponseProfile):
             partnerId=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            status=NotImplemented):
+            status=NotImplemented,
+            version=NotImplemented):
         KalturaDetachedResponseProfile.__init__(self,
             name,
             type,
@@ -20065,6 +20070,10 @@ class KalturaResponseProfile(KalturaDetachedResponseProfile):
         # @readonly
         self.status = status
 
+        # @var int
+        # @readonly
+        self.version = version
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -20073,6 +20082,7 @@ class KalturaResponseProfile(KalturaDetachedResponseProfile):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'status': (KalturaEnumsFactory.createInt, "KalturaResponseProfileStatus"), 
+        'version': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -20105,6 +20115,161 @@ class KalturaResponseProfile(KalturaDetachedResponseProfile):
 
     def getStatus(self):
         return self.status
+
+    def getVersion(self):
+        return self.version
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileCacheRecalculateOptions(KalturaObjectBase):
+    def __init__(self,
+            limit=NotImplemented,
+            cachedObjectType=NotImplemented,
+            objectId=NotImplemented,
+            startObjectKey=NotImplemented,
+            endObjectKey=NotImplemented,
+            jobCreatedAt=NotImplemented,
+            isFirstLoop=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Maximum number of keys to recalculate
+        # @var int
+        self.limit = limit
+
+        # Class name
+        # @var string
+        self.cachedObjectType = cachedObjectType
+
+        # @var string
+        self.objectId = objectId
+
+        # @var string
+        self.startObjectKey = startObjectKey
+
+        # @var string
+        self.endObjectKey = endObjectKey
+
+        # @var int
+        self.jobCreatedAt = jobCreatedAt
+
+        # @var bool
+        self.isFirstLoop = isFirstLoop
+
+
+    PROPERTY_LOADERS = {
+        'limit': getXmlNodeInt, 
+        'cachedObjectType': getXmlNodeText, 
+        'objectId': getXmlNodeText, 
+        'startObjectKey': getXmlNodeText, 
+        'endObjectKey': getXmlNodeText, 
+        'jobCreatedAt': getXmlNodeInt, 
+        'isFirstLoop': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileCacheRecalculateOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileCacheRecalculateOptions")
+        kparams.addIntIfDefined("limit", self.limit)
+        kparams.addStringIfDefined("cachedObjectType", self.cachedObjectType)
+        kparams.addStringIfDefined("objectId", self.objectId)
+        kparams.addStringIfDefined("startObjectKey", self.startObjectKey)
+        kparams.addStringIfDefined("endObjectKey", self.endObjectKey)
+        kparams.addIntIfDefined("jobCreatedAt", self.jobCreatedAt)
+        kparams.addBoolIfDefined("isFirstLoop", self.isFirstLoop)
+        return kparams
+
+    def getLimit(self):
+        return self.limit
+
+    def setLimit(self, newLimit):
+        self.limit = newLimit
+
+    def getCachedObjectType(self):
+        return self.cachedObjectType
+
+    def setCachedObjectType(self, newCachedObjectType):
+        self.cachedObjectType = newCachedObjectType
+
+    def getObjectId(self):
+        return self.objectId
+
+    def setObjectId(self, newObjectId):
+        self.objectId = newObjectId
+
+    def getStartObjectKey(self):
+        return self.startObjectKey
+
+    def setStartObjectKey(self, newStartObjectKey):
+        self.startObjectKey = newStartObjectKey
+
+    def getEndObjectKey(self):
+        return self.endObjectKey
+
+    def setEndObjectKey(self, newEndObjectKey):
+        self.endObjectKey = newEndObjectKey
+
+    def getJobCreatedAt(self):
+        return self.jobCreatedAt
+
+    def setJobCreatedAt(self, newJobCreatedAt):
+        self.jobCreatedAt = newJobCreatedAt
+
+    def getIsFirstLoop(self):
+        return self.isFirstLoop
+
+    def setIsFirstLoop(self, newIsFirstLoop):
+        self.isFirstLoop = newIsFirstLoop
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResponseProfileCacheRecalculateResults(KalturaObjectBase):
+    def __init__(self,
+            lastObjectKey=NotImplemented,
+            recalculated=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Last recalculated id
+        # @var string
+        self.lastObjectKey = lastObjectKey
+
+        # Number of recalculated keys
+        # @var int
+        self.recalculated = recalculated
+
+
+    PROPERTY_LOADERS = {
+        'lastObjectKey': getXmlNodeText, 
+        'recalculated': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResponseProfileCacheRecalculateResults.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaResponseProfileCacheRecalculateResults")
+        kparams.addStringIfDefined("lastObjectKey", self.lastObjectKey)
+        kparams.addIntIfDefined("recalculated", self.recalculated)
+        return kparams
+
+    def getLastObjectKey(self):
+        return self.lastObjectKey
+
+    def setLastObjectKey(self, newLastObjectKey):
+        self.lastObjectKey = newLastObjectKey
+
+    def getRecalculated(self):
+        return self.recalculated
+
+    def setRecalculated(self, newRecalculated):
+        self.recalculated = newRecalculated
 
 
 # @package Kaltura
@@ -33327,6 +33492,26 @@ class KalturaQuizUserEntry(KalturaUserEntry):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaRecalculateCacheJobData(KalturaJobData):
+    def __init__(self):
+        KalturaJobData.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRecalculateCacheJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaRecalculateCacheJobData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaRemotePathListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -35694,7 +35879,7 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         # @var string
         self.entryIdNotIn = entryIdNotIn
 
-        # @var int
+        # @var string
         self.userIdEqual = userIdEqual
 
         # @var string
@@ -35729,7 +35914,7 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         'entryIdEqual': getXmlNodeText, 
         'entryIdIn': getXmlNodeText, 
         'entryIdNotIn': getXmlNodeText, 
-        'userIdEqual': getXmlNodeInt, 
+        'userIdEqual': getXmlNodeText, 
         'userIdIn': getXmlNodeText, 
         'userIdNotIn': getXmlNodeText, 
         'statusEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
@@ -35753,7 +35938,7 @@ class KalturaUserEntryBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
         kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         kparams.addStringIfDefined("entryIdNotIn", self.entryIdNotIn)
-        kparams.addIntIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
         kparams.addStringIfDefined("userIdIn", self.userIdIn)
         kparams.addStringIfDefined("userIdNotIn", self.userIdNotIn)
         kparams.addStringEnumIfDefined("statusEqual", self.statusEqual)
@@ -40981,6 +41166,112 @@ class KalturaPreviewRestriction(KalturaSessionRestriction):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaRecalculateResponseProfileCacheJobData(KalturaRecalculateCacheJobData):
+    def __init__(self,
+            protocol=NotImplemented,
+            ksType=NotImplemented,
+            userRoles=NotImplemented,
+            cachedObjectType=NotImplemented,
+            objectId=NotImplemented,
+            startObjectKey=NotImplemented,
+            endObjectKey=NotImplemented):
+        KalturaRecalculateCacheJobData.__init__(self)
+
+        # http / https
+        # @var string
+        self.protocol = protocol
+
+        # @var KalturaSessionType
+        self.ksType = ksType
+
+        # @var array of KalturaIntegerValue
+        self.userRoles = userRoles
+
+        # Class name
+        # @var string
+        self.cachedObjectType = cachedObjectType
+
+        # @var string
+        self.objectId = objectId
+
+        # @var string
+        self.startObjectKey = startObjectKey
+
+        # @var string
+        self.endObjectKey = endObjectKey
+
+
+    PROPERTY_LOADERS = {
+        'protocol': getXmlNodeText, 
+        'ksType': (KalturaEnumsFactory.createInt, "KalturaSessionType"), 
+        'userRoles': (KalturaObjectFactory.createArray, KalturaIntegerValue), 
+        'cachedObjectType': getXmlNodeText, 
+        'objectId': getXmlNodeText, 
+        'startObjectKey': getXmlNodeText, 
+        'endObjectKey': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRecalculateCacheJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRecalculateResponseProfileCacheJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRecalculateCacheJobData.toParams(self)
+        kparams.put("objectType", "KalturaRecalculateResponseProfileCacheJobData")
+        kparams.addStringIfDefined("protocol", self.protocol)
+        kparams.addIntEnumIfDefined("ksType", self.ksType)
+        kparams.addArrayIfDefined("userRoles", self.userRoles)
+        kparams.addStringIfDefined("cachedObjectType", self.cachedObjectType)
+        kparams.addStringIfDefined("objectId", self.objectId)
+        kparams.addStringIfDefined("startObjectKey", self.startObjectKey)
+        kparams.addStringIfDefined("endObjectKey", self.endObjectKey)
+        return kparams
+
+    def getProtocol(self):
+        return self.protocol
+
+    def setProtocol(self, newProtocol):
+        self.protocol = newProtocol
+
+    def getKsType(self):
+        return self.ksType
+
+    def setKsType(self, newKsType):
+        self.ksType = newKsType
+
+    def getUserRoles(self):
+        return self.userRoles
+
+    def setUserRoles(self, newUserRoles):
+        self.userRoles = newUserRoles
+
+    def getCachedObjectType(self):
+        return self.cachedObjectType
+
+    def setCachedObjectType(self, newCachedObjectType):
+        self.cachedObjectType = newCachedObjectType
+
+    def getObjectId(self):
+        return self.objectId
+
+    def setObjectId(self, newObjectId):
+        self.objectId = newObjectId
+
+    def getStartObjectKey(self):
+        return self.startObjectKey
+
+    def setStartObjectKey(self, newStartObjectKey):
+        self.startObjectKey = newStartObjectKey
+
+    def getEndObjectKey(self):
+        return self.endObjectKey
+
+    def setEndObjectKey(self, newEndObjectKey):
+        self.endObjectKey = newEndObjectKey
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaRegexCondition(KalturaMatchCondition):
     def __init__(self,
             type=NotImplemented,
@@ -41563,7 +41854,8 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented):
+            typeEqual=NotImplemented,
+            userIdEqualCurrent=NotImplemented):
         KalturaUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -41583,8 +41875,12 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             updatedAtGreaterThanOrEqual,
             typeEqual)
 
+        # @var KalturaNullableBoolean
+        self.userIdEqualCurrent = userIdEqualCurrent
+
 
     PROPERTY_LOADERS = {
+        'userIdEqualCurrent': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -41594,7 +41890,14 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
     def toParams(self):
         kparams = KalturaUserEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaUserEntryFilter")
+        kparams.addIntEnumIfDefined("userIdEqualCurrent", self.userIdEqualCurrent)
         return kparams
+
+    def getUserIdEqualCurrent(self):
+        return self.userIdEqualCurrent
+
+    def setUserIdEqualCurrent(self, newUserIdEqualCurrent):
+        self.userIdEqualCurrent = newUserIdEqualCurrent
 
 
 # @package Kaltura
@@ -43802,7 +44105,8 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented):
+            typeEqual=NotImplemented,
+            userIdEqualCurrent=NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -43820,7 +44124,8 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
-            typeEqual)
+            typeEqual,
+            userIdEqualCurrent)
 
 
     PROPERTY_LOADERS = {
@@ -45585,7 +45890,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented):
+            typeEqual=NotImplemented,
+            userIdEqualCurrent=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45603,7 +45909,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
-            typeEqual)
+            typeEqual,
+            userIdEqualCurrent)
 
 
     PROPERTY_LOADERS = {
@@ -53265,7 +53572,7 @@ class KalturaReportService(KalturaServiceBase):
         """report getGraphs action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
-        kparams.addIntIfDefined("reportType", reportType);
+        kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("dimension", dimension)
         kparams.addStringIfDefined("objectIds", objectIds)
@@ -53279,7 +53586,7 @@ class KalturaReportService(KalturaServiceBase):
         """report getTotal action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
-        kparams.addIntIfDefined("reportType", reportType);
+        kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
         self.client.queueServiceActionCall("report", "getTotal", KalturaReportTotal, kparams)
@@ -53292,7 +53599,7 @@ class KalturaReportService(KalturaServiceBase):
         """report getBaseTotal action allows to get a the total base for storage reports"""
 
         kparams = KalturaParams()
-        kparams.addIntIfDefined("reportType", reportType);
+        kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
         self.client.queueServiceActionCall("report", "getBaseTotal", KalturaReportBaseTotal, kparams)
@@ -53305,7 +53612,7 @@ class KalturaReportService(KalturaServiceBase):
         """report getTable action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
-        kparams.addIntIfDefined("reportType", reportType);
+        kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addObjectIfDefined("pager", pager)
         kparams.addStringIfDefined("order", order)
@@ -53323,7 +53630,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addStringIfDefined("reportTitle", reportTitle)
         kparams.addStringIfDefined("reportText", reportText)
         kparams.addStringIfDefined("headers", headers)
-        kparams.addIntIfDefined("reportType", reportType);
+        kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("dimension", dimension)
         kparams.addObjectIfDefined("pager", pager)
@@ -53448,6 +53755,17 @@ class KalturaResponseProfileService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaResponseProfileListResponse)
+
+    def recalculate(self, options):
+        """Recalculate response profile cached objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("options", options)
+        self.client.queueServiceActionCall("responseprofile", "recalculate", KalturaResponseProfileCacheRecalculateResults, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaResponseProfileCacheRecalculateResults)
 
 
 # @package Kaltura
@@ -54960,7 +55278,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistType': KalturaPlaylistType,
             'KalturaPrivacyType': KalturaPrivacyType,
             'KalturaRecordStatus': KalturaRecordStatus,
-            'KalturaReportType': KalturaReportType,
             'KalturaResponseProfileStatus': KalturaResponseProfileStatus,
             'KalturaResponseProfileType': KalturaResponseProfileType,
             'KalturaResponseType': KalturaResponseType,
@@ -55099,6 +55416,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaQuizUserEntryOrderBy': KalturaQuizUserEntryOrderBy,
             'KalturaReportInterval': KalturaReportInterval,
             'KalturaReportOrderBy': KalturaReportOrderBy,
+            'KalturaReportType': KalturaReportType,
             'KalturaResponseProfileOrderBy': KalturaResponseProfileOrderBy,
             'KalturaRuleActionType': KalturaRuleActionType,
             'KalturaSchemaType': KalturaSchemaType,
@@ -55262,6 +55580,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportTotal': KalturaReportTotal,
             'KalturaRequestConfiguration': KalturaRequestConfiguration,
             'KalturaResponseProfile': KalturaResponseProfile,
+            'KalturaResponseProfileCacheRecalculateOptions': KalturaResponseProfileCacheRecalculateOptions,
+            'KalturaResponseProfileCacheRecalculateResults': KalturaResponseProfileCacheRecalculateResults,
             'KalturaSchedulerStatus': KalturaSchedulerStatus,
             'KalturaSchedulerConfig': KalturaSchedulerConfig,
             'KalturaSchedulerWorker': KalturaSchedulerWorker,
@@ -55417,6 +55737,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistListResponse': KalturaPlaylistListResponse,
             'KalturaProvisionJobData': KalturaProvisionJobData,
             'KalturaQuizUserEntry': KalturaQuizUserEntry,
+            'KalturaRecalculateCacheJobData': KalturaRecalculateCacheJobData,
             'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportInputFilter': KalturaReportInputFilter,
@@ -55509,6 +55830,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionItemBaseFilter': KalturaPermissionItemBaseFilter,
             'KalturaPostConvertJobData': KalturaPostConvertJobData,
             'KalturaPreviewRestriction': KalturaPreviewRestriction,
+            'KalturaRecalculateResponseProfileCacheJobData': KalturaRecalculateResponseProfileCacheJobData,
             'KalturaRegexCondition': KalturaRegexCondition,
             'KalturaRemoteStorageResources': KalturaRemoteStorageResources,
             'KalturaReportFilter': KalturaReportFilter,

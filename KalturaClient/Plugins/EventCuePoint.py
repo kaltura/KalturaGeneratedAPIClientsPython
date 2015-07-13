@@ -164,6 +164,8 @@ class KalturaEventCuePointBaseFilter(KalturaCuePointFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             eventTypeEqual=NotImplemented,
             eventTypeIn=NotImplemented):
         KalturaCuePointFilter.__init__(self,
@@ -197,7 +199,9 @@ class KalturaEventCuePointBaseFilter(KalturaCuePointFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
         # @var KalturaEventType
         self.eventTypeEqual = eventTypeEqual
@@ -270,6 +274,8 @@ class KalturaEventCuePointFilter(KalturaEventCuePointBaseFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             eventTypeEqual=NotImplemented,
             eventTypeIn=NotImplemented):
         KalturaEventCuePointBaseFilter.__init__(self,
@@ -304,6 +310,8 @@ class KalturaEventCuePointFilter(KalturaEventCuePointBaseFilter):
             systemNameEqual,
             systemNameIn,
             freeText,
+            userIdEqualCurrent,
+            userIdCurrent,
             eventTypeEqual,
             eventTypeIn)
 

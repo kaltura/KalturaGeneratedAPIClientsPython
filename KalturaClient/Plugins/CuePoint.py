@@ -47,6 +47,18 @@ class KalturaCuePointStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaThumbCuePointSubType(object):
+    SLIDE = 1
+    CHAPTER = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
@@ -74,6 +86,7 @@ class KalturaCuePointType(object):
     EVENT = "eventCuePoint.Event"
     QUIZ_ANSWER = "quiz.QUIZ_ANSWER"
     QUIZ_QUESTION = "quiz.QUIZ_QUESTION"
+    THUMB = "thumbCuePoint.Thumb"
 
     def __init__(self, value):
         self.value = value
@@ -700,7 +713,9 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
             forceStopEqual=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
-            freeText=NotImplemented):
+            freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented):
         KalturaCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -736,9 +751,17 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
         # @var string
         self.freeText = freeText
 
+        # @var KalturaNullableBoolean
+        self.userIdEqualCurrent = userIdEqualCurrent
+
+        # @var KalturaNullableBoolean
+        self.userIdCurrent = userIdCurrent
+
 
     PROPERTY_LOADERS = {
         'freeText': getXmlNodeText, 
+        'userIdEqualCurrent': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'userIdCurrent': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -749,6 +772,8 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
         kparams = KalturaCuePointBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaCuePointFilter")
         kparams.addStringIfDefined("freeText", self.freeText)
+        kparams.addIntEnumIfDefined("userIdEqualCurrent", self.userIdEqualCurrent)
+        kparams.addIntEnumIfDefined("userIdCurrent", self.userIdCurrent)
         return kparams
 
     def getFreeText(self):
@@ -756,6 +781,18 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
 
     def setFreeText(self, newFreeText):
         self.freeText = newFreeText
+
+    def getUserIdEqualCurrent(self):
+        return self.userIdEqualCurrent
+
+    def setUserIdEqualCurrent(self, newUserIdEqualCurrent):
+        self.userIdEqualCurrent = newUserIdEqualCurrent
+
+    def getUserIdCurrent(self):
+        return self.userIdCurrent
+
+    def setUserIdCurrent(self, newUserIdCurrent):
+        self.userIdCurrent = newUserIdCurrent
 
 
 ########## services ##########
@@ -877,6 +914,7 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaCuePointStatus': KalturaCuePointStatus,
+            'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,
             'KalturaCuePointType': KalturaCuePointType,
         }

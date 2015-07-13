@@ -279,6 +279,8 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             parentIdEqual=NotImplemented,
             parentIdIn=NotImplemented,
             textLike=NotImplemented,
@@ -320,7 +322,9 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             forceStopEqual,
             systemNameEqual,
             systemNameIn,
-            freeText)
+            freeText,
+            userIdEqualCurrent,
+            userIdCurrent)
 
         # @var string
         self.parentIdEqual = parentIdEqual
@@ -481,6 +485,8 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            userIdCurrent=NotImplemented,
             parentIdEqual=NotImplemented,
             parentIdIn=NotImplemented,
             textLike=NotImplemented,
@@ -523,6 +529,8 @@ class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
             systemNameEqual,
             systemNameIn,
             freeText,
+            userIdEqualCurrent,
+            userIdCurrent,
             parentIdEqual,
             parentIdIn,
             textLike,
