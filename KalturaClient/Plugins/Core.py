@@ -10229,7 +10229,7 @@ class KalturaEdgeServer(KalturaObjectBase):
             partnerId=NotImplemented,
             name=NotImplemented,
             systemName=NotImplemented,
-            desciption=NotImplemented,
+            description=NotImplemented,
             status=NotImplemented,
             tags=NotImplemented,
             hostName=NotImplemented,
@@ -10264,7 +10264,7 @@ class KalturaEdgeServer(KalturaObjectBase):
 
         # edgeServer description
         # @var string
-        self.desciption = desciption
+        self.description = description
 
         # @var KalturaEdgeServerStatus
         self.status = status
@@ -10297,7 +10297,7 @@ class KalturaEdgeServer(KalturaObjectBase):
         'partnerId': getXmlNodeInt, 
         'name': getXmlNodeText, 
         'systemName': getXmlNodeText, 
-        'desciption': getXmlNodeText, 
+        'description': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaEdgeServerStatus"), 
         'tags': getXmlNodeText, 
         'hostName': getXmlNodeText, 
@@ -10315,7 +10315,7 @@ class KalturaEdgeServer(KalturaObjectBase):
         kparams.put("objectType", "KalturaEdgeServer")
         kparams.addStringIfDefined("name", self.name)
         kparams.addStringIfDefined("systemName", self.systemName)
-        kparams.addStringIfDefined("desciption", self.desciption)
+        kparams.addStringIfDefined("description", self.description)
         kparams.addIntEnumIfDefined("status", self.status)
         kparams.addStringIfDefined("tags", self.tags)
         kparams.addStringIfDefined("hostName", self.hostName)
@@ -10348,11 +10348,11 @@ class KalturaEdgeServer(KalturaObjectBase):
     def setSystemName(self, newSystemName):
         self.systemName = newSystemName
 
-    def getDesciption(self):
-        return self.desciption
+    def getDescription(self):
+        return self.description
 
-    def setDesciption(self, newDesciption):
-        self.desciption = newDesciption
+    def setDescription(self, newDescription):
+        self.description = newDescription
 
     def getStatus(self):
         return self.status
