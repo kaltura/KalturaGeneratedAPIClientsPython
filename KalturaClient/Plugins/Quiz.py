@@ -293,7 +293,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         self.isCorrect = isCorrect
 
         # Array of string
-        # @var KalturaTypedArray
+        # @var array of KalturaString
         # @readonly
         self.correctAnswerKeys = correctAnswerKeys
 
@@ -307,7 +307,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         'quizUserEntryId': getXmlNodeText, 
         'answerKey': getXmlNodeText, 
         'isCorrect': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'correctAnswerKeys': (KalturaObjectFactory.create, KalturaTypedArray), 
+        'correctAnswerKeys': (KalturaObjectFactory.createArray, KalturaString), 
         'explanation': getXmlNodeText, 
     }
 
@@ -601,7 +601,9 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
             userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented):
+            userIdCurrent=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -637,8 +639,16 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
+        # @var string
+        self.parentIdEqual = parentIdEqual
+
+        # @var string
+        self.parentIdIn = parentIdIn
+
 
     PROPERTY_LOADERS = {
+        'parentIdEqual': getXmlNodeText, 
+        'parentIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -648,7 +658,21 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
     def toParams(self):
         kparams = KalturaCuePointFilter.toParams(self)
         kparams.put("objectType", "KalturaAnswerCuePointBaseFilter")
+        kparams.addStringIfDefined("parentIdEqual", self.parentIdEqual)
+        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
         return kparams
+
+    def getParentIdEqual(self):
+        return self.parentIdEqual
+
+    def setParentIdEqual(self, newParentIdEqual):
+        self.parentIdEqual = newParentIdEqual
+
+    def getParentIdIn(self):
+        return self.parentIdIn
+
+    def setParentIdIn(self, newParentIdIn):
+        self.parentIdIn = newParentIdIn
 
 
 # @package Kaltura
@@ -809,7 +833,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             systemNameIn=NotImplemented,
             freeText=NotImplemented,
             userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented):
+            userIdCurrent=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented):
         KalturaAnswerCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -843,7 +869,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             systemNameIn,
             freeText,
             userIdEqualCurrent,
-            userIdCurrent)
+            userIdCurrent,
+            parentIdEqual,
+            parentIdIn)
 
 
     PROPERTY_LOADERS = {
