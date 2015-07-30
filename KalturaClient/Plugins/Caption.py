@@ -114,7 +114,8 @@ class KalturaCaptionAsset(KalturaAsset):
             label=NotImplemented,
             format=NotImplemented,
             status=NotImplemented,
-            parentId=NotImplemented):
+            parentId=NotImplemented,
+            accuracy=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -168,6 +169,10 @@ class KalturaCaptionAsset(KalturaAsset):
         # @insertonly
         self.parentId = parentId
 
+        # The Accuracy of the caption content
+        # @var int
+        self.accuracy = accuracy
+
 
     PROPERTY_LOADERS = {
         'captionParamsId': getXmlNodeInt, 
@@ -178,6 +183,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'format': (KalturaEnumsFactory.createString, "KalturaCaptionType"), 
         'status': (KalturaEnumsFactory.createInt, "KalturaCaptionAssetStatus"), 
         'parentId': getXmlNodeText, 
+        'accuracy': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -193,6 +199,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addStringIfDefined("label", self.label)
         kparams.addStringEnumIfDefined("format", self.format)
         kparams.addStringIfDefined("parentId", self.parentId)
+        kparams.addIntIfDefined("accuracy", self.accuracy)
         return kparams
 
     def getCaptionParamsId(self):
@@ -236,6 +243,12 @@ class KalturaCaptionAsset(KalturaAsset):
 
     def setParentId(self, newParentId):
         self.parentId = newParentId
+
+    def getAccuracy(self):
+        return self.accuracy
+
+    def setAccuracy(self, newAccuracy):
+        self.accuracy = newAccuracy
 
 
 # @package Kaltura
