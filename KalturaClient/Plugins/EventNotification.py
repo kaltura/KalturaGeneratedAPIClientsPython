@@ -151,26 +151,6 @@ class KalturaEventNotificationTemplateType(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
-class KalturaEventCondition(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEventCondition.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaEventCondition")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEventNotificationParameter(KalturaObjectBase):
     def __init__(self,
             key=NotImplemented,
@@ -1078,7 +1058,6 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaEventCondition': KalturaEventCondition,
             'KalturaEventNotificationParameter': KalturaEventNotificationParameter,
             'KalturaEventNotificationTemplate': KalturaEventNotificationTemplate,
             'KalturaEventFieldCondition': KalturaEventFieldCondition,

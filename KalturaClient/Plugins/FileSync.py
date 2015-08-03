@@ -338,37 +338,6 @@ class KalturaFileSync(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFileSyncListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaFileSync
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFileSync), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFileSyncListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaFileSyncListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFileSyncBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -741,6 +710,37 @@ class KalturaFileSyncBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFileSyncListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFileSync
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaFileSync), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileSyncListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFileSyncListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFileSyncFilter(KalturaFileSyncBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -861,8 +861,8 @@ class KalturaFileSyncClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaFileSync': KalturaFileSync,
-            'KalturaFileSyncListResponse': KalturaFileSyncListResponse,
             'KalturaFileSyncBaseFilter': KalturaFileSyncBaseFilter,
+            'KalturaFileSyncListResponse': KalturaFileSyncListResponse,
             'KalturaFileSyncFilter': KalturaFileSyncFilter,
         }
 
