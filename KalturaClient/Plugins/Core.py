@@ -3671,6 +3671,8 @@ class KalturaReportOrderBy(object):
 # @subpackage Client
 class KalturaReportType(object):
     QUIZ = "quiz.QUIZ"
+    QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"
+    QUIZ_USER_AGGREGATE_BY_QUESTION = "quiz.QUIZ_USER_AGGREGATE_BY_QUESTION"
     QUIZ_USER_PERCENTAGE = "quiz.QUIZ_USER_PERCENTAGE"
     TOP_CONTENT = "1"
     CONTENT_DROPOFF = "2"
@@ -3756,6 +3758,7 @@ class KalturaSearchConditionComparison(object):
     GREATER_THAN_OR_EQUAL = "3"
     LESS_THAN = "4"
     LESS_THAN_OR_EQUAL = "5"
+    NOT_EQUAL = "6"
 
     def __init__(self, value):
         self.value = value
@@ -41225,6 +41228,42 @@ class KalturaSearchComparableCondition(KalturaSearchCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaSearchMatchCondition(KalturaSearchCondition):
+    def __init__(self,
+            field=NotImplemented,
+            value=NotImplemented,
+            not_=NotImplemented):
+        KalturaSearchCondition.__init__(self,
+            field,
+            value)
+
+        # @var bool
+        self.not_ = not_
+
+
+    PROPERTY_LOADERS = {
+        'not': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchMatchCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchCondition.toParams(self)
+        kparams.put("objectType", "KalturaSearchMatchCondition")
+        kparams.addBoolIfDefined("not", self.not_)
+        return kparams
+
+    def getNot_(self):
+        return self.not_
+
+    def setNot_(self, newNot_):
+        self.not_ = newNot_
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSiteCondition(KalturaMatchCondition):
     def __init__(self,
             type=NotImplemented,
@@ -55617,6 +55656,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportFilter': KalturaReportFilter,
             'KalturaResponseProfileFilter': KalturaResponseProfileFilter,
             'KalturaSearchComparableCondition': KalturaSearchComparableCondition,
+            'KalturaSearchMatchCondition': KalturaSearchMatchCondition,
             'KalturaSiteCondition': KalturaSiteCondition,
             'KalturaSshImportJobData': KalturaSshImportJobData,
             'KalturaStorageDeleteJobData': KalturaStorageDeleteJobData,
