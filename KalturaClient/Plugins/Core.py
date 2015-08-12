@@ -1457,6 +1457,20 @@ class KalturaApiParameterPermissionItemOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAppTokenHashType(object):
+    MD5 = "MD5"
+    SHA1 = "SHA1"
+    SHA256 = "SHA256"
+    SHA512 = "SHA512"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAppTokenOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     UPDATED_AT_ASC = "+updatedAt"
@@ -4878,7 +4892,8 @@ class KalturaAppToken(KalturaObjectBase):
             sessionType=NotImplemented,
             sessionUserId=NotImplemented,
             sessionDuration=NotImplemented,
-            sessionPrivileges=NotImplemented):
+            sessionPrivileges=NotImplemented,
+            hashType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the application token
@@ -4930,6 +4945,9 @@ class KalturaAppToken(KalturaObjectBase):
         # @var string
         self.sessionPrivileges = sessionPrivileges
 
+        # @var KalturaAppTokenHashType
+        self.hashType = hashType
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -4943,6 +4961,7 @@ class KalturaAppToken(KalturaObjectBase):
         'sessionUserId': getXmlNodeText, 
         'sessionDuration': getXmlNodeInt, 
         'sessionPrivileges': getXmlNodeText, 
+        'hashType': (KalturaEnumsFactory.createString, "KalturaAppTokenHashType"), 
     }
 
     def fromXml(self, node):
@@ -4957,6 +4976,7 @@ class KalturaAppToken(KalturaObjectBase):
         kparams.addStringIfDefined("sessionUserId", self.sessionUserId)
         kparams.addIntIfDefined("sessionDuration", self.sessionDuration)
         kparams.addStringIfDefined("sessionPrivileges", self.sessionPrivileges)
+        kparams.addStringEnumIfDefined("hashType", self.hashType)
         return kparams
 
     def getId(self):
@@ -5006,6 +5026,12 @@ class KalturaAppToken(KalturaObjectBase):
 
     def setSessionPrivileges(self, newSessionPrivileges):
         self.sessionPrivileges = newSessionPrivileges
+
+    def getHashType(self):
+        return self.hashType
+
+    def setHashType(self, newHashType):
+        self.hashType = newHashType
 
 
 # @package Kaltura
@@ -55142,6 +55168,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaApiActionPermissionItemOrderBy': KalturaApiActionPermissionItemOrderBy,
             'KalturaApiParameterPermissionItemAction': KalturaApiParameterPermissionItemAction,
             'KalturaApiParameterPermissionItemOrderBy': KalturaApiParameterPermissionItemOrderBy,
+            'KalturaAppTokenHashType': KalturaAppTokenHashType,
             'KalturaAppTokenOrderBy': KalturaAppTokenOrderBy,
             'KalturaAssetOrderBy': KalturaAssetOrderBy,
             'KalturaAssetParamsOrderBy': KalturaAssetParamsOrderBy,
