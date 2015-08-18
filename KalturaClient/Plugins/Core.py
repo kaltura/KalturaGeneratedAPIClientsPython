@@ -1457,20 +1457,6 @@ class KalturaApiParameterPermissionItemOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAppTokenHashType(object):
-    MD5 = "MD5"
-    SHA1 = "SHA1"
-    SHA256 = "SHA256"
-    SHA512 = "SHA512"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAppTokenOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     UPDATED_AT_ASC = "+updatedAt"
@@ -1556,6 +1542,53 @@ class KalturaAudioCodec(object):
     VORBIS = "vorbis"
     WMA = "wma"
     WMAPRO = "wmapro"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
 
     def __init__(self, value):
         self.value = value
@@ -2017,6 +2050,53 @@ class KalturaConversionProfileType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDataEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDataEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDataEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     END_DATE_ASC = "+endDate"
@@ -2258,6 +2338,53 @@ class KalturaDeliveryProfileType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDocumentEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDocumentEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDurationType(object):
     LONG = "long"
     MEDIUM = "medium"
@@ -2355,6 +2482,61 @@ class KalturaEntryType(object):
     LIVE_STREAM = "7"
     LIVE_CHANNEL = "8"
     DOCUMENT = "10"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaExternalMediaEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaExternalMediaEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
 
     def __init__(self, value):
         self.value = value
@@ -3004,6 +3186,61 @@ class KalturaLiveAssetOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveChannelCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveChannelMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveChannelOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3103,6 +3340,61 @@ class KalturaLiveChannelSegmentType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3188,6 +3480,61 @@ class KalturaLiveReportType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveStreamAdminEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamAdminEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveStreamAdminEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3225,6 +3572,61 @@ class KalturaLiveStreamAdminEntryOrderBy(object):
     UPDATED_AT_DESC = "-updatedAt"
     VIEWS_DESC = "-views"
     WEIGHT_DESC = "-weight"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
 
     def __init__(self, value):
         self.value = value
@@ -3332,6 +3734,61 @@ class KalturaMailType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MEDIA_DATE = "mediaDate"
+    MEDIA_TYPE = "mediaType"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    FLAVOR_PARAMS_IDS = "flavorParamsIds"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3407,6 +3864,58 @@ class KalturaMediaInfoOrderBy(object):
 class KalturaMediaParserType(object):
     MEDIAINFO = "0"
     FFMPEG = "1"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMixEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMixEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
 
     def __init__(self, value):
         self.value = value
@@ -3550,6 +4059,58 @@ class KalturaPermissionOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPlayableEntryCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    LAST_PLAYED_AT = "lastPlayedAt"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    MS_DURATION = "msDuration"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    PLAYS = "plays"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+    VIEWS = "views"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlayableEntryMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    DURATION_TYPE = "durationType"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPlayableEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DURATION_ASC = "+duration"
@@ -3604,6 +4165,53 @@ class KalturaPlaybackProtocol(object):
     RTMP = "rtmp"
     RTSP = "rtsp"
     SILVER_LIGHT = "sl"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistCompareAttribute(object):
+    ACCESS_CONTROL_ID = "accessControlId"
+    CREATED_AT = "createdAt"
+    END_DATE = "endDate"
+    MODERATION_COUNT = "moderationCount"
+    MODERATION_STATUS = "moderationStatus"
+    PARTNER_ID = "partnerId"
+    PARTNER_SORT_VALUE = "partnerSortValue"
+    RANK = "rank"
+    REPLACEMENT_STATUS = "replacementStatus"
+    START_DATE = "startDate"
+    STATUS = "status"
+    TOTAL_RANK = "totalRank"
+    TYPE = "type"
+    UPDATED_AT = "updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistMatchAttribute(object):
+    ADMIN_TAGS = "adminTags"
+    CATEGORIES_IDS = "categoriesIds"
+    CREATOR_ID = "creatorId"
+    DESCRIPTION = "description"
+    GROUP_ID = "groupId"
+    ID = "id"
+    NAME = "name"
+    REFERENCE_ID = "referenceId"
+    REPLACED_ENTRY_ID = "replacedEntryId"
+    REPLACING_ENTRY_ID = "replacingEntryId"
+    SEARCH_TEXT = "searchText"
+    TAGS = "tags"
+    USER_ID = "userId"
 
     def __init__(self, value):
         self.value = value
@@ -4892,8 +5500,7 @@ class KalturaAppToken(KalturaObjectBase):
             sessionType=NotImplemented,
             sessionUserId=NotImplemented,
             sessionDuration=NotImplemented,
-            sessionPrivileges=NotImplemented,
-            hashType=NotImplemented):
+            sessionPrivileges=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the application token
@@ -4945,9 +5552,6 @@ class KalturaAppToken(KalturaObjectBase):
         # @var string
         self.sessionPrivileges = sessionPrivileges
 
-        # @var KalturaAppTokenHashType
-        self.hashType = hashType
-
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -4961,7 +5565,6 @@ class KalturaAppToken(KalturaObjectBase):
         'sessionUserId': getXmlNodeText, 
         'sessionDuration': getXmlNodeInt, 
         'sessionPrivileges': getXmlNodeText, 
-        'hashType': (KalturaEnumsFactory.createString, "KalturaAppTokenHashType"), 
     }
 
     def fromXml(self, node):
@@ -4976,7 +5579,6 @@ class KalturaAppToken(KalturaObjectBase):
         kparams.addStringIfDefined("sessionUserId", self.sessionUserId)
         kparams.addIntIfDefined("sessionDuration", self.sessionDuration)
         kparams.addStringIfDefined("sessionPrivileges", self.sessionPrivileges)
-        kparams.addStringEnumIfDefined("hashType", self.hashType)
         return kparams
 
     def getId(self):
@@ -5026,12 +5628,6 @@ class KalturaAppToken(KalturaObjectBase):
 
     def setSessionPrivileges(self, newSessionPrivileges):
         self.sessionPrivileges = newSessionPrivileges
-
-    def getHashType(self):
-        return self.hashType
-
-    def setHashType(self, newHashType):
-        self.hashType = newHashType
 
 
 # @package Kaltura
@@ -24503,6 +25099,38 @@ class KalturaAssetsParamsResourceContainers(KalturaResource):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAttributeCondition(KalturaSearchItem):
+    def __init__(self,
+            value=NotImplemented):
+        KalturaSearchItem.__init__(self)
+
+        # @var string
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'value': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchItem.toParams(self)
+        kparams.put("objectType", "KalturaAttributeCondition")
+        kparams.addStringIfDefined("value", self.value)
+        return kparams
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAuthenticatedCondition(KalturaCondition):
     def __init__(self,
             type=NotImplemented,
@@ -41218,6 +41846,40 @@ class KalturaResponseProfileFilter(KalturaResponseProfileBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaSearchComparableAttributeCondition(KalturaAttributeCondition):
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented):
+        KalturaAttributeCondition.__init__(self,
+            value)
+
+        # @var KalturaSearchConditionComparison
+        self.comparison = comparison
+
+
+    PROPERTY_LOADERS = {
+        'comparison': (KalturaEnumsFactory.createString, "KalturaSearchConditionComparison"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchComparableAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaSearchComparableAttributeCondition")
+        kparams.addStringEnumIfDefined("comparison", self.comparison)
+        return kparams
+
+    def getComparison(self):
+        return self.comparison
+
+    def setComparison(self, newComparison):
+        self.comparison = newComparison
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSearchComparableCondition(KalturaSearchCondition):
     def __init__(self,
             field=NotImplemented,
@@ -41250,6 +41912,40 @@ class KalturaSearchComparableCondition(KalturaSearchCondition):
 
     def setComparison(self, newComparison):
         self.comparison = newComparison
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSearchMatchAttributeCondition(KalturaAttributeCondition):
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented):
+        KalturaAttributeCondition.__init__(self,
+            value)
+
+        # @var bool
+        self.not_ = not_
+
+
+    PROPERTY_LOADERS = {
+        'not': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaSearchMatchAttributeCondition")
+        kparams.addBoolIfDefined("not", self.not_)
+        return kparams
+
+    def getNot_(self):
+        return self.not_
+
+    def setNot_(self, newNot_):
+        self.not_ = newNot_
 
 
 # @package Kaltura
@@ -42339,6 +43035,86 @@ class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBaseEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaBaseEntry attributes. Use KalturaBaseEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaBaseEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaBaseEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaBaseEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaBaseEntry attributes. Use KalturaBaseEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaBaseEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaBaseEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaBaseEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBatchJobFilterExt(KalturaBatchJobFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -42898,6 +43674,86 @@ class KalturaCountryContextField(KalturaStringField):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDataEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaDataEntry attributes. Use KalturaDataEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaDataEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaDataEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDataEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaDataEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDataEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaDataEntry attributes. Use KalturaDataEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaDataEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaDataEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDataEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaDataEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter(KalturaDeliveryProfileFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -43348,6 +44204,86 @@ class KalturaDeliveryProfileRtmpBaseFilter(KalturaDeliveryProfileFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDocumentEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaDocumentEntry attributes. Use KalturaDocumentEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaDocumentEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaDocumentEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDocumentEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaDocumentEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDocumentEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaDocumentEntry attributes. Use KalturaDocumentEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaDocumentEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaDocumentEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDocumentEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaDocumentEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEvalBooleanField(KalturaBooleanField):
     """Evaluates PHP statement, depends on the execution context"""
 
@@ -43422,6 +44358,86 @@ class KalturaEvalStringField(KalturaStringField):
 
     def setCode(self, newCode):
         self.code = newCode
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaExternalMediaEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaExternalMediaEntry attributes. Use KalturaExternalMediaEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaExternalMediaEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaExternalMediaEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaExternalMediaEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaExternalMediaEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaExternalMediaEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaExternalMediaEntry attributes. Use KalturaExternalMediaEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaExternalMediaEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaExternalMediaEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaExternalMediaEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaExternalMediaEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
 
 
 # @package Kaltura
@@ -43616,6 +44632,86 @@ class KalturaIpAddressContextField(KalturaStringField):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveChannelCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveChannel attributes. Use KalturaLiveChannelCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaLiveChannelCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveChannelCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveChannelMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveChannel attributes. Use KalturaLiveChannelMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaLiveChannelMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveChannelMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveChannelMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveChannelMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveChannelSegmentFilter(KalturaLiveChannelSegmentBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -43656,6 +44752,326 @@ class KalturaLiveChannelSegmentFilter(KalturaLiveChannelSegmentBaseFilter):
         kparams = KalturaLiveChannelSegmentBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaLiveChannelSegmentFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveEntry attributes. Use KalturaLiveEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaLiveEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveEntry attributes. Use KalturaLiveEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaLiveEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamAdminEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveStreamAdminEntry attributes. Use KalturaLiveStreamAdminEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaLiveStreamAdminEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveStreamAdminEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamAdminEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamAdminEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamAdminEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveStreamAdminEntry attributes. Use KalturaLiveStreamAdminEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaLiveStreamAdminEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveStreamAdminEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamAdminEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamAdminEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveStreamEntry attributes. Use KalturaLiveStreamEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaLiveStreamEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveStreamEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaLiveStreamEntry attributes. Use KalturaLiveStreamEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaLiveStreamEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaLiveStreamEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaMediaEntry attributes. Use KalturaMediaEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaMediaEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaMediaEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaMediaEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaMediaEntry attributes. Use KalturaMediaEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaMediaEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaMediaEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaMediaEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
 
 
 # @package Kaltura
@@ -43784,6 +45200,86 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
         kparams = KalturaFlavorParamsOutput.toParams(self)
         kparams.put("objectType", "KalturaMediaFlavorParamsOutput")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMixEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaMixEntry attributes. Use KalturaMixEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaMixEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaMixEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMixEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaMixEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMixEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaMixEntry attributes. Use KalturaMixEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaMixEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaMixEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMixEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaMixEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
 
 
 # @package Kaltura
@@ -43922,6 +45418,166 @@ class KalturaPermissionItemFilter(KalturaPermissionItemBaseFilter):
         kparams = KalturaPermissionItemBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaPermissionItemFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlayableEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaPlayableEntry attributes. Use KalturaPlayableEntryCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaPlayableEntryCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaPlayableEntryCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlayableEntryCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaPlayableEntryCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlayableEntryMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaPlayableEntry attributes. Use KalturaPlayableEntryMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaPlayableEntryMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaPlayableEntryMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlayableEntryMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaPlayableEntryMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaPlaylist attributes. Use KalturaPlaylistCompareAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            comparison=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchComparableAttributeCondition.__init__(self,
+            value,
+            comparison)
+
+        # @var KalturaPlaylistCompareAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaPlaylistCompareAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchComparableAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaylistCompareAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchComparableAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaPlaylistCompareAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaylistMatchAttributeCondition(KalturaSearchMatchAttributeCondition):
+    """Auto-generated class.
+     Used to search KalturaPlaylist attributes. Use KalturaPlaylistMatchAttribute enum to provide attribute name.
+    /"""
+
+    def __init__(self,
+            value=NotImplemented,
+            not_=NotImplemented,
+            attribute=NotImplemented):
+        KalturaSearchMatchAttributeCondition.__init__(self,
+            value,
+            not_)
+
+        # @var KalturaPlaylistMatchAttribute
+        self.attribute = attribute
+
+
+    PROPERTY_LOADERS = {
+        'attribute': (KalturaEnumsFactory.createString, "KalturaPlaylistMatchAttribute"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchMatchAttributeCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaylistMatchAttributeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchMatchAttributeCondition.toParams(self)
+        kparams.put("objectType", "KalturaPlaylistMatchAttributeCondition")
+        kparams.addStringEnumIfDefined("attribute", self.attribute)
+        return kparams
+
+    def getAttribute(self):
+        return self.attribute
+
+    def setAttribute(self, newAttribute):
+        self.attribute = newAttribute
 
 
 # @package Kaltura
@@ -55168,13 +56824,14 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaApiActionPermissionItemOrderBy': KalturaApiActionPermissionItemOrderBy,
             'KalturaApiParameterPermissionItemAction': KalturaApiParameterPermissionItemAction,
             'KalturaApiParameterPermissionItemOrderBy': KalturaApiParameterPermissionItemOrderBy,
-            'KalturaAppTokenHashType': KalturaAppTokenHashType,
             'KalturaAppTokenOrderBy': KalturaAppTokenOrderBy,
             'KalturaAssetOrderBy': KalturaAssetOrderBy,
             'KalturaAssetParamsOrderBy': KalturaAssetParamsOrderBy,
             'KalturaAssetParamsOutputOrderBy': KalturaAssetParamsOutputOrderBy,
             'KalturaAssetType': KalturaAssetType,
             'KalturaAudioCodec': KalturaAudioCodec,
+            'KalturaBaseEntryCompareAttribute': KalturaBaseEntryCompareAttribute,
+            'KalturaBaseEntryMatchAttribute': KalturaBaseEntryMatchAttribute,
             'KalturaBaseEntryOrderBy': KalturaBaseEntryOrderBy,
             'KalturaBaseSyndicationFeedOrderBy': KalturaBaseSyndicationFeedOrderBy,
             'KalturaBatchJobOrderBy': KalturaBatchJobOrderBy,
@@ -55198,6 +56855,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaConversionProfileOrderBy': KalturaConversionProfileOrderBy,
             'KalturaConversionProfileStatus': KalturaConversionProfileStatus,
             'KalturaConversionProfileType': KalturaConversionProfileType,
+            'KalturaDataEntryCompareAttribute': KalturaDataEntryCompareAttribute,
+            'KalturaDataEntryMatchAttribute': KalturaDataEntryMatchAttribute,
             'KalturaDataEntryOrderBy': KalturaDataEntryOrderBy,
             'KalturaDeliveryProfileAkamaiAppleHttpManifestOrderBy': KalturaDeliveryProfileAkamaiAppleHttpManifestOrderBy,
             'KalturaDeliveryProfileAkamaiHdsOrderBy': KalturaDeliveryProfileAkamaiHdsOrderBy,
@@ -55211,6 +56870,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileOrderBy': KalturaDeliveryProfileOrderBy,
             'KalturaDeliveryProfileRtmpOrderBy': KalturaDeliveryProfileRtmpOrderBy,
             'KalturaDeliveryProfileType': KalturaDeliveryProfileType,
+            'KalturaDocumentEntryCompareAttribute': KalturaDocumentEntryCompareAttribute,
+            'KalturaDocumentEntryMatchAttribute': KalturaDocumentEntryMatchAttribute,
             'KalturaDurationType': KalturaDurationType,
             'KalturaDynamicEnum': KalturaDynamicEnum,
             'KalturaEdgeServerOrderBy': KalturaEdgeServerOrderBy,
@@ -55218,6 +56879,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
             'KalturaEntryStatus': KalturaEntryStatus,
             'KalturaEntryType': KalturaEntryType,
+            'KalturaExternalMediaEntryCompareAttribute': KalturaExternalMediaEntryCompareAttribute,
+            'KalturaExternalMediaEntryMatchAttribute': KalturaExternalMediaEntryMatchAttribute,
             'KalturaFileAssetObjectType': KalturaFileAssetObjectType,
             'KalturaFileAssetOrderBy': KalturaFileAssetOrderBy,
             'KalturaFileAssetStatus': KalturaFileAssetStatus,
@@ -55237,23 +56900,35 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLanguage': KalturaLanguage,
             'KalturaLanguageCode': KalturaLanguageCode,
             'KalturaLiveAssetOrderBy': KalturaLiveAssetOrderBy,
+            'KalturaLiveChannelCompareAttribute': KalturaLiveChannelCompareAttribute,
+            'KalturaLiveChannelMatchAttribute': KalturaLiveChannelMatchAttribute,
             'KalturaLiveChannelOrderBy': KalturaLiveChannelOrderBy,
             'KalturaLiveChannelSegmentOrderBy': KalturaLiveChannelSegmentOrderBy,
             'KalturaLiveChannelSegmentStatus': KalturaLiveChannelSegmentStatus,
             'KalturaLiveChannelSegmentTriggerType': KalturaLiveChannelSegmentTriggerType,
             'KalturaLiveChannelSegmentType': KalturaLiveChannelSegmentType,
+            'KalturaLiveEntryCompareAttribute': KalturaLiveEntryCompareAttribute,
+            'KalturaLiveEntryMatchAttribute': KalturaLiveEntryMatchAttribute,
             'KalturaLiveEntryOrderBy': KalturaLiveEntryOrderBy,
             'KalturaLiveParamsOrderBy': KalturaLiveParamsOrderBy,
             'KalturaLiveReportOrderBy': KalturaLiveReportOrderBy,
             'KalturaLiveReportType': KalturaLiveReportType,
+            'KalturaLiveStreamAdminEntryCompareAttribute': KalturaLiveStreamAdminEntryCompareAttribute,
+            'KalturaLiveStreamAdminEntryMatchAttribute': KalturaLiveStreamAdminEntryMatchAttribute,
             'KalturaLiveStreamAdminEntryOrderBy': KalturaLiveStreamAdminEntryOrderBy,
+            'KalturaLiveStreamEntryCompareAttribute': KalturaLiveStreamEntryCompareAttribute,
+            'KalturaLiveStreamEntryMatchAttribute': KalturaLiveStreamEntryMatchAttribute,
             'KalturaLiveStreamEntryOrderBy': KalturaLiveStreamEntryOrderBy,
             'KalturaMailType': KalturaMailType,
+            'KalturaMediaEntryCompareAttribute': KalturaMediaEntryCompareAttribute,
+            'KalturaMediaEntryMatchAttribute': KalturaMediaEntryMatchAttribute,
             'KalturaMediaEntryOrderBy': KalturaMediaEntryOrderBy,
             'KalturaMediaFlavorParamsOrderBy': KalturaMediaFlavorParamsOrderBy,
             'KalturaMediaFlavorParamsOutputOrderBy': KalturaMediaFlavorParamsOutputOrderBy,
             'KalturaMediaInfoOrderBy': KalturaMediaInfoOrderBy,
             'KalturaMediaParserType': KalturaMediaParserType,
+            'KalturaMixEntryCompareAttribute': KalturaMixEntryCompareAttribute,
+            'KalturaMixEntryMatchAttribute': KalturaMixEntryMatchAttribute,
             'KalturaMixEntryOrderBy': KalturaMixEntryOrderBy,
             'KalturaModerationFlagStatus': KalturaModerationFlagStatus,
             'KalturaModerationObjectType': KalturaModerationObjectType,
@@ -55261,8 +56936,12 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionItemOrderBy': KalturaPermissionItemOrderBy,
             'KalturaPermissionItemType': KalturaPermissionItemType,
             'KalturaPermissionOrderBy': KalturaPermissionOrderBy,
+            'KalturaPlayableEntryCompareAttribute': KalturaPlayableEntryCompareAttribute,
+            'KalturaPlayableEntryMatchAttribute': KalturaPlayableEntryMatchAttribute,
             'KalturaPlayableEntryOrderBy': KalturaPlayableEntryOrderBy,
             'KalturaPlaybackProtocol': KalturaPlaybackProtocol,
+            'KalturaPlaylistCompareAttribute': KalturaPlaylistCompareAttribute,
+            'KalturaPlaylistMatchAttribute': KalturaPlaylistMatchAttribute,
             'KalturaPlaylistOrderBy': KalturaPlaylistOrderBy,
             'KalturaQuizUserEntryOrderBy': KalturaQuizUserEntryOrderBy,
             'KalturaReportInterval': KalturaReportInterval,
@@ -55469,6 +57148,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsOutput': KalturaAssetParamsOutput,
             'KalturaAssetPropertiesCompareCondition': KalturaAssetPropertiesCompareCondition,
             'KalturaAssetsParamsResourceContainers': KalturaAssetsParamsResourceContainers,
+            'KalturaAttributeCondition': KalturaAttributeCondition,
             'KalturaAuthenticatedCondition': KalturaAuthenticatedCondition,
             'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
@@ -55682,7 +57362,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRemoteStorageResources': KalturaRemoteStorageResources,
             'KalturaReportFilter': KalturaReportFilter,
             'KalturaResponseProfileFilter': KalturaResponseProfileFilter,
+            'KalturaSearchComparableAttributeCondition': KalturaSearchComparableAttributeCondition,
             'KalturaSearchComparableCondition': KalturaSearchComparableCondition,
+            'KalturaSearchMatchAttributeCondition': KalturaSearchMatchAttributeCondition,
             'KalturaSearchMatchCondition': KalturaSearchMatchCondition,
             'KalturaSiteCondition': KalturaSiteCondition,
             'KalturaSshImportJobData': KalturaSshImportJobData,
@@ -55702,6 +57384,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAmazonS3StorageProfileBaseFilter': KalturaAmazonS3StorageProfileBaseFilter,
             'KalturaAssetFilter': KalturaAssetFilter,
             'KalturaAssetParamsFilter': KalturaAssetParamsFilter,
+            'KalturaBaseEntryCompareAttributeCondition': KalturaBaseEntryCompareAttributeCondition,
+            'KalturaBaseEntryMatchAttributeCondition': KalturaBaseEntryMatchAttributeCondition,
             'KalturaBatchJobFilterExt': KalturaBatchJobFilterExt,
             'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
             'KalturaCategoryFilter': KalturaCategoryFilter,
@@ -55709,6 +57393,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaConversionProfileAssetParamsFilter': KalturaConversionProfileAssetParamsFilter,
             'KalturaCoordinatesContextField': KalturaCoordinatesContextField,
             'KalturaCountryContextField': KalturaCountryContextField,
+            'KalturaDataEntryCompareAttributeCondition': KalturaDataEntryCompareAttributeCondition,
+            'KalturaDataEntryMatchAttributeCondition': KalturaDataEntryMatchAttributeCondition,
             'KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter': KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter,
             'KalturaDeliveryProfileAkamaiHdsBaseFilter': KalturaDeliveryProfileAkamaiHdsBaseFilter,
             'KalturaDeliveryProfileAkamaiHttpBaseFilter': KalturaDeliveryProfileAkamaiHttpBaseFilter,
@@ -55718,19 +57404,39 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLightBaseFilter': KalturaDeliveryProfileGenericSilverLightBaseFilter,
             'KalturaDeliveryProfileLiveAppleHttpBaseFilter': KalturaDeliveryProfileLiveAppleHttpBaseFilter,
             'KalturaDeliveryProfileRtmpBaseFilter': KalturaDeliveryProfileRtmpBaseFilter,
+            'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
+            'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
+            'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
+            'KalturaExternalMediaEntryMatchAttributeCondition': KalturaExternalMediaEntryMatchAttributeCondition,
             'KalturaFileAssetFilter': KalturaFileAssetFilter,
             'KalturaGenericSyndicationFeedBaseFilter': KalturaGenericSyndicationFeedBaseFilter,
             'KalturaGoogleVideoSyndicationFeedBaseFilter': KalturaGoogleVideoSyndicationFeedBaseFilter,
             'KalturaGroupUserFilter': KalturaGroupUserFilter,
             'KalturaITunesSyndicationFeedBaseFilter': KalturaITunesSyndicationFeedBaseFilter,
             'KalturaIpAddressContextField': KalturaIpAddressContextField,
+            'KalturaLiveChannelCompareAttributeCondition': KalturaLiveChannelCompareAttributeCondition,
+            'KalturaLiveChannelMatchAttributeCondition': KalturaLiveChannelMatchAttributeCondition,
             'KalturaLiveChannelSegmentFilter': KalturaLiveChannelSegmentFilter,
+            'KalturaLiveEntryCompareAttributeCondition': KalturaLiveEntryCompareAttributeCondition,
+            'KalturaLiveEntryMatchAttributeCondition': KalturaLiveEntryMatchAttributeCondition,
+            'KalturaLiveStreamAdminEntryCompareAttributeCondition': KalturaLiveStreamAdminEntryCompareAttributeCondition,
+            'KalturaLiveStreamAdminEntryMatchAttributeCondition': KalturaLiveStreamAdminEntryMatchAttributeCondition,
+            'KalturaLiveStreamEntryCompareAttributeCondition': KalturaLiveStreamEntryCompareAttributeCondition,
+            'KalturaLiveStreamEntryMatchAttributeCondition': KalturaLiveStreamEntryMatchAttributeCondition,
+            'KalturaMediaEntryCompareAttributeCondition': KalturaMediaEntryCompareAttributeCondition,
+            'KalturaMediaEntryMatchAttributeCondition': KalturaMediaEntryMatchAttributeCondition,
             'KalturaMediaFlavorParamsOutput': KalturaMediaFlavorParamsOutput,
+            'KalturaMixEntryCompareAttributeCondition': KalturaMixEntryCompareAttributeCondition,
+            'KalturaMixEntryMatchAttributeCondition': KalturaMixEntryMatchAttributeCondition,
             'KalturaObjectIdField': KalturaObjectIdField,
             'KalturaPermissionFilter': KalturaPermissionFilter,
             'KalturaPermissionItemFilter': KalturaPermissionItemFilter,
+            'KalturaPlayableEntryCompareAttributeCondition': KalturaPlayableEntryCompareAttributeCondition,
+            'KalturaPlayableEntryMatchAttributeCondition': KalturaPlayableEntryMatchAttributeCondition,
+            'KalturaPlaylistCompareAttributeCondition': KalturaPlaylistCompareAttributeCondition,
+            'KalturaPlaylistMatchAttributeCondition': KalturaPlaylistMatchAttributeCondition,
             'KalturaQuizUserEntryBaseFilter': KalturaQuizUserEntryBaseFilter,
             'KalturaServerFileResource': KalturaServerFileResource,
             'KalturaSshUrlResource': KalturaSshUrlResource,
