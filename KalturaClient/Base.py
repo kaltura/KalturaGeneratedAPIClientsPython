@@ -264,7 +264,7 @@ class KalturaConfiguration(object):
         self.serviceUrl                 = serviceUrl
         self.partnerId                  = None
         self.format                     = KALTURA_SERVICE_FORMAT_XML
-        self.clientTag                  = "python:15-08-18"
+        self.clientTag                  = "python:15-08-19"
         self.requestTimeout             = 120
         
         if partnerId != None and type(partnerId) != int:
