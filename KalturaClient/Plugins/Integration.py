@@ -175,6 +175,36 @@ class KalturaIntegrationJobData(KalturaJobData):
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaIntegrationService(KalturaServiceBase):
+    """Integration service lets you dispatch integration tasks"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def dispatch(self, data, objectType, objectId):
+        """Dispatch integration task"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("data", data)
+        kparams.addStringIfDefined("objectType", objectType)
+        kparams.addStringIfDefined("objectId", objectId)
+        self.client.queueServiceActionCall("integration_integration", "dispatch", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
+
+    def notify(self, id):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("integration_integration", "notify", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 ########## main ##########
 class KalturaIntegrationClientPlugin(KalturaClientPlugin):
     # KalturaIntegrationClientPlugin
@@ -190,6 +220,7 @@ class KalturaIntegrationClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'integration': KalturaIntegrationService,
         }
 
     def getEnums(self):

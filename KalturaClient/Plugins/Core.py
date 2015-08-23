@@ -1650,6 +1650,25 @@ class KalturaBaseSyndicationFeedOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBatchJobObjectType(object):
+    ENTRY_DISTRIBUTION = "contentDistribution.EntryDistribution"
+    DROP_FOLDER_FILE = "dropFolderXmlBulkUpload.DropFolderFile"
+    METADATA = "metadata.Metadata"
+    METADATA_PROFILE = "metadata.MetadataProfile"
+    SCHEDULED_TASK_PROFILE = "scheduledTask.ScheduledTaskProfile"
+    ENTRY = "1"
+    CATEGORY = "2"
+    FILE_SYNC = "3"
+    ASSET = "4"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBatchJobOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     ESTIMATED_EFFORT_ASC = "+estimatedEffort"
@@ -1692,6 +1711,7 @@ class KalturaBatchJobType(object):
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
+    INTEGRATION = "integration.Integration"
     SCHEDULED_TASK = "scheduledTask.ScheduledTask"
     INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
     TAG_RESOLVE = "tagSearch.TagResolve"
@@ -56834,6 +56854,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryMatchAttribute': KalturaBaseEntryMatchAttribute,
             'KalturaBaseEntryOrderBy': KalturaBaseEntryOrderBy,
             'KalturaBaseSyndicationFeedOrderBy': KalturaBaseSyndicationFeedOrderBy,
+            'KalturaBatchJobObjectType': KalturaBatchJobObjectType,
             'KalturaBatchJobOrderBy': KalturaBatchJobOrderBy,
             'KalturaBatchJobType': KalturaBatchJobType,
             'KalturaBulkUploadAction': KalturaBulkUploadAction,
