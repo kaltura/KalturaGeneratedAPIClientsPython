@@ -165,7 +165,8 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
             restrictEntryByMetadata=NotImplemented,
             language=NotImplemented,
             audioThumbEntryId=NotImplemented,
-            liveThumbEntryId=NotImplemented):
+            liveThumbEntryId=NotImplemented,
+            timeAlignedRenditions=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -358,6 +359,9 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
         # @var string
         self.liveThumbEntryId = liveThumbEntryId
 
+        # @var bool
+        self.timeAlignedRenditions = timeAlignedRenditions
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -422,6 +426,7 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
         'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
         'audioThumbEntryId': getXmlNodeText, 
         'liveThumbEntryId': getXmlNodeText, 
+        'timeAlignedRenditions': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -492,6 +497,7 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
         kparams.addStringEnumIfDefined("language", self.language)
         kparams.addStringIfDefined("audioThumbEntryId", self.audioThumbEntryId)
         kparams.addStringIfDefined("liveThumbEntryId", self.liveThumbEntryId)
+        kparams.addBoolIfDefined("timeAlignedRenditions", self.timeAlignedRenditions)
         return kparams
 
     def getId(self):
@@ -862,6 +868,12 @@ class KalturaSystemPartnerConfiguration(KalturaObjectBase):
 
     def setLiveThumbEntryId(self, newLiveThumbEntryId):
         self.liveThumbEntryId = newLiveThumbEntryId
+
+    def getTimeAlignedRenditions(self):
+        return self.timeAlignedRenditions
+
+    def setTimeAlignedRenditions(self, newTimeAlignedRenditions):
+        self.timeAlignedRenditions = newTimeAlignedRenditions
 
 
 # @package Kaltura
@@ -1364,6 +1376,7 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
             partnerPackageEqual=NotImplemented,
             partnerPackageGreaterThanOrEqual=NotImplemented,
             partnerPackageLessThanOrEqual=NotImplemented,
+            partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
             partnerParentIdEqual=NotImplemented,
@@ -1383,6 +1396,7 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
             partnerPackageEqual,
             partnerPackageGreaterThanOrEqual,
             partnerPackageLessThanOrEqual,
+            partnerPackageIn,
             partnerGroupTypeEqual,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
 

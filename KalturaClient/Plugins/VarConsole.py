@@ -466,6 +466,7 @@ class KalturaVarConsolePartnerFilter(KalturaPartnerFilter):
             partnerPackageEqual=NotImplemented,
             partnerPackageGreaterThanOrEqual=NotImplemented,
             partnerPackageLessThanOrEqual=NotImplemented,
+            partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
             groupTypeEq=NotImplemented,
@@ -486,6 +487,7 @@ class KalturaVarConsolePartnerFilter(KalturaPartnerFilter):
             partnerPackageEqual,
             partnerPackageGreaterThanOrEqual,
             partnerPackageLessThanOrEqual,
+            partnerPackageIn,
             partnerGroupTypeEqual,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
 

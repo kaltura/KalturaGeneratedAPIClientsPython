@@ -18203,7 +18203,8 @@ class KalturaPartner(KalturaObjectBase):
             logoutUrl=NotImplemented,
             partnerParentId=NotImplemented,
             crmId=NotImplemented,
-            referenceId=NotImplemented):
+            referenceId=NotImplemented,
+            timeAlignedRenditions=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -18391,6 +18392,10 @@ class KalturaPartner(KalturaObjectBase):
         # @var string
         self.referenceId = referenceId
 
+        # @var bool
+        # @readonly
+        self.timeAlignedRenditions = timeAlignedRenditions
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -18445,6 +18450,7 @@ class KalturaPartner(KalturaObjectBase):
         'partnerParentId': getXmlNodeInt, 
         'crmId': getXmlNodeText, 
         'referenceId': getXmlNodeText, 
+        'timeAlignedRenditions': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -18727,6 +18733,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def setReferenceId(self, newReferenceId):
         self.referenceId = newReferenceId
+
+    def getTimeAlignedRenditions(self):
+        return self.timeAlignedRenditions
 
 
 # @package Kaltura
@@ -33303,6 +33312,7 @@ class KalturaPartnerBaseFilter(KalturaFilter):
             partnerPackageEqual=NotImplemented,
             partnerPackageGreaterThanOrEqual=NotImplemented,
             partnerPackageLessThanOrEqual=NotImplemented,
+            partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented):
         KalturaFilter.__init__(self,
@@ -33345,6 +33355,9 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         # @var int
         self.partnerPackageLessThanOrEqual = partnerPackageLessThanOrEqual
 
+        # @var string
+        self.partnerPackageIn = partnerPackageIn
+
         # @var KalturaPartnerGroupType
         self.partnerGroupTypeEqual = partnerGroupTypeEqual
 
@@ -33365,6 +33378,7 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         'partnerPackageEqual': getXmlNodeInt, 
         'partnerPackageGreaterThanOrEqual': getXmlNodeInt, 
         'partnerPackageLessThanOrEqual': getXmlNodeInt, 
+        'partnerPackageIn': getXmlNodeText, 
         'partnerGroupTypeEqual': (KalturaEnumsFactory.createInt, "KalturaPartnerGroupType"), 
         'partnerNameDescriptionWebsiteAdminNameAdminEmailLike': getXmlNodeText, 
     }
@@ -33388,6 +33402,7 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         kparams.addIntIfDefined("partnerPackageEqual", self.partnerPackageEqual)
         kparams.addIntIfDefined("partnerPackageGreaterThanOrEqual", self.partnerPackageGreaterThanOrEqual)
         kparams.addIntIfDefined("partnerPackageLessThanOrEqual", self.partnerPackageLessThanOrEqual)
+        kparams.addStringIfDefined("partnerPackageIn", self.partnerPackageIn)
         kparams.addIntEnumIfDefined("partnerGroupTypeEqual", self.partnerGroupTypeEqual)
         kparams.addStringIfDefined("partnerNameDescriptionWebsiteAdminNameAdminEmailLike", self.partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
         return kparams
@@ -33463,6 +33478,12 @@ class KalturaPartnerBaseFilter(KalturaFilter):
 
     def setPartnerPackageLessThanOrEqual(self, newPartnerPackageLessThanOrEqual):
         self.partnerPackageLessThanOrEqual = newPartnerPackageLessThanOrEqual
+
+    def getPartnerPackageIn(self):
+        return self.partnerPackageIn
+
+    def setPartnerPackageIn(self, newPartnerPackageIn):
+        self.partnerPackageIn = newPartnerPackageIn
 
     def getPartnerGroupTypeEqual(self):
         return self.partnerGroupTypeEqual
@@ -41011,6 +41032,7 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerPackageEqual=NotImplemented,
             partnerPackageGreaterThanOrEqual=NotImplemented,
             partnerPackageLessThanOrEqual=NotImplemented,
+            partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented):
         KalturaPartnerBaseFilter.__init__(self,
@@ -41028,6 +41050,7 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerPackageEqual,
             partnerPackageGreaterThanOrEqual,
             partnerPackageLessThanOrEqual,
+            partnerPackageIn,
             partnerGroupTypeEqual,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
 
