@@ -4383,6 +4383,7 @@ class KalturaRuleActionType(object):
     ADD_TO_STORAGE = "4"
     LIMIT_DELIVERY_PROFILES = "5"
     SERVE_FROM_REMOTE_SERVER = "6"
+    REQUEST_HOST_REGEX = "7"
 
     def __init__(self, value):
         self.value = value
@@ -24408,6 +24409,54 @@ class KalturaAccessControlListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
+    def __init__(self,
+            type=NotImplemented,
+            pattern=NotImplemented,
+            replacement=NotImplemented):
+        KalturaRuleAction.__init__(self,
+            type)
+
+        # Request host regex pattern
+        # @var string
+        self.pattern = pattern
+
+        # Request host regex replacment
+        # @var string
+        self.replacement = replacement
+
+
+    PROPERTY_LOADERS = {
+        'pattern': getXmlNodeText, 
+        'replacement': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRuleAction.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlModifyRequestHostRegexAction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRuleAction.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlModifyRequestHostRegexAction")
+        kparams.addStringIfDefined("pattern", self.pattern)
+        kparams.addStringIfDefined("replacement", self.replacement)
+        return kparams
+
+    def getPattern(self):
+        return self.pattern
+
+    def setPattern(self, newPattern):
+        self.pattern = newPattern
+
+    def getReplacement(self):
+        return self.replacement
+
+    def setReplacement(self, newReplacement):
+        self.replacement = newReplacement
 
 
 # @package Kaltura
@@ -57207,6 +57256,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlLimitDeliveryProfilesAction': KalturaAccessControlLimitDeliveryProfilesAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
             'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
+            'KalturaAccessControlModifyRequestHostRegexAction': KalturaAccessControlModifyRequestHostRegexAction,
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
             'KalturaAccessControlProfileListResponse': KalturaAccessControlProfileListResponse,
             'KalturaAccessControlServeRemoteEdgeServerAction': KalturaAccessControlServeRemoteEdgeServerAction,
