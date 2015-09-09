@@ -35,6 +35,7 @@ from ..Base import *
 # @package Kaltura
 # @subpackage Client
 class KalturaIntegrationProviderType(object):
+    CIELO24 = "cielo24.Cielo24"
     VOICEBASE = "voicebase.Voicebase"
 
     def __init__(self, value):

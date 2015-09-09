@@ -29,7 +29,7 @@
 # @subpackage Client
 from ..Base import *
 
-API_VERSION = '3.2.0'
+API_VERSION = '3.3.0'
 
 ########## enums ##########
 # @package Kaltura
