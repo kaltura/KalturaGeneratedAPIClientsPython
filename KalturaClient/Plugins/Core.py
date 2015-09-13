@@ -50163,7 +50163,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50271,10 +50272,14 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
         # @var KalturaNullableBoolean
         self.isRecordedEntryIdEmpty = isRecordedEntryIdEmpty
 
+        # @var string
+        self.hasMediaServerHostname = hasMediaServerHostname
+
 
     PROPERTY_LOADERS = {
         'isLive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'isRecordedEntryIdEmpty': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'hasMediaServerHostname': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -50286,6 +50291,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
         kparams.put("objectType", "KalturaLiveEntryFilter")
         kparams.addIntEnumIfDefined("isLive", self.isLive)
         kparams.addIntEnumIfDefined("isRecordedEntryIdEmpty", self.isRecordedEntryIdEmpty)
+        kparams.addStringIfDefined("hasMediaServerHostname", self.hasMediaServerHostname)
         return kparams
 
     def getIsLive(self):
@@ -50299,6 +50305,12 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
 
     def setIsRecordedEntryIdEmpty(self, newIsRecordedEntryIdEmpty):
         self.isRecordedEntryIdEmpty = newIsRecordedEntryIdEmpty
+
+    def getHasMediaServerHostname(self):
+        return self.hasMediaServerHostname
+
+    def setHasMediaServerHostname(self, newHasMediaServerHostname):
+        self.hasMediaServerHostname = newHasMediaServerHostname
 
 
 # @package Kaltura
@@ -50447,7 +50459,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50549,7 +50562,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
@@ -50669,7 +50683,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50771,7 +50786,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
@@ -50891,7 +50907,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveChannelBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50993,7 +51010,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
@@ -51113,7 +51131,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveStreamEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -51215,7 +51234,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
@@ -51335,7 +51355,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveStreamEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -51437,7 +51458,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
@@ -51557,7 +51579,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
             isLive=NotImplemented,
-            isRecordedEntryIdEmpty=NotImplemented):
+            isRecordedEntryIdEmpty=NotImplemented,
+            hasMediaServerHostname=NotImplemented):
         KalturaLiveStreamAdminEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -51659,7 +51682,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
             isLive,
-            isRecordedEntryIdEmpty)
+            isRecordedEntryIdEmpty,
+            hasMediaServerHostname)
 
 
     PROPERTY_LOADERS = {
