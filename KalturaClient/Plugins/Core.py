@@ -36032,7 +36032,8 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
             window=NotImplemented,
             key=NotImplemented,
             keyPairId=NotImplemented,
-            rootDir=NotImplemented):
+            rootDir=NotImplemented,
+            limitIpAddress=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
             key)
@@ -36043,10 +36044,14 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
         # @var string
         self.rootDir = rootDir
 
+        # @var bool
+        self.limitIpAddress = limitIpAddress
+
 
     PROPERTY_LOADERS = {
         'keyPairId': getXmlNodeText, 
         'rootDir': getXmlNodeText, 
+        'limitIpAddress': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -36058,6 +36063,7 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
         kparams.put("objectType", "KalturaUrlTokenizerCloudFront")
         kparams.addStringIfDefined("keyPairId", self.keyPairId)
         kparams.addStringIfDefined("rootDir", self.rootDir)
+        kparams.addBoolIfDefined("limitIpAddress", self.limitIpAddress)
         return kparams
 
     def getKeyPairId(self):
@@ -36071,6 +36077,12 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
 
     def setRootDir(self, newRootDir):
         self.rootDir = newRootDir
+
+    def getLimitIpAddress(self):
+        return self.limitIpAddress
+
+    def setLimitIpAddress(self, newLimitIpAddress):
+        self.limitIpAddress = newLimitIpAddress
 
 
 # @package Kaltura
