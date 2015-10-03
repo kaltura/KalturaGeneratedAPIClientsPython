@@ -603,7 +603,9 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent=NotImplemented,
             userIdCurrent=NotImplemented,
             parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
+            parentIdIn=NotImplemented,
+            quizUserEntryIdEqual=NotImplemented,
+            quizUserEntryIdIn=NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -645,10 +647,18 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
         # @var string
         self.parentIdIn = parentIdIn
 
+        # @var string
+        self.quizUserEntryIdEqual = quizUserEntryIdEqual
+
+        # @var string
+        self.quizUserEntryIdIn = quizUserEntryIdIn
+
 
     PROPERTY_LOADERS = {
         'parentIdEqual': getXmlNodeText, 
         'parentIdIn': getXmlNodeText, 
+        'quizUserEntryIdEqual': getXmlNodeText, 
+        'quizUserEntryIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -660,6 +670,8 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
         kparams.put("objectType", "KalturaAnswerCuePointBaseFilter")
         kparams.addStringIfDefined("parentIdEqual", self.parentIdEqual)
         kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
+        kparams.addStringIfDefined("quizUserEntryIdEqual", self.quizUserEntryIdEqual)
+        kparams.addStringIfDefined("quizUserEntryIdIn", self.quizUserEntryIdIn)
         return kparams
 
     def getParentIdEqual(self):
@@ -673,6 +685,18 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
 
     def setParentIdIn(self, newParentIdIn):
         self.parentIdIn = newParentIdIn
+
+    def getQuizUserEntryIdEqual(self):
+        return self.quizUserEntryIdEqual
+
+    def setQuizUserEntryIdEqual(self, newQuizUserEntryIdEqual):
+        self.quizUserEntryIdEqual = newQuizUserEntryIdEqual
+
+    def getQuizUserEntryIdIn(self):
+        return self.quizUserEntryIdIn
+
+    def setQuizUserEntryIdIn(self, newQuizUserEntryIdIn):
+        self.quizUserEntryIdIn = newQuizUserEntryIdIn
 
 
 # @package Kaltura
@@ -835,7 +859,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             userIdEqualCurrent=NotImplemented,
             userIdCurrent=NotImplemented,
             parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
+            parentIdIn=NotImplemented,
+            quizUserEntryIdEqual=NotImplemented,
+            quizUserEntryIdIn=NotImplemented):
         KalturaAnswerCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -871,7 +897,9 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
             userIdEqualCurrent,
             userIdCurrent,
             parentIdEqual,
-            parentIdIn)
+            parentIdIn,
+            quizUserEntryIdEqual,
+            quizUserEntryIdIn)
 
 
     PROPERTY_LOADERS = {
@@ -1035,6 +1063,17 @@ class KalturaQuizService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaQuizListResponse)
+
+    def servePdf(self, entryId):
+        """creates a pdf from quiz object"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("quiz_quiz", "servePdf", KalturaQuiz, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
 
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):
