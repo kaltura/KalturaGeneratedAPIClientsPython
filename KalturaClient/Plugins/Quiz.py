@@ -152,7 +152,8 @@ class KalturaQuiz(KalturaObjectBase):
             showResultOnAnswer=NotImplemented,
             showCorrectKeyOnAnswer=NotImplemented,
             allowAnswerUpdate=NotImplemented,
-            showCorrectAfterSubmission=NotImplemented):
+            showCorrectAfterSubmission=NotImplemented,
+            allowDownload=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -175,6 +176,9 @@ class KalturaQuiz(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.showCorrectAfterSubmission = showCorrectAfterSubmission
 
+        # @var KalturaNullableBoolean
+        self.allowDownload = allowDownload
+
 
     PROPERTY_LOADERS = {
         'version': getXmlNodeInt, 
@@ -183,6 +187,7 @@ class KalturaQuiz(KalturaObjectBase):
         'showCorrectKeyOnAnswer': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'allowAnswerUpdate': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showCorrectAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'allowDownload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -197,6 +202,7 @@ class KalturaQuiz(KalturaObjectBase):
         kparams.addIntEnumIfDefined("showCorrectKeyOnAnswer", self.showCorrectKeyOnAnswer)
         kparams.addIntEnumIfDefined("allowAnswerUpdate", self.allowAnswerUpdate)
         kparams.addIntEnumIfDefined("showCorrectAfterSubmission", self.showCorrectAfterSubmission)
+        kparams.addIntEnumIfDefined("allowDownload", self.allowDownload)
         return kparams
 
     def getVersion(self):
@@ -231,6 +237,12 @@ class KalturaQuiz(KalturaObjectBase):
 
     def setShowCorrectAfterSubmission(self, newShowCorrectAfterSubmission):
         self.showCorrectAfterSubmission = newShowCorrectAfterSubmission
+
+    def getAllowDownload(self):
+        return self.allowDownload
+
+    def setAllowDownload(self, newAllowDownload):
+        self.allowDownload = newAllowDownload
 
 
 # @package Kaltura
@@ -1069,11 +1081,8 @@ class KalturaQuizService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("quiz_quiz", "servePdf", KalturaQuiz, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+        self.client.queueServiceActionCall('quiz_quiz', 'servePdf', None ,kparams)
+        return self.client.getServeUrl()
 
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):
