@@ -17,5 +17,6 @@ notifications:
       - jess.portnoy@kaltura.com
       - Noad.arad@kaltura.com
       - Elad.cohen@kaltura.com
+      - Jonathan.Kanarek@kaltura.com
     on_success: change
     on_failure: always
