@@ -54380,13 +54380,14 @@ class KalturaMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaMediaEntry)
 
-    def getMrss(self, entryId, extendingItemsArray = NotImplemented):
+    def getMrss(self, entryId, extendingItemsArray = NotImplemented, features = NotImplemented):
         """Get MRSS by entry id
              XML will return as an escaped string"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addArrayIfDefined("extendingItemsArray", extendingItemsArray)
+        kparams.addStringIfDefined("features", features)
         self.client.queueServiceActionCall("media", "getMrss", None, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

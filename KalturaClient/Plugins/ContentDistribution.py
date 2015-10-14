@@ -2045,7 +2045,8 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented):
+            itemXpathsToExtend=NotImplemented,
+            useCategoryEntries=NotImplemented):
         KalturaDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -2078,10 +2079,15 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
         # @var array of KalturaExtendingItemMrssParameter
         self.itemXpathsToExtend = itemXpathsToExtend
 
+        # When checking custom XSLT conditions using the fieldConfigArray - address only categories associated with the entry via the categoryEntry object
+        # @var bool
+        self.useCategoryEntries = useCategoryEntries
+
 
     PROPERTY_LOADERS = {
         'fieldConfigArray': (KalturaObjectFactory.createArray, KalturaDistributionFieldConfig), 
         'itemXpathsToExtend': (KalturaObjectFactory.createArray, KalturaExtendingItemMrssParameter), 
+        'useCategoryEntries': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -2093,6 +2099,7 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
         kparams.put("objectType", "KalturaConfigurableDistributionProfile")
         kparams.addArrayIfDefined("fieldConfigArray", self.fieldConfigArray)
         kparams.addArrayIfDefined("itemXpathsToExtend", self.itemXpathsToExtend)
+        kparams.addBoolIfDefined("useCategoryEntries", self.useCategoryEntries)
         return kparams
 
     def getFieldConfigArray(self):
@@ -2106,6 +2113,12 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
 
     def setItemXpathsToExtend(self, newItemXpathsToExtend):
         self.itemXpathsToExtend = newItemXpathsToExtend
+
+    def getUseCategoryEntries(self):
+        return self.useCategoryEntries
+
+    def setUseCategoryEntries(self, newUseCategoryEntries):
+        self.useCategoryEntries = newUseCategoryEntries
 
 
 # @package Kaltura
