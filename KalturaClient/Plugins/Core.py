@@ -1531,6 +1531,7 @@ class KalturaAssetType(object):
     PDF = "document.PDF"
     SWF = "document.SWF"
     TIMED_THUMB_ASSET = "thumbCuePoint.timedThumb"
+    TRANSCRIPT = "transcript.Transcript"
     FLAVOR = "1"
     THUMBNAIL = "2"
     LIVE = "3"
