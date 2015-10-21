@@ -31,7 +31,170 @@ from Core import *
 from ..Base import *
 
 ########## enums ##########
+# @package Kaltura
+# @subpackage Client
+class KalturaLikeOrderBy(object):
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
+# @package Kaltura
+# @subpackage Client
+class KalturaLike(KalturaObjectBase):
+    def __init__(self,
+            entryId=NotImplemented,
+            userId=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the entry that the like belongs to
+        # @var string
+        self.entryId = entryId
+
+        # The id of user that the like belongs to
+        # @var string
+        self.userId = userId
+
+
+    PROPERTY_LOADERS = {
+        'entryId': getXmlNodeText, 
+        'userId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLike.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaLike")
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addStringIfDefined("userId", self.userId)
+        return kparams
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getUserId(self):
+        return self.userId
+
+    def setUserId(self, newUserId):
+        self.userId = newUserId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLikeListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaLike
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaLike), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLikeListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaLikeListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLikeBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            entryIdEqual=NotImplemented,
+            userIdEqual=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.userIdEqual = userIdEqual
+
+
+    PROPERTY_LOADERS = {
+        'entryIdEqual': getXmlNodeText, 
+        'userIdEqual': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLikeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaLikeBaseFilter")
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
+        return kparams
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getUserIdEqual(self):
+        return self.userIdEqual
+
+    def setUserIdEqual(self, newUserIdEqual):
+        self.userIdEqual = newUserIdEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLikeFilter(KalturaLikeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            entryIdEqual=NotImplemented,
+            userIdEqual=NotImplemented):
+        KalturaLikeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            entryIdEqual,
+            userIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaLikeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLikeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLikeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaLikeFilter")
+        return kparams
+
+
 ########## services ##########
 
 # @package Kaltura
@@ -70,6 +233,16 @@ class KalturaLikeService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeBool(resultNode)
 
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("like_like", "list", KalturaLikeListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaLikeListResponse)
+
 ########## main ##########
 class KalturaLikeClientPlugin(KalturaClientPlugin):
     # KalturaLikeClientPlugin
@@ -90,10 +263,15 @@ class KalturaLikeClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaLikeOrderBy': KalturaLikeOrderBy,
         }
 
     def getTypes(self):
         return {
+            'KalturaLike': KalturaLike,
+            'KalturaLikeListResponse': KalturaLikeListResponse,
+            'KalturaLikeBaseFilter': KalturaLikeBaseFilter,
+            'KalturaLikeFilter': KalturaLikeFilter,
         }
 
     # @return string
