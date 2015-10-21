@@ -417,7 +417,8 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
             isRequired=NotImplemented,
             updateOnChange=NotImplemented,
             updateParams=NotImplemented,
-            isDefault=NotImplemented):
+            isDefault=NotImplemented,
+            triggerDeleteOnError=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # A value taken from a connector field enum which associates the current configuration to that connector field
@@ -451,6 +452,10 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         # @readonly
         self.isDefault = isDefault
 
+        # Is an error on this field going to trigger deletion of distributed content?
+        # @var bool
+        self.triggerDeleteOnError = triggerDeleteOnError
+
 
     PROPERTY_LOADERS = {
         'fieldName': getXmlNodeText, 
@@ -460,6 +465,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         'updateOnChange': getXmlNodeBool, 
         'updateParams': (KalturaObjectFactory.createArray, KalturaString), 
         'isDefault': getXmlNodeBool, 
+        'triggerDeleteOnError': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -475,6 +481,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         kparams.addIntEnumIfDefined("isRequired", self.isRequired)
         kparams.addBoolIfDefined("updateOnChange", self.updateOnChange)
         kparams.addArrayIfDefined("updateParams", self.updateParams)
+        kparams.addBoolIfDefined("triggerDeleteOnError", self.triggerDeleteOnError)
         return kparams
 
     def getFieldName(self):
@@ -515,6 +522,12 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
 
     def getIsDefault(self):
         return self.isDefault
+
+    def getTriggerDeleteOnError(self):
+        return self.triggerDeleteOnError
+
+    def setTriggerDeleteOnError(self, newTriggerDeleteOnError):
+        self.triggerDeleteOnError = newTriggerDeleteOnError
 
 
 # @package Kaltura
