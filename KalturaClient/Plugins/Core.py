@@ -12175,7 +12175,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         self.height = height
 
         # The frame rate of the Flavor Params
-        # @var int
+        # @var float
         self.frameRate = frameRate
 
         # The gop size of the Flavor Params
@@ -12270,7 +12270,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'audioSampleRate': getXmlNodeInt, 
         'width': getXmlNodeInt, 
         'height': getXmlNodeInt, 
-        'frameRate': getXmlNodeInt, 
+        'frameRate': getXmlNodeFloat, 
         'gopSize': getXmlNodeInt, 
         'conversionEngines': getXmlNodeText, 
         'conversionEnginesExtraParams': getXmlNodeText, 
@@ -12314,7 +12314,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         kparams.addIntIfDefined("audioSampleRate", self.audioSampleRate)
         kparams.addIntIfDefined("width", self.width)
         kparams.addIntIfDefined("height", self.height)
-        kparams.addIntIfDefined("frameRate", self.frameRate)
+        kparams.addFloatIfDefined("frameRate", self.frameRate)
         kparams.addIntIfDefined("gopSize", self.gopSize)
         kparams.addStringIfDefined("conversionEngines", self.conversionEngines)
         kparams.addStringIfDefined("conversionEnginesExtraParams", self.conversionEnginesExtraParams)
