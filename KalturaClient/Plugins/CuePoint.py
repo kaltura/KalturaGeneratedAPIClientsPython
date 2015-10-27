@@ -47,6 +47,17 @@ class KalturaCuePointStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaQuizFileType(object):
+    PDF = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaThumbCuePointSubType(object):
     SLIDE = 1
     CHAPTER = 2
@@ -914,6 +925,7 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaCuePointStatus': KalturaCuePointStatus,
+            'KalturaQuizFileType': KalturaQuizFileType,
             'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,
             'KalturaCuePointType': KalturaCuePointType,

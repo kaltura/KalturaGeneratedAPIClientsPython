@@ -1076,13 +1076,26 @@ class KalturaQuizService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaQuizListResponse)
 
-    def servePdf(self, entryId):
+    def serve(self, entryId, quizFileType):
         """creates a pdf from quiz object"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall('quiz_quiz', 'servePdf', None ,kparams)
+        kparams.addIntIfDefined("quizFileType", quizFileType);
+        self.client.queueServiceActionCall('quiz_quiz', 'serve', None ,kparams)
         return self.client.getServeUrl()
+
+    def getUrl(self, entryId, quizFileType):
+        """sends a with an api request for pdf from quiz object"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("quizFileType", quizFileType);
+        self.client.queueServiceActionCall("quiz_quiz", "getUrl", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):
