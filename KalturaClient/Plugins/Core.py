@@ -322,19 +322,6 @@ class KalturaDirectoryRestrictionType(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEdgeServerStatus(object):
-    ACTIVE = 1
-    DISABLED = 2
-    DELETED = 3
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEditorType(object):
     SIMPLE = 1
     ADVANCED = 2
@@ -892,6 +879,20 @@ class KalturaSearchProviderType(object):
     METACAFE = 24
     SEARCH_PROXY = 28
     PARTNER_SPECIFIC = 100
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeStatus(object):
+    ACTIVE = 1
+    DISABLED = 2
+    DELETED = 3
+    NOT_REGISTERED = 4
 
     def __init__(self, value):
         self.value = value
@@ -2373,6 +2374,22 @@ class KalturaDeliveryProfileType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryServerNodeOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    HEARTBEAT_TIME_ASC = "+heartbeatTime"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    HEARTBEAT_TIME_DESC = "-heartbeatTime"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDocumentEntryCompareAttribute(object):
     ACCESS_CONTROL_ID = "accessControlId"
     CREATED_AT = "createdAt"
@@ -2444,10 +2461,12 @@ class KalturaDynamicEnum(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEdgeServerOrderBy(object):
+class KalturaEdgeServerNodeOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
+    HEARTBEAT_TIME_ASC = "+heartbeatTime"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
+    HEARTBEAT_TIME_DESC = "-heartbeatTime"
     UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
@@ -3908,6 +3927,22 @@ class KalturaMediaParserType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaServerNodeOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    HEARTBEAT_TIME_ASC = "+heartbeatTime"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    HEARTBEAT_TIME_DESC = "-heartbeatTime"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMixEntryCompareAttribute(object):
     ACCESS_CONTROL_ID = "accessControlId"
     CREATED_AT = "createdAt"
@@ -4417,6 +4452,34 @@ class KalturaSearchConditionComparison(object):
     LESS_THAN = "4"
     LESS_THAN_OR_EQUAL = "5"
     NOT_EQUAL = "6"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    HEARTBEAT_TIME_ASC = "+heartbeatTime"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    HEARTBEAT_TIME_DESC = "-heartbeatTime"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeType(object):
+    WOWZA_MEDIA_SERVER = "wowza.WOWZA_MEDIA_SERVER"
+    EDGE = "1"
 
     def __init__(self, value):
         self.value = value
@@ -10694,178 +10757,6 @@ class KalturaDetachedResponseProfile(KalturaBaseResponseProfile):
 
     def setMappings(self, newMappings):
         self.mappings = newMappings
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEdgeServer(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            hostName=NotImplemented,
-            playbackHostName=NotImplemented,
-            deliveryProfileIds=NotImplemented,
-            parentId=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var int
-        # @readonly
-        self.id = id
-
-        # @var int
-        # @readonly
-        self.createdAt = createdAt
-
-        # @var int
-        # @readonly
-        self.updatedAt = updatedAt
-
-        # @var int
-        # @readonly
-        self.partnerId = partnerId
-
-        # edgeServer name
-        # @var string
-        self.name = name
-
-        # edgeServer uniqe system name
-        # @var string
-        self.systemName = systemName
-
-        # edgeServer description
-        # @var string
-        self.description = description
-
-        # @var KalturaEdgeServerStatus
-        self.status = status
-
-        # edgeServer tags
-        # @var string
-        self.tags = tags
-
-        # edgeServer host name
-        # @var string
-        self.hostName = hostName
-
-        # edgeServer playback hostName
-        # @var string
-        self.playbackHostName = playbackHostName
-
-        # Delivery profile ids comma seperated
-        # @var string
-        self.deliveryProfileIds = deliveryProfileIds
-
-        # Id of the parent edge server
-        # @var int
-        self.parentId = parentId
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeInt, 
-        'createdAt': getXmlNodeInt, 
-        'updatedAt': getXmlNodeInt, 
-        'partnerId': getXmlNodeInt, 
-        'name': getXmlNodeText, 
-        'systemName': getXmlNodeText, 
-        'description': getXmlNodeText, 
-        'status': (KalturaEnumsFactory.createInt, "KalturaEdgeServerStatus"), 
-        'tags': getXmlNodeText, 
-        'hostName': getXmlNodeText, 
-        'playbackHostName': getXmlNodeText, 
-        'deliveryProfileIds': getXmlNodeText, 
-        'parentId': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEdgeServer.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaEdgeServer")
-        kparams.addStringIfDefined("name", self.name)
-        kparams.addStringIfDefined("systemName", self.systemName)
-        kparams.addStringIfDefined("description", self.description)
-        kparams.addIntEnumIfDefined("status", self.status)
-        kparams.addStringIfDefined("tags", self.tags)
-        kparams.addStringIfDefined("hostName", self.hostName)
-        kparams.addStringIfDefined("playbackHostName", self.playbackHostName)
-        kparams.addStringIfDefined("deliveryProfileIds", self.deliveryProfileIds)
-        kparams.addIntIfDefined("parentId", self.parentId)
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def getCreatedAt(self):
-        return self.createdAt
-
-    def getUpdatedAt(self):
-        return self.updatedAt
-
-    def getPartnerId(self):
-        return self.partnerId
-
-    def getName(self):
-        return self.name
-
-    def setName(self, newName):
-        self.name = newName
-
-    def getSystemName(self):
-        return self.systemName
-
-    def setSystemName(self, newSystemName):
-        self.systemName = newSystemName
-
-    def getDescription(self):
-        return self.description
-
-    def setDescription(self, newDescription):
-        self.description = newDescription
-
-    def getStatus(self):
-        return self.status
-
-    def setStatus(self, newStatus):
-        self.status = newStatus
-
-    def getTags(self):
-        return self.tags
-
-    def setTags(self, newTags):
-        self.tags = newTags
-
-    def getHostName(self):
-        return self.hostName
-
-    def setHostName(self, newHostName):
-        self.hostName = newHostName
-
-    def getPlaybackHostName(self):
-        return self.playbackHostName
-
-    def setPlaybackHostName(self, newPlaybackHostName):
-        self.playbackHostName = newPlaybackHostName
-
-    def getDeliveryProfileIds(self):
-        return self.deliveryProfileIds
-
-    def setDeliveryProfileIds(self, newDeliveryProfileIds):
-        self.deliveryProfileIds = newDeliveryProfileIds
-
-    def getParentId(self):
-        return self.parentId
-
-    def setParentId(self, newParentId):
-        self.parentId = newParentId
 
 
 # @package Kaltura
@@ -17620,96 +17511,6 @@ class KalturaMediaInfo(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaServer(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            dc=NotImplemented,
-            hostname=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # Unique identifier
-        # @var int
-        # @readonly
-        self.id = id
-
-        # Server data center id
-        # @var int
-        # @readonly
-        self.dc = dc
-
-        # Server host name
-        # @var string
-        # @readonly
-        self.hostname = hostname
-
-        # Server first registration date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.createdAt = createdAt
-
-        # Server last update date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.updatedAt = updatedAt
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeInt, 
-        'dc': getXmlNodeInt, 
-        'hostname': getXmlNodeText, 
-        'createdAt': getXmlNodeInt, 
-        'updatedAt': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaServer.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaServer")
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def getDc(self):
-        return self.dc
-
-    def getHostname(self):
-        return self.hostname
-
-    def getCreatedAt(self):
-        return self.createdAt
-
-    def getUpdatedAt(self):
-        return self.updatedAt
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaServerStatus(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaServerStatus.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaServerStatus")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMixEntry(KalturaPlayableEntry):
     def __init__(self,
             id=NotImplemented,
@@ -21213,6 +21014,176 @@ class KalturaSearchResultResponse(KalturaObjectBase):
 
     def getNeedMediaInfo(self):
         return self.needMediaInfo
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNode(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            heartbeatTime=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            tags=NotImplemented,
+            dc=NotImplemented,
+            parentId=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        # @readonly
+        self.id = id
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # @var int
+        # @readonly
+        self.heartbeatTime = heartbeatTime
+
+        # serverNode name
+        # @var string
+        self.name = name
+
+        # serverNode uniqe system name
+        # @var string
+        self.systemName = systemName
+
+        # @var string
+        self.description = description
+
+        # serverNode hostName
+        # @var string
+        self.hostName = hostName
+
+        # @var KalturaServerNodeStatus
+        # @readonly
+        self.status = status
+
+        # @var KalturaServerNodeType
+        # @readonly
+        self.type = type
+
+        # serverNode tags
+        # @var string
+        self.tags = tags
+
+        # DC where the serverNode is located
+        # @var int
+        # @readonly
+        self.dc = dc
+
+        # Id of the parent serverNode
+        # @var int
+        self.parentId = parentId
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'partnerId': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'heartbeatTime': getXmlNodeInt, 
+        'name': getXmlNodeText, 
+        'systemName': getXmlNodeText, 
+        'description': getXmlNodeText, 
+        'hostName': getXmlNodeText, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaServerNodeStatus"), 
+        'type': (KalturaEnumsFactory.createString, "KalturaServerNodeType"), 
+        'tags': getXmlNodeText, 
+        'dc': getXmlNodeInt, 
+        'parentId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaServerNode.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaServerNode")
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addStringIfDefined("systemName", self.systemName)
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addStringIfDefined("hostName", self.hostName)
+        kparams.addStringIfDefined("tags", self.tags)
+        kparams.addIntIfDefined("parentId", self.parentId)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getHeartbeatTime(self):
+        return self.heartbeatTime
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getSystemName(self):
+        return self.systemName
+
+    def setSystemName(self, newSystemName):
+        self.systemName = newSystemName
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getHostName(self):
+        return self.hostName
+
+    def setHostName(self, newHostName):
+        self.hostName = newHostName
+
+    def getStatus(self):
+        return self.status
+
+    def getType(self):
+        return self.type
+
+    def getTags(self):
+        return self.tags
+
+    def setTags(self, newTags):
+        self.tags = newTags
+
+    def getDc(self):
+        return self.dc
+
+    def getParentId(self):
+        return self.parentId
+
+    def setParentId(self, newParentId):
+        self.parentId = newParentId
 
 
 # @package Kaltura
@@ -29727,6 +29698,67 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryServerNode(KalturaServerNode):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            heartbeatTime=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            tags=NotImplemented,
+            dc=NotImplemented,
+            parentId=NotImplemented,
+            playbackDomain=NotImplemented):
+        KalturaServerNode.__init__(self,
+            id,
+            partnerId,
+            createdAt,
+            updatedAt,
+            heartbeatTime,
+            name,
+            systemName,
+            description,
+            hostName,
+            status,
+            type,
+            tags,
+            dc,
+            parentId)
+
+        # Delivery server playback Domain
+        # @var string
+        self.playbackDomain = playbackDomain
+
+
+    PROPERTY_LOADERS = {
+        'playbackDomain': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaServerNode.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryServerNode.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaServerNode.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryServerNode")
+        kparams.addStringIfDefined("playbackDomain", self.playbackDomain)
+        return kparams
+
+    def getPlaybackDomain(self):
+        return self.playbackDomain
+
+    def setPlaybackDomain(self, newPlaybackDomain):
+        self.playbackDomain = newPlaybackDomain
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDirectoryRestriction(KalturaBaseRestriction):
     def __init__(self,
             directoryRestrictionType=NotImplemented):
@@ -29790,337 +29822,6 @@ class KalturaDrmEntryContextPluginData(KalturaPluginData):
 
     def setFlavorData(self, newFlavorData):
         self.flavorData = newFlavorData
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEdgeServerBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            hostNameLike=NotImplemented,
-            hostNameMultiLikeOr=NotImplemented,
-            hostNameMultiLikeAnd=NotImplemented,
-            playbackHostNameLike=NotImplemented,
-            playbackHostNameMultiLikeOr=NotImplemented,
-            playbackHostNameMultiLikeAnd=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var string
-        self.nameEqual = nameEqual
-
-        # @var string
-        self.nameIn = nameIn
-
-        # @var string
-        self.systemNameEqual = systemNameEqual
-
-        # @var string
-        self.systemNameIn = systemNameIn
-
-        # @var KalturaEdgeServerStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var string
-        self.tagsLike = tagsLike
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var string
-        self.hostNameLike = hostNameLike
-
-        # @var string
-        self.hostNameMultiLikeOr = hostNameMultiLikeOr
-
-        # @var string
-        self.hostNameMultiLikeAnd = hostNameMultiLikeAnd
-
-        # @var string
-        self.playbackHostNameLike = playbackHostNameLike
-
-        # @var string
-        self.playbackHostNameMultiLikeOr = playbackHostNameMultiLikeOr
-
-        # @var string
-        self.playbackHostNameMultiLikeAnd = playbackHostNameMultiLikeAnd
-
-        # @var int
-        self.parentIdEqual = parentIdEqual
-
-        # @var string
-        self.parentIdIn = parentIdIn
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'nameEqual': getXmlNodeText, 
-        'nameIn': getXmlNodeText, 
-        'systemNameEqual': getXmlNodeText, 
-        'systemNameIn': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEdgeServerStatus"), 
-        'statusIn': getXmlNodeText, 
-        'tagsLike': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'hostNameLike': getXmlNodeText, 
-        'hostNameMultiLikeOr': getXmlNodeText, 
-        'hostNameMultiLikeAnd': getXmlNodeText, 
-        'playbackHostNameLike': getXmlNodeText, 
-        'playbackHostNameMultiLikeOr': getXmlNodeText, 
-        'playbackHostNameMultiLikeAnd': getXmlNodeText, 
-        'parentIdEqual': getXmlNodeInt, 
-        'parentIdIn': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEdgeServerBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaEdgeServerBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addStringIfDefined("nameEqual", self.nameEqual)
-        kparams.addStringIfDefined("nameIn", self.nameIn)
-        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
-        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringIfDefined("tagsLike", self.tagsLike)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addStringIfDefined("hostNameLike", self.hostNameLike)
-        kparams.addStringIfDefined("hostNameMultiLikeOr", self.hostNameMultiLikeOr)
-        kparams.addStringIfDefined("hostNameMultiLikeAnd", self.hostNameMultiLikeAnd)
-        kparams.addStringIfDefined("playbackHostNameLike", self.playbackHostNameLike)
-        kparams.addStringIfDefined("playbackHostNameMultiLikeOr", self.playbackHostNameMultiLikeOr)
-        kparams.addStringIfDefined("playbackHostNameMultiLikeAnd", self.playbackHostNameMultiLikeAnd)
-        kparams.addIntIfDefined("parentIdEqual", self.parentIdEqual)
-        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getNameEqual(self):
-        return self.nameEqual
-
-    def setNameEqual(self, newNameEqual):
-        self.nameEqual = newNameEqual
-
-    def getNameIn(self):
-        return self.nameIn
-
-    def setNameIn(self, newNameIn):
-        self.nameIn = newNameIn
-
-    def getSystemNameEqual(self):
-        return self.systemNameEqual
-
-    def setSystemNameEqual(self, newSystemNameEqual):
-        self.systemNameEqual = newSystemNameEqual
-
-    def getSystemNameIn(self):
-        return self.systemNameIn
-
-    def setSystemNameIn(self, newSystemNameIn):
-        self.systemNameIn = newSystemNameIn
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getTagsLike(self):
-        return self.tagsLike
-
-    def setTagsLike(self, newTagsLike):
-        self.tagsLike = newTagsLike
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getHostNameLike(self):
-        return self.hostNameLike
-
-    def setHostNameLike(self, newHostNameLike):
-        self.hostNameLike = newHostNameLike
-
-    def getHostNameMultiLikeOr(self):
-        return self.hostNameMultiLikeOr
-
-    def setHostNameMultiLikeOr(self, newHostNameMultiLikeOr):
-        self.hostNameMultiLikeOr = newHostNameMultiLikeOr
-
-    def getHostNameMultiLikeAnd(self):
-        return self.hostNameMultiLikeAnd
-
-    def setHostNameMultiLikeAnd(self, newHostNameMultiLikeAnd):
-        self.hostNameMultiLikeAnd = newHostNameMultiLikeAnd
-
-    def getPlaybackHostNameLike(self):
-        return self.playbackHostNameLike
-
-    def setPlaybackHostNameLike(self, newPlaybackHostNameLike):
-        self.playbackHostNameLike = newPlaybackHostNameLike
-
-    def getPlaybackHostNameMultiLikeOr(self):
-        return self.playbackHostNameMultiLikeOr
-
-    def setPlaybackHostNameMultiLikeOr(self, newPlaybackHostNameMultiLikeOr):
-        self.playbackHostNameMultiLikeOr = newPlaybackHostNameMultiLikeOr
-
-    def getPlaybackHostNameMultiLikeAnd(self):
-        return self.playbackHostNameMultiLikeAnd
-
-    def setPlaybackHostNameMultiLikeAnd(self, newPlaybackHostNameMultiLikeAnd):
-        self.playbackHostNameMultiLikeAnd = newPlaybackHostNameMultiLikeAnd
-
-    def getParentIdEqual(self):
-        return self.parentIdEqual
-
-    def setParentIdEqual(self, newParentIdEqual):
-        self.parentIdEqual = newParentIdEqual
-
-    def getParentIdIn(self):
-        return self.parentIdIn
-
-    def setParentIdIn(self, newParentIdIn):
-        self.parentIdIn = newParentIdIn
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEdgeServerListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaStorageProfile
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaStorageProfile), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEdgeServerListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaEdgeServerListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
 
 
 # @package Kaltura
@@ -32888,78 +32589,6 @@ class KalturaMediaListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMediaServerBaseFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaServerBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaMediaServerBaseFilter")
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        return kparams
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMixListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -34546,6 +34175,373 @@ class KalturaSearchOperator(KalturaSearchItem):
 
     def setItems(self, newItems):
         self.items = newItems
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.heartbeatTimeGreaterThanOrEqual = heartbeatTimeGreaterThanOrEqual
+
+        # @var int
+        self.heartbeatTimeLessThanOrEqual = heartbeatTimeLessThanOrEqual
+
+        # @var string
+        self.nameEqual = nameEqual
+
+        # @var string
+        self.nameIn = nameIn
+
+        # @var string
+        self.systemNameEqual = systemNameEqual
+
+        # @var string
+        self.systemNameIn = systemNameIn
+
+        # @var string
+        self.hostNameLike = hostNameLike
+
+        # @var string
+        self.hostNameMultiLikeOr = hostNameMultiLikeOr
+
+        # @var string
+        self.hostNameMultiLikeAnd = hostNameMultiLikeAnd
+
+        # @var KalturaServerNodeStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var KalturaServerNodeType
+        self.typeEqual = typeEqual
+
+        # @var string
+        self.typeIn = typeIn
+
+        # @var string
+        self.tagsLike = tagsLike
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.dcEqual = dcEqual
+
+        # @var string
+        self.dcIn = dcIn
+
+        # @var int
+        self.parentIdEqual = parentIdEqual
+
+        # @var string
+        self.parentIdIn = parentIdIn
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'heartbeatTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'heartbeatTimeLessThanOrEqual': getXmlNodeInt, 
+        'nameEqual': getXmlNodeText, 
+        'nameIn': getXmlNodeText, 
+        'systemNameEqual': getXmlNodeText, 
+        'systemNameIn': getXmlNodeText, 
+        'hostNameLike': getXmlNodeText, 
+        'hostNameMultiLikeOr': getXmlNodeText, 
+        'hostNameMultiLikeAnd': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaServerNodeStatus"), 
+        'statusIn': getXmlNodeText, 
+        'typeEqual': (KalturaEnumsFactory.createString, "KalturaServerNodeType"), 
+        'typeIn': getXmlNodeText, 
+        'tagsLike': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'dcEqual': getXmlNodeInt, 
+        'dcIn': getXmlNodeText, 
+        'parentIdEqual': getXmlNodeInt, 
+        'parentIdIn': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaServerNodeBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("heartbeatTimeGreaterThanOrEqual", self.heartbeatTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("heartbeatTimeLessThanOrEqual", self.heartbeatTimeLessThanOrEqual)
+        kparams.addStringIfDefined("nameEqual", self.nameEqual)
+        kparams.addStringIfDefined("nameIn", self.nameIn)
+        kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
+        kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
+        kparams.addStringIfDefined("hostNameLike", self.hostNameLike)
+        kparams.addStringIfDefined("hostNameMultiLikeOr", self.hostNameMultiLikeOr)
+        kparams.addStringIfDefined("hostNameMultiLikeAnd", self.hostNameMultiLikeAnd)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringIfDefined("typeIn", self.typeIn)
+        kparams.addStringIfDefined("tagsLike", self.tagsLike)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("dcEqual", self.dcEqual)
+        kparams.addStringIfDefined("dcIn", self.dcIn)
+        kparams.addIntIfDefined("parentIdEqual", self.parentIdEqual)
+        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getHeartbeatTimeGreaterThanOrEqual(self):
+        return self.heartbeatTimeGreaterThanOrEqual
+
+    def setHeartbeatTimeGreaterThanOrEqual(self, newHeartbeatTimeGreaterThanOrEqual):
+        self.heartbeatTimeGreaterThanOrEqual = newHeartbeatTimeGreaterThanOrEqual
+
+    def getHeartbeatTimeLessThanOrEqual(self):
+        return self.heartbeatTimeLessThanOrEqual
+
+    def setHeartbeatTimeLessThanOrEqual(self, newHeartbeatTimeLessThanOrEqual):
+        self.heartbeatTimeLessThanOrEqual = newHeartbeatTimeLessThanOrEqual
+
+    def getNameEqual(self):
+        return self.nameEqual
+
+    def setNameEqual(self, newNameEqual):
+        self.nameEqual = newNameEqual
+
+    def getNameIn(self):
+        return self.nameIn
+
+    def setNameIn(self, newNameIn):
+        self.nameIn = newNameIn
+
+    def getSystemNameEqual(self):
+        return self.systemNameEqual
+
+    def setSystemNameEqual(self, newSystemNameEqual):
+        self.systemNameEqual = newSystemNameEqual
+
+    def getSystemNameIn(self):
+        return self.systemNameIn
+
+    def setSystemNameIn(self, newSystemNameIn):
+        self.systemNameIn = newSystemNameIn
+
+    def getHostNameLike(self):
+        return self.hostNameLike
+
+    def setHostNameLike(self, newHostNameLike):
+        self.hostNameLike = newHostNameLike
+
+    def getHostNameMultiLikeOr(self):
+        return self.hostNameMultiLikeOr
+
+    def setHostNameMultiLikeOr(self, newHostNameMultiLikeOr):
+        self.hostNameMultiLikeOr = newHostNameMultiLikeOr
+
+    def getHostNameMultiLikeAnd(self):
+        return self.hostNameMultiLikeAnd
+
+    def setHostNameMultiLikeAnd(self, newHostNameMultiLikeAnd):
+        self.hostNameMultiLikeAnd = newHostNameMultiLikeAnd
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getTypeEqual(self):
+        return self.typeEqual
+
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
+
+    def getTypeIn(self):
+        return self.typeIn
+
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
+
+    def getTagsLike(self):
+        return self.tagsLike
+
+    def setTagsLike(self, newTagsLike):
+        self.tagsLike = newTagsLike
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getDcEqual(self):
+        return self.dcEqual
+
+    def setDcEqual(self, newDcEqual):
+        self.dcEqual = newDcEqual
+
+    def getDcIn(self):
+        return self.dcIn
+
+    def setDcIn(self, newDcIn):
+        self.dcIn = newDcIn
+
+    def getParentIdEqual(self):
+        return self.parentIdEqual
+
+    def setParentIdEqual(self, newParentIdEqual):
+        self.parentIdEqual = newParentIdEqual
+
+    def getParentIdIn(self):
+        return self.parentIdIn
+
+    def setParentIdIn(self, newParentIdIn):
+        self.parentIdIn = newParentIdIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaServerNode
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaServerNode), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaServerNodeListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaServerNodeListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -39426,71 +39422,51 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEdgeServerFilter(KalturaEdgeServerBaseFilter):
+class KalturaEdgeServerNode(KalturaDeliveryServerNode):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            hostNameLike=NotImplemented,
-            hostNameMultiLikeOr=NotImplemented,
-            hostNameMultiLikeAnd=NotImplemented,
-            playbackHostNameLike=NotImplemented,
-            playbackHostNameMultiLikeOr=NotImplemented,
-            playbackHostNameMultiLikeAnd=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
-        KalturaEdgeServerBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            nameEqual,
-            nameIn,
-            systemNameEqual,
-            systemNameIn,
-            statusEqual,
-            statusIn,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            hostNameLike,
-            hostNameMultiLikeOr,
-            hostNameMultiLikeAnd,
-            playbackHostNameLike,
-            playbackHostNameMultiLikeOr,
-            playbackHostNameMultiLikeAnd,
-            parentIdEqual,
-            parentIdIn)
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            heartbeatTime=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            tags=NotImplemented,
+            dc=NotImplemented,
+            parentId=NotImplemented,
+            playbackDomain=NotImplemented):
+        KalturaDeliveryServerNode.__init__(self,
+            id,
+            partnerId,
+            createdAt,
+            updatedAt,
+            heartbeatTime,
+            name,
+            systemName,
+            description,
+            hostName,
+            status,
+            type,
+            tags,
+            dc,
+            parentId,
+            playbackDomain)
 
 
     PROPERTY_LOADERS = {
     }
 
     def fromXml(self, node):
-        KalturaEdgeServerBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEdgeServerFilter.PROPERTY_LOADERS)
+        KalturaDeliveryServerNode.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEdgeServerNode.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaEdgeServerBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaEdgeServerFilter")
+        kparams = KalturaDeliveryServerNode.toParams(self)
+        kparams.put("objectType", "KalturaEdgeServerNode")
         return kparams
 
 
@@ -41018,6 +40994,95 @@ class KalturaMediaInfoFilter(KalturaMediaInfoBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaServerNode(KalturaDeliveryServerNode):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            heartbeatTime=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            tags=NotImplemented,
+            dc=NotImplemented,
+            parentId=NotImplemented,
+            playbackDomain=NotImplemented,
+            applicationName=NotImplemented,
+            mediaServerPortConfig=NotImplemented,
+            mediaServerPlaybackDomainConfig=NotImplemented):
+        KalturaDeliveryServerNode.__init__(self,
+            id,
+            partnerId,
+            createdAt,
+            updatedAt,
+            heartbeatTime,
+            name,
+            systemName,
+            description,
+            hostName,
+            status,
+            type,
+            tags,
+            dc,
+            parentId,
+            playbackDomain)
+
+        # Media server application name
+        # @var string
+        self.applicationName = applicationName
+
+        # Media server playback port configuration by protocol and format
+        # @var array of KalturaKeyValue
+        self.mediaServerPortConfig = mediaServerPortConfig
+
+        # Media server playback Domain configuration by protocol and format
+        # @var array of KalturaKeyValue
+        self.mediaServerPlaybackDomainConfig = mediaServerPlaybackDomainConfig
+
+
+    PROPERTY_LOADERS = {
+        'applicationName': getXmlNodeText, 
+        'mediaServerPortConfig': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'mediaServerPlaybackDomainConfig': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryServerNode.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaServerNode.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryServerNode.toParams(self)
+        kparams.put("objectType", "KalturaMediaServerNode")
+        kparams.addStringIfDefined("applicationName", self.applicationName)
+        kparams.addArrayIfDefined("mediaServerPortConfig", self.mediaServerPortConfig)
+        kparams.addArrayIfDefined("mediaServerPlaybackDomainConfig", self.mediaServerPlaybackDomainConfig)
+        return kparams
+
+    def getApplicationName(self):
+        return self.applicationName
+
+    def setApplicationName(self, newApplicationName):
+        self.applicationName = newApplicationName
+
+    def getMediaServerPortConfig(self):
+        return self.mediaServerPortConfig
+
+    def setMediaServerPortConfig(self, newMediaServerPortConfig):
+        self.mediaServerPortConfig = newMediaServerPortConfig
+
+    def getMediaServerPlaybackDomainConfig(self):
+        return self.mediaServerPlaybackDomainConfig
+
+    def setMediaServerPlaybackDomainConfig(self, newMediaServerPlaybackDomainConfig):
+        self.mediaServerPlaybackDomainConfig = newMediaServerPlaybackDomainConfig
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaOperationResource(KalturaContentResource):
     """A resource that perform operation (transcoding, clipping, cropping) before the flavor is ready."""
 
@@ -42113,6 +42178,82 @@ class KalturaSearchMatchCondition(KalturaSearchCondition):
 
     def setNot_(self, newNot_):
         self.not_ = newNot_
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeFilter(KalturaServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented):
+        KalturaServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaServerNodeFilter")
+        return kparams
 
 
 # @package Kaltura
@@ -44331,6 +44472,118 @@ class KalturaDeliveryProfileRtmpBaseFilter(KalturaDeliveryProfileFilter):
         kparams = KalturaDeliveryProfileFilter.toParams(self)
         kparams.put("objectType", "KalturaDeliveryProfileRtmpBaseFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaServerNodeFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn)
+
+        # @var string
+        self.playbackDomainLike = playbackDomainLike
+
+        # @var string
+        self.playbackDomainMultiLikeOr = playbackDomainMultiLikeOr
+
+        # @var string
+        self.playbackDomainMultiLikeAnd = playbackDomainMultiLikeAnd
+
+
+    PROPERTY_LOADERS = {
+        'playbackDomainLike': getXmlNodeText, 
+        'playbackDomainMultiLikeOr': getXmlNodeText, 
+        'playbackDomainMultiLikeAnd': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaServerNodeFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaServerNodeFilter.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryServerNodeBaseFilter")
+        kparams.addStringIfDefined("playbackDomainLike", self.playbackDomainLike)
+        kparams.addStringIfDefined("playbackDomainMultiLikeOr", self.playbackDomainMultiLikeOr)
+        kparams.addStringIfDefined("playbackDomainMultiLikeAnd", self.playbackDomainMultiLikeAnd)
+        return kparams
+
+    def getPlaybackDomainLike(self):
+        return self.playbackDomainLike
+
+    def setPlaybackDomainLike(self, newPlaybackDomainLike):
+        self.playbackDomainLike = newPlaybackDomainLike
+
+    def getPlaybackDomainMultiLikeOr(self):
+        return self.playbackDomainMultiLikeOr
+
+    def setPlaybackDomainMultiLikeOr(self, newPlaybackDomainMultiLikeOr):
+        self.playbackDomainMultiLikeOr = newPlaybackDomainMultiLikeOr
+
+    def getPlaybackDomainMultiLikeAnd(self):
+        return self.playbackDomainMultiLikeAnd
+
+    def setPlaybackDomainMultiLikeAnd(self, newPlaybackDomainMultiLikeAnd):
+        self.playbackDomainMultiLikeAnd = newPlaybackDomainMultiLikeAnd
 
 
 # @package Kaltura
@@ -47080,6 +47333,88 @@ class KalturaDeliveryProfileRtmpFilter(KalturaDeliveryProfileRtmpBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryServerNodeFilter(KalturaDeliveryServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaDeliveryServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn,
+            playbackDomainLike,
+            playbackDomainMultiLikeOr,
+            playbackDomainMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryServerNodeFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -48202,6 +48537,88 @@ class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilt
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaDeliveryServerNodeFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn,
+            playbackDomainLike,
+            playbackDomainMultiLikeOr,
+            playbackDomainMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryServerNodeFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEdgeServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryServerNodeFilter.toParams(self)
+        kparams.put("objectType", "KalturaEdgeServerNodeBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorAssetFilter(KalturaFlavorAssetBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -48521,6 +48938,88 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
     def toParams(self):
         kparams = KalturaLiveStreamEntry.toParams(self)
         kparams.put("objectType", "KalturaLiveStreamAdminEntry")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaDeliveryServerNodeFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn,
+            playbackDomainLike,
+            playbackDomainMultiLikeOr,
+            playbackDomainMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryServerNodeFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryServerNodeFilter.toParams(self)
+        kparams.put("objectType", "KalturaMediaServerNodeBaseFilter")
         return kparams
 
 
@@ -48874,6 +49373,88 @@ class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpB
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEdgeServerNodeFilter(KalturaEdgeServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaEdgeServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn,
+            playbackDomainLike,
+            playbackDomainMultiLikeOr,
+            playbackDomainMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEdgeServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEdgeServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEdgeServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaEdgeServerNodeFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -49111,6 +49692,88 @@ class KalturaMediaFlavorParamsBaseFilter(KalturaFlavorParamsFilter):
     def toParams(self):
         kparams = KalturaFlavorParamsFilter.toParams(self)
         kparams.put("objectType", "KalturaMediaFlavorParamsBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaServerNodeFilter(KalturaMediaServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            heartbeatTimeGreaterThanOrEqual=NotImplemented,
+            heartbeatTimeLessThanOrEqual=NotImplemented,
+            nameEqual=NotImplemented,
+            nameIn=NotImplemented,
+            systemNameEqual=NotImplemented,
+            systemNameIn=NotImplemented,
+            hostNameLike=NotImplemented,
+            hostNameMultiLikeOr=NotImplemented,
+            hostNameMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            dcEqual=NotImplemented,
+            dcIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            playbackDomainLike=NotImplemented,
+            playbackDomainMultiLikeOr=NotImplemented,
+            playbackDomainMultiLikeAnd=NotImplemented):
+        KalturaMediaServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            heartbeatTimeGreaterThanOrEqual,
+            heartbeatTimeLessThanOrEqual,
+            nameEqual,
+            nameIn,
+            systemNameEqual,
+            systemNameIn,
+            hostNameLike,
+            hostNameMultiLikeOr,
+            hostNameMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            typeEqual,
+            typeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            dcEqual,
+            dcIn,
+            parentIdEqual,
+            parentIdIn,
+            playbackDomainLike,
+            playbackDomainMultiLikeOr,
+            playbackDomainMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaMediaServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMediaServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaMediaServerNodeFilter")
         return kparams
 
 
@@ -53145,69 +53808,6 @@ class KalturaDocumentService(KalturaServiceBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEdgeServerService(KalturaServiceBase):
-    """Edge Server service"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, edgeServer):
-        """Adds a edge server to the Kaltura DB."""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("edgeServer", edgeServer)
-        self.client.queueServiceActionCall("edgeserver", "add", KalturaEdgeServer, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEdgeServer)
-
-    def get(self, edgeServerId):
-        """Get edge server by id"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("edgeServerId", edgeServerId);
-        self.client.queueServiceActionCall("edgeserver", "get", KalturaEdgeServer, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEdgeServer)
-
-    def update(self, edgeServerId, edgeServer):
-        """Update edge server by id"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("edgeServerId", edgeServerId);
-        kparams.addObjectIfDefined("edgeServer", edgeServer)
-        self.client.queueServiceActionCall("edgeserver", "update", KalturaEdgeServer, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEdgeServer)
-
-    def delete(self, edgeServerId):
-        """delete edge server by id"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("edgeServerId", edgeServerId)
-        self.client.queueServiceActionCall("edgeserver", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("edgeserver", "list", KalturaEdgeServerListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEdgeServerListResponse)
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEmailIngestionProfileService(KalturaServiceBase):
     """EmailIngestionProfile service lets you manage email ingestion profile records"""
 
@@ -54215,38 +54815,6 @@ class KalturaMediaInfoService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaMediaInfoListResponse)
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaServerService(KalturaServiceBase):
-    """Manage media servers"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def get(self, hostname):
-        """Get media server by hostname"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("hostname", hostname)
-        self.client.queueServiceActionCall("mediaserver", "get", KalturaMediaServer, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaMediaServer)
-
-    def reportStatus(self, hostname, mediaServerStatus):
-        """Update media server status"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("hostname", hostname)
-        kparams.addObjectIfDefined("mediaServerStatus", mediaServerStatus)
-        self.client.queueServiceActionCall("mediaserver", "reportStatus", KalturaMediaServer, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaMediaServer)
 
 
 # @package Kaltura
@@ -55505,6 +56073,103 @@ class KalturaSearchService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaSearchAuthData)
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaServerNodeService(KalturaServiceBase):
+    """Server Node service"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, serverNode):
+        """Adds a server node to the Kaltura DB."""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("serverNode", serverNode)
+        self.client.queueServiceActionCall("servernode", "add", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
+
+    def get(self, serverNodeId):
+        """Get server node by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("serverNodeId", serverNodeId);
+        self.client.queueServiceActionCall("servernode", "get", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
+
+    def update(self, serverNodeId, serverNode):
+        """Update server node by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("serverNodeId", serverNodeId);
+        kparams.addObjectIfDefined("serverNode", serverNode)
+        self.client.queueServiceActionCall("servernode", "update", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
+
+    def delete(self, serverNodeId):
+        """delete server node by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("serverNodeId", serverNodeId)
+        self.client.queueServiceActionCall("servernode", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def disable(self, serverNodeId):
+        """Disable server node by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("serverNodeId", serverNodeId)
+        self.client.queueServiceActionCall("servernode", "disable", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
+
+    def enable(self, serverNodeId):
+        """Enable server node by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("serverNodeId", serverNodeId)
+        self.client.queueServiceActionCall("servernode", "enable", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("servernode", "list", KalturaServerNodeListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNodeListResponse)
+
+    def reportStatus(self, hostName, serverNode = NotImplemented):
+        """Update server node status"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("hostName", hostName)
+        kparams.addObjectIfDefined("serverNode", serverNode)
+        self.client.queueServiceActionCall("servernode", "reportStatus", KalturaServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaServerNode)
 
 
 # @package Kaltura
@@ -56842,7 +57507,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'data': KalturaDataService,
             'deliveryProfile': KalturaDeliveryProfileService,
             'document': KalturaDocumentService,
-            'edgeServer': KalturaEdgeServerService,
             'EmailIngestionProfile': KalturaEmailIngestionProfileService,
             'fileAsset': KalturaFileAssetService,
             'flavorAsset': KalturaFlavorAssetService,
@@ -56855,7 +57519,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'liveStats': KalturaLiveStatsService,
             'liveStream': KalturaLiveStreamService,
             'mediaInfo': KalturaMediaInfoService,
-            'mediaServer': KalturaMediaServerService,
             'media': KalturaMediaService,
             'mixing': KalturaMixingService,
             'notification': KalturaNotificationService,
@@ -56867,6 +57530,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'responseProfile': KalturaResponseProfileService,
             'schema': KalturaSchemaService,
             'search': KalturaSearchService,
+            'serverNode': KalturaServerNodeService,
             'session': KalturaSessionService,
             'stats': KalturaStatsService,
             'storageProfile': KalturaStorageProfileService,
@@ -56908,7 +57572,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDVRStatus': KalturaDVRStatus,
             'KalturaDeliveryStatus': KalturaDeliveryStatus,
             'KalturaDirectoryRestrictionType': KalturaDirectoryRestrictionType,
-            'KalturaEdgeServerStatus': KalturaEdgeServerStatus,
             'KalturaEditorType': KalturaEditorType,
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
@@ -56947,6 +57610,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSchedulerStatusType': KalturaSchedulerStatusType,
             'KalturaSearchOperatorType': KalturaSearchOperatorType,
             'KalturaSearchProviderType': KalturaSearchProviderType,
+            'KalturaServerNodeStatus': KalturaServerNodeStatus,
             'KalturaSessionType': KalturaSessionType,
             'KalturaSiteRestrictionType': KalturaSiteRestrictionType,
             'KalturaStatsEventType': KalturaStatsEventType,
@@ -57028,11 +57692,12 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileOrderBy': KalturaDeliveryProfileOrderBy,
             'KalturaDeliveryProfileRtmpOrderBy': KalturaDeliveryProfileRtmpOrderBy,
             'KalturaDeliveryProfileType': KalturaDeliveryProfileType,
+            'KalturaDeliveryServerNodeOrderBy': KalturaDeliveryServerNodeOrderBy,
             'KalturaDocumentEntryCompareAttribute': KalturaDocumentEntryCompareAttribute,
             'KalturaDocumentEntryMatchAttribute': KalturaDocumentEntryMatchAttribute,
             'KalturaDurationType': KalturaDurationType,
             'KalturaDynamicEnum': KalturaDynamicEnum,
-            'KalturaEdgeServerOrderBy': KalturaEdgeServerOrderBy,
+            'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
             'KalturaEntryStatus': KalturaEntryStatus,
@@ -57085,6 +57750,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaFlavorParamsOutputOrderBy': KalturaMediaFlavorParamsOutputOrderBy,
             'KalturaMediaInfoOrderBy': KalturaMediaInfoOrderBy,
             'KalturaMediaParserType': KalturaMediaParserType,
+            'KalturaMediaServerNodeOrderBy': KalturaMediaServerNodeOrderBy,
             'KalturaMixEntryCompareAttribute': KalturaMixEntryCompareAttribute,
             'KalturaMixEntryMatchAttribute': KalturaMixEntryMatchAttribute,
             'KalturaMixEntryOrderBy': KalturaMixEntryOrderBy,
@@ -57109,6 +57775,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRuleActionType': KalturaRuleActionType,
             'KalturaSchemaType': KalturaSchemaType,
             'KalturaSearchConditionComparison': KalturaSearchConditionComparison,
+            'KalturaServerNodeOrderBy': KalturaServerNodeOrderBy,
+            'KalturaServerNodeType': KalturaServerNodeType,
             'KalturaSourceType': KalturaSourceType,
             'KalturaStorageProfileOrderBy': KalturaStorageProfileOrderBy,
             'KalturaStorageProfileProtocol': KalturaStorageProfileProtocol,
@@ -57193,7 +57861,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFilterPager': KalturaFilterPager,
             'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
-            'KalturaEdgeServer': KalturaEdgeServer,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaValue': KalturaValue,
             'KalturaStringValue': KalturaStringValue,
@@ -57234,8 +57901,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryFilter': KalturaMediaEntryFilter,
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
             'KalturaMediaInfo': KalturaMediaInfo,
-            'KalturaMediaServer': KalturaMediaServer,
-            'KalturaMediaServerStatus': KalturaMediaServerStatus,
             'KalturaMixEntry': KalturaMixEntry,
             'KalturaModerationFlag': KalturaModerationFlag,
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
@@ -57270,6 +57935,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSearchAuthData': KalturaSearchAuthData,
             'KalturaSearchResult': KalturaSearchResult,
             'KalturaSearchResultResponse': KalturaSearchResultResponse,
+            'KalturaServerNode': KalturaServerNode,
             'KalturaSessionInfo': KalturaSessionInfo,
             'KalturaSourceFileSyncDescriptor': KalturaSourceFileSyncDescriptor,
             'KalturaStartWidgetSessionResponse': KalturaStartWidgetSessionResponse,
@@ -57365,10 +58031,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
+            'KalturaDeliveryServerNode': KalturaDeliveryServerNode,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
             'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
-            'KalturaEdgeServerBaseFilter': KalturaEdgeServerBaseFilter,
-            'KalturaEdgeServerListResponse': KalturaEdgeServerListResponse,
             'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaCategoryUserFilter': KalturaCategoryUserFilter,
             'KalturaUserBaseFilter': KalturaUserBaseFilter,
@@ -57407,7 +58072,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,
             'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
             'KalturaMediaListResponse': KalturaMediaListResponse,
-            'KalturaMediaServerBaseFilter': KalturaMediaServerBaseFilter,
             'KalturaMixListResponse': KalturaMixListResponse,
             'KalturaModerationFlagListResponse': KalturaModerationFlagListResponse,
             'KalturaMoveCategoryEntriesJobData': KalturaMoveCategoryEntriesJobData,
@@ -57433,6 +58097,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSchedulerWorkerListResponse': KalturaSchedulerWorkerListResponse,
             'KalturaSearchCondition': KalturaSearchCondition,
             'KalturaSearchOperator': KalturaSearchOperator,
+            'KalturaServerNodeBaseFilter': KalturaServerNodeBaseFilter,
+            'KalturaServerNodeListResponse': KalturaServerNodeListResponse,
             'KalturaSessionRestriction': KalturaSessionRestriction,
             'KalturaSiteRestriction': KalturaSiteRestriction,
             'KalturaStorageAddAction': KalturaStorageAddAction,
@@ -57489,7 +58155,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCountryCondition': KalturaCountryCondition,
             'KalturaDeliveryProfileFilter': KalturaDeliveryProfileFilter,
             'KalturaDeliveryProfileGenericRtmp': KalturaDeliveryProfileGenericRtmp,
-            'KalturaEdgeServerFilter': KalturaEdgeServerFilter,
+            'KalturaEdgeServerNode': KalturaEdgeServerNode,
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
             'KalturaEntryReferrerLiveStats': KalturaEntryReferrerLiveStats,
             'KalturaEntryResource': KalturaEntryResource,
@@ -57510,6 +58176,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveParams': KalturaLiveParams,
             'KalturaMediaFlavorParams': KalturaMediaFlavorParams,
             'KalturaMediaInfoFilter': KalturaMediaInfoFilter,
+            'KalturaMediaServerNode': KalturaMediaServerNode,
             'KalturaOperationResource': KalturaOperationResource,
             'KalturaPartnerFilter': KalturaPartnerFilter,
             'KalturaPermissionBaseFilter': KalturaPermissionBaseFilter,
@@ -57525,6 +58192,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSearchComparableCondition': KalturaSearchComparableCondition,
             'KalturaSearchMatchAttributeCondition': KalturaSearchMatchAttributeCondition,
             'KalturaSearchMatchCondition': KalturaSearchMatchCondition,
+            'KalturaServerNodeFilter': KalturaServerNodeFilter,
             'KalturaSiteCondition': KalturaSiteCondition,
             'KalturaSshImportJobData': KalturaSshImportJobData,
             'KalturaStorageDeleteJobData': KalturaStorageDeleteJobData,
@@ -57563,6 +58231,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLightBaseFilter': KalturaDeliveryProfileGenericSilverLightBaseFilter,
             'KalturaDeliveryProfileLiveAppleHttpBaseFilter': KalturaDeliveryProfileLiveAppleHttpBaseFilter,
             'KalturaDeliveryProfileRtmpBaseFilter': KalturaDeliveryProfileRtmpBaseFilter,
+            'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
@@ -57624,6 +58293,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLightFilter': KalturaDeliveryProfileGenericSilverLightFilter,
             'KalturaDeliveryProfileLiveAppleHttpFilter': KalturaDeliveryProfileLiveAppleHttpFilter,
             'KalturaDeliveryProfileRtmpFilter': KalturaDeliveryProfileRtmpFilter,
+            'KalturaDeliveryServerNodeFilter': KalturaDeliveryServerNodeFilter,
             'KalturaFlavorAssetBaseFilter': KalturaFlavorAssetBaseFilter,
             'KalturaFlavorParamsBaseFilter': KalturaFlavorParamsBaseFilter,
             'KalturaGenericSyndicationFeedFilter': KalturaGenericSyndicationFeedFilter,
@@ -57641,19 +58311,23 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsOutputFilter': KalturaAssetParamsOutputFilter,
             'KalturaDataEntryFilter': KalturaDataEntryFilter,
             'KalturaDeliveryProfileGenericRtmpBaseFilter': KalturaDeliveryProfileGenericRtmpBaseFilter,
+            'KalturaEdgeServerNodeBaseFilter': KalturaEdgeServerNodeBaseFilter,
             'KalturaFlavorAssetFilter': KalturaFlavorAssetFilter,
             'KalturaFlavorParamsFilter': KalturaFlavorParamsFilter,
             'KalturaGenericXsltSyndicationFeedBaseFilter': KalturaGenericXsltSyndicationFeedBaseFilter,
             'KalturaLiveStreamAdminEntry': KalturaLiveStreamAdminEntry,
+            'KalturaMediaServerNodeBaseFilter': KalturaMediaServerNodeBaseFilter,
             'KalturaPlaylistFilter': KalturaPlaylistFilter,
             'KalturaThumbAssetFilter': KalturaThumbAssetFilter,
             'KalturaThumbParamsFilter': KalturaThumbParamsFilter,
             'KalturaDeliveryProfileGenericRtmpFilter': KalturaDeliveryProfileGenericRtmpFilter,
+            'KalturaEdgeServerNodeFilter': KalturaEdgeServerNodeFilter,
             'KalturaFlavorParamsOutputBaseFilter': KalturaFlavorParamsOutputBaseFilter,
             'KalturaGenericXsltSyndicationFeedFilter': KalturaGenericXsltSyndicationFeedFilter,
             'KalturaLiveAssetBaseFilter': KalturaLiveAssetBaseFilter,
             'KalturaLiveParamsBaseFilter': KalturaLiveParamsBaseFilter,
             'KalturaMediaFlavorParamsBaseFilter': KalturaMediaFlavorParamsBaseFilter,
+            'KalturaMediaServerNodeFilter': KalturaMediaServerNodeFilter,
             'KalturaMixEntryBaseFilter': KalturaMixEntryBaseFilter,
             'KalturaThumbParamsOutputBaseFilter': KalturaThumbParamsOutputBaseFilter,
             'KalturaFlavorParamsOutputFilter': KalturaFlavorParamsOutputFilter,
