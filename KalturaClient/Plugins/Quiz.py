@@ -1077,7 +1077,9 @@ class KalturaQuizService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, KalturaQuizListResponse)
 
     def serve(self, entryId, quizOutputType):
-        """creates a pdf from quiz object"""
+        """creates a pdf from quiz object
+        	 The Output type defines the file format in which the quiz will be generated
+        	 Currently only PDF files are supported"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
