@@ -1714,7 +1714,6 @@ class KalturaBatchJobOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBatchJobType(object):
-    CONVERT = "0"
     PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
     PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
     DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
@@ -1724,6 +1723,7 @@ class KalturaBatchJobType(object):
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
     DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
+    CONVERT = "0"
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"

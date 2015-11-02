@@ -47,7 +47,8 @@ class KalturaLikeOrderBy(object):
 class KalturaLike(KalturaObjectBase):
     def __init__(self,
             entryId=NotImplemented,
-            userId=NotImplemented):
+            userId=NotImplemented,
+            createdAt=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the entry that the like belongs to
@@ -58,10 +59,15 @@ class KalturaLike(KalturaObjectBase):
         # @var string
         self.userId = userId
 
+        # The date of the like's creation
+        # @var int
+        self.createdAt = createdAt
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
         'userId': getXmlNodeText, 
+        'createdAt': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -73,6 +79,7 @@ class KalturaLike(KalturaObjectBase):
         kparams.put("objectType", "KalturaLike")
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringIfDefined("userId", self.userId)
+        kparams.addIntIfDefined("createdAt", self.createdAt)
         return kparams
 
     def getEntryId(self):
@@ -86,6 +93,12 @@ class KalturaLike(KalturaObjectBase):
 
     def setUserId(self, newUserId):
         self.userId = newUserId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def setCreatedAt(self, newCreatedAt):
+        self.createdAt = newCreatedAt
 
 
 # @package Kaltura
@@ -126,7 +139,9 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             entryIdEqual=NotImplemented,
-            userIdEqual=NotImplemented):
+            userIdEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -137,10 +152,18 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
         # @var string
         self.userIdEqual = userIdEqual
 
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
 
     PROPERTY_LOADERS = {
         'entryIdEqual': getXmlNodeText, 
         'userIdEqual': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -152,6 +175,8 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
         kparams.put("objectType", "KalturaLikeBaseFilter")
         kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
         kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         return kparams
 
     def getEntryIdEqual(self):
@@ -166,6 +191,18 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
     def setUserIdEqual(self, newUserIdEqual):
         self.userIdEqual = newUserIdEqual
 
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -174,12 +211,16 @@ class KalturaLikeFilter(KalturaLikeBaseFilter):
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             entryIdEqual=NotImplemented,
-            userIdEqual=NotImplemented):
+            userIdEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented):
         KalturaLikeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             entryIdEqual,
-            userIdEqual)
+            userIdEqual,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual)
 
 
     PROPERTY_LOADERS = {
