@@ -153,7 +153,8 @@ class KalturaQuiz(KalturaObjectBase):
             showCorrectKeyOnAnswer=NotImplemented,
             allowAnswerUpdate=NotImplemented,
             showCorrectAfterSubmission=NotImplemented,
-            allowDownload=NotImplemented):
+            allowDownload=NotImplemented,
+            showGradeAfterSubmission=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -179,6 +180,9 @@ class KalturaQuiz(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.allowDownload = allowDownload
 
+        # @var KalturaNullableBoolean
+        self.showGradeAfterSubmission = showGradeAfterSubmission
+
 
     PROPERTY_LOADERS = {
         'version': getXmlNodeInt, 
@@ -188,6 +192,7 @@ class KalturaQuiz(KalturaObjectBase):
         'allowAnswerUpdate': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showCorrectAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'allowDownload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'showGradeAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -203,6 +208,7 @@ class KalturaQuiz(KalturaObjectBase):
         kparams.addIntEnumIfDefined("allowAnswerUpdate", self.allowAnswerUpdate)
         kparams.addIntEnumIfDefined("showCorrectAfterSubmission", self.showCorrectAfterSubmission)
         kparams.addIntEnumIfDefined("allowDownload", self.allowDownload)
+        kparams.addIntEnumIfDefined("showGradeAfterSubmission", self.showGradeAfterSubmission)
         return kparams
 
     def getVersion(self):
@@ -243,6 +249,12 @@ class KalturaQuiz(KalturaObjectBase):
 
     def setAllowDownload(self, newAllowDownload):
         self.allowDownload = newAllowDownload
+
+    def getShowGradeAfterSubmission(self):
+        return self.showGradeAfterSubmission
+
+    def setShowGradeAfterSubmission(self, newShowGradeAfterSubmission):
+        self.showGradeAfterSubmission = newShowGradeAfterSubmission
 
 
 # @package Kaltura
