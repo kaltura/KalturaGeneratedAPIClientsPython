@@ -6747,40 +6747,6 @@ class KalturaBaseEntry(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBaseEntryCloneOptions(KalturaObjectBase):
-    """A representation of a live stream recording entry configuration"""
-
-    def __init__(self,
-            shouldCopyEntitlement=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var KalturaNullableBoolean
-        self.shouldCopyEntitlement = shouldCopyEntitlement
-
-
-    PROPERTY_LOADERS = {
-        'shouldCopyEntitlement': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBaseEntryCloneOptions.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBaseEntryCloneOptions")
-        kparams.addIntEnumIfDefined("shouldCopyEntitlement", self.shouldCopyEntitlement)
-        return kparams
-
-    def getShouldCopyEntitlement(self):
-        return self.shouldCopyEntitlement
-
-    def setShouldCopyEntitlement(self, newShouldCopyEntitlement):
-        self.shouldCopyEntitlement = newShouldCopyEntitlement
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaBaseResponseProfile(KalturaObjectBase):
     def __init__(self):
         KalturaObjectBase.__init__(self)
@@ -52965,12 +52931,11 @@ class KalturaBaseEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeInt(resultNode)
 
-    def clone(self, entryId, cloneOptions):
+    def clone(self, entryId):
         """Clone an entry with optional attributes to apply to the clone"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kparams.addObjectIfDefined("cloneOptions", cloneOptions)
         self.client.queueServiceActionCall("baseentry", "clone", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57860,7 +57825,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
-            'KalturaBaseEntryCloneOptions': KalturaBaseEntryCloneOptions,
             'KalturaBaseResponseProfile': KalturaBaseResponseProfile,
             'KalturaBaseSyndicationFeed': KalturaBaseSyndicationFeed,
             'KalturaBatchHistoryData': KalturaBatchHistoryData,
