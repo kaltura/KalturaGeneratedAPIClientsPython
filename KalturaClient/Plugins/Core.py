@@ -6788,7 +6788,8 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
             entriesOrderBy=NotImplemented,
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
-            updatedAt=NotImplemented):
+            updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -6874,6 +6875,9 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
+        # @var bool
+        self.useCategoryEntries = useCategoryEntries
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -6896,6 +6900,7 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         'enforceEntitlement': getXmlNodeBool, 
         'privacyContext': getXmlNodeText, 
         'updatedAt': getXmlNodeInt, 
+        'useCategoryEntries': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -6919,6 +6924,7 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         kparams.addStringEnumIfDefined("entriesOrderBy", self.entriesOrderBy)
         kparams.addBoolIfDefined("enforceEntitlement", self.enforceEntitlement)
         kparams.addStringIfDefined("privacyContext", self.privacyContext)
+        kparams.addBoolIfDefined("useCategoryEntries", self.useCategoryEntries)
         return kparams
 
     def getId(self):
@@ -7022,6 +7028,12 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+    def getUseCategoryEntries(self):
+        return self.useCategoryEntries
+
+    def setUseCategoryEntries(self, newUseCategoryEntries):
+        self.useCategoryEntries = newUseCategoryEntries
 
 
 # @package Kaltura
@@ -31303,6 +31315,7 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             feedDescription=NotImplemented,
             feedLandingPage=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
@@ -31325,7 +31338,8 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
             entriesOrderBy,
             enforceEntitlement,
             privacyContext,
-            updatedAt)
+            updatedAt,
+            useCategoryEntries)
 
         # feed description
         # @var string
@@ -31389,6 +31403,7 @@ class KalturaGoogleVideoSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             adultContent=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
@@ -31410,7 +31425,8 @@ class KalturaGoogleVideoSyndicationFeed(KalturaBaseSyndicationFeed):
             entriesOrderBy,
             enforceEntitlement,
             privacyContext,
-            updatedAt)
+            updatedAt,
+            useCategoryEntries)
 
         # @var KalturaGoogleSyndicationFeedAdultValues
         self.adultContent = adultContent
@@ -31544,6 +31560,7 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             feedDescription=NotImplemented,
             language=NotImplemented,
             feedLandingPage=NotImplemented,
@@ -31574,7 +31591,8 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
             entriesOrderBy,
             enforceEntitlement,
             privacyContext,
-            updatedAt)
+            updatedAt,
+            useCategoryEntries)
 
         # feed description
         # @var string
@@ -35173,6 +35191,7 @@ class KalturaTubeMogulSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             category=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
@@ -35194,7 +35213,8 @@ class KalturaTubeMogulSyndicationFeed(KalturaBaseSyndicationFeed):
             entriesOrderBy,
             enforceEntitlement,
             privacyContext,
-            updatedAt)
+            updatedAt,
+            useCategoryEntries)
 
         # @var KalturaTubeMogulSyndicationFeedCategories
         # @readonly
@@ -36868,6 +36888,7 @@ class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             category=NotImplemented,
             adultContent=NotImplemented,
             feedDescription=NotImplemented,
@@ -36892,7 +36913,8 @@ class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
             entriesOrderBy,
             enforceEntitlement,
             privacyContext,
-            updatedAt)
+            updatedAt,
+            useCategoryEntries)
 
         # @var KalturaYahooSyndicationFeedCategories
         # @readonly
@@ -40116,6 +40138,7 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
             feedDescription=NotImplemented,
             feedLandingPage=NotImplemented,
             xslt=NotImplemented,
@@ -40141,6 +40164,7 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
+            useCategoryEntries,
             feedDescription,
             feedLandingPage)
 
