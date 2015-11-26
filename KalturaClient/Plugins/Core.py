@@ -39460,7 +39460,8 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
-            playbackDomain=NotImplemented):
+            playbackDomain=NotImplemented,
+            deliveryProfileIds=NotImplemented):
         KalturaDeliveryServerNode.__init__(self,
             id,
             partnerId,
@@ -39478,8 +39479,13 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             parentId,
             playbackDomain)
 
+        # Delivery profile ids
+        # @var array of KalturaKeyValue
+        self.deliveryProfileIds = deliveryProfileIds
+
 
     PROPERTY_LOADERS = {
+        'deliveryProfileIds': (KalturaObjectFactory.createArray, KalturaKeyValue), 
     }
 
     def fromXml(self, node):
@@ -39489,7 +39495,14 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
     def toParams(self):
         kparams = KalturaDeliveryServerNode.toParams(self)
         kparams.put("objectType", "KalturaEdgeServerNode")
+        kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
         return kparams
+
+    def getDeliveryProfileIds(self):
+        return self.deliveryProfileIds
+
+    def setDeliveryProfileIds(self, newDeliveryProfileIds):
+        self.deliveryProfileIds = newDeliveryProfileIds
 
 
 # @package Kaltura
