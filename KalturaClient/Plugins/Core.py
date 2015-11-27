@@ -4388,6 +4388,7 @@ class KalturaReportType(object):
     BROWSERS = "23"
     LIVE = "24"
     TOP_PLAYBACK_CONTEXT = "25"
+    VPAAS_USAGE = "26"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
