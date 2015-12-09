@@ -27944,7 +27944,8 @@ class KalturaConcatJobData(KalturaJobData):
             destFilePath=NotImplemented,
             flavorAssetId=NotImplemented,
             offset=NotImplemented,
-            duration=NotImplemented):
+            duration=NotImplemented,
+            amfArray=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Source files to be concatenated
@@ -27967,6 +27968,9 @@ class KalturaConcatJobData(KalturaJobData):
         # @var float
         self.duration = duration
 
+        # @var array of KalturaKeyValue
+        self.amfArray = amfArray
+
 
     PROPERTY_LOADERS = {
         'srcFiles': (KalturaObjectFactory.createArray, KalturaString), 
@@ -27974,6 +27978,7 @@ class KalturaConcatJobData(KalturaJobData):
         'flavorAssetId': getXmlNodeText, 
         'offset': getXmlNodeFloat, 
         'duration': getXmlNodeFloat, 
+        'amfArray': (KalturaObjectFactory.createArray, KalturaKeyValue), 
     }
 
     def fromXml(self, node):
@@ -27988,6 +27993,7 @@ class KalturaConcatJobData(KalturaJobData):
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
         kparams.addFloatIfDefined("offset", self.offset)
         kparams.addFloatIfDefined("duration", self.duration)
+        kparams.addArrayIfDefined("amfArray", self.amfArray)
         return kparams
 
     def getSrcFiles(self):
@@ -28019,6 +28025,12 @@ class KalturaConcatJobData(KalturaJobData):
 
     def setDuration(self, newDuration):
         self.duration = newDuration
+
+    def getAmfArray(self):
+        return self.amfArray
+
+    def setAmfArray(self, newAmfArray):
+        self.amfArray = newAmfArray
 
 
 # @package Kaltura
@@ -28433,7 +28445,8 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
             fileIndex=NotImplemented,
             srcFilePath=NotImplemented,
             destFilePath=NotImplemented,
-            endTime=NotImplemented):
+            endTime=NotImplemented,
+            amfArray=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Live stream entry id
@@ -28463,6 +28476,9 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         # @var float
         self.endTime = endTime
 
+        # @var array of KalturaKeyValue
+        self.amfArray = amfArray
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
@@ -28472,6 +28488,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         'srcFilePath': getXmlNodeText, 
         'destFilePath': getXmlNodeText, 
         'endTime': getXmlNodeFloat, 
+        'amfArray': (KalturaObjectFactory.createArray, KalturaKeyValue), 
     }
 
     def fromXml(self, node):
@@ -28488,6 +28505,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         kparams.addStringIfDefined("srcFilePath", self.srcFilePath)
         kparams.addStringIfDefined("destFilePath", self.destFilePath)
         kparams.addFloatIfDefined("endTime", self.endTime)
+        kparams.addArrayIfDefined("amfArray", self.amfArray)
         return kparams
 
     def getEntryId(self):
@@ -28531,6 +28549,12 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
 
     def setEndTime(self, newEndTime):
         self.endTime = newEndTime
+
+    def getAmfArray(self):
+        return self.amfArray
+
+    def setAmfArray(self, newAmfArray):
+        self.amfArray = newAmfArray
 
 
 # @package Kaltura
@@ -39462,7 +39486,8 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             dc=NotImplemented,
             parentId=NotImplemented,
             playbackDomain=NotImplemented,
-            deliveryProfileIds=NotImplemented):
+            deliveryProfileIds=NotImplemented,
+            config=NotImplemented):
         KalturaDeliveryServerNode.__init__(self,
             id,
             partnerId,
@@ -39484,9 +39509,14 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
         # @var array of KalturaKeyValue
         self.deliveryProfileIds = deliveryProfileIds
 
+        # Overdie edge server default configuration - json format
+        # @var string
+        self.config = config
+
 
     PROPERTY_LOADERS = {
         'deliveryProfileIds': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'config': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -39497,6 +39527,7 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
         kparams = KalturaDeliveryServerNode.toParams(self)
         kparams.put("objectType", "KalturaEdgeServerNode")
         kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
+        kparams.addStringIfDefined("config", self.config)
         return kparams
 
     def getDeliveryProfileIds(self):
@@ -39504,6 +39535,12 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
 
     def setDeliveryProfileIds(self, newDeliveryProfileIds):
         self.deliveryProfileIds = newDeliveryProfileIds
+
+    def getConfig(self):
+        return self.config
+
+    def setConfig(self, newConfig):
+        self.config = newConfig
 
 
 # @package Kaltura
