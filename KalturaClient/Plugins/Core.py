@@ -27945,7 +27945,7 @@ class KalturaConcatJobData(KalturaJobData):
             flavorAssetId=NotImplemented,
             offset=NotImplemented,
             duration=NotImplemented,
-            amfArray=NotImplemented):
+            concatenatedDuration=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Source files to be concatenated
@@ -27968,8 +27968,9 @@ class KalturaConcatJobData(KalturaJobData):
         # @var float
         self.duration = duration
 
-        # @var array of KalturaKeyValue
-        self.amfArray = amfArray
+        # duration of the concated video
+        # @var float
+        self.concatenatedDuration = concatenatedDuration
 
 
     PROPERTY_LOADERS = {
@@ -27978,7 +27979,7 @@ class KalturaConcatJobData(KalturaJobData):
         'flavorAssetId': getXmlNodeText, 
         'offset': getXmlNodeFloat, 
         'duration': getXmlNodeFloat, 
-        'amfArray': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'concatenatedDuration': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
@@ -27993,7 +27994,7 @@ class KalturaConcatJobData(KalturaJobData):
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
         kparams.addFloatIfDefined("offset", self.offset)
         kparams.addFloatIfDefined("duration", self.duration)
-        kparams.addArrayIfDefined("amfArray", self.amfArray)
+        kparams.addFloatIfDefined("concatenatedDuration", self.concatenatedDuration)
         return kparams
 
     def getSrcFiles(self):
@@ -28026,11 +28027,11 @@ class KalturaConcatJobData(KalturaJobData):
     def setDuration(self, newDuration):
         self.duration = newDuration
 
-    def getAmfArray(self):
-        return self.amfArray
+    def getConcatenatedDuration(self):
+        return self.concatenatedDuration
 
-    def setAmfArray(self, newAmfArray):
-        self.amfArray = newAmfArray
+    def setConcatenatedDuration(self, newConcatenatedDuration):
+        self.concatenatedDuration = newConcatenatedDuration
 
 
 # @package Kaltura
@@ -28446,7 +28447,8 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
             srcFilePath=NotImplemented,
             destFilePath=NotImplemented,
             endTime=NotImplemented,
-            amfArray=NotImplemented):
+            amfArray=NotImplemented,
+            duration=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Live stream entry id
@@ -28479,6 +28481,11 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         # @var array of KalturaKeyValue
         self.amfArray = amfArray
 
+        # Duration of the live segment.
+        # 	 filled by the ConvertLiveSegment job
+        # @var float
+        self.duration = duration
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
@@ -28489,6 +28496,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         'destFilePath': getXmlNodeText, 
         'endTime': getXmlNodeFloat, 
         'amfArray': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'duration': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
@@ -28506,6 +28514,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         kparams.addStringIfDefined("destFilePath", self.destFilePath)
         kparams.addFloatIfDefined("endTime", self.endTime)
         kparams.addArrayIfDefined("amfArray", self.amfArray)
+        kparams.addFloatIfDefined("duration", self.duration)
         return kparams
 
     def getEntryId(self):
@@ -28555,6 +28564,12 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
 
     def setAmfArray(self, newAmfArray):
         self.amfArray = newAmfArray
+
+    def getDuration(self):
+        return self.duration
+
+    def setDuration(self, newDuration):
+        self.duration = newDuration
 
 
 # @package Kaltura
