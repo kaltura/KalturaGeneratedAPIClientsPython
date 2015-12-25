@@ -1961,6 +1961,7 @@ class KalturaConditionType(object):
     OR_OPERATOR = "11"
     HASH = "12"
     DELIVERY_PROFILE = "13"
+    ACTIVE_EDGE_VALIDATE = "14"
 
     def __init__(self, value):
         self.value = value
@@ -28460,8 +28461,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
             srcFilePath=NotImplemented,
             destFilePath=NotImplemented,
             endTime=NotImplemented,
-            amfArray=NotImplemented,
-            duration=NotImplemented):
+            destDataFilePath=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Live stream entry id
@@ -28491,13 +28491,9 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         # @var float
         self.endTime = endTime
 
-        # @var array of KalturaKeyValue
-        self.amfArray = amfArray
-
-        # Duration of the live segment.
-        # 	 filled by the ConvertLiveSegment job
-        # @var float
-        self.duration = duration
+        # The data output file
+        # @var string
+        self.destDataFilePath = destDataFilePath
 
 
     PROPERTY_LOADERS = {
@@ -28508,8 +28504,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         'srcFilePath': getXmlNodeText, 
         'destFilePath': getXmlNodeText, 
         'endTime': getXmlNodeFloat, 
-        'amfArray': (KalturaObjectFactory.createArray, KalturaKeyValue), 
-        'duration': getXmlNodeFloat, 
+        'destDataFilePath': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -28526,8 +28521,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         kparams.addStringIfDefined("srcFilePath", self.srcFilePath)
         kparams.addStringIfDefined("destFilePath", self.destFilePath)
         kparams.addFloatIfDefined("endTime", self.endTime)
-        kparams.addArrayIfDefined("amfArray", self.amfArray)
-        kparams.addFloatIfDefined("duration", self.duration)
+        kparams.addStringIfDefined("destDataFilePath", self.destDataFilePath)
         return kparams
 
     def getEntryId(self):
@@ -28572,17 +28566,11 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
     def setEndTime(self, newEndTime):
         self.endTime = newEndTime
 
-    def getAmfArray(self):
-        return self.amfArray
+    def getDestDataFilePath(self):
+        return self.destDataFilePath
 
-    def setAmfArray(self, newAmfArray):
-        self.amfArray = newAmfArray
-
-    def getDuration(self):
-        return self.duration
-
-    def setDuration(self, newDuration):
-        self.duration = newDuration
+    def setDestDataFilePath(self, newDestDataFilePath):
+        self.destDataFilePath = newDestDataFilePath
 
 
 # @package Kaltura
@@ -36734,6 +36722,45 @@ class KalturaUserRoleListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaValidateActiveEdgeCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            edgeServerIds=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+        # Comma separated list of edge servers to validate are active
+        # @var string
+        self.edgeServerIds = edgeServerIds
+
+
+    PROPERTY_LOADERS = {
+        'edgeServerIds': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaValidateActiveEdgeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaValidateActiveEdgeCondition")
+        kparams.addStringIfDefined("edgeServerIds", self.edgeServerIds)
+        return kparams
+
+    def getEdgeServerIds(self):
+        return self.edgeServerIds
+
+    def setEdgeServerIds(self, newEdgeServerIds):
+        self.edgeServerIds = newEdgeServerIds
 
 
 # @package Kaltura
@@ -58254,6 +58281,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserLoginDataListResponse': KalturaUserLoginDataListResponse,
             'KalturaUserRoleCondition': KalturaUserRoleCondition,
             'KalturaUserRoleListResponse': KalturaUserRoleListResponse,
+            'KalturaValidateActiveEdgeCondition': KalturaValidateActiveEdgeCondition,
             'KalturaWidgetBaseFilter': KalturaWidgetBaseFilter,
             'KalturaWidgetListResponse': KalturaWidgetListResponse,
             'KalturaYahooSyndicationFeed': KalturaYahooSyndicationFeed,
