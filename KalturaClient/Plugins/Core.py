@@ -1567,6 +1567,18 @@ class KalturaAudioCodec(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBaseEntryCloneOptions(object):
+    USERS = "1"
+    CATEGORIES = "2"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBaseEntryCompareAttribute(object):
     ACCESS_CONTROL_ID = "accessControlId"
     CREATED_AT = "createdAt"
@@ -1933,6 +1945,18 @@ class KalturaCategoryUserOrderBy(object):
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
     UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCloneComponentSelectorType(object):
+    INCLUDE_COMPONENT = "0"
+    EXCLUDE_COMPONENT = "1"
 
     def __init__(self, value):
         self.value = value
@@ -6745,6 +6769,26 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def getCapabilities(self):
         return self.capabilities
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseEntryCloneOptionItem(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseEntryCloneOptionItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaBaseEntryCloneOptionItem")
+        return kparams
 
 
 # @package Kaltura
@@ -25269,6 +25313,51 @@ class KalturaAuthenticatedCondition(KalturaCondition):
 
     def setPrivileges(self, newPrivileges):
         self.privileges = newPrivileges
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseEntryCloneOptionComponent(KalturaBaseEntryCloneOptionItem):
+    def __init__(self,
+            itemType=NotImplemented,
+            rule=NotImplemented):
+        KalturaBaseEntryCloneOptionItem.__init__(self)
+
+        # @var KalturaBaseEntryCloneOptions
+        self.itemType = itemType
+
+        # condition rule (include/exclude)
+        # @var KalturaCloneComponentSelectorType
+        self.rule = rule
+
+
+    PROPERTY_LOADERS = {
+        'itemType': (KalturaEnumsFactory.createString, "KalturaBaseEntryCloneOptions"), 
+        'rule': (KalturaEnumsFactory.createString, "KalturaCloneComponentSelectorType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseEntryCloneOptionItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseEntryCloneOptionComponent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseEntryCloneOptionItem.toParams(self)
+        kparams.put("objectType", "KalturaBaseEntryCloneOptionComponent")
+        kparams.addStringEnumIfDefined("itemType", self.itemType)
+        kparams.addStringEnumIfDefined("rule", self.rule)
+        return kparams
+
+    def getItemType(self):
+        return self.itemType
+
+    def setItemType(self, newItemType):
+        self.itemType = newItemType
+
+    def getRule(self):
+        return self.rule
+
+    def setRule(self, newRule):
+        self.rule = newRule
 
 
 # @package Kaltura
@@ -53081,11 +53170,12 @@ class KalturaBaseEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeInt(resultNode)
 
-    def clone(self, entryId):
+    def clone(self, entryId, cloneOptions = NotImplemented):
         """Clone an entry with optional attributes to apply to the clone"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
+        kparams.addArrayIfDefined("cloneOptions", cloneOptions)
         self.client.queueServiceActionCall("baseentry", "clone", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57801,6 +57891,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsOutputOrderBy': KalturaAssetParamsOutputOrderBy,
             'KalturaAssetType': KalturaAssetType,
             'KalturaAudioCodec': KalturaAudioCodec,
+            'KalturaBaseEntryCloneOptions': KalturaBaseEntryCloneOptions,
             'KalturaBaseEntryCompareAttribute': KalturaBaseEntryCompareAttribute,
             'KalturaBaseEntryMatchAttribute': KalturaBaseEntryMatchAttribute,
             'KalturaBaseEntryOrderBy': KalturaBaseEntryOrderBy,
@@ -57819,6 +57910,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryIdentifierField': KalturaCategoryIdentifierField,
             'KalturaCategoryOrderBy': KalturaCategoryOrderBy,
             'KalturaCategoryUserOrderBy': KalturaCategoryUserOrderBy,
+            'KalturaCloneComponentSelectorType': KalturaCloneComponentSelectorType,
             'KalturaConditionType': KalturaConditionType,
             'KalturaContainerFormat': KalturaContainerFormat,
             'KalturaContextType': KalturaContextType,
@@ -57975,6 +58067,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
+            'KalturaBaseEntryCloneOptionItem': KalturaBaseEntryCloneOptionItem,
             'KalturaBaseResponseProfile': KalturaBaseResponseProfile,
             'KalturaBaseSyndicationFeed': KalturaBaseSyndicationFeed,
             'KalturaBatchHistoryData': KalturaBatchHistoryData,
@@ -58125,6 +58218,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetsParamsResourceContainers': KalturaAssetsParamsResourceContainers,
             'KalturaAttributeCondition': KalturaAttributeCondition,
             'KalturaAuthenticatedCondition': KalturaAuthenticatedCondition,
+            'KalturaBaseEntryCloneOptionComponent': KalturaBaseEntryCloneOptionComponent,
             'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
             'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
