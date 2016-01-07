@@ -500,6 +500,19 @@ class KalturaLimitFlavorsRestrictionType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveEntryStatus(object):
+    STOPPED = 0
+    PLAYABLE = 1
+    BROADCASTING = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLivePublishStatus(object):
     DISABLED = 0
     ENABLED = 1
@@ -5205,12 +5218,22 @@ class KalturaCondition(KalturaObjectBase):
 # @subpackage Client
 class KalturaRule(KalturaObjectBase):
     def __init__(self,
+            description=NotImplemented,
+            ruleData=NotImplemented,
             message=NotImplemented,
             actions=NotImplemented,
             conditions=NotImplemented,
             contexts=NotImplemented,
             stopProcessing=NotImplemented):
         KalturaObjectBase.__init__(self)
+
+        # Short Rule Description
+        # @var string
+        self.description = description
+
+        # Rule Custom Data to allow saving rule specific information
+        # @var string
+        self.ruleData = ruleData
 
         # Message to be thrown to the player in case the rule is fulfilled
         # @var string
@@ -5234,6 +5257,8 @@ class KalturaRule(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
+        'description': getXmlNodeText, 
+        'ruleData': getXmlNodeText, 
         'message': getXmlNodeText, 
         'actions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
         'conditions': (KalturaObjectFactory.createArray, KalturaCondition), 
@@ -5248,12 +5273,26 @@ class KalturaRule(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaRule")
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addStringIfDefined("ruleData", self.ruleData)
         kparams.addStringIfDefined("message", self.message)
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("conditions", self.conditions)
         kparams.addArrayIfDefined("contexts", self.contexts)
         kparams.addBoolIfDefined("stopProcessing", self.stopProcessing)
         return kparams
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getRuleData(self):
+        return self.ruleData
+
+    def setRuleData(self, newRuleData):
+        self.ruleData = newRuleData
 
     def getMessage(self):
         return self.message
@@ -13209,7 +13248,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             firstBroadcast=NotImplemented,
             lastBroadcast=NotImplemented,
             currentBroadcastStartTime=NotImplemented,
-            recordingOptions=NotImplemented):
+            recordingOptions=NotImplemented,
+            liveStatus=NotImplemented):
         KalturaMediaEntry.__init__(self,
             id,
             name,
@@ -13330,6 +13370,10 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @insertonly
         self.recordingOptions = recordingOptions
 
+        # the status of the entry of type LiveEntryStatus
+        # @var KalturaLiveEntryStatus
+        self.liveStatus = liveStatus
+
 
     PROPERTY_LOADERS = {
         'offlineMessage': getXmlNodeText, 
@@ -13345,6 +13389,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'lastBroadcast': getXmlNodeInt, 
         'currentBroadcastStartTime': getXmlNodeFloat, 
         'recordingOptions': (KalturaObjectFactory.create, KalturaLiveEntryRecordingOptions), 
+        'liveStatus': (KalturaEnumsFactory.createInt, "KalturaLiveEntryStatus"), 
     }
 
     def fromXml(self, node):
@@ -13365,6 +13410,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addArrayIfDefined("publishConfigurations", self.publishConfigurations)
         kparams.addFloatIfDefined("currentBroadcastStartTime", self.currentBroadcastStartTime)
         kparams.addObjectIfDefined("recordingOptions", self.recordingOptions)
+        kparams.addIntEnumIfDefined("liveStatus", self.liveStatus)
         return kparams
 
     def getOfflineMessage(self):
@@ -13438,6 +13484,12 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
     def setRecordingOptions(self, newRecordingOptions):
         self.recordingOptions = newRecordingOptions
+
+    def getLiveStatus(self):
+        return self.liveStatus
+
+    def setLiveStatus(self, newLiveStatus):
+        self.liveStatus = newLiveStatus
 
 
 # @package Kaltura
@@ -13518,6 +13570,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             lastBroadcast=NotImplemented,
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
+            liveStatus=NotImplemented,
             playlistId=NotImplemented,
             repeat=NotImplemented):
         KalturaLiveEntry.__init__(self,
@@ -13594,7 +13647,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             firstBroadcast,
             lastBroadcast,
             currentBroadcastStartTime,
-            recordingOptions)
+            recordingOptions,
+            liveStatus)
 
         # Playlist id to be played
         # @var string
@@ -14450,6 +14504,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             lastBroadcast=NotImplemented,
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
+            liveStatus=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -14539,7 +14594,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             firstBroadcast,
             lastBroadcast,
             currentBroadcastStartTime,
-            recordingOptions)
+            recordingOptions,
+            liveStatus)
 
         # The stream id as provided by the provider
         # @var string
@@ -49060,6 +49116,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             lastBroadcast=NotImplemented,
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
+            liveStatus=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -49150,6 +49207,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             lastBroadcast,
             currentBroadcastStartTime,
             recordingOptions,
+            liveStatus,
             streamRemoteId,
             streamRemoteBackupId,
             bitrates,
@@ -54719,7 +54777,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveEntry)
 
-    def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented):
+    def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented, liveEntryStatus = 1):
         """Register media server to live entry"""
 
         kparams = KalturaParams()
@@ -54727,6 +54785,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addStringIfDefined("hostname", hostname)
         kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
         kparams.addStringIfDefined("applicationName", applicationName)
+        kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         self.client.queueServiceActionCall("livechannel", "registerMediaServer", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -54986,7 +55045,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveEntry)
 
-    def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented):
+    def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented, liveEntryStatus = 1):
         """Register media server to live entry"""
 
         kparams = KalturaParams()
@@ -54994,6 +55053,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("hostname", hostname)
         kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
         kparams.addStringIfDefined("applicationName", applicationName)
+        kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         self.client.queueServiceActionCall("livestream", "registerMediaServer", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57824,6 +57884,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaIpAddressRestrictionType': KalturaIpAddressRestrictionType,
             'KalturaLicenseType': KalturaLicenseType,
             'KalturaLimitFlavorsRestrictionType': KalturaLimitFlavorsRestrictionType,
+            'KalturaLiveEntryStatus': KalturaLiveEntryStatus,
             'KalturaLivePublishStatus': KalturaLivePublishStatus,
             'KalturaLiveReportExportType': KalturaLiveReportExportType,
             'KalturaLiveStatsEventType': KalturaLiveStatsEventType,
