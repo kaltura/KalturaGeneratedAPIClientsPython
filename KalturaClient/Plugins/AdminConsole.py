@@ -602,6 +602,17 @@ class KalturaEntryAdminService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaTrackEntryListResponse)
 
+    def restoreDeletedEntry(self, entryId):
+        """Restore deleted entry."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("adminconsole_entryadmin", "restoreDeletedEntry", KalturaBaseEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaBaseEntry)
+
 
 # @package Kaltura
 # @subpackage Client
