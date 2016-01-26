@@ -1581,6 +1581,10 @@ class KalturaAudioCodec(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBaseEntryCloneOptions(object):
+    AD_CUE_POINTS = "adCuePoint.AD_CUE_POINTS"
+    ANNOTATION_CUE_POINTS = "annotation.ANNOTATION_CUE_POINTS"
+    CODE_CUE_POINTS = "codeCuePoint.CODE_CUE_POINTS"
+    THUMB_CUE_POINTS = "thumbCuePoint.THUMB_CUE_POINTS"
     USERS = "1"
     CATEGORIES = "2"
 
@@ -30941,6 +30945,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
             accessControlMessages=NotImplemented,
             accessControlActions=NotImplemented,
             flavorAssets=NotImplemented,
+            msDuration=NotImplemented,
             pluginData=NotImplemented):
         KalturaContextDataResult.__init__(self,
             messages,
@@ -30993,6 +30998,10 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         # @var array of KalturaFlavorAsset
         self.flavorAssets = flavorAssets
 
+        # The duration of the entry in milliseconds
+        # @var int
+        self.msDuration = msDuration
+
         # Array of allowed flavor assets according to access control limitations and requested tags
         # @var map
         self.pluginData = pluginData
@@ -31013,6 +31022,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         'accessControlMessages': (KalturaObjectFactory.createArray, KalturaString), 
         'accessControlActions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
         'flavorAssets': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
+        'msDuration': getXmlNodeInt, 
         'pluginData': (KalturaObjectFactory.create, map), 
     }
 
@@ -31037,6 +31047,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         kparams.addArrayIfDefined("accessControlMessages", self.accessControlMessages)
         kparams.addArrayIfDefined("accessControlActions", self.accessControlActions)
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
+        kparams.addIntIfDefined("msDuration", self.msDuration)
         kparams.addObjectIfDefined("pluginData", self.pluginData)
         return kparams
 
@@ -31123,6 +31134,12 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
 
     def setFlavorAssets(self, newFlavorAssets):
         self.flavorAssets = newFlavorAssets
+
+    def getMsDuration(self):
+        return self.msDuration
+
+    def setMsDuration(self, newMsDuration):
+        self.msDuration = newMsDuration
 
     def getPluginData(self):
         return self.pluginData
@@ -48147,7 +48164,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             typeEqual=NotImplemented,
-            userIdEqualCurrent=NotImplemented):
+            userIdEqualCurrent=NotImplemented,
+            isAnonymous=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48168,8 +48186,12 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             typeEqual,
             userIdEqualCurrent)
 
+        # @var KalturaNullableBoolean
+        self.isAnonymous = isAnonymous
+
 
     PROPERTY_LOADERS = {
+        'isAnonymous': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -48179,7 +48201,14 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
     def toParams(self):
         kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntryFilter")
+        kparams.addIntEnumIfDefined("isAnonymous", self.isAnonymous)
         return kparams
+
+    def getIsAnonymous(self):
+        return self.isAnonymous
+
+    def setIsAnonymous(self, newIsAnonymous):
+        self.isAnonymous = newIsAnonymous
 
 
 # @package Kaltura
