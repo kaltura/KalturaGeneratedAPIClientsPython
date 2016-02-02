@@ -366,6 +366,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -415,6 +416,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration)
 
@@ -482,6 +484,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             densityWidth=NotImplemented,
@@ -536,6 +539,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration)
 
@@ -658,6 +662,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             readonly=NotImplemented):
@@ -708,6 +713,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration)
 
@@ -786,6 +792,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flashVersion=NotImplemented,
@@ -837,6 +844,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration)
 
@@ -926,6 +934,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -981,6 +990,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1054,6 +1064,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1114,6 +1125,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1242,6 +1254,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1298,6 +1311,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1382,6 +1396,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1439,6 +1454,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            isEncrypted,
             clipOffset,
             clipDuration,
             flavorParamsId,
