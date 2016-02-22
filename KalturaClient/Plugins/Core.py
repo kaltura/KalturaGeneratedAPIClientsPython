@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2015  Kaltura Inc.
+# Copyright (C) 2006-2016  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -13342,12 +13342,10 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
         # DVR Status Enabled/Disabled
         # @var KalturaDVRStatus
-        # @insertonly
         self.dvrStatus = dvrStatus
 
         # Window of time which the DVR allows for backwards scrubbing (in minutes)
         # @var int
-        # @insertonly
         self.dvrWindow = dvrWindow
 
         # Elapsed recording time (in msec) up to the point where the live stream was last stopped (unpublished).
