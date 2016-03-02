@@ -24259,7 +24259,8 @@ class KalturaWidget(KalturaObjectBase):
             widgetHTML=NotImplemented,
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
-            addEmbedHtml5Support=NotImplemented):
+            addEmbedHtml5Support=NotImplemented,
+            roles=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -24317,6 +24318,9 @@ class KalturaWidget(KalturaObjectBase):
         # @var bool
         self.addEmbedHtml5Support = addEmbedHtml5Support
 
+        # @var string
+        self.roles = roles
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -24334,6 +24338,7 @@ class KalturaWidget(KalturaObjectBase):
         'enforceEntitlement': getXmlNodeBool, 
         'privacyContext': getXmlNodeText, 
         'addEmbedHtml5Support': getXmlNodeBool, 
+        'roles': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -24352,6 +24357,7 @@ class KalturaWidget(KalturaObjectBase):
         kparams.addBoolIfDefined("enforceEntitlement", self.enforceEntitlement)
         kparams.addStringIfDefined("privacyContext", self.privacyContext)
         kparams.addBoolIfDefined("addEmbedHtml5Support", self.addEmbedHtml5Support)
+        kparams.addStringIfDefined("roles", self.roles)
         return kparams
 
     def getId(self):
@@ -24425,6 +24431,12 @@ class KalturaWidget(KalturaObjectBase):
 
     def setAddEmbedHtml5Support(self, newAddEmbedHtml5Support):
         self.addEmbedHtml5Support = newAddEmbedHtml5Support
+
+    def getRoles(self):
+        return self.roles
+
+    def setRoles(self, newRoles):
+        self.roles = newRoles
 
 
 # @package Kaltura
