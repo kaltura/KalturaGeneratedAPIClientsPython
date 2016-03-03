@@ -3456,7 +3456,8 @@ class KalturaDistributionDeleteJobData(KalturaDistributionJobData):
             providerData=NotImplemented,
             results=NotImplemented,
             sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            mediaFiles=NotImplemented,
+            keepDistributionItem=NotImplemented):
         KalturaDistributionJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -3469,8 +3470,13 @@ class KalturaDistributionDeleteJobData(KalturaDistributionJobData):
             sentData,
             mediaFiles)
 
+        # Flag signifying that the associated distribution item should not be moved to 'removed' status
+        # @var bool
+        self.keepDistributionItem = keepDistributionItem
+
 
     PROPERTY_LOADERS = {
+        'keepDistributionItem': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -3480,7 +3486,14 @@ class KalturaDistributionDeleteJobData(KalturaDistributionJobData):
     def toParams(self):
         kparams = KalturaDistributionJobData.toParams(self)
         kparams.put("objectType", "KalturaDistributionDeleteJobData")
+        kparams.addBoolIfDefined("keepDistributionItem", self.keepDistributionItem)
         return kparams
+
+    def getKeepDistributionItem(self):
+        return self.keepDistributionItem
+
+    def setKeepDistributionItem(self, newKeepDistributionItem):
+        self.keepDistributionItem = newKeepDistributionItem
 
 
 # @package Kaltura

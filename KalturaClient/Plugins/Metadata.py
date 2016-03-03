@@ -1151,6 +1151,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
             advancedSearch=NotImplemented,
             partnerIdEqual=NotImplemented,
             metadataProfileIdEqual=NotImplemented,
+            metadataProfileIdIn=NotImplemented,
             metadataProfileVersionEqual=NotImplemented,
             metadataProfileVersionGreaterThanOrEqual=NotImplemented,
             metadataProfileVersionLessThanOrEqual=NotImplemented,
@@ -1175,6 +1176,9 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
 
         # @var int
         self.metadataProfileIdEqual = metadataProfileIdEqual
+
+        # @var string
+        self.metadataProfileIdIn = metadataProfileIdIn
 
         # @var int
         self.metadataProfileVersionEqual = metadataProfileVersionEqual
@@ -1226,6 +1230,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
     PROPERTY_LOADERS = {
         'partnerIdEqual': getXmlNodeInt, 
         'metadataProfileIdEqual': getXmlNodeInt, 
+        'metadataProfileIdIn': getXmlNodeText, 
         'metadataProfileVersionEqual': getXmlNodeInt, 
         'metadataProfileVersionGreaterThanOrEqual': getXmlNodeInt, 
         'metadataProfileVersionLessThanOrEqual': getXmlNodeInt, 
@@ -1252,6 +1257,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
         kparams.put("objectType", "KalturaMetadataBaseFilter")
         kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
         kparams.addIntIfDefined("metadataProfileIdEqual", self.metadataProfileIdEqual)
+        kparams.addStringIfDefined("metadataProfileIdIn", self.metadataProfileIdIn)
         kparams.addIntIfDefined("metadataProfileVersionEqual", self.metadataProfileVersionEqual)
         kparams.addIntIfDefined("metadataProfileVersionGreaterThanOrEqual", self.metadataProfileVersionGreaterThanOrEqual)
         kparams.addIntIfDefined("metadataProfileVersionLessThanOrEqual", self.metadataProfileVersionLessThanOrEqual)
@@ -1280,6 +1286,12 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
 
     def setMetadataProfileIdEqual(self, newMetadataProfileIdEqual):
         self.metadataProfileIdEqual = newMetadataProfileIdEqual
+
+    def getMetadataProfileIdIn(self):
+        return self.metadataProfileIdIn
+
+    def setMetadataProfileIdIn(self, newMetadataProfileIdIn):
+        self.metadataProfileIdIn = newMetadataProfileIdIn
 
     def getMetadataProfileVersionEqual(self):
         return self.metadataProfileVersionEqual
@@ -1582,6 +1594,7 @@ class KalturaMetadataFilter(KalturaMetadataBaseFilter):
             advancedSearch=NotImplemented,
             partnerIdEqual=NotImplemented,
             metadataProfileIdEqual=NotImplemented,
+            metadataProfileIdIn=NotImplemented,
             metadataProfileVersionEqual=NotImplemented,
             metadataProfileVersionGreaterThanOrEqual=NotImplemented,
             metadataProfileVersionLessThanOrEqual=NotImplemented,
@@ -1602,6 +1615,7 @@ class KalturaMetadataFilter(KalturaMetadataBaseFilter):
             advancedSearch,
             partnerIdEqual,
             metadataProfileIdEqual,
+            metadataProfileIdIn,
             metadataProfileVersionEqual,
             metadataProfileVersionGreaterThanOrEqual,
             metadataProfileVersionLessThanOrEqual,
