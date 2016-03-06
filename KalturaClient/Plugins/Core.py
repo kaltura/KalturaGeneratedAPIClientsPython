@@ -22950,15 +22950,20 @@ class KalturaThumbParamsOutput(KalturaThumbParams):
 # @subpackage Client
 class KalturaThumbnailServeOptions(KalturaObjectBase):
     def __init__(self,
-            download=NotImplemented):
+            download=NotImplemented,
+            referrer=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var bool
         self.download = download
 
+        # @var string
+        self.referrer = referrer
+
 
     PROPERTY_LOADERS = {
         'download': getXmlNodeBool, 
+        'referrer': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -22969,6 +22974,7 @@ class KalturaThumbnailServeOptions(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaThumbnailServeOptions")
         kparams.addBoolIfDefined("download", self.download)
+        kparams.addStringIfDefined("referrer", self.referrer)
         return kparams
 
     def getDownload(self):
@@ -22976,6 +22982,12 @@ class KalturaThumbnailServeOptions(KalturaObjectBase):
 
     def setDownload(self, newDownload):
         self.download = newDownload
+
+    def getReferrer(self):
+        return self.referrer
+
+    def setReferrer(self, newReferrer):
+        self.referrer = newReferrer
 
 
 # @package Kaltura
