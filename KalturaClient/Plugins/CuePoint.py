@@ -904,6 +904,17 @@ class KalturaCuePointService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def updateStatus(self, id, status):
+        """Update cuePoint status by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addIntIfDefined("status", status);
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "updateStatus", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 ########## main ##########
 class KalturaCuePointClientPlugin(KalturaClientPlugin):
     # KalturaCuePointClientPlugin

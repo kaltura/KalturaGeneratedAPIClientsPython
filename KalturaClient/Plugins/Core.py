@@ -13337,7 +13337,6 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
         # Recording Status Enabled/Disabled
         # @var KalturaRecordStatus
-        # @insertonly
         self.recordStatus = recordStatus
 
         # DVR Status Enabled/Disabled
@@ -13383,7 +13382,6 @@ class KalturaLiveEntry(KalturaMediaEntry):
         self.currentBroadcastStartTime = currentBroadcastStartTime
 
         # @var KalturaLiveEntryRecordingOptions
-        # @insertonly
         self.recordingOptions = recordingOptions
 
         # the status of the entry of type LiveEntryStatus
