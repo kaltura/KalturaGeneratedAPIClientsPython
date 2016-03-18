@@ -361,6 +361,20 @@ class KalturaEntryModerationStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeStatus(object):
+    STOPPED = 0
+    PLAYABLE = 1
+    BROADCASTING = 2
+    AUTHENTICATED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFeatureStatusType(object):
     LOCK_CATEGORY = 1
     CATEGORY = 2
@@ -500,19 +514,6 @@ class KalturaLimitFlavorsRestrictionType(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveEntryStatus(object):
-    STOPPED = 0
-    PLAYABLE = 1
-    BROADCASTING = 2
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaLivePublishStatus(object):
     DISABLED = 0
     ENABLED = 1
@@ -560,18 +561,6 @@ class KalturaMailJobStatus(object):
     SENT = 2
     ERROR = 3
     QUEUED = 4
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaServerIndex(object):
-    PRIMARY = 0
-    SECONDARY = 1
 
     def __init__(self, value):
         self.value = value
@@ -2537,6 +2526,32 @@ class KalturaEntryReplacementStatus(object):
     READY_BUT_NOT_APPROVED = "2"
     NOT_READY_AND_NOT_APPROVED = "3"
     FAILED = "4"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryServerNodeOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryServerNodeType(object):
+    LIVE_PRIMARY = "0"
+    LIVE_BACKUP = "1"
 
     def __init__(self, value):
         self.value = value
@@ -11180,6 +11195,99 @@ class KalturaEntryReplacementOptions(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNode(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            serverNodeId=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serverType=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # unique auto-generated identifier
+        # @var int
+        # @readonly
+        self.id = id
+
+        # @var string
+        # @readonly
+        self.entryId = entryId
+
+        # @var int
+        # @readonly
+        self.serverNodeId = serverNodeId
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # @var KalturaEntryServerNodeStatus
+        # @readonly
+        self.status = status
+
+        # @var KalturaEntryServerNodeType
+        # @readonly
+        self.serverType = serverType
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'entryId': getXmlNodeText, 
+        'serverNodeId': getXmlNodeInt, 
+        'partnerId': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'serverType': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNode.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNode")
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getEntryId(self):
+        return self.entryId
+
+    def getServerNodeId(self):
+        return self.serverNodeId
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getStatus(self):
+        return self.status
+
+    def getServerType(self):
+        return self.serverType
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaObjectIdentifier(KalturaObjectBase):
     """Configuration for extended item in the Kaltura MRSS feeds"""
 
@@ -13384,8 +13492,9 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @var KalturaLiveEntryRecordingOptions
         self.recordingOptions = recordingOptions
 
-        # the status of the entry of type LiveEntryStatus
-        # @var KalturaLiveEntryStatus
+        # the status of the entry of type EntryServerNodeStatus
+        # @var KalturaEntryServerNodeStatus
+        # @readonly
         self.liveStatus = liveStatus
 
 
@@ -13403,7 +13512,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'lastBroadcast': getXmlNodeInt, 
         'currentBroadcastStartTime': getXmlNodeFloat, 
         'recordingOptions': (KalturaObjectFactory.create, KalturaLiveEntryRecordingOptions), 
-        'liveStatus': (KalturaEnumsFactory.createInt, "KalturaLiveEntryStatus"), 
+        'liveStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
     }
 
     def fromXml(self, node):
@@ -13424,7 +13533,6 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addArrayIfDefined("publishConfigurations", self.publishConfigurations)
         kparams.addFloatIfDefined("currentBroadcastStartTime", self.currentBroadcastStartTime)
         kparams.addObjectIfDefined("recordingOptions", self.recordingOptions)
-        kparams.addIntEnumIfDefined("liveStatus", self.liveStatus)
         return kparams
 
     def getOfflineMessage(self):
@@ -13501,9 +13609,6 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
     def getLiveStatus(self):
         return self.liveStatus
-
-    def setLiveStatus(self, newLiveStatus):
-        self.liveStatus = newLiveStatus
 
 
 # @package Kaltura
@@ -14789,6 +14894,91 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def getStreamUsername(self):
         return self.streamUsername
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamParams(KalturaObjectBase):
+    def __init__(self,
+            bitrate=NotImplemented,
+            flavorId=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            codec=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Bit rate of the stream. (i.e. 900)
+        # @var int
+        self.bitrate = bitrate
+
+        # flavor asset id
+        # @var string
+        self.flavorId = flavorId
+
+        # Stream's width
+        # @var int
+        self.width = width
+
+        # Stream's height
+        # @var int
+        self.height = height
+
+        # Live stream's codec
+        # @var string
+        self.codec = codec
+
+
+    PROPERTY_LOADERS = {
+        'bitrate': getXmlNodeInt, 
+        'flavorId': getXmlNodeText, 
+        'width': getXmlNodeInt, 
+        'height': getXmlNodeInt, 
+        'codec': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamParams.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamParams")
+        kparams.addIntIfDefined("bitrate", self.bitrate)
+        kparams.addStringIfDefined("flavorId", self.flavorId)
+        kparams.addIntIfDefined("width", self.width)
+        kparams.addIntIfDefined("height", self.height)
+        kparams.addStringIfDefined("codec", self.codec)
+        return kparams
+
+    def getBitrate(self):
+        return self.bitrate
+
+    def setBitrate(self, newBitrate):
+        self.bitrate = newBitrate
+
+    def getFlavorId(self):
+        return self.flavorId
+
+    def setFlavorId(self, newFlavorId):
+        self.flavorId = newFlavorId
+
+    def getWidth(self):
+        return self.width
+
+    def setWidth(self, newWidth):
+        self.width = newWidth
+
+    def getHeight(self):
+        return self.height
+
+    def setHeight(self, newHeight):
+        self.height = newHeight
+
+    def getCodec(self):
+        return self.codec
+
+    def setCodec(self, newCodec):
+        self.codec = newCodec
 
 
 # @package Kaltura
@@ -28703,7 +28893,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         self.assetId = assetId
 
         # Primary or secondary media server
-        # @var KalturaMediaServerIndex
+        # @var KalturaEntryServerNodeType
         self.mediaServerIndex = mediaServerIndex
 
         # The index of the file within the entry
@@ -28730,7 +28920,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
         'assetId': getXmlNodeText, 
-        'mediaServerIndex': (KalturaEnumsFactory.createInt, "KalturaMediaServerIndex"), 
+        'mediaServerIndex': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
         'fileIndex': getXmlNodeInt, 
         'srcFilePath': getXmlNodeText, 
         'destFilePath': getXmlNodeText, 
@@ -28747,7 +28937,7 @@ class KalturaConvertLiveSegmentJobData(KalturaJobData):
         kparams.put("objectType", "KalturaConvertLiveSegmentJobData")
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringIfDefined("assetId", self.assetId)
-        kparams.addIntEnumIfDefined("mediaServerIndex", self.mediaServerIndex)
+        kparams.addStringEnumIfDefined("mediaServerIndex", self.mediaServerIndex)
         kparams.addIntIfDefined("fileIndex", self.fileIndex)
         kparams.addStringIfDefined("srcFilePath", self.srcFilePath)
         kparams.addStringIfDefined("destFilePath", self.destFilePath)
@@ -31395,6 +31585,37 @@ class KalturaEntryLiveStats(KalturaLiveStats):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaEntryServerNode
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaEntryServerNode), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNodeListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNodeListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBooleanField(KalturaBooleanValue):
     """A boolean representation to return evaluated dynamic value"""
 
@@ -32336,6 +32557,55 @@ class KalturaLiveChannelSegmentListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryServerNode(KalturaEntryServerNode):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            serverNodeId=NotImplemented,
+            partnerId=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serverType=NotImplemented,
+            streams=NotImplemented):
+        KalturaEntryServerNode.__init__(self,
+            id,
+            entryId,
+            serverNodeId,
+            partnerId,
+            createdAt,
+            updatedAt,
+            status,
+            serverType)
+
+        # parameters of the stream we got
+        # @var array of KalturaLiveStreamParams
+        self.streams = streams
+
+
+    PROPERTY_LOADERS = {
+        'streams': (KalturaObjectFactory.createArray, KalturaLiveStreamParams), 
+    }
+
+    def fromXml(self, node):
+        KalturaEntryServerNode.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryServerNode.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryServerNode.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryServerNode")
+        kparams.addArrayIfDefined("streams", self.streams)
+        return kparams
+
+    def getStreams(self):
+        return self.streams
+
+    def setStreams(self, newStreams):
+        self.streams = newStreams
 
 
 # @package Kaltura
@@ -40054,6 +40324,210 @@ class KalturaEntryResource(KalturaContentResource):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            serverTypeEqual=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.idNotIn = idNotIn
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var string
+        self.entryIdNotIn = entryIdNotIn
+
+        # @var int
+        self.serverNodeIdEqual = serverNodeIdEqual
+
+        # @var string
+        self.serverNodeIdIn = serverNodeIdIn
+
+        # @var string
+        self.serverNodeIdNotIn = serverNodeIdNotIn
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var KalturaEntryServerNodeStatus
+        self.statusEqual = statusEqual
+
+        # @var KalturaEntryServerNodeType
+        self.serverTypeEqual = serverTypeEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'idNotIn': getXmlNodeText, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'entryIdNotIn': getXmlNodeText, 
+        'serverNodeIdEqual': getXmlNodeInt, 
+        'serverNodeIdIn': getXmlNodeText, 
+        'serverNodeIdNotIn': getXmlNodeText, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNodeBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("idNotIn", self.idNotIn)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addStringIfDefined("entryIdNotIn", self.entryIdNotIn)
+        kparams.addIntIfDefined("serverNodeIdEqual", self.serverNodeIdEqual)
+        kparams.addStringIfDefined("serverNodeIdIn", self.serverNodeIdIn)
+        kparams.addStringIfDefined("serverNodeIdNotIn", self.serverNodeIdNotIn)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getIdNotIn(self):
+        return self.idNotIn
+
+    def setIdNotIn(self, newIdNotIn):
+        self.idNotIn = newIdNotIn
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getEntryIdNotIn(self):
+        return self.entryIdNotIn
+
+    def setEntryIdNotIn(self, newEntryIdNotIn):
+        self.entryIdNotIn = newEntryIdNotIn
+
+    def getServerNodeIdEqual(self):
+        return self.serverNodeIdEqual
+
+    def setServerNodeIdEqual(self, newServerNodeIdEqual):
+        self.serverNodeIdEqual = newServerNodeIdEqual
+
+    def getServerNodeIdIn(self):
+        return self.serverNodeIdIn
+
+    def setServerNodeIdIn(self, newServerNodeIdIn):
+        self.serverNodeIdIn = newServerNodeIdIn
+
+    def getServerNodeIdNotIn(self):
+        return self.serverNodeIdNotIn
+
+    def setServerNodeIdNotIn(self, newServerNodeIdNotIn):
+        self.serverNodeIdNotIn = newServerNodeIdNotIn
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getServerTypeEqual(self):
+        return self.serverTypeEqual
+
+    def setServerTypeEqual(self, newServerTypeEqual):
+        self.serverTypeEqual = newServerTypeEqual
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaExtractMediaJobData(KalturaConvartableJobData):
     def __init__(self,
             srcFileSyncLocalPath=NotImplemented,
@@ -45074,6 +45548,60 @@ class KalturaDocumentEntryMatchAttributeCondition(KalturaSearchMatchAttributeCon
 
     def setAttribute(self, newAttribute):
         self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            serverTypeEqual=NotImplemented):
+        KalturaEntryServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            entryIdEqual,
+            entryIdIn,
+            entryIdNotIn,
+            serverNodeIdEqual,
+            serverNodeIdIn,
+            serverNodeIdNotIn,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            statusEqual,
+            serverTypeEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNodeFilter")
+        return kparams
 
 
 # @package Kaltura
@@ -54362,6 +54890,34 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeService(KalturaServiceBase):
+    """Base class for entry server node"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def list(self, filter, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("entryservernode", "list", KalturaEntryServerNodeListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEntryServerNodeListResponse)
+
+    def get(self, id):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("entryservernode", "get", KalturaEntryServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEntryServerNode)
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFileAssetService(KalturaServiceBase):
     """Manage file assets"""
 
@@ -54944,7 +55500,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("assetId", assetId)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addBoolIfDefined("isLastChunk", isLastChunk);
@@ -54960,7 +55516,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addStringIfDefined("applicationName", applicationName)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         self.client.queueServiceActionCall("livechannel", "registerMediaServer", KalturaLiveEntry, kparams)
@@ -54975,7 +55531,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         self.client.queueServiceActionCall("livechannel", "unregisterMediaServer", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -55212,7 +55768,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("assetId", assetId)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addBoolIfDefined("isLastChunk", isLastChunk);
@@ -55228,7 +55784,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addStringIfDefined("applicationName", applicationName)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         self.client.queueServiceActionCall("livestream", "registerMediaServer", KalturaLiveEntry, kparams)
@@ -55243,7 +55799,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
-        kparams.addIntIfDefined("mediaServerIndex", mediaServerIndex);
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         self.client.queueServiceActionCall("livestream", "unregisterMediaServer", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57993,6 +58549,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'deliveryProfile': KalturaDeliveryProfileService,
             'document': KalturaDocumentService,
             'EmailIngestionProfile': KalturaEmailIngestionProfileService,
+            'entryServerNode': KalturaEntryServerNodeService,
             'fileAsset': KalturaFileAssetService,
             'flavorAsset': KalturaFlavorAssetService,
             'flavorParamsOutput': KalturaFlavorParamsOutputService,
@@ -58060,6 +58617,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEditorType': KalturaEditorType,
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
+            'KalturaEntryServerNodeStatus': KalturaEntryServerNodeStatus,
             'KalturaFeatureStatusType': KalturaFeatureStatusType,
             'KalturaFlavorAssetStatus': KalturaFlavorAssetStatus,
             'KalturaFlavorReadyBehaviorType': KalturaFlavorReadyBehaviorType,
@@ -58069,12 +58627,10 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaIpAddressRestrictionType': KalturaIpAddressRestrictionType,
             'KalturaLicenseType': KalturaLicenseType,
             'KalturaLimitFlavorsRestrictionType': KalturaLimitFlavorsRestrictionType,
-            'KalturaLiveEntryStatus': KalturaLiveEntryStatus,
             'KalturaLivePublishStatus': KalturaLivePublishStatus,
             'KalturaLiveReportExportType': KalturaLiveReportExportType,
             'KalturaLiveStatsEventType': KalturaLiveStatsEventType,
             'KalturaMailJobStatus': KalturaMailJobStatus,
-            'KalturaMediaServerIndex': KalturaMediaServerIndex,
             'KalturaMediaType': KalturaMediaType,
             'KalturaModerationFlagType': KalturaModerationFlagType,
             'KalturaMrssExtensionMode': KalturaMrssExtensionMode,
@@ -58188,6 +58744,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
+            'KalturaEntryServerNodeOrderBy': KalturaEntryServerNodeOrderBy,
+            'KalturaEntryServerNodeType': KalturaEntryServerNodeType,
             'KalturaEntryStatus': KalturaEntryStatus,
             'KalturaEntryType': KalturaEntryType,
             'KalturaExternalMediaEntryCompareAttribute': KalturaExternalMediaEntryCompareAttribute,
@@ -58354,6 +58912,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaValue': KalturaValue,
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
+            'KalturaEntryServerNode': KalturaEntryServerNode,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
             'KalturaExtendingItemMrssParameter': KalturaExtendingItemMrssParameter,
             'KalturaPlayableEntry': KalturaPlayableEntry,
@@ -58382,6 +58941,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStatsEvent': KalturaLiveStatsEvent,
             'KalturaLiveStreamBitrate': KalturaLiveStreamBitrate,
             'KalturaLiveStreamEntry': KalturaLiveStreamEntry,
+            'KalturaLiveStreamParams': KalturaLiveStreamParams,
             'KalturaBaseEntryBaseFilter': KalturaBaseEntryBaseFilter,
             'KalturaBaseEntryFilter': KalturaBaseEntryFilter,
             'KalturaPlayableEntryBaseFilter': KalturaPlayableEntryBaseFilter,
@@ -58534,6 +59094,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryCuePointSearchFilter': KalturaEntryCuePointSearchFilter,
             'KalturaEntryIdentifier': KalturaEntryIdentifier,
             'KalturaEntryLiveStats': KalturaEntryLiveStats,
+            'KalturaEntryServerNodeListResponse': KalturaEntryServerNodeListResponse,
             'KalturaBooleanField': KalturaBooleanField,
             'KalturaFeatureStatusListResponse': KalturaFeatureStatusListResponse,
             'KalturaFileAssetListResponse': KalturaFileAssetListResponse,
@@ -58553,6 +59114,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLimitFlavorsRestriction': KalturaLimitFlavorsRestriction,
             'KalturaLiveChannelListResponse': KalturaLiveChannelListResponse,
             'KalturaLiveChannelSegmentListResponse': KalturaLiveChannelSegmentListResponse,
+            'KalturaLiveEntryServerNode': KalturaLiveEntryServerNode,
             'KalturaLiveReportExportJobData': KalturaLiveReportExportJobData,
             'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
             'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
@@ -58650,6 +59212,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
             'KalturaEntryReferrerLiveStats': KalturaEntryReferrerLiveStats,
             'KalturaEntryResource': KalturaEntryResource,
+            'KalturaEntryServerNodeBaseFilter': KalturaEntryServerNodeBaseFilter,
             'KalturaExtractMediaJobData': KalturaExtractMediaJobData,
             'KalturaIntegerField': KalturaIntegerField,
             'KalturaFieldCompareCondition': KalturaFieldCompareCondition,
@@ -58725,6 +59288,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
+            'KalturaEntryServerNodeFilter': KalturaEntryServerNodeFilter,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
             'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
