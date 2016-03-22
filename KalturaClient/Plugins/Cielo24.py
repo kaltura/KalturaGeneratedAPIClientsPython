@@ -69,6 +69,7 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
             fidelity=NotImplemented,
             username=NotImplemented,
             password=NotImplemented,
+            baseUrl=NotImplemented,
             spokenLanguage=NotImplemented,
             replaceMediaContent=NotImplemented):
         KalturaIntegrationJobProviderData.__init__(self)
@@ -101,6 +102,11 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
         # @readonly
         self.password = password
 
+        # Base url for service provider
+        # @var string
+        # @readonly
+        self.baseUrl = baseUrl
+
         # Transcript content language
         # @var KalturaLanguage
         self.spokenLanguage = spokenLanguage
@@ -118,6 +124,7 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
         'fidelity': (KalturaEnumsFactory.createString, "KalturaCielo24Fidelity"), 
         'username': getXmlNodeText, 
         'password': getXmlNodeText, 
+        'baseUrl': getXmlNodeText, 
         'spokenLanguage': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
         'replaceMediaContent': getXmlNodeBool, 
     }
@@ -173,6 +180,9 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
 
     def getPassword(self):
         return self.password
+
+    def getBaseUrl(self):
+        return self.baseUrl
 
     def getSpokenLanguage(self):
         return self.spokenLanguage

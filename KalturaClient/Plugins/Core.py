@@ -33250,7 +33250,6 @@ class KalturaMoveCategoryEntriesJobData(KalturaJobData):
             lastMovedCategoryPageIndex=NotImplemented,
             lastMovedCategoryEntryPageIndex=NotImplemented,
             moveFromChildren=NotImplemented,
-            copyOnly=NotImplemented,
             destCategoryFullIds=NotImplemented):
         KalturaJobData.__init__(self)
 
@@ -33281,10 +33280,6 @@ class KalturaMoveCategoryEntriesJobData(KalturaJobData):
         # @var bool
         self.moveFromChildren = moveFromChildren
 
-        # Entries won't be deleted from the source entry
-        # @var bool
-        self.copyOnly = copyOnly
-
         # Destination categories fallback ids
         # @var string
         self.destCategoryFullIds = destCategoryFullIds
@@ -33297,7 +33292,6 @@ class KalturaMoveCategoryEntriesJobData(KalturaJobData):
         'lastMovedCategoryPageIndex': getXmlNodeInt, 
         'lastMovedCategoryEntryPageIndex': getXmlNodeInt, 
         'moveFromChildren': getXmlNodeBool, 
-        'copyOnly': getXmlNodeBool, 
         'destCategoryFullIds': getXmlNodeText, 
     }
 
@@ -33314,7 +33308,6 @@ class KalturaMoveCategoryEntriesJobData(KalturaJobData):
         kparams.addIntIfDefined("lastMovedCategoryPageIndex", self.lastMovedCategoryPageIndex)
         kparams.addIntIfDefined("lastMovedCategoryEntryPageIndex", self.lastMovedCategoryEntryPageIndex)
         kparams.addBoolIfDefined("moveFromChildren", self.moveFromChildren)
-        kparams.addBoolIfDefined("copyOnly", self.copyOnly)
         kparams.addStringIfDefined("destCategoryFullIds", self.destCategoryFullIds)
         return kparams
 
@@ -33353,12 +33346,6 @@ class KalturaMoveCategoryEntriesJobData(KalturaJobData):
 
     def setMoveFromChildren(self, newMoveFromChildren):
         self.moveFromChildren = newMoveFromChildren
-
-    def getCopyOnly(self):
-        return self.copyOnly
-
-    def setCopyOnly(self, newCopyOnly):
-        self.copyOnly = newCopyOnly
 
     def getDestCategoryFullIds(self):
         return self.destCategoryFullIds
