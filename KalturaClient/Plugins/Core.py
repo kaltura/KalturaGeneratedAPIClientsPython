@@ -12159,16 +12159,21 @@ class KalturaFlavorAsset(KalturaAsset):
 # @subpackage Client
 class KalturaFlavorAssetUrlOptions(KalturaObjectBase):
     def __init__(self,
-            fileName=NotImplemented):
+            fileName=NotImplemented,
+            referrer=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The name of the downloaded file
         # @var string
         self.fileName = fileName
 
+        # @var string
+        self.referrer = referrer
+
 
     PROPERTY_LOADERS = {
         'fileName': getXmlNodeText, 
+        'referrer': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -12179,6 +12184,7 @@ class KalturaFlavorAssetUrlOptions(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaFlavorAssetUrlOptions")
         kparams.addStringIfDefined("fileName", self.fileName)
+        kparams.addStringIfDefined("referrer", self.referrer)
         return kparams
 
     def getFileName(self):
@@ -12186,6 +12192,12 @@ class KalturaFlavorAssetUrlOptions(KalturaObjectBase):
 
     def setFileName(self, newFileName):
         self.fileName = newFileName
+
+    def getReferrer(self):
+        return self.referrer
+
+    def setReferrer(self, newReferrer):
+        self.referrer = newReferrer
 
 
 # @package Kaltura
