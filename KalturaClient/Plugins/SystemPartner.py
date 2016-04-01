@@ -1479,9 +1479,9 @@ class KalturaSystemPartnerService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaPartnerListResponse)
 
-    def updateStatus(self, partnerId, status, reason):
+    def updateStatus(self, id, status, reason):
         kparams = KalturaParams()
-        kparams.addIntIfDefined("partnerId", partnerId);
+        kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("status", status);
         kparams.addStringIfDefined("reason", reason)
         self.client.queueServiceActionCall("systempartner_systempartner", "updateStatus", None, kparams)
