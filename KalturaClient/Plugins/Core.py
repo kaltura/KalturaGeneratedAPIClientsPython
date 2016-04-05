@@ -40341,6 +40341,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
+            statusIn=NotImplemented,
             serverTypeEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
@@ -40388,6 +40389,9 @@ class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
         # @var KalturaEntryServerNodeStatus
         self.statusEqual = statusEqual
 
+        # @var KalturaEntryServerNodeStatus
+        self.statusIn = statusIn
+
         # @var KalturaEntryServerNodeType
         self.serverTypeEqual = serverTypeEqual
 
@@ -40407,6 +40411,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
         'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'statusIn': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
         'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
     }
 
@@ -40431,6 +40436,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
         kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addIntEnumIfDefined("statusIn", self.statusIn)
         kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
         return kparams
 
@@ -40517,6 +40523,12 @@ class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
 
     def setStatusEqual(self, newStatusEqual):
         self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
 
     def getServerTypeEqual(self):
         return self.serverTypeEqual
@@ -45569,6 +45581,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
+            statusIn=NotImplemented,
             serverTypeEqual=NotImplemented):
         KalturaEntryServerNodeBaseFilter.__init__(self,
             orderBy,
@@ -45587,6 +45600,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             statusEqual,
+            statusIn,
             serverTypeEqual)
 
 
@@ -54895,7 +54909,7 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def list(self, filter, pager = NotImplemented):
+    def list(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
