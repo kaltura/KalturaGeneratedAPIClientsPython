@@ -1837,21 +1837,6 @@ class KalturaBulkUploadOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBulkUploadResultObjectType(object):
-    ENTRY = "1"
-    CATEGORY = "2"
-    USER = "3"
-    CATEGORY_USER = "4"
-    CATEGORY_ENTRY = "5"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaBulkUploadResultStatus(object):
     ERROR = "1"
     OK = "2"
@@ -6367,7 +6352,8 @@ class KalturaBaseEntry(KalturaObjectBase):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
-            capabilities=NotImplemented):
+            capabilities=NotImplemented,
+            templateEntryId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated 10 characters alphanumeric string
@@ -6555,6 +6541,11 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @readonly
         self.capabilities = capabilities
 
+        # Template entry id
+        # @var string
+        # @insertonly
+        self.templateEntryId = templateEntryId
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -6599,6 +6590,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         'entitledUsersEdit': getXmlNodeText, 
         'entitledUsersPublish': getXmlNodeText, 
         'capabilities': getXmlNodeText, 
+        'templateEntryId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -6631,6 +6623,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addArrayIfDefined("operationAttributes", self.operationAttributes)
         kparams.addStringIfDefined("entitledUsersEdit", self.entitledUsersEdit)
         kparams.addStringIfDefined("entitledUsersPublish", self.entitledUsersPublish)
+        kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
         return kparams
 
     def getId(self):
@@ -6827,6 +6820,12 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def getCapabilities(self):
         return self.capabilities
+
+    def getTemplateEntryId(self):
+        return self.templateEntryId
+
+    def setTemplateEntryId(self, newTemplateEntryId):
+        self.templateEntryId = newTemplateEntryId
 
 
 # @package Kaltura
@@ -7836,7 +7835,7 @@ class KalturaBulkUploadResult(KalturaObjectBase):
         # @var int
         self.objectStatus = objectStatus
 
-        # @var KalturaBulkUploadResultObjectType
+        # @var KalturaBulkUploadObjectType
         self.bulkUploadResultObjectType = bulkUploadResultObjectType
 
         # The data as recieved in the csv
@@ -7871,7 +7870,7 @@ class KalturaBulkUploadResult(KalturaObjectBase):
         'action': (KalturaEnumsFactory.createString, "KalturaBulkUploadAction"), 
         'objectId': getXmlNodeText, 
         'objectStatus': getXmlNodeInt, 
-        'bulkUploadResultObjectType': (KalturaEnumsFactory.createString, "KalturaBulkUploadResultObjectType"), 
+        'bulkUploadResultObjectType': (KalturaEnumsFactory.createString, "KalturaBulkUploadObjectType"), 
         'rowData': getXmlNodeText, 
         'partnerData': getXmlNodeText, 
         'objectErrorDescription': getXmlNodeText, 
@@ -10090,6 +10089,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             dataContent=NotImplemented,
             retrieveDataContentByGet=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -10134,7 +10134,8 @@ class KalturaDataEntry(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
-            capabilities)
+            capabilities,
+            templateEntryId)
 
         # The data of the entry
         # @var string
@@ -11426,6 +11427,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -11476,7 +11478,8 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
-            capabilities)
+            capabilities,
+            templateEntryId)
 
         # Number of plays
         # @var int
@@ -11613,6 +11616,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -11675,6 +11679,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -13355,6 +13360,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -13431,6 +13437,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -13669,6 +13676,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -13747,6 +13755,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -14603,6 +14612,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -14694,6 +14704,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -17946,6 +17957,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -18000,6 +18012,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -19378,6 +19391,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             playlistContent=NotImplemented,
             filters=NotImplemented,
             totalResults=NotImplemented,
@@ -19428,7 +19442,8 @@ class KalturaPlaylist(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
-            capabilities)
+            capabilities,
+            templateEntryId)
 
         # Content of the playlist - 
         # 	 XML if the playlistType is dynamic 
@@ -27352,7 +27367,9 @@ class KalturaBulkUploadResultEntry(KalturaBulkUploadResult):
             creatorId=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
-            ownerId=NotImplemented):
+            ownerId=NotImplemented,
+            referenceId=NotImplemented,
+            templateEntryId=NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -27434,6 +27451,12 @@ class KalturaBulkUploadResultEntry(KalturaBulkUploadResult):
         # @var string
         self.ownerId = ownerId
 
+        # @var string
+        self.referenceId = referenceId
+
+        # @var string
+        self.templateEntryId = templateEntryId
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
@@ -27457,6 +27480,8 @@ class KalturaBulkUploadResultEntry(KalturaBulkUploadResult):
         'entitledUsersEdit': getXmlNodeText, 
         'entitledUsersPublish': getXmlNodeText, 
         'ownerId': getXmlNodeText, 
+        'referenceId': getXmlNodeText, 
+        'templateEntryId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -27487,6 +27512,8 @@ class KalturaBulkUploadResultEntry(KalturaBulkUploadResult):
         kparams.addStringIfDefined("entitledUsersEdit", self.entitledUsersEdit)
         kparams.addStringIfDefined("entitledUsersPublish", self.entitledUsersPublish)
         kparams.addStringIfDefined("ownerId", self.ownerId)
+        kparams.addStringIfDefined("referenceId", self.referenceId)
+        kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
         return kparams
 
     def getEntryId(self):
@@ -27614,6 +27641,18 @@ class KalturaBulkUploadResultEntry(KalturaBulkUploadResult):
 
     def setOwnerId(self, newOwnerId):
         self.ownerId = newOwnerId
+
+    def getReferenceId(self):
+        return self.referenceId
+
+    def setReferenceId(self, newReferenceId):
+        self.referenceId = newReferenceId
+
+    def getTemplateEntryId(self):
+        return self.templateEntryId
+
+    def setTemplateEntryId(self, newTemplateEntryId):
+        self.templateEntryId = newTemplateEntryId
 
 
 # @package Kaltura
@@ -49758,6 +49797,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -49849,6 +49889,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
+            templateEntryId,
             plays,
             views,
             lastPlayedAt,
@@ -58717,7 +58758,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBulkUploadAction': KalturaBulkUploadAction,
             'KalturaBulkUploadObjectType': KalturaBulkUploadObjectType,
             'KalturaBulkUploadOrderBy': KalturaBulkUploadOrderBy,
-            'KalturaBulkUploadResultObjectType': KalturaBulkUploadResultObjectType,
             'KalturaBulkUploadResultStatus': KalturaBulkUploadResultStatus,
             'KalturaBulkUploadType': KalturaBulkUploadType,
             'KalturaCategoryEntryAdvancedOrderBy': KalturaCategoryEntryAdvancedOrderBy,

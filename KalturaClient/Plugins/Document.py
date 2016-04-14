@@ -203,6 +203,7 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
+            templateEntryId=NotImplemented,
             documentType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -247,7 +248,8 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
-            capabilities)
+            capabilities,
+            templateEntryId)
 
         # The type of the document
         # @var KalturaDocumentType
