@@ -13286,15 +13286,25 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
     """A representation of a live stream recording entry configuration"""
 
     def __init__(self,
-            shouldCopyEntitlement=NotImplemented):
+            shouldCopyEntitlement=NotImplemented,
+            shouldCopyScheduling=NotImplemented,
+            shouldCopyThumbnail=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaNullableBoolean
         self.shouldCopyEntitlement = shouldCopyEntitlement
 
+        # @var KalturaNullableBoolean
+        self.shouldCopyScheduling = shouldCopyScheduling
+
+        # @var KalturaNullableBoolean
+        self.shouldCopyThumbnail = shouldCopyThumbnail
+
 
     PROPERTY_LOADERS = {
         'shouldCopyEntitlement': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'shouldCopyScheduling': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'shouldCopyThumbnail': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -13305,6 +13315,8 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaLiveEntryRecordingOptions")
         kparams.addIntEnumIfDefined("shouldCopyEntitlement", self.shouldCopyEntitlement)
+        kparams.addIntEnumIfDefined("shouldCopyScheduling", self.shouldCopyScheduling)
+        kparams.addIntEnumIfDefined("shouldCopyThumbnail", self.shouldCopyThumbnail)
         return kparams
 
     def getShouldCopyEntitlement(self):
@@ -13312,6 +13324,18 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
 
     def setShouldCopyEntitlement(self, newShouldCopyEntitlement):
         self.shouldCopyEntitlement = newShouldCopyEntitlement
+
+    def getShouldCopyScheduling(self):
+        return self.shouldCopyScheduling
+
+    def setShouldCopyScheduling(self, newShouldCopyScheduling):
+        self.shouldCopyScheduling = newShouldCopyScheduling
+
+    def getShouldCopyThumbnail(self):
+        return self.shouldCopyThumbnail
+
+    def setShouldCopyThumbnail(self, newShouldCopyThumbnail):
+        self.shouldCopyThumbnail = newShouldCopyThumbnail
 
 
 # @package Kaltura
