@@ -14684,7 +14684,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             encodingIP1=NotImplemented,
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
-            streamUsername=NotImplemented):
+            streamUsername=NotImplemented,
+            primaryServerNodeId=NotImplemented):
         KalturaLiveEntry.__init__(self,
             id,
             name,
@@ -14821,6 +14822,11 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         # @readonly
         self.streamUsername = streamUsername
 
+        # The Streams primary server node id
+        # @var int
+        # @readonly
+        self.primaryServerNodeId = primaryServerNodeId
+
 
     PROPERTY_LOADERS = {
         'streamRemoteId': getXmlNodeText, 
@@ -14838,6 +14844,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'encodingIP2': getXmlNodeText, 
         'streamPassword': getXmlNodeText, 
         'streamUsername': getXmlNodeText, 
+        'primaryServerNodeId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -14941,6 +14948,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def getStreamUsername(self):
         return self.streamUsername
+
+    def getPrimaryServerNodeId(self):
+        return self.primaryServerNodeId
 
 
 # @package Kaltura
@@ -49869,7 +49879,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP1=NotImplemented,
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
-            streamUsername=NotImplemented):
+            streamUsername=NotImplemented,
+            primaryServerNodeId=NotImplemented):
         KalturaLiveStreamEntry.__init__(self,
             id,
             name,
@@ -49961,7 +49972,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP1,
             encodingIP2,
             streamPassword,
-            streamUsername)
+            streamUsername,
+            primaryServerNodeId)
 
 
     PROPERTY_LOADERS = {
@@ -55731,12 +55743,15 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveStreamEntry)
 
-    def authenticate(self, entryId, token):
+    def authenticate(self, entryId, token, hostname = NotImplemented, mediaServerIndex = NotImplemented, applicationName = NotImplemented):
         """Authenticate live-stream entry against stream token and partner limitations"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("token", token)
+        kparams.addStringIfDefined("hostname", hostname)
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
+        kparams.addStringIfDefined("applicationName", applicationName)
         self.client.queueServiceActionCall("livestream", "authenticate", KalturaLiveStreamEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
