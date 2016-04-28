@@ -139,6 +139,7 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented):
@@ -148,6 +149,9 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
 
         # @var string
         self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
 
         # @var string
         self.userIdEqual = userIdEqual
@@ -161,6 +165,7 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
 
     PROPERTY_LOADERS = {
         'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
         'userIdEqual': getXmlNodeText, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
@@ -174,6 +179,7 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
         kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaLikeBaseFilter")
         kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
@@ -184,6 +190,12 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
 
     def setEntryIdEqual(self, newEntryIdEqual):
         self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
 
     def getUserIdEqual(self):
         return self.userIdEqual
@@ -211,6 +223,7 @@ class KalturaLikeFilter(KalturaLikeBaseFilter):
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented):
@@ -218,6 +231,7 @@ class KalturaLikeFilter(KalturaLikeBaseFilter):
             orderBy,
             advancedSearch,
             entryIdEqual,
+            entryIdIn,
             userIdEqual,
             createdAtGreaterThanOrEqual,
             createdAtLessThanOrEqual)

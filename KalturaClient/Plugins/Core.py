@@ -12255,6 +12255,7 @@ class KalturaFlavorParams(KalturaAssetParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
@@ -12385,6 +12386,9 @@ class KalturaFlavorParams(KalturaAssetParams):
         # @var string
         self.watermarkData = watermarkData
 
+        # @var string
+        self.subtitlesData = subtitlesData
+
         # @var int
         self.isEncrypted = isEncrypted
 
@@ -12429,6 +12433,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'videoConstantBitrate': getXmlNodeInt, 
         'videoBitrateTolerance': getXmlNodeInt, 
         'watermarkData': getXmlNodeText, 
+        'subtitlesData': getXmlNodeText, 
         'isEncrypted': getXmlNodeInt, 
         'clipOffset': getXmlNodeInt, 
         'clipDuration': getXmlNodeInt, 
@@ -12474,6 +12479,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         kparams.addIntIfDefined("videoConstantBitrate", self.videoConstantBitrate)
         kparams.addIntIfDefined("videoBitrateTolerance", self.videoBitrateTolerance)
         kparams.addStringIfDefined("watermarkData", self.watermarkData)
+        kparams.addStringIfDefined("subtitlesData", self.subtitlesData)
         kparams.addIntIfDefined("isEncrypted", self.isEncrypted)
         kparams.addIntIfDefined("clipOffset", self.clipOffset)
         kparams.addIntIfDefined("clipDuration", self.clipDuration)
@@ -12677,6 +12683,12 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setWatermarkData(self, newWatermarkData):
         self.watermarkData = newWatermarkData
 
+    def getSubtitlesData(self):
+        return self.subtitlesData
+
+    def setSubtitlesData(self, newSubtitlesData):
+        self.subtitlesData = newSubtitlesData
+
     def getIsEncrypted(self):
         return self.isEncrypted
 
@@ -12805,6 +12817,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
@@ -12861,6 +12874,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            subtitlesData,
             isEncrypted,
             clipOffset,
             clipDuration)
@@ -41723,6 +41737,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
@@ -41774,6 +41789,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            subtitlesData,
             isEncrypted,
             clipOffset,
             clipDuration)
@@ -41854,6 +41870,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
@@ -41904,6 +41921,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            subtitlesData,
             isEncrypted,
             clipOffset,
             clipDuration)
@@ -46532,6 +46550,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate=NotImplemented,
             videoBitrateTolerance=NotImplemented,
             watermarkData=NotImplemented,
+            subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
@@ -46588,6 +46607,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             videoConstantBitrate,
             videoBitrateTolerance,
             watermarkData,
+            subtitlesData,
             isEncrypted,
             clipOffset,
             clipDuration,

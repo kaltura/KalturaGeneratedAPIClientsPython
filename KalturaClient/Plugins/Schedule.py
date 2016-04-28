@@ -72,6 +72,18 @@ class KalturaScheduleEventStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaScheduleEventType(object):
+    RECORD = 1
+    LIVE_STREAM = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduleResourceStatus(object):
     DISABLED = 1
     ACTIVE = 2
@@ -3800,6 +3812,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaScheduleEventClassificationType': KalturaScheduleEventClassificationType,
             'KalturaScheduleEventRecurrenceType': KalturaScheduleEventRecurrenceType,
             'KalturaScheduleEventStatus': KalturaScheduleEventStatus,
+            'KalturaScheduleEventType': KalturaScheduleEventType,
             'KalturaScheduleResourceStatus': KalturaScheduleResourceStatus,
             'KalturaCameraScheduleResourceOrderBy': KalturaCameraScheduleResourceOrderBy,
             'KalturaEntryScheduleEventOrderBy': KalturaEntryScheduleEventOrderBy,

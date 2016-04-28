@@ -77,7 +77,7 @@ class KalturaShortLink(KalturaObjectBase):
             status=NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var int
+        # @var string
         # @readonly
         self.id = id
 
@@ -113,7 +113,7 @@ class KalturaShortLink(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
-        'id': getXmlNodeInt, 
+        'id': getXmlNodeText, 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'expiresAt': getXmlNodeInt, 
