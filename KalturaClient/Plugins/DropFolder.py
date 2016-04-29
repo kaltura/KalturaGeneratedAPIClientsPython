@@ -147,6 +147,7 @@ class KalturaDropFolderFileErrorCode(object):
 # @subpackage Client
 class KalturaDropFolderFileHandlerType(object):
     XML = "dropFolderXmlBulkUpload.XML"
+    ICAL = "scheduleDropFolder.ICAL"
     CONTENT = "1"
 
     def __init__(self, value):

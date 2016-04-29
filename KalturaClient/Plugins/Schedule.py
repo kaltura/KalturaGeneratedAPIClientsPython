@@ -3653,6 +3653,19 @@ class KalturaScheduleEventService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduleEventListResponse)
 
+    def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented):
+        """Add new bulk upload batch job"""
+
+        kparams = KalturaParams()
+        kfiles = KalturaFiles()
+        kfiles.put("fileData", fileData);
+        kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+
 
 # @package Kaltura
 # @subpackage Client
@@ -3718,6 +3731,19 @@ class KalturaScheduleResourceService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduleResourceListResponse)
+
+    def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented):
+        """Add new bulk upload batch job"""
+
+        kparams = KalturaParams()
+        kfiles = KalturaFiles()
+        kfiles.put("fileData", fileData);
+        kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
 
 
 # @package Kaltura

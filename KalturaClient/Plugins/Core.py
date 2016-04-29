@@ -1797,6 +1797,7 @@ class KalturaBatchJobType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBulkUploadAction(object):
+    CANCEL = "scheduleBulkUpload.CANCEL"
     ADD = "1"
     UPDATE = "2"
     DELETE = "3"
@@ -1813,6 +1814,8 @@ class KalturaBulkUploadAction(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBulkUploadObjectType(object):
+    SCHEDULE_EVENT = "scheduleBulkUpload.SCHEDULE_EVENT"
+    SCHEDULE_RESOURCE = "scheduleBulkUpload.SCHEDULE_RESOURCE"
     ENTRY = "1"
     CATEGORY = "2"
     USER = "3"
@@ -1855,6 +1858,8 @@ class KalturaBulkUploadType(object):
     FILTER = "bulkUploadFilter.FILTER"
     XML = "bulkUploadXml.XML"
     DROP_FOLDER_XML = "dropFolderXmlBulkUpload.DROP_FOLDER_XML"
+    ICAL = "scheduleBulkUpload.ICAL"
+    DROP_FOLDER_ICAL = "scheduleDropFolder.DROP_FOLDER_ICAL"
 
     def __init__(self, value):
         self.value = value
