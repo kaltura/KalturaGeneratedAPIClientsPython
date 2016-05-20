@@ -558,208 +558,6 @@ class KalturaUiConfAdminFilter(KalturaUiConfAdminBaseFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEntryAdminService(KalturaServiceBase):
-    """Entry Admin service"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def get(self, entryId, version = -1):
-        """Get base entry by ID with no filters."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("adminconsole_entryadmin", "get", KalturaBaseEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBaseEntry)
-
-    def getByFlavorId(self, flavorId, version = -1):
-        """Get base entry by flavor ID with no filters."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("flavorId", flavorId)
-        kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("adminconsole_entryadmin", "getByFlavorId", KalturaBaseEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBaseEntry)
-
-    def getTracks(self, entryId):
-        """Get base entry by ID with no filters."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("adminconsole_entryadmin", "getTracks", KalturaTrackEntryListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaTrackEntryListResponse)
-
-    def restoreDeletedEntry(self, entryId):
-        """Restore deleted entry."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("adminconsole_entryadmin", "restoreDeletedEntry", KalturaBaseEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBaseEntry)
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUiConfAdminService(KalturaServiceBase):
-    """UiConf Admin service"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, uiConf):
-        """Adds new UIConf with no partner limitation"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("uiConf", uiConf)
-        self.client.queueServiceActionCall("adminconsole_uiconfadmin", "add", KalturaUiConfAdmin, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaUiConfAdmin)
-
-    def update(self, id, uiConf):
-        """Update an existing UIConf with no partner limitation"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addObjectIfDefined("uiConf", uiConf)
-        self.client.queueServiceActionCall("adminconsole_uiconfadmin", "update", KalturaUiConfAdmin, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaUiConfAdmin)
-
-    def get(self, id):
-        """Retrieve a UIConf by id with no partner limitation"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("adminconsole_uiconfadmin", "get", KalturaUiConfAdmin, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaUiConfAdmin)
-
-    def delete(self, id):
-        """Delete an existing UIConf with no partner limitation"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("adminconsole_uiconfadmin", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """Retrieve a list of available UIConfs  with no partner limitation"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("adminconsole_uiconfadmin", "list", KalturaUiConfAdminListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaUiConfAdminListResponse)
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaReportAdminService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, report):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("report", report)
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "add", KalturaReport, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaReport)
-
-    def get(self, id):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "get", KalturaReport, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaReport)
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "list", KalturaReportListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaReportListResponse)
-
-    def update(self, id, report):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addObjectIfDefined("report", report)
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "update", KalturaReport, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaReport)
-
-    def delete(self, id):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def executeDebug(self, id, params = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addArrayIfDefined("params", params)
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "executeDebug", KalturaReportResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaReportResponse)
-
-    def getParameters(self, id):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "getParameters", KalturaString, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.createArray(resultNode, KalturaString)
-
-    def getCsvUrl(self, id, reportPartnerId):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addIntIfDefined("reportPartnerId", reportPartnerId);
-        self.client.queueServiceActionCall("adminconsole_reportadmin", "getCsvUrl", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
 ########## main ##########
 class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
     # KalturaAdminConsoleClientPlugin
@@ -775,9 +573,6 @@ class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'entryAdmin': KalturaEntryAdminService,
-            'uiConfAdmin': KalturaUiConfAdminService,
-            'reportAdmin': KalturaReportAdminService,
         }
 
     def getEnums(self):
@@ -788,7 +583,10 @@ class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaInvestigateFlavorAssetData': KalturaInvestigateFlavorAssetData,
+            'KalturaInvestigateThumbAssetData': KalturaInvestigateThumbAssetData,
             'KalturaTrackEntry': KalturaTrackEntry,
+            'KalturaInvestigateEntryData': KalturaInvestigateEntryData,
             'KalturaUiConfAdmin': KalturaUiConfAdmin,
             'KalturaTrackEntryListResponse': KalturaTrackEntryListResponse,
             'KalturaUiConfAdminListResponse': KalturaUiConfAdminListResponse,

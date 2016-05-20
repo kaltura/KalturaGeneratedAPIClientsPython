@@ -5211,11 +5211,6 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'distributionProfile': KalturaDistributionProfileService,
-            'entryDistribution': KalturaEntryDistributionService,
-            'distributionProvider': KalturaDistributionProviderService,
-            'genericDistributionProvider': KalturaGenericDistributionProviderService,
-            'genericDistributionProviderAction': KalturaGenericDistributionProviderActionService,
         }
 
     def getEnums(self):
@@ -5241,6 +5236,7 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProviderActionOrderBy': KalturaGenericDistributionProviderActionOrderBy,
             'KalturaGenericDistributionProviderOrderBy': KalturaGenericDistributionProviderOrderBy,
             'KalturaSyndicationDistributionProfileOrderBy': KalturaSyndicationDistributionProfileOrderBy,
+            'KalturaSyndicationDistributionProviderOrderBy': KalturaSyndicationDistributionProviderOrderBy,
         }
 
     def getTypes(self):

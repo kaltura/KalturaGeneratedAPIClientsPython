@@ -1994,13 +1994,12 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'metadata': KalturaMetadataService,
-            'metadataProfile': KalturaMetadataProfileService,
         }
 
     def getEnums(self):
         return {
             'KalturaMetadataProfileCreateMode': KalturaMetadataProfileCreateMode,
+            'KalturaMetadataProfileFieldStatus': KalturaMetadataProfileFieldStatus,
             'KalturaMetadataProfileStatus': KalturaMetadataProfileStatus,
             'KalturaMetadataStatus': KalturaMetadataStatus,
             'KalturaMetadataObjectType': KalturaMetadataObjectType,
@@ -2013,6 +2012,8 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadata': KalturaMetadata,
             'KalturaMetadataProfile': KalturaMetadataProfile,
             'KalturaMetadataProfileField': KalturaMetadataProfileField,
+            'KalturaTransformMetadataResponse': KalturaTransformMetadataResponse,
+            'KalturaUpgradeMetadataResponse': KalturaUpgradeMetadataResponse,
             'KalturaImportMetadataJobData': KalturaImportMetadataJobData,
             'KalturaMetadataListResponse': KalturaMetadataListResponse,
             'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,

@@ -313,7 +313,6 @@ class KalturaLikeClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'like': KalturaLikeService,
         }
 
     def getEnums(self):

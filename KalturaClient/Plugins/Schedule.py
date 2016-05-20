@@ -3828,9 +3828,6 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'scheduleEvent': KalturaScheduleEventService,
-            'scheduleResource': KalturaScheduleResourceService,
-            'scheduleEventResource': KalturaScheduleEventResourceService,
         }
 
     def getEnums(self):

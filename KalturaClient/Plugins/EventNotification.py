@@ -1046,7 +1046,6 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'eventNotificationTemplate': KalturaEventNotificationTemplateService,
         }
 
     def getEnums(self):
@@ -1060,6 +1059,7 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaEventCondition': KalturaEventCondition,
             'KalturaEventNotificationParameter': KalturaEventNotificationParameter,
             'KalturaEventNotificationTemplate': KalturaEventNotificationTemplate,
             'KalturaEventFieldCondition': KalturaEventFieldCondition,

@@ -1126,7 +1126,6 @@ class KalturaQuizClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'quiz': KalturaQuizService,
         }
 
     def getEnums(self):

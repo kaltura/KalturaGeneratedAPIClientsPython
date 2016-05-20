@@ -443,41 +443,6 @@ class KalturaCaptionAssetItemFilter(KalturaCaptionAssetFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaCaptionAssetItemService(KalturaServiceBase):
-    """Search caption asset items"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def search(self, entryFilter = NotImplemented, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
-        """Search caption asset items by filter, pager and free text"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("entryFilter", entryFilter)
-        kparams.addObjectIfDefined("captionAssetItemFilter", captionAssetItemFilter)
-        kparams.addObjectIfDefined("captionAssetItemPager", captionAssetItemPager)
-        self.client.queueServiceActionCall("captionsearch_captionassetitem", "search", KalturaCaptionAssetItemListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAssetItemListResponse)
-
-    def searchEntries(self, entryFilter = NotImplemented, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
-        """Search caption asset items by filter, pager and free text"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("entryFilter", entryFilter)
-        kparams.addObjectIfDefined("captionAssetItemFilter", captionAssetItemFilter)
-        kparams.addObjectIfDefined("captionAssetItemPager", captionAssetItemPager)
-        self.client.queueServiceActionCall("captionsearch_captionassetitem", "searchEntries", KalturaBaseEntryListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBaseEntryListResponse)
-
 ########## main ##########
 class KalturaCaptionSearchClientPlugin(KalturaClientPlugin):
     # KalturaCaptionSearchClientPlugin
@@ -493,7 +458,6 @@ class KalturaCaptionSearchClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'captionAssetItem': KalturaCaptionAssetItemService,
         }
 
     def getEnums(self):
