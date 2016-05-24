@@ -9360,7 +9360,9 @@ class KalturaCategory(KalturaObjectBase):
             defaultOrderBy=NotImplemented,
             directSubCategoriesCount=NotImplemented,
             moderation=NotImplemented,
-            pendingEntriesCount=NotImplemented):
+            pendingEntriesCount=NotImplemented,
+            isAggregationCategory=NotImplemented,
+            aggregationCategories=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Category
@@ -9510,6 +9512,14 @@ class KalturaCategory(KalturaObjectBase):
         # @readonly
         self.pendingEntriesCount = pendingEntriesCount
 
+        # Flag indicating that the category is an aggregation category
+        # @var KalturaNullableBoolean
+        self.isAggregationCategory = isAggregationCategory
+
+        # List of aggregation channels the category belongs to
+        # @var string
+        self.aggregationCategories = aggregationCategories
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9545,6 +9555,8 @@ class KalturaCategory(KalturaObjectBase):
         'directSubCategoriesCount': getXmlNodeInt, 
         'moderation': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'pendingEntriesCount': getXmlNodeInt, 
+        'isAggregationCategory': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'aggregationCategories': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -9570,6 +9582,8 @@ class KalturaCategory(KalturaObjectBase):
         kparams.addStringIfDefined("partnerData", self.partnerData)
         kparams.addStringEnumIfDefined("defaultOrderBy", self.defaultOrderBy)
         kparams.addIntEnumIfDefined("moderation", self.moderation)
+        kparams.addIntEnumIfDefined("isAggregationCategory", self.isAggregationCategory)
+        kparams.addStringIfDefined("aggregationCategories", self.aggregationCategories)
         return kparams
 
     def getId(self):
@@ -9718,6 +9732,18 @@ class KalturaCategory(KalturaObjectBase):
 
     def getPendingEntriesCount(self):
         return self.pendingEntriesCount
+
+    def getIsAggregationCategory(self):
+        return self.isAggregationCategory
+
+    def setIsAggregationCategory(self, newIsAggregationCategory):
+        self.isAggregationCategory = newIsAggregationCategory
+
+    def getAggregationCategories(self):
+        return self.aggregationCategories
+
+    def setAggregationCategories(self, newAggregationCategories):
+        self.aggregationCategories = newAggregationCategories
 
 
 # @package Kaltura
@@ -29340,65 +29366,6 @@ class KalturaConvertProfileJobData(KalturaJobData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCopyJobData(KalturaJobData):
-    def __init__(self,
-            filter=NotImplemented,
-            lastCopyId=NotImplemented,
-            templateObject=NotImplemented):
-        KalturaJobData.__init__(self)
-
-        # The filter should return the list of objects that need to be copied.
-        # @var KalturaFilter
-        self.filter = filter
-
-        # Indicates the last id that copied, used when the batch crached, to re-run from the last crash point.
-        # @var int
-        self.lastCopyId = lastCopyId
-
-        # Template object to overwrite attributes on the copied object
-        # @var KalturaObjectBase
-        self.templateObject = templateObject
-
-
-    PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, KalturaFilter), 
-        'lastCopyId': getXmlNodeInt, 
-        'templateObject': (KalturaObjectFactory.create, KalturaObjectBase), 
-    }
-
-    def fromXml(self, node):
-        KalturaJobData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCopyJobData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaJobData.toParams(self)
-        kparams.put("objectType", "KalturaCopyJobData")
-        kparams.addObjectIfDefined("filter", self.filter)
-        kparams.addIntIfDefined("lastCopyId", self.lastCopyId)
-        kparams.addObjectIfDefined("templateObject", self.templateObject)
-        return kparams
-
-    def getFilter(self):
-        return self.filter
-
-    def setFilter(self, newFilter):
-        self.filter = newFilter
-
-    def getLastCopyId(self):
-        return self.lastCopyId
-
-    def setLastCopyId(self, newLastCopyId):
-        self.lastCopyId = newLastCopyId
-
-    def getTemplateObject(self):
-        return self.templateObject
-
-    def setTemplateObject(self, newTemplateObject):
-        self.templateObject = newTemplateObject
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCopyPartnerJobData(KalturaJobData):
     def __init__(self,
             fromPartnerId=NotImplemented,
@@ -38835,7 +38802,9 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
             inheritedParentIdEqual=NotImplemented,
             inheritedParentIdIn=NotImplemented,
             partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented):
+            partnerSortValueLessThanOrEqual=NotImplemented,
+            aggregationCategoriesMultiLikeOr=NotImplemented,
+            aggregationCategoriesMultiLikeAnd=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -38951,6 +38920,12 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         # @var int
         self.partnerSortValueLessThanOrEqual = partnerSortValueLessThanOrEqual
 
+        # @var string
+        self.aggregationCategoriesMultiLikeOr = aggregationCategoriesMultiLikeOr
+
+        # @var string
+        self.aggregationCategoriesMultiLikeAnd = aggregationCategoriesMultiLikeAnd
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -38990,6 +38965,8 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         'inheritedParentIdIn': getXmlNodeText, 
         'partnerSortValueGreaterThanOrEqual': getXmlNodeInt, 
         'partnerSortValueLessThanOrEqual': getXmlNodeInt, 
+        'aggregationCategoriesMultiLikeOr': getXmlNodeText, 
+        'aggregationCategoriesMultiLikeAnd': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -39036,6 +39013,8 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("inheritedParentIdIn", self.inheritedParentIdIn)
         kparams.addIntIfDefined("partnerSortValueGreaterThanOrEqual", self.partnerSortValueGreaterThanOrEqual)
         kparams.addIntIfDefined("partnerSortValueLessThanOrEqual", self.partnerSortValueLessThanOrEqual)
+        kparams.addStringIfDefined("aggregationCategoriesMultiLikeOr", self.aggregationCategoriesMultiLikeOr)
+        kparams.addStringIfDefined("aggregationCategoriesMultiLikeAnd", self.aggregationCategoriesMultiLikeAnd)
         return kparams
 
     def getIdEqual(self):
@@ -39259,6 +39238,18 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
 
     def setPartnerSortValueLessThanOrEqual(self, newPartnerSortValueLessThanOrEqual):
         self.partnerSortValueLessThanOrEqual = newPartnerSortValueLessThanOrEqual
+
+    def getAggregationCategoriesMultiLikeOr(self):
+        return self.aggregationCategoriesMultiLikeOr
+
+    def setAggregationCategoriesMultiLikeOr(self, newAggregationCategoriesMultiLikeOr):
+        self.aggregationCategoriesMultiLikeOr = newAggregationCategoriesMultiLikeOr
+
+    def getAggregationCategoriesMultiLikeAnd(self):
+        return self.aggregationCategoriesMultiLikeAnd
+
+    def setAggregationCategoriesMultiLikeAnd(self, newAggregationCategoriesMultiLikeAnd):
+        self.aggregationCategoriesMultiLikeAnd = newAggregationCategoriesMultiLikeAnd
 
 
 # @package Kaltura
@@ -44551,6 +44542,8 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
             inheritedParentIdIn=NotImplemented,
             partnerSortValueGreaterThanOrEqual=NotImplemented,
             partnerSortValueLessThanOrEqual=NotImplemented,
+            aggregationCategoriesMultiLikeOr=NotImplemented,
+            aggregationCategoriesMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             membersIn=NotImplemented,
             nameOrReferenceIdStartsWith=NotImplemented,
@@ -44598,7 +44591,9 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
             inheritedParentIdEqual,
             inheritedParentIdIn,
             partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual)
+            partnerSortValueLessThanOrEqual,
+            aggregationCategoriesMultiLikeOr,
+            aggregationCategoriesMultiLikeAnd)
 
         # @var string
         self.freeText = freeText
@@ -47186,41 +47181,6 @@ class KalturaTubeMogulSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter
         kparams = KalturaBaseSyndicationFeedFilter.toParams(self)
         kparams.put("objectType", "KalturaTubeMogulSyndicationFeedBaseFilter")
         return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUploadedFileResource(KalturaDataCenterContentResource):
-    """sed to ingest media that uploaded as posted file in this http request, the file data represents the $_FILE"""
-
-    def __init__(self,
-            fileData=NotImplemented):
-        KalturaDataCenterContentResource.__init__(self)
-
-        # Represents the $_FILE
-        # @var file
-        self.fileData = fileData
-
-
-    PROPERTY_LOADERS = {
-        'fileData': (KalturaObjectFactory.create, file), 
-    }
-
-    def fromXml(self, node):
-        KalturaDataCenterContentResource.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUploadedFileResource.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDataCenterContentResource.toParams(self)
-        kparams.put("objectType", "KalturaUploadedFileResource")
-        kparams.addObjectIfDefined("fileData", self.fileData)
-        return kparams
-
-    def getFileData(self):
-        return self.fileData
-
-    def setFileData(self, newFileData):
-        self.fileData = newFileData
 
 
 # @package Kaltura
