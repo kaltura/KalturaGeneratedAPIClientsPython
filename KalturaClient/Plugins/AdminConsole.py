@@ -583,10 +583,7 @@ class KalturaAdminConsoleClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaInvestigateFlavorAssetData': KalturaInvestigateFlavorAssetData,
-            'KalturaInvestigateThumbAssetData': KalturaInvestigateThumbAssetData,
             'KalturaTrackEntry': KalturaTrackEntry,
-            'KalturaInvestigateEntryData': KalturaInvestigateEntryData,
             'KalturaUiConfAdmin': KalturaUiConfAdmin,
             'KalturaTrackEntryListResponse': KalturaTrackEntryListResponse,
             'KalturaUiConfAdminListResponse': KalturaUiConfAdminListResponse,

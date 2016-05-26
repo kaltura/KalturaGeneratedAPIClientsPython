@@ -419,7 +419,6 @@ class KalturaIdeticDistributionClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
-            'KalturaIdeticDistributionField': KalturaIdeticDistributionField,
             'KalturaIdeticDistributionProfileOrderBy': KalturaIdeticDistributionProfileOrderBy,
             'KalturaIdeticDistributionProviderOrderBy': KalturaIdeticDistributionProviderOrderBy,
         }

@@ -645,7 +645,6 @@ class KalturaYoutubeApiDistributionClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaYouTubeApiDistributionCaptionAction': KalturaYouTubeApiDistributionCaptionAction,
-            'KalturaYouTubeApiDistributionField': KalturaYouTubeApiDistributionField,
             'KalturaYoutubeApiDistributionProfileOrderBy': KalturaYoutubeApiDistributionProfileOrderBy,
             'KalturaYoutubeApiDistributionProviderOrderBy': KalturaYoutubeApiDistributionProviderOrderBy,
         }

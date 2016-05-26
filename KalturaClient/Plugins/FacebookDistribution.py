@@ -559,7 +559,6 @@ class KalturaFacebookDistributionClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
-            'KalturaFacebookDistributionField': KalturaFacebookDistributionField,
             'KalturaFacebookDistributionProfileOrderBy': KalturaFacebookDistributionProfileOrderBy,
             'KalturaFacebookDistributionProviderOrderBy': KalturaFacebookDistributionProviderOrderBy,
         }

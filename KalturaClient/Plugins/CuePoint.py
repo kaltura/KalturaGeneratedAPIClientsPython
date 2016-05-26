@@ -935,7 +935,6 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaCuePointStatus': KalturaCuePointStatus,
-            'KalturaQuizFileType': KalturaQuizFileType,
             'KalturaQuizOutputType': KalturaQuizOutputType,
             'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,

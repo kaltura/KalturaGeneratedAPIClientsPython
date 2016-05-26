@@ -56,7 +56,6 @@ class KalturaKalturaInternalToolsClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaInternalToolsSession': KalturaInternalToolsSession,
         }
 
     # @return string

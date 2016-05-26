@@ -1059,7 +1059,6 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaEventCondition': KalturaEventCondition,
             'KalturaEventNotificationParameter': KalturaEventNotificationParameter,
             'KalturaEventNotificationTemplate': KalturaEventNotificationTemplate,
             'KalturaEventFieldCondition': KalturaEventFieldCondition,

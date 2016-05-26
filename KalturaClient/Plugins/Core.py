@@ -9360,9 +9360,7 @@ class KalturaCategory(KalturaObjectBase):
             defaultOrderBy=NotImplemented,
             directSubCategoriesCount=NotImplemented,
             moderation=NotImplemented,
-            pendingEntriesCount=NotImplemented,
-            isAggregationCategory=NotImplemented,
-            aggregationCategories=NotImplemented):
+            pendingEntriesCount=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Category
@@ -9512,14 +9510,6 @@ class KalturaCategory(KalturaObjectBase):
         # @readonly
         self.pendingEntriesCount = pendingEntriesCount
 
-        # Flag indicating that the category is an aggregation category
-        # @var KalturaNullableBoolean
-        self.isAggregationCategory = isAggregationCategory
-
-        # List of aggregation channels the category belongs to
-        # @var string
-        self.aggregationCategories = aggregationCategories
-
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9555,8 +9545,6 @@ class KalturaCategory(KalturaObjectBase):
         'directSubCategoriesCount': getXmlNodeInt, 
         'moderation': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'pendingEntriesCount': getXmlNodeInt, 
-        'isAggregationCategory': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'aggregationCategories': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -9582,8 +9570,6 @@ class KalturaCategory(KalturaObjectBase):
         kparams.addStringIfDefined("partnerData", self.partnerData)
         kparams.addStringEnumIfDefined("defaultOrderBy", self.defaultOrderBy)
         kparams.addIntEnumIfDefined("moderation", self.moderation)
-        kparams.addIntEnumIfDefined("isAggregationCategory", self.isAggregationCategory)
-        kparams.addStringIfDefined("aggregationCategories", self.aggregationCategories)
         return kparams
 
     def getId(self):
@@ -9732,18 +9718,6 @@ class KalturaCategory(KalturaObjectBase):
 
     def getPendingEntriesCount(self):
         return self.pendingEntriesCount
-
-    def getIsAggregationCategory(self):
-        return self.isAggregationCategory
-
-    def setIsAggregationCategory(self, newIsAggregationCategory):
-        self.isAggregationCategory = newIsAggregationCategory
-
-    def getAggregationCategories(self):
-        return self.aggregationCategories
-
-    def setAggregationCategories(self, newAggregationCategories):
-        self.aggregationCategories = newAggregationCategories
 
 
 # @package Kaltura
@@ -9955,6 +9929,53 @@ class KalturaCategoryUser(KalturaObjectBase):
 
     def setPermissionNames(self, newPermissionNames):
         self.permissionNames = newPermissionNames
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaClientConfiguration(KalturaObjectBase):
+    """Define client optional configurations
+     /"""
+
+    def __init__(self,
+            clientTag=NotImplemented,
+            apiVersion=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.clientTag = clientTag
+
+        # @var string
+        self.apiVersion = apiVersion
+
+
+    PROPERTY_LOADERS = {
+        'clientTag': getXmlNodeText, 
+        'apiVersion': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaClientConfiguration.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaClientConfiguration")
+        kparams.addStringIfDefined("clientTag", self.clientTag)
+        kparams.addStringIfDefined("apiVersion", self.apiVersion)
+        return kparams
+
+    def getClientTag(self):
+        return self.clientTag
+
+    def setClientTag(self, newClientTag):
+        self.clientTag = newClientTag
+
+    def getApiVersion(self):
+        return self.apiVersion
+
+    def setApiVersion(self, newApiVersion):
+        self.apiVersion = newApiVersion
 
 
 # @package Kaltura
@@ -10697,7 +10718,8 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
             origin=NotImplemented,
             systemName=NotImplemented,
             forceNoneComplied=NotImplemented,
-            deletePolicy=NotImplemented):
+            deletePolicy=NotImplemented,
+            isEncrypted=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the conversion profile
@@ -10730,6 +10752,9 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         # @var KalturaAssetParamsDeletePolicy
         self.deletePolicy = deletePolicy
 
+        # @var KalturaNullableBoolean
+        self.isEncrypted = isEncrypted
+
 
     PROPERTY_LOADERS = {
         'conversionProfileId': getXmlNodeInt, 
@@ -10739,6 +10764,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         'systemName': getXmlNodeText, 
         'forceNoneComplied': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'deletePolicy': (KalturaEnumsFactory.createInt, "KalturaAssetParamsDeletePolicy"), 
+        'isEncrypted': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -10753,6 +10779,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         kparams.addStringIfDefined("systemName", self.systemName)
         kparams.addIntEnumIfDefined("forceNoneComplied", self.forceNoneComplied)
         kparams.addIntEnumIfDefined("deletePolicy", self.deletePolicy)
+        kparams.addIntEnumIfDefined("isEncrypted", self.isEncrypted)
         return kparams
 
     def getConversionProfileId(self):
@@ -10790,6 +10817,12 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
     def setDeletePolicy(self, newDeletePolicy):
         self.deletePolicy = newDeletePolicy
+
+    def getIsEncrypted(self):
+        return self.isEncrypted
+
+    def setIsEncrypted(self, newIsEncrypted):
+        self.isEncrypted = newIsEncrypted
 
 
 # @package Kaltura
@@ -21504,6 +21537,68 @@ class KalturaReportTotal(KalturaObjectBase):
 
     def setData(self, newData):
         self.data = newData
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRequestConfiguration(KalturaObjectBase):
+    """Define client request optional configurations
+     /"""
+
+    def __init__(self,
+            partnerId=NotImplemented,
+            ks=NotImplemented,
+            responseProfile=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Impersonated partner id
+        # @var int
+        self.partnerId = partnerId
+
+        # Kaltura API session
+        # @var string
+        self.ks = ks
+
+        # Response profile - this attribute will be automatically unset after every API call.
+        # @var KalturaBaseResponseProfile
+        self.responseProfile = responseProfile
+
+
+    PROPERTY_LOADERS = {
+        'partnerId': getXmlNodeInt, 
+        'ks': getXmlNodeText, 
+        'responseProfile': (KalturaObjectFactory.create, KalturaBaseResponseProfile), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRequestConfiguration.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaRequestConfiguration")
+        kparams.addIntIfDefined("partnerId", self.partnerId)
+        kparams.addStringIfDefined("ks", self.ks)
+        kparams.addObjectIfDefined("responseProfile", self.responseProfile)
+        return kparams
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def setPartnerId(self, newPartnerId):
+        self.partnerId = newPartnerId
+
+    def getKs(self):
+        return self.ks
+
+    def setKs(self, newKs):
+        self.ks = newKs
+
+    def getResponseProfile(self):
+        return self.responseProfile
+
+    def setResponseProfile(self, newResponseProfile):
+        self.responseProfile = newResponseProfile
 
 
 # @package Kaltura
@@ -38802,9 +38897,7 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
             inheritedParentIdEqual=NotImplemented,
             inheritedParentIdIn=NotImplemented,
             partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            aggregationCategoriesMultiLikeOr=NotImplemented,
-            aggregationCategoriesMultiLikeAnd=NotImplemented):
+            partnerSortValueLessThanOrEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -38920,12 +39013,6 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         # @var int
         self.partnerSortValueLessThanOrEqual = partnerSortValueLessThanOrEqual
 
-        # @var string
-        self.aggregationCategoriesMultiLikeOr = aggregationCategoriesMultiLikeOr
-
-        # @var string
-        self.aggregationCategoriesMultiLikeAnd = aggregationCategoriesMultiLikeAnd
-
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -38965,8 +39052,6 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         'inheritedParentIdIn': getXmlNodeText, 
         'partnerSortValueGreaterThanOrEqual': getXmlNodeInt, 
         'partnerSortValueLessThanOrEqual': getXmlNodeInt, 
-        'aggregationCategoriesMultiLikeOr': getXmlNodeText, 
-        'aggregationCategoriesMultiLikeAnd': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -39013,8 +39098,6 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("inheritedParentIdIn", self.inheritedParentIdIn)
         kparams.addIntIfDefined("partnerSortValueGreaterThanOrEqual", self.partnerSortValueGreaterThanOrEqual)
         kparams.addIntIfDefined("partnerSortValueLessThanOrEqual", self.partnerSortValueLessThanOrEqual)
-        kparams.addStringIfDefined("aggregationCategoriesMultiLikeOr", self.aggregationCategoriesMultiLikeOr)
-        kparams.addStringIfDefined("aggregationCategoriesMultiLikeAnd", self.aggregationCategoriesMultiLikeAnd)
         return kparams
 
     def getIdEqual(self):
@@ -39238,18 +39321,6 @@ class KalturaCategoryBaseFilter(KalturaRelatedFilter):
 
     def setPartnerSortValueLessThanOrEqual(self, newPartnerSortValueLessThanOrEqual):
         self.partnerSortValueLessThanOrEqual = newPartnerSortValueLessThanOrEqual
-
-    def getAggregationCategoriesMultiLikeOr(self):
-        return self.aggregationCategoriesMultiLikeOr
-
-    def setAggregationCategoriesMultiLikeOr(self, newAggregationCategoriesMultiLikeOr):
-        self.aggregationCategoriesMultiLikeOr = newAggregationCategoriesMultiLikeOr
-
-    def getAggregationCategoriesMultiLikeAnd(self):
-        return self.aggregationCategoriesMultiLikeAnd
-
-    def setAggregationCategoriesMultiLikeAnd(self, newAggregationCategoriesMultiLikeAnd):
-        self.aggregationCategoriesMultiLikeAnd = newAggregationCategoriesMultiLikeAnd
 
 
 # @package Kaltura
@@ -44542,8 +44613,6 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
             inheritedParentIdIn=NotImplemented,
             partnerSortValueGreaterThanOrEqual=NotImplemented,
             partnerSortValueLessThanOrEqual=NotImplemented,
-            aggregationCategoriesMultiLikeOr=NotImplemented,
-            aggregationCategoriesMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             membersIn=NotImplemented,
             nameOrReferenceIdStartsWith=NotImplemented,
@@ -44591,9 +44660,7 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
             inheritedParentIdEqual,
             inheritedParentIdIn,
             partnerSortValueGreaterThanOrEqual,
-            partnerSortValueLessThanOrEqual,
-            aggregationCategoriesMultiLikeOr,
-            aggregationCategoriesMultiLikeAnd)
+            partnerSortValueLessThanOrEqual)
 
         # @var string
         self.freeText = freeText
@@ -54794,6 +54861,16 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
+    def update(self, id, entryServerNode):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("entryServerNode", entryServerNode)
+        self.client.queueServiceActionCall("entryservernode", "update", KalturaEntryServerNode, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEntryServerNode)
+
     def list(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
@@ -58513,8 +58590,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAppearInListType': KalturaAppearInListType,
             'KalturaAssetParamsDeletePolicy': KalturaAssetParamsDeletePolicy,
             'KalturaAssetParamsOrigin': KalturaAssetParamsOrigin,
-            'KalturaAssetStatus': KalturaAssetStatus,
-            'KalturaBatchJobAppErrors': KalturaBatchJobAppErrors,
             'KalturaBatchJobErrorTypes': KalturaBatchJobErrorTypes,
             'KalturaBatchJobStatus': KalturaBatchJobStatus,
             'KalturaBitRateMode': KalturaBitRateMode,
@@ -58524,22 +58599,17 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryUserStatus': KalturaCategoryUserStatus,
             'KalturaCommercialUseType': KalturaCommercialUseType,
             'KalturaContributionPolicyType': KalturaContributionPolicyType,
-            'KalturaControlCommandStatus': KalturaControlCommandStatus,
             'KalturaControlPanelCommandStatus': KalturaControlPanelCommandStatus,
             'KalturaControlPanelCommandTargetType': KalturaControlPanelCommandTargetType,
             'KalturaControlPanelCommandType': KalturaControlPanelCommandType,
-            'KalturaCopyObjectType': KalturaCopyObjectType,
             'KalturaCountryRestrictionType': KalturaCountryRestrictionType,
             'KalturaDVRStatus': KalturaDVRStatus,
-            'KalturaDeleteObjectType': KalturaDeleteObjectType,
             'KalturaDeliveryStatus': KalturaDeliveryStatus,
             'KalturaDirectoryRestrictionType': KalturaDirectoryRestrictionType,
             'KalturaEditorType': KalturaEditorType,
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
             'KalturaEntryServerNodeStatus': KalturaEntryServerNodeStatus,
-            'KalturaExportProtocol': KalturaExportProtocol,
-            'KalturaExtractMediaType': KalturaExtractMediaType,
             'KalturaFeatureStatusType': KalturaFeatureStatusType,
             'KalturaFlavorAssetStatus': KalturaFlavorAssetStatus,
             'KalturaFlavorReadyBehaviorType': KalturaFlavorReadyBehaviorType,
@@ -58557,11 +58627,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaModerationFlagType': KalturaModerationFlagType,
             'KalturaMrssExtensionMode': KalturaMrssExtensionMode,
             'KalturaNotificationObjectType': KalturaNotificationObjectType,
-            'KalturaNotificationResult': KalturaNotificationResult,
             'KalturaNotificationStatus': KalturaNotificationStatus,
             'KalturaNotificationType': KalturaNotificationType,
             'KalturaNullableBoolean': KalturaNullableBoolean,
-            'KalturaPartnerFreeTrialType': KalturaPartnerFreeTrialType,
             'KalturaPartnerGroupType': KalturaPartnerGroupType,
             'KalturaPartnerStatus': KalturaPartnerStatus,
             'KalturaPartnerType': KalturaPartnerType,
@@ -58569,13 +58637,11 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionType': KalturaPermissionType,
             'KalturaPlaylistType': KalturaPlaylistType,
             'KalturaPrivacyType': KalturaPrivacyType,
-            'KalturaProvisionJobType': KalturaProvisionJobType,
             'KalturaRecordStatus': KalturaRecordStatus,
             'KalturaResponseProfileStatus': KalturaResponseProfileStatus,
             'KalturaResponseProfileType': KalturaResponseProfileType,
             'KalturaResponseType': KalturaResponseType,
             'KalturaSchedulerStatusType': KalturaSchedulerStatusType,
-            'KalturaSearchConditionType': KalturaSearchConditionType,
             'KalturaSearchOperatorType': KalturaSearchOperatorType,
             'KalturaSearchProviderType': KalturaSearchProviderType,
             'KalturaServerNodeStatus': KalturaServerNodeStatus,
@@ -58587,7 +58653,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStorageProfileDeliveryStatus': KalturaStorageProfileDeliveryStatus,
             'KalturaStorageProfileReadyBehavior': KalturaStorageProfileReadyBehavior,
             'KalturaStorageProfileStatus': KalturaStorageProfileStatus,
-            'KalturaStorageServePriority': KalturaStorageServePriority,
             'KalturaSyndicationFeedStatus': KalturaSyndicationFeedStatus,
             'KalturaSyndicationFeedType': KalturaSyndicationFeedType,
             'KalturaThumbAssetStatus': KalturaThumbAssetStatus,
@@ -58603,8 +58668,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserStatus': KalturaUserStatus,
             'KalturaUserType': KalturaUserType,
             'KalturaWidgetSecurityType': KalturaWidgetSecurityType,
-            'KalturaAccessControlActionType': KalturaAccessControlActionType,
-            'KalturaAccessControlContextType': KalturaAccessControlContextType,
             'KalturaAccessControlOrderBy': KalturaAccessControlOrderBy,
             'KalturaAccessControlProfileOrderBy': KalturaAccessControlProfileOrderBy,
             'KalturaAdminUserOrderBy': KalturaAdminUserOrderBy,
@@ -58644,7 +58707,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaContainerFormat': KalturaContainerFormat,
             'KalturaContextType': KalturaContextType,
             'KalturaControlPanelCommandOrderBy': KalturaControlPanelCommandOrderBy,
-            'KalturaConversionEngineType': KalturaConversionEngineType,
             'KalturaConversionProfileAssetParamsOrderBy': KalturaConversionProfileAssetParamsOrderBy,
             'KalturaConversionProfileOrderBy': KalturaConversionProfileOrderBy,
             'KalturaConversionProfileStatus': KalturaConversionProfileStatus,
@@ -58668,9 +58730,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDocumentEntryCompareAttribute': KalturaDocumentEntryCompareAttribute,
             'KalturaDocumentEntryMatchAttribute': KalturaDocumentEntryMatchAttribute,
             'KalturaDurationType': KalturaDurationType,
-            'KalturaDynamicEnum': KalturaDynamicEnum,
             'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
-            'KalturaEntryCapability': KalturaEntryCapability,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
             'KalturaEntryServerNodeOrderBy': KalturaEntryServerNodeOrderBy,
@@ -58695,7 +58755,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaITunesSyndicationFeedAdultValues': KalturaITunesSyndicationFeedAdultValues,
             'KalturaITunesSyndicationFeedCategories': KalturaITunesSyndicationFeedCategories,
             'KalturaITunesSyndicationFeedOrderBy': KalturaITunesSyndicationFeedOrderBy,
-            'KalturaIndexObjectType': KalturaIndexObjectType,
             'KalturaLanguage': KalturaLanguage,
             'KalturaLanguageCode': KalturaLanguageCode,
             'KalturaLiveAssetOrderBy': KalturaLiveAssetOrderBy,
@@ -58732,11 +58791,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMixEntryOrderBy': KalturaMixEntryOrderBy,
             'KalturaModerationFlagStatus': KalturaModerationFlagStatus,
             'KalturaModerationObjectType': KalturaModerationObjectType,
-            'KalturaObjectFeatureType': KalturaObjectFeatureType,
             'KalturaPartnerOrderBy': KalturaPartnerOrderBy,
             'KalturaPermissionItemOrderBy': KalturaPermissionItemOrderBy,
             'KalturaPermissionItemType': KalturaPermissionItemType,
-            'KalturaPermissionName': KalturaPermissionName,
             'KalturaPermissionOrderBy': KalturaPermissionOrderBy,
             'KalturaPlayableEntryCompareAttribute': KalturaPlayableEntryCompareAttribute,
             'KalturaPlayableEntryMatchAttribute': KalturaPlayableEntryMatchAttribute,
@@ -58746,7 +58803,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistMatchAttribute': KalturaPlaylistMatchAttribute,
             'KalturaPlaylistOrderBy': KalturaPlaylistOrderBy,
             'KalturaQuizUserEntryOrderBy': KalturaQuizUserEntryOrderBy,
-            'KalturaRecalculateCacheType': KalturaRecalculateCacheType,
             'KalturaReportInterval': KalturaReportInterval,
             'KalturaReportOrderBy': KalturaReportOrderBy,
             'KalturaReportType': KalturaReportType,
@@ -58786,7 +58842,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaListResponse': KalturaListResponse,
             'KalturaBaseRestriction': KalturaBaseRestriction,
             'KalturaAccessControl': KalturaAccessControl,
-            'KalturaAccessControlAction': KalturaAccessControlAction,
             'KalturaContextTypeHolder': KalturaContextTypeHolder,
             'KalturaAccessControlContextTypeHolder': KalturaAccessControlContextTypeHolder,
             'KalturaRuleAction': KalturaRuleAction,
@@ -58816,9 +58871,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
             'KalturaPlayerEmbedCodeType': KalturaPlayerEmbedCodeType,
             'KalturaPartner': KalturaPartner,
-            'KalturaBatchGetExclusiveNotificationJobsResponse': KalturaBatchGetExclusiveNotificationJobsResponse,
-            'KalturaBatchJobResponse': KalturaBatchJobResponse,
-            'KalturaBatchQueuesStatus': KalturaBatchQueuesStatus,
             'KalturaValue': KalturaValue,
             'KalturaBooleanValue': KalturaBooleanValue,
             'KalturaBulkUploadPluginData': KalturaBulkUploadPluginData,
@@ -58856,25 +58908,21 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
             'KalturaEntryServerNode': KalturaEntryServerNode,
-            'KalturaExclusiveLockKey': KalturaExclusiveLockKey,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
             'KalturaExtendingItemMrssParameter': KalturaExtendingItemMrssParameter,
             'KalturaPlayableEntry': KalturaPlayableEntry,
             'KalturaMediaEntry': KalturaMediaEntry,
             'KalturaFeatureStatus': KalturaFeatureStatus,
             'KalturaFileAsset': KalturaFileAsset,
-            'KalturaFileExistsResponse': KalturaFileExistsResponse,
             'KalturaFlavorAsset': KalturaFlavorAsset,
             'KalturaFlavorAssetUrlOptions': KalturaFlavorAssetUrlOptions,
             'KalturaFlavorParams': KalturaFlavorParams,
             'KalturaFlavorAssetWithParams': KalturaFlavorAssetWithParams,
             'KalturaFlavorParamsOutput': KalturaFlavorParamsOutput,
-            'KalturaFreeJobResponse': KalturaFreeJobResponse,
             'KalturaSchedulerStatus': KalturaSchedulerStatus,
             'KalturaSchedulerConfig': KalturaSchedulerConfig,
             'KalturaSchedulerWorker': KalturaSchedulerWorker,
             'KalturaScheduler': KalturaScheduler,
-            'KalturaFullStatusResponse': KalturaFullStatusResponse,
             'KalturaGroupUser': KalturaGroupUser,
             'KalturaObject': KalturaObject,
             'KalturaIntegerValue': KalturaIntegerValue,
@@ -58886,7 +58934,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaThumbParams': KalturaThumbParams,
             'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
             'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
-            'KalturaKeyBooleanValue': KalturaKeyBooleanValue,
             'KalturaLiveStreamConfiguration': KalturaLiveStreamConfiguration,
             'KalturaLiveStreamPushPublishConfiguration': KalturaLiveStreamPushPublishConfiguration,
             'KalturaLiveEntryRecordingOptions': KalturaLiveEntryRecordingOptions,
@@ -58908,7 +58955,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryBaseFilter': KalturaMediaEntryBaseFilter,
             'KalturaMediaEntryFilter': KalturaMediaEntryFilter,
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
-            'KalturaMediaServerStatus': KalturaMediaServerStatus,
             'KalturaMixEntry': KalturaMixEntry,
             'KalturaModerationFlag': KalturaModerationFlag,
             'KalturaPartnerStatistics': KalturaPartnerStatistics,
@@ -58931,7 +58977,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaResponseProfile': KalturaResponseProfile,
             'KalturaResponseProfileCacheRecalculateOptions': KalturaResponseProfileCacheRecalculateOptions,
             'KalturaResponseProfileCacheRecalculateResults': KalturaResponseProfileCacheRecalculateResults,
-            'KalturaSchedulerStatusResponse': KalturaSchedulerStatusResponse,
             'KalturaScope': KalturaScope,
             'KalturaSearch': KalturaSearch,
             'KalturaSearchAuthData': KalturaSearchAuthData,
@@ -58944,10 +58989,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsEvent': KalturaStatsEvent,
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
-            'KalturaSupportedSubTypes': KalturaSupportedSubTypes,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
             'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
-            'KalturaTypedArray': KalturaTypedArray,
             'KalturaUiConf': KalturaUiConf,
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
@@ -58959,7 +59002,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaWidget': KalturaWidget,
             'KalturaBatchJobBaseFilter': KalturaBatchJobBaseFilter,
             'KalturaBatchJobFilter': KalturaBatchJobFilter,
-            'KalturaWorkerQueueFilter': KalturaWorkerQueueFilter,
             'KalturaAccessControlBlockAction': KalturaAccessControlBlockAction,
             'KalturaAccessControlLimitDeliveryProfilesAction': KalturaAccessControlLimitDeliveryProfilesAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
@@ -59016,7 +59058,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaConversionProfileListResponse': KalturaConversionProfileListResponse,
             'KalturaConvertLiveSegmentJobData': KalturaConvertLiveSegmentJobData,
             'KalturaConvertProfileJobData': KalturaConvertProfileJobData,
-            'KalturaCopyJobData': KalturaCopyJobData,
             'KalturaCopyPartnerJobData': KalturaCopyPartnerJobData,
             'KalturaCountryRestriction': KalturaCountryRestriction,
             'KalturaDataListResponse': KalturaDataListResponse,
@@ -59274,7 +59315,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSshUrlResource': KalturaSshUrlResource,
             'KalturaTimeContextField': KalturaTimeContextField,
             'KalturaTubeMogulSyndicationFeedBaseFilter': KalturaTubeMogulSyndicationFeedBaseFilter,
-            'KalturaUploadedFileResource': KalturaUploadedFileResource,
             'KalturaUploadedFileTokenResource': KalturaUploadedFileTokenResource,
             'KalturaUserAgentCondition': KalturaUserAgentCondition,
             'KalturaUserAgentContextField': KalturaUserAgentContextField,

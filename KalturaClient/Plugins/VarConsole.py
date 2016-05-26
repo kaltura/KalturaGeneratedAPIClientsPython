@@ -508,7 +508,6 @@ class KalturaVarConsoleClientPlugin(KalturaClientPlugin):
             'KalturaVarPartnerUsageItem': KalturaVarPartnerUsageItem,
             'KalturaPartnerUsageListResponse': KalturaPartnerUsageListResponse,
             'KalturaVarPartnerUsageTotalItem': KalturaVarPartnerUsageTotalItem,
-            'KalturaVarConsolePartnerFilter': KalturaVarConsolePartnerFilter,
         }
 
     # @return string

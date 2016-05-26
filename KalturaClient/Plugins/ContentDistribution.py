@@ -5236,7 +5236,6 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProviderActionOrderBy': KalturaGenericDistributionProviderActionOrderBy,
             'KalturaGenericDistributionProviderOrderBy': KalturaGenericDistributionProviderOrderBy,
             'KalturaSyndicationDistributionProfileOrderBy': KalturaSyndicationDistributionProfileOrderBy,
-            'KalturaSyndicationDistributionProviderOrderBy': KalturaSyndicationDistributionProviderOrderBy,
         }
 
     def getTypes(self):

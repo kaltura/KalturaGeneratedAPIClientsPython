@@ -520,16 +520,11 @@ class KalturaSystemPartnerClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
-            'KalturaSystemPartnerLimitType': KalturaSystemPartnerLimitType,
         }
 
     def getTypes(self):
         return {
-            'KalturaSystemPartnerLimit': KalturaSystemPartnerLimit,
-            'KalturaSystemPartnerConfiguration': KalturaSystemPartnerConfiguration,
-            'KalturaSystemPartnerPackage': KalturaSystemPartnerPackage,
             'KalturaSystemPartnerUsageItem': KalturaSystemPartnerUsageItem,
-            'KalturaSystemPartnerOveragedLimit': KalturaSystemPartnerOveragedLimit,
             'KalturaSystemPartnerUsageFilter': KalturaSystemPartnerUsageFilter,
             'KalturaSystemPartnerUsageListResponse': KalturaSystemPartnerUsageListResponse,
             'KalturaSystemPartnerFilter': KalturaSystemPartnerFilter,

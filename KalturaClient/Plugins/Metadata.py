@@ -1999,7 +1999,6 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaMetadataProfileCreateMode': KalturaMetadataProfileCreateMode,
-            'KalturaMetadataProfileFieldStatus': KalturaMetadataProfileFieldStatus,
             'KalturaMetadataProfileStatus': KalturaMetadataProfileStatus,
             'KalturaMetadataStatus': KalturaMetadataStatus,
             'KalturaMetadataObjectType': KalturaMetadataObjectType,
@@ -2012,8 +2011,6 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadata': KalturaMetadata,
             'KalturaMetadataProfile': KalturaMetadataProfile,
             'KalturaMetadataProfileField': KalturaMetadataProfileField,
-            'KalturaTransformMetadataResponse': KalturaTransformMetadataResponse,
-            'KalturaUpgradeMetadataResponse': KalturaUpgradeMetadataResponse,
             'KalturaImportMetadataJobData': KalturaImportMetadataJobData,
             'KalturaMetadataListResponse': KalturaMetadataListResponse,
             'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,
