@@ -215,7 +215,7 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
             orderBy,
             advancedSearch)
 
-        # @var int
+        # @var string
         self.idEqual = idEqual
 
         # @var string
@@ -265,7 +265,7 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
 
 
     PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
+        'idEqual': getXmlNodeText, 
         'idIn': getXmlNodeText, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
@@ -290,7 +290,7 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
     def toParams(self):
         kparams = KalturaFilter.toParams(self)
         kparams.put("objectType", "KalturaShortLinkBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)

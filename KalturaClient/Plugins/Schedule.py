@@ -1282,7 +1282,252 @@ class KalturaLocationScheduleResource(KalturaScheduleResource):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaScheduleEventBaseFilter(KalturaFilter):
+class KalturaScheduleEventListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaScheduleEvent
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEvent), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduleEventListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaScheduleEventListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaScheduleEventResourceListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaScheduleEventResource
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEventResource), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduleEventResourceListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaScheduleEventResourceListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaScheduleResourceListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaScheduleResource
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, KalturaScheduleResource), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduleResourceListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaScheduleResourceListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            parentId=NotImplemented,
+            summary=NotImplemented,
+            description=NotImplemented,
+            status=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            classificationType=NotImplemented,
+            geoLatitude=NotImplemented,
+            geoLongitude=NotImplemented,
+            location=NotImplemented,
+            organizer=NotImplemented,
+            ownerId=NotImplemented,
+            priority=NotImplemented,
+            sequence=NotImplemented,
+            recurrenceType=NotImplemented,
+            duration=NotImplemented,
+            contact=NotImplemented,
+            comment=NotImplemented,
+            tags=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            recurrence=NotImplemented,
+            templateEntryId=NotImplemented,
+            entryIds=NotImplemented,
+            categoryIds=NotImplemented):
+        KalturaEntryScheduleEvent.__init__(self,
+            id,
+            partnerId,
+            parentId,
+            summary,
+            description,
+            status,
+            startDate,
+            endDate,
+            referenceId,
+            classificationType,
+            geoLatitude,
+            geoLongitude,
+            location,
+            organizer,
+            ownerId,
+            priority,
+            sequence,
+            recurrenceType,
+            duration,
+            contact,
+            comment,
+            tags,
+            createdAt,
+            updatedAt,
+            recurrence,
+            templateEntryId,
+            entryIds,
+            categoryIds)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryScheduleEvent.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamScheduleEvent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryScheduleEvent.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            parentId=NotImplemented,
+            summary=NotImplemented,
+            description=NotImplemented,
+            status=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            classificationType=NotImplemented,
+            geoLatitude=NotImplemented,
+            geoLongitude=NotImplemented,
+            location=NotImplemented,
+            organizer=NotImplemented,
+            ownerId=NotImplemented,
+            priority=NotImplemented,
+            sequence=NotImplemented,
+            recurrenceType=NotImplemented,
+            duration=NotImplemented,
+            contact=NotImplemented,
+            comment=NotImplemented,
+            tags=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            recurrence=NotImplemented,
+            templateEntryId=NotImplemented,
+            entryIds=NotImplemented,
+            categoryIds=NotImplemented):
+        KalturaEntryScheduleEvent.__init__(self,
+            id,
+            partnerId,
+            parentId,
+            summary,
+            description,
+            status,
+            startDate,
+            endDate,
+            referenceId,
+            classificationType,
+            geoLatitude,
+            geoLongitude,
+            location,
+            organizer,
+            ownerId,
+            priority,
+            sequence,
+            recurrenceType,
+            duration,
+            contact,
+            comment,
+            tags,
+            createdAt,
+            updatedAt,
+            recurrence,
+            templateEntryId,
+            entryIds,
+            categoryIds)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryScheduleEvent.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRecordScheduleEvent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryScheduleEvent.toParams(self)
+        kparams.put("objectType", "KalturaRecordScheduleEvent")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -1315,7 +1560,7 @@ class KalturaScheduleEventBaseFilter(KalturaFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -1440,11 +1685,11 @@ class KalturaScheduleEventBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaScheduleEventBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaScheduleEventBaseFilter")
         kparams.addIntIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
@@ -1654,38 +1899,7 @@ class KalturaScheduleEventBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaScheduleEventListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaScheduleEvent
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEvent), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaScheduleEventListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaScheduleEventListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaScheduleEventResourceBaseFilter(KalturaFilter):
+class KalturaScheduleEventResourceBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -1697,7 +1911,7 @@ class KalturaScheduleEventResourceBaseFilter(KalturaFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -1738,11 +1952,11 @@ class KalturaScheduleEventResourceBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaScheduleEventResourceBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaScheduleEventResourceBaseFilter")
         kparams.addIntIfDefined("eventIdEqual", self.eventIdEqual)
         kparams.addStringIfDefined("eventIdIn", self.eventIdIn)
@@ -1805,38 +2019,7 @@ class KalturaScheduleEventResourceBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaScheduleEventResourceListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaScheduleEventResource
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEventResource), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaScheduleEventResourceListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaScheduleEventResourceListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaScheduleResourceBaseFilter(KalturaFilter):
+class KalturaScheduleResourceBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
@@ -1856,7 +2039,7 @@ class KalturaScheduleResourceBaseFilter(KalturaFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented):
-        KalturaFilter.__init__(self,
+        KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
@@ -1929,11 +2112,11 @@ class KalturaScheduleResourceBaseFilter(KalturaFilter):
     }
 
     def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
+        KalturaRelatedFilter.fromXml(self, node)
         self.fromXmlImpl(node, KalturaScheduleResourceBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaFilter.toParams(self)
+        kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaScheduleResourceBaseFilter")
         kparams.addIntIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
@@ -2048,189 +2231,6 @@ class KalturaScheduleResourceBaseFilter(KalturaFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaScheduleResourceListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaScheduleResource
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleResource), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaScheduleResourceListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaScheduleResourceListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented):
-        KalturaEntryScheduleEvent.__init__(self,
-            id,
-            partnerId,
-            parentId,
-            summary,
-            description,
-            status,
-            startDate,
-            endDate,
-            referenceId,
-            classificationType,
-            geoLatitude,
-            geoLongitude,
-            location,
-            organizer,
-            ownerId,
-            priority,
-            sequence,
-            recurrenceType,
-            duration,
-            contact,
-            comment,
-            tags,
-            createdAt,
-            updatedAt,
-            recurrence,
-            templateEntryId,
-            entryIds,
-            categoryIds)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaEntryScheduleEvent.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveStreamScheduleEvent.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaEntryScheduleEvent.toParams(self)
-        kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented):
-        KalturaEntryScheduleEvent.__init__(self,
-            id,
-            partnerId,
-            parentId,
-            summary,
-            description,
-            status,
-            startDate,
-            endDate,
-            referenceId,
-            classificationType,
-            geoLatitude,
-            geoLongitude,
-            location,
-            organizer,
-            ownerId,
-            priority,
-            sequence,
-            recurrenceType,
-            duration,
-            contact,
-            comment,
-            tags,
-            createdAt,
-            updatedAt,
-            recurrence,
-            templateEntryId,
-            entryIds,
-            categoryIds)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaEntryScheduleEvent.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaRecordScheduleEvent.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaEntryScheduleEvent.toParams(self)
-        kparams.put("objectType", "KalturaRecordScheduleEvent")
-        return kparams
 
 
 # @package Kaltura
@@ -3860,14 +3860,14 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaEntryScheduleEvent': KalturaEntryScheduleEvent,
             'KalturaLiveEntryScheduleResource': KalturaLiveEntryScheduleResource,
             'KalturaLocationScheduleResource': KalturaLocationScheduleResource,
-            'KalturaScheduleEventBaseFilter': KalturaScheduleEventBaseFilter,
             'KalturaScheduleEventListResponse': KalturaScheduleEventListResponse,
-            'KalturaScheduleEventResourceBaseFilter': KalturaScheduleEventResourceBaseFilter,
             'KalturaScheduleEventResourceListResponse': KalturaScheduleEventResourceListResponse,
-            'KalturaScheduleResourceBaseFilter': KalturaScheduleResourceBaseFilter,
             'KalturaScheduleResourceListResponse': KalturaScheduleResourceListResponse,
             'KalturaLiveStreamScheduleEvent': KalturaLiveStreamScheduleEvent,
             'KalturaRecordScheduleEvent': KalturaRecordScheduleEvent,
+            'KalturaScheduleEventBaseFilter': KalturaScheduleEventBaseFilter,
+            'KalturaScheduleEventResourceBaseFilter': KalturaScheduleEventResourceBaseFilter,
+            'KalturaScheduleResourceBaseFilter': KalturaScheduleResourceBaseFilter,
             'KalturaScheduleEventFilter': KalturaScheduleEventFilter,
             'KalturaScheduleEventResourceFilter': KalturaScheduleEventResourceFilter,
             'KalturaScheduleResourceFilter': KalturaScheduleResourceFilter,
