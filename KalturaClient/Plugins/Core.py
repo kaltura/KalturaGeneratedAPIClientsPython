@@ -37182,7 +37182,8 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
-            tokenizationFormat=NotImplemented):
+            tokenizationFormat=NotImplemented,
+            shouldIncludeClientIp=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
             key)
@@ -37190,9 +37191,13 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
         # @var int
         self.tokenizationFormat = tokenizationFormat
 
+        # @var bool
+        self.shouldIncludeClientIp = shouldIncludeClientIp
+
 
     PROPERTY_LOADERS = {
         'tokenizationFormat': getXmlNodeInt, 
+        'shouldIncludeClientIp': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -37203,6 +37208,7 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
         kparams = KalturaUrlTokenizer.toParams(self)
         kparams.put("objectType", "KalturaUrlTokenizerVnpt")
         kparams.addIntIfDefined("tokenizationFormat", self.tokenizationFormat)
+        kparams.addBoolIfDefined("shouldIncludeClientIp", self.shouldIncludeClientIp)
         return kparams
 
     def getTokenizationFormat(self):
@@ -37210,6 +37216,12 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
 
     def setTokenizationFormat(self, newTokenizationFormat):
         self.tokenizationFormat = newTokenizationFormat
+
+    def getShouldIncludeClientIp(self):
+        return self.shouldIncludeClientIp
+
+    def setShouldIncludeClientIp(self, newShouldIncludeClientIp):
+        self.shouldIncludeClientIp = newShouldIncludeClientIp
 
 
 # @package Kaltura
