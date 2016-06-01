@@ -1004,6 +1004,8 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'captionAsset': KalturaCaptionAssetService,
+            'captionParams': KalturaCaptionParamsService,
         }
 
     def getEnums(self):

@@ -493,6 +493,7 @@ class KalturaCaptionSearchClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'captionAssetItem': KalturaCaptionAssetItemService,
         }
 
     def getEnums(self):

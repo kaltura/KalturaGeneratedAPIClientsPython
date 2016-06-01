@@ -514,6 +514,7 @@ class KalturaAttachmentClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'attachmentAsset': KalturaAttachmentAssetService,
         }
 
     def getEnums(self):

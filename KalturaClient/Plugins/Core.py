@@ -58591,35 +58591,6 @@ class KalturaWidgetService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaWidgetListResponse)
 
-
-# @package Kaltura
-# @subpackage Client
-class KalturaXInternalService(KalturaServiceBase):
-    """Internal Service is used for actions that are used internally in Kaltura applications and might be changed in the future without any notice."""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def xAddBulkDownload(self, entryIds, flavorParamsId = ""):
-        """Creates new download job for multiple entry ids (comma separated), an email will be sent when the job is done
-        	 This sevice support the following entries: 
-        	 - MediaEntry
-        	 - Video will be converted using the flavor params id
-        	 - Audio will be downloaded as MP3
-        	 - Image will be downloaded as Jpeg
-        	 - MixEntry will be flattened using the flavor params id
-        	 - Other entry types are not supported
-        	 Returns the admin email that the email message will be sent to"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryIds", entryIds)
-        kparams.addStringIfDefined("flavorParamsId", flavorParamsId)
-        self.client.queueServiceActionCall("xinternal", "xAddBulkDownload", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
 ########## main ##########
 class KalturaCoreClient(KalturaClientPlugin):
     # KalturaCoreClient
@@ -58689,7 +58660,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'userRole': KalturaUserRoleService,
             'user': KalturaUserService,
             'widget': KalturaWidgetService,
-            'xInternal': KalturaXInternalService,
         }
 
     def getEnums(self):

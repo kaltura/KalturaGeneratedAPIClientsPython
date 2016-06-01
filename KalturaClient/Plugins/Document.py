@@ -2758,6 +2758,7 @@ class KalturaDocumentClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'documents': KalturaDocumentsService,
         }
 
     def getEnums(self):

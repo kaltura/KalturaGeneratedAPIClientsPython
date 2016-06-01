@@ -583,6 +583,7 @@ class KalturaShortLinkClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'shortLink': KalturaShortLinkService,
         }
 
     def getEnums(self):

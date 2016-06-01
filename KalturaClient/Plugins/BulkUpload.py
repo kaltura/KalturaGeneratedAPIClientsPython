@@ -130,6 +130,7 @@ class KalturaBulkUploadClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'bulk': KalturaBulkService,
         }
 
     def getEnums(self):

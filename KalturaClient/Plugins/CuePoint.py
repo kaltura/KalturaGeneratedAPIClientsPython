@@ -930,6 +930,7 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'cuePoint': KalturaCuePointService,
         }
 
     def getEnums(self):

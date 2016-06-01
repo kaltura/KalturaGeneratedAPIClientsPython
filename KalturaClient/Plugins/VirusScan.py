@@ -683,6 +683,7 @@ class KalturaVirusScanClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'virusScanProfile': KalturaVirusScanProfileService,
         }
 
     def getEnums(self):

@@ -680,6 +680,7 @@ class KalturaAnnotationClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'annotation': KalturaAnnotationService,
         }
 
     def getEnums(self):

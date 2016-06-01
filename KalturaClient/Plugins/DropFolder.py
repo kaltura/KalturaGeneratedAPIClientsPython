@@ -3699,6 +3699,8 @@ class KalturaDropFolderClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'dropFolder': KalturaDropFolderService,
+            'dropFolderFile': KalturaDropFolderFileService,
         }
 
     def getEnums(self):

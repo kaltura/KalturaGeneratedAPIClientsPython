@@ -995,6 +995,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'scheduledTaskProfile': KalturaScheduledTaskProfileService,
         }
 
     def getEnums(self):

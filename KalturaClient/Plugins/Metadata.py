@@ -1994,6 +1994,8 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'metadata': KalturaMetadataService,
+            'metadataProfile': KalturaMetadataProfileService,
         }
 
     def getEnums(self):

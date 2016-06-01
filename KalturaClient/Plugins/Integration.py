@@ -221,6 +221,7 @@ class KalturaIntegrationClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'integration': KalturaIntegrationService,
         }
 
     def getEnums(self):

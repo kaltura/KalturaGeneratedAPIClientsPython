@@ -877,6 +877,7 @@ class KalturaExternalMediaClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'externalMedia': KalturaExternalMediaService,
         }
 
     def getEnums(self):

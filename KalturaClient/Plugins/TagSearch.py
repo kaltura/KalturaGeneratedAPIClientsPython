@@ -341,6 +341,7 @@ class KalturaTagSearchClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'tag': KalturaTagService,
         }
 
     def getEnums(self):

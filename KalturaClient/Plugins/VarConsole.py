@@ -497,6 +497,7 @@ class KalturaVarConsoleClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'varConsole': KalturaVarConsoleService,
         }
 
     def getEnums(self):
