@@ -54998,6 +54998,16 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaEntryServerNode)
 
+    def validateRegisteredEntryServerNode(self, id):
+        """Validates server node still registered on entry"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("entryservernode", "validateRegisteredEntryServerNode", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 
 # @package Kaltura
 # @subpackage Client
