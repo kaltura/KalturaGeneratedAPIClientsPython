@@ -2276,10 +2276,11 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented):
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented):
         KalturaScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2338,16 +2339,19 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
         self.templateEntryCategoriesIdsMultiLikeOr = templateEntryCategoriesIdsMultiLikeOr
 
         # @var string
+        self.resourceSystemNamesMultiLikeOr = resourceSystemNamesMultiLikeOr
+
+        # @var string
         self.templateEntryCategoriesIdsLike = templateEntryCategoriesIdsLike
 
         # @var string
-        self.systemNamesMultiLikeOr = systemNamesMultiLikeOr
+        self.resourceSystemNamesMultiLikeAnd = resourceSystemNamesMultiLikeAnd
 
         # @var string
-        self.systemNamesMultiLikeAnd = systemNamesMultiLikeAnd
+        self.resourceSystemNamesLike = resourceSystemNamesLike
 
         # @var string
-        self.systemNamesLike = systemNamesLike
+        self.templateEntryIdEqual = templateEntryIdEqual
 
 
     PROPERTY_LOADERS = {
@@ -2359,10 +2363,11 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
         'parentResourceIdsMultiLikeAnd': getXmlNodeText, 
         'templateEntryCategoriesIdsMultiLikeAnd': getXmlNodeText, 
         'templateEntryCategoriesIdsMultiLikeOr': getXmlNodeText, 
+        'resourceSystemNamesMultiLikeOr': getXmlNodeText, 
         'templateEntryCategoriesIdsLike': getXmlNodeText, 
-        'systemNamesMultiLikeOr': getXmlNodeText, 
-        'systemNamesMultiLikeAnd': getXmlNodeText, 
-        'systemNamesLike': getXmlNodeText, 
+        'resourceSystemNamesMultiLikeAnd': getXmlNodeText, 
+        'resourceSystemNamesLike': getXmlNodeText, 
+        'templateEntryIdEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -2380,10 +2385,11 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
         kparams.addStringIfDefined("parentResourceIdsMultiLikeAnd", self.parentResourceIdsMultiLikeAnd)
         kparams.addStringIfDefined("templateEntryCategoriesIdsMultiLikeAnd", self.templateEntryCategoriesIdsMultiLikeAnd)
         kparams.addStringIfDefined("templateEntryCategoriesIdsMultiLikeOr", self.templateEntryCategoriesIdsMultiLikeOr)
+        kparams.addStringIfDefined("resourceSystemNamesMultiLikeOr", self.resourceSystemNamesMultiLikeOr)
         kparams.addStringIfDefined("templateEntryCategoriesIdsLike", self.templateEntryCategoriesIdsLike)
-        kparams.addStringIfDefined("systemNamesMultiLikeOr", self.systemNamesMultiLikeOr)
-        kparams.addStringIfDefined("systemNamesMultiLikeAnd", self.systemNamesMultiLikeAnd)
-        kparams.addStringIfDefined("systemNamesLike", self.systemNamesLike)
+        kparams.addStringIfDefined("resourceSystemNamesMultiLikeAnd", self.resourceSystemNamesMultiLikeAnd)
+        kparams.addStringIfDefined("resourceSystemNamesLike", self.resourceSystemNamesLike)
+        kparams.addStringIfDefined("templateEntryIdEqual", self.templateEntryIdEqual)
         return kparams
 
     def getResourceIdsLike(self):
@@ -2434,29 +2440,35 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
     def setTemplateEntryCategoriesIdsMultiLikeOr(self, newTemplateEntryCategoriesIdsMultiLikeOr):
         self.templateEntryCategoriesIdsMultiLikeOr = newTemplateEntryCategoriesIdsMultiLikeOr
 
+    def getResourceSystemNamesMultiLikeOr(self):
+        return self.resourceSystemNamesMultiLikeOr
+
+    def setResourceSystemNamesMultiLikeOr(self, newResourceSystemNamesMultiLikeOr):
+        self.resourceSystemNamesMultiLikeOr = newResourceSystemNamesMultiLikeOr
+
     def getTemplateEntryCategoriesIdsLike(self):
         return self.templateEntryCategoriesIdsLike
 
     def setTemplateEntryCategoriesIdsLike(self, newTemplateEntryCategoriesIdsLike):
         self.templateEntryCategoriesIdsLike = newTemplateEntryCategoriesIdsLike
 
-    def getSystemNamesMultiLikeOr(self):
-        return self.systemNamesMultiLikeOr
+    def getResourceSystemNamesMultiLikeAnd(self):
+        return self.resourceSystemNamesMultiLikeAnd
 
-    def setSystemNamesMultiLikeOr(self, newSystemNamesMultiLikeOr):
-        self.systemNamesMultiLikeOr = newSystemNamesMultiLikeOr
+    def setResourceSystemNamesMultiLikeAnd(self, newResourceSystemNamesMultiLikeAnd):
+        self.resourceSystemNamesMultiLikeAnd = newResourceSystemNamesMultiLikeAnd
 
-    def getSystemNamesMultiLikeAnd(self):
-        return self.systemNamesMultiLikeAnd
+    def getResourceSystemNamesLike(self):
+        return self.resourceSystemNamesLike
 
-    def setSystemNamesMultiLikeAnd(self, newSystemNamesMultiLikeAnd):
-        self.systemNamesMultiLikeAnd = newSystemNamesMultiLikeAnd
+    def setResourceSystemNamesLike(self, newResourceSystemNamesLike):
+        self.resourceSystemNamesLike = newResourceSystemNamesLike
 
-    def getSystemNamesLike(self):
-        return self.systemNamesLike
+    def getTemplateEntryIdEqual(self):
+        return self.templateEntryIdEqual
 
-    def setSystemNamesLike(self, newSystemNamesLike):
-        self.systemNamesLike = newSystemNamesLike
+    def setTemplateEntryIdEqual(self, newTemplateEntryIdEqual):
+        self.templateEntryIdEqual = newTemplateEntryIdEqual
 
 
 # @package Kaltura
@@ -2654,10 +2666,12 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -2704,10 +2718,14 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike)
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual)
+
+        # @var string
+        self.templateEntryIdEqual = templateEntryIdEqual
 
         # @var string
         self.entryIdsLike = entryIdsLike
@@ -2729,6 +2747,7 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
 
 
     PROPERTY_LOADERS = {
+        'templateEntryIdEqual': getXmlNodeText, 
         'entryIdsLike': getXmlNodeText, 
         'entryIdsMultiLikeOr': getXmlNodeText, 
         'entryIdsMultiLikeAnd': getXmlNodeText, 
@@ -2744,6 +2763,7 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
     def toParams(self):
         kparams = KalturaScheduleEventFilter.toParams(self)
         kparams.put("objectType", "KalturaEntryScheduleEventBaseFilter")
+        kparams.addStringIfDefined("templateEntryIdEqual", self.templateEntryIdEqual)
         kparams.addStringIfDefined("entryIdsLike", self.entryIdsLike)
         kparams.addStringIfDefined("entryIdsMultiLikeOr", self.entryIdsMultiLikeOr)
         kparams.addStringIfDefined("entryIdsMultiLikeAnd", self.entryIdsMultiLikeAnd)
@@ -2751,6 +2771,12 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
         kparams.addStringIfDefined("categoryIdsMultiLikeOr", self.categoryIdsMultiLikeOr)
         kparams.addStringIfDefined("categoryIdsMultiLikeAnd", self.categoryIdsMultiLikeAnd)
         return kparams
+
+    def getTemplateEntryIdEqual(self):
+        return self.templateEntryIdEqual
+
+    def setTemplateEntryIdEqual(self, newTemplateEntryIdEqual):
+        self.templateEntryIdEqual = newTemplateEntryIdEqual
 
     def getEntryIdsLike(self):
         return self.entryIdsLike
@@ -3000,10 +3026,12 @@ class KalturaEntryScheduleEventFilter(KalturaEntryScheduleEventBaseFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -3053,10 +3081,12 @@ class KalturaEntryScheduleEventFilter(KalturaEntryScheduleEventBaseFilter):
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual,
+            templateEntryIdEqual,
             entryIdsLike,
             entryIdsMultiLikeOr,
             entryIdsMultiLikeAnd,
@@ -3266,10 +3296,12 @@ class KalturaLiveStreamScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -3319,10 +3351,12 @@ class KalturaLiveStreamScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual,
+            templateEntryIdEqual,
             entryIdsLike,
             entryIdsMultiLikeOr,
             entryIdsMultiLikeAnd,
@@ -3390,10 +3424,12 @@ class KalturaRecordScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -3443,10 +3479,12 @@ class KalturaRecordScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual,
+            templateEntryIdEqual,
             entryIdsLike,
             entryIdsMultiLikeOr,
             entryIdsMultiLikeAnd,
@@ -3514,10 +3552,12 @@ class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFil
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -3567,10 +3607,12 @@ class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFil
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual,
+            templateEntryIdEqual,
             entryIdsLike,
             entryIdsMultiLikeOr,
             entryIdsMultiLikeAnd,
@@ -3638,10 +3680,12 @@ class KalturaRecordScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
             parentResourceIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
             templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
             templateEntryCategoriesIdsLike=NotImplemented,
-            systemNamesMultiLikeOr=NotImplemented,
-            systemNamesMultiLikeAnd=NotImplemented,
-            systemNamesLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
             entryIdsLike=NotImplemented,
             entryIdsMultiLikeOr=NotImplemented,
             entryIdsMultiLikeAnd=NotImplemented,
@@ -3691,10 +3735,12 @@ class KalturaRecordScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
             parentResourceIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeAnd,
             templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
             templateEntryCategoriesIdsLike,
-            systemNamesMultiLikeOr,
-            systemNamesMultiLikeAnd,
-            systemNamesLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            templateEntryIdEqual,
+            templateEntryIdEqual,
             entryIdsLike,
             entryIdsMultiLikeOr,
             entryIdsMultiLikeAnd,
