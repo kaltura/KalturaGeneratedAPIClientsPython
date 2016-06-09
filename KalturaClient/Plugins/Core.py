@@ -26104,7 +26104,9 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
             filesPermissionInS3=NotImplemented,
-            s3Region=NotImplemented):
+            s3Region=NotImplemented,
+            sseType=NotImplemented,
+            sseKmsKeyId=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
             createdAt,
@@ -26144,10 +26146,18 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         # @var string
         self.s3Region = s3Region
 
+        # @var string
+        self.sseType = sseType
+
+        # @var string
+        self.sseKmsKeyId = sseKmsKeyId
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
         's3Region': getXmlNodeText, 
+        'sseType': getXmlNodeText, 
+        'sseKmsKeyId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26159,6 +26169,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         kparams.put("objectType", "KalturaAmazonS3StorageProfile")
         kparams.addStringEnumIfDefined("filesPermissionInS3", self.filesPermissionInS3)
         kparams.addStringIfDefined("s3Region", self.s3Region)
+        kparams.addStringIfDefined("sseType", self.sseType)
+        kparams.addStringIfDefined("sseKmsKeyId", self.sseKmsKeyId)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -26172,6 +26184,18 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
 
     def setS3Region(self, newS3Region):
         self.s3Region = newS3Region
+
+    def getSseType(self):
+        return self.sseType
+
+    def setSseType(self, newSseType):
+        self.sseType = newSseType
+
+    def getSseKmsKeyId(self):
+        return self.sseKmsKeyId
+
+    def setSseKmsKeyId(self, newSseKmsKeyId):
+        self.sseKmsKeyId = newSseKmsKeyId
 
 
 # @package Kaltura
@@ -44153,7 +44177,9 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             force=NotImplemented,
             createLink=NotImplemented,
             filesPermissionInS3=NotImplemented,
-            s3Region=NotImplemented):
+            s3Region=NotImplemented,
+            sseType=NotImplemented,
+            sseKmsKeyId=NotImplemented):
         KalturaStorageExportJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -44174,10 +44200,18 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         # @var string
         self.s3Region = s3Region
 
+        # @var string
+        self.sseType = sseType
+
+        # @var string
+        self.sseKmsKeyId = sseKmsKeyId
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
         's3Region': getXmlNodeText, 
+        'sseType': getXmlNodeText, 
+        'sseKmsKeyId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -44189,6 +44223,8 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         kparams.put("objectType", "KalturaAmazonS3StorageExportJobData")
         kparams.addStringEnumIfDefined("filesPermissionInS3", self.filesPermissionInS3)
         kparams.addStringIfDefined("s3Region", self.s3Region)
+        kparams.addStringIfDefined("sseType", self.sseType)
+        kparams.addStringIfDefined("sseKmsKeyId", self.sseKmsKeyId)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -44202,6 +44238,18 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
 
     def setS3Region(self, newS3Region):
         self.s3Region = newS3Region
+
+    def getSseType(self):
+        return self.sseType
+
+    def setSseType(self, newSseType):
+        self.sseType = newSseType
+
+    def getSseKmsKeyId(self):
+        return self.sseKmsKeyId
+
+    def setSseKmsKeyId(self, newSseKmsKeyId):
+        self.sseKmsKeyId = newSseKmsKeyId
 
 
 # @package Kaltura
@@ -57858,6 +57906,18 @@ class KalturaThumbAssetService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaRemotePathListResponse)
+
+    def export(self, assetId, storageProfileId):
+        """manually export an asset"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("assetId", assetId)
+        kparams.addIntIfDefined("storageProfileId", storageProfileId);
+        self.client.queueServiceActionCall("thumbasset", "export", KalturaFlavorAsset, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaFlavorAsset)
 
 
 # @package Kaltura
