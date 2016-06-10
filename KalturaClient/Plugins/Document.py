@@ -370,6 +370,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -421,6 +422,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -490,6 +492,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             densityWidth=NotImplemented,
@@ -546,6 +549,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -670,6 +674,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             readonly=NotImplemented):
@@ -722,6 +727,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -802,6 +808,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flashVersion=NotImplemented,
@@ -855,6 +862,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -946,6 +954,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1003,6 +1012,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1078,6 +1088,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1140,6 +1151,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1270,6 +1282,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1328,6 +1341,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1414,6 +1428,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1473,6 +1488,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration,
             flavorParamsId,

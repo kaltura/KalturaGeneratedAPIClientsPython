@@ -10745,7 +10745,9 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
             systemName=NotImplemented,
             forceNoneComplied=NotImplemented,
             deletePolicy=NotImplemented,
-            isEncrypted=NotImplemented):
+            isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
+            twoPass=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the conversion profile
@@ -10781,6 +10783,12 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.isEncrypted = isEncrypted
 
+        # @var float
+        self.contentAwareness = contentAwareness
+
+        # @var KalturaNullableBoolean
+        self.twoPass = twoPass
+
 
     PROPERTY_LOADERS = {
         'conversionProfileId': getXmlNodeInt, 
@@ -10791,6 +10799,8 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         'forceNoneComplied': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'deletePolicy': (KalturaEnumsFactory.createInt, "KalturaAssetParamsDeletePolicy"), 
         'isEncrypted': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'contentAwareness': getXmlNodeFloat, 
+        'twoPass': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -10806,6 +10816,8 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         kparams.addIntEnumIfDefined("forceNoneComplied", self.forceNoneComplied)
         kparams.addIntEnumIfDefined("deletePolicy", self.deletePolicy)
         kparams.addIntEnumIfDefined("isEncrypted", self.isEncrypted)
+        kparams.addFloatIfDefined("contentAwareness", self.contentAwareness)
+        kparams.addIntEnumIfDefined("twoPass", self.twoPass)
         return kparams
 
     def getConversionProfileId(self):
@@ -10849,6 +10861,18 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
     def setIsEncrypted(self, newIsEncrypted):
         self.isEncrypted = newIsEncrypted
+
+    def getContentAwareness(self):
+        return self.contentAwareness
+
+    def setContentAwareness(self, newContentAwareness):
+        self.contentAwareness = newContentAwareness
+
+    def getTwoPass(self):
+        return self.twoPass
+
+    def setTwoPass(self, newTwoPass):
+        self.twoPass = newTwoPass
 
 
 # @package Kaltura
@@ -13204,6 +13228,7 @@ class KalturaFlavorParams(KalturaAssetParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaAssetParams.__init__(self,
@@ -13339,6 +13364,9 @@ class KalturaFlavorParams(KalturaAssetParams):
         # @var int
         self.isEncrypted = isEncrypted
 
+        # @var float
+        self.contentAwareness = contentAwareness
+
         # @var int
         self.clipOffset = clipOffset
 
@@ -13382,6 +13410,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'watermarkData': getXmlNodeText, 
         'subtitlesData': getXmlNodeText, 
         'isEncrypted': getXmlNodeInt, 
+        'contentAwareness': getXmlNodeFloat, 
         'clipOffset': getXmlNodeInt, 
         'clipDuration': getXmlNodeInt, 
     }
@@ -13428,6 +13457,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         kparams.addStringIfDefined("watermarkData", self.watermarkData)
         kparams.addStringIfDefined("subtitlesData", self.subtitlesData)
         kparams.addIntIfDefined("isEncrypted", self.isEncrypted)
+        kparams.addFloatIfDefined("contentAwareness", self.contentAwareness)
         kparams.addIntIfDefined("clipOffset", self.clipOffset)
         kparams.addIntIfDefined("clipDuration", self.clipDuration)
         return kparams
@@ -13642,6 +13672,12 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setIsEncrypted(self, newIsEncrypted):
         self.isEncrypted = newIsEncrypted
 
+    def getContentAwareness(self):
+        return self.contentAwareness
+
+    def setContentAwareness(self, newContentAwareness):
+        self.contentAwareness = newContentAwareness
+
     def getClipOffset(self):
         return self.clipOffset
 
@@ -13766,6 +13802,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -13823,6 +13860,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -14764,7 +14802,8 @@ class KalturaMediaInfo(KalturaObjectBase):
             scanType=NotImplemented,
             multiStream=NotImplemented,
             isFastStart=NotImplemented,
-            contentStreams=NotImplemented):
+            contentStreams=NotImplemented,
+            complexityValue=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the media info
@@ -14894,6 +14933,9 @@ class KalturaMediaInfo(KalturaObjectBase):
         # @var string
         self.contentStreams = contentStreams
 
+        # @var int
+        self.complexityValue = complexityValue
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -14929,6 +14971,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         'multiStream': getXmlNodeText, 
         'isFastStart': getXmlNodeInt, 
         'contentStreams': getXmlNodeText, 
+        'complexityValue': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -14970,6 +15013,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         kparams.addStringIfDefined("multiStream", self.multiStream)
         kparams.addIntIfDefined("isFastStart", self.isFastStart)
         kparams.addStringIfDefined("contentStreams", self.contentStreams)
+        kparams.addIntIfDefined("complexityValue", self.complexityValue)
         return kparams
 
     def getId(self):
@@ -15166,6 +15210,12 @@ class KalturaMediaInfo(KalturaObjectBase):
 
     def setContentStreams(self, newContentStreams):
         self.contentStreams = newContentStreams
+
+    def getComplexityValue(self):
+        return self.complexityValue
+
+    def setComplexityValue(self, newComplexityValue):
+        self.complexityValue = newComplexityValue
 
 
 # @package Kaltura
@@ -41728,6 +41778,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             streamSuffix=NotImplemented):
@@ -41780,6 +41831,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -41861,6 +41913,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -41912,6 +41965,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration)
 
@@ -46649,6 +46703,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData=NotImplemented,
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
+            contentAwareness=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -46706,6 +46761,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             watermarkData,
             subtitlesData,
             isEncrypted,
+            contentAwareness,
             clipOffset,
             clipDuration,
             flavorParamsId,
