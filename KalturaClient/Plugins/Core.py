@@ -32818,15 +32818,20 @@ class KalturaImportJobData(KalturaJobData):
 # @subpackage Client
 class KalturaIndexAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            indexIdGreaterThan=NotImplemented):
+            indexIdGreaterThan=NotImplemented,
+            depthGreaterThanEqual=NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var int
         self.indexIdGreaterThan = indexIdGreaterThan
 
+        # @var int
+        self.depthGreaterThanEqual = depthGreaterThanEqual
+
 
     PROPERTY_LOADERS = {
         'indexIdGreaterThan': getXmlNodeInt, 
+        'depthGreaterThanEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -32837,6 +32842,7 @@ class KalturaIndexAdvancedFilter(KalturaSearchItem):
         kparams = KalturaSearchItem.toParams(self)
         kparams.put("objectType", "KalturaIndexAdvancedFilter")
         kparams.addIntIfDefined("indexIdGreaterThan", self.indexIdGreaterThan)
+        kparams.addIntIfDefined("depthGreaterThanEqual", self.depthGreaterThanEqual)
         return kparams
 
     def getIndexIdGreaterThan(self):
@@ -32845,6 +32851,12 @@ class KalturaIndexAdvancedFilter(KalturaSearchItem):
     def setIndexIdGreaterThan(self, newIndexIdGreaterThan):
         self.indexIdGreaterThan = newIndexIdGreaterThan
 
+    def getDepthGreaterThanEqual(self):
+        return self.depthGreaterThanEqual
+
+    def setDepthGreaterThanEqual(self, newDepthGreaterThanEqual):
+        self.depthGreaterThanEqual = newDepthGreaterThanEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -32852,6 +32864,7 @@ class KalturaIndexJobData(KalturaJobData):
     def __init__(self,
             filter=NotImplemented,
             lastIndexId=NotImplemented,
+            lastIndexDepth=NotImplemented,
             shouldUpdate=NotImplemented):
         KalturaJobData.__init__(self)
 
@@ -32863,6 +32876,10 @@ class KalturaIndexJobData(KalturaJobData):
         # @var int
         self.lastIndexId = lastIndexId
 
+        # Indicates the last depth that reindexed, used when the batch crached, to re-run from the last crash point.
+        # @var int
+        self.lastIndexDepth = lastIndexDepth
+
         # Indicates that the object columns and attributes values should be recalculated before reindexed.
         # @var bool
         self.shouldUpdate = shouldUpdate
@@ -32871,6 +32888,7 @@ class KalturaIndexJobData(KalturaJobData):
     PROPERTY_LOADERS = {
         'filter': (KalturaObjectFactory.create, KalturaFilter), 
         'lastIndexId': getXmlNodeInt, 
+        'lastIndexDepth': getXmlNodeInt, 
         'shouldUpdate': getXmlNodeBool, 
     }
 
@@ -32883,6 +32901,7 @@ class KalturaIndexJobData(KalturaJobData):
         kparams.put("objectType", "KalturaIndexJobData")
         kparams.addObjectIfDefined("filter", self.filter)
         kparams.addIntIfDefined("lastIndexId", self.lastIndexId)
+        kparams.addIntIfDefined("lastIndexDepth", self.lastIndexDepth)
         kparams.addBoolIfDefined("shouldUpdate", self.shouldUpdate)
         return kparams
 
@@ -32897,6 +32916,12 @@ class KalturaIndexJobData(KalturaJobData):
 
     def setLastIndexId(self, newLastIndexId):
         self.lastIndexId = newLastIndexId
+
+    def getLastIndexDepth(self):
+        return self.lastIndexDepth
+
+    def setLastIndexDepth(self, newLastIndexDepth):
+        self.lastIndexDepth = newLastIndexDepth
 
     def getShouldUpdate(self):
         return self.shouldUpdate
