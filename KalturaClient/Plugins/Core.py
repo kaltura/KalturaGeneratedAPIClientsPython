@@ -4428,6 +4428,7 @@ class KalturaRuleActionType(object):
     LIMIT_DELIVERY_PROFILES = "5"
     SERVE_FROM_REMOTE_SERVER = "6"
     REQUEST_HOST_REGEX = "7"
+    LIMIT_THUMBNAIL_CAPTURE = "8"
 
     def __init__(self, value):
         self.value = value
@@ -25843,6 +25844,28 @@ class KalturaAccessControlLimitFlavorsAction(KalturaRuleAction):
 
     def setIsBlockedList(self, newIsBlockedList):
         self.isBlockedList = newIsBlockedList
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAccessControlLimitThumbnailCaptureAction(KalturaRuleAction):
+    def __init__(self,
+            type=NotImplemented):
+        KalturaRuleAction.__init__(self,
+            type)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaRuleAction.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlLimitThumbnailCaptureAction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRuleAction.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlLimitThumbnailCaptureAction")
+        return kparams
 
 
 # @package Kaltura
@@ -59234,6 +59257,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlBlockAction': KalturaAccessControlBlockAction,
             'KalturaAccessControlLimitDeliveryProfilesAction': KalturaAccessControlLimitDeliveryProfilesAction,
             'KalturaAccessControlLimitFlavorsAction': KalturaAccessControlLimitFlavorsAction,
+            'KalturaAccessControlLimitThumbnailCaptureAction': KalturaAccessControlLimitThumbnailCaptureAction,
             'KalturaAccessControlListResponse': KalturaAccessControlListResponse,
             'KalturaAccessControlModifyRequestHostRegexAction': KalturaAccessControlModifyRequestHostRegexAction,
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
