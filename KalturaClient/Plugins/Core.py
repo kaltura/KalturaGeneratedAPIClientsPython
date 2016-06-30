@@ -25905,7 +25905,8 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
     def __init__(self,
             type=NotImplemented,
             pattern=NotImplemented,
-            replacement=NotImplemented):
+            replacement=NotImplemented,
+            replacmenServerNodeId=NotImplemented):
         KalturaRuleAction.__init__(self,
             type)
 
@@ -25917,10 +25918,15 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
         # @var string
         self.replacement = replacement
 
+        # serverNodeId to generate replacment host from
+        # @var int
+        self.replacmenServerNodeId = replacmenServerNodeId
+
 
     PROPERTY_LOADERS = {
         'pattern': getXmlNodeText, 
         'replacement': getXmlNodeText, 
+        'replacmenServerNodeId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -25932,6 +25938,7 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
         kparams.put("objectType", "KalturaAccessControlModifyRequestHostRegexAction")
         kparams.addStringIfDefined("pattern", self.pattern)
         kparams.addStringIfDefined("replacement", self.replacement)
+        kparams.addIntIfDefined("replacmenServerNodeId", self.replacmenServerNodeId)
         return kparams
 
     def getPattern(self):
@@ -25945,6 +25952,12 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
 
     def setReplacement(self, newReplacement):
         self.replacement = newReplacement
+
+    def getReplacmenServerNodeId(self):
+        return self.replacmenServerNodeId
+
+    def setReplacmenServerNodeId(self, newReplacmenServerNodeId):
+        self.replacmenServerNodeId = newReplacmenServerNodeId
 
 
 # @package Kaltura
