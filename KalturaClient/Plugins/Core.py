@@ -26192,7 +26192,9 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
-            sseKmsKeyId=NotImplemented):
+            sseKmsKeyId=NotImplemented,
+            signatureType=NotImplemented,
+            endPoint=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
             createdAt,
@@ -26238,12 +26240,20 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         # @var string
         self.sseKmsKeyId = sseKmsKeyId
 
+        # @var string
+        self.signatureType = signatureType
+
+        # @var string
+        self.endPoint = endPoint
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
         's3Region': getXmlNodeText, 
         'sseType': getXmlNodeText, 
         'sseKmsKeyId': getXmlNodeText, 
+        'signatureType': getXmlNodeText, 
+        'endPoint': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26257,6 +26267,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
         kparams.addStringIfDefined("s3Region", self.s3Region)
         kparams.addStringIfDefined("sseType", self.sseType)
         kparams.addStringIfDefined("sseKmsKeyId", self.sseKmsKeyId)
+        kparams.addStringIfDefined("signatureType", self.signatureType)
+        kparams.addStringIfDefined("endPoint", self.endPoint)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -26282,6 +26294,18 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
 
     def setSseKmsKeyId(self, newSseKmsKeyId):
         self.sseKmsKeyId = newSseKmsKeyId
+
+    def getSignatureType(self):
+        return self.signatureType
+
+    def setSignatureType(self, newSignatureType):
+        self.signatureType = newSignatureType
+
+    def getEndPoint(self):
+        return self.endPoint
+
+    def setEndPoint(self, newEndPoint):
+        self.endPoint = newEndPoint
 
 
 # @package Kaltura
@@ -44294,7 +44318,9 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
-            sseKmsKeyId=NotImplemented):
+            sseKmsKeyId=NotImplemented,
+            signatureType=NotImplemented,
+            endPoint=NotImplemented):
         KalturaStorageExportJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -44321,12 +44347,20 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         # @var string
         self.sseKmsKeyId = sseKmsKeyId
 
+        # @var string
+        self.signatureType = signatureType
+
+        # @var string
+        self.endPoint = endPoint
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
         's3Region': getXmlNodeText, 
         'sseType': getXmlNodeText, 
         'sseKmsKeyId': getXmlNodeText, 
+        'signatureType': getXmlNodeText, 
+        'endPoint': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -44340,6 +44374,8 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         kparams.addStringIfDefined("s3Region", self.s3Region)
         kparams.addStringIfDefined("sseType", self.sseType)
         kparams.addStringIfDefined("sseKmsKeyId", self.sseKmsKeyId)
+        kparams.addStringIfDefined("signatureType", self.signatureType)
+        kparams.addStringIfDefined("endPoint", self.endPoint)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -44365,6 +44401,18 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
 
     def setSseKmsKeyId(self, newSseKmsKeyId):
         self.sseKmsKeyId = newSseKmsKeyId
+
+    def getSignatureType(self):
+        return self.signatureType
+
+    def setSignatureType(self, newSignatureType):
+        self.signatureType = newSignatureType
+
+    def getEndPoint(self):
+        return self.endPoint
+
+    def setEndPoint(self, newEndPoint):
+        self.endPoint = newEndPoint
 
 
 # @package Kaltura
