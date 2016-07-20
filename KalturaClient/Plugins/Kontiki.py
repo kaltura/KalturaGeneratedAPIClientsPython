@@ -81,6 +81,7 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
+            shouldExportThumbs=NotImplemented,
             serviceToken=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
@@ -113,7 +114,8 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             deliveryProfileIds,
             privateKey,
             publicKey,
-            passPhrase)
+            passPhrase,
+            shouldExportThumbs)
 
         # @var string
         self.serviceToken = serviceToken

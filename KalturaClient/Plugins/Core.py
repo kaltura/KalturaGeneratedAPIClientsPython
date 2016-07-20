@@ -23136,7 +23136,8 @@ class KalturaStorageProfile(KalturaObjectBase):
             deliveryProfileIds=NotImplemented,
             privateKey=NotImplemented,
             publicKey=NotImplemented,
-            passPhrase=NotImplemented):
+            passPhrase=NotImplemented,
+            shouldExportThumbs=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -23242,6 +23243,9 @@ class KalturaStorageProfile(KalturaObjectBase):
         # @var string
         self.passPhrase = passPhrase
 
+        # @var bool
+        self.shouldExportThumbs = shouldExportThumbs
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -23275,6 +23279,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         'privateKey': getXmlNodeText, 
         'publicKey': getXmlNodeText, 
         'passPhrase': getXmlNodeText, 
+        'shouldExportThumbs': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -23311,6 +23316,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addStringIfDefined("privateKey", self.privateKey)
         kparams.addStringIfDefined("publicKey", self.publicKey)
         kparams.addStringIfDefined("passPhrase", self.passPhrase)
+        kparams.addBoolIfDefined("shouldExportThumbs", self.shouldExportThumbs)
         return kparams
 
     def getId(self):
@@ -23486,6 +23492,12 @@ class KalturaStorageProfile(KalturaObjectBase):
 
     def setPassPhrase(self, newPassPhrase):
         self.passPhrase = newPassPhrase
+
+    def getShouldExportThumbs(self):
+        return self.shouldExportThumbs
+
+    def setShouldExportThumbs(self, newShouldExportThumbs):
+        self.shouldExportThumbs = newShouldExportThumbs
 
 
 # @package Kaltura
@@ -26189,6 +26201,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
+            shouldExportThumbs=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
@@ -26226,7 +26239,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             deliveryProfileIds,
             privateKey,
             publicKey,
-            passPhrase)
+            passPhrase,
+            shouldExportThumbs)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
