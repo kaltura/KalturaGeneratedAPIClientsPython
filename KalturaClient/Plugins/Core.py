@@ -11263,6 +11263,380 @@ class KalturaUrlTokenizer(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaSearchItem(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaSearchItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFilter(KalturaObjectBase):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.orderBy = orderBy
+
+        # @var KalturaSearchItem
+        self.advancedSearch = advancedSearch
+
+
+    PROPERTY_LOADERS = {
+        'orderBy': getXmlNodeText, 
+        'advancedSearch': (KalturaObjectFactory.create, KalturaSearchItem), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFilter")
+        kparams.addStringIfDefined("orderBy", self.orderBy)
+        kparams.addObjectIfDefined("advancedSearch", self.advancedSearch)
+        return kparams
+
+    def getOrderBy(self):
+        return self.orderBy
+
+    def setOrderBy(self, newOrderBy):
+        self.orderBy = newOrderBy
+
+    def getAdvancedSearch(self):
+        return self.advancedSearch
+
+    def setAdvancedSearch(self, newAdvancedSearch):
+        self.advancedSearch = newAdvancedSearch
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRelatedFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRelatedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaRelatedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAssetBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            sizeGreaterThanOrEqual=NotImplemented,
+            sizeLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            deletedAtGreaterThanOrEqual=NotImplemented,
+            deletedAtLessThanOrEqual=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var string
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var int
+        self.partnerIdEqual = partnerIdEqual
+
+        # @var string
+        self.partnerIdIn = partnerIdIn
+
+        # @var int
+        self.sizeGreaterThanOrEqual = sizeGreaterThanOrEqual
+
+        # @var int
+        self.sizeLessThanOrEqual = sizeLessThanOrEqual
+
+        # @var string
+        self.tagsLike = tagsLike
+
+        # @var string
+        self.tagsMultiLikeOr = tagsMultiLikeOr
+
+        # @var string
+        self.tagsMultiLikeAnd = tagsMultiLikeAnd
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.deletedAtGreaterThanOrEqual = deletedAtGreaterThanOrEqual
+
+        # @var int
+        self.deletedAtLessThanOrEqual = deletedAtLessThanOrEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeText, 
+        'idIn': getXmlNodeText, 
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'partnerIdEqual': getXmlNodeInt, 
+        'partnerIdIn': getXmlNodeText, 
+        'sizeGreaterThanOrEqual': getXmlNodeInt, 
+        'sizeLessThanOrEqual': getXmlNodeInt, 
+        'tagsLike': getXmlNodeText, 
+        'tagsMultiLikeOr': getXmlNodeText, 
+        'tagsMultiLikeAnd': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'deletedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'deletedAtLessThanOrEqual': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetBaseFilter")
+        kparams.addStringIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
+        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
+        kparams.addIntIfDefined("sizeGreaterThanOrEqual", self.sizeGreaterThanOrEqual)
+        kparams.addIntIfDefined("sizeLessThanOrEqual", self.sizeLessThanOrEqual)
+        kparams.addStringIfDefined("tagsLike", self.tagsLike)
+        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
+        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("deletedAtGreaterThanOrEqual", self.deletedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("deletedAtLessThanOrEqual", self.deletedAtLessThanOrEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getPartnerIdEqual(self):
+        return self.partnerIdEqual
+
+    def setPartnerIdEqual(self, newPartnerIdEqual):
+        self.partnerIdEqual = newPartnerIdEqual
+
+    def getPartnerIdIn(self):
+        return self.partnerIdIn
+
+    def setPartnerIdIn(self, newPartnerIdIn):
+        self.partnerIdIn = newPartnerIdIn
+
+    def getSizeGreaterThanOrEqual(self):
+        return self.sizeGreaterThanOrEqual
+
+    def setSizeGreaterThanOrEqual(self, newSizeGreaterThanOrEqual):
+        self.sizeGreaterThanOrEqual = newSizeGreaterThanOrEqual
+
+    def getSizeLessThanOrEqual(self):
+        return self.sizeLessThanOrEqual
+
+    def setSizeLessThanOrEqual(self, newSizeLessThanOrEqual):
+        self.sizeLessThanOrEqual = newSizeLessThanOrEqual
+
+    def getTagsLike(self):
+        return self.tagsLike
+
+    def setTagsLike(self, newTagsLike):
+        self.tagsLike = newTagsLike
+
+    def getTagsMultiLikeOr(self):
+        return self.tagsMultiLikeOr
+
+    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
+        self.tagsMultiLikeOr = newTagsMultiLikeOr
+
+    def getTagsMultiLikeAnd(self):
+        return self.tagsMultiLikeAnd
+
+    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
+        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getDeletedAtGreaterThanOrEqual(self):
+        return self.deletedAtGreaterThanOrEqual
+
+    def setDeletedAtGreaterThanOrEqual(self, newDeletedAtGreaterThanOrEqual):
+        self.deletedAtGreaterThanOrEqual = newDeletedAtGreaterThanOrEqual
+
+    def getDeletedAtLessThanOrEqual(self):
+        return self.deletedAtLessThanOrEqual
+
+    def setDeletedAtLessThanOrEqual(self, newDeletedAtLessThanOrEqual):
+        self.deletedAtLessThanOrEqual = newDeletedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAssetFilter(KalturaAssetBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            partnerIdIn=NotImplemented,
+            sizeGreaterThanOrEqual=NotImplemented,
+            sizeLessThanOrEqual=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            deletedAtGreaterThanOrEqual=NotImplemented,
+            deletedAtLessThanOrEqual=NotImplemented):
+        KalturaAssetBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            entryIdEqual,
+            entryIdIn,
+            partnerIdEqual,
+            partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAssetBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAssetFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfile(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -11283,7 +11657,8 @@ class KalturaDeliveryProfile(KalturaObjectBase):
             parentId=NotImplemented,
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
-            extraParams=NotImplemented):
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Delivery
@@ -11363,6 +11738,10 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         # @var string
         self.extraParams = extraParams
 
+        # A filter that can be used to include additional assets in the URL (e.g. captions)
+        # @var KalturaAssetFilter
+        self.supplementaryAssetsFilter = supplementaryAssetsFilter
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -11384,6 +11763,7 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         'mediaProtocols': getXmlNodeText, 
         'priority': getXmlNodeInt, 
         'extraParams': getXmlNodeText, 
+        'supplementaryAssetsFilter': (KalturaObjectFactory.create, KalturaAssetFilter), 
     }
 
     def fromXml(self, node):
@@ -11405,6 +11785,7 @@ class KalturaDeliveryProfile(KalturaObjectBase):
         kparams.addStringIfDefined("mediaProtocols", self.mediaProtocols)
         kparams.addIntIfDefined("priority", self.priority)
         kparams.addStringIfDefined("extraParams", self.extraParams)
+        kparams.addObjectIfDefined("supplementaryAssetsFilter", self.supplementaryAssetsFilter)
         return kparams
 
     def getId(self):
@@ -11500,6 +11881,12 @@ class KalturaDeliveryProfile(KalturaObjectBase):
     def setExtraParams(self, newExtraParams):
         self.extraParams = newExtraParams
 
+    def getSupplementaryAssetsFilter(self):
+        return self.supplementaryAssetsFilter
+
+    def setSupplementaryAssetsFilter(self, newSupplementaryAssetsFilter):
+        self.supplementaryAssetsFilter = newSupplementaryAssetsFilter
+
 
 # @package Kaltura
 # @subpackage Client
@@ -11581,94 +11968,6 @@ class KalturaDestFileSyncDescriptor(KalturaFileSyncDescriptor):
     def toParams(self):
         kparams = KalturaFileSyncDescriptor.toParams(self)
         kparams.put("objectType", "KalturaDestFileSyncDescriptor")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSearchItem(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaSearchItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaSearchItem")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFilter(KalturaObjectBase):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.orderBy = orderBy
-
-        # @var KalturaSearchItem
-        self.advancedSearch = advancedSearch
-
-
-    PROPERTY_LOADERS = {
-        'orderBy': getXmlNodeText, 
-        'advancedSearch': (KalturaObjectFactory.create, KalturaSearchItem), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFilter")
-        kparams.addStringIfDefined("orderBy", self.orderBy)
-        kparams.addObjectIfDefined("advancedSearch", self.advancedSearch)
-        return kparams
-
-    def getOrderBy(self):
-        return self.orderBy
-
-    def setOrderBy(self, newOrderBy):
-        self.orderBy = newOrderBy
-
-    def getAdvancedSearch(self):
-        return self.advancedSearch
-
-    def setAdvancedSearch(self, newAdvancedSearch):
-        self.advancedSearch = newAdvancedSearch
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaRelatedFilter(KalturaFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented):
-        KalturaFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaRelatedFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaFilter.toParams(self)
-        kparams.put("objectType", "KalturaRelatedFilter")
         return kparams
 
 
@@ -29868,6 +30167,7 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifest(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             supportClipping=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -29888,7 +30188,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifest(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # Should we use timing parameters - clipTo / seekFrom
         # @var bool
@@ -29939,6 +30240,7 @@ class KalturaDeliveryProfileAkamaiHds(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             supportClipping=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -29959,7 +30261,8 @@ class KalturaDeliveryProfileAkamaiHds(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # Should we use timing parameters - clipTo / seekFrom
         # @var bool
@@ -30010,6 +30313,7 @@ class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             useIntelliseek=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -30030,7 +30334,8 @@ class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # Should we use intelliseek
         # @var bool
@@ -30300,6 +30605,7 @@ class KalturaDeliveryProfileGenericAppleHttp(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             pattern=NotImplemented,
             rendererClass=NotImplemented,
             manifestRedirect=NotImplemented):
@@ -30322,7 +30628,8 @@ class KalturaDeliveryProfileGenericAppleHttp(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # @var string
         self.pattern = pattern
@@ -30396,6 +30703,7 @@ class KalturaDeliveryProfileGenericHds(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             pattern=NotImplemented,
             rendererClass=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -30417,7 +30725,8 @@ class KalturaDeliveryProfileGenericHds(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # @var string
         self.pattern = pattern
@@ -30479,6 +30788,7 @@ class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             pattern=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -30499,7 +30809,8 @@ class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # @var string
         self.pattern = pattern
@@ -30549,6 +30860,7 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             pattern=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
@@ -30569,7 +30881,8 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # @var string
         self.pattern = pattern
@@ -30650,6 +30963,7 @@ class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             disableExtraAttributes=NotImplemented,
             forceProxy=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -30671,7 +30985,8 @@ class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # @var bool
         self.disableExtraAttributes = disableExtraAttributes
@@ -30732,6 +31047,7 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             enforceRtmpe=NotImplemented,
             prefix=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
@@ -30753,7 +31069,8 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
             parentId,
             mediaProtocols,
             priority,
-            extraParams)
+            extraParams,
+            supplementaryAssetsFilter)
 
         # enforceRtmpe
         # @var bool
@@ -38495,234 +38812,6 @@ class KalturaAppTokenFilter(KalturaAppTokenBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAssetBaseFilter(KalturaRelatedFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented):
-        KalturaRelatedFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var string
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var string
-        self.entryIdIn = entryIdIn
-
-        # @var int
-        self.partnerIdEqual = partnerIdEqual
-
-        # @var string
-        self.partnerIdIn = partnerIdIn
-
-        # @var int
-        self.sizeGreaterThanOrEqual = sizeGreaterThanOrEqual
-
-        # @var int
-        self.sizeLessThanOrEqual = sizeLessThanOrEqual
-
-        # @var string
-        self.tagsLike = tagsLike
-
-        # @var string
-        self.tagsMultiLikeOr = tagsMultiLikeOr
-
-        # @var string
-        self.tagsMultiLikeAnd = tagsMultiLikeAnd
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var int
-        self.deletedAtGreaterThanOrEqual = deletedAtGreaterThanOrEqual
-
-        # @var int
-        self.deletedAtLessThanOrEqual = deletedAtLessThanOrEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeText, 
-        'idIn': getXmlNodeText, 
-        'entryIdEqual': getXmlNodeText, 
-        'entryIdIn': getXmlNodeText, 
-        'partnerIdEqual': getXmlNodeInt, 
-        'partnerIdIn': getXmlNodeText, 
-        'sizeGreaterThanOrEqual': getXmlNodeInt, 
-        'sizeLessThanOrEqual': getXmlNodeInt, 
-        'tagsLike': getXmlNodeText, 
-        'tagsMultiLikeOr': getXmlNodeText, 
-        'tagsMultiLikeAnd': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'deletedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'deletedAtLessThanOrEqual': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaRelatedFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaRelatedFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetBaseFilter")
-        kparams.addStringIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
-        kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
-        kparams.addIntIfDefined("sizeGreaterThanOrEqual", self.sizeGreaterThanOrEqual)
-        kparams.addIntIfDefined("sizeLessThanOrEqual", self.sizeLessThanOrEqual)
-        kparams.addStringIfDefined("tagsLike", self.tagsLike)
-        kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
-        kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntIfDefined("deletedAtGreaterThanOrEqual", self.deletedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("deletedAtLessThanOrEqual", self.deletedAtLessThanOrEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
-
-    def getPartnerIdEqual(self):
-        return self.partnerIdEqual
-
-    def setPartnerIdEqual(self, newPartnerIdEqual):
-        self.partnerIdEqual = newPartnerIdEqual
-
-    def getPartnerIdIn(self):
-        return self.partnerIdIn
-
-    def setPartnerIdIn(self, newPartnerIdIn):
-        self.partnerIdIn = newPartnerIdIn
-
-    def getSizeGreaterThanOrEqual(self):
-        return self.sizeGreaterThanOrEqual
-
-    def setSizeGreaterThanOrEqual(self, newSizeGreaterThanOrEqual):
-        self.sizeGreaterThanOrEqual = newSizeGreaterThanOrEqual
-
-    def getSizeLessThanOrEqual(self):
-        return self.sizeLessThanOrEqual
-
-    def setSizeLessThanOrEqual(self, newSizeLessThanOrEqual):
-        self.sizeLessThanOrEqual = newSizeLessThanOrEqual
-
-    def getTagsLike(self):
-        return self.tagsLike
-
-    def setTagsLike(self, newTagsLike):
-        self.tagsLike = newTagsLike
-
-    def getTagsMultiLikeOr(self):
-        return self.tagsMultiLikeOr
-
-    def setTagsMultiLikeOr(self, newTagsMultiLikeOr):
-        self.tagsMultiLikeOr = newTagsMultiLikeOr
-
-    def getTagsMultiLikeAnd(self):
-        return self.tagsMultiLikeAnd
-
-    def setTagsMultiLikeAnd(self, newTagsMultiLikeAnd):
-        self.tagsMultiLikeAnd = newTagsMultiLikeAnd
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getDeletedAtGreaterThanOrEqual(self):
-        return self.deletedAtGreaterThanOrEqual
-
-    def setDeletedAtGreaterThanOrEqual(self, newDeletedAtGreaterThanOrEqual):
-        self.deletedAtGreaterThanOrEqual = newDeletedAtGreaterThanOrEqual
-
-    def getDeletedAtLessThanOrEqual(self):
-        return self.deletedAtLessThanOrEqual
-
-    def setDeletedAtLessThanOrEqual(self, newDeletedAtLessThanOrEqual):
-        self.deletedAtLessThanOrEqual = newDeletedAtLessThanOrEqual
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -40286,6 +40375,7 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
             mediaProtocols=NotImplemented,
             priority=NotImplemented,
             extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
             enforceRtmpe=NotImplemented,
             prefix=NotImplemented,
             pattern=NotImplemented,
@@ -40310,6 +40400,7 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
             mediaProtocols,
             priority,
             extraParams,
+            supplementaryAssetsFilter,
             enforceRtmpe,
             prefix)
 
@@ -44478,64 +44569,6 @@ class KalturaAmazonS3StorageProfileBaseFilter(KalturaStorageProfileFilter):
     def toParams(self):
         kparams = KalturaStorageProfileFilter.toParams(self)
         kparams.put("objectType", "KalturaAmazonS3StorageProfileBaseFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaAssetFilter(KalturaAssetBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented):
-        KalturaAssetBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            entryIdEqual,
-            entryIdIn,
-            partnerIdEqual,
-            partnerIdIn,
-            sizeGreaterThanOrEqual,
-            sizeLessThanOrEqual,
-            tagsLike,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaAssetBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAssetFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAssetFilter")
         return kparams
 
 
@@ -59222,12 +59255,14 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDataEntry': KalturaDataEntry,
             'KalturaUrlRecognizer': KalturaUrlRecognizer,
             'KalturaUrlTokenizer': KalturaUrlTokenizer,
-            'KalturaDeliveryProfile': KalturaDeliveryProfile,
-            'KalturaFileSyncDescriptor': KalturaFileSyncDescriptor,
-            'KalturaDestFileSyncDescriptor': KalturaDestFileSyncDescriptor,
             'KalturaSearchItem': KalturaSearchItem,
             'KalturaFilter': KalturaFilter,
             'KalturaRelatedFilter': KalturaRelatedFilter,
+            'KalturaAssetBaseFilter': KalturaAssetBaseFilter,
+            'KalturaAssetFilter': KalturaAssetFilter,
+            'KalturaDeliveryProfile': KalturaDeliveryProfile,
+            'KalturaFileSyncDescriptor': KalturaFileSyncDescriptor,
+            'KalturaDestFileSyncDescriptor': KalturaDestFileSyncDescriptor,
             'KalturaFilterPager': KalturaFilterPager,
             'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
@@ -59511,7 +59546,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAkamaiProvisionJobData': KalturaAkamaiProvisionJobData,
             'KalturaAkamaiUniversalProvisionJobData': KalturaAkamaiUniversalProvisionJobData,
             'KalturaAppTokenFilter': KalturaAppTokenFilter,
-            'KalturaAssetBaseFilter': KalturaAssetBaseFilter,
             'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetResource': KalturaAssetResource,
             'KalturaBaseSyndicationFeedFilter': KalturaBaseSyndicationFeedFilter,
@@ -59580,7 +59614,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
             'KalturaAmazonS3StorageExportJobData': KalturaAmazonS3StorageExportJobData,
             'KalturaAmazonS3StorageProfileBaseFilter': KalturaAmazonS3StorageProfileBaseFilter,
-            'KalturaAssetFilter': KalturaAssetFilter,
             'KalturaAssetParamsFilter': KalturaAssetParamsFilter,
             'KalturaBaseEntryCompareAttributeCondition': KalturaBaseEntryCompareAttributeCondition,
             'KalturaBaseEntryMatchAttributeCondition': KalturaBaseEntryMatchAttributeCondition,
