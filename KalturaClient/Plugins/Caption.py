@@ -505,6 +505,7 @@ class KalturaCaptionAssetBaseFilter(KalturaAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             captionParamsIdEqual=NotImplemented,
             captionParamsIdIn=NotImplemented,
             formatEqual=NotImplemented,
@@ -531,7 +532,8 @@ class KalturaCaptionAssetBaseFilter(KalturaAssetFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
+            deletedAtLessThanOrEqual,
+            typeIn)
 
         # @var int
         self.captionParamsIdEqual = captionParamsIdEqual
@@ -703,6 +705,7 @@ class KalturaCaptionAssetFilter(KalturaCaptionAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             captionParamsIdEqual=NotImplemented,
             captionParamsIdIn=NotImplemented,
             formatEqual=NotImplemented,
@@ -730,6 +733,7 @@ class KalturaCaptionAssetFilter(KalturaCaptionAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             captionParamsIdEqual,
             captionParamsIdIn,
             formatEqual,

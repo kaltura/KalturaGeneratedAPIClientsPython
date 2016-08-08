@@ -230,6 +230,7 @@ class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             formatEqual=NotImplemented,
             formatIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -254,7 +255,8 @@ class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
+            deletedAtLessThanOrEqual,
+            typeIn)
 
         # @var KalturaAttachmentType
         self.formatEqual = formatEqual
@@ -348,6 +350,7 @@ class KalturaAttachmentAssetFilter(KalturaAttachmentAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             formatEqual=NotImplemented,
             formatIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -373,6 +376,7 @@ class KalturaAttachmentAssetFilter(KalturaAttachmentAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             formatEqual,
             formatIn,
             statusEqual,

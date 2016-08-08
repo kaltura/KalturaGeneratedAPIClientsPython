@@ -861,6 +861,41 @@ class KalturaMetadataProfileListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataReplacementOptionsItem(KalturaPluginReplacementOptionsItem):
+    """Advanced metadata configuration for entry replacement process"""
+
+    def __init__(self,
+            shouldCopyMetadata=NotImplemented):
+        KalturaPluginReplacementOptionsItem.__init__(self)
+
+        # If true custom-metadata transferred to temp entry on entry replacement
+        # @var bool
+        self.shouldCopyMetadata = shouldCopyMetadata
+
+
+    PROPERTY_LOADERS = {
+        'shouldCopyMetadata': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaPluginReplacementOptionsItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataReplacementOptionsItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPluginReplacementOptionsItem.toParams(self)
+        kparams.put("objectType", "KalturaMetadataReplacementOptionsItem")
+        kparams.addBoolIfDefined("shouldCopyMetadata", self.shouldCopyMetadata)
+        return kparams
+
+    def getShouldCopyMetadata(self):
+        return self.shouldCopyMetadata
+
+    def setShouldCopyMetadata(self, newShouldCopyMetadata):
+        self.shouldCopyMetadata = newShouldCopyMetadata
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMetadataResponseProfileMapping(KalturaResponseProfileMapping):
     def __init__(self,
             parentProperty=NotImplemented,
@@ -2018,6 +2053,7 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadataProfileBaseFilter': KalturaMetadataProfileBaseFilter,
             'KalturaMetadataProfileFieldListResponse': KalturaMetadataProfileFieldListResponse,
             'KalturaMetadataProfileListResponse': KalturaMetadataProfileListResponse,
+            'KalturaMetadataReplacementOptionsItem': KalturaMetadataReplacementOptionsItem,
             'KalturaMetadataResponseProfileMapping': KalturaMetadataResponseProfileMapping,
             'KalturaTransformMetadataJobData': KalturaTransformMetadataJobData,
             'KalturaCompareMetadataCondition': KalturaCompareMetadataCondition,

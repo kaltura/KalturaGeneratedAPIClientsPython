@@ -1757,6 +1757,7 @@ class KalturaBatchJobType(object):
     SYNC_CATEGORY_PRIVACY_CONTEXT = "39"
     LIVE_REPORT_EXPORT = "40"
     RECALCULATE_CACHE = "41"
+    LIVE_TO_VOD = "42"
 
     def __init__(self, value):
         self.value = value
@@ -11600,7 +11601,8 @@ class KalturaAssetFilter(KalturaAssetBaseFilter):
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented):
+            deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented):
         KalturaAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -11622,8 +11624,12 @@ class KalturaAssetFilter(KalturaAssetBaseFilter):
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual)
 
+        # @var string
+        self.typeIn = typeIn
+
 
     PROPERTY_LOADERS = {
+        'typeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -11633,7 +11639,14 @@ class KalturaAssetFilter(KalturaAssetBaseFilter):
     def toParams(self):
         kparams = KalturaAssetBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaAssetFilter")
+        kparams.addStringIfDefined("typeIn", self.typeIn)
         return kparams
+
+    def getTypeIn(self):
+        return self.typeIn
+
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
 
 
 # @package Kaltura
@@ -12420,20 +12433,46 @@ class KalturaStringValue(KalturaValue):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPluginReplacementOptionsItem(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPluginReplacementOptionsItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPluginReplacementOptionsItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryReplacementOptions(KalturaObjectBase):
     """Advanced configuration for entry replacement process"""
 
     def __init__(self,
-            keepManualThumbnails=NotImplemented):
+            keepManualThumbnails=NotImplemented,
+            pluginOptionItems=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # If true manually created thumbnails will not be deleted on entry replacement
         # @var int
         self.keepManualThumbnails = keepManualThumbnails
 
+        # Array of plugin replacement options
+        # @var array of KalturaPluginReplacementOptionsItem
+        self.pluginOptionItems = pluginOptionItems
+
 
     PROPERTY_LOADERS = {
         'keepManualThumbnails': getXmlNodeInt, 
+        'pluginOptionItems': (KalturaObjectFactory.createArray, KalturaPluginReplacementOptionsItem), 
     }
 
     def fromXml(self, node):
@@ -12444,6 +12483,7 @@ class KalturaEntryReplacementOptions(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaEntryReplacementOptions")
         kparams.addIntIfDefined("keepManualThumbnails", self.keepManualThumbnails)
+        kparams.addArrayIfDefined("pluginOptionItems", self.pluginOptionItems)
         return kparams
 
     def getKeepManualThumbnails(self):
@@ -12451,6 +12491,12 @@ class KalturaEntryReplacementOptions(KalturaObjectBase):
 
     def setKeepManualThumbnails(self, newKeepManualThumbnails):
         self.keepManualThumbnails = newKeepManualThumbnails
+
+    def getPluginOptionItems(self):
+        return self.pluginOptionItems
+
+    def setPluginOptionItems(self, newPluginOptionItems):
+        self.pluginOptionItems = newPluginOptionItems
 
 
 # @package Kaltura
@@ -33748,6 +33794,91 @@ class KalturaLiveStreamPushPublishRTMPConfiguration(KalturaLiveStreamPushPublish
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveToVodJobData(KalturaJobData):
+    def __init__(self,
+            vodEntryId=NotImplemented,
+            liveEntryId=NotImplemented,
+            totalVodDuration=NotImplemented,
+            lastSegmentDuration=NotImplemented,
+            amfArray=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # $vod Entry Id
+        # @var string
+        self.vodEntryId = vodEntryId
+
+        # live Entry Id
+        # @var string
+        self.liveEntryId = liveEntryId
+
+        # total VOD Duration
+        # @var float
+        self.totalVodDuration = totalVodDuration
+
+        # last Segment Duration
+        # @var float
+        self.lastSegmentDuration = lastSegmentDuration
+
+        # amf Array File Path
+        # @var string
+        self.amfArray = amfArray
+
+
+    PROPERTY_LOADERS = {
+        'vodEntryId': getXmlNodeText, 
+        'liveEntryId': getXmlNodeText, 
+        'totalVodDuration': getXmlNodeFloat, 
+        'lastSegmentDuration': getXmlNodeFloat, 
+        'amfArray': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveToVodJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaLiveToVodJobData")
+        kparams.addStringIfDefined("vodEntryId", self.vodEntryId)
+        kparams.addStringIfDefined("liveEntryId", self.liveEntryId)
+        kparams.addFloatIfDefined("totalVodDuration", self.totalVodDuration)
+        kparams.addFloatIfDefined("lastSegmentDuration", self.lastSegmentDuration)
+        kparams.addStringIfDefined("amfArray", self.amfArray)
+        return kparams
+
+    def getVodEntryId(self):
+        return self.vodEntryId
+
+    def setVodEntryId(self, newVodEntryId):
+        self.vodEntryId = newVodEntryId
+
+    def getLiveEntryId(self):
+        return self.liveEntryId
+
+    def setLiveEntryId(self, newLiveEntryId):
+        self.liveEntryId = newLiveEntryId
+
+    def getTotalVodDuration(self):
+        return self.totalVodDuration
+
+    def setTotalVodDuration(self, newTotalVodDuration):
+        self.totalVodDuration = newTotalVodDuration
+
+    def getLastSegmentDuration(self):
+        return self.lastSegmentDuration
+
+    def setLastSegmentDuration(self, newLastSegmentDuration):
+        self.lastSegmentDuration = newLastSegmentDuration
+
+    def getAmfArray(self):
+        return self.amfArray
+
+    def setAmfArray(self, newAmfArray):
+        self.amfArray = newAmfArray
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMailJobData(KalturaJobData):
     def __init__(self,
             mailType=NotImplemented,
@@ -48818,6 +48949,7 @@ class KalturaFlavorAssetBaseFilter(KalturaAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             flavorParamsIdEqual=NotImplemented,
             flavorParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -48842,7 +48974,8 @@ class KalturaFlavorAssetBaseFilter(KalturaAssetFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
+            deletedAtLessThanOrEqual,
+            typeIn)
 
         # @var int
         self.flavorParamsIdEqual = flavorParamsIdEqual
@@ -49298,6 +49431,7 @@ class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             thumbParamsIdEqual=NotImplemented,
             thumbParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -49322,7 +49456,8 @@ class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
-            deletedAtLessThanOrEqual)
+            deletedAtLessThanOrEqual,
+            typeIn)
 
         # @var int
         self.thumbParamsIdEqual = thumbParamsIdEqual
@@ -50032,6 +50167,7 @@ class KalturaFlavorAssetFilter(KalturaFlavorAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             flavorParamsIdEqual=NotImplemented,
             flavorParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -50057,6 +50193,7 @@ class KalturaFlavorAssetFilter(KalturaFlavorAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             flavorParamsIdEqual,
             flavorParamsIdIn,
             statusEqual,
@@ -50690,12 +50827,12 @@ class KalturaThumbAssetFilter(KalturaThumbAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             thumbParamsIdEqual=NotImplemented,
             thumbParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeIn=NotImplemented):
+            statusNotIn=NotImplemented):
         KalturaThumbAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50716,18 +50853,15 @@ class KalturaThumbAssetFilter(KalturaThumbAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             thumbParamsIdEqual,
             thumbParamsIdIn,
             statusEqual,
             statusIn,
             statusNotIn)
 
-        # @var string
-        self.typeIn = typeIn
-
 
     PROPERTY_LOADERS = {
-        'typeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -50737,14 +50871,7 @@ class KalturaThumbAssetFilter(KalturaThumbAssetBaseFilter):
     def toParams(self):
         kparams = KalturaThumbAssetBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaThumbAssetFilter")
-        kparams.addStringIfDefined("typeIn", self.typeIn)
         return kparams
-
-    def getTypeIn(self):
-        return self.typeIn
-
-    def setTypeIn(self, newTypeIn):
-        self.typeIn = newTypeIn
 
 
 # @package Kaltura
@@ -51042,6 +51169,7 @@ class KalturaLiveAssetBaseFilter(KalturaFlavorAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             flavorParamsIdEqual=NotImplemented,
             flavorParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -51067,6 +51195,7 @@ class KalturaLiveAssetBaseFilter(KalturaFlavorAssetFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             flavorParamsIdEqual,
             flavorParamsIdIn,
             statusEqual,
@@ -51586,6 +51715,7 @@ class KalturaLiveAssetFilter(KalturaLiveAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             flavorParamsIdEqual=NotImplemented,
             flavorParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
@@ -51611,6 +51741,7 @@ class KalturaLiveAssetFilter(KalturaLiveAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             flavorParamsIdEqual,
             flavorParamsIdIn,
             statusEqual,
@@ -55556,6 +55687,17 @@ class KalturaFlavorAssetService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def serveAdStitchCmd(self, assetId, mediaInfoJson):
+        """serve cmd line to transcode the ad"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("assetId", assetId)
+        kparams.addStringIfDefined("mediaInfoJson", mediaInfoJson)
+        self.client.queueServiceActionCall("flavorasset", "serveAdStitchCmd", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 
 # @package Kaltura
 # @subpackage Client
@@ -59269,6 +59411,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
+            'KalturaPluginReplacementOptionsItem': KalturaPluginReplacementOptionsItem,
             'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
             'KalturaEntryServerNode': KalturaEntryServerNode,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
@@ -59476,6 +59619,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
             'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
             'KalturaLiveStreamPushPublishRTMPConfiguration': KalturaLiveStreamPushPublishRTMPConfiguration,
+            'KalturaLiveToVodJobData': KalturaLiveToVodJobData,
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,

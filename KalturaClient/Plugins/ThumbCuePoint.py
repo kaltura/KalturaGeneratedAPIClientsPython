@@ -549,12 +549,12 @@ class KalturaTimedThumbAssetBaseFilter(KalturaThumbAssetFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             thumbParamsIdEqual=NotImplemented,
             thumbParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeIn=NotImplemented):
+            statusNotIn=NotImplemented):
         KalturaThumbAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -575,12 +575,12 @@ class KalturaTimedThumbAssetBaseFilter(KalturaThumbAssetFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             thumbParamsIdEqual,
             thumbParamsIdIn,
             statusEqual,
             statusIn,
-            statusNotIn,
-            typeIn)
+            statusNotIn)
 
 
     PROPERTY_LOADERS = {
@@ -619,12 +619,12 @@ class KalturaTimedThumbAssetFilter(KalturaTimedThumbAssetBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             deletedAtGreaterThanOrEqual=NotImplemented,
             deletedAtLessThanOrEqual=NotImplemented,
+            typeIn=NotImplemented,
             thumbParamsIdEqual=NotImplemented,
             thumbParamsIdIn=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeIn=NotImplemented):
+            statusNotIn=NotImplemented):
         KalturaTimedThumbAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -645,12 +645,12 @@ class KalturaTimedThumbAssetFilter(KalturaTimedThumbAssetBaseFilter):
             updatedAtLessThanOrEqual,
             deletedAtGreaterThanOrEqual,
             deletedAtLessThanOrEqual,
+            typeIn,
             thumbParamsIdEqual,
             thumbParamsIdIn,
             statusEqual,
             statusIn,
-            statusNotIn,
-            typeIn)
+            statusNotIn)
 
 
     PROPERTY_LOADERS = {
