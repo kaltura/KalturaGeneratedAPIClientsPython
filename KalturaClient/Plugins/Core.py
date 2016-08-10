@@ -1757,7 +1757,6 @@ class KalturaBatchJobType(object):
     SYNC_CATEGORY_PRIVACY_CONTEXT = "39"
     LIVE_REPORT_EXPORT = "40"
     RECALCULATE_CACHE = "41"
-    LIVE_TO_VOD = "42"
 
     def __init__(self, value):
         self.value = value
@@ -33794,91 +33793,6 @@ class KalturaLiveStreamPushPublishRTMPConfiguration(KalturaLiveStreamPushPublish
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveToVodJobData(KalturaJobData):
-    def __init__(self,
-            vodEntryId=NotImplemented,
-            liveEntryId=NotImplemented,
-            totalVodDuration=NotImplemented,
-            lastSegmentDuration=NotImplemented,
-            amfArray=NotImplemented):
-        KalturaJobData.__init__(self)
-
-        # $vod Entry Id
-        # @var string
-        self.vodEntryId = vodEntryId
-
-        # live Entry Id
-        # @var string
-        self.liveEntryId = liveEntryId
-
-        # total VOD Duration
-        # @var float
-        self.totalVodDuration = totalVodDuration
-
-        # last Segment Duration
-        # @var float
-        self.lastSegmentDuration = lastSegmentDuration
-
-        # amf Array File Path
-        # @var string
-        self.amfArray = amfArray
-
-
-    PROPERTY_LOADERS = {
-        'vodEntryId': getXmlNodeText, 
-        'liveEntryId': getXmlNodeText, 
-        'totalVodDuration': getXmlNodeFloat, 
-        'lastSegmentDuration': getXmlNodeFloat, 
-        'amfArray': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaJobData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveToVodJobData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaJobData.toParams(self)
-        kparams.put("objectType", "KalturaLiveToVodJobData")
-        kparams.addStringIfDefined("vodEntryId", self.vodEntryId)
-        kparams.addStringIfDefined("liveEntryId", self.liveEntryId)
-        kparams.addFloatIfDefined("totalVodDuration", self.totalVodDuration)
-        kparams.addFloatIfDefined("lastSegmentDuration", self.lastSegmentDuration)
-        kparams.addStringIfDefined("amfArray", self.amfArray)
-        return kparams
-
-    def getVodEntryId(self):
-        return self.vodEntryId
-
-    def setVodEntryId(self, newVodEntryId):
-        self.vodEntryId = newVodEntryId
-
-    def getLiveEntryId(self):
-        return self.liveEntryId
-
-    def setLiveEntryId(self, newLiveEntryId):
-        self.liveEntryId = newLiveEntryId
-
-    def getTotalVodDuration(self):
-        return self.totalVodDuration
-
-    def setTotalVodDuration(self, newTotalVodDuration):
-        self.totalVodDuration = newTotalVodDuration
-
-    def getLastSegmentDuration(self):
-        return self.lastSegmentDuration
-
-    def setLastSegmentDuration(self, newLastSegmentDuration):
-        self.lastSegmentDuration = newLastSegmentDuration
-
-    def getAmfArray(self):
-        return self.amfArray
-
-    def setAmfArray(self, newAmfArray):
-        self.amfArray = newAmfArray
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaMailJobData(KalturaJobData):
     def __init__(self,
             mailType=NotImplemented,
@@ -55687,12 +55601,13 @@ class KalturaFlavorAssetService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def serveAdStitchCmd(self, assetId, mediaInfoJson):
+    def serveAdStitchCmd(self, assetId, ffprobeJson = NotImplemented, duration = NotImplemented):
         """serve cmd line to transcode the ad"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("assetId", assetId)
-        kparams.addStringIfDefined("mediaInfoJson", mediaInfoJson)
+        kparams.addStringIfDefined("ffprobeJson", ffprobeJson)
+        kparams.addStringIfDefined("duration", duration)
         self.client.queueServiceActionCall("flavorasset", "serveAdStitchCmd", None, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -59619,7 +59534,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
             'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
             'KalturaLiveStreamPushPublishRTMPConfiguration': KalturaLiveStreamPushPublishRTMPConfiguration,
-            'KalturaLiveToVodJobData': KalturaLiveToVodJobData,
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,
