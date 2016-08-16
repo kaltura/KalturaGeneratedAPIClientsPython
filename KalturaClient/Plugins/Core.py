@@ -11221,7 +11221,8 @@ class KalturaUrlRecognizer(KalturaObjectBase):
 class KalturaUrlTokenizer(KalturaObjectBase):
     def __init__(self,
             window=NotImplemented,
-            key=NotImplemented):
+            key=NotImplemented,
+            limitIpAddress=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Window
@@ -11232,10 +11233,14 @@ class KalturaUrlTokenizer(KalturaObjectBase):
         # @var string
         self.key = key
 
+        # @var bool
+        self.limitIpAddress = limitIpAddress
+
 
     PROPERTY_LOADERS = {
         'window': getXmlNodeInt, 
         'key': getXmlNodeText, 
+        'limitIpAddress': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -11247,6 +11252,7 @@ class KalturaUrlTokenizer(KalturaObjectBase):
         kparams.put("objectType", "KalturaUrlTokenizer")
         kparams.addIntIfDefined("window", self.window)
         kparams.addStringIfDefined("key", self.key)
+        kparams.addBoolIfDefined("limitIpAddress", self.limitIpAddress)
         return kparams
 
     def getWindow(self):
@@ -11260,6 +11266,12 @@ class KalturaUrlTokenizer(KalturaObjectBase):
 
     def setKey(self, newKey):
         self.key = newKey
+
+    def getLimitIpAddress(self):
+        return self.limitIpAddress
+
+    def setLimitIpAddress(self, newLimitIpAddress):
+        self.limitIpAddress = newLimitIpAddress
 
 
 # @package Kaltura
@@ -37214,11 +37226,13 @@ class KalturaUrlTokenizerAkamaiHttp(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             paramName=NotImplemented,
             rootDir=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # param
         # @var string
@@ -37263,13 +37277,15 @@ class KalturaUrlTokenizerAkamaiRtmp(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             profile=NotImplemented,
             type=NotImplemented,
             aifp=NotImplemented,
             usePrefix=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # profile
         # @var string
@@ -37337,11 +37353,13 @@ class KalturaUrlTokenizerAkamaiRtsp(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             host=NotImplemented,
             cpcode=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # host
         # @var string
@@ -37387,6 +37405,7 @@ class KalturaUrlTokenizerAkamaiSecureHd(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             paramName=NotImplemented,
             aclPostfix=NotImplemented,
             customPostfixes=NotImplemented,
@@ -37394,7 +37413,8 @@ class KalturaUrlTokenizerAkamaiSecureHd(KalturaUrlTokenizer):
             rootDir=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # @var string
         self.paramName = paramName
@@ -37471,10 +37491,12 @@ class KalturaUrlTokenizerBitGravity(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             hashPatternRegex=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # hashPatternRegex
         # @var string
@@ -37508,12 +37530,13 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             keyPairId=NotImplemented,
-            rootDir=NotImplemented,
-            limitIpAddress=NotImplemented):
+            rootDir=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # @var string
         self.keyPairId = keyPairId
@@ -37521,14 +37544,10 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
         # @var string
         self.rootDir = rootDir
 
-        # @var bool
-        self.limitIpAddress = limitIpAddress
-
 
     PROPERTY_LOADERS = {
         'keyPairId': getXmlNodeText, 
         'rootDir': getXmlNodeText, 
-        'limitIpAddress': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -37540,7 +37559,6 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
         kparams.put("objectType", "KalturaUrlTokenizerCloudFront")
         kparams.addStringIfDefined("keyPairId", self.keyPairId)
         kparams.addStringIfDefined("rootDir", self.rootDir)
-        kparams.addBoolIfDefined("limitIpAddress", self.limitIpAddress)
         return kparams
 
     def getKeyPairId(self):
@@ -37555,12 +37573,6 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
     def setRootDir(self, newRootDir):
         self.rootDir = newRootDir
 
-    def getLimitIpAddress(self):
-        return self.limitIpAddress
-
-    def setLimitIpAddress(self, newLimitIpAddress):
-        self.limitIpAddress = newLimitIpAddress
-
 
 # @package Kaltura
 # @subpackage Client
@@ -37568,12 +37580,14 @@ class KalturaUrlTokenizerLevel3(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             paramName=NotImplemented,
             expiryName=NotImplemented,
             gen=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # paramName
         # @var string
@@ -37630,10 +37644,12 @@ class KalturaUrlTokenizerLevel3(KalturaUrlTokenizer):
 class KalturaUrlTokenizerLimeLight(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
-            key=NotImplemented):
+            key=NotImplemented,
+            limitIpAddress=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
 
     PROPERTY_LOADERS = {
@@ -37655,12 +37671,14 @@ class KalturaUrlTokenizerVelocix(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             hdsPaths=NotImplemented,
             paramName=NotImplemented,
             authPrefix=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # hdsPaths
         # @var string
@@ -37718,11 +37736,13 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
             key=NotImplemented,
+            limitIpAddress=NotImplemented,
             tokenizationFormat=NotImplemented,
             shouldIncludeClientIp=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
-            key)
+            key,
+            limitIpAddress)
 
         # @var int
         self.tokenizationFormat = tokenizationFormat
