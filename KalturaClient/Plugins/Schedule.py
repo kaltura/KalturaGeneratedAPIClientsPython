@@ -600,7 +600,6 @@ class KalturaScheduleEvent(KalturaObjectBase):
         self.sequence = sequence
 
         # @var KalturaScheduleEventRecurrenceType
-        # @insertonly
         self.recurrenceType = recurrenceType
 
         # Duration in seconds

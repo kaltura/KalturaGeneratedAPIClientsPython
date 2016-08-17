@@ -7016,7 +7016,8 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
-            useCategoryEntries=NotImplemented):
+            useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -7105,6 +7106,10 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         # @var bool
         self.useCategoryEntries = useCategoryEntries
 
+        # Feed content-type header value
+        # @var string
+        self.feedContentTypeHeader = feedContentTypeHeader
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -7128,6 +7133,7 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         'privacyContext': getXmlNodeText, 
         'updatedAt': getXmlNodeInt, 
         'useCategoryEntries': getXmlNodeBool, 
+        'feedContentTypeHeader': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -7152,6 +7158,7 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
         kparams.addBoolIfDefined("enforceEntitlement", self.enforceEntitlement)
         kparams.addStringIfDefined("privacyContext", self.privacyContext)
         kparams.addBoolIfDefined("useCategoryEntries", self.useCategoryEntries)
+        kparams.addStringIfDefined("feedContentTypeHeader", self.feedContentTypeHeader)
         return kparams
 
     def getId(self):
@@ -7261,6 +7268,12 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
 
     def setUseCategoryEntries(self, newUseCategoryEntries):
         self.useCategoryEntries = newUseCategoryEntries
+
+    def getFeedContentTypeHeader(self):
+        return self.feedContentTypeHeader
+
+    def setFeedContentTypeHeader(self, newFeedContentTypeHeader):
+        self.feedContentTypeHeader = newFeedContentTypeHeader
 
 
 # @package Kaltura
@@ -32789,6 +32802,7 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             feedDescription=NotImplemented,
             feedLandingPage=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
@@ -32812,7 +32826,8 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
-            useCategoryEntries)
+            useCategoryEntries,
+            feedContentTypeHeader)
 
         # feed description
         # @var string
@@ -32877,6 +32892,7 @@ class KalturaGoogleVideoSyndicationFeed(KalturaBaseSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             adultContent=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
@@ -32899,7 +32915,8 @@ class KalturaGoogleVideoSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
-            useCategoryEntries)
+            useCategoryEntries,
+            feedContentTypeHeader)
 
         # @var KalturaGoogleSyndicationFeedAdultValues
         self.adultContent = adultContent
@@ -33034,6 +33051,7 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             feedDescription=NotImplemented,
             language=NotImplemented,
             feedLandingPage=NotImplemented,
@@ -33065,7 +33083,8 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
-            useCategoryEntries)
+            useCategoryEntries,
+            feedContentTypeHeader)
 
         # feed description
         # @var string
@@ -36664,6 +36683,7 @@ class KalturaTubeMogulSyndicationFeed(KalturaBaseSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             category=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
@@ -36686,7 +36706,8 @@ class KalturaTubeMogulSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
-            useCategoryEntries)
+            useCategoryEntries,
+            feedContentTypeHeader)
 
         # @var KalturaTubeMogulSyndicationFeedCategories
         # @readonly
@@ -38252,6 +38273,7 @@ class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             category=NotImplemented,
             adultContent=NotImplemented,
             feedDescription=NotImplemented,
@@ -38277,7 +38299,8 @@ class KalturaYahooSyndicationFeed(KalturaBaseSyndicationFeed):
             enforceEntitlement,
             privacyContext,
             updatedAt,
-            useCategoryEntries)
+            useCategoryEntries,
+            feedContentTypeHeader)
 
         # @var KalturaYahooSyndicationFeedCategories
         # @readonly
@@ -41374,6 +41397,7 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             privacyContext=NotImplemented,
             updatedAt=NotImplemented,
             useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
             feedDescription=NotImplemented,
             feedLandingPage=NotImplemented,
             xslt=NotImplemented,
@@ -41400,6 +41424,7 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             privacyContext,
             updatedAt,
             useCategoryEntries,
+            feedContentTypeHeader,
             feedDescription,
             feedLandingPage)
 
