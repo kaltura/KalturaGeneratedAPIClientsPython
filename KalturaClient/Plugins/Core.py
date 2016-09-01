@@ -31199,7 +31199,7 @@ class KalturaDeliveryServerNode(KalturaServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
-            playbackDomain=NotImplemented):
+            deliveryProfileIds=NotImplemented):
         KalturaServerNode.__init__(self,
             id,
             partnerId,
@@ -31216,13 +31216,13 @@ class KalturaDeliveryServerNode(KalturaServerNode):
             dc,
             parentId)
 
-        # Delivery server playback Domain
-        # @var string
-        self.playbackDomain = playbackDomain
+        # Delivery profile ids
+        # @var array of KalturaKeyValue
+        self.deliveryProfileIds = deliveryProfileIds
 
 
     PROPERTY_LOADERS = {
-        'playbackDomain': getXmlNodeText, 
+        'deliveryProfileIds': (KalturaObjectFactory.createArray, KalturaKeyValue), 
     }
 
     def fromXml(self, node):
@@ -31232,14 +31232,14 @@ class KalturaDeliveryServerNode(KalturaServerNode):
     def toParams(self):
         kparams = KalturaServerNode.toParams(self)
         kparams.put("objectType", "KalturaDeliveryServerNode")
-        kparams.addStringIfDefined("playbackDomain", self.playbackDomain)
+        kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
         return kparams
 
-    def getPlaybackDomain(self):
-        return self.playbackDomain
+    def getDeliveryProfileIds(self):
+        return self.deliveryProfileIds
 
-    def setPlaybackDomain(self, newPlaybackDomain):
-        self.playbackDomain = newPlaybackDomain
+    def setDeliveryProfileIds(self, newDeliveryProfileIds):
+        self.deliveryProfileIds = newDeliveryProfileIds
 
 
 # @package Kaltura
@@ -40409,7 +40409,8 @@ class KalturaDeliveryProfileFilter(KalturaDeliveryProfileBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -40427,8 +40428,12 @@ class KalturaDeliveryProfileFilter(KalturaDeliveryProfileBaseFilter):
             statusEqual,
             statusIn)
 
+        # @var KalturaNullableBoolean
+        self.isLive = isLive
+
 
     PROPERTY_LOADERS = {
+        'isLive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -40438,7 +40443,14 @@ class KalturaDeliveryProfileFilter(KalturaDeliveryProfileBaseFilter):
     def toParams(self):
         kparams = KalturaDeliveryProfileBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaDeliveryProfileFilter")
+        kparams.addIntEnumIfDefined("isLive", self.isLive)
         return kparams
+
+    def getIsLive(self):
+        return self.isLive
+
+    def setIsLive(self, newIsLive):
+        self.isLive = newIsLive
 
 
 # @package Kaltura
@@ -40548,8 +40560,8 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
-            playbackDomain=NotImplemented,
             deliveryProfileIds=NotImplemented,
+            playbackDomain=NotImplemented,
             config=NotImplemented):
         KalturaDeliveryServerNode.__init__(self,
             id,
@@ -40566,11 +40578,11 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
-            playbackDomain)
+            deliveryProfileIds)
 
-        # Delivery profile ids
-        # @var array of KalturaKeyValue
-        self.deliveryProfileIds = deliveryProfileIds
+        # Delivery server playback Domain
+        # @var string
+        self.playbackDomain = playbackDomain
 
         # Overdie edge server default configuration - json format
         # @var string
@@ -40578,7 +40590,7 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
 
 
     PROPERTY_LOADERS = {
-        'deliveryProfileIds': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'playbackDomain': getXmlNodeText, 
         'config': getXmlNodeText, 
     }
 
@@ -40589,15 +40601,15 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
     def toParams(self):
         kparams = KalturaDeliveryServerNode.toParams(self)
         kparams.put("objectType", "KalturaEdgeServerNode")
-        kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
+        kparams.addStringIfDefined("playbackDomain", self.playbackDomain)
         kparams.addStringIfDefined("config", self.config)
         return kparams
 
-    def getDeliveryProfileIds(self):
-        return self.deliveryProfileIds
+    def getPlaybackDomain(self):
+        return self.playbackDomain
 
-    def setDeliveryProfileIds(self, newDeliveryProfileIds):
-        self.deliveryProfileIds = newDeliveryProfileIds
+    def setPlaybackDomain(self, newPlaybackDomain):
+        self.playbackDomain = newPlaybackDomain
 
     def getConfig(self):
         return self.config
@@ -42308,7 +42320,7 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
-            playbackDomain=NotImplemented,
+            deliveryProfileIds=NotImplemented,
             applicationName=NotImplemented,
             mediaServerPortConfig=NotImplemented,
             mediaServerPlaybackDomainConfig=NotImplemented):
@@ -42327,7 +42339,7 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
-            playbackDomain)
+            deliveryProfileIds)
 
         # Media server application name
         # @var string
@@ -45438,7 +45450,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter(KalturaDeliveryPro
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45454,7 +45467,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter(KalturaDeliveryPro
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45488,7 +45502,8 @@ class KalturaDeliveryProfileAkamaiHdsBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45504,7 +45519,8 @@ class KalturaDeliveryProfileAkamaiHdsBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45538,7 +45554,8 @@ class KalturaDeliveryProfileAkamaiHttpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45554,7 +45571,8 @@ class KalturaDeliveryProfileAkamaiHttpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45588,7 +45606,8 @@ class KalturaDeliveryProfileGenericAppleHttpBaseFilter(KalturaDeliveryProfileFil
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45604,7 +45623,8 @@ class KalturaDeliveryProfileGenericAppleHttpBaseFilter(KalturaDeliveryProfileFil
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45638,7 +45658,8 @@ class KalturaDeliveryProfileGenericHdsBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45654,7 +45675,8 @@ class KalturaDeliveryProfileGenericHdsBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45688,7 +45710,8 @@ class KalturaDeliveryProfileGenericHttpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45704,7 +45727,8 @@ class KalturaDeliveryProfileGenericHttpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45738,7 +45762,8 @@ class KalturaDeliveryProfileGenericSilverLightBaseFilter(KalturaDeliveryProfileF
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45754,7 +45779,8 @@ class KalturaDeliveryProfileGenericSilverLightBaseFilter(KalturaDeliveryProfileF
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45788,7 +45814,8 @@ class KalturaDeliveryProfileLiveAppleHttpBaseFilter(KalturaDeliveryProfileFilter
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45804,7 +45831,8 @@ class KalturaDeliveryProfileLiveAppleHttpBaseFilter(KalturaDeliveryProfileFilter
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -45838,7 +45866,8 @@ class KalturaDeliveryProfileRtmpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45854,7 +45883,8 @@ class KalturaDeliveryProfileRtmpBaseFilter(KalturaDeliveryProfileFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48371,7 +48401,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifestFilter(KalturaDeliveryProfile
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileAkamaiAppleHttpManifestBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48387,7 +48418,8 @@ class KalturaDeliveryProfileAkamaiAppleHttpManifestFilter(KalturaDeliveryProfile
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48421,7 +48453,8 @@ class KalturaDeliveryProfileAkamaiHdsFilter(KalturaDeliveryProfileAkamaiHdsBaseF
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileAkamaiHdsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48437,7 +48470,8 @@ class KalturaDeliveryProfileAkamaiHdsFilter(KalturaDeliveryProfileAkamaiHdsBaseF
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48471,7 +48505,8 @@ class KalturaDeliveryProfileAkamaiHttpFilter(KalturaDeliveryProfileAkamaiHttpBas
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileAkamaiHttpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48487,7 +48522,8 @@ class KalturaDeliveryProfileAkamaiHttpFilter(KalturaDeliveryProfileAkamaiHttpBas
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48521,7 +48557,8 @@ class KalturaDeliveryProfileGenericAppleHttpFilter(KalturaDeliveryProfileGeneric
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileGenericAppleHttpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48537,7 +48574,8 @@ class KalturaDeliveryProfileGenericAppleHttpFilter(KalturaDeliveryProfileGeneric
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48571,7 +48609,8 @@ class KalturaDeliveryProfileGenericHdsFilter(KalturaDeliveryProfileGenericHdsBas
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileGenericHdsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48587,7 +48626,8 @@ class KalturaDeliveryProfileGenericHdsFilter(KalturaDeliveryProfileGenericHdsBas
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48621,7 +48661,8 @@ class KalturaDeliveryProfileGenericHttpFilter(KalturaDeliveryProfileGenericHttpB
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileGenericHttpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48637,7 +48678,8 @@ class KalturaDeliveryProfileGenericHttpFilter(KalturaDeliveryProfileGenericHttpB
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48671,7 +48713,8 @@ class KalturaDeliveryProfileGenericSilverLightFilter(KalturaDeliveryProfileGener
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileGenericSilverLightBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48687,7 +48730,8 @@ class KalturaDeliveryProfileGenericSilverLightFilter(KalturaDeliveryProfileGener
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48721,7 +48765,8 @@ class KalturaDeliveryProfileLiveAppleHttpFilter(KalturaDeliveryProfileLiveAppleH
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileLiveAppleHttpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48737,7 +48782,8 @@ class KalturaDeliveryProfileLiveAppleHttpFilter(KalturaDeliveryProfileLiveAppleH
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -48771,7 +48817,8 @@ class KalturaDeliveryProfileRtmpFilter(KalturaDeliveryProfileRtmpBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileRtmpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -48787,7 +48834,8 @@ class KalturaDeliveryProfileRtmpFilter(KalturaDeliveryProfileRtmpBaseFilter):
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -49989,7 +50037,8 @@ class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilt
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileRtmpFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50005,7 +50054,8 @@ class KalturaDeliveryProfileGenericRtmpBaseFilter(KalturaDeliveryProfileRtmpFilt
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
@@ -50885,7 +50935,8 @@ class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpB
             updatedAtLessThanOrEqual=NotImplemented,
             streamerTypeEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            isLive=NotImplemented):
         KalturaDeliveryProfileGenericRtmpBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50901,7 +50952,8 @@ class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpB
             updatedAtLessThanOrEqual,
             streamerTypeEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            isLive)
 
 
     PROPERTY_LOADERS = {
