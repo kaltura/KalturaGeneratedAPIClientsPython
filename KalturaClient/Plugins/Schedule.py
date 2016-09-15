@@ -2471,7 +2471,8 @@ class KalturaScheduleEventResourceFilter(KalturaScheduleEventResourceBaseFilter)
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            updatedAtLessThanOrEqual=NotImplemented,
+            eventIdOrItsParentIdEqual=NotImplemented):
         KalturaScheduleEventResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2484,8 +2485,13 @@ class KalturaScheduleEventResourceFilter(KalturaScheduleEventResourceBaseFilter)
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual)
 
+        # Find event-resource objects that associated with the event, if none found, find by its parent event
+        # @var int
+        self.eventIdOrItsParentIdEqual = eventIdOrItsParentIdEqual
+
 
     PROPERTY_LOADERS = {
+        'eventIdOrItsParentIdEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -2495,7 +2501,14 @@ class KalturaScheduleEventResourceFilter(KalturaScheduleEventResourceBaseFilter)
     def toParams(self):
         kparams = KalturaScheduleEventResourceBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaScheduleEventResourceFilter")
+        kparams.addIntIfDefined("eventIdOrItsParentIdEqual", self.eventIdOrItsParentIdEqual)
         return kparams
+
+    def getEventIdOrItsParentIdEqual(self):
+        return self.eventIdOrItsParentIdEqual
+
+    def setEventIdOrItsParentIdEqual(self, newEventIdOrItsParentIdEqual):
+        self.eventIdOrItsParentIdEqual = newEventIdOrItsParentIdEqual
 
 
 # @package Kaltura

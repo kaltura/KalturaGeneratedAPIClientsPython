@@ -330,6 +330,20 @@ class KalturaEmailIngestionProfileStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryDisplayInSearchType(object):
+    SYSTEM = -1
+    NONE = 0
+    PARTNER_ONLY = 1
+    KALTURA_NETWORK = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryModerationStatus(object):
     PENDING_MODERATION = 1
     APPROVED = 2
@@ -1757,6 +1771,7 @@ class KalturaBatchJobType(object):
     SYNC_CATEGORY_PRIVACY_CONTEXT = "39"
     LIVE_REPORT_EXPORT = "40"
     RECALCULATE_CACHE = "41"
+    LIVE_TO_VOD = "42"
 
     def __init__(self, value):
         self.value = value
@@ -6477,7 +6492,8 @@ class KalturaBaseEntry(KalturaObjectBase):
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
-            templateEntryId=NotImplemented):
+            templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated 10 characters alphanumeric string
@@ -6670,6 +6686,10 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @insertonly
         self.templateEntryId = templateEntryId
 
+        # should we display this entry in search
+        # @var KalturaEntryDisplayInSearchType
+        self.displayInSearch = displayInSearch
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -6715,6 +6735,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         'entitledUsersPublish': getXmlNodeText, 
         'capabilities': getXmlNodeText, 
         'templateEntryId': getXmlNodeText, 
+        'displayInSearch': (KalturaEnumsFactory.createInt, "KalturaEntryDisplayInSearchType"), 
     }
 
     def fromXml(self, node):
@@ -6748,6 +6769,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addStringIfDefined("entitledUsersEdit", self.entitledUsersEdit)
         kparams.addStringIfDefined("entitledUsersPublish", self.entitledUsersPublish)
         kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
+        kparams.addIntEnumIfDefined("displayInSearch", self.displayInSearch)
         return kparams
 
     def getId(self):
@@ -6950,6 +6972,12 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setTemplateEntryId(self, newTemplateEntryId):
         self.templateEntryId = newTemplateEntryId
+
+    def getDisplayInSearch(self):
+        return self.displayInSearch
+
+    def setDisplayInSearch(self, newDisplayInSearch):
+        self.displayInSearch = newDisplayInSearch
 
 
 # @package Kaltura
@@ -11097,6 +11125,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             dataContent=NotImplemented,
             retrieveDataContentByGet=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -11142,7 +11171,8 @@ class KalturaDataEntry(KalturaBaseEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
-            templateEntryId)
+            templateEntryId,
+            displayInSearch)
 
         # The data of the entry
         # @var string
@@ -12757,6 +12787,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -12808,7 +12839,8 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
-            templateEntryId)
+            templateEntryId,
+            displayInSearch)
 
         # Number of plays
         # @var int
@@ -12946,6 +12978,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -13009,6 +13042,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -16318,7 +16352,8 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
     def __init__(self,
             shouldCopyEntitlement=NotImplemented,
             shouldCopyScheduling=NotImplemented,
-            shouldCopyThumbnail=NotImplemented):
+            shouldCopyThumbnail=NotImplemented,
+            shouldMakeHidden=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -16330,11 +16365,15 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.shouldCopyThumbnail = shouldCopyThumbnail
 
+        # @var KalturaNullableBoolean
+        self.shouldMakeHidden = shouldMakeHidden
+
 
     PROPERTY_LOADERS = {
         'shouldCopyEntitlement': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldCopyScheduling': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldCopyThumbnail': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'shouldMakeHidden': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -16347,6 +16386,7 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         kparams.addIntEnumIfDefined("shouldCopyEntitlement", self.shouldCopyEntitlement)
         kparams.addIntEnumIfDefined("shouldCopyScheduling", self.shouldCopyScheduling)
         kparams.addIntEnumIfDefined("shouldCopyThumbnail", self.shouldCopyThumbnail)
+        kparams.addIntEnumIfDefined("shouldMakeHidden", self.shouldMakeHidden)
         return kparams
 
     def getShouldCopyEntitlement(self):
@@ -16366,6 +16406,12 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
 
     def setShouldCopyThumbnail(self, newShouldCopyThumbnail):
         self.shouldCopyThumbnail = newShouldCopyThumbnail
+
+    def getShouldMakeHidden(self):
+        return self.shouldMakeHidden
+
+    def setShouldMakeHidden(self, newShouldMakeHidden):
+        self.shouldMakeHidden = newShouldMakeHidden
 
 
 # @package Kaltura
@@ -16415,6 +16461,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -16492,6 +16539,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -16731,6 +16779,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -16810,6 +16859,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -17667,6 +17717,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -17760,6 +17811,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -20582,6 +20634,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -20637,6 +20690,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -21278,6 +21332,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             playlistContent=NotImplemented,
             filters=NotImplemented,
             totalResults=NotImplemented,
@@ -21329,7 +21384,8 @@ class KalturaPlaylist(KalturaBaseEntry):
             entitledUsersEdit,
             entitledUsersPublish,
             capabilities,
-            templateEntryId)
+            templateEntryId,
+            displayInSearch)
 
         # Content of the playlist - 
         # 	 XML if the playlistType is dynamic 
@@ -33820,6 +33876,91 @@ class KalturaLiveStreamPushPublishRTMPConfiguration(KalturaLiveStreamPushPublish
 
     def setApplicationName(self, newApplicationName):
         self.applicationName = newApplicationName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveToVodJobData(KalturaJobData):
+    def __init__(self,
+            vodEntryId=NotImplemented,
+            liveEntryId=NotImplemented,
+            totalVodDuration=NotImplemented,
+            lastSegmentDuration=NotImplemented,
+            amfArray=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # $vod Entry Id
+        # @var string
+        self.vodEntryId = vodEntryId
+
+        # live Entry Id
+        # @var string
+        self.liveEntryId = liveEntryId
+
+        # total VOD Duration
+        # @var float
+        self.totalVodDuration = totalVodDuration
+
+        # last Segment Duration
+        # @var float
+        self.lastSegmentDuration = lastSegmentDuration
+
+        # amf Array File Path
+        # @var string
+        self.amfArray = amfArray
+
+
+    PROPERTY_LOADERS = {
+        'vodEntryId': getXmlNodeText, 
+        'liveEntryId': getXmlNodeText, 
+        'totalVodDuration': getXmlNodeFloat, 
+        'lastSegmentDuration': getXmlNodeFloat, 
+        'amfArray': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveToVodJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaLiveToVodJobData")
+        kparams.addStringIfDefined("vodEntryId", self.vodEntryId)
+        kparams.addStringIfDefined("liveEntryId", self.liveEntryId)
+        kparams.addFloatIfDefined("totalVodDuration", self.totalVodDuration)
+        kparams.addFloatIfDefined("lastSegmentDuration", self.lastSegmentDuration)
+        kparams.addStringIfDefined("amfArray", self.amfArray)
+        return kparams
+
+    def getVodEntryId(self):
+        return self.vodEntryId
+
+    def setVodEntryId(self, newVodEntryId):
+        self.vodEntryId = newVodEntryId
+
+    def getLiveEntryId(self):
+        return self.liveEntryId
+
+    def setLiveEntryId(self, newLiveEntryId):
+        self.liveEntryId = newLiveEntryId
+
+    def getTotalVodDuration(self):
+        return self.totalVodDuration
+
+    def setTotalVodDuration(self, newTotalVodDuration):
+        self.totalVodDuration = newTotalVodDuration
+
+    def getLastSegmentDuration(self):
+        return self.lastSegmentDuration
+
+    def setLastSegmentDuration(self, newLastSegmentDuration):
+        self.lastSegmentDuration = newLastSegmentDuration
+
+    def getAmfArray(self):
+        return self.amfArray
+
+    def setAmfArray(self, newAmfArray):
+        self.amfArray = newAmfArray
 
 
 # @package Kaltura
@@ -50328,6 +50469,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             entitledUsersPublish=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
+            displayInSearch=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -50421,6 +50563,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             entitledUsersPublish,
             capabilities,
             templateEntryId,
+            displayInSearch,
             plays,
             views,
             lastPlayedAt,
@@ -59123,6 +59266,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDirectoryRestrictionType': KalturaDirectoryRestrictionType,
             'KalturaEditorType': KalturaEditorType,
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
+            'KalturaEntryDisplayInSearchType': KalturaEntryDisplayInSearchType,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
             'KalturaEntryServerNodeStatus': KalturaEntryServerNodeStatus,
             'KalturaFeatureStatusType': KalturaFeatureStatusType,
@@ -59631,6 +59775,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
             'KalturaLiveStreamListResponse': KalturaLiveStreamListResponse,
             'KalturaLiveStreamPushPublishRTMPConfiguration': KalturaLiveStreamPushPublishRTMPConfiguration,
+            'KalturaLiveToVodJobData': KalturaLiveToVodJobData,
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,

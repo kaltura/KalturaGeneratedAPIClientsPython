@@ -915,6 +915,18 @@ class KalturaCuePointService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def clone(self, id, entryId):
+        """Clone cuePoint with id to given entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "clone", KalturaCuePoint, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+
 ########## main ##########
 class KalturaCuePointClientPlugin(KalturaClientPlugin):
     # KalturaCuePointClientPlugin
