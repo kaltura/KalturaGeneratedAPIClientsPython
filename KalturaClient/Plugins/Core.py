@@ -2370,6 +2370,10 @@ class KalturaDeliveryProfileType(object):
     LIVE_DASH = "1003"
     LIVE_RTMP = "1005"
     LIVE_HLS_TO_MULTICAST = "1006"
+    LIVE_PACKAGER_HLS = "1007"
+    LIVE_PACKAGER_HDS = "1008"
+    LIVE_PACKAGER_DASH = "1009"
+    LIVE_PACKAGER_MSS = "1010"
     LIVE_AKAMAI_HDS = "1013"
 
     def __init__(self, value):
@@ -28667,7 +28671,8 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
             zip=NotImplemented,
             gender=NotImplemented,
             firstName=NotImplemented,
-            lastName=NotImplemented):
+            lastName=NotImplemented,
+            group=NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -28725,6 +28730,9 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         # @var string
         self.lastName = lastName
 
+        # @var string
+        self.group = group
+
 
     PROPERTY_LOADERS = {
         'userId': getXmlNodeText, 
@@ -28740,6 +28748,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         'gender': getXmlNodeInt, 
         'firstName': getXmlNodeText, 
         'lastName': getXmlNodeText, 
+        'group': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -28762,6 +28771,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         kparams.addIntIfDefined("gender", self.gender)
         kparams.addStringIfDefined("firstName", self.firstName)
         kparams.addStringIfDefined("lastName", self.lastName)
+        kparams.addStringIfDefined("group", self.group)
         return kparams
 
     def getUserId(self):
@@ -28841,6 +28851,12 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
 
     def setLastName(self, newLastName):
         self.lastName = newLastName
+
+    def getGroup(self):
+        return self.group
+
+    def setGroup(self, newGroup):
+        self.group = newGroup
 
 
 # @package Kaltura
