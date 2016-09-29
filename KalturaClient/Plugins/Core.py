@@ -31255,6 +31255,78 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfile):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            allowFairplayOffline=NotImplemented):
+        KalturaDeliveryProfile.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter)
+
+        # @var bool
+        self.allowFairplayOffline = allowFairplayOffline
+
+
+    PROPERTY_LOADERS = {
+        'allowFairplayOffline': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerHls.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfile.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerHls")
+        kparams.addBoolIfDefined("allowFairplayOffline", self.allowFairplayOffline)
+        return kparams
+
+    def getAllowFairplayOffline(self):
+        return self.allowFairplayOffline
+
+    def setAllowFairplayOffline(self, newAllowFairplayOffline):
+        self.allowFairplayOffline = newAllowFairplayOffline
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryServerNode(KalturaServerNode):
     def __init__(self,
             id=NotImplemented,
@@ -59754,6 +59826,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
+            'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
             'KalturaDeliveryServerNode': KalturaDeliveryServerNode,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
             'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
