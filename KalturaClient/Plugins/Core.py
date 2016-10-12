@@ -56504,6 +56504,16 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveStreamEntry)
 
+    def regenrateSecureToken(self, entryId):
+        """Regenerate new secure token for liveStream"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("livestream", "regenrateSecureToken", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
     def appendRecording(self, entryId, assetId, mediaServerIndex, resource, duration, isLastChunk = False):
         """Append recorded video to live entry"""
 
