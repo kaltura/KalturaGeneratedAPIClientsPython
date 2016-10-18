@@ -59089,7 +59089,7 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
-    def loginByLoginId(self, loginId, password, partnerId = NotImplemented, expiry = 86400, privileges = "*"):
+    def loginByLoginId(self, loginId, password, partnerId = NotImplemented, expiry = 86400, privileges = "*", otp = NotImplemented):
         """Logs a user into a partner account with a user login ID and a user password."""
 
         kparams = KalturaParams()
@@ -59098,6 +59098,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addIntIfDefined("partnerId", partnerId);
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
+        kparams.addStringIfDefined("otp", otp)
         self.client.queueServiceActionCall("user", "loginByLoginId", None, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
