@@ -364,6 +364,7 @@ class KalturaEntryServerNodeStatus(object):
     PLAYABLE = 1
     BROADCASTING = 2
     AUTHENTICATED = 3
+    MARKED_FOR_DELETION = 4
 
     def __init__(self, value):
         self.value = value
@@ -4531,6 +4532,7 @@ class KalturaSourceType(object):
     LIVE_CHANNEL = "33"
     RECORDED_LIVE = "34"
     CLIP = "35"
+    KALTURA_RECORDED_LIVE = "36"
     LIVE_STREAM_ONTEXTDATA_CAPTIONS = "42"
 
     def __init__(self, value):
@@ -55940,6 +55942,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
 
 # @package Kaltura
@@ -56287,6 +56290,20 @@ class KalturaLiveChannelService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration):
+        """Sey recorded video to live entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
+        kparams.addObjectIfDefined("resource", resource)
+        kparams.addFloatIfDefined("duration", duration)
+        self.client.queueServiceActionCall("livechannel", "setRecordedContent", KalturaLiveEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaLiveEntry)
+
 
 # @package Kaltura
 # @subpackage Client
@@ -56567,6 +56584,20 @@ class KalturaLiveStreamService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration):
+        """Sey recorded video to live entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
+        kparams.addObjectIfDefined("resource", resource)
+        kparams.addFloatIfDefined("duration", duration)
+        self.client.queueServiceActionCall("livestream", "setRecordedContent", KalturaLiveEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaLiveEntry)
 
     def createPeriodicSyncPoints(self, entryId, interval, duration):
         """Creates perioding metadata sync-point events on a live stream"""
