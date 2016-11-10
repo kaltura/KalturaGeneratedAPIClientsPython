@@ -12939,6 +12939,98 @@ class KalturaPlayableEntry(KalturaBaseEntry):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaStreamContainer(KalturaObjectBase):
+    def __init__(self,
+            type=NotImplemented,
+            trackIndex=NotImplemented,
+            language=NotImplemented,
+            channelIndex=NotImplemented,
+            label=NotImplemented,
+            channelLayout=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.type = type
+
+        # @var int
+        self.trackIndex = trackIndex
+
+        # @var string
+        self.language = language
+
+        # @var int
+        self.channelIndex = channelIndex
+
+        # @var string
+        self.label = label
+
+        # @var string
+        self.channelLayout = channelLayout
+
+
+    PROPERTY_LOADERS = {
+        'type': getXmlNodeText, 
+        'trackIndex': getXmlNodeInt, 
+        'language': getXmlNodeText, 
+        'channelIndex': getXmlNodeInt, 
+        'label': getXmlNodeText, 
+        'channelLayout': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaStreamContainer.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaStreamContainer")
+        kparams.addStringIfDefined("type", self.type)
+        kparams.addIntIfDefined("trackIndex", self.trackIndex)
+        kparams.addStringIfDefined("language", self.language)
+        kparams.addIntIfDefined("channelIndex", self.channelIndex)
+        kparams.addStringIfDefined("label", self.label)
+        kparams.addStringIfDefined("channelLayout", self.channelLayout)
+        return kparams
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getTrackIndex(self):
+        return self.trackIndex
+
+    def setTrackIndex(self, newTrackIndex):
+        self.trackIndex = newTrackIndex
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getChannelIndex(self):
+        return self.channelIndex
+
+    def setChannelIndex(self, newChannelIndex):
+        self.channelIndex = newChannelIndex
+
+    def getLabel(self):
+        return self.label
+
+    def setLabel(self, newLabel):
+        self.label = newLabel
+
+    def getChannelLayout(self):
+        return self.channelLayout
+
+    def setChannelLayout(self, newChannelLayout):
+        self.channelLayout = newChannelLayout
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaEntry(KalturaPlayableEntry):
     def __init__(self,
             id=NotImplemented,
@@ -13003,7 +13095,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             mediaDate=NotImplemented,
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
-            isTrimDisabled=NotImplemented):
+            isTrimDisabled=NotImplemented,
+            streams=NotImplemented):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
@@ -13111,6 +13204,10 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         # @readonly
         self.isTrimDisabled = isTrimDisabled
 
+        # Array of streams that exists on the entry
+        # @var array of KalturaStreamContainer
+        self.streams = streams
+
 
     PROPERTY_LOADERS = {
         'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
@@ -13124,6 +13221,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         'dataUrl': getXmlNodeText, 
         'flavorParamsIds': getXmlNodeText, 
         'isTrimDisabled': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'streams': (KalturaObjectFactory.createArray, KalturaStreamContainer), 
     }
 
     def fromXml(self, node):
@@ -13140,6 +13238,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         kparams.addStringIfDefined("searchProviderId", self.searchProviderId)
         kparams.addStringIfDefined("creditUserName", self.creditUserName)
         kparams.addStringIfDefined("creditUrl", self.creditUrl)
+        kparams.addArrayIfDefined("streams", self.streams)
         return kparams
 
     def getMediaType(self):
@@ -13195,6 +13294,12 @@ class KalturaMediaEntry(KalturaPlayableEntry):
 
     def getIsTrimDisabled(self):
         return self.isTrimDisabled
+
+    def getStreams(self):
+        return self.streams
+
+    def setStreams(self, newStreams):
+        self.streams = newStreams
 
 
 # @package Kaltura
@@ -13405,7 +13510,8 @@ class KalturaFlavorAsset(KalturaAsset):
             containerFormat=NotImplemented,
             videoCodecId=NotImplemented,
             status=NotImplemented,
-            language=NotImplemented):
+            language=NotImplemented,
+            label=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -13476,6 +13582,11 @@ class KalturaFlavorAsset(KalturaAsset):
         # @var KalturaLanguage
         self.language = language
 
+        # The label of the flavor asset
+        # @var string
+        # @readonly
+        self.label = label
+
 
     PROPERTY_LOADERS = {
         'flavorParamsId': getXmlNodeInt, 
@@ -13489,6 +13600,7 @@ class KalturaFlavorAsset(KalturaAsset):
         'videoCodecId': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaFlavorAssetStatus"), 
         'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
+        'label': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -13540,6 +13652,9 @@ class KalturaFlavorAsset(KalturaAsset):
 
     def setLanguage(self, newLanguage):
         self.language = newLanguage
+
+    def getLabel(self):
+        return self.label
 
 
 # @package Kaltura
@@ -16487,6 +16602,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
+            streams=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -16564,7 +16680,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             mediaDate,
             dataUrl,
             flavorParamsIds,
-            isTrimDisabled)
+            isTrimDisabled,
+            streams)
 
         # The message to be presented when the stream is offline
         # @var string
@@ -16805,6 +16922,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
+            streams=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -16885,6 +17003,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
+            streams,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -17743,6 +17862,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
+            streams=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -17837,6 +17957,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
+            streams,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -31257,7 +31378,7 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfile):
+class KalturaDeliveryProfileVodPackagerPlayServer(KalturaDeliveryProfile):
     def __init__(self,
             id=NotImplemented,
             partnerId=NotImplemented,
@@ -31279,7 +31400,7 @@ class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfile):
             priority=NotImplemented,
             extraParams=NotImplemented,
             supplementaryAssetsFilter=NotImplemented,
-            allowFairplayOffline=NotImplemented):
+            adStitchingEnabled=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
             partnerId,
@@ -31303,28 +31424,28 @@ class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfile):
             supplementaryAssetsFilter)
 
         # @var bool
-        self.allowFairplayOffline = allowFairplayOffline
+        self.adStitchingEnabled = adStitchingEnabled
 
 
     PROPERTY_LOADERS = {
-        'allowFairplayOffline': getXmlNodeBool, 
+        'adStitchingEnabled': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
         KalturaDeliveryProfile.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerHls.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerPlayServer.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaDeliveryProfile.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerHls")
-        kparams.addBoolIfDefined("allowFairplayOffline", self.allowFairplayOffline)
+        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerPlayServer")
+        kparams.addBoolIfDefined("adStitchingEnabled", self.adStitchingEnabled)
         return kparams
 
-    def getAllowFairplayOffline(self):
-        return self.allowFairplayOffline
+    def getAdStitchingEnabled(self):
+        return self.adStitchingEnabled
 
-    def setAllowFairplayOffline(self, newAllowFairplayOffline):
-        self.allowFairplayOffline = newAllowFairplayOffline
+    def setAdStitchingEnabled(self, newAdStitchingEnabled):
+        self.adStitchingEnabled = newAdStitchingEnabled
 
 
 # @package Kaltura
@@ -40775,6 +40896,80 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfileVodPackagerPlayServer):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            adStitchingEnabled=NotImplemented,
+            allowFairplayOffline=NotImplemented):
+        KalturaDeliveryProfileVodPackagerPlayServer.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter,
+            adStitchingEnabled)
+
+        # @var bool
+        self.allowFairplayOffline = allowFairplayOffline
+
+
+    PROPERTY_LOADERS = {
+        'allowFairplayOffline': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileVodPackagerPlayServer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerHls.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileVodPackagerPlayServer.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerHls")
+        kparams.addBoolIfDefined("allowFairplayOffline", self.allowFairplayOffline)
+        return kparams
+
+    def getAllowFairplayOffline(self):
+        return self.allowFairplayOffline
+
+    def setAllowFairplayOffline(self, newAllowFairplayOffline):
+        self.allowFairplayOffline = newAllowFairplayOffline
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEdgeServerNode(KalturaDeliveryServerNode):
     def __init__(self,
             id=NotImplemented,
@@ -42041,6 +42236,7 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             videoCodecId=NotImplemented,
             status=NotImplemented,
             language=NotImplemented,
+            label=NotImplemented,
             multicastIP=NotImplemented,
             multicastPort=NotImplemented):
         KalturaFlavorAsset.__init__(self,
@@ -42068,7 +42264,8 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             containerFormat,
             videoCodecId,
             status,
-            language)
+            language,
+            label)
 
         # @var string
         self.multicastIP = multicastIP
@@ -50579,6 +50776,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
+            streams=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -50673,6 +50871,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
+            streams,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -59703,6 +59902,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
             'KalturaExtendingItemMrssParameter': KalturaExtendingItemMrssParameter,
             'KalturaPlayableEntry': KalturaPlayableEntry,
+            'KalturaStreamContainer': KalturaStreamContainer,
             'KalturaMediaEntry': KalturaMediaEntry,
             'KalturaFeatureStatus': KalturaFeatureStatus,
             'KalturaFileAsset': KalturaFileAsset,
@@ -59868,7 +60068,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
-            'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
+            'KalturaDeliveryProfileVodPackagerPlayServer': KalturaDeliveryProfileVodPackagerPlayServer,
             'KalturaDeliveryServerNode': KalturaDeliveryServerNode,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
             'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
@@ -59992,6 +60192,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCountryCondition': KalturaCountryCondition,
             'KalturaDeliveryProfileFilter': KalturaDeliveryProfileFilter,
             'KalturaDeliveryProfileGenericRtmp': KalturaDeliveryProfileGenericRtmp,
+            'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
             'KalturaEdgeServerNode': KalturaEdgeServerNode,
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
             'KalturaEntryReferrerLiveStats': KalturaEntryReferrerLiveStats,

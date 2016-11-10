@@ -295,6 +295,7 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
             name=NotImplemented,
             frequency=NotImplemented,
             until=NotImplemented,
+            timeZone=NotImplemented,
             count=NotImplemented,
             interval=NotImplemented,
             bySecond=NotImplemented,
@@ -317,6 +318,10 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
 
         # @var int
         self.until = until
+
+        # TimeZone String
+        # @var string
+        self.timeZone = timeZone
 
         # @var int
         self.count = count
@@ -385,6 +390,7 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         'name': getXmlNodeText, 
         'frequency': (KalturaEnumsFactory.createString, "KalturaScheduleEventRecurrenceFrequency"), 
         'until': getXmlNodeInt, 
+        'timeZone': getXmlNodeText, 
         'count': getXmlNodeInt, 
         'interval': getXmlNodeInt, 
         'bySecond': getXmlNodeText, 
@@ -409,6 +415,7 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         kparams.addStringIfDefined("name", self.name)
         kparams.addStringEnumIfDefined("frequency", self.frequency)
         kparams.addIntIfDefined("until", self.until)
+        kparams.addStringIfDefined("timeZone", self.timeZone)
         kparams.addIntIfDefined("count", self.count)
         kparams.addIntIfDefined("interval", self.interval)
         kparams.addStringIfDefined("bySecond", self.bySecond)
@@ -440,6 +447,12 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
 
     def setUntil(self, newUntil):
         self.until = newUntil
+
+    def getTimeZone(self):
+        return self.timeZone
+
+    def setTimeZone(self, newTimeZone):
+        self.timeZone = newTimeZone
 
     def getCount(self):
         return self.count
