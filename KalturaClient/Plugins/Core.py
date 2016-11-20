@@ -18264,6 +18264,7 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -18375,6 +18376,9 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
 
         # @var string
         self.userIdIn = userIdIn
+
+        # @var string
+        self.userIdNotIn = userIdNotIn
 
         # @var string
         self.creatorIdEqual = creatorIdEqual
@@ -18605,6 +18609,7 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         'partnerIdIn': getXmlNodeText, 
         'userIdEqual': getXmlNodeText, 
         'userIdIn': getXmlNodeText, 
+        'userIdNotIn': getXmlNodeText, 
         'creatorIdEqual': getXmlNodeText, 
         'tagsLike': getXmlNodeText, 
         'tagsMultiLikeOr': getXmlNodeText, 
@@ -18691,6 +18696,7 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
         kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
         kparams.addStringIfDefined("userIdIn", self.userIdIn)
+        kparams.addStringIfDefined("userIdNotIn", self.userIdNotIn)
         kparams.addStringIfDefined("creatorIdEqual", self.creatorIdEqual)
         kparams.addStringIfDefined("tagsLike", self.tagsLike)
         kparams.addStringIfDefined("tagsMultiLikeOr", self.tagsMultiLikeOr)
@@ -18824,6 +18830,12 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
 
     def setUserIdIn(self, newUserIdIn):
         self.userIdIn = newUserIdIn
+
+    def getUserIdNotIn(self):
+        return self.userIdNotIn
+
+    def setUserIdNotIn(self, newUserIdNotIn):
+        self.userIdNotIn = newUserIdNotIn
 
     def getCreatorIdEqual(self):
         return self.creatorIdEqual
@@ -19239,6 +19251,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -19324,6 +19337,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -19479,6 +19493,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -19571,6 +19586,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -19751,6 +19767,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -19843,6 +19860,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -19953,6 +19971,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -20055,6 +20074,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -20275,6 +20295,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -20377,6 +20398,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -20497,6 +20519,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -20600,6 +20623,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -48640,6 +48664,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -48725,6 +48750,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -49614,6 +49640,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -49699,6 +49726,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -50276,6 +50304,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -50361,6 +50390,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -51016,6 +51046,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -51101,6 +51132,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -51826,6 +51858,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -51918,6 +51951,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -52290,6 +52324,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -52382,6 +52417,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -52534,6 +52570,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -52636,6 +52673,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -52798,6 +52836,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -52903,6 +52942,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -53098,6 +53138,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -53203,6 +53244,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -53326,6 +53368,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -53431,6 +53474,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -53554,6 +53598,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -53659,6 +53704,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -53782,6 +53828,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -53887,6 +53934,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -54010,6 +54058,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -54115,6 +54164,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
@@ -54238,6 +54288,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             partnerIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
             creatorIdEqual=NotImplemented,
             tagsLike=NotImplemented,
             tagsMultiLikeOr=NotImplemented,
@@ -54343,6 +54394,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             partnerIdIn,
             userIdEqual,
             userIdIn,
+            userIdNotIn,
             creatorIdEqual,
             tagsLike,
             tagsMultiLikeOr,
