@@ -94,6 +94,7 @@ class KalturaObjectTaskType(object):
     CONVERT_ENTRY_FLAVORS = "4"
     DELETE_LOCAL_CONTENT = "5"
     STORAGE_EXPORT = "6"
+    MODIFY_ENTRY = "7"
 
     def __init__(self, value):
         self.value = value
@@ -525,6 +526,121 @@ class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
 
     def setCategoryIds(self, newCategoryIds):
         self.categoryIds = newCategoryIds
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaModifyEntryObjectTask(KalturaObjectTask):
+    def __init__(self,
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
+            inputMetadataProfileId=NotImplemented,
+            inputMetadata=NotImplemented,
+            outputMetadataProfileId=NotImplemented,
+            outputMetadata=NotImplemented,
+            inputUserId=NotImplemented,
+            inputEntitledUsersEdit=NotImplemented,
+            inputEntitledUsersPublish=NotImplemented):
+        KalturaObjectTask.__init__(self,
+            type,
+            stopProcessingOnError)
+
+        # The input metadata profile id
+        # @var int
+        self.inputMetadataProfileId = inputMetadataProfileId
+
+        # array of {input metadata xpath location,entry field} objects
+        # @var array of KalturaKeyValue
+        self.inputMetadata = inputMetadata
+
+        # The output metadata profile id
+        # @var int
+        self.outputMetadataProfileId = outputMetadataProfileId
+
+        # array of {output metadata xpath location,entry field} objects
+        # @var array of KalturaKeyValue
+        self.outputMetadata = outputMetadata
+
+        # The input user id to set on the entry
+        # @var string
+        self.inputUserId = inputUserId
+
+        # The input entitled users edit to set on the entry
+        # @var string
+        self.inputEntitledUsersEdit = inputEntitledUsersEdit
+
+        # The input entitled users publish to set on the entry
+        # @var string
+        self.inputEntitledUsersPublish = inputEntitledUsersPublish
+
+
+    PROPERTY_LOADERS = {
+        'inputMetadataProfileId': getXmlNodeInt, 
+        'inputMetadata': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'outputMetadataProfileId': getXmlNodeInt, 
+        'outputMetadata': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'inputUserId': getXmlNodeText, 
+        'inputEntitledUsersEdit': getXmlNodeText, 
+        'inputEntitledUsersPublish': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectTask.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaModifyEntryObjectTask.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectTask.toParams(self)
+        kparams.put("objectType", "KalturaModifyEntryObjectTask")
+        kparams.addIntIfDefined("inputMetadataProfileId", self.inputMetadataProfileId)
+        kparams.addArrayIfDefined("inputMetadata", self.inputMetadata)
+        kparams.addIntIfDefined("outputMetadataProfileId", self.outputMetadataProfileId)
+        kparams.addArrayIfDefined("outputMetadata", self.outputMetadata)
+        kparams.addStringIfDefined("inputUserId", self.inputUserId)
+        kparams.addStringIfDefined("inputEntitledUsersEdit", self.inputEntitledUsersEdit)
+        kparams.addStringIfDefined("inputEntitledUsersPublish", self.inputEntitledUsersPublish)
+        return kparams
+
+    def getInputMetadataProfileId(self):
+        return self.inputMetadataProfileId
+
+    def setInputMetadataProfileId(self, newInputMetadataProfileId):
+        self.inputMetadataProfileId = newInputMetadataProfileId
+
+    def getInputMetadata(self):
+        return self.inputMetadata
+
+    def setInputMetadata(self, newInputMetadata):
+        self.inputMetadata = newInputMetadata
+
+    def getOutputMetadataProfileId(self):
+        return self.outputMetadataProfileId
+
+    def setOutputMetadataProfileId(self, newOutputMetadataProfileId):
+        self.outputMetadataProfileId = newOutputMetadataProfileId
+
+    def getOutputMetadata(self):
+        return self.outputMetadata
+
+    def setOutputMetadata(self, newOutputMetadata):
+        self.outputMetadata = newOutputMetadata
+
+    def getInputUserId(self):
+        return self.inputUserId
+
+    def setInputUserId(self, newInputUserId):
+        self.inputUserId = newInputUserId
+
+    def getInputEntitledUsersEdit(self):
+        return self.inputEntitledUsersEdit
+
+    def setInputEntitledUsersEdit(self, newInputEntitledUsersEdit):
+        self.inputEntitledUsersEdit = newInputEntitledUsersEdit
+
+    def getInputEntitledUsersPublish(self):
+        return self.inputEntitledUsersPublish
+
+    def setInputEntitledUsersPublish(self, newInputEntitledUsersPublish):
+        self.inputEntitledUsersPublish = newInputEntitledUsersPublish
 
 
 # @package Kaltura
@@ -1017,6 +1133,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
             'KalturaDeleteEntryObjectTask': KalturaDeleteEntryObjectTask,
             'KalturaDeleteLocalContentObjectTask': KalturaDeleteLocalContentObjectTask,
             'KalturaModifyCategoriesObjectTask': KalturaModifyCategoriesObjectTask,
+            'KalturaModifyEntryObjectTask': KalturaModifyEntryObjectTask,
             'KalturaScheduledTaskJobData': KalturaScheduledTaskJobData,
             'KalturaScheduledTaskProfileBaseFilter': KalturaScheduledTaskProfileBaseFilter,
             'KalturaScheduledTaskProfileListResponse': KalturaScheduledTaskProfileListResponse,

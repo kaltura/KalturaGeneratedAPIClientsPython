@@ -9803,7 +9803,8 @@ class KalturaCategoryEntry(KalturaObjectBase):
             entryId=NotImplemented,
             createdAt=NotImplemented,
             categoryFullIds=NotImplemented,
-            status=NotImplemented):
+            status=NotImplemented,
+            creatorUserId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9828,6 +9829,11 @@ class KalturaCategoryEntry(KalturaObjectBase):
         # @readonly
         self.status = status
 
+        # CategroyEntry creator puser ID
+        # @var string
+        # @readonly
+        self.creatorUserId = creatorUserId
+
 
     PROPERTY_LOADERS = {
         'categoryId': getXmlNodeInt, 
@@ -9835,6 +9841,7 @@ class KalturaCategoryEntry(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'categoryFullIds': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaCategoryEntryStatus"), 
+        'creatorUserId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -9868,6 +9875,9 @@ class KalturaCategoryEntry(KalturaObjectBase):
 
     def getStatus(self):
         return self.status
+
+    def getCreatorUserId(self):
+        return self.creatorUserId
 
 
 # @package Kaltura
@@ -18170,7 +18180,9 @@ class KalturaLiveStreamParams(KalturaObjectBase):
             flavorId=NotImplemented,
             width=NotImplemented,
             height=NotImplemented,
-            codec=NotImplemented):
+            codec=NotImplemented,
+            frameRate=NotImplemented,
+            keyFrameInterval=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Bit rate of the stream. (i.e. 900)
@@ -18193,6 +18205,14 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         # @var string
         self.codec = codec
 
+        # Live stream's farme rate
+        # @var int
+        self.frameRate = frameRate
+
+        # Live stream's key frame interval
+        # @var float
+        self.keyFrameInterval = keyFrameInterval
+
 
     PROPERTY_LOADERS = {
         'bitrate': getXmlNodeInt, 
@@ -18200,6 +18220,8 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         'width': getXmlNodeInt, 
         'height': getXmlNodeInt, 
         'codec': getXmlNodeText, 
+        'frameRate': getXmlNodeInt, 
+        'keyFrameInterval': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
@@ -18214,6 +18236,8 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         kparams.addIntIfDefined("width", self.width)
         kparams.addIntIfDefined("height", self.height)
         kparams.addStringIfDefined("codec", self.codec)
+        kparams.addIntIfDefined("frameRate", self.frameRate)
+        kparams.addFloatIfDefined("keyFrameInterval", self.keyFrameInterval)
         return kparams
 
     def getBitrate(self):
@@ -18245,6 +18269,18 @@ class KalturaLiveStreamParams(KalturaObjectBase):
 
     def setCodec(self, newCodec):
         self.codec = newCodec
+
+    def getFrameRate(self):
+        return self.frameRate
+
+    def setFrameRate(self, newFrameRate):
+        self.frameRate = newFrameRate
+
+    def getKeyFrameInterval(self):
+        return self.keyFrameInterval
+
+    def setKeyFrameInterval(self, newKeyFrameInterval):
+        self.keyFrameInterval = newKeyFrameInterval
 
 
 # @package Kaltura
@@ -39962,7 +39998,9 @@ class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
             createdAtLessThanOrEqual=NotImplemented,
             categoryFullIdsStartsWith=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            creatorUserIdEqual=NotImplemented,
+            creatorUserIdIn=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -39994,6 +40032,12 @@ class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
         # @var string
         self.statusIn = statusIn
 
+        # @var string
+        self.creatorUserIdEqual = creatorUserIdEqual
+
+        # @var string
+        self.creatorUserIdIn = creatorUserIdIn
+
 
     PROPERTY_LOADERS = {
         'categoryIdEqual': getXmlNodeInt, 
@@ -40005,6 +40049,8 @@ class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
         'categoryFullIdsStartsWith': getXmlNodeText, 
         'statusEqual': (KalturaEnumsFactory.createInt, "KalturaCategoryEntryStatus"), 
         'statusIn': getXmlNodeText, 
+        'creatorUserIdEqual': getXmlNodeText, 
+        'creatorUserIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -40023,6 +40069,8 @@ class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("categoryFullIdsStartsWith", self.categoryFullIdsStartsWith)
         kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
         kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("creatorUserIdEqual", self.creatorUserIdEqual)
+        kparams.addStringIfDefined("creatorUserIdIn", self.creatorUserIdIn)
         return kparams
 
     def getCategoryIdEqual(self):
@@ -40078,6 +40126,18 @@ class KalturaCategoryEntryBaseFilter(KalturaRelatedFilter):
 
     def setStatusIn(self, newStatusIn):
         self.statusIn = newStatusIn
+
+    def getCreatorUserIdEqual(self):
+        return self.creatorUserIdEqual
+
+    def setCreatorUserIdEqual(self, newCreatorUserIdEqual):
+        self.creatorUserIdEqual = newCreatorUserIdEqual
+
+    def getCreatorUserIdIn(self):
+        return self.creatorUserIdIn
+
+    def setCreatorUserIdIn(self, newCreatorUserIdIn):
+        self.creatorUserIdIn = newCreatorUserIdIn
 
 
 # @package Kaltura
@@ -45379,7 +45439,9 @@ class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             categoryFullIdsStartsWith=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            creatorUserIdEqual=NotImplemented,
+            creatorUserIdIn=NotImplemented):
         KalturaCategoryEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -45391,7 +45453,9 @@ class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
             createdAtLessThanOrEqual,
             categoryFullIdsStartsWith,
             statusEqual,
-            statusIn)
+            statusIn,
+            creatorUserIdEqual,
+            creatorUserIdIn)
 
 
     PROPERTY_LOADERS = {
