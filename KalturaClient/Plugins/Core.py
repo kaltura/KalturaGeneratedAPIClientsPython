@@ -5666,14 +5666,15 @@ class KalturaAnalyticsFilter(KalturaObjectBase):
             metrics=NotImplemented,
             utcOffset=NotImplemented,
             dimensions=NotImplemented,
-            filters=NotImplemented):
+            filters=NotImplemented,
+            orderBy=NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # Query start time (in local time)
+        # Query start time (in local time) MM/dd/yyyy HH:mi
         # @var string
         self.from_time = from_time
 
-        # Query end time (in local time)
+        # Query end time (in local time) MM/dd/yyyy HH:mi
         # @var string
         self.to_time = to_time
 
@@ -5693,6 +5694,10 @@ class KalturaAnalyticsFilter(KalturaObjectBase):
         # @var array of KalturaReportFilter
         self.filters = filters
 
+        # Query order by metric/dimension
+        # @var string
+        self.orderBy = orderBy
+
 
     PROPERTY_LOADERS = {
         'from_time': getXmlNodeText, 
@@ -5701,6 +5706,7 @@ class KalturaAnalyticsFilter(KalturaObjectBase):
         'utcOffset': getXmlNodeFloat, 
         'dimensions': getXmlNodeText, 
         'filters': (KalturaObjectFactory.createArray, KalturaReportFilter), 
+        'orderBy': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -5716,6 +5722,7 @@ class KalturaAnalyticsFilter(KalturaObjectBase):
         kparams.addFloatIfDefined("utcOffset", self.utcOffset)
         kparams.addStringIfDefined("dimensions", self.dimensions)
         kparams.addArrayIfDefined("filters", self.filters)
+        kparams.addStringIfDefined("orderBy", self.orderBy)
         return kparams
 
     def getFrom_time(self):
@@ -5753,6 +5760,12 @@ class KalturaAnalyticsFilter(KalturaObjectBase):
 
     def setFilters(self, newFilters):
         self.filters = newFilters
+
+    def getOrderBy(self):
+        return self.orderBy
+
+    def setOrderBy(self, newOrderBy):
+        self.orderBy = newOrderBy
 
 
 # @package Kaltura
@@ -10562,7 +10575,8 @@ class KalturaConversionProfile(KalturaObjectBase):
             clipDuration=NotImplemented,
             xslTransformation=NotImplemented,
             storageProfileId=NotImplemented,
-            mediaParserType=NotImplemented):
+            mediaParserType=NotImplemented,
+            calculateComplexity=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -10643,6 +10657,10 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var KalturaMediaParserType
         self.mediaParserType = mediaParserType
 
+        # Should calculate file conversion complexity
+        # @var KalturaNullableBoolean
+        self.calculateComplexity = calculateComplexity
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10664,6 +10682,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         'xslTransformation': getXmlNodeText, 
         'storageProfileId': getXmlNodeInt, 
         'mediaParserType': (KalturaEnumsFactory.createString, "KalturaMediaParserType"), 
+        'calculateComplexity': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -10688,6 +10707,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addStringIfDefined("xslTransformation", self.xslTransformation)
         kparams.addIntIfDefined("storageProfileId", self.storageProfileId)
         kparams.addStringEnumIfDefined("mediaParserType", self.mediaParserType)
+        kparams.addIntEnumIfDefined("calculateComplexity", self.calculateComplexity)
         return kparams
 
     def getId(self):
@@ -10791,6 +10811,12 @@ class KalturaConversionProfile(KalturaObjectBase):
 
     def setMediaParserType(self, newMediaParserType):
         self.mediaParserType = newMediaParserType
+
+    def getCalculateComplexity(self):
+        return self.calculateComplexity
+
+    def setCalculateComplexity(self, newCalculateComplexity):
+        self.calculateComplexity = newCalculateComplexity
 
 
 # @package Kaltura
@@ -34157,7 +34183,9 @@ class KalturaLiveToVodJobData(KalturaJobData):
             liveEntryId=NotImplemented,
             totalVodDuration=NotImplemented,
             lastSegmentDuration=NotImplemented,
-            amfArray=NotImplemented):
+            amfArray=NotImplemented,
+            lastCuePointSyncTime=NotImplemented,
+            lastSegmentDrift=NotImplemented):
         KalturaJobData.__init__(self)
 
         # $vod Entry Id
@@ -34180,6 +34208,14 @@ class KalturaLiveToVodJobData(KalturaJobData):
         # @var string
         self.amfArray = amfArray
 
+        # last live to vod sync time
+        # @var int
+        self.lastCuePointSyncTime = lastCuePointSyncTime
+
+        # last segment drift
+        # @var int
+        self.lastSegmentDrift = lastSegmentDrift
+
 
     PROPERTY_LOADERS = {
         'vodEntryId': getXmlNodeText, 
@@ -34187,6 +34223,8 @@ class KalturaLiveToVodJobData(KalturaJobData):
         'totalVodDuration': getXmlNodeFloat, 
         'lastSegmentDuration': getXmlNodeFloat, 
         'amfArray': getXmlNodeText, 
+        'lastCuePointSyncTime': getXmlNodeInt, 
+        'lastSegmentDrift': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -34201,6 +34239,8 @@ class KalturaLiveToVodJobData(KalturaJobData):
         kparams.addFloatIfDefined("totalVodDuration", self.totalVodDuration)
         kparams.addFloatIfDefined("lastSegmentDuration", self.lastSegmentDuration)
         kparams.addStringIfDefined("amfArray", self.amfArray)
+        kparams.addIntIfDefined("lastCuePointSyncTime", self.lastCuePointSyncTime)
+        kparams.addIntIfDefined("lastSegmentDrift", self.lastSegmentDrift)
         return kparams
 
     def getVodEntryId(self):
@@ -34232,6 +34272,18 @@ class KalturaLiveToVodJobData(KalturaJobData):
 
     def setAmfArray(self, newAmfArray):
         self.amfArray = newAmfArray
+
+    def getLastCuePointSyncTime(self):
+        return self.lastCuePointSyncTime
+
+    def setLastCuePointSyncTime(self, newLastCuePointSyncTime):
+        self.lastCuePointSyncTime = newLastCuePointSyncTime
+
+    def getLastSegmentDrift(self):
+        return self.lastSegmentDrift
+
+    def setLastSegmentDrift(self, newLastSegmentDrift):
+        self.lastSegmentDrift = newLastSegmentDrift
 
 
 # @package Kaltura
@@ -41477,7 +41529,10 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
             currentOperationSet=NotImplemented,
             currentOperationIndex=NotImplemented,
             pluginData=NotImplemented,
-            flavorAssetId=NotImplemented):
+            flavorAssetId=NotImplemented,
+            calculateComplexity=NotImplemented,
+            extractId3Tags=NotImplemented,
+            destDataFilePath=NotImplemented):
         KalturaConvartableJobData.__init__(self,
             srcFileSyncLocalPath,
             actualSrcFileSyncLocalPath,
@@ -41494,9 +41549,22 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
         # @var string
         self.flavorAssetId = flavorAssetId
 
+        # @var bool
+        self.calculateComplexity = calculateComplexity
+
+        # @var bool
+        self.extractId3Tags = extractId3Tags
+
+        # The data output file
+        # @var string
+        self.destDataFilePath = destDataFilePath
+
 
     PROPERTY_LOADERS = {
         'flavorAssetId': getXmlNodeText, 
+        'calculateComplexity': getXmlNodeBool, 
+        'extractId3Tags': getXmlNodeBool, 
+        'destDataFilePath': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -41507,6 +41575,9 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
         kparams = KalturaConvartableJobData.toParams(self)
         kparams.put("objectType", "KalturaExtractMediaJobData")
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
+        kparams.addBoolIfDefined("calculateComplexity", self.calculateComplexity)
+        kparams.addBoolIfDefined("extractId3Tags", self.extractId3Tags)
+        kparams.addStringIfDefined("destDataFilePath", self.destDataFilePath)
         return kparams
 
     def getFlavorAssetId(self):
@@ -41514,6 +41585,24 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
 
     def setFlavorAssetId(self, newFlavorAssetId):
         self.flavorAssetId = newFlavorAssetId
+
+    def getCalculateComplexity(self):
+        return self.calculateComplexity
+
+    def setCalculateComplexity(self, newCalculateComplexity):
+        self.calculateComplexity = newCalculateComplexity
+
+    def getExtractId3Tags(self):
+        return self.extractId3Tags
+
+    def setExtractId3Tags(self, newExtractId3Tags):
+        self.extractId3Tags = newExtractId3Tags
+
+    def getDestDataFilePath(self):
+        return self.destDataFilePath
+
+    def setDestDataFilePath(self, newDestDataFilePath):
+        self.destDataFilePath = newDestDataFilePath
 
 
 # @package Kaltura
@@ -54762,11 +54851,12 @@ class KalturaAnalyticsService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def query(self, filter):
+    def query(self, filter, pager = NotImplemented):
         """report query action allows to get a analytics data for specific query dimensions, metrics and filters."""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
         self.client.queueServiceActionCall("analytics", "query", KalturaReportResponse, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
