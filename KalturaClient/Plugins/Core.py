@@ -5213,6 +5213,7 @@ class KalturaRule(KalturaObjectBase):
             description=NotImplemented,
             ruleData=NotImplemented,
             message=NotImplemented,
+            code=NotImplemented,
             actions=NotImplemented,
             conditions=NotImplemented,
             contexts=NotImplemented,
@@ -5231,6 +5232,10 @@ class KalturaRule(KalturaObjectBase):
         # Message to be thrown to the player in case the rule is fulfilled
         # @var string
         self.message = message
+
+        # Code to be thrown to the player in case the rule is fulfilled
+        # @var string
+        self.code = code
 
         # Actions to be performed by the player in case the rule is fulfilled
         # @var array of KalturaRuleAction
@@ -5257,6 +5262,7 @@ class KalturaRule(KalturaObjectBase):
         'description': getXmlNodeText, 
         'ruleData': getXmlNodeText, 
         'message': getXmlNodeText, 
+        'code': getXmlNodeText, 
         'actions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
         'conditions': (KalturaObjectFactory.createArray, KalturaCondition), 
         'contexts': (KalturaObjectFactory.createArray, KalturaContextTypeHolder), 
@@ -5274,6 +5280,7 @@ class KalturaRule(KalturaObjectBase):
         kparams.addStringIfDefined("description", self.description)
         kparams.addStringIfDefined("ruleData", self.ruleData)
         kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("code", self.code)
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("conditions", self.conditions)
         kparams.addArrayIfDefined("contexts", self.contexts)
@@ -5298,6 +5305,12 @@ class KalturaRule(KalturaObjectBase):
 
     def setMessage(self, newMessage):
         self.message = newMessage
+
+    def getCode(self):
+        return self.code
+
+    def setCode(self, newCode):
+        self.code = newCode
 
     def getActions(self):
         return self.actions
@@ -21500,6 +21513,301 @@ class KalturaPermissionItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPluginData(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPluginData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDrmEntryPlayingPluginData(KalturaPluginData):
+    def __init__(self,
+            scheme=NotImplemented,
+            licenseURL=NotImplemented):
+        KalturaPluginData.__init__(self)
+
+        # @var string
+        self.scheme = scheme
+
+        # @var string
+        self.licenseURL = licenseURL
+
+
+    PROPERTY_LOADERS = {
+        'scheme': getXmlNodeText, 
+        'licenseURL': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaPluginData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDrmEntryPlayingPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPluginData.toParams(self)
+        kparams.put("objectType", "KalturaDrmEntryPlayingPluginData")
+        kparams.addStringIfDefined("scheme", self.scheme)
+        kparams.addStringIfDefined("licenseURL", self.licenseURL)
+        return kparams
+
+    def getScheme(self):
+        return self.scheme
+
+    def setScheme(self, newScheme):
+        self.scheme = newScheme
+
+    def getLicenseURL(self):
+        return self.licenseURL
+
+    def setLicenseURL(self, newLicenseURL):
+        self.licenseURL = newLicenseURL
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaybackSource(KalturaObjectBase):
+    def __init__(self,
+            deliveryProfileId=NotImplemented,
+            format=NotImplemented,
+            priority=NotImplemented,
+            protocols=NotImplemented,
+            flavors=NotImplemented,
+            url=NotImplemented,
+            drm=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.deliveryProfileId = deliveryProfileId
+
+        # @var string
+        self.format = format
+
+        # @var string
+        self.priority = priority
+
+        # @var array of KalturaString
+        self.protocols = protocols
+
+        # @var array of KalturaString
+        self.flavors = flavors
+
+        # @var string
+        self.url = url
+
+        # @var array of KalturaDrmEntryPlayingPluginData
+        self.drm = drm
+
+
+    PROPERTY_LOADERS = {
+        'deliveryProfileId': getXmlNodeText, 
+        'format': getXmlNodeText, 
+        'priority': getXmlNodeText, 
+        'protocols': (KalturaObjectFactory.createArray, KalturaString), 
+        'flavors': (KalturaObjectFactory.createArray, KalturaString), 
+        'url': getXmlNodeText, 
+        'drm': (KalturaObjectFactory.createArray, KalturaDrmEntryPlayingPluginData), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaybackSource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlaybackSource")
+        kparams.addStringIfDefined("deliveryProfileId", self.deliveryProfileId)
+        kparams.addStringIfDefined("format", self.format)
+        kparams.addStringIfDefined("priority", self.priority)
+        kparams.addArrayIfDefined("protocols", self.protocols)
+        kparams.addArrayIfDefined("flavors", self.flavors)
+        kparams.addStringIfDefined("url", self.url)
+        kparams.addArrayIfDefined("drm", self.drm)
+        return kparams
+
+    def getDeliveryProfileId(self):
+        return self.deliveryProfileId
+
+    def setDeliveryProfileId(self, newDeliveryProfileId):
+        self.deliveryProfileId = newDeliveryProfileId
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+    def getPriority(self):
+        return self.priority
+
+    def setPriority(self, newPriority):
+        self.priority = newPriority
+
+    def getProtocols(self):
+        return self.protocols
+
+    def setProtocols(self, newProtocols):
+        self.protocols = newProtocols
+
+    def getFlavors(self):
+        return self.flavors
+
+    def setFlavors(self, newFlavors):
+        self.flavors = newFlavors
+
+    def getUrl(self):
+        return self.url
+
+    def setUrl(self, newUrl):
+        self.url = newUrl
+
+    def getDrm(self):
+        return self.drm
+
+    def setDrm(self, newDrm):
+        self.drm = newDrm
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaybackRestriction(KalturaObjectBase):
+    def __init__(self,
+            message=NotImplemented,
+            code=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.message = message
+
+        # @var string
+        self.code = code
+
+
+    PROPERTY_LOADERS = {
+        'message': getXmlNodeText, 
+        'code': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaybackRestriction.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlaybackRestriction")
+        kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("code", self.code)
+        return kparams
+
+    def getMessage(self):
+        return self.message
+
+    def setMessage(self, newMessage):
+        self.message = newMessage
+
+    def getCode(self):
+        return self.code
+
+    def setCode(self, newCode):
+        self.code = newCode
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaybackContextResult(KalturaObjectBase):
+    def __init__(self,
+            sources=NotImplemented,
+            flavorAssets=NotImplemented,
+            messages=NotImplemented,
+            actions=NotImplemented,
+            restrictions=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var array of KalturaPlaybackSource
+        self.sources = sources
+
+        # @var array of KalturaFlavorAsset
+        self.flavorAssets = flavorAssets
+
+        # Array of messages as received from the rules that invalidated
+        # @var array of KalturaString
+        self.messages = messages
+
+        # Array of actions as received from the rules that invalidated
+        # @var array of KalturaRuleAction
+        self.actions = actions
+
+        # Array of actions as received from the rules that invalidated
+        # @var array of KalturaPlaybackRestriction
+        self.restrictions = restrictions
+
+
+    PROPERTY_LOADERS = {
+        'sources': (KalturaObjectFactory.createArray, KalturaPlaybackSource), 
+        'flavorAssets': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
+        'messages': (KalturaObjectFactory.createArray, KalturaString), 
+        'actions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
+        'restrictions': (KalturaObjectFactory.createArray, KalturaPlaybackRestriction), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaybackContextResult.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlaybackContextResult")
+        kparams.addArrayIfDefined("sources", self.sources)
+        kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
+        kparams.addArrayIfDefined("messages", self.messages)
+        kparams.addArrayIfDefined("actions", self.actions)
+        kparams.addArrayIfDefined("restrictions", self.restrictions)
+        return kparams
+
+    def getSources(self):
+        return self.sources
+
+    def setSources(self, newSources):
+        self.sources = newSources
+
+    def getFlavorAssets(self):
+        return self.flavorAssets
+
+    def setFlavorAssets(self, newFlavorAssets):
+        self.flavorAssets = newFlavorAssets
+
+    def getMessages(self):
+        return self.messages
+
+    def setMessages(self, newMessages):
+        self.messages = newMessages
+
+    def getActions(self):
+        return self.actions
+
+    def setActions(self, newActions):
+        self.actions = newActions
+
+    def getRestrictions(self):
+        return self.restrictions
+
+    def setRestrictions(self, newRestrictions):
+        self.restrictions = newRestrictions
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPlaylist(KalturaBaseEntry):
     def __init__(self,
             id=NotImplemented,
@@ -21698,26 +22006,6 @@ class KalturaPlaylist(KalturaBaseEntry):
 
     def getExecuteUrl(self):
         return self.executeUrl
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaPluginData(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPluginData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPluginData")
-        return kparams
 
 
 # @package Kaltura
@@ -38011,6 +38299,32 @@ class KalturaUrlTokenizerBitGravity(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerCht(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerCht.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerCht")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -41603,6 +41917,42 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
 
     def setDestDataFilePath(self, newDestDataFilePath):
         self.destDataFilePath = newDestDataFilePath
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFairPlayEntryPlayingPluginData(KalturaDrmEntryPlayingPluginData):
+    def __init__(self,
+            scheme=NotImplemented,
+            licenseURL=NotImplemented,
+            certificate=NotImplemented):
+        KalturaDrmEntryPlayingPluginData.__init__(self,
+            scheme,
+            licenseURL)
+
+        # @var string
+        self.certificate = certificate
+
+
+    PROPERTY_LOADERS = {
+        'certificate': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaDrmEntryPlayingPluginData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFairPlayEntryPlayingPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDrmEntryPlayingPluginData.toParams(self)
+        kparams.put("objectType", "KalturaFairPlayEntryPlayingPluginData")
+        kparams.addStringIfDefined("certificate", self.certificate)
+        return kparams
+
+    def getCertificate(self):
+        return self.certificate
+
+    def setCertificate(self, newCertificate):
+        self.certificate = newCertificate
 
 
 # @package Kaltura
@@ -55243,6 +55593,18 @@ class KalturaBaseEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaBaseEntry)
 
+    def getPlaybackContext(self, entryId, contextDataParams):
+        """This action delivers all data relevant for player"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("contextDataParams", contextDataParams)
+        self.client.queueServiceActionCall("baseentry", "getPlaybackContext", KalturaPlaybackContextResult, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaPlaybackContextResult)
+
 
 # @package Kaltura
 # @subpackage Client
@@ -56695,7 +57057,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration):
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented):
         """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
@@ -56703,6 +57065,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
+        kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
         self.client.queueServiceActionCall("livechannel", "setRecordedContent", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -56990,7 +57353,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration):
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented):
         """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
@@ -56998,6 +57361,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
+        kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
         self.client.queueServiceActionCall("livestream", "setRecordedContent", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -60159,8 +60523,12 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPartnerUsage': KalturaPartnerUsage,
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
-            'KalturaPlaylist': KalturaPlaylist,
             'KalturaPluginData': KalturaPluginData,
+            'KalturaDrmEntryPlayingPluginData': KalturaDrmEntryPlayingPluginData,
+            'KalturaPlaybackSource': KalturaPlaybackSource,
+            'KalturaPlaybackRestriction': KalturaPlaybackRestriction,
+            'KalturaPlaybackContextResult': KalturaPlaybackContextResult,
+            'KalturaPlaylist': KalturaPlaylist,
             'KalturaRemotePath': KalturaRemotePath,
             'KalturaUrlResource': KalturaUrlResource,
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
@@ -60364,6 +60732,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerAkamaiRtsp': KalturaUrlTokenizerAkamaiRtsp,
             'KalturaUrlTokenizerAkamaiSecureHd': KalturaUrlTokenizerAkamaiSecureHd,
             'KalturaUrlTokenizerBitGravity': KalturaUrlTokenizerBitGravity,
+            'KalturaUrlTokenizerCht': KalturaUrlTokenizerCht,
             'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
@@ -60405,6 +60774,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryResource': KalturaEntryResource,
             'KalturaEntryServerNodeBaseFilter': KalturaEntryServerNodeBaseFilter,
             'KalturaExtractMediaJobData': KalturaExtractMediaJobData,
+            'KalturaFairPlayEntryPlayingPluginData': KalturaFairPlayEntryPlayingPluginData,
             'KalturaIntegerField': KalturaIntegerField,
             'KalturaFieldCompareCondition': KalturaFieldCompareCondition,
             'KalturaStringField': KalturaStringField,
