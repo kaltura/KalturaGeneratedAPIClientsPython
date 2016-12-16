@@ -1623,6 +1623,72 @@ class KalturaMetadataSearchItem(KalturaSearchOperator):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataField(KalturaStringField):
+    def __init__(self,
+            description=NotImplemented,
+            value=NotImplemented,
+            xPath=NotImplemented,
+            profileId=NotImplemented,
+            profileSystemName=NotImplemented):
+        KalturaStringField.__init__(self,
+            description,
+            value)
+
+        # May contain the full xpath to the field in three formats
+        # 	 1. Slashed xPath, e.g. /metadata/myElementName
+        # 	 2. Using local-name function, e.g. /[local-name()='metadata']/[local-name()='myElementName']
+        # 	 3. Using only the field name, e.g. myElementName, it will be searched as //myElementName
+        # @var string
+        self.xPath = xPath
+
+        # Metadata profile id
+        # @var int
+        self.profileId = profileId
+
+        # Metadata profile system name
+        # @var string
+        self.profileSystemName = profileSystemName
+
+
+    PROPERTY_LOADERS = {
+        'xPath': getXmlNodeText, 
+        'profileId': getXmlNodeInt, 
+        'profileSystemName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaStringField.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataField.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaStringField.toParams(self)
+        kparams.put("objectType", "KalturaMetadataField")
+        kparams.addStringIfDefined("xPath", self.xPath)
+        kparams.addIntIfDefined("profileId", self.profileId)
+        kparams.addStringIfDefined("profileSystemName", self.profileSystemName)
+        return kparams
+
+    def getXPath(self):
+        return self.xPath
+
+    def setXPath(self, newXPath):
+        self.xPath = newXPath
+
+    def getProfileId(self):
+        return self.profileId
+
+    def setProfileId(self, newProfileId):
+        self.profileId = newProfileId
+
+    def getProfileSystemName(self):
+        return self.profileSystemName
+
+    def setProfileSystemName(self, newProfileSystemName):
+        self.profileSystemName = newProfileSystemName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMetadataFilter(KalturaMetadataBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -2063,6 +2129,7 @@ class KalturaMetadataClientPlugin(KalturaClientPlugin):
             'KalturaMetadataFieldChangedCondition': KalturaMetadataFieldChangedCondition,
             'KalturaMetadataProfileFilter': KalturaMetadataProfileFilter,
             'KalturaMetadataSearchItem': KalturaMetadataSearchItem,
+            'KalturaMetadataField': KalturaMetadataField,
             'KalturaMetadataFilter': KalturaMetadataFilter,
         }
 

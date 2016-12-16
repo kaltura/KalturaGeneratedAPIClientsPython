@@ -38145,6 +38145,44 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented,
+            usePath=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+        # @var bool
+        self.usePath = usePath
+
+
+    PROPERTY_LOADERS = {
+        'usePath': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerKs.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerKs")
+        kparams.addBoolIfDefined("usePath", self.usePath)
+        return kparams
+
+    def getUsePath(self):
+        return self.usePath
+
+    def setUsePath(self, newUsePath):
+        self.usePath = newUsePath
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerLevel3(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -60545,6 +60583,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerBitGravity': KalturaUrlTokenizerBitGravity,
             'KalturaUrlTokenizerCht': KalturaUrlTokenizerCht,
             'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
+            'KalturaUrlTokenizerKs': KalturaUrlTokenizerKs,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
