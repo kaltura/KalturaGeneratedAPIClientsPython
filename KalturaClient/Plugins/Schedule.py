@@ -3852,6 +3852,18 @@ class KalturaScheduleEventService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduleEventListResponse)
 
+    def getConflicts(self, resourceIds, scheduleEvent):
+        """List conflicting events for resourcesIds by event's dates"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("resourceIds", resourceIds)
+        kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", KalturaScheduleEvent, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.createArray(resultNode, KalturaScheduleEvent)
+
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented):
         """Add new bulk upload batch job"""
 

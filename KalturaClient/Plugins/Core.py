@@ -5125,6 +5125,50 @@ class KalturaAccessControlContextTypeHolder(KalturaContextTypeHolder):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAccessControlMessage(KalturaObjectBase):
+    def __init__(self,
+            message=NotImplemented,
+            code=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.message = message
+
+        # @var string
+        self.code = code
+
+
+    PROPERTY_LOADERS = {
+        'message': getXmlNodeText, 
+        'code': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAccessControlMessage.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAccessControlMessage")
+        kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("code", self.code)
+        return kparams
+
+    def getMessage(self):
+        return self.message
+
+    def setMessage(self, newMessage):
+        self.message = newMessage
+
+    def getCode(self):
+        return self.code
+
+    def setCode(self, newCode):
+        self.code = newCode
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaRuleAction(KalturaObjectBase):
     def __init__(self,
             type=NotImplemented):
@@ -10590,7 +10634,8 @@ class KalturaConversionProfile(KalturaObjectBase):
             xslTransformation=NotImplemented,
             storageProfileId=NotImplemented,
             mediaParserType=NotImplemented,
-            calculateComplexity=NotImplemented):
+            calculateComplexity=NotImplemented,
+            collectionTags=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -10675,6 +10720,11 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.calculateComplexity = calculateComplexity
 
+        # Defines the tags that should be used to define 'collective'/group/multi-flavor processing,
+        # 	 like 'mbr' or 'ism'
+        # @var string
+        self.collectionTags = collectionTags
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10697,6 +10747,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         'storageProfileId': getXmlNodeInt, 
         'mediaParserType': (KalturaEnumsFactory.createString, "KalturaMediaParserType"), 
         'calculateComplexity': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'collectionTags': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10722,6 +10773,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addIntIfDefined("storageProfileId", self.storageProfileId)
         kparams.addStringEnumIfDefined("mediaParserType", self.mediaParserType)
         kparams.addIntEnumIfDefined("calculateComplexity", self.calculateComplexity)
+        kparams.addStringIfDefined("collectionTags", self.collectionTags)
         return kparams
 
     def getId(self):
@@ -10832,6 +10884,12 @@ class KalturaConversionProfile(KalturaObjectBase):
     def setCalculateComplexity(self, newCalculateComplexity):
         self.calculateComplexity = newCalculateComplexity
 
+    def getCollectionTags(self):
+        return self.collectionTags
+
+    def setCollectionTags(self, newCollectionTags):
+        self.collectionTags = newCollectionTags
+
 
 # @package Kaltura
 # @subpackage Client
@@ -10846,7 +10904,8 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
             deletePolicy=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
-            twoPass=NotImplemented):
+            twoPass=NotImplemented,
+            tags=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the conversion profile
@@ -10888,6 +10947,9 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.twoPass = twoPass
 
+        # @var string
+        self.tags = tags
+
 
     PROPERTY_LOADERS = {
         'conversionProfileId': getXmlNodeInt, 
@@ -10900,6 +10962,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         'isEncrypted': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'contentAwareness': getXmlNodeFloat, 
         'twoPass': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'tags': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10917,6 +10980,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         kparams.addIntEnumIfDefined("isEncrypted", self.isEncrypted)
         kparams.addFloatIfDefined("contentAwareness", self.contentAwareness)
         kparams.addIntEnumIfDefined("twoPass", self.twoPass)
+        kparams.addStringIfDefined("tags", self.tags)
         return kparams
 
     def getConversionProfileId(self):
@@ -10972,6 +11036,12 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
     def setTwoPass(self, newTwoPass):
         self.twoPass = newTwoPass
+
+    def getTags(self):
+        return self.tags
+
+    def setTags(self, newTags):
+        self.tags = newTags
 
 
 # @package Kaltura
@@ -21540,7 +21610,7 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
             licenseURL=NotImplemented):
         KalturaPluginData.__init__(self)
 
-        # @var string
+        # @var KalturaDrmSchemeName
         self.scheme = scheme
 
         # @var string
@@ -21548,7 +21618,7 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
 
     PROPERTY_LOADERS = {
-        'scheme': getXmlNodeText, 
+        'scheme': (KalturaEnumsFactory.createString, "KalturaDrmSchemeName"), 
         'licenseURL': getXmlNodeText, 
     }
 
@@ -21559,7 +21629,7 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
     def toParams(self):
         kparams = KalturaPluginData.toParams(self)
         kparams.put("objectType", "KalturaDrmPlaybackPluginData")
-        kparams.addStringIfDefined("scheme", self.scheme)
+        kparams.addStringEnumIfDefined("scheme", self.scheme)
         kparams.addStringIfDefined("licenseURL", self.licenseURL)
         return kparams
 
@@ -21574,6 +21644,172 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
     def setLicenseURL(self, newLicenseURL):
         self.licenseURL = newLicenseURL
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaybackSource(KalturaObjectBase):
+    def __init__(self,
+            deliveryProfileId=NotImplemented,
+            format=NotImplemented,
+            protocols=NotImplemented,
+            flavorIds=NotImplemented,
+            url=NotImplemented,
+            drm=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.deliveryProfileId = deliveryProfileId
+
+        # source format according to delivery profile streamer type (applehttp, mpegdash etc.)
+        # @var string
+        self.format = format
+
+        # comma separated string according to deliveryProfile media protocols ('http,https' etc.)
+        # @var string
+        self.protocols = protocols
+
+        # comma separated string of flavor ids
+        # @var string
+        self.flavorIds = flavorIds
+
+        # @var string
+        self.url = url
+
+        # drm data object containing relevant license url ,scheme name and certificate
+        # @var array of KalturaDrmPlaybackPluginData
+        self.drm = drm
+
+
+    PROPERTY_LOADERS = {
+        'deliveryProfileId': getXmlNodeText, 
+        'format': getXmlNodeText, 
+        'protocols': getXmlNodeText, 
+        'flavorIds': getXmlNodeText, 
+        'url': getXmlNodeText, 
+        'drm': (KalturaObjectFactory.createArray, KalturaDrmPlaybackPluginData), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaybackSource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlaybackSource")
+        kparams.addStringIfDefined("deliveryProfileId", self.deliveryProfileId)
+        kparams.addStringIfDefined("format", self.format)
+        kparams.addStringIfDefined("protocols", self.protocols)
+        kparams.addStringIfDefined("flavorIds", self.flavorIds)
+        kparams.addStringIfDefined("url", self.url)
+        kparams.addArrayIfDefined("drm", self.drm)
+        return kparams
+
+    def getDeliveryProfileId(self):
+        return self.deliveryProfileId
+
+    def setDeliveryProfileId(self, newDeliveryProfileId):
+        self.deliveryProfileId = newDeliveryProfileId
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+    def getProtocols(self):
+        return self.protocols
+
+    def setProtocols(self, newProtocols):
+        self.protocols = newProtocols
+
+    def getFlavorIds(self):
+        return self.flavorIds
+
+    def setFlavorIds(self, newFlavorIds):
+        self.flavorIds = newFlavorIds
+
+    def getUrl(self):
+        return self.url
+
+    def setUrl(self, newUrl):
+        self.url = newUrl
+
+    def getDrm(self):
+        return self.drm
+
+    def setDrm(self, newDrm):
+        self.drm = newDrm
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlaybackContext(KalturaObjectBase):
+    def __init__(self,
+            sources=NotImplemented,
+            flavorAssets=NotImplemented,
+            actions=NotImplemented,
+            messages=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var array of KalturaPlaybackSource
+        self.sources = sources
+
+        # @var array of KalturaFlavorAsset
+        self.flavorAssets = flavorAssets
+
+        # Array of actions as received from the rules that invalidated
+        # @var array of KalturaRuleAction
+        self.actions = actions
+
+        # Array of actions as received from the rules that invalidated
+        # @var array of KalturaAccessControlMessage
+        self.messages = messages
+
+
+    PROPERTY_LOADERS = {
+        'sources': (KalturaObjectFactory.createArray, KalturaPlaybackSource), 
+        'flavorAssets': (KalturaObjectFactory.createArray, KalturaFlavorAsset), 
+        'actions': (KalturaObjectFactory.createArray, KalturaRuleAction), 
+        'messages': (KalturaObjectFactory.createArray, KalturaAccessControlMessage), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlaybackContext.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlaybackContext")
+        kparams.addArrayIfDefined("sources", self.sources)
+        kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
+        kparams.addArrayIfDefined("actions", self.actions)
+        kparams.addArrayIfDefined("messages", self.messages)
+        return kparams
+
+    def getSources(self):
+        return self.sources
+
+    def setSources(self, newSources):
+        self.sources = newSources
+
+    def getFlavorAssets(self):
+        return self.flavorAssets
+
+    def setFlavorAssets(self, newFlavorAssets):
+        self.flavorAssets = newFlavorAssets
+
+    def getActions(self):
+        return self.actions
+
+    def setActions(self, newActions):
+        self.actions = newActions
+
+    def getMessages(self):
+        return self.messages
+
+    def setMessages(self, newMessages):
+        self.messages = newMessages
 
 
 # @package Kaltura
@@ -55451,11 +55687,11 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("contextDataParams", contextDataParams)
-        self.client.queueServiceActionCall("baseentry", "getPlaybackContext", KalturaPlaybackContextOptions, kparams)
+        self.client.queueServiceActionCall("baseentry", "getPlaybackContext", KalturaPlaybackContext, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaPlaybackContextOptions)
+        return KalturaObjectFactory.create(resultNode, KalturaPlaybackContext)
 
 
 # @package Kaltura
@@ -60254,6 +60490,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControl': KalturaAccessControl,
             'KalturaContextTypeHolder': KalturaContextTypeHolder,
             'KalturaAccessControlContextTypeHolder': KalturaAccessControlContextTypeHolder,
+            'KalturaAccessControlMessage': KalturaAccessControlMessage,
             'KalturaRuleAction': KalturaRuleAction,
             'KalturaCondition': KalturaCondition,
             'KalturaRule': KalturaRule,
@@ -60377,6 +60614,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionItem': KalturaPermissionItem,
             'KalturaPluginData': KalturaPluginData,
             'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
+            'KalturaPlaybackSource': KalturaPlaybackSource,
+            'KalturaPlaybackContext': KalturaPlaybackContext,
             'KalturaPlaylist': KalturaPlaylist,
             'KalturaRemotePath': KalturaRemotePath,
             'KalturaUrlResource': KalturaUrlResource,
