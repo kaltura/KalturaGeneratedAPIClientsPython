@@ -29,6 +29,7 @@
 # @subpackage Client
 from Core import *
 from Integration import *
+from Transcript import *
 from ..Base import *
 
 ########## enums ##########

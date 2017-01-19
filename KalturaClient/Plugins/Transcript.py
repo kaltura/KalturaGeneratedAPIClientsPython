@@ -50,6 +50,18 @@ class KalturaTranscriptAssetOrderBy(object):
     def getValue(self):
         return self.value
 
+# @package Kaltura
+# @subpackage Client
+class KalturaTranscriptProviderType(object):
+    CIELO24 = "cielo24.Cielo24"
+    VOICEBASE = "voicebase.Voicebase"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -75,7 +87,8 @@ class KalturaTranscriptAsset(KalturaAttachmentAsset):
             status=NotImplemented,
             accuracy=NotImplemented,
             humanVerified=NotImplemented,
-            language=NotImplemented):
+            language=NotImplemented,
+            providerType=NotImplemented):
         KalturaAttachmentAsset.__init__(self,
             id,
             entryId,
@@ -108,11 +121,16 @@ class KalturaTranscriptAsset(KalturaAttachmentAsset):
         # @var KalturaLanguage
         self.language = language
 
+        # The provider of the transcript
+        # @var KalturaTranscriptProviderType
+        self.providerType = providerType
+
 
     PROPERTY_LOADERS = {
         'accuracy': getXmlNodeFloat, 
         'humanVerified': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
+        'providerType': (KalturaEnumsFactory.createString, "KalturaTranscriptProviderType"), 
     }
 
     def fromXml(self, node):
@@ -125,6 +143,7 @@ class KalturaTranscriptAsset(KalturaAttachmentAsset):
         kparams.addFloatIfDefined("accuracy", self.accuracy)
         kparams.addIntEnumIfDefined("humanVerified", self.humanVerified)
         kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addStringEnumIfDefined("providerType", self.providerType)
         return kparams
 
     def getAccuracy(self):
@@ -144,6 +163,12 @@ class KalturaTranscriptAsset(KalturaAttachmentAsset):
 
     def setLanguage(self, newLanguage):
         self.language = newLanguage
+
+    def getProviderType(self):
+        return self.providerType
+
+    def setProviderType(self, newProviderType):
+        self.providerType = newProviderType
 
 
 # @package Kaltura
@@ -394,6 +419,7 @@ class KalturaTranscriptClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaTranscriptAssetOrderBy': KalturaTranscriptAssetOrderBy,
+            'KalturaTranscriptProviderType': KalturaTranscriptProviderType,
         }
 
     def getTypes(self):
