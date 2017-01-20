@@ -339,6 +339,16 @@ class KalturaSyndicationDistributionProfileOrderBy(object):
     def getValue(self):
         return self.value
 
+# @package Kaltura
+# @subpackage Client
+class KalturaSyndicationDistributionProviderOrderBy(object):
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -4696,6 +4706,34 @@ class KalturaSyndicationDistributionProfileFilter(KalturaSyndicationDistribution
         return kparams
 
 
+# @package Kaltura
+# @subpackage Client
+class KalturaSyndicationDistributionProviderFilter(KalturaSyndicationDistributionProviderBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented):
+        KalturaSyndicationDistributionProviderBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            typeEqual,
+            typeIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaSyndicationDistributionProviderBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSyndicationDistributionProviderFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSyndicationDistributionProviderBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaSyndicationDistributionProviderFilter")
+        return kparams
+
+
 ########## services ##########
 
 # @package Kaltura
@@ -5241,6 +5279,7 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProviderActionOrderBy': KalturaGenericDistributionProviderActionOrderBy,
             'KalturaGenericDistributionProviderOrderBy': KalturaGenericDistributionProviderOrderBy,
             'KalturaSyndicationDistributionProfileOrderBy': KalturaSyndicationDistributionProfileOrderBy,
+            'KalturaSyndicationDistributionProviderOrderBy': KalturaSyndicationDistributionProviderOrderBy,
         }
 
     def getTypes(self):
@@ -5302,6 +5341,7 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
             'KalturaGenericDistributionProfileFilter': KalturaGenericDistributionProfileFilter,
             'KalturaGenericDistributionProviderFilter': KalturaGenericDistributionProviderFilter,
             'KalturaSyndicationDistributionProfileFilter': KalturaSyndicationDistributionProfileFilter,
+            'KalturaSyndicationDistributionProviderFilter': KalturaSyndicationDistributionProviderFilter,
         }
 
     # @return string
