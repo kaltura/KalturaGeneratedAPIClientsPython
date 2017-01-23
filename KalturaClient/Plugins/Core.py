@@ -1561,6 +1561,7 @@ class KalturaBaseEntryCloneOptions(object):
     THUMB_CUE_POINTS = "thumbCuePoint.THUMB_CUE_POINTS"
     USERS = "1"
     CATEGORIES = "2"
+    CHILD_ENTRIES = "3"
 
     def __init__(self, value):
         self.value = value
