@@ -6504,6 +6504,50 @@ class KalturaAssetParamsResourceContainer(KalturaResource):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAssetServeOptions(KalturaObjectBase):
+    def __init__(self,
+            download=NotImplemented,
+            referrer=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var bool
+        self.download = download
+
+        # @var string
+        self.referrer = referrer
+
+
+    PROPERTY_LOADERS = {
+        'download': getXmlNodeBool, 
+        'referrer': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetServeOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAssetServeOptions")
+        kparams.addBoolIfDefined("download", self.download)
+        kparams.addStringIfDefined("referrer", self.referrer)
+        return kparams
+
+    def getDownload(self):
+        return self.download
+
+    def setDownload(self, newDownload):
+        self.download = newDownload
+
+    def getReferrer(self):
+        return self.referrer
+
+    def setReferrer(self, newReferrer):
+        self.referrer = newReferrer
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaOperationAttributes(KalturaObjectBase):
     """Base class to all operation attributes types"""
 
@@ -24495,50 +24539,6 @@ class KalturaSyndicationFeedEntryCount(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaThumbnailServeOptions(KalturaObjectBase):
-    def __init__(self,
-            download=NotImplemented,
-            referrer=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var bool
-        self.download = download
-
-        # @var string
-        self.referrer = referrer
-
-
-    PROPERTY_LOADERS = {
-        'download': getXmlNodeBool, 
-        'referrer': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbnailServeOptions.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaThumbnailServeOptions")
-        kparams.addBoolIfDefined("download", self.download)
-        kparams.addStringIfDefined("referrer", self.referrer)
-        return kparams
-
-    def getDownload(self):
-        return self.download
-
-    def setDownload(self, newDownload):
-        self.download = newDownload
-
-    def getReferrer(self):
-        return self.referrer
-
-    def setReferrer(self, newReferrer):
-        self.referrer = newReferrer
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaUiConf(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -37415,6 +37415,30 @@ class KalturaThumbParamsListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbnailServeOptions(KalturaAssetServeOptions):
+    def __init__(self,
+            download=NotImplemented,
+            referrer=NotImplemented):
+        KalturaAssetServeOptions.__init__(self,
+            download,
+            referrer)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAssetServeOptions.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbnailServeOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetServeOptions.toParams(self)
+        kparams.put("objectType", "KalturaThumbnailServeOptions")
+        return kparams
 
 
 # @package Kaltura
@@ -60508,6 +60532,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaResource': KalturaResource,
             'KalturaContentResource': KalturaContentResource,
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
+            'KalturaAssetServeOptions': KalturaAssetServeOptions,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
             'KalturaBaseEntryCloneOptionItem': KalturaBaseEntryCloneOptionItem,
@@ -60645,7 +60670,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
-            'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
             'KalturaUiConf': KalturaUiConf,
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
@@ -60810,6 +60834,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSyncCategoryPrivacyContextJobData': KalturaSyncCategoryPrivacyContextJobData,
             'KalturaThumbAssetListResponse': KalturaThumbAssetListResponse,
             'KalturaThumbParamsListResponse': KalturaThumbParamsListResponse,
+            'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
             'KalturaTubeMogulSyndicationFeed': KalturaTubeMogulSyndicationFeed,
             'KalturaUiConfBaseFilter': KalturaUiConfBaseFilter,
             'KalturaUiConfListResponse': KalturaUiConfListResponse,

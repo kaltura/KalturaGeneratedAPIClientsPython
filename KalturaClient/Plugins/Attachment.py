@@ -210,6 +210,30 @@ class KalturaAttachmentAssetListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAttachmentServeOptions(KalturaAssetServeOptions):
+    def __init__(self,
+            download=NotImplemented,
+            referrer=NotImplemented):
+        KalturaAssetServeOptions.__init__(self,
+            download,
+            referrer)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAssetServeOptions.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAttachmentServeOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetServeOptions.toParams(self)
+        kparams.put("objectType", "KalturaAttachmentServeOptions")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -467,11 +491,12 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaRemotePathListResponse)
 
-    def serve(self, attachmentAssetId):
+    def serve(self, attachmentAssetId, serveOptions = NotImplemented):
         """Serves attachment by its id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("attachmentAssetId", attachmentAssetId)
+        kparams.addObjectIfDefined("serveOptions", serveOptions)
         self.client.queueServiceActionCall('attachment_attachmentasset', 'serve', None ,kparams)
         return self.client.getServeUrl()
 
@@ -533,6 +558,7 @@ class KalturaAttachmentClientPlugin(KalturaClientPlugin):
         return {
             'KalturaAttachmentAsset': KalturaAttachmentAsset,
             'KalturaAttachmentAssetListResponse': KalturaAttachmentAssetListResponse,
+            'KalturaAttachmentServeOptions': KalturaAttachmentServeOptions,
             'KalturaAttachmentAssetBaseFilter': KalturaAttachmentAssetBaseFilter,
             'KalturaAttachmentAssetFilter': KalturaAttachmentAssetFilter,
         }
