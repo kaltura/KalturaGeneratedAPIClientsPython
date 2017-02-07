@@ -16781,7 +16781,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             lastBroadcast=NotImplemented,
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
-            liveStatus=NotImplemented):
+            liveStatus=NotImplemented,
+            segmentDuration=NotImplemented):
         KalturaMediaEntry.__init__(self,
             id,
             name,
@@ -16906,6 +16907,10 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @readonly
         self.liveStatus = liveStatus
 
+        # The chunk duration value in milliseconds
+        # @var int
+        self.segmentDuration = segmentDuration
+
 
     PROPERTY_LOADERS = {
         'offlineMessage': getXmlNodeText, 
@@ -16922,6 +16927,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'currentBroadcastStartTime': getXmlNodeFloat, 
         'recordingOptions': (KalturaObjectFactory.create, KalturaLiveEntryRecordingOptions), 
         'liveStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'segmentDuration': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -16942,6 +16948,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addArrayIfDefined("publishConfigurations", self.publishConfigurations)
         kparams.addFloatIfDefined("currentBroadcastStartTime", self.currentBroadcastStartTime)
         kparams.addObjectIfDefined("recordingOptions", self.recordingOptions)
+        kparams.addIntIfDefined("segmentDuration", self.segmentDuration)
         return kparams
 
     def getOfflineMessage(self):
@@ -17018,6 +17025,12 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
     def getLiveStatus(self):
         return self.liveStatus
+
+    def getSegmentDuration(self):
+        return self.segmentDuration
+
+    def setSegmentDuration(self, newSegmentDuration):
+        self.segmentDuration = newSegmentDuration
 
 
 # @package Kaltura
@@ -17102,6 +17115,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
+            segmentDuration=NotImplemented,
             playlistId=NotImplemented,
             repeat=NotImplemented):
         KalturaLiveEntry.__init__(self,
@@ -17182,7 +17196,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             lastBroadcast,
             currentBroadcastStartTime,
             recordingOptions,
-            liveStatus)
+            liveStatus,
+            segmentDuration)
 
         # Playlist id to be played
         # @var string
@@ -18042,6 +18057,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
+            segmentDuration=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -18136,7 +18152,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             lastBroadcast,
             currentBroadcastStartTime,
             recordingOptions,
-            liveStatus)
+            liveStatus,
+            segmentDuration)
 
         # The stream id as provided by the provider
         # @var string
@@ -51437,6 +51454,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
+            segmentDuration=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -51532,6 +51550,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             currentBroadcastStartTime,
             recordingOptions,
             liveStatus,
+            segmentDuration,
             streamRemoteId,
             streamRemoteBackupId,
             bitrates,
