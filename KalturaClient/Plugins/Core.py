@@ -1562,6 +1562,7 @@ class KalturaBaseEntryCloneOptions(object):
     USERS = "1"
     CATEGORIES = "2"
     CHILD_ENTRIES = "3"
+    ACCESS_CONTROL = "4"
 
     def __init__(self, value):
         self.value = value
