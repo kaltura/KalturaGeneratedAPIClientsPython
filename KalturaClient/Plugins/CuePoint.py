@@ -839,14 +839,38 @@ class KalturaCuePointService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaCuePointListResponse)
 
-    def serveBulk(self, filter = NotImplemented, pager = NotImplemented):
-        """Download multiple cue points objects as XML definitions"""
+    def clone(self, id, entryId):
+        """Clone cuePoint with id to given entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "clone", KalturaCuePoint, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+
+    def count(self, filter = NotImplemented):
+        """count cue point objects by filter"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall('cuepoint_cuepoint', 'serveBulk', None ,kparams)
-        return self.client.getServeUrl()
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "count", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
+
+    def delete(self, id):
+        """delete cue point by id, and delete all children cue points"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
 
     def get(self, id):
         """Retrieve an CuePoint object by id"""
@@ -871,16 +895,14 @@ class KalturaCuePointService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaCuePointListResponse)
 
-    def count(self, filter = NotImplemented):
-        """count cue point objects by filter"""
+    def serveBulk(self, filter = NotImplemented, pager = NotImplemented):
+        """Download multiple cue points objects as XML definitions"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "count", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall('cuepoint_cuepoint', 'serveBulk', None ,kparams)
+        return self.client.getServeUrl()
 
     def update(self, id, cuePoint):
         """Update cue point by id"""
@@ -894,16 +916,6 @@ class KalturaCuePointService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
 
-    def delete(self, id):
-        """delete cue point by id, and delete all children cue points"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
     def updateStatus(self, id, status):
         """Update cuePoint status by id"""
 
@@ -914,18 +926,6 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-
-    def clone(self, id, entryId):
-        """Clone cuePoint with id to given entry"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "clone", KalturaCuePoint, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
 
 ########## main ##########
 class KalturaCuePointClientPlugin(KalturaClientPlugin):

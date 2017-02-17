@@ -1053,18 +1053,6 @@ class KalturaQuizService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaQuiz)
 
-    def update(self, entryId, quiz):
-        """Allows to update a quiz"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addObjectIfDefined("quiz", quiz)
-        self.client.queueServiceActionCall("quiz_quiz", "update", KalturaQuiz, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
-
     def get(self, entryId):
         """Allows to get a quiz"""
 
@@ -1075,6 +1063,18 @@ class KalturaQuizService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+
+    def getUrl(self, entryId, quizOutputType):
+        """sends a with an api request for pdf from quiz object"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("quizOutputType", quizOutputType);
+        self.client.queueServiceActionCall("quiz_quiz", "getUrl", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List quiz objects by filter and pager"""
@@ -1099,17 +1099,17 @@ class KalturaQuizService(KalturaServiceBase):
         self.client.queueServiceActionCall('quiz_quiz', 'serve', None ,kparams)
         return self.client.getServeUrl()
 
-    def getUrl(self, entryId, quizOutputType):
-        """sends a with an api request for pdf from quiz object"""
+    def update(self, entryId, quiz):
+        """Allows to update a quiz"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kparams.addIntIfDefined("quizOutputType", quizOutputType);
-        self.client.queueServiceActionCall("quiz_quiz", "getUrl", None, kparams)
+        kparams.addObjectIfDefined("quiz", quiz)
+        self.client.queueServiceActionCall("quiz_quiz", "update", KalturaQuiz, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
+        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
 
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):

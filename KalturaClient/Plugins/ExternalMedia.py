@@ -814,28 +814,16 @@ class KalturaExternalMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
 
-    def get(self, id):
-        """Get external media entry by ID."""
+    def count(self, filter = NotImplemented):
+        """Count media entries by filter."""
 
         kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "get", KalturaExternalMediaEntry, kparams)
+        kparams.addObjectIfDefined("filter", filter)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "count", None, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
-
-    def update(self, id, entry):
-        """Update external media entry. Only the properties that were set will be updated."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        kparams.addObjectIfDefined("entry", entry)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "update", KalturaExternalMediaEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
+        return getXmlNodeInt(resultNode)
 
     def delete(self, id):
         """Delete a external media entry."""
@@ -846,6 +834,17 @@ class KalturaExternalMediaService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def get(self, id):
+        """Get external media entry by ID."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "get", KalturaExternalMediaEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List media entries by filter with paging support."""
@@ -859,16 +858,17 @@ class KalturaExternalMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntryListResponse)
 
-    def count(self, filter = NotImplemented):
-        """Count media entries by filter."""
+    def update(self, id, entry):
+        """Update external media entry. Only the properties that were set will be updated."""
 
         kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "count", None, kparams)
+        kparams.addStringIfDefined("id", id)
+        kparams.addObjectIfDefined("entry", entry)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "update", KalturaExternalMediaEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
+        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
 
 ########## main ##########
 class KalturaExternalMediaClientPlugin(KalturaClientPlugin):

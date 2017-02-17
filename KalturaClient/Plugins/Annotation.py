@@ -577,30 +577,6 @@ class KalturaAnnotationService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaAnnotation)
 
-    def update(self, id, annotation):
-        """Update annotation by id"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        kparams.addObjectIfDefined("annotation", annotation)
-        self.client.queueServiceActionCall("annotation_annotation", "update", KalturaAnnotation, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAnnotation)
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """List annotation objects by filter and pager"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("annotation_annotation", "list", KalturaAnnotationListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAnnotationListResponse)
-
     def addFromBulk(self, fileData):
         """Allows you to add multiple cue points objects by uploading XML that contains multiple cue point definitions"""
 
@@ -613,21 +589,13 @@ class KalturaAnnotationService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaCuePointListResponse)
 
-    def serveBulk(self, filter = NotImplemented, pager = NotImplemented):
-        """Download multiple cue points objects as XML definitions"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall('annotation_annotation', 'serveBulk', None ,kparams)
-        return self.client.getServeUrl()
-
-    def get(self, id):
-        """Retrieve an CuePoint object by id"""
+    def clone(self, id, entryId):
+        """Clone cuePoint with id to given entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("annotation_annotation", "get", KalturaCuePoint, kparams)
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("annotation_annotation", "clone", KalturaCuePoint, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -654,6 +622,50 @@ class KalturaAnnotationService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def get(self, id):
+        """Retrieve an CuePoint object by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("annotation_annotation", "get", KalturaCuePoint, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List annotation objects by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("annotation_annotation", "list", KalturaAnnotationListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAnnotationListResponse)
+
+    def serveBulk(self, filter = NotImplemented, pager = NotImplemented):
+        """Download multiple cue points objects as XML definitions"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall('annotation_annotation', 'serveBulk', None ,kparams)
+        return self.client.getServeUrl()
+
+    def update(self, id, annotation):
+        """Update annotation by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addObjectIfDefined("annotation", annotation)
+        self.client.queueServiceActionCall("annotation_annotation", "update", KalturaAnnotation, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaAnnotation)
+
     def updateStatus(self, id, status):
         """Update cuePoint status by id"""
 
@@ -664,18 +676,6 @@ class KalturaAnnotationService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-
-    def clone(self, id, entryId):
-        """Clone cuePoint with id to given entry"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("annotation_annotation", "clone", KalturaCuePoint, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
 
 ########## main ##########
 class KalturaAnnotationClientPlugin(KalturaClientPlugin):

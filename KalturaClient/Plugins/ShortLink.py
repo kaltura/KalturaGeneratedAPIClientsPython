@@ -502,47 +502,12 @@ class KalturaShortLinkService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """List short link objects by filter and pager"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("shortlink_shortlink", "list", KalturaShortLinkListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLinkListResponse)
-
     def add(self, shortLink):
         """Allows you to add a short link object"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("shortLink", shortLink)
         self.client.queueServiceActionCall("shortlink_shortlink", "add", KalturaShortLink, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
-
-    def get(self, id):
-        """Retrieve an short link object by id"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("shortlink_shortlink", "get", KalturaShortLink, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
-
-    def update(self, id, shortLink):
-        """Update exisitng short link"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
-        kparams.addObjectIfDefined("shortLink", shortLink)
-        self.client.queueServiceActionCall("shortlink_shortlink", "update", KalturaShortLink, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -559,6 +524,17 @@ class KalturaShortLinkService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaShortLink)
 
+    def get(self, id):
+        """Retrieve an short link object by id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("shortlink_shortlink", "get", KalturaShortLink, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
+
     def goto(self, id, proxy = False):
         """Serves short link"""
 
@@ -567,6 +543,30 @@ class KalturaShortLinkService(KalturaServiceBase):
         kparams.addBoolIfDefined("proxy", proxy);
         self.client.queueServiceActionCall('shortlink_shortlink', 'goto', None ,kparams)
         return self.client.getServeUrl()
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List short link objects by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("shortlink_shortlink", "list", KalturaShortLinkListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaShortLinkListResponse)
+
+    def update(self, id, shortLink):
+        """Update exisitng short link"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addObjectIfDefined("shortLink", shortLink)
+        self.client.queueServiceActionCall("shortlink_shortlink", "update", KalturaShortLink, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
 
 ########## main ##########
 class KalturaShortLinkClientPlugin(KalturaClientPlugin):

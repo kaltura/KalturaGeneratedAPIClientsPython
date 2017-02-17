@@ -940,6 +940,28 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
 
+    def delete(self, id):
+        """Delete an event notification template object"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def dispatch(self, id, scope):
+        """Dispatch event notification object by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("scope", scope)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "dispatch", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
+
     def get(self, id):
         """Retrieve an event notification template object by id"""
 
@@ -950,6 +972,40 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """list event notification template objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "list", KalturaEventNotificationTemplateListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+
+    def listByPartner(self, filter = NotImplemented, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "listByPartner", KalturaEventNotificationTemplateListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+
+    def listTemplates(self, filter = NotImplemented, pager = NotImplemented):
+        """Action lists the template partner event notification templates."""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "listTemplates", KalturaEventNotificationTemplateListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
 
     def update(self, id, eventNotificationTemplate):
         """Update an existing event notification template object"""
@@ -974,62 +1030,6 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
-
-    def delete(self, id):
-        """Delete an event notification template object"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """list event notification template objects"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "list", KalturaEventNotificationTemplateListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
-
-    def listByPartner(self, filter = NotImplemented, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "listByPartner", KalturaEventNotificationTemplateListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
-
-    def dispatch(self, id, scope):
-        """Dispatch event notification object by id"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addObjectIfDefined("scope", scope)
-        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "dispatch", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
-
-    def listTemplates(self, filter = NotImplemented, pager = NotImplemented):
-        """Action lists the template partner event notification templates."""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "listTemplates", KalturaEventNotificationTemplateListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
 
 ########## main ##########
 class KalturaEventNotificationClientPlugin(KalturaClientPlugin):

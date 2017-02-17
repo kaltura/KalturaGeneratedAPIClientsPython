@@ -2590,18 +2590,6 @@ class KalturaDocumentsService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def addFromUploadedFile(self, documentEntry, uploadTokenId):
-        """Add new document entry after the specific document file was uploaded and the upload token id exists"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("documentEntry", documentEntry)
-        kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        self.client.queueServiceActionCall("document_documents", "addFromUploadedFile", KalturaDocumentEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
-
     def addFromEntry(self, sourceEntryId, documentEntry = NotImplemented, sourceFlavorParamsId = NotImplemented):
         """Copy entry into new entry"""
 
@@ -2627,117 +2615,13 @@ class KalturaDocumentsService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
 
-    def convert(self, entryId, conversionProfileId = NotImplemented, dynamicConversionAttributes = NotImplemented):
-        """Convert entry"""
+    def addFromUploadedFile(self, documentEntry, uploadTokenId):
+        """Add new document entry after the specific document file was uploaded and the upload token id exists"""
 
         kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        kparams.addArrayIfDefined("dynamicConversionAttributes", dynamicConversionAttributes)
-        self.client.queueServiceActionCall("document_documents", "convert", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
-
-    def get(self, entryId, version = -1):
-        """Get document entry by ID."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("document_documents", "get", KalturaDocumentEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
-
-    def update(self, entryId, documentEntry):
-        """Update document entry. Only the properties that were set will be updated."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("documentEntry", documentEntry)
-        self.client.queueServiceActionCall("document_documents", "update", KalturaDocumentEntry, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
-
-    def delete(self, entryId):
-        """Delete a document entry."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """List document entries by filter with paging support."""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("document_documents", "list", KalturaDocumentListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentListResponse)
-
-    def upload(self, fileData):
-        """Upload a document file to Kaltura, then the file can be used to create a document entry."""
-
-        kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("document_documents", "upload", None, kparams, kfiles)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
-    def convertPptToSwf(self, entryId):
-        """This will queue a batch job for converting the document file to swf
-        	 Returns the URL where the new swf will be available"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "convertPptToSwf", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
-    def serve(self, entryId, flavorAssetId = NotImplemented, forceProxy = False):
-        """Serves the file content"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addStringIfDefined("flavorAssetId", flavorAssetId)
-        kparams.addBoolIfDefined("forceProxy", forceProxy);
-        self.client.queueServiceActionCall('document_documents', 'serve', None ,kparams)
-        return self.client.getServeUrl()
-
-    def serveByFlavorParamsId(self, entryId, flavorParamsId = NotImplemented, forceProxy = False):
-        """Serves the file content"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addStringIfDefined("flavorParamsId", flavorParamsId)
-        kparams.addBoolIfDefined("forceProxy", forceProxy);
-        self.client.queueServiceActionCall('document_documents', 'serveByFlavorParamsId', None ,kparams)
-        return self.client.getServeUrl()
-
-    def updateContent(self, entryId, resource, conversionProfileId = NotImplemented):
-        """Replace content associated with the given document entry."""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addObjectIfDefined("resource", resource)
-        kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        self.client.queueServiceActionCall("document_documents", "updateContent", KalturaDocumentEntry, kparams)
+        kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
+        self.client.queueServiceActionCall("document_documents", "addFromUploadedFile", KalturaDocumentEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2764,6 +2648,122 @@ class KalturaDocumentsService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+
+    def convert(self, entryId, conversionProfileId = NotImplemented, dynamicConversionAttributes = NotImplemented):
+        """Convert entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
+        kparams.addArrayIfDefined("dynamicConversionAttributes", dynamicConversionAttributes)
+        self.client.queueServiceActionCall("document_documents", "convert", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
+
+    def convertPptToSwf(self, entryId):
+        """This will queue a batch job for converting the document file to swf
+        	 Returns the URL where the new swf will be available"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("document_documents", "convertPptToSwf", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def delete(self, entryId):
+        """Delete a document entry."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("document_documents", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def get(self, entryId, version = -1):
+        """Get document entry by ID."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("version", version);
+        self.client.queueServiceActionCall("document_documents", "get", KalturaDocumentEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List document entries by filter with paging support."""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("document_documents", "list", KalturaDocumentListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDocumentListResponse)
+
+    def serve(self, entryId, flavorAssetId = NotImplemented, forceProxy = False):
+        """Serves the file content"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("flavorAssetId", flavorAssetId)
+        kparams.addBoolIfDefined("forceProxy", forceProxy);
+        self.client.queueServiceActionCall('document_documents', 'serve', None ,kparams)
+        return self.client.getServeUrl()
+
+    def serveByFlavorParamsId(self, entryId, flavorParamsId = NotImplemented, forceProxy = False):
+        """Serves the file content"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("flavorParamsId", flavorParamsId)
+        kparams.addBoolIfDefined("forceProxy", forceProxy);
+        self.client.queueServiceActionCall('document_documents', 'serveByFlavorParamsId', None ,kparams)
+        return self.client.getServeUrl()
+
+    def update(self, entryId, documentEntry):
+        """Update document entry. Only the properties that were set will be updated."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("documentEntry", documentEntry)
+        self.client.queueServiceActionCall("document_documents", "update", KalturaDocumentEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+
+    def updateContent(self, entryId, resource, conversionProfileId = NotImplemented):
+        """Replace content associated with the given document entry."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("resource", resource)
+        kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
+        self.client.queueServiceActionCall("document_documents", "updateContent", KalturaDocumentEntry, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+
+    def upload(self, fileData):
+        """Upload a document file to Kaltura, then the file can be used to create a document entry."""
+
+        kparams = KalturaParams()
+        kfiles = KalturaFiles()
+        kfiles.put("fileData", fileData);
+        self.client.queueServiceActionCall("document_documents", "upload", None, kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
 ########## main ##########
 class KalturaDocumentClientPlugin(KalturaClientPlugin):

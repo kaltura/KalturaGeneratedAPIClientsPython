@@ -65,6 +65,17 @@ class KalturaBulkService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
+    def abort(self, id):
+        """Aborts the bulk upload and all its child jobs"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("bulkupload_bulk", "abort", KalturaBulkUpload, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+
     def get(self, id):
         """Get bulk upload batch job by id"""
 
@@ -103,17 +114,6 @@ class KalturaBulkService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         self.client.queueServiceActionCall('bulkupload_bulk', 'serveLog', None ,kparams)
         return self.client.getServeUrl()
-
-    def abort(self, id):
-        """Aborts the bulk upload and all its child jobs"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("bulkupload_bulk", "abort", KalturaBulkUpload, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
 
 ########## main ##########
 class KalturaBulkUploadClientPlugin(KalturaClientPlugin):

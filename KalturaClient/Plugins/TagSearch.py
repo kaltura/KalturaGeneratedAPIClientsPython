@@ -296,16 +296,6 @@ class KalturaTagService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def search(self, tagFilter, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("tagFilter", tagFilter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("tagsearch_tag", "search", KalturaTagListResponse, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaTagListResponse)
-
     def deletePending(self):
         """Action goes over all tags with instanceCount==0 and checks whether they need to be removed from the DB. Returns number of removed tags."""
 
@@ -325,6 +315,16 @@ class KalturaTagService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def search(self, tagFilter, pager = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("tagFilter", tagFilter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("tagsearch_tag", "search", KalturaTagListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaTagListResponse)
 
 ########## main ##########
 class KalturaTagSearchClientPlugin(KalturaClientPlugin):

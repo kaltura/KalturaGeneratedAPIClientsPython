@@ -1032,6 +1032,16 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
 
+    def delete(self, id):
+        """Delete a scheduled task profile"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "delete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
     def get(self, id):
         """Retrieve a scheduled task profile by id"""
 
@@ -1043,27 +1053,14 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
 
-    def update(self, id, scheduledTaskProfile):
-        """Update an existing scheduled task profile"""
-
+    def getDryRunResults(self, requestId):
         kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        kparams.addObjectIfDefined("scheduledTaskProfile", scheduledTaskProfile)
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "update", KalturaScheduledTaskProfile, kparams)
+        kparams.addIntIfDefined("requestId", requestId);
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "getDryRunResults", KalturaObjectListResponse, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
-
-    def delete(self, id):
-        """Delete a scheduled task profile"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "delete", None, kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaObjectListResponse)
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List scheduled task profiles"""
@@ -1087,14 +1084,17 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeInt(resultNode)
 
-    def getDryRunResults(self, requestId):
+    def update(self, id, scheduledTaskProfile):
+        """Update an existing scheduled task profile"""
+
         kparams = KalturaParams()
-        kparams.addIntIfDefined("requestId", requestId);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "getDryRunResults", KalturaObjectListResponse, kparams)
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("scheduledTaskProfile", scheduledTaskProfile)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "update", KalturaScheduledTaskProfile, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaObjectListResponse)
+        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
 
 ########## main ##########
 class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
