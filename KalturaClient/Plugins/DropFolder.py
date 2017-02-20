@@ -3560,12 +3560,38 @@ class KalturaDropFolderService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
 
+    def freeExclusiveDropFolder(self, dropFolderId, status, errorCode = NotImplemented, errorDescription = NotImplemented):
+        """freeExclusive KalturaDropFolder object"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("dropFolderId", dropFolderId);
+        kparams.addIntIfDefined("status", status);
+        kparams.addStringIfDefined("errorCode", errorCode)
+        kparams.addStringIfDefined("errorDescription", errorDescription)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "freeExclusiveDropFolder", KalturaDropFolder, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+
     def get(self, dropFolderId):
         """Retrieve a KalturaDropFolder object by ID"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
         self.client.queueServiceActionCall("dropfolder_dropfolder", "get", KalturaDropFolder, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+
+    def getExclusiveDropFolder(self, tag, maxTime):
+        """getExclusive KalturaDropFolder object"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("tag", tag)
+        kparams.addIntIfDefined("maxTime", maxTime);
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "getExclusiveDropFolder", KalturaDropFolder, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
