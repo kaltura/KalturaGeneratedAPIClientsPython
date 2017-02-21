@@ -10681,7 +10681,9 @@ class KalturaConversionProfile(KalturaObjectBase):
             storageProfileId=NotImplemented,
             mediaParserType=NotImplemented,
             calculateComplexity=NotImplemented,
-            collectionTags=NotImplemented):
+            collectionTags=NotImplemented,
+            conditionalProfiles=NotImplemented,
+            detectGOP=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -10771,6 +10773,14 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var string
         self.collectionTags = collectionTags
 
+        # JSON string with array of "condition,profile-id" pairs.
+        # @var string
+        self.conditionalProfiles = conditionalProfiles
+
+        # When set, the ExtractMedia job should detect the source file GOP using this value as the max calculated period
+        # @var int
+        self.detectGOP = detectGOP
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10794,6 +10804,8 @@ class KalturaConversionProfile(KalturaObjectBase):
         'mediaParserType': (KalturaEnumsFactory.createString, "KalturaMediaParserType"), 
         'calculateComplexity': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'collectionTags': getXmlNodeText, 
+        'conditionalProfiles': getXmlNodeText, 
+        'detectGOP': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -10820,6 +10832,8 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addStringEnumIfDefined("mediaParserType", self.mediaParserType)
         kparams.addIntEnumIfDefined("calculateComplexity", self.calculateComplexity)
         kparams.addStringIfDefined("collectionTags", self.collectionTags)
+        kparams.addStringIfDefined("conditionalProfiles", self.conditionalProfiles)
+        kparams.addIntIfDefined("detectGOP", self.detectGOP)
         return kparams
 
     def getId(self):
@@ -10935,6 +10949,18 @@ class KalturaConversionProfile(KalturaObjectBase):
 
     def setCollectionTags(self, newCollectionTags):
         self.collectionTags = newCollectionTags
+
+    def getConditionalProfiles(self):
+        return self.conditionalProfiles
+
+    def setConditionalProfiles(self, newConditionalProfiles):
+        self.conditionalProfiles = newConditionalProfiles
+
+    def getDetectGOP(self):
+        return self.detectGOP
+
+    def setDetectGOP(self, newDetectGOP):
+        self.detectGOP = newDetectGOP
 
 
 # @package Kaltura
@@ -13912,6 +13938,7 @@ class KalturaFlavorParams(KalturaAssetParams):
             multiStream=NotImplemented,
             anamorphicPixels=NotImplemented,
             isAvoidForcedKeyFrames=NotImplemented,
+            forcedKeyFramesMode=NotImplemented,
             isCropIMX=NotImplemented,
             optimizationPolicy=NotImplemented,
             maxFrameRate=NotImplemented,
@@ -14033,6 +14060,9 @@ class KalturaFlavorParams(KalturaAssetParams):
         self.isAvoidForcedKeyFrames = isAvoidForcedKeyFrames
 
         # @var int
+        self.forcedKeyFramesMode = forcedKeyFramesMode
+
+        # @var int
         self.isCropIMX = isCropIMX
 
         # @var int
@@ -14094,6 +14124,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'multiStream': getXmlNodeText, 
         'anamorphicPixels': getXmlNodeFloat, 
         'isAvoidForcedKeyFrames': getXmlNodeInt, 
+        'forcedKeyFramesMode': getXmlNodeInt, 
         'isCropIMX': getXmlNodeInt, 
         'optimizationPolicy': getXmlNodeInt, 
         'maxFrameRate': getXmlNodeInt, 
@@ -14141,6 +14172,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         kparams.addStringIfDefined("multiStream", self.multiStream)
         kparams.addFloatIfDefined("anamorphicPixels", self.anamorphicPixels)
         kparams.addIntIfDefined("isAvoidForcedKeyFrames", self.isAvoidForcedKeyFrames)
+        kparams.addIntIfDefined("forcedKeyFramesMode", self.forcedKeyFramesMode)
         kparams.addIntIfDefined("isCropIMX", self.isCropIMX)
         kparams.addIntIfDefined("optimizationPolicy", self.optimizationPolicy)
         kparams.addIntIfDefined("maxFrameRate", self.maxFrameRate)
@@ -14316,6 +14348,12 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setIsAvoidForcedKeyFrames(self, newIsAvoidForcedKeyFrames):
         self.isAvoidForcedKeyFrames = newIsAvoidForcedKeyFrames
 
+    def getForcedKeyFramesMode(self):
+        return self.forcedKeyFramesMode
+
+    def setForcedKeyFramesMode(self, newForcedKeyFramesMode):
+        self.forcedKeyFramesMode = newForcedKeyFramesMode
+
     def getIsCropIMX(self):
         return self.isCropIMX
 
@@ -14486,6 +14524,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             multiStream=NotImplemented,
             anamorphicPixels=NotImplemented,
             isAvoidForcedKeyFrames=NotImplemented,
+            forcedKeyFramesMode=NotImplemented,
             isCropIMX=NotImplemented,
             optimizationPolicy=NotImplemented,
             maxFrameRate=NotImplemented,
@@ -14544,6 +14583,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             multiStream,
             anamorphicPixels,
             isAvoidForcedKeyFrames,
+            forcedKeyFramesMode,
             isCropIMX,
             optimizationPolicy,
             maxFrameRate,
@@ -15495,7 +15535,8 @@ class KalturaMediaInfo(KalturaObjectBase):
             multiStream=NotImplemented,
             isFastStart=NotImplemented,
             contentStreams=NotImplemented,
-            complexityValue=NotImplemented):
+            complexityValue=NotImplemented,
+            maxGOP=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the media info
@@ -15628,6 +15669,9 @@ class KalturaMediaInfo(KalturaObjectBase):
         # @var int
         self.complexityValue = complexityValue
 
+        # @var float
+        self.maxGOP = maxGOP
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -15664,6 +15708,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         'isFastStart': getXmlNodeInt, 
         'contentStreams': getXmlNodeText, 
         'complexityValue': getXmlNodeInt, 
+        'maxGOP': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
@@ -15706,6 +15751,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         kparams.addIntIfDefined("isFastStart", self.isFastStart)
         kparams.addStringIfDefined("contentStreams", self.contentStreams)
         kparams.addIntIfDefined("complexityValue", self.complexityValue)
+        kparams.addFloatIfDefined("maxGOP", self.maxGOP)
         return kparams
 
     def getId(self):
@@ -15908,6 +15954,12 @@ class KalturaMediaInfo(KalturaObjectBase):
 
     def setComplexityValue(self, newComplexityValue):
         self.complexityValue = newComplexityValue
+
+    def getMaxGOP(self):
+        return self.maxGOP
+
+    def setMaxGOP(self, newMaxGOP):
+        self.maxGOP = newMaxGOP
 
 
 # @package Kaltura
@@ -41933,7 +41985,8 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
             flavorAssetId=NotImplemented,
             calculateComplexity=NotImplemented,
             extractId3Tags=NotImplemented,
-            destDataFilePath=NotImplemented):
+            destDataFilePath=NotImplemented,
+            detectGOP=NotImplemented):
         KalturaConvartableJobData.__init__(self,
             srcFileSyncLocalPath,
             actualSrcFileSyncLocalPath,
@@ -41960,12 +42013,16 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
         # @var string
         self.destDataFilePath = destDataFilePath
 
+        # @var int
+        self.detectGOP = detectGOP
+
 
     PROPERTY_LOADERS = {
         'flavorAssetId': getXmlNodeText, 
         'calculateComplexity': getXmlNodeBool, 
         'extractId3Tags': getXmlNodeBool, 
         'destDataFilePath': getXmlNodeText, 
+        'detectGOP': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -41979,6 +42036,7 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
         kparams.addBoolIfDefined("calculateComplexity", self.calculateComplexity)
         kparams.addBoolIfDefined("extractId3Tags", self.extractId3Tags)
         kparams.addStringIfDefined("destDataFilePath", self.destDataFilePath)
+        kparams.addIntIfDefined("detectGOP", self.detectGOP)
         return kparams
 
     def getFlavorAssetId(self):
@@ -42004,6 +42062,12 @@ class KalturaExtractMediaJobData(KalturaConvartableJobData):
 
     def setDestDataFilePath(self, newDestDataFilePath):
         self.destDataFilePath = newDestDataFilePath
+
+    def getDetectGOP(self):
+        return self.detectGOP
+
+    def setDetectGOP(self, newDetectGOP):
+        self.detectGOP = newDetectGOP
 
 
 # @package Kaltura
@@ -43101,6 +43165,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             multiStream=NotImplemented,
             anamorphicPixels=NotImplemented,
             isAvoidForcedKeyFrames=NotImplemented,
+            forcedKeyFramesMode=NotImplemented,
             isCropIMX=NotImplemented,
             optimizationPolicy=NotImplemented,
             maxFrameRate=NotImplemented,
@@ -43154,6 +43219,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             multiStream,
             anamorphicPixels,
             isAvoidForcedKeyFrames,
+            forcedKeyFramesMode,
             isCropIMX,
             optimizationPolicy,
             maxFrameRate,
@@ -43236,6 +43302,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             multiStream=NotImplemented,
             anamorphicPixels=NotImplemented,
             isAvoidForcedKeyFrames=NotImplemented,
+            forcedKeyFramesMode=NotImplemented,
             isCropIMX=NotImplemented,
             optimizationPolicy=NotImplemented,
             maxFrameRate=NotImplemented,
@@ -43288,6 +43355,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             multiStream,
             anamorphicPixels,
             isAvoidForcedKeyFrames,
+            forcedKeyFramesMode,
             isCropIMX,
             optimizationPolicy,
             maxFrameRate,
@@ -48058,6 +48126,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             multiStream=NotImplemented,
             anamorphicPixels=NotImplemented,
             isAvoidForcedKeyFrames=NotImplemented,
+            forcedKeyFramesMode=NotImplemented,
             isCropIMX=NotImplemented,
             optimizationPolicy=NotImplemented,
             maxFrameRate=NotImplemented,
@@ -48116,6 +48185,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             multiStream,
             anamorphicPixels,
             isAvoidForcedKeyFrames,
+            forcedKeyFramesMode,
             isCropIMX,
             optimizationPolicy,
             maxFrameRate,
