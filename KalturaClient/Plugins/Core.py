@@ -4536,6 +4536,7 @@ class KalturaSourceType(object):
     RECORDED_LIVE = "34"
     CLIP = "35"
     KALTURA_RECORDED_LIVE = "36"
+    LECTURE_CAPTURE = "37"
     LIVE_STREAM_ONTEXTDATA_CAPTIONS = "42"
 
     def __init__(self, value):
@@ -38481,7 +38482,8 @@ class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
             window=NotImplemented,
             key=NotImplemented,
             limitIpAddress=NotImplemented,
-            usePath=NotImplemented):
+            usePath=NotImplemented,
+            additionalUris=NotImplemented):
         KalturaUrlTokenizer.__init__(self,
             window,
             key,
@@ -38490,9 +38492,13 @@ class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
         # @var bool
         self.usePath = usePath
 
+        # @var string
+        self.additionalUris = additionalUris
+
 
     PROPERTY_LOADERS = {
         'usePath': getXmlNodeBool, 
+        'additionalUris': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38503,6 +38509,7 @@ class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
         kparams = KalturaUrlTokenizer.toParams(self)
         kparams.put("objectType", "KalturaUrlTokenizerKs")
         kparams.addBoolIfDefined("usePath", self.usePath)
+        kparams.addStringIfDefined("additionalUris", self.additionalUris)
         return kparams
 
     def getUsePath(self):
@@ -38510,6 +38517,12 @@ class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
 
     def setUsePath(self, newUsePath):
         self.usePath = newUsePath
+
+    def getAdditionalUris(self):
+        return self.additionalUris
+
+    def setAdditionalUris(self, newAdditionalUris):
+        self.additionalUris = newAdditionalUris
 
 
 # @package Kaltura
