@@ -81,6 +81,7 @@ class KalturaCaptionType(object):
     SRT = "1"
     DFXP = "2"
     WEBVTT = "3"
+    CAP = "4"
 
     def __init__(self, value):
         self.value = value
