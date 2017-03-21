@@ -8412,7 +8412,7 @@ class KalturaPartner(KalturaObjectBase):
         self.logoutUrl = logoutUrl
 
         # @var int
-        # @readonly
+        # @insertonly
         self.partnerParentId = partnerParentId
 
         # @var string
@@ -8518,6 +8518,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addStringIfDefined("country", self.country)
         kparams.addStringIfDefined("state", self.state)
         kparams.addArrayIfDefined("additionalParams", self.additionalParams)
+        kparams.addIntIfDefined("partnerParentId", self.partnerParentId)
         kparams.addStringIfDefined("referenceId", self.referenceId)
         return kparams
 
@@ -8754,6 +8755,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def getPartnerParentId(self):
         return self.partnerParentId
+
+    def setPartnerParentId(self, newPartnerParentId):
+        self.partnerParentId = newPartnerParentId
 
     def getCrmId(self):
         return self.crmId
@@ -33523,7 +33527,9 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
             useCategoryEntries=NotImplemented,
             feedContentTypeHeader=NotImplemented,
             feedDescription=NotImplemented,
-            feedLandingPage=NotImplemented):
+            feedLandingPage=NotImplemented,
+            entryFilter=NotImplemented,
+            pageSize=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
             feedUrl,
@@ -33556,10 +33562,20 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
         # @var string
         self.feedLandingPage = feedLandingPage
 
+        # entry filter
+        # @var KalturaBaseEntryFilter
+        self.entryFilter = entryFilter
+
+        # page size
+        # @var int
+        self.pageSize = pageSize
+
 
     PROPERTY_LOADERS = {
         'feedDescription': getXmlNodeText, 
         'feedLandingPage': getXmlNodeText, 
+        'entryFilter': (KalturaObjectFactory.create, KalturaBaseEntryFilter), 
+        'pageSize': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -33571,6 +33587,8 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
         kparams.put("objectType", "KalturaGenericSyndicationFeed")
         kparams.addStringIfDefined("feedDescription", self.feedDescription)
         kparams.addStringIfDefined("feedLandingPage", self.feedLandingPage)
+        kparams.addObjectIfDefined("entryFilter", self.entryFilter)
+        kparams.addIntIfDefined("pageSize", self.pageSize)
         return kparams
 
     def getFeedDescription(self):
@@ -33584,6 +33602,18 @@ class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
 
     def setFeedLandingPage(self, newFeedLandingPage):
         self.feedLandingPage = newFeedLandingPage
+
+    def getEntryFilter(self):
+        return self.entryFilter
+
+    def setEntryFilter(self, newEntryFilter):
+        self.entryFilter = newEntryFilter
+
+    def getPageSize(self):
+        return self.pageSize
+
+    def setPageSize(self, newPageSize):
+        self.pageSize = newPageSize
 
 
 # @package Kaltura
@@ -42525,6 +42555,8 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             feedContentTypeHeader=NotImplemented,
             feedDescription=NotImplemented,
             feedLandingPage=NotImplemented,
+            entryFilter=NotImplemented,
+            pageSize=NotImplemented,
             xslt=NotImplemented,
             itemXpathsToExtend=NotImplemented):
         KalturaGenericSyndicationFeed.__init__(self,
@@ -42551,7 +42583,9 @@ class KalturaGenericXsltSyndicationFeed(KalturaGenericSyndicationFeed):
             useCategoryEntries,
             feedContentTypeHeader,
             feedDescription,
-            feedLandingPage)
+            feedLandingPage,
+            entryFilter,
+            pageSize)
 
         # @var string
         self.xslt = xslt
