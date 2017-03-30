@@ -46361,6 +46361,82 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaConstantXsltSyndicationFeed(KalturaGenericXsltSyndicationFeed):
+    def __init__(self,
+            id=NotImplemented,
+            feedUrl=NotImplemented,
+            partnerId=NotImplemented,
+            playlistId=NotImplemented,
+            name=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            landingPage=NotImplemented,
+            createdAt=NotImplemented,
+            allowEmbed=NotImplemented,
+            playerUiconfId=NotImplemented,
+            flavorParamId=NotImplemented,
+            transcodeExistingContent=NotImplemented,
+            addToDefaultConversionProfile=NotImplemented,
+            categories=NotImplemented,
+            storageId=NotImplemented,
+            entriesOrderBy=NotImplemented,
+            enforceEntitlement=NotImplemented,
+            privacyContext=NotImplemented,
+            updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
+            feedDescription=NotImplemented,
+            feedLandingPage=NotImplemented,
+            entryFilter=NotImplemented,
+            pageSize=NotImplemented,
+            xslt=NotImplemented,
+            itemXpathsToExtend=NotImplemented):
+        KalturaGenericXsltSyndicationFeed.__init__(self,
+            id,
+            feedUrl,
+            partnerId,
+            playlistId,
+            name,
+            status,
+            type,
+            landingPage,
+            createdAt,
+            allowEmbed,
+            playerUiconfId,
+            flavorParamId,
+            transcodeExistingContent,
+            addToDefaultConversionProfile,
+            categories,
+            storageId,
+            entriesOrderBy,
+            enforceEntitlement,
+            privacyContext,
+            updatedAt,
+            useCategoryEntries,
+            feedContentTypeHeader,
+            feedDescription,
+            feedLandingPage,
+            entryFilter,
+            pageSize,
+            xslt,
+            itemXpathsToExtend)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaGenericXsltSyndicationFeed.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConstantXsltSyndicationFeed.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGenericXsltSyndicationFeed.toParams(self)
+        kparams.put("objectType", "KalturaConstantXsltSyndicationFeed")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaConversionProfileFilter(KalturaConversionProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -48651,16 +48727,22 @@ class KalturaServerFileResource(KalturaDataCenterContentResource):
     """Used to ingest media file that is already accessible on the shared disc."""
 
     def __init__(self,
-            localFilePath=NotImplemented):
+            localFilePath=NotImplemented,
+            keepOriginalFile=NotImplemented):
         KalturaDataCenterContentResource.__init__(self)
 
         # Full path to the local file
         # @var string
         self.localFilePath = localFilePath
 
+        # Should keep original file (false = mv, true = cp)
+        # @var bool
+        self.keepOriginalFile = keepOriginalFile
+
 
     PROPERTY_LOADERS = {
         'localFilePath': getXmlNodeText, 
+        'keepOriginalFile': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -48671,6 +48753,7 @@ class KalturaServerFileResource(KalturaDataCenterContentResource):
         kparams = KalturaDataCenterContentResource.toParams(self)
         kparams.put("objectType", "KalturaServerFileResource")
         kparams.addStringIfDefined("localFilePath", self.localFilePath)
+        kparams.addBoolIfDefined("keepOriginalFile", self.keepOriginalFile)
         return kparams
 
     def getLocalFilePath(self):
@@ -48678,6 +48761,12 @@ class KalturaServerFileResource(KalturaDataCenterContentResource):
 
     def setLocalFilePath(self, newLocalFilePath):
         self.localFilePath = newLocalFilePath
+
+    def getKeepOriginalFile(self):
+        return self.keepOriginalFile
+
+    def setKeepOriginalFile(self, newKeepOriginalFile):
+        self.keepOriginalFile = newKeepOriginalFile
 
 
 # @package Kaltura
@@ -50378,6 +50467,82 @@ class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter)
 
 # @package Kaltura
 # @subpackage Client
+class KalturaOperaSyndicationFeed(KalturaConstantXsltSyndicationFeed):
+    def __init__(self,
+            id=NotImplemented,
+            feedUrl=NotImplemented,
+            partnerId=NotImplemented,
+            playlistId=NotImplemented,
+            name=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            landingPage=NotImplemented,
+            createdAt=NotImplemented,
+            allowEmbed=NotImplemented,
+            playerUiconfId=NotImplemented,
+            flavorParamId=NotImplemented,
+            transcodeExistingContent=NotImplemented,
+            addToDefaultConversionProfile=NotImplemented,
+            categories=NotImplemented,
+            storageId=NotImplemented,
+            entriesOrderBy=NotImplemented,
+            enforceEntitlement=NotImplemented,
+            privacyContext=NotImplemented,
+            updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
+            feedDescription=NotImplemented,
+            feedLandingPage=NotImplemented,
+            entryFilter=NotImplemented,
+            pageSize=NotImplemented,
+            xslt=NotImplemented,
+            itemXpathsToExtend=NotImplemented):
+        KalturaConstantXsltSyndicationFeed.__init__(self,
+            id,
+            feedUrl,
+            partnerId,
+            playlistId,
+            name,
+            status,
+            type,
+            landingPage,
+            createdAt,
+            allowEmbed,
+            playerUiconfId,
+            flavorParamId,
+            transcodeExistingContent,
+            addToDefaultConversionProfile,
+            categories,
+            storageId,
+            entriesOrderBy,
+            enforceEntitlement,
+            privacyContext,
+            updatedAt,
+            useCategoryEntries,
+            feedContentTypeHeader,
+            feedDescription,
+            feedLandingPage,
+            entryFilter,
+            pageSize,
+            xslt,
+            itemXpathsToExtend)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaConstantXsltSyndicationFeed.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaOperaSyndicationFeed.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaConstantXsltSyndicationFeed.toParams(self)
+        kparams.put("objectType", "KalturaOperaSyndicationFeed")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -50621,6 +50786,82 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
     def toParams(self):
         kparams = KalturaUserEntryFilter.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntryBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRokuSyndicationFeed(KalturaConstantXsltSyndicationFeed):
+    def __init__(self,
+            id=NotImplemented,
+            feedUrl=NotImplemented,
+            partnerId=NotImplemented,
+            playlistId=NotImplemented,
+            name=NotImplemented,
+            status=NotImplemented,
+            type=NotImplemented,
+            landingPage=NotImplemented,
+            createdAt=NotImplemented,
+            allowEmbed=NotImplemented,
+            playerUiconfId=NotImplemented,
+            flavorParamId=NotImplemented,
+            transcodeExistingContent=NotImplemented,
+            addToDefaultConversionProfile=NotImplemented,
+            categories=NotImplemented,
+            storageId=NotImplemented,
+            entriesOrderBy=NotImplemented,
+            enforceEntitlement=NotImplemented,
+            privacyContext=NotImplemented,
+            updatedAt=NotImplemented,
+            useCategoryEntries=NotImplemented,
+            feedContentTypeHeader=NotImplemented,
+            feedDescription=NotImplemented,
+            feedLandingPage=NotImplemented,
+            entryFilter=NotImplemented,
+            pageSize=NotImplemented,
+            xslt=NotImplemented,
+            itemXpathsToExtend=NotImplemented):
+        KalturaConstantXsltSyndicationFeed.__init__(self,
+            id,
+            feedUrl,
+            partnerId,
+            playlistId,
+            name,
+            status,
+            type,
+            landingPage,
+            createdAt,
+            allowEmbed,
+            playerUiconfId,
+            flavorParamId,
+            transcodeExistingContent,
+            addToDefaultConversionProfile,
+            categories,
+            storageId,
+            entriesOrderBy,
+            enforceEntitlement,
+            privacyContext,
+            updatedAt,
+            useCategoryEntries,
+            feedContentTypeHeader,
+            feedDescription,
+            feedLandingPage,
+            entryFilter,
+            pageSize,
+            xslt,
+            itemXpathsToExtend)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaConstantXsltSyndicationFeed.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRokuSyndicationFeed.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaConstantXsltSyndicationFeed.toParams(self)
+        kparams.put("objectType", "KalturaRokuSyndicationFeed")
         return kparams
 
 
@@ -61084,6 +61325,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBatchJobFilterExt': KalturaBatchJobFilterExt,
             'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
             'KalturaCategoryFilter': KalturaCategoryFilter,
+            'KalturaConstantXsltSyndicationFeed': KalturaConstantXsltSyndicationFeed,
             'KalturaConversionProfileFilter': KalturaConversionProfileFilter,
             'KalturaConversionProfileAssetParamsFilter': KalturaConversionProfileAssetParamsFilter,
             'KalturaCoordinatesContextField': KalturaCoordinatesContextField,
@@ -61168,8 +61410,10 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGenericSyndicationFeedFilter': KalturaGenericSyndicationFeedFilter,
             'KalturaGoogleVideoSyndicationFeedFilter': KalturaGoogleVideoSyndicationFeedFilter,
             'KalturaITunesSyndicationFeedFilter': KalturaITunesSyndicationFeedFilter,
+            'KalturaOperaSyndicationFeed': KalturaOperaSyndicationFeed,
             'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
             'KalturaQuizUserEntryBaseFilter': KalturaQuizUserEntryBaseFilter,
+            'KalturaRokuSyndicationFeed': KalturaRokuSyndicationFeed,
             'KalturaThumbAssetBaseFilter': KalturaThumbAssetBaseFilter,
             'KalturaThumbParamsBaseFilter': KalturaThumbParamsBaseFilter,
             'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,
