@@ -39867,6 +39867,8 @@ class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -39874,6 +39876,12 @@ class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
 
         # @var string
         self.systemNameEqual = systemNameEqual
@@ -39889,6 +39897,8 @@ class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
         'systemNameEqual': getXmlNodeText, 
         'systemNameIn': getXmlNodeText, 
         'isSystemDefaultEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
@@ -39902,11 +39912,25 @@ class KalturaAssetParamsBaseFilter(KalturaRelatedFilter):
     def toParams(self):
         kparams = KalturaRelatedFilter.toParams(self)
         kparams.put("objectType", "KalturaAssetParamsBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
         kparams.addStringIfDefined("systemNameEqual", self.systemNameEqual)
         kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
         kparams.addIntEnumIfDefined("isSystemDefaultEqual", self.isSystemDefaultEqual)
         kparams.addStringIfDefined("tagsEqual", self.tagsEqual)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
 
     def getSystemNameEqual(self):
         return self.systemNameEqual
@@ -45880,6 +45904,8 @@ class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -45887,6 +45913,8 @@ class KalturaAssetParamsFilter(KalturaAssetParamsBaseFilter):
         KalturaAssetParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -49463,6 +49491,8 @@ class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -49470,6 +49500,8 @@ class KalturaAssetParamsOutputBaseFilter(KalturaAssetParamsFilter):
         KalturaAssetParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -50355,6 +50387,8 @@ class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -50363,6 +50397,8 @@ class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
         KalturaAssetParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -50991,6 +51027,8 @@ class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -50999,6 +51037,8 @@ class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
         KalturaAssetParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -51255,6 +51295,8 @@ class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -51262,6 +51304,8 @@ class KalturaAssetParamsOutputFilter(KalturaAssetParamsOutputBaseFilter):
         KalturaAssetParamsOutputBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -51681,6 +51725,8 @@ class KalturaFlavorParamsFilter(KalturaFlavorParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -51689,6 +51735,8 @@ class KalturaFlavorParamsFilter(KalturaFlavorParamsBaseFilter):
         KalturaFlavorParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -52349,6 +52397,8 @@ class KalturaThumbParamsFilter(KalturaThumbParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -52357,6 +52407,8 @@ class KalturaThumbParamsFilter(KalturaThumbParamsBaseFilter):
         KalturaThumbParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -52517,6 +52569,8 @@ class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -52529,6 +52583,8 @@ class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
         KalturaFlavorParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -52693,6 +52749,8 @@ class KalturaLiveParamsBaseFilter(KalturaFlavorParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -52701,6 +52759,8 @@ class KalturaLiveParamsBaseFilter(KalturaFlavorParamsFilter):
         KalturaFlavorParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -52727,6 +52787,8 @@ class KalturaMediaFlavorParamsBaseFilter(KalturaFlavorParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -52735,6 +52797,8 @@ class KalturaMediaFlavorParamsBaseFilter(KalturaFlavorParamsFilter):
         KalturaFlavorParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53047,6 +53111,8 @@ class KalturaThumbParamsOutputBaseFilter(KalturaThumbParamsFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53059,6 +53125,8 @@ class KalturaThumbParamsOutputBaseFilter(KalturaThumbParamsFilter):
         KalturaThumbParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53129,6 +53197,8 @@ class KalturaFlavorParamsOutputFilter(KalturaFlavorParamsOutputBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53141,6 +53211,8 @@ class KalturaFlavorParamsOutputFilter(KalturaFlavorParamsOutputBaseFilter):
         KalturaFlavorParamsOutputBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53241,6 +53313,8 @@ class KalturaLiveParamsFilter(KalturaLiveParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53249,6 +53323,8 @@ class KalturaLiveParamsFilter(KalturaLiveParamsBaseFilter):
         KalturaLiveParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53275,6 +53351,8 @@ class KalturaMediaFlavorParamsFilter(KalturaMediaFlavorParamsBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53283,6 +53361,8 @@ class KalturaMediaFlavorParamsFilter(KalturaMediaFlavorParamsBaseFilter):
         KalturaMediaFlavorParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53513,6 +53593,8 @@ class KalturaThumbParamsOutputFilter(KalturaThumbParamsOutputBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53525,6 +53607,8 @@ class KalturaThumbParamsOutputFilter(KalturaThumbParamsOutputBaseFilter):
         KalturaThumbParamsOutputBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -53779,6 +53863,8 @@ class KalturaMediaFlavorParamsOutputBaseFilter(KalturaFlavorParamsOutputFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -53791,6 +53877,8 @@ class KalturaMediaFlavorParamsOutputBaseFilter(KalturaFlavorParamsOutputFilter):
         KalturaFlavorParamsOutputFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
@@ -54081,6 +54169,8 @@ class KalturaMediaFlavorParamsOutputFilter(KalturaMediaFlavorParamsOutputBaseFil
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             systemNameEqual=NotImplemented,
             systemNameIn=NotImplemented,
             isSystemDefaultEqual=NotImplemented,
@@ -54093,6 +54183,8 @@ class KalturaMediaFlavorParamsOutputFilter(KalturaMediaFlavorParamsOutputBaseFil
         KalturaMediaFlavorParamsOutputBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
+            idEqual,
+            idIn,
             systemNameEqual,
             systemNameIn,
             isSystemDefaultEqual,
