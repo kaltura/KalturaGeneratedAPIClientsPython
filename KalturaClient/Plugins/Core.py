@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2016  Kaltura Inc.
+# Copyright (C) 2006-2017  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -183,6 +183,18 @@ class KalturaCategoryUserStatus(object):
     PENDING = 2
     NOT_ACTIVE = 3
     DELETED = 4
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaChinaCacheAlgorithmType(object):
+    SHA1 = 1
+    SHA256 = 2
 
     def __init__(self, value):
         self.value = value
@@ -1541,6 +1553,7 @@ class KalturaAudioCodec(object):
     AC3 = "ac3"
     AMRNB = "amrnb"
     COPY = "copy"
+    EAC3 = "eac3"
     MP3 = "mp3"
     MPEG2 = "mpeg2"
     PCM = "pcm"
@@ -8316,7 +8329,6 @@ class KalturaPartner(KalturaObjectBase):
         self.maxUploadSize = maxUploadSize
 
         # @var int
-        # @readonly
         self.partnerPackage = partnerPackage
 
         # @var string
@@ -8414,7 +8426,6 @@ class KalturaPartner(KalturaObjectBase):
         self.logoutUrl = logoutUrl
 
         # @var int
-        # @insertonly
         self.partnerParentId = partnerParentId
 
         # @var string
@@ -8513,6 +8524,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addIntIfDefined("mergeEntryLists", self.mergeEntryLists)
         kparams.addStringIfDefined("notificationsConfig", self.notificationsConfig)
         kparams.addIntIfDefined("maxUploadSize", self.maxUploadSize)
+        kparams.addIntIfDefined("partnerPackage", self.partnerPackage)
         kparams.addIntIfDefined("allowMultiNotification", self.allowMultiNotification)
         kparams.addStringIfDefined("adminUserId", self.adminUserId)
         kparams.addStringIfDefined("firstName", self.firstName)
@@ -8661,6 +8673,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def getPartnerPackage(self):
         return self.partnerPackage
+
+    def setPartnerPackage(self, newPartnerPackage):
+        self.partnerPackage = newPartnerPackage
 
     def getSecret(self):
         return self.secret
@@ -38433,6 +38448,56 @@ class KalturaUrlTokenizerBitGravity(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerChinaCache(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented,
+            algorithmId=NotImplemented,
+            keyId=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+        # @var KalturaChinaCacheAlgorithmType
+        self.algorithmId = algorithmId
+
+        # @var int
+        self.keyId = keyId
+
+
+    PROPERTY_LOADERS = {
+        'algorithmId': (KalturaEnumsFactory.createInt, "KalturaChinaCacheAlgorithmType"), 
+        'keyId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerChinaCache.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerChinaCache")
+        kparams.addIntEnumIfDefined("algorithmId", self.algorithmId)
+        kparams.addIntIfDefined("keyId", self.keyId)
+        return kparams
+
+    def getAlgorithmId(self):
+        return self.algorithmId
+
+    def setAlgorithmId(self, newAlgorithmId):
+        self.algorithmId = newAlgorithmId
+
+    def getKeyId(self):
+        return self.keyId
+
+    def setKeyId(self, newKeyId):
+        self.keyId = newKeyId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerCht(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -60739,6 +60804,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryStatus': KalturaCategoryStatus,
             'KalturaCategoryUserPermissionLevel': KalturaCategoryUserPermissionLevel,
             'KalturaCategoryUserStatus': KalturaCategoryUserStatus,
+            'KalturaChinaCacheAlgorithmType': KalturaChinaCacheAlgorithmType,
             'KalturaCommercialUseType': KalturaCommercialUseType,
             'KalturaContributionPolicyType': KalturaContributionPolicyType,
             'KalturaControlPanelCommandStatus': KalturaControlPanelCommandStatus,
@@ -61318,6 +61384,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerAkamaiRtsp': KalturaUrlTokenizerAkamaiRtsp,
             'KalturaUrlTokenizerAkamaiSecureHd': KalturaUrlTokenizerAkamaiSecureHd,
             'KalturaUrlTokenizerBitGravity': KalturaUrlTokenizerBitGravity,
+            'KalturaUrlTokenizerChinaCache': KalturaUrlTokenizerChinaCache,
             'KalturaUrlTokenizerCht': KalturaUrlTokenizerCht,
             'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
             'KalturaUrlTokenizerKs': KalturaUrlTokenizerKs,
