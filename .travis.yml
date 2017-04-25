@@ -1,13 +1,10 @@
 language: python
 python:
-#  - "2.5"
-#  - "2.6"
   - "2.7"
-#  - "3.2"
-#  - "3.3"
-#  - "3.4"
+  - "3.4"
+  - "3.5"
 # command to install dependencies
-install: "pip install poster setuptools discover"
+install: "python setup.py install"
 # command to run tests
 script: python -m unittest discover 
 notifications:
