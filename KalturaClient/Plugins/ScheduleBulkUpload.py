@@ -27,9 +27,11 @@
 # ===================================================================================================
 # @package Kaltura
 # @subpackage Client
-from Core import *
-from BulkUpload import *
-from Schedule import *
+from __future__ import absolute_import
+
+from .Core import *
+from .BulkUpload import *
+from .Schedule import *
 from ..Base import *
 
 ########## enums ##########
