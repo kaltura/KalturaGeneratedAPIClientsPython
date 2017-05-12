@@ -362,6 +362,7 @@ class KalturaEntryModerationStatus(object):
     PENDING_MODERATION = 1
     APPROVED = 2
     REJECTED = 3
+    DELETED = 4
     FLAGGED_FOR_REVIEW = 5
     AUTO_APPROVED = 6
 
@@ -1987,6 +1988,7 @@ class KalturaConditionType(object):
     HASH = "12"
     DELIVERY_PROFILE = "13"
     ACTIVE_EDGE_VALIDATE = "14"
+    ANONYMOUS_IP = "15"
 
     def __init__(self, value):
         self.value = value
@@ -2791,6 +2793,7 @@ class KalturaGenericXsltSyndicationFeedOrderBy(object):
 # @subpackage Client
 class KalturaGeoCoderType(object):
     KALTURA = "1"
+    MAX_MIND = "2"
 
     def __init__(self, value):
         self.value = value
@@ -3835,6 +3838,18 @@ class KalturaMailType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMatchConditionType(object):
+    MATCH_ANY = "1"
+    MATCH_ALL = "2"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaEntryCompareAttribute(object):
     ACCESS_CONTROL_ID = "accessControlId"
     CREATED_AT = "createdAt"
@@ -4728,6 +4743,19 @@ class KalturaUploadTokenOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUserEntryExtendedStatus(object):
+    PLAYBACK_COMPLETE = "viewHistory.PLAYBACK_COMPLETE"
+    PLAYBACK_STARTED = "viewHistory.PLAYBACK_STARTED"
+    VIEWED = "viewHistory.VIEWED"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     UPDATED_AT_ASC = "+updatedAt"
@@ -4757,6 +4785,7 @@ class KalturaUserEntryStatus(object):
 # @subpackage Client
 class KalturaUserEntryType(object):
     QUIZ = "quiz.QUIZ"
+    VIEW_HISTORY = "viewHistory.VIEW_HISTORY"
 
     def __init__(self, value):
         self.value = value
@@ -18431,7 +18460,8 @@ class KalturaLiveStreamParams(KalturaObjectBase):
             height=NotImplemented,
             codec=NotImplemented,
             frameRate=NotImplemented,
-            keyFrameInterval=NotImplemented):
+            keyFrameInterval=NotImplemented,
+            language=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Bit rate of the stream. (i.e. 900)
@@ -18462,6 +18492,10 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         # @var float
         self.keyFrameInterval = keyFrameInterval
 
+        # Live stream's language
+        # @var string
+        self.language = language
+
 
     PROPERTY_LOADERS = {
         'bitrate': getXmlNodeInt, 
@@ -18471,6 +18505,7 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         'codec': getXmlNodeText, 
         'frameRate': getXmlNodeInt, 
         'keyFrameInterval': getXmlNodeFloat, 
+        'language': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -18487,6 +18522,7 @@ class KalturaLiveStreamParams(KalturaObjectBase):
         kparams.addStringIfDefined("codec", self.codec)
         kparams.addIntIfDefined("frameRate", self.frameRate)
         kparams.addFloatIfDefined("keyFrameInterval", self.keyFrameInterval)
+        kparams.addStringIfDefined("language", self.language)
         return kparams
 
     def getBitrate(self):
@@ -18530,6 +18566,12 @@ class KalturaLiveStreamParams(KalturaObjectBase):
 
     def setKeyFrameInterval(self, newKeyFrameInterval):
         self.keyFrameInterval = newKeyFrameInterval
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
 
 
 # @package Kaltura
@@ -25632,7 +25674,8 @@ class KalturaUserEntry(KalturaObjectBase):
             status=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            type=NotImplemented):
+            type=NotImplemented,
+            extendedStatus=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # unique auto-generated identifier
@@ -25668,6 +25711,9 @@ class KalturaUserEntry(KalturaObjectBase):
         # @readonly
         self.type = type
 
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatus = extendedStatus
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -25678,6 +25724,7 @@ class KalturaUserEntry(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'type': (KalturaEnumsFactory.createString, "KalturaUserEntryType"), 
+        'extendedStatus': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
     }
 
     def fromXml(self, node):
@@ -25689,6 +25736,7 @@ class KalturaUserEntry(KalturaObjectBase):
         kparams.put("objectType", "KalturaUserEntry")
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringIfDefined("userId", self.userId)
+        kparams.addStringEnumIfDefined("extendedStatus", self.extendedStatus)
         return kparams
 
     def getId(self):
@@ -25720,6 +25768,12 @@ class KalturaUserEntry(KalturaObjectBase):
 
     def getType(self):
         return self.type
+
+    def getExtendedStatus(self):
+        return self.extendedStatus
+
+    def setExtendedStatus(self, newExtendedStatus):
+        self.extendedStatus = newExtendedStatus
 
 
 # @package Kaltura
@@ -34921,7 +34975,8 @@ class KalturaMatchCondition(KalturaCondition):
             type=NotImplemented,
             description=NotImplemented,
             not_=NotImplemented,
-            values=NotImplemented):
+            values=NotImplemented,
+            matchType=NotImplemented):
         KalturaCondition.__init__(self,
             type,
             description,
@@ -34930,9 +34985,13 @@ class KalturaMatchCondition(KalturaCondition):
         # @var array of KalturaStringValue
         self.values = values
 
+        # @var KalturaMatchConditionType
+        self.matchType = matchType
+
 
     PROPERTY_LOADERS = {
         'values': (KalturaObjectFactory.createArray, KalturaStringValue), 
+        'matchType': (KalturaEnumsFactory.createString, "KalturaMatchConditionType"), 
     }
 
     def fromXml(self, node):
@@ -34943,6 +35002,7 @@ class KalturaMatchCondition(KalturaCondition):
         kparams = KalturaCondition.toParams(self)
         kparams.put("objectType", "KalturaMatchCondition")
         kparams.addArrayIfDefined("values", self.values)
+        kparams.addStringEnumIfDefined("matchType", self.matchType)
         return kparams
 
     def getValues(self):
@@ -34950,6 +35010,12 @@ class KalturaMatchCondition(KalturaCondition):
 
     def setValues(self, newValues):
         self.values = newValues
+
+    def getMatchType(self):
+        return self.matchType
+
+    def setMatchType(self, newMatchType):
+        self.matchType = newMatchType
 
 
 # @package Kaltura
@@ -35908,6 +35974,7 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
             type=NotImplemented,
+            extendedStatus=NotImplemented,
             score=NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
@@ -35917,7 +35984,8 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             status,
             createdAt,
             updatedAt,
-            type)
+            type,
+            extendedStatus)
 
         # @var float
         # @readonly
@@ -39890,6 +39958,49 @@ class KalturaAkamaiUniversalProvisionJobData(KalturaProvisionJobData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAnonymousIPCondition(KalturaMatchCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            values=NotImplemented,
+            matchType=NotImplemented,
+            geoCoderType=NotImplemented):
+        KalturaMatchCondition.__init__(self,
+            type,
+            description,
+            not_,
+            values,
+            matchType)
+
+        # The ip geo coder engine to be used
+        # @var KalturaGeoCoderType
+        self.geoCoderType = geoCoderType
+
+
+    PROPERTY_LOADERS = {
+        'geoCoderType': (KalturaEnumsFactory.createString, "KalturaGeoCoderType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaMatchCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAnonymousIPCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMatchCondition.toParams(self)
+        kparams.put("objectType", "KalturaAnonymousIPCondition")
+        kparams.addStringEnumIfDefined("geoCoderType", self.geoCoderType)
+        return kparams
+
+    def getGeoCoderType(self):
+        return self.geoCoderType
+
+    def setGeoCoderType(self, newGeoCoderType):
+        self.geoCoderType = newGeoCoderType
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAppTokenFilter(KalturaAppTokenBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -41435,12 +41546,14 @@ class KalturaCountryCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             geoCoderType=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # The ip geo coder engine to be used
         # @var KalturaGeoCoderType
@@ -42345,12 +42458,14 @@ class KalturaFieldMatchCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             field=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # Field to evaluate
         # @var KalturaStringField
@@ -42724,12 +42839,14 @@ class KalturaGeoDistanceCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             geoCoderType=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # The ip geo coder engine to be used
         # @var KalturaGeoCoderType
@@ -42975,13 +43092,15 @@ class KalturaIpAddressCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             acceptInternalIps=NotImplemented,
             httpHeader=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # allow internal ips
         # @var bool
@@ -44504,12 +44623,14 @@ class KalturaRegexCondition(KalturaMatchCondition):
             type=NotImplemented,
             description=NotImplemented,
             not_=NotImplemented,
-            values=NotImplemented):
+            values=NotImplemented,
+            matchType=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
 
     PROPERTY_LOADERS = {
@@ -44827,12 +44948,14 @@ class KalturaSiteCondition(KalturaMatchCondition):
             type=NotImplemented,
             description=NotImplemented,
             not_=NotImplemented,
-            values=NotImplemented):
+            values=NotImplemented,
+            matchType=NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
 
     PROPERTY_LOADERS = {
@@ -45225,7 +45348,10 @@ class KalturaUserEntryBaseFilter(KalturaRelatedFilter):
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented):
+            typeEqual=NotImplemented,
+            extendedStatusEqual=NotImplemented,
+            extendedStatusIn=NotImplemented,
+            extendedStatusNotIn=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -45275,6 +45401,15 @@ class KalturaUserEntryBaseFilter(KalturaRelatedFilter):
         # @var KalturaUserEntryType
         self.typeEqual = typeEqual
 
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatusEqual = extendedStatusEqual
+
+        # @var string
+        self.extendedStatusIn = extendedStatusIn
+
+        # @var string
+        self.extendedStatusNotIn = extendedStatusNotIn
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -45292,6 +45427,9 @@ class KalturaUserEntryBaseFilter(KalturaRelatedFilter):
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
         'typeEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryType"), 
+        'extendedStatusEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
+        'extendedStatusIn': getXmlNodeText, 
+        'extendedStatusNotIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -45316,6 +45454,9 @@ class KalturaUserEntryBaseFilter(KalturaRelatedFilter):
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
         kparams.addStringEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringEnumIfDefined("extendedStatusEqual", self.extendedStatusEqual)
+        kparams.addStringIfDefined("extendedStatusIn", self.extendedStatusIn)
+        kparams.addStringIfDefined("extendedStatusNotIn", self.extendedStatusNotIn)
         return kparams
 
     def getIdEqual(self):
@@ -45407,6 +45548,24 @@ class KalturaUserEntryBaseFilter(KalturaRelatedFilter):
 
     def setTypeEqual(self, newTypeEqual):
         self.typeEqual = newTypeEqual
+
+    def getExtendedStatusEqual(self):
+        return self.extendedStatusEqual
+
+    def setExtendedStatusEqual(self, newExtendedStatusEqual):
+        self.extendedStatusEqual = newExtendedStatusEqual
+
+    def getExtendedStatusIn(self):
+        return self.extendedStatusIn
+
+    def setExtendedStatusIn(self, newExtendedStatusIn):
+        self.extendedStatusIn = newExtendedStatusIn
+
+    def getExtendedStatusNotIn(self):
+        return self.extendedStatusNotIn
+
+    def setExtendedStatusNotIn(self, newExtendedStatusNotIn):
+        self.extendedStatusNotIn = newExtendedStatusNotIn
 
 
 # @package Kaltura
@@ -45963,6 +46122,45 @@ class KalturaAmazonS3StorageProfileBaseFilter(KalturaStorageProfileFilter):
         kparams = KalturaStorageProfileFilter.toParams(self)
         kparams.put("objectType", "KalturaAmazonS3StorageProfileBaseFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAnonymousIPContextField(KalturaStringField):
+    """Represents the current request country context as calculated based on the IP address"""
+
+    def __init__(self,
+            description=NotImplemented,
+            value=NotImplemented,
+            geoCoderType=NotImplemented):
+        KalturaStringField.__init__(self,
+            description,
+            value)
+
+        # The ip geo coder engine to be used
+        # @var KalturaGeoCoderType
+        self.geoCoderType = geoCoderType
+
+
+    PROPERTY_LOADERS = {
+        'geoCoderType': (KalturaEnumsFactory.createString, "KalturaGeoCoderType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaStringField.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAnonymousIPContextField.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaStringField.toParams(self)
+        kparams.put("objectType", "KalturaAnonymousIPContextField")
+        kparams.addStringEnumIfDefined("geoCoderType", self.geoCoderType)
+        return kparams
+
+    def getGeoCoderType(self):
+        return self.geoCoderType
+
+    def setGeoCoderType(self, newGeoCoderType):
+        self.geoCoderType = newGeoCoderType
 
 
 # @package Kaltura
@@ -49034,12 +49232,14 @@ class KalturaUserAgentCondition(KalturaRegexCondition):
             type=NotImplemented,
             description=NotImplemented,
             not_=NotImplemented,
-            values=NotImplemented):
+            values=NotImplemented,
+            matchType=NotImplemented):
         KalturaRegexCondition.__init__(self,
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
 
     PROPERTY_LOADERS = {
@@ -49128,8 +49328,13 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             typeEqual=NotImplemented,
+            extendedStatusEqual=NotImplemented,
+            extendedStatusIn=NotImplemented,
+            extendedStatusNotIn=NotImplemented,
             userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented):
+            isAnonymous=NotImplemented,
+            privacyContextEqual=NotImplemented,
+            privacyContextIn=NotImplemented):
         KalturaUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -49147,7 +49352,10 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             createdAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
-            typeEqual)
+            typeEqual,
+            extendedStatusEqual,
+            extendedStatusIn,
+            extendedStatusNotIn)
 
         # @var KalturaNullableBoolean
         self.userIdEqualCurrent = userIdEqualCurrent
@@ -49155,10 +49363,18 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
         # @var KalturaNullableBoolean
         self.isAnonymous = isAnonymous
 
+        # @var string
+        self.privacyContextEqual = privacyContextEqual
+
+        # @var string
+        self.privacyContextIn = privacyContextIn
+
 
     PROPERTY_LOADERS = {
         'userIdEqualCurrent': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'isAnonymous': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'privacyContextEqual': getXmlNodeText, 
+        'privacyContextIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -49170,6 +49386,8 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
         kparams.put("objectType", "KalturaUserEntryFilter")
         kparams.addIntEnumIfDefined("userIdEqualCurrent", self.userIdEqualCurrent)
         kparams.addIntEnumIfDefined("isAnonymous", self.isAnonymous)
+        kparams.addStringIfDefined("privacyContextEqual", self.privacyContextEqual)
+        kparams.addStringIfDefined("privacyContextIn", self.privacyContextIn)
         return kparams
 
     def getUserIdEqualCurrent(self):
@@ -49183,6 +49401,18 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
 
     def setIsAnonymous(self, newIsAnonymous):
         self.isAnonymous = newIsAnonymous
+
+    def getPrivacyContextEqual(self):
+        return self.privacyContextEqual
+
+    def setPrivacyContextEqual(self, newPrivacyContextEqual):
+        self.privacyContextEqual = newPrivacyContextEqual
+
+    def getPrivacyContextIn(self):
+        return self.privacyContextIn
+
+    def setPrivacyContextIn(self, newPrivacyContextIn):
+        self.privacyContextIn = newPrivacyContextIn
 
 
 # @package Kaltura
@@ -50855,8 +51085,13 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             typeEqual=NotImplemented,
+            extendedStatusEqual=NotImplemented,
+            extendedStatusIn=NotImplemented,
+            extendedStatusNotIn=NotImplemented,
             userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented):
+            isAnonymous=NotImplemented,
+            privacyContextEqual=NotImplemented,
+            privacyContextIn=NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50875,8 +51110,13 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             typeEqual,
+            extendedStatusEqual,
+            extendedStatusIn,
+            extendedStatusNotIn,
             userIdEqualCurrent,
-            isAnonymous)
+            isAnonymous,
+            privacyContextEqual,
+            privacyContextIn)
 
 
     PROPERTY_LOADERS = {
@@ -52327,64 +52567,6 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
     def toParams(self):
         kparams = KalturaPlaylistBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaPlaylistFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            entryIdNotIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            userIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented):
-        KalturaQuizUserEntryBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            idNotIn,
-            entryIdEqual,
-            entryIdIn,
-            entryIdNotIn,
-            userIdEqual,
-            userIdIn,
-            userIdNotIn,
-            statusEqual,
-            createdAtLessThanOrEqual,
-            createdAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            typeEqual,
-            userIdEqualCurrent,
-            isAnonymous)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaQuizUserEntryBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaQuizUserEntryFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaQuizUserEntryFilter")
         return kparams
 
 
@@ -57674,7 +57856,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveEntry)
 
-    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented):
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
         """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
@@ -57683,6 +57865,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
+        kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
         self.client.queueServiceActionCall("livechannel", "setRecordedContent", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57957,7 +58140,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaLiveStreamEntry)
 
-    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented):
+    def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
         """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
@@ -57966,6 +58149,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
+        kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
         self.client.queueServiceActionCall("livestream", "setRecordedContent", KalturaLiveEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -60306,6 +60490,15 @@ class KalturaUserEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
 
+    def bulkDelete(self, filter):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        self.client.queueServiceActionCall("userentry", "bulkDelete", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeInt(resultNode)
+
     def delete(self, id):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
@@ -60989,6 +61182,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStreamEntryMatchAttribute': KalturaLiveStreamEntryMatchAttribute,
             'KalturaLiveStreamEntryOrderBy': KalturaLiveStreamEntryOrderBy,
             'KalturaMailType': KalturaMailType,
+            'KalturaMatchConditionType': KalturaMatchConditionType,
             'KalturaMediaEntryCompareAttribute': KalturaMediaEntryCompareAttribute,
             'KalturaMediaEntryMatchAttribute': KalturaMediaEntryMatchAttribute,
             'KalturaMediaEntryOrderBy': KalturaMediaEntryOrderBy,
@@ -61035,6 +61229,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaTubeMogulSyndicationFeedOrderBy': KalturaTubeMogulSyndicationFeedOrderBy,
             'KalturaUiConfOrderBy': KalturaUiConfOrderBy,
             'KalturaUploadTokenOrderBy': KalturaUploadTokenOrderBy,
+            'KalturaUserEntryExtendedStatus': KalturaUserEntryExtendedStatus,
             'KalturaUserEntryOrderBy': KalturaUserEntryOrderBy,
             'KalturaUserEntryStatus': KalturaUserEntryStatus,
             'KalturaUserEntryType': KalturaUserEntryType,
@@ -61408,6 +61603,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfileBaseFilter': KalturaAccessControlProfileBaseFilter,
             'KalturaAkamaiProvisionJobData': KalturaAkamaiProvisionJobData,
             'KalturaAkamaiUniversalProvisionJobData': KalturaAkamaiUniversalProvisionJobData,
+            'KalturaAnonymousIPCondition': KalturaAnonymousIPCondition,
             'KalturaAppTokenFilter': KalturaAppTokenFilter,
             'KalturaAssetParamsBaseFilter': KalturaAssetParamsBaseFilter,
             'KalturaAssetResource': KalturaAssetResource,
@@ -61480,6 +61676,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
             'KalturaAmazonS3StorageExportJobData': KalturaAmazonS3StorageExportJobData,
             'KalturaAmazonS3StorageProfileBaseFilter': KalturaAmazonS3StorageProfileBaseFilter,
+            'KalturaAnonymousIPContextField': KalturaAnonymousIPContextField,
             'KalturaAssetParamsFilter': KalturaAssetParamsFilter,
             'KalturaBaseEntryCompareAttributeCondition': KalturaBaseEntryCompareAttributeCondition,
             'KalturaBaseEntryMatchAttributeCondition': KalturaBaseEntryMatchAttributeCondition,
@@ -61592,7 +61789,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStreamAdminEntry': KalturaLiveStreamAdminEntry,
             'KalturaMediaServerNodeBaseFilter': KalturaMediaServerNodeBaseFilter,
             'KalturaPlaylistFilter': KalturaPlaylistFilter,
-            'KalturaQuizUserEntryFilter': KalturaQuizUserEntryFilter,
             'KalturaThumbAssetFilter': KalturaThumbAssetFilter,
             'KalturaThumbParamsFilter': KalturaThumbParamsFilter,
             'KalturaDeliveryProfileGenericRtmpFilter': KalturaDeliveryProfileGenericRtmpFilter,

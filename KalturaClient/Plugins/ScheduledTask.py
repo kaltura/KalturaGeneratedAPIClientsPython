@@ -97,6 +97,7 @@ class KalturaObjectTaskType(object):
     DELETE_LOCAL_CONTENT = "5"
     STORAGE_EXPORT = "6"
     MODIFY_ENTRY = "7"
+    MAIL_NOTIFICATION = "8"
 
     def __init__(self, value):
         self.value = value
@@ -478,6 +479,69 @@ class KalturaDeleteLocalContentObjectTask(KalturaObjectTask):
         kparams = KalturaObjectTask.toParams(self)
         kparams.put("objectType", "KalturaDeleteLocalContentObjectTask")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMailNotificationObjectTask(KalturaObjectTask):
+    def __init__(self,
+            type=NotImplemented,
+            stopProcessingOnError=NotImplemented,
+            mailAddress=NotImplemented,
+            message=NotImplemented,
+            sendToUsers=NotImplemented):
+        KalturaObjectTask.__init__(self,
+            type,
+            stopProcessingOnError)
+
+        # The mail to send the notification to
+        # @var string
+        self.mailAddress = mailAddress
+
+        # The message to send in the notification mail
+        # @var string
+        self.message = message
+
+        # Send the mail to each user
+        # @var bool
+        self.sendToUsers = sendToUsers
+
+
+    PROPERTY_LOADERS = {
+        'mailAddress': getXmlNodeText, 
+        'message': getXmlNodeText, 
+        'sendToUsers': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectTask.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMailNotificationObjectTask.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectTask.toParams(self)
+        kparams.put("objectType", "KalturaMailNotificationObjectTask")
+        kparams.addStringIfDefined("mailAddress", self.mailAddress)
+        kparams.addStringIfDefined("message", self.message)
+        kparams.addBoolIfDefined("sendToUsers", self.sendToUsers)
+        return kparams
+
+    def getMailAddress(self):
+        return self.mailAddress
+
+    def setMailAddress(self, newMailAddress):
+        self.mailAddress = newMailAddress
+
+    def getMessage(self):
+        return self.message
+
+    def setMessage(self, newMessage):
+        self.message = newMessage
+
+    def getSendToUsers(self):
+        return self.sendToUsers
+
+    def setSendToUsers(self, newSendToUsers):
+        self.sendToUsers = newSendToUsers
 
 
 # @package Kaltura
@@ -1134,6 +1198,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
             'KalturaDeleteEntryFlavorsObjectTask': KalturaDeleteEntryFlavorsObjectTask,
             'KalturaDeleteEntryObjectTask': KalturaDeleteEntryObjectTask,
             'KalturaDeleteLocalContentObjectTask': KalturaDeleteLocalContentObjectTask,
+            'KalturaMailNotificationObjectTask': KalturaMailNotificationObjectTask,
             'KalturaModifyCategoriesObjectTask': KalturaModifyCategoriesObjectTask,
             'KalturaModifyEntryObjectTask': KalturaModifyEntryObjectTask,
             'KalturaScheduledTaskJobData': KalturaScheduledTaskJobData,

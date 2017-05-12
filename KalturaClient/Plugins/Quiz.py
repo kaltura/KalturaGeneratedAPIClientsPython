@@ -1033,6 +1033,74 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
         return kparams
 
 
+# @package Kaltura
+# @subpackage Client
+class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            entryIdNotIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            userIdIn=NotImplemented,
+            userIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            extendedStatusEqual=NotImplemented,
+            extendedStatusIn=NotImplemented,
+            extendedStatusNotIn=NotImplemented,
+            userIdEqualCurrent=NotImplemented,
+            isAnonymous=NotImplemented,
+            privacyContextEqual=NotImplemented,
+            privacyContextIn=NotImplemented):
+        KalturaQuizUserEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            entryIdEqual,
+            entryIdIn,
+            entryIdNotIn,
+            userIdEqual,
+            userIdIn,
+            userIdNotIn,
+            statusEqual,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            typeEqual,
+            extendedStatusEqual,
+            extendedStatusIn,
+            extendedStatusNotIn,
+            userIdEqualCurrent,
+            isAnonymous,
+            privacyContextEqual,
+            privacyContextIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaQuizUserEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaQuizUserEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaQuizUserEntryFilter")
+        return kparams
+
+
 ########## services ##########
 
 # @package Kaltura
@@ -1150,6 +1218,7 @@ class KalturaQuizClientPlugin(KalturaClientPlugin):
             'KalturaQuestionCuePointBaseFilter': KalturaQuestionCuePointBaseFilter,
             'KalturaAnswerCuePointFilter': KalturaAnswerCuePointFilter,
             'KalturaQuestionCuePointFilter': KalturaQuestionCuePointFilter,
+            'KalturaQuizUserEntryFilter': KalturaQuizUserEntryFilter,
         }
 
     # @return string

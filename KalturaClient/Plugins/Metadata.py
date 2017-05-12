@@ -1118,6 +1118,7 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             xPath=NotImplemented,
             profileId=NotImplemented,
             profileSystemName=NotImplemented):
@@ -1125,7 +1126,8 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # May contain the full xpath to the field in three formats
         # 	 1. Slashed xPath, e.g. /metadata/myElementName
@@ -1429,6 +1431,7 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
             description=NotImplemented,
             not_=NotImplemented,
             values=NotImplemented,
+            matchType=NotImplemented,
             xPath=NotImplemented,
             profileId=NotImplemented,
             profileSystemName=NotImplemented,
@@ -1438,7 +1441,8 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
             type,
             description,
             not_,
-            values)
+            values,
+            matchType)
 
         # May contain the full xpath to the field in three formats
         # 	 1. Slashed xPath, e.g. /metadata/myElementName

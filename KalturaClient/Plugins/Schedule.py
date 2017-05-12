@@ -3849,11 +3849,11 @@ class KalturaScheduleEventService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("resourceIds", resourceIds)
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", KalturaScheduleEventListResponse, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.createArray(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventListResponse)
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaScheduleEvent objects"""
