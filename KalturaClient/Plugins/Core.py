@@ -10736,7 +10736,8 @@ class KalturaConversionProfile(KalturaObjectBase):
             calculateComplexity=NotImplemented,
             collectionTags=NotImplemented,
             conditionalProfiles=NotImplemented,
-            detectGOP=NotImplemented):
+            detectGOP=NotImplemented,
+            mediaInfoXslTransformation=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -10834,6 +10835,10 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var int
         self.detectGOP = detectGOP
 
+        # XSL to transform ingestion Media Info XML
+        # @var string
+        self.mediaInfoXslTransformation = mediaInfoXslTransformation
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10859,6 +10864,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         'collectionTags': getXmlNodeText, 
         'conditionalProfiles': getXmlNodeText, 
         'detectGOP': getXmlNodeInt, 
+        'mediaInfoXslTransformation': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10887,6 +10893,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addStringIfDefined("collectionTags", self.collectionTags)
         kparams.addStringIfDefined("conditionalProfiles", self.conditionalProfiles)
         kparams.addIntIfDefined("detectGOP", self.detectGOP)
+        kparams.addStringIfDefined("mediaInfoXslTransformation", self.mediaInfoXslTransformation)
         return kparams
 
     def getId(self):
@@ -11014,6 +11021,12 @@ class KalturaConversionProfile(KalturaObjectBase):
 
     def setDetectGOP(self, newDetectGOP):
         self.detectGOP = newDetectGOP
+
+    def getMediaInfoXslTransformation(self):
+        return self.mediaInfoXslTransformation
+
+    def setMediaInfoXslTransformation(self, newMediaInfoXslTransformation):
+        self.mediaInfoXslTransformation = newMediaInfoXslTransformation
 
 
 # @package Kaltura
