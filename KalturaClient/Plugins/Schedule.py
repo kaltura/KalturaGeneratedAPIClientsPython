@@ -3893,12 +3893,13 @@ class KalturaScheduleEventService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
 
-    def getConflicts(self, resourceIds, scheduleEvent):
+    def getConflicts(self, resourceIds, scheduleEvent, scheduleEventIdToIgnore = NotImplemented):
         """List conflicting events for resourcesIds by event's dates"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("resourceIds", resourceIds)
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
+        kparams.addStringIfDefined("scheduleEventIdToIgnore", scheduleEventIdToIgnore)
         self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", KalturaScheduleEventListResponse, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
