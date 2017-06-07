@@ -51,6 +51,7 @@ class KalturaDeleteFlavorsLogicType(object):
 class KalturaScheduledTaskAddOrRemoveType(object):
     ADD = 1
     REMOVE = 2
+    MOVE = 3
 
     def __init__(self, value):
         self.value = value
