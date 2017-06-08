@@ -214,11 +214,9 @@ class KalturaWowzaMediaServerNodeBaseFilter(KalturaMediaServerNodeFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaMediaServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -246,11 +244,9 @@ class KalturaWowzaMediaServerNodeBaseFilter(KalturaMediaServerNodeFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
@@ -296,11 +292,9 @@ class KalturaWowzaMediaServerNodeFilter(KalturaWowzaMediaServerNodeBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaWowzaMediaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -328,11 +322,9 @@ class KalturaWowzaMediaServerNodeFilter(KalturaWowzaMediaServerNodeBaseFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {

@@ -23496,7 +23496,7 @@ class KalturaServerNode(KalturaObjectBase):
         self.dc = dc
 
         # Id of the parent serverNode
-        # @var int
+        # @var string
         self.parentId = parentId
 
 
@@ -23514,7 +23514,7 @@ class KalturaServerNode(KalturaObjectBase):
         'type': (KalturaEnumsFactory.createString, "KalturaServerNodeType"), 
         'tags': getXmlNodeText, 
         'dc': getXmlNodeInt, 
-        'parentId': getXmlNodeInt, 
+        'parentId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -23529,7 +23529,7 @@ class KalturaServerNode(KalturaObjectBase):
         kparams.addStringIfDefined("description", self.description)
         kparams.addStringIfDefined("hostName", self.hostName)
         kparams.addStringIfDefined("tags", self.tags)
-        kparams.addIntIfDefined("parentId", self.parentId)
+        kparams.addStringIfDefined("parentId", self.parentId)
         return kparams
 
     def getId(self):
@@ -33387,6 +33387,150 @@ class KalturaEntryLiveStats(KalturaLiveStats):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeBaseFilter(KalturaFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            serverNodeIdEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serverTypeEqual=NotImplemented):
+        KalturaFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var string
+        self.entryIdIn = entryIdIn
+
+        # @var int
+        self.serverNodeIdEqual = serverNodeIdEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var KalturaEntryServerNodeStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var KalturaEntryServerNodeType
+        self.serverTypeEqual = serverTypeEqual
+
+
+    PROPERTY_LOADERS = {
+        'entryIdEqual': getXmlNodeText, 
+        'entryIdIn': getXmlNodeText, 
+        'serverNodeIdEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'statusIn': getXmlNodeText, 
+        'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNodeBaseFilter")
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addIntIfDefined("serverNodeIdEqual", self.serverNodeIdEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
+        return kparams
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
+
+    def getServerNodeIdEqual(self):
+        return self.serverNodeIdEqual
+
+    def setServerNodeIdEqual(self, newServerNodeIdEqual):
+        self.serverNodeIdEqual = newServerNodeIdEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getServerTypeEqual(self):
+        return self.serverTypeEqual
+
+    def setServerTypeEqual(self, newServerTypeEqual):
+        self.serverTypeEqual = newServerTypeEqual
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryServerNodeListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -36707,8 +36851,9 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -36785,11 +36930,14 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         # @var string
         self.dcIn = dcIn
 
-        # @var int
-        self.parentIdEqual = parentIdEqual
+        # @var string
+        self.parentIdLike = parentIdLike
 
         # @var string
-        self.parentIdIn = parentIdIn
+        self.parentIdMultiLikeOr = parentIdMultiLikeOr
+
+        # @var string
+        self.parentIdMultiLikeAnd = parentIdMultiLikeAnd
 
 
     PROPERTY_LOADERS = {
@@ -36817,8 +36965,9 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         'tagsMultiLikeAnd': getXmlNodeText, 
         'dcEqual': getXmlNodeInt, 
         'dcIn': getXmlNodeText, 
-        'parentIdEqual': getXmlNodeInt, 
-        'parentIdIn': getXmlNodeText, 
+        'parentIdLike': getXmlNodeText, 
+        'parentIdMultiLikeOr': getXmlNodeText, 
+        'parentIdMultiLikeAnd': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -36852,8 +37001,9 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("tagsMultiLikeAnd", self.tagsMultiLikeAnd)
         kparams.addIntIfDefined("dcEqual", self.dcEqual)
         kparams.addStringIfDefined("dcIn", self.dcIn)
-        kparams.addIntIfDefined("parentIdEqual", self.parentIdEqual)
-        kparams.addStringIfDefined("parentIdIn", self.parentIdIn)
+        kparams.addStringIfDefined("parentIdLike", self.parentIdLike)
+        kparams.addStringIfDefined("parentIdMultiLikeOr", self.parentIdMultiLikeOr)
+        kparams.addStringIfDefined("parentIdMultiLikeAnd", self.parentIdMultiLikeAnd)
         return kparams
 
     def getIdEqual(self):
@@ -37000,17 +37150,23 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
     def setDcIn(self, newDcIn):
         self.dcIn = newDcIn
 
-    def getParentIdEqual(self):
-        return self.parentIdEqual
+    def getParentIdLike(self):
+        return self.parentIdLike
 
-    def setParentIdEqual(self, newParentIdEqual):
-        self.parentIdEqual = newParentIdEqual
+    def setParentIdLike(self, newParentIdLike):
+        self.parentIdLike = newParentIdLike
 
-    def getParentIdIn(self):
-        return self.parentIdIn
+    def getParentIdMultiLikeOr(self):
+        return self.parentIdMultiLikeOr
 
-    def setParentIdIn(self, newParentIdIn):
-        self.parentIdIn = newParentIdIn
+    def setParentIdMultiLikeOr(self, newParentIdMultiLikeOr):
+        self.parentIdMultiLikeOr = newParentIdMultiLikeOr
+
+    def getParentIdMultiLikeAnd(self):
+        return self.parentIdMultiLikeAnd
+
+    def setParentIdMultiLikeAnd(self, newParentIdMultiLikeAnd):
+        self.parentIdMultiLikeAnd = newParentIdMultiLikeAnd
 
 
 # @package Kaltura
@@ -42087,146 +42243,46 @@ class KalturaEntryResource(KalturaContentResource):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryServerNodeBaseFilter(KalturaRelatedFilter):
+class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             entryIdEqual=NotImplemented,
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
             serverTypeEqual=NotImplemented):
-        KalturaRelatedFilter.__init__(self,
+        KalturaEntryServerNodeBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var string
-        self.entryIdIn = entryIdIn
-
-        # @var int
-        self.serverNodeIdEqual = serverNodeIdEqual
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var KalturaEntryServerNodeStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var KalturaEntryServerNodeType
-        self.serverTypeEqual = serverTypeEqual
+            advancedSearch,
+            entryIdEqual,
+            entryIdIn,
+            serverNodeIdEqual,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serverTypeEqual)
 
 
     PROPERTY_LOADERS = {
-        'entryIdEqual': getXmlNodeText, 
-        'entryIdIn': getXmlNodeText, 
-        'serverNodeIdEqual': getXmlNodeInt, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
-        'statusIn': getXmlNodeText, 
-        'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
     }
 
     def fromXml(self, node):
-        KalturaRelatedFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryServerNodeBaseFilter.PROPERTY_LOADERS)
+        KalturaEntryServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryServerNodeFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaRelatedFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryServerNodeBaseFilter")
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
-        kparams.addIntIfDefined("serverNodeIdEqual", self.serverNodeIdEqual)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
+        kparams = KalturaEntryServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryServerNodeFilter")
         return kparams
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
-
-    def getServerNodeIdEqual(self):
-        return self.serverNodeIdEqual
-
-    def setServerNodeIdEqual(self, newServerNodeIdEqual):
-        self.serverNodeIdEqual = newServerNodeIdEqual
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getServerTypeEqual(self):
-        return self.serverTypeEqual
-
-    def setServerTypeEqual(self, newServerTypeEqual):
-        self.serverTypeEqual = newServerTypeEqual
 
 
 # @package Kaltura
@@ -44908,8 +44964,9 @@ class KalturaServerNodeFilter(KalturaServerNodeBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -44937,8 +44994,9 @@ class KalturaServerNodeFilter(KalturaServerNodeBaseFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
@@ -47515,11 +47573,9 @@ class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -47547,23 +47603,12 @@ class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn)
-
-        # @var string
-        self.playbackDomainLike = playbackDomainLike
-
-        # @var string
-        self.playbackDomainMultiLikeOr = playbackDomainMultiLikeOr
-
-        # @var string
-        self.playbackDomainMultiLikeAnd = playbackDomainMultiLikeAnd
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
-        'playbackDomainLike': getXmlNodeText, 
-        'playbackDomainMultiLikeOr': getXmlNodeText, 
-        'playbackDomainMultiLikeAnd': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -47573,28 +47618,7 @@ class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
     def toParams(self):
         kparams = KalturaServerNodeFilter.toParams(self)
         kparams.put("objectType", "KalturaDeliveryServerNodeBaseFilter")
-        kparams.addStringIfDefined("playbackDomainLike", self.playbackDomainLike)
-        kparams.addStringIfDefined("playbackDomainMultiLikeOr", self.playbackDomainMultiLikeOr)
-        kparams.addStringIfDefined("playbackDomainMultiLikeAnd", self.playbackDomainMultiLikeAnd)
         return kparams
-
-    def getPlaybackDomainLike(self):
-        return self.playbackDomainLike
-
-    def setPlaybackDomainLike(self, newPlaybackDomainLike):
-        self.playbackDomainLike = newPlaybackDomainLike
-
-    def getPlaybackDomainMultiLikeOr(self):
-        return self.playbackDomainMultiLikeOr
-
-    def setPlaybackDomainMultiLikeOr(self, newPlaybackDomainMultiLikeOr):
-        self.playbackDomainMultiLikeOr = newPlaybackDomainMultiLikeOr
-
-    def getPlaybackDomainMultiLikeAnd(self):
-        return self.playbackDomainMultiLikeAnd
-
-    def setPlaybackDomainMultiLikeAnd(self, newPlaybackDomainMultiLikeAnd):
-        self.playbackDomainMultiLikeAnd = newPlaybackDomainMultiLikeAnd
 
 
 # @package Kaltura
@@ -47675,50 +47699,6 @@ class KalturaDocumentEntryMatchAttributeCondition(KalturaSearchMatchAttributeCon
 
     def setAttribute(self, newAttribute):
         self.attribute = newAttribute
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            serverNodeIdEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            serverTypeEqual=NotImplemented):
-        KalturaEntryServerNodeBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            entryIdEqual,
-            entryIdIn,
-            serverNodeIdEqual,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            statusEqual,
-            statusIn,
-            serverTypeEqual)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaEntryServerNodeBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryServerNodeFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaEntryServerNodeBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryServerNodeFilter")
-        return kparams
 
 
 # @package Kaltura
@@ -50519,11 +50499,9 @@ class KalturaDeliveryServerNodeFilter(KalturaDeliveryServerNodeBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaDeliveryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -50551,11 +50529,9 @@ class KalturaDeliveryServerNodeFilter(KalturaDeliveryServerNodeBaseFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
@@ -51917,8 +51893,9 @@ class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented,
             playbackDomainLike=NotImplemented,
             playbackDomainMultiLikeOr=NotImplemented,
             playbackDomainMultiLikeAnd=NotImplemented):
@@ -51949,14 +51926,24 @@ class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
+
+        # @var string
+        self.playbackDomainLike = playbackDomainLike
+
+        # @var string
+        self.playbackDomainMultiLikeOr = playbackDomainMultiLikeOr
+
+        # @var string
+        self.playbackDomainMultiLikeAnd = playbackDomainMultiLikeAnd
 
 
     PROPERTY_LOADERS = {
+        'playbackDomainLike': getXmlNodeText, 
+        'playbackDomainMultiLikeOr': getXmlNodeText, 
+        'playbackDomainMultiLikeAnd': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -51966,7 +51953,28 @@ class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
     def toParams(self):
         kparams = KalturaDeliveryServerNodeFilter.toParams(self)
         kparams.put("objectType", "KalturaEdgeServerNodeBaseFilter")
+        kparams.addStringIfDefined("playbackDomainLike", self.playbackDomainLike)
+        kparams.addStringIfDefined("playbackDomainMultiLikeOr", self.playbackDomainMultiLikeOr)
+        kparams.addStringIfDefined("playbackDomainMultiLikeAnd", self.playbackDomainMultiLikeAnd)
         return kparams
+
+    def getPlaybackDomainLike(self):
+        return self.playbackDomainLike
+
+    def setPlaybackDomainLike(self, newPlaybackDomainLike):
+        self.playbackDomainLike = newPlaybackDomainLike
+
+    def getPlaybackDomainMultiLikeOr(self):
+        return self.playbackDomainMultiLikeOr
+
+    def setPlaybackDomainMultiLikeOr(self, newPlaybackDomainMultiLikeOr):
+        self.playbackDomainMultiLikeOr = newPlaybackDomainMultiLikeOr
+
+    def getPlaybackDomainMultiLikeAnd(self):
+        return self.playbackDomainMultiLikeAnd
+
+    def setPlaybackDomainMultiLikeAnd(self, newPlaybackDomainMultiLikeAnd):
+        self.playbackDomainMultiLikeAnd = newPlaybackDomainMultiLikeAnd
 
 
 # @package Kaltura
@@ -52341,11 +52349,9 @@ class KalturaMediaServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaDeliveryServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -52373,11 +52379,9 @@ class KalturaMediaServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
@@ -52773,8 +52777,9 @@ class KalturaEdgeServerNodeFilter(KalturaEdgeServerNodeBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented,
             playbackDomainLike=NotImplemented,
             playbackDomainMultiLikeOr=NotImplemented,
             playbackDomainMultiLikeAnd=NotImplemented):
@@ -52805,8 +52810,9 @@ class KalturaEdgeServerNodeFilter(KalturaEdgeServerNodeBaseFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd,
             playbackDomainLike,
             playbackDomainMultiLikeOr,
             playbackDomainMultiLikeAnd)
@@ -53111,11 +53117,9 @@ class KalturaMediaServerNodeFilter(KalturaMediaServerNodeBaseFilter):
             tagsMultiLikeAnd=NotImplemented,
             dcEqual=NotImplemented,
             dcIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            playbackDomainLike=NotImplemented,
-            playbackDomainMultiLikeOr=NotImplemented,
-            playbackDomainMultiLikeAnd=NotImplemented):
+            parentIdLike=NotImplemented,
+            parentIdMultiLikeOr=NotImplemented,
+            parentIdMultiLikeAnd=NotImplemented):
         KalturaMediaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -53143,11 +53147,9 @@ class KalturaMediaServerNodeFilter(KalturaMediaServerNodeBaseFilter):
             tagsMultiLikeAnd,
             dcEqual,
             dcIn,
-            parentIdEqual,
-            parentIdIn,
-            playbackDomainLike,
-            playbackDomainMultiLikeOr,
-            playbackDomainMultiLikeAnd)
+            parentIdLike,
+            parentIdMultiLikeOr,
+            parentIdMultiLikeAnd)
 
 
     PROPERTY_LOADERS = {
@@ -61517,6 +61519,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryCuePointSearchFilter': KalturaEntryCuePointSearchFilter,
             'KalturaEntryIdentifier': KalturaEntryIdentifier,
             'KalturaEntryLiveStats': KalturaEntryLiveStats,
+            'KalturaEntryServerNodeBaseFilter': KalturaEntryServerNodeBaseFilter,
             'KalturaEntryServerNodeListResponse': KalturaEntryServerNodeListResponse,
             'KalturaBooleanField': KalturaBooleanField,
             'KalturaFeatureStatusListResponse': KalturaFeatureStatusListResponse,
@@ -61637,7 +61640,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
             'KalturaEntryReferrerLiveStats': KalturaEntryReferrerLiveStats,
             'KalturaEntryResource': KalturaEntryResource,
-            'KalturaEntryServerNodeBaseFilter': KalturaEntryServerNodeBaseFilter,
+            'KalturaEntryServerNodeFilter': KalturaEntryServerNodeFilter,
             'KalturaExtractMediaJobData': KalturaExtractMediaJobData,
             'KalturaFairPlayPlaybackPluginData': KalturaFairPlayPlaybackPluginData,
             'KalturaIntegerField': KalturaIntegerField,
@@ -61715,7 +61718,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
-            'KalturaEntryServerNodeFilter': KalturaEntryServerNodeFilter,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
             'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
