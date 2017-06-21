@@ -59766,6 +59766,16 @@ class KalturaStatsService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def reportDeviceCapabilities(self, data):
+        """Use this action to report device capabilities to the kaltura server."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("data", data)
+        self.client.queueServiceActionCall("stats", "reportDeviceCapabilities", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
     def reportError(self, errorCode, errorMessage):
         """Use this action to report errors to the kaltura server."""
 
