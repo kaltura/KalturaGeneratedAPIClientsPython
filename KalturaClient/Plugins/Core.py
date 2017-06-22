@@ -13842,7 +13842,6 @@ class KalturaFlavorAsset(KalturaAsset):
 
         # The label of the flavor asset
         # @var string
-        # @readonly
         self.label = label
 
 
@@ -13870,6 +13869,7 @@ class KalturaFlavorAsset(KalturaAsset):
         kparams.put("objectType", "KalturaFlavorAsset")
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
         kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addStringIfDefined("label", self.label)
         return kparams
 
     def getFlavorParamsId(self):
@@ -13913,6 +13913,9 @@ class KalturaFlavorAsset(KalturaAsset):
 
     def getLabel(self):
         return self.label
+
+    def setLabel(self, newLabel):
+        self.label = newLabel
 
 
 # @package Kaltura
