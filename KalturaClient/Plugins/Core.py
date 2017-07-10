@@ -2794,6 +2794,7 @@ class KalturaGenericXsltSyndicationFeedOrderBy(object):
 class KalturaGeoCoderType(object):
     KALTURA = "1"
     MAX_MIND = "2"
+    DIGITAL_ELEMENT = "3"
 
     def __init__(self, value):
         self.value = value
