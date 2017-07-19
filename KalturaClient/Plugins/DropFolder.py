@@ -2431,41 +2431,6 @@ class KalturaSshDropFolder(KalturaRemoteDropFolder):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDropFolderFileResource(KalturaDataCenterContentResource):
-    """Used to ingest media that dropped through drop folder"""
-
-    def __init__(self,
-            dropFolderFileId=NotImplemented):
-        KalturaDataCenterContentResource.__init__(self)
-
-        # Id of the drop folder file object
-        # @var int
-        self.dropFolderFileId = dropFolderFileId
-
-
-    PROPERTY_LOADERS = {
-        'dropFolderFileId': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaDataCenterContentResource.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDropFolderFileResource.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDataCenterContentResource.toParams(self)
-        kparams.put("objectType", "KalturaDropFolderFileResource")
-        kparams.addIntIfDefined("dropFolderFileId", self.dropFolderFileId)
-        return kparams
-
-    def getDropFolderFileId(self):
-        return self.dropFolderFileId
-
-    def setDropFolderFileId(self, newDropFolderFileId):
-        self.dropFolderFileId = newDropFolderFileId
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDropFolderImportJobData(KalturaSshImportJobData):
     def __init__(self,
             srcFileUrl=NotImplemented,
@@ -2772,6 +2737,41 @@ class KalturaSftpDropFolder(KalturaSshDropFolder):
         kparams = KalturaSshDropFolder.toParams(self)
         kparams.put("objectType", "KalturaSftpDropFolder")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDropFolderFileResource(KalturaGenericDataCenterContentResource):
+    """Used to ingest media that dropped through drop folder"""
+
+    def __init__(self,
+            dropFolderFileId=NotImplemented):
+        KalturaGenericDataCenterContentResource.__init__(self)
+
+        # Id of the drop folder file object
+        # @var int
+        self.dropFolderFileId = dropFolderFileId
+
+
+    PROPERTY_LOADERS = {
+        'dropFolderFileId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaGenericDataCenterContentResource.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDropFolderFileResource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGenericDataCenterContentResource.toParams(self)
+        kparams.put("objectType", "KalturaDropFolderFileResource")
+        kparams.addIntIfDefined("dropFolderFileId", self.dropFolderFileId)
+        return kparams
+
+    def getDropFolderFileId(self):
+        return self.dropFolderFileId
+
+    def setDropFolderFileId(self, newDropFolderFileId):
+        self.dropFolderFileId = newDropFolderFileId
 
 
 # @package Kaltura
@@ -3766,11 +3766,11 @@ class KalturaDropFolderClientPlugin(KalturaClientPlugin):
             'KalturaDropFolderFilter': KalturaDropFolderFilter,
             'KalturaFtpDropFolder': KalturaFtpDropFolder,
             'KalturaSshDropFolder': KalturaSshDropFolder,
-            'KalturaDropFolderFileResource': KalturaDropFolderFileResource,
             'KalturaDropFolderImportJobData': KalturaDropFolderImportJobData,
             'KalturaRemoteDropFolderBaseFilter': KalturaRemoteDropFolderBaseFilter,
             'KalturaScpDropFolder': KalturaScpDropFolder,
             'KalturaSftpDropFolder': KalturaSftpDropFolder,
+            'KalturaDropFolderFileResource': KalturaDropFolderFileResource,
             'KalturaRemoteDropFolderFilter': KalturaRemoteDropFolderFilter,
             'KalturaFtpDropFolderBaseFilter': KalturaFtpDropFolderBaseFilter,
             'KalturaSshDropFolderBaseFilter': KalturaSshDropFolderBaseFilter,

@@ -488,8 +488,11 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
     def __init__(self,
             type=NotImplemented,
             stopProcessingOnError=NotImplemented,
-            mailAddress=NotImplemented,
+            mailTo=NotImplemented,
+            sender=NotImplemented,
+            subject=NotImplemented,
             message=NotImplemented,
+            link=NotImplemented,
             sendToUsers=NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
@@ -497,11 +500,23 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
 
         # The mail to send the notification to
         # @var string
-        self.mailAddress = mailAddress
+        self.mailTo = mailTo
+
+        # The sender in the mail
+        # @var string
+        self.sender = sender
+
+        # The subject of the entry
+        # @var string
+        self.subject = subject
 
         # The message to send in the notification mail
         # @var string
         self.message = message
+
+        # The basic link for the KMC site
+        # @var string
+        self.link = link
 
         # Send the mail to each user
         # @var bool
@@ -509,8 +524,11 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
 
 
     PROPERTY_LOADERS = {
-        'mailAddress': getXmlNodeText, 
+        'mailTo': getXmlNodeText, 
+        'sender': getXmlNodeText, 
+        'subject': getXmlNodeText, 
         'message': getXmlNodeText, 
+        'link': getXmlNodeText, 
         'sendToUsers': getXmlNodeBool, 
     }
 
@@ -521,22 +539,43 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
     def toParams(self):
         kparams = KalturaObjectTask.toParams(self)
         kparams.put("objectType", "KalturaMailNotificationObjectTask")
-        kparams.addStringIfDefined("mailAddress", self.mailAddress)
+        kparams.addStringIfDefined("mailTo", self.mailTo)
+        kparams.addStringIfDefined("sender", self.sender)
+        kparams.addStringIfDefined("subject", self.subject)
         kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("link", self.link)
         kparams.addBoolIfDefined("sendToUsers", self.sendToUsers)
         return kparams
 
-    def getMailAddress(self):
-        return self.mailAddress
+    def getMailTo(self):
+        return self.mailTo
 
-    def setMailAddress(self, newMailAddress):
-        self.mailAddress = newMailAddress
+    def setMailTo(self, newMailTo):
+        self.mailTo = newMailTo
+
+    def getSender(self):
+        return self.sender
+
+    def setSender(self, newSender):
+        self.sender = newSender
+
+    def getSubject(self):
+        return self.subject
+
+    def setSubject(self, newSubject):
+        self.subject = newSubject
 
     def getMessage(self):
         return self.message
 
     def setMessage(self, newMessage):
         self.message = newMessage
+
+    def getLink(self):
+        return self.link
+
+    def setLink(self, newLink):
+        self.link = newLink
 
     def getSendToUsers(self):
         return self.sendToUsers

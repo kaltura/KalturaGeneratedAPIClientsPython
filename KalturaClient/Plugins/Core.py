@@ -47913,6 +47913,26 @@ class KalturaFileAssetFilter(KalturaFileAssetBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaGenericDataCenterContentResource(KalturaDataCenterContentResource):
+    def __init__(self):
+        KalturaDataCenterContentResource.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaDataCenterContentResource.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaGenericDataCenterContentResource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDataCenterContentResource.toParams(self)
+        kparams.put("objectType", "KalturaGenericDataCenterContentResource")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaGenericSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -49013,54 +49033,6 @@ class KalturaPlaylistMatchAttributeCondition(KalturaSearchMatchAttributeConditio
 
 # @package Kaltura
 # @subpackage Client
-class KalturaServerFileResource(KalturaDataCenterContentResource):
-    """Used to ingest media file that is already accessible on the shared disc."""
-
-    def __init__(self,
-            localFilePath=NotImplemented,
-            keepOriginalFile=NotImplemented):
-        KalturaDataCenterContentResource.__init__(self)
-
-        # Full path to the local file
-        # @var string
-        self.localFilePath = localFilePath
-
-        # Should keep original file (false = mv, true = cp)
-        # @var bool
-        self.keepOriginalFile = keepOriginalFile
-
-
-    PROPERTY_LOADERS = {
-        'localFilePath': getXmlNodeText, 
-        'keepOriginalFile': getXmlNodeBool, 
-    }
-
-    def fromXml(self, node):
-        KalturaDataCenterContentResource.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaServerFileResource.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDataCenterContentResource.toParams(self)
-        kparams.put("objectType", "KalturaServerFileResource")
-        kparams.addStringIfDefined("localFilePath", self.localFilePath)
-        kparams.addBoolIfDefined("keepOriginalFile", self.keepOriginalFile)
-        return kparams
-
-    def getLocalFilePath(self):
-        return self.localFilePath
-
-    def setLocalFilePath(self, newLocalFilePath):
-        self.localFilePath = newLocalFilePath
-
-    def getKeepOriginalFile(self):
-        return self.keepOriginalFile
-
-    def setKeepOriginalFile(self, newKeepOriginalFile):
-        self.keepOriginalFile = newKeepOriginalFile
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaSshUrlResource(KalturaUrlResource):
     """Used to ingest media that is available on remote SSH server and accessible using the supplied URL, media file will be downloaded using import job in order to make the asset ready."""
 
@@ -49185,41 +49157,6 @@ class KalturaTubeMogulSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter
         kparams = KalturaBaseSyndicationFeedFilter.toParams(self)
         kparams.put("objectType", "KalturaTubeMogulSyndicationFeedBaseFilter")
         return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUploadedFileTokenResource(KalturaDataCenterContentResource):
-    """Used to ingest media that uploaded to the system and represented by token that returned from upload.upload action or uploadToken.add action."""
-
-    def __init__(self,
-            token=NotImplemented):
-        KalturaDataCenterContentResource.__init__(self)
-
-        # Token that returned from upload.upload action or uploadToken.add action.
-        # @var string
-        self.token = token
-
-
-    PROPERTY_LOADERS = {
-        'token': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaDataCenterContentResource.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUploadedFileTokenResource.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDataCenterContentResource.toParams(self)
-        kparams.put("objectType", "KalturaUploadedFileTokenResource")
-        kparams.addStringIfDefined("token", self.token)
-        return kparams
-
-    def getToken(self):
-        return self.token
-
-    def setToken(self, newToken):
-        self.token = newToken
 
 
 # @package Kaltura
@@ -51203,6 +51140,54 @@ class KalturaRokuSyndicationFeed(KalturaConstantXsltSyndicationFeed):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaServerFileResource(KalturaGenericDataCenterContentResource):
+    """Used to ingest media file that is already accessible on the shared disc."""
+
+    def __init__(self,
+            localFilePath=NotImplemented,
+            keepOriginalFile=NotImplemented):
+        KalturaGenericDataCenterContentResource.__init__(self)
+
+        # Full path to the local file
+        # @var string
+        self.localFilePath = localFilePath
+
+        # Should keep original file (false = mv, true = cp)
+        # @var bool
+        self.keepOriginalFile = keepOriginalFile
+
+
+    PROPERTY_LOADERS = {
+        'localFilePath': getXmlNodeText, 
+        'keepOriginalFile': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaGenericDataCenterContentResource.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaServerFileResource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGenericDataCenterContentResource.toParams(self)
+        kparams.put("objectType", "KalturaServerFileResource")
+        kparams.addStringIfDefined("localFilePath", self.localFilePath)
+        kparams.addBoolIfDefined("keepOriginalFile", self.keepOriginalFile)
+        return kparams
+
+    def getLocalFilePath(self):
+        return self.localFilePath
+
+    def setLocalFilePath(self, newLocalFilePath):
+        self.localFilePath = newLocalFilePath
+
+    def getKeepOriginalFile(self):
+        return self.keepOriginalFile
+
+    def setKeepOriginalFile(self, newKeepOriginalFile):
+        self.keepOriginalFile = newKeepOriginalFile
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaThumbAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -51391,6 +51376,41 @@ class KalturaTubeMogulSyndicationFeedFilter(KalturaTubeMogulSyndicationFeedBaseF
         kparams = KalturaTubeMogulSyndicationFeedBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaTubeMogulSyndicationFeedFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUploadedFileTokenResource(KalturaGenericDataCenterContentResource):
+    """Used to ingest media that uploaded to the system and represented by token that returned from upload.upload action or uploadToken.add action."""
+
+    def __init__(self,
+            token=NotImplemented):
+        KalturaGenericDataCenterContentResource.__init__(self)
+
+        # Token that returned from upload.upload action or uploadToken.add action.
+        # @var string
+        self.token = token
+
+
+    PROPERTY_LOADERS = {
+        'token': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaGenericDataCenterContentResource.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUploadedFileTokenResource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaGenericDataCenterContentResource.toParams(self)
+        kparams.put("objectType", "KalturaUploadedFileTokenResource")
+        kparams.addStringIfDefined("token", self.token)
+        return kparams
+
+    def getToken(self):
+        return self.token
+
+    def setToken(self, newToken):
+        self.token = newToken
 
 
 # @package Kaltura
@@ -57014,6 +57034,18 @@ class KalturaDataService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaDataEntry)
 
+    def addContent(self, entryId, resource):
+        """Update the dataContent of data entry using a resource"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("resource", resource)
+        self.client.queueServiceActionCall("data", "addContent", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def delete(self, entryId):
         """Delete a data entry."""
 
@@ -61737,6 +61769,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
             'KalturaExternalMediaEntryMatchAttributeCondition': KalturaExternalMediaEntryMatchAttributeCondition,
             'KalturaFileAssetFilter': KalturaFileAssetFilter,
+            'KalturaGenericDataCenterContentResource': KalturaGenericDataCenterContentResource,
             'KalturaGenericSyndicationFeedBaseFilter': KalturaGenericSyndicationFeedBaseFilter,
             'KalturaGoogleVideoSyndicationFeedBaseFilter': KalturaGoogleVideoSyndicationFeedBaseFilter,
             'KalturaGroupUserFilter': KalturaGroupUserFilter,
@@ -61763,11 +61796,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlayableEntryMatchAttributeCondition': KalturaPlayableEntryMatchAttributeCondition,
             'KalturaPlaylistCompareAttributeCondition': KalturaPlaylistCompareAttributeCondition,
             'KalturaPlaylistMatchAttributeCondition': KalturaPlaylistMatchAttributeCondition,
-            'KalturaServerFileResource': KalturaServerFileResource,
             'KalturaSshUrlResource': KalturaSshUrlResource,
             'KalturaTimeContextField': KalturaTimeContextField,
             'KalturaTubeMogulSyndicationFeedBaseFilter': KalturaTubeMogulSyndicationFeedBaseFilter,
-            'KalturaUploadedFileTokenResource': KalturaUploadedFileTokenResource,
             'KalturaUserAgentCondition': KalturaUserAgentCondition,
             'KalturaUserAgentContextField': KalturaUserAgentContextField,
             'KalturaUserEmailContextField': KalturaUserEmailContextField,
@@ -61801,9 +61832,11 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
             'KalturaQuizUserEntryBaseFilter': KalturaQuizUserEntryBaseFilter,
             'KalturaRokuSyndicationFeed': KalturaRokuSyndicationFeed,
+            'KalturaServerFileResource': KalturaServerFileResource,
             'KalturaThumbAssetBaseFilter': KalturaThumbAssetBaseFilter,
             'KalturaThumbParamsBaseFilter': KalturaThumbParamsBaseFilter,
             'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,
+            'KalturaUploadedFileTokenResource': KalturaUploadedFileTokenResource,
             'KalturaYahooSyndicationFeedFilter': KalturaYahooSyndicationFeedFilter,
             'KalturaAdminUserFilter': KalturaAdminUserFilter,
             'KalturaApiActionPermissionItemFilter': KalturaApiActionPermissionItemFilter,
