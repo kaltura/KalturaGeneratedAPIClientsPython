@@ -376,6 +376,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -429,6 +430,7 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -500,6 +502,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             densityWidth=NotImplemented,
@@ -558,6 +561,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -684,6 +688,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             readonly=NotImplemented):
@@ -738,6 +743,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -820,6 +826,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flashVersion=NotImplemented,
@@ -875,6 +882,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -968,6 +976,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1027,6 +1036,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1104,6 +1114,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1168,6 +1179,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1300,6 +1312,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1360,6 +1373,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration,
             flavorParamsId,
@@ -1448,6 +1462,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -1509,6 +1524,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration,
             flavorParamsId,

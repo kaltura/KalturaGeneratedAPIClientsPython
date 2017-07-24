@@ -11043,6 +11043,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
             deletePolicy=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             twoPass=NotImplemented,
             tags=NotImplemented):
         KalturaObjectBase.__init__(self)
@@ -11083,6 +11084,9 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         # @var float
         self.contentAwareness = contentAwareness
 
+        # @var int
+        self.chunkedEncodeMode = chunkedEncodeMode
+
         # @var KalturaNullableBoolean
         self.twoPass = twoPass
 
@@ -11100,6 +11104,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         'deletePolicy': (KalturaEnumsFactory.createInt, "KalturaAssetParamsDeletePolicy"), 
         'isEncrypted': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'contentAwareness': getXmlNodeFloat, 
+        'chunkedEncodeMode': getXmlNodeInt, 
         'twoPass': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'tags': getXmlNodeText, 
     }
@@ -11118,6 +11123,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         kparams.addIntEnumIfDefined("deletePolicy", self.deletePolicy)
         kparams.addIntEnumIfDefined("isEncrypted", self.isEncrypted)
         kparams.addFloatIfDefined("contentAwareness", self.contentAwareness)
+        kparams.addIntIfDefined("chunkedEncodeMode", self.chunkedEncodeMode)
         kparams.addIntEnumIfDefined("twoPass", self.twoPass)
         kparams.addStringIfDefined("tags", self.tags)
         return kparams
@@ -11169,6 +11175,12 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
     def setContentAwareness(self, newContentAwareness):
         self.contentAwareness = newContentAwareness
+
+    def getChunkedEncodeMode(self):
+        return self.chunkedEncodeMode
+
+    def setChunkedEncodeMode(self, newChunkedEncodeMode):
+        self.chunkedEncodeMode = newChunkedEncodeMode
 
     def getTwoPass(self):
         return self.twoPass
@@ -14018,6 +14030,7 @@ class KalturaFlavorParams(KalturaAssetParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaAssetParams.__init__(self,
@@ -14160,6 +14173,9 @@ class KalturaFlavorParams(KalturaAssetParams):
         self.contentAwareness = contentAwareness
 
         # @var int
+        self.chunkedEncodeMode = chunkedEncodeMode
+
+        # @var int
         self.clipOffset = clipOffset
 
         # @var int
@@ -14204,6 +14220,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'subtitlesData': getXmlNodeText, 
         'isEncrypted': getXmlNodeInt, 
         'contentAwareness': getXmlNodeFloat, 
+        'chunkedEncodeMode': getXmlNodeInt, 
         'clipOffset': getXmlNodeInt, 
         'clipDuration': getXmlNodeInt, 
     }
@@ -14252,6 +14269,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         kparams.addStringIfDefined("subtitlesData", self.subtitlesData)
         kparams.addIntIfDefined("isEncrypted", self.isEncrypted)
         kparams.addFloatIfDefined("contentAwareness", self.contentAwareness)
+        kparams.addIntIfDefined("chunkedEncodeMode", self.chunkedEncodeMode)
         kparams.addIntIfDefined("clipOffset", self.clipOffset)
         kparams.addIntIfDefined("clipDuration", self.clipDuration)
         return kparams
@@ -14478,6 +14496,12 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setContentAwareness(self, newContentAwareness):
         self.contentAwareness = newContentAwareness
 
+    def getChunkedEncodeMode(self):
+        return self.chunkedEncodeMode
+
+    def setChunkedEncodeMode(self, newChunkedEncodeMode):
+        self.chunkedEncodeMode = newChunkedEncodeMode
+
     def getClipOffset(self):
         return self.clipOffset
 
@@ -14604,6 +14628,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -14663,6 +14688,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -43507,6 +43533,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             streamSuffix=NotImplemented):
@@ -43561,6 +43588,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -43644,6 +43672,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -43697,6 +43726,7 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration)
 
@@ -48571,6 +48601,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData=NotImplemented,
             isEncrypted=NotImplemented,
             contentAwareness=NotImplemented,
+            chunkedEncodeMode=NotImplemented,
             clipOffset=NotImplemented,
             clipDuration=NotImplemented,
             flavorParamsId=NotImplemented,
@@ -48630,6 +48661,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             subtitlesData,
             isEncrypted,
             contentAwareness,
+            chunkedEncodeMode,
             clipOffset,
             clipDuration,
             flavorParamsId,
