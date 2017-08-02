@@ -60610,7 +60610,7 @@ class KalturaUserEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaUserEntry)
 
-    def list(self, filter, pager = NotImplemented):
+    def list(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
