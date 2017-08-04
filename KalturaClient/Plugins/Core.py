@@ -12318,8 +12318,8 @@ class KalturaDestFileSyncDescriptor(KalturaFileSyncDescriptor):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFilterPager(KalturaObjectBase):
-    """The KalturaFilterPager object enables paging management to be applied upon service list actions."""
+class KalturaPager(KalturaObjectBase):
+    """The KalturaPager object enables paging management to be applied upon service list/search actions."""
 
     def __init__(self,
             pageSize=NotImplemented,
@@ -12342,11 +12342,11 @@ class KalturaFilterPager(KalturaObjectBase):
 
     def fromXml(self, node):
         KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFilterPager.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaPager.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaFilterPager")
+        kparams.put("objectType", "KalturaPager")
         kparams.addIntIfDefined("pageSize", self.pageSize)
         kparams.addIntIfDefined("pageIndex", self.pageIndex)
         return kparams
@@ -12362,6 +12362,32 @@ class KalturaFilterPager(KalturaObjectBase):
 
     def setPageIndex(self, newPageIndex):
         self.pageIndex = newPageIndex
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaFilterPager(KalturaPager):
+    """The KalturaFilterPager object enables paging management to be applied upon service list actions."""
+
+    def __init__(self,
+            pageSize=NotImplemented,
+            pageIndex=NotImplemented):
+        KalturaPager.__init__(self,
+            pageSize,
+            pageIndex)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaPager.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFilterPager.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPager.toParams(self)
+        kparams.put("objectType", "KalturaFilterPager")
+        return kparams
 
 
 # @package Kaltura
@@ -61404,6 +61430,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfile': KalturaDeliveryProfile,
             'KalturaFileSyncDescriptor': KalturaFileSyncDescriptor,
             'KalturaDestFileSyncDescriptor': KalturaDestFileSyncDescriptor,
+            'KalturaPager': KalturaPager,
             'KalturaFilterPager': KalturaFilterPager,
             'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
