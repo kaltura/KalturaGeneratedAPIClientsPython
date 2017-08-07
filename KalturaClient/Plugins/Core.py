@@ -2469,6 +2469,16 @@ class KalturaDocumentEntryMatchAttribute(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDrmSchemeName(object):
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDurationType(object):
     LONG = "long"
     MEDIUM = "medium"
@@ -61252,6 +61262,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryServerNodeOrderBy': KalturaDeliveryServerNodeOrderBy,
             'KalturaDocumentEntryCompareAttribute': KalturaDocumentEntryCompareAttribute,
             'KalturaDocumentEntryMatchAttribute': KalturaDocumentEntryMatchAttribute,
+            'KalturaDrmSchemeName': KalturaDrmSchemeName,
             'KalturaDurationType': KalturaDurationType,
             'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
