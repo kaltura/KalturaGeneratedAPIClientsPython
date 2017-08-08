@@ -42207,6 +42207,30 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryIndexAdvancedFilter(KalturaIndexAdvancedFilter):
+    def __init__(self,
+            indexIdGreaterThan=NotImplemented,
+            depthGreaterThanEqual=NotImplemented):
+        KalturaIndexAdvancedFilter.__init__(self,
+            indexIdGreaterThan,
+            depthGreaterThanEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaIndexAdvancedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryIndexAdvancedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaIndexAdvancedFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryIndexAdvancedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryReferrerLiveStats(KalturaEntryLiveStats):
     def __init__(self,
             audience=NotImplemented,
@@ -61754,6 +61778,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
             'KalturaEdgeServerNode': KalturaEdgeServerNode,
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
+            'KalturaEntryIndexAdvancedFilter': KalturaEntryIndexAdvancedFilter,
             'KalturaEntryReferrerLiveStats': KalturaEntryReferrerLiveStats,
             'KalturaEntryResource': KalturaEntryResource,
             'KalturaEntryServerNodeFilter': KalturaEntryServerNodeFilter,
