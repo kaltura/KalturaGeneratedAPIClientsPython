@@ -1537,7 +1537,6 @@ class KalturaAssetType(object):
     SWF = "document.SWF"
     TIMED_THUMB_ASSET = "thumbCuePoint.timedThumb"
     TRANSCRIPT = "transcript.Transcript"
-    WIDEVINE_FLAVOR = "widevine.WidevineFlavor"
     FLAVOR = "1"
     THUMBNAIL = "2"
     LIVE = "3"
@@ -1756,7 +1755,6 @@ class KalturaBatchJobType(object):
     INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
     TAG_RESOLVE = "tagSearch.TagResolve"
     VIRUS_SCAN = "virusScan.VirusScan"
-    WIDEVINE_REPOSITORY_SYNC = "widevine.WidevineRepositorySync"
     IMPORT = "1"
     DELETE = "2"
     FLATTEN = "3"
@@ -2472,10 +2470,6 @@ class KalturaDocumentEntryMatchAttribute(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDrmSchemeName(object):
-    PLAYREADY_CENC = "drm.PLAYREADY_CENC"
-    WIDEVINE_CENC = "drm.WIDEVINE_CENC"
-    PLAYREADY = "playReady.PLAYREADY"
-    WIDEVINE = "widevine.WIDEVINE"
 
     def __init__(self, value):
         self.value = value
@@ -4494,7 +4488,6 @@ class KalturaResponseProfileOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaRuleActionType(object):
-    DRM_POLICY = "drm.DRM_POLICY"
     BLOCK = "1"
     PREVIEW = "2"
     LIMIT_FLAVORS = "3"
@@ -12571,70 +12564,6 @@ class KalturaDetachedResponseProfile(KalturaBaseResponseProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaPluginData(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPluginData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPluginData")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDrmPlaybackPluginData(KalturaPluginData):
-    def __init__(self,
-            scheme=NotImplemented,
-            licenseURL=NotImplemented):
-        KalturaPluginData.__init__(self)
-
-        # @var KalturaDrmSchemeName
-        self.scheme = scheme
-
-        # @var string
-        self.licenseURL = licenseURL
-
-
-    PROPERTY_LOADERS = {
-        'scheme': (KalturaEnumsFactory.createString, "KalturaDrmSchemeName"), 
-        'licenseURL': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaPluginData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDrmPlaybackPluginData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaPluginData.toParams(self)
-        kparams.put("objectType", "KalturaDrmPlaybackPluginData")
-        kparams.addStringEnumIfDefined("scheme", self.scheme)
-        kparams.addStringIfDefined("licenseURL", self.licenseURL)
-        return kparams
-
-    def getScheme(self):
-        return self.scheme
-
-    def setScheme(self, newScheme):
-        self.scheme = newScheme
-
-    def getLicenseURL(self):
-        return self.licenseURL
-
-    def setLicenseURL(self, newLicenseURL):
-        self.licenseURL = newLicenseURL
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEmailIngestionProfile(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -17693,6 +17622,50 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveEntryServerNodeRecordingInfo(KalturaObjectBase):
+    def __init__(self,
+            recordedEntryId=NotImplemented,
+            duration=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.recordedEntryId = recordedEntryId
+
+        # @var int
+        self.duration = duration
+
+
+    PROPERTY_LOADERS = {
+        'recordedEntryId': getXmlNodeText, 
+        'duration': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryServerNodeRecordingInfo.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryServerNodeRecordingInfo")
+        kparams.addStringIfDefined("recordedEntryId", self.recordedEntryId)
+        kparams.addIntIfDefined("duration", self.duration)
+        return kparams
+
+    def getRecordedEntryId(self):
+        return self.recordedEntryId
+
+    def setRecordedEntryId(self, newRecordedEntryId):
+        self.recordedEntryId = newRecordedEntryId
+
+    def getDuration(self):
+        return self.duration
+
+    def setDuration(self, newDuration):
+        self.duration = newDuration
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveReportExportParams(KalturaObjectBase):
     def __init__(self,
             entryIds=NotImplemented,
@@ -21911,6 +21884,70 @@ class KalturaPermissionItem(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPluginData(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPluginData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDrmPlaybackPluginData(KalturaPluginData):
+    def __init__(self,
+            scheme=NotImplemented,
+            licenseURL=NotImplemented):
+        KalturaPluginData.__init__(self)
+
+        # @var KalturaDrmSchemeName
+        self.scheme = scheme
+
+        # @var string
+        self.licenseURL = licenseURL
+
+
+    PROPERTY_LOADERS = {
+        'scheme': (KalturaEnumsFactory.createString, "KalturaDrmSchemeName"), 
+        'licenseURL': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaPluginData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDrmPlaybackPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaPluginData.toParams(self)
+        kparams.put("objectType", "KalturaDrmPlaybackPluginData")
+        kparams.addStringEnumIfDefined("scheme", self.scheme)
+        kparams.addStringIfDefined("licenseURL", self.licenseURL)
+        return kparams
+
+    def getScheme(self):
+        return self.scheme
+
+    def setScheme(self, newScheme):
+        self.scheme = newScheme
+
+    def getLicenseURL(self):
+        return self.licenseURL
+
+    def setLicenseURL(self, newLicenseURL):
+        self.licenseURL = newLicenseURL
 
 
 # @package Kaltura
@@ -34616,7 +34653,8 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
             updatedAt=NotImplemented,
             status=NotImplemented,
             serverType=NotImplemented,
-            streams=NotImplemented):
+            streams=NotImplemented,
+            recordingInfo=NotImplemented):
         KalturaEntryServerNode.__init__(self,
             id,
             entryId,
@@ -34631,9 +34669,13 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         # @var array of KalturaLiveStreamParams
         self.streams = streams
 
+        # @var array of KalturaLiveEntryServerNodeRecordingInfo
+        self.recordingInfo = recordingInfo
+
 
     PROPERTY_LOADERS = {
         'streams': (KalturaObjectFactory.createArray, KalturaLiveStreamParams), 
+        'recordingInfo': (KalturaObjectFactory.createArray, KalturaLiveEntryServerNodeRecordingInfo), 
     }
 
     def fromXml(self, node):
@@ -34644,6 +34686,7 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         kparams = KalturaEntryServerNode.toParams(self)
         kparams.put("objectType", "KalturaLiveEntryServerNode")
         kparams.addArrayIfDefined("streams", self.streams)
+        kparams.addArrayIfDefined("recordingInfo", self.recordingInfo)
         return kparams
 
     def getStreams(self):
@@ -34651,6 +34694,12 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
 
     def setStreams(self, newStreams):
         self.streams = newStreams
+
+    def getRecordingInfo(self):
+        return self.recordingInfo
+
+    def setRecordingInfo(self, newRecordingInfo):
+        self.recordingInfo = newRecordingInfo
 
 
 # @package Kaltura
@@ -61500,8 +61549,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFilterPager': KalturaFilterPager,
             'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
-            'KalturaPluginData': KalturaPluginData,
-            'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
             'KalturaPluginReplacementOptionsItem': KalturaPluginReplacementOptionsItem,
@@ -61540,6 +61587,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveEntry': KalturaLiveEntry,
             'KalturaLiveChannel': KalturaLiveChannel,
             'KalturaLiveChannelSegment': KalturaLiveChannelSegment,
+            'KalturaLiveEntryServerNodeRecordingInfo': KalturaLiveEntryServerNodeRecordingInfo,
             'KalturaLiveReportExportParams': KalturaLiveReportExportParams,
             'KalturaLiveReportExportResponse': KalturaLiveReportExportResponse,
             'KalturaLiveReportInputFilter': KalturaLiveReportInputFilter,
@@ -61561,6 +61609,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPartnerUsage': KalturaPartnerUsage,
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
+            'KalturaPluginData': KalturaPluginData,
+            'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
             'KalturaPlaybackSource': KalturaPlaybackSource,
             'KalturaPlaybackContext': KalturaPlaybackContext,
             'KalturaPlaylist': KalturaPlaylist,
