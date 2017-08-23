@@ -3562,12 +3562,11 @@ class KalturaDropFolderService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
 
-    def freeExclusiveDropFolder(self, dropFolderId, status, errorCode = NotImplemented, errorDescription = NotImplemented):
+    def freeExclusiveDropFolder(self, dropFolderId, errorCode = NotImplemented, errorDescription = NotImplemented):
         """freeExclusive KalturaDropFolder object"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
-        kparams.addIntIfDefined("status", status);
         kparams.addStringIfDefined("errorCode", errorCode)
         kparams.addStringIfDefined("errorDescription", errorDescription)
         self.client.queueServiceActionCall("dropfolder_dropfolder", "freeExclusiveDropFolder", KalturaDropFolder, kparams)
