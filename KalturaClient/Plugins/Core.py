@@ -17841,7 +17841,7 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
         KalturaObjectBase.__init__(self)
 
         # Unique identifier
-        # @var string
+        # @var int
         # @readonly
         self.id = id
 
@@ -17892,7 +17892,7 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
         self.triggerType = triggerType
 
         # Live channel segment that the trigger relates to
-        # @var string
+        # @var int
         self.triggerSegmentId = triggerSegmentId
 
         # Segment play start time, in mili-seconds, according to trigger type
@@ -17905,7 +17905,7 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
-        'id': getXmlNodeText, 
+        'id': getXmlNodeInt, 
         'partnerId': getXmlNodeInt, 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
@@ -17917,7 +17917,7 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
         'channelId': getXmlNodeText, 
         'entryId': getXmlNodeText, 
         'triggerType': (KalturaEnumsFactory.createString, "KalturaLiveChannelSegmentTriggerType"), 
-        'triggerSegmentId': getXmlNodeText, 
+        'triggerSegmentId': getXmlNodeInt, 
         'startTime': getXmlNodeFloat, 
         'duration': getXmlNodeFloat, 
     }
@@ -17936,7 +17936,7 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
         kparams.addStringIfDefined("channelId", self.channelId)
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringEnumIfDefined("triggerType", self.triggerType)
-        kparams.addStringIfDefined("triggerSegmentId", self.triggerSegmentId)
+        kparams.addIntIfDefined("triggerSegmentId", self.triggerSegmentId)
         kparams.addFloatIfDefined("startTime", self.startTime)
         kparams.addFloatIfDefined("duration", self.duration)
         return kparams
@@ -57906,7 +57906,7 @@ class KalturaFileAssetService(KalturaServiceBase):
         """Set content of file asset"""
 
         kparams = KalturaParams()
-        kparams.addStringIfDefined("id", id)
+        kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("contentResource", contentResource)
         self.client.queueServiceActionCall("fileasset", "setContent", KalturaFileAsset, kparams)
         if self.client.isMultiRequest():
