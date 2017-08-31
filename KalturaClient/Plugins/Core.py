@@ -11120,6 +11120,74 @@ class KalturaCropDimensions(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPluginReplacementOptionsItem(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPluginReplacementOptionsItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPluginReplacementOptionsItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryReplacementOptions(KalturaObjectBase):
+    """Advanced configuration for entry replacement process"""
+
+    def __init__(self,
+            keepManualThumbnails=NotImplemented,
+            pluginOptionItems=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # If true manually created thumbnails will not be deleted on entry replacement
+        # @var int
+        self.keepManualThumbnails = keepManualThumbnails
+
+        # Array of plugin replacement options
+        # @var array of KalturaPluginReplacementOptionsItem
+        self.pluginOptionItems = pluginOptionItems
+
+
+    PROPERTY_LOADERS = {
+        'keepManualThumbnails': getXmlNodeInt, 
+        'pluginOptionItems': (KalturaObjectFactory.createArray, KalturaPluginReplacementOptionsItem), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryReplacementOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaEntryReplacementOptions")
+        kparams.addIntIfDefined("keepManualThumbnails", self.keepManualThumbnails)
+        kparams.addArrayIfDefined("pluginOptionItems", self.pluginOptionItems)
+        return kparams
+
+    def getKeepManualThumbnails(self):
+        return self.keepManualThumbnails
+
+    def setKeepManualThumbnails(self, newKeepManualThumbnails):
+        self.keepManualThumbnails = newKeepManualThumbnails
+
+    def getPluginOptionItems(self):
+        return self.pluginOptionItems
+
+    def setPluginOptionItems(self, newPluginOptionItems):
+        self.pluginOptionItems = newPluginOptionItems
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaConversionProfile(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -11145,7 +11213,8 @@ class KalturaConversionProfile(KalturaObjectBase):
             collectionTags=NotImplemented,
             conditionalProfiles=NotImplemented,
             detectGOP=NotImplemented,
-            mediaInfoXslTransformation=NotImplemented):
+            mediaInfoXslTransformation=NotImplemented,
+            defaultReplacementOptions=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -11247,6 +11316,10 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var string
         self.mediaInfoXslTransformation = mediaInfoXslTransformation
 
+        # Default replacement options to be applied to entries
+        # @var KalturaEntryReplacementOptions
+        self.defaultReplacementOptions = defaultReplacementOptions
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -11273,6 +11346,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         'conditionalProfiles': getXmlNodeText, 
         'detectGOP': getXmlNodeInt, 
         'mediaInfoXslTransformation': getXmlNodeText, 
+        'defaultReplacementOptions': (KalturaObjectFactory.create, KalturaEntryReplacementOptions), 
     }
 
     def fromXml(self, node):
@@ -11302,6 +11376,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addStringIfDefined("conditionalProfiles", self.conditionalProfiles)
         kparams.addIntIfDefined("detectGOP", self.detectGOP)
         kparams.addStringIfDefined("mediaInfoXslTransformation", self.mediaInfoXslTransformation)
+        kparams.addObjectIfDefined("defaultReplacementOptions", self.defaultReplacementOptions)
         return kparams
 
     def getId(self):
@@ -11435,6 +11510,12 @@ class KalturaConversionProfile(KalturaObjectBase):
 
     def setMediaInfoXslTransformation(self, newMediaInfoXslTransformation):
         self.mediaInfoXslTransformation = newMediaInfoXslTransformation
+
+    def getDefaultReplacementOptions(self):
+        return self.defaultReplacementOptions
+
+    def setDefaultReplacementOptions(self, newDefaultReplacementOptions):
+        self.defaultReplacementOptions = newDefaultReplacementOptions
 
 
 # @package Kaltura
@@ -13193,74 +13274,6 @@ class KalturaStringValue(KalturaValue):
 
     def setValue(self, newValue):
         self.value = newValue
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaPluginReplacementOptionsItem(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaPluginReplacementOptionsItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaPluginReplacementOptionsItem")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEntryReplacementOptions(KalturaObjectBase):
-    """Advanced configuration for entry replacement process"""
-
-    def __init__(self,
-            keepManualThumbnails=NotImplemented,
-            pluginOptionItems=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # If true manually created thumbnails will not be deleted on entry replacement
-        # @var int
-        self.keepManualThumbnails = keepManualThumbnails
-
-        # Array of plugin replacement options
-        # @var array of KalturaPluginReplacementOptionsItem
-        self.pluginOptionItems = pluginOptionItems
-
-
-    PROPERTY_LOADERS = {
-        'keepManualThumbnails': getXmlNodeInt, 
-        'pluginOptionItems': (KalturaObjectFactory.createArray, KalturaPluginReplacementOptionsItem), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryReplacementOptions.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaEntryReplacementOptions")
-        kparams.addIntIfDefined("keepManualThumbnails", self.keepManualThumbnails)
-        kparams.addArrayIfDefined("pluginOptionItems", self.pluginOptionItems)
-        return kparams
-
-    def getKeepManualThumbnails(self):
-        return self.keepManualThumbnails
-
-    def setKeepManualThumbnails(self, newKeepManualThumbnails):
-        self.keepManualThumbnails = newKeepManualThumbnails
-
-    def getPluginOptionItems(self):
-        return self.pluginOptionItems
-
-    def setPluginOptionItems(self, newPluginOptionItems):
-        self.pluginOptionItems = newPluginOptionItems
 
 
 # @package Kaltura
@@ -61927,6 +61940,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaControlPanelCommand': KalturaControlPanelCommand,
             'KalturaConversionAttribute': KalturaConversionAttribute,
             'KalturaCropDimensions': KalturaCropDimensions,
+            'KalturaPluginReplacementOptionsItem': KalturaPluginReplacementOptionsItem,
+            'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
             'KalturaConversionProfile': KalturaConversionProfile,
             'KalturaConversionProfileAssetParams': KalturaConversionProfileAssetParams,
             'KalturaConvertCollectionFlavorData': KalturaConvertCollectionFlavorData,
@@ -61948,8 +61963,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
-            'KalturaPluginReplacementOptionsItem': KalturaPluginReplacementOptionsItem,
-            'KalturaEntryReplacementOptions': KalturaEntryReplacementOptions,
             'KalturaEntryServerNode': KalturaEntryServerNode,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
             'KalturaExtendingItemMrssParameter': KalturaExtendingItemMrssParameter,
