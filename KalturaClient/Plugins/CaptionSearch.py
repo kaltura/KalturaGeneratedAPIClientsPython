@@ -456,6 +456,19 @@ class KalturaCaptionAssetItemService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
+    def list(self, captionAssetId, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
+        """List caption asset items by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("captionAssetId", captionAssetId)
+        kparams.addObjectIfDefined("captionAssetItemFilter", captionAssetItemFilter)
+        kparams.addObjectIfDefined("captionAssetItemPager", captionAssetItemPager)
+        self.client.queueServiceActionCall("captionsearch_captionassetitem", "list", KalturaCaptionAssetItemListResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaCaptionAssetItemListResponse)
+
     def search(self, entryFilter = NotImplemented, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
         """Search caption asset items by filter, pager and free text"""
 

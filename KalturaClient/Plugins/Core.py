@@ -1793,6 +1793,7 @@ class KalturaBatchJobType(object):
     LIVE_REPORT_EXPORT = "40"
     RECALCULATE_CACHE = "41"
     LIVE_TO_VOD = "42"
+    COPY_CAPTIONS = "43"
 
     def __init__(self, value):
         self.value = value
@@ -30446,6 +30447,49 @@ class KalturaCategoryUserListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaClearBeaconsJobData(KalturaJobData):
+    def __init__(self,
+            objectId=NotImplemented,
+            relatedObjectType=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # Beacon object Id to clear info for
+        # @var string
+        # @readonly
+        self.objectId = objectId
+
+        # Beacon object Type to clear info for
+        # @var int
+        self.relatedObjectType = relatedObjectType
+
+
+    PROPERTY_LOADERS = {
+        'objectId': getXmlNodeText, 
+        'relatedObjectType': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaClearBeaconsJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaClearBeaconsJobData")
+        kparams.addIntIfDefined("relatedObjectType", self.relatedObjectType)
+        return kparams
+
+    def getObjectId(self):
+        return self.objectId
+
+    def getRelatedObjectType(self):
+        return self.relatedObjectType
+
+    def setRelatedObjectType(self, newRelatedObjectType):
+        self.relatedObjectType = newRelatedObjectType
 
 
 # @package Kaltura
@@ -62107,6 +62151,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryListResponse': KalturaCategoryListResponse,
             'KalturaCategoryUserAdvancedFilter': KalturaCategoryUserAdvancedFilter,
             'KalturaCategoryUserListResponse': KalturaCategoryUserListResponse,
+            'KalturaClearBeaconsJobData': KalturaClearBeaconsJobData,
             'KalturaClipAttributes': KalturaClipAttributes,
             'KalturaCompareCondition': KalturaCompareCondition,
             'KalturaDataCenterContentResource': KalturaDataCenterContentResource,

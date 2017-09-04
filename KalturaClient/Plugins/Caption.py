@@ -431,6 +431,90 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaCopyCaptionsJobData(KalturaJobData):
+    def __init__(self,
+            sourceEntryId=NotImplemented,
+            entryId=NotImplemented,
+            offset=NotImplemented,
+            duration=NotImplemented,
+            fullCopy=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # source entry Id
+        # @var string
+        self.sourceEntryId = sourceEntryId
+
+        # entry Id
+        # @var string
+        self.entryId = entryId
+
+        # clip offset
+        # @var int
+        self.offset = offset
+
+        # clip duration
+        # @var int
+        self.duration = duration
+
+        # @var bool
+        self.fullCopy = fullCopy
+
+
+    PROPERTY_LOADERS = {
+        'sourceEntryId': getXmlNodeText, 
+        'entryId': getXmlNodeText, 
+        'offset': getXmlNodeInt, 
+        'duration': getXmlNodeInt, 
+        'fullCopy': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCopyCaptionsJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaCopyCaptionsJobData")
+        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addIntIfDefined("offset", self.offset)
+        kparams.addIntIfDefined("duration", self.duration)
+        kparams.addBoolIfDefined("fullCopy", self.fullCopy)
+        return kparams
+
+    def getSourceEntryId(self):
+        return self.sourceEntryId
+
+    def setSourceEntryId(self, newSourceEntryId):
+        self.sourceEntryId = newSourceEntryId
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getOffset(self):
+        return self.offset
+
+    def setOffset(self, newOffset):
+        self.offset = newOffset
+
+    def getDuration(self):
+        return self.duration
+
+    def setDuration(self, newDuration):
+        self.duration = newDuration
+
+    def getFullCopy(self):
+        return self.fullCopy
+
+    def setFullCopy(self, newFullCopy):
+        self.fullCopy = newFullCopy
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
     def __init__(self,
             multiLanaguageCaptionAssetId=NotImplemented,
@@ -1037,6 +1121,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
             'KalturaCaptionParams': KalturaCaptionParams,
             'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParamsListResponse': KalturaCaptionParamsListResponse,
+            'KalturaCopyCaptionsJobData': KalturaCopyCaptionsJobData,
             'KalturaParseMultiLanguageCaptionAssetJobData': KalturaParseMultiLanguageCaptionAssetJobData,
             'KalturaCaptionAssetBaseFilter': KalturaCaptionAssetBaseFilter,
             'KalturaCaptionParamsBaseFilter': KalturaCaptionParamsBaseFilter,
