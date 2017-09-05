@@ -78,6 +78,9 @@ class KalturaVirusScanProfileStatus(object):
 # @subpackage Client
 class KalturaVirusScanEngineType(object):
     CLAMAV_SCAN_ENGINE = "clamAVScanEngine.ClamAV"
+    SYMANTEC_SCAN_DIRECT_ENGINE = "symantecScanEngine.SymantecScanDirectEngine"
+    SYMANTEC_SCAN_ENGINE = "symantecScanEngine.SymantecScanEngine"
+    SYMANTEC_SCAN_JAVA_ENGINE = "symantecScanEngine.SymantecScanJavaEngine"
 
     def __init__(self, value):
         self.value = value
