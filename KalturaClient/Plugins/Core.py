@@ -374,6 +374,20 @@ class KalturaEntryModerationStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryServerNodeRecordingStatus(object):
+    STOPPED = 0
+    ON_GOING = 1
+    DONE = 2
+    DISMISSED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryServerNodeStatus(object):
     STOPPED = 0
     PLAYABLE = 1
@@ -3316,7 +3330,7 @@ class KalturaLanguage(object):
     NE = "Nepali"
     NEW_ = "Newari Nepal Bhasa"
     NIO = "Nganasan"
-    NCG = "Nisga'a"
+    NCG = "Nisgaa"
     NIU = "Niuean"
     NOG = "Nogai"
     NON = "Norse Old"
@@ -3360,7 +3374,7 @@ class KalturaLanguage(object):
     PRG = "Prussian"
     FUC = "Pulaar"
     PA = "Punjabi"
-    QXQ = "Qashqa'i"
+    QXQ = "Qashqai"
     ALC = "Qawasqar"
     QU = "Quechua"
     QUC = "Quich Central"
@@ -3464,7 +3478,7 @@ class KalturaLanguage(object):
     TI = "Tigrinya"
     TLI = "Tlingit"
     TCX = "Toda"
-    OOD = "Tohono O'odham"
+    OOD = "Tohono Oodham"
     TPI = "Tok Pisin"
     TO = "Tonga"
     TOG = "Tonga (Nyasa)"
@@ -18036,7 +18050,8 @@ class KalturaLiveChannelSegment(KalturaObjectBase):
 class KalturaLiveEntryServerNodeRecordingInfo(KalturaObjectBase):
     def __init__(self,
             recordedEntryId=NotImplemented,
-            duration=NotImplemented):
+            duration=NotImplemented,
+            recordingStatus=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -18045,10 +18060,14 @@ class KalturaLiveEntryServerNodeRecordingInfo(KalturaObjectBase):
         # @var int
         self.duration = duration
 
+        # @var KalturaEntryServerNodeRecordingStatus
+        self.recordingStatus = recordingStatus
+
 
     PROPERTY_LOADERS = {
         'recordedEntryId': getXmlNodeText, 
         'duration': getXmlNodeInt, 
+        'recordingStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeRecordingStatus"), 
     }
 
     def fromXml(self, node):
@@ -18060,6 +18079,7 @@ class KalturaLiveEntryServerNodeRecordingInfo(KalturaObjectBase):
         kparams.put("objectType", "KalturaLiveEntryServerNodeRecordingInfo")
         kparams.addStringIfDefined("recordedEntryId", self.recordedEntryId)
         kparams.addIntIfDefined("duration", self.duration)
+        kparams.addIntEnumIfDefined("recordingStatus", self.recordingStatus)
         return kparams
 
     def getRecordedEntryId(self):
@@ -18073,6 +18093,12 @@ class KalturaLiveEntryServerNodeRecordingInfo(KalturaObjectBase):
 
     def setDuration(self, newDuration):
         self.duration = newDuration
+
+    def getRecordingStatus(self):
+        return self.recordingStatus
+
+    def setRecordingStatus(self, newRecordingStatus):
+        self.recordingStatus = newRecordingStatus
 
 
 # @package Kaltura
@@ -61700,6 +61726,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
             'KalturaEntryDisplayInSearchType': KalturaEntryDisplayInSearchType,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
+            'KalturaEntryServerNodeRecordingStatus': KalturaEntryServerNodeRecordingStatus,
             'KalturaEntryServerNodeStatus': KalturaEntryServerNodeStatus,
             'KalturaFeatureStatusType': KalturaFeatureStatusType,
             'KalturaFlavorAssetStatus': KalturaFlavorAssetStatus,
