@@ -104,6 +104,7 @@ class KalturaEventNotificationEventObjectType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEventNotificationEventType(object):
+    INTEGRATION_JOB_CLOSED = "integrationEventNotifications.INTEGRATION_JOB_CLOSED"
     BATCH_JOB_STATUS = "1"
     OBJECT_ADDED = "2"
     OBJECT_CHANGED = "3"
@@ -143,8 +144,12 @@ class KalturaEventNotificationTemplateOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEventNotificationTemplateType(object):
+    BPM_ABORT = "businessProcessNotification.BusinessProcessAbort"
+    BPM_SIGNAL = "businessProcessNotification.BusinessProcessSignal"
+    BPM_START = "businessProcessNotification.BusinessProcessStart"
     EMAIL = "emailNotification.Email"
     HTTP = "httpNotification.Http"
+    PUSH = "pushNotification.Push"
 
     def __init__(self, value):
         self.value = value
@@ -1008,6 +1013,30 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+
+    def register(self, notificationTemplateSystemName, pushNotificationParams):
+        """Register to a queue from which event messages will be provided according to given template. Queue will be created if not already exists"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("notificationTemplateSystemName", notificationTemplateSystemName)
+        kparams.addObjectIfDefined("pushNotificationParams", pushNotificationParams)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "register", KalturaPushNotificationData, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaPushNotificationData)
+
+    def sendCommand(self, notificationTemplateSystemName, pushNotificationParams, command):
+        """Clear queue messages"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("notificationTemplateSystemName", notificationTemplateSystemName)
+        kparams.addObjectIfDefined("pushNotificationParams", pushNotificationParams)
+        kparams.addStringIfDefined("command", command)
+        self.client.queueServiceActionCall("eventnotification_eventnotificationtemplate", "sendCommand", None, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
 
     def update(self, id, eventNotificationTemplate):
         """Update an existing event notification template object"""
