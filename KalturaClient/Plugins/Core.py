@@ -56829,12 +56829,13 @@ class KalturaBaseEntryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def clone(self, entryId, cloneOptions = NotImplemented):
+    def clone(self, entryId, cloneOptions = NotImplemented, setSourceAsRootEntryId = False):
         """Clone an entry with optional attributes to apply to the clone"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addArrayIfDefined("cloneOptions", cloneOptions)
+        kparams.addBoolIfDefined("setSourceAsRootEntryId", setSourceAsRootEntryId);
         self.client.queueServiceActionCall("baseentry", "clone", KalturaBaseEntry, kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
