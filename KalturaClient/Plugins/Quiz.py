@@ -420,7 +420,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             systemName)
 
         # Array of key value answerKey->optionAnswer objects
-        # @var map
+        # @var array of KalturaOptionalAnswer
         self.optionalAnswers = optionalAnswers
 
         # @var string
@@ -434,7 +434,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
 
 
     PROPERTY_LOADERS = {
-        'optionalAnswers': (KalturaObjectFactory.create, map), 
+        'optionalAnswers': (KalturaObjectFactory.createArray, KalturaOptionalAnswer), 
         'hint': getXmlNodeText, 
         'question': getXmlNodeText, 
         'explanation': getXmlNodeText, 
@@ -447,7 +447,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
     def toParams(self):
         kparams = KalturaCuePoint.toParams(self)
         kparams.put("objectType", "KalturaQuestionCuePoint")
-        kparams.addObjectIfDefined("optionalAnswers", self.optionalAnswers)
+        kparams.addArrayIfDefined("optionalAnswers", self.optionalAnswers)
         kparams.addStringIfDefined("hint", self.hint)
         kparams.addStringIfDefined("question", self.question)
         kparams.addStringIfDefined("explanation", self.explanation)

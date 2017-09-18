@@ -37772,6 +37772,32 @@ class KalturaServerNodeListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaSessionResponse(KalturaStartWidgetSessionResponse):
+    def __init__(self,
+            partnerId=NotImplemented,
+            ks=NotImplemented,
+            userId=NotImplemented):
+        KalturaStartWidgetSessionResponse.__init__(self,
+            partnerId,
+            ks,
+            userId)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaStartWidgetSessionResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSessionResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaStartWidgetSessionResponse.toParams(self)
+        kparams.put("objectType", "KalturaSessionResponse")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSessionRestriction(KalturaBaseRestriction):
     def __init__(self):
         KalturaBaseRestriction.__init__(self)
@@ -61454,6 +61480,17 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
+    def loginByKs(self, requestedPartnerId):
+        """Loges a user to the destination account as long the ks user id exists in the desc acount and the loginData id match for both accounts"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("requestedPartnerId", requestedPartnerId);
+        self.client.queueServiceActionCall("user", "loginByKs", KalturaSessionResponse, kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, KalturaSessionResponse)
+
     def loginByLoginId(self, loginId, password, partnerId = NotImplemented, expiry = 86400, privileges = "*", otp = NotImplemented):
         """Logs a user into a partner account with a user login ID and a user password."""
 
@@ -62247,6 +62284,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSearchOperator': KalturaSearchOperator,
             'KalturaServerNodeBaseFilter': KalturaServerNodeBaseFilter,
             'KalturaServerNodeListResponse': KalturaServerNodeListResponse,
+            'KalturaSessionResponse': KalturaSessionResponse,
             'KalturaSessionRestriction': KalturaSessionRestriction,
             'KalturaSiteRestriction': KalturaSiteRestriction,
             'KalturaStorageAddAction': KalturaStorageAddAction,
