@@ -76,7 +76,7 @@ class KalturaBulkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def get(self, id):
         """Get bulk upload batch job by id"""
@@ -87,7 +87,7 @@ class KalturaBulkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def list(self, bulkUploadFilter = NotImplemented, pager = NotImplemented):
         """List bulk upload batch jobs"""
@@ -99,7 +99,7 @@ class KalturaBulkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUploadListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUploadListResponse')
 
     def serve(self, id):
         """serve action returns the original file."""

@@ -384,7 +384,7 @@ class KalturaTrackEntryListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaTrackEntry), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaTrackEntry'), 
     }
 
     def fromXml(self, node):
@@ -415,7 +415,7 @@ class KalturaUiConfAdminListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaUiConfAdmin), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaUiConfAdmin'), 
     }
 
     def fromXml(self, node):

@@ -194,7 +194,7 @@ class KalturaAttachmentAssetListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaAttachmentAsset), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaAttachmentAsset'), 
     }
 
     def fromXml(self, node):
@@ -444,7 +444,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAttachmentAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaAttachmentAsset')
 
     def delete(self, attachmentAssetId):
         kparams = KalturaParams()
@@ -461,7 +461,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAttachmentAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaAttachmentAsset')
 
     def getRemotePaths(self, id):
         """Get remote storage existing paths for the asset"""
@@ -472,7 +472,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaRemotePathListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaRemotePathListResponse')
 
     def getUrl(self, id, storageId = NotImplemented):
         """Get download URL for the asset"""
@@ -496,7 +496,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAttachmentAssetListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaAttachmentAssetListResponse')
 
     def serve(self, attachmentAssetId, serveOptions = NotImplemented):
         """Serves attachment by its id"""
@@ -517,7 +517,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAttachmentAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaAttachmentAsset')
 
     def update(self, id, attachmentAsset):
         """Update attachment asset"""
@@ -529,7 +529,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaAttachmentAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaAttachmentAsset')
 
 ########## main ##########
 class KalturaAttachmentClientPlugin(KalturaClientPlugin):

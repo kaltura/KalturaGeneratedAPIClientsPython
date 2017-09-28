@@ -188,7 +188,7 @@ class KalturaQuiz(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'version': getXmlNodeInt, 
-        'uiAttributes': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'uiAttributes': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'showResultOnAnswer': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showCorrectKeyOnAnswer': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'allowAnswerUpdate': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
@@ -333,7 +333,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         'quizUserEntryId': getXmlNodeText, 
         'answerKey': getXmlNodeText, 
         'isCorrect': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'correctAnswerKeys': (KalturaObjectFactory.createArray, KalturaString), 
+        'correctAnswerKeys': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'explanation': getXmlNodeText, 
     }
 
@@ -434,7 +434,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
 
 
     PROPERTY_LOADERS = {
-        'optionalAnswers': (KalturaObjectFactory.createArray, KalturaOptionalAnswer), 
+        'optionalAnswers': (KalturaObjectFactory.createArray, 'KalturaOptionalAnswer'), 
         'hint': getXmlNodeText, 
         'question': getXmlNodeText, 
         'explanation': getXmlNodeText, 
@@ -525,7 +525,7 @@ class KalturaQuizListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaQuiz), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaQuiz'), 
     }
 
     def fromXml(self, node):
@@ -1121,7 +1121,7 @@ class KalturaQuizService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+        return KalturaObjectFactory.create(resultNode, 'KalturaQuiz')
 
     def get(self, entryId):
         """Allows to get a quiz"""
@@ -1132,7 +1132,7 @@ class KalturaQuizService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+        return KalturaObjectFactory.create(resultNode, 'KalturaQuiz')
 
     def getUrl(self, entryId, quizOutputType):
         """sends a with an api request for pdf from quiz object"""
@@ -1156,7 +1156,7 @@ class KalturaQuizService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuizListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaQuizListResponse')
 
     def serve(self, entryId, quizOutputType):
         """creates a pdf from quiz object
@@ -1179,7 +1179,7 @@ class KalturaQuizService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaQuiz)
+        return KalturaObjectFactory.create(resultNode, 'KalturaQuiz')
 
 ########## main ##########
 class KalturaQuizClientPlugin(KalturaClientPlugin):

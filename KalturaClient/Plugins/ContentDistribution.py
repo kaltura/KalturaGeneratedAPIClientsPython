@@ -399,7 +399,7 @@ class KalturaAssetDistributionRule(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'validationError': getXmlNodeText, 
-        'assetDistributionConditions': (KalturaObjectFactory.createArray, KalturaAssetDistributionCondition), 
+        'assetDistributionConditions': (KalturaObjectFactory.createArray, 'KalturaAssetDistributionCondition'), 
     }
 
     def fromXml(self, node):
@@ -482,7 +482,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         'entryMrssXslt': getXmlNodeText, 
         'isRequired': (KalturaEnumsFactory.createInt, "KalturaDistributionFieldRequiredStatus"), 
         'updateOnChange': getXmlNodeBool, 
-        'updateParams': (KalturaObjectFactory.createArray, KalturaString), 
+        'updateParams': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'isDefault': getXmlNodeBool, 
         'triggerDeleteOnError': getXmlNodeBool, 
     }
@@ -753,10 +753,10 @@ class KalturaDistributionProfile(KalturaObjectBase):
         'autoCreateThumb': getXmlNodeText, 
         'optionalFlavorParamsIds': getXmlNodeText, 
         'requiredFlavorParamsIds': getXmlNodeText, 
-        'optionalThumbDimensions': (KalturaObjectFactory.createArray, KalturaDistributionThumbDimensions), 
-        'requiredThumbDimensions': (KalturaObjectFactory.createArray, KalturaDistributionThumbDimensions), 
-        'optionalAssetDistributionRules': (KalturaObjectFactory.createArray, KalturaAssetDistributionRule), 
-        'requiredAssetDistributionRules': (KalturaObjectFactory.createArray, KalturaAssetDistributionRule), 
+        'optionalThumbDimensions': (KalturaObjectFactory.createArray, 'KalturaDistributionThumbDimensions'), 
+        'requiredThumbDimensions': (KalturaObjectFactory.createArray, 'KalturaDistributionThumbDimensions'), 
+        'optionalAssetDistributionRules': (KalturaObjectFactory.createArray, 'KalturaAssetDistributionRule'), 
+        'requiredAssetDistributionRules': (KalturaObjectFactory.createArray, 'KalturaAssetDistributionRule'), 
         'sunriseDefaultOffset': getXmlNodeInt, 
         'sunsetDefaultOffset': getXmlNodeInt, 
         'recommendedStorageProfileForDownload': getXmlNodeInt, 
@@ -1335,7 +1335,7 @@ class KalturaEntryDistribution(KalturaObjectBase):
         'remoteId': getXmlNodeText, 
         'plays': getXmlNodeInt, 
         'views': getXmlNodeInt, 
-        'validationErrors': (KalturaObjectFactory.createArray, KalturaDistributionValidationError), 
+        'validationErrors': (KalturaObjectFactory.createArray, 'KalturaDistributionValidationError'), 
         'errorType': (KalturaEnumsFactory.createInt, "KalturaBatchJobErrorTypes"), 
         'errorNumber': getXmlNodeInt, 
         'errorDescription': getXmlNodeText, 
@@ -1887,8 +1887,8 @@ class KalturaGenericDistributionProvider(KalturaDistributionProvider):
         'status': (KalturaEnumsFactory.createInt, "KalturaGenericDistributionProviderStatus"), 
         'optionalFlavorParamsIds': getXmlNodeText, 
         'requiredFlavorParamsIds': getXmlNodeText, 
-        'optionalThumbDimensions': (KalturaObjectFactory.createArray, KalturaDistributionThumbDimensions), 
-        'requiredThumbDimensions': (KalturaObjectFactory.createArray, KalturaDistributionThumbDimensions), 
+        'optionalThumbDimensions': (KalturaObjectFactory.createArray, 'KalturaDistributionThumbDimensions'), 
+        'requiredThumbDimensions': (KalturaObjectFactory.createArray, 'KalturaDistributionThumbDimensions'), 
         'editableFields': getXmlNodeText, 
         'mandatoryFields': getXmlNodeText, 
     }
@@ -2117,8 +2117,8 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
 
 
     PROPERTY_LOADERS = {
-        'fieldConfigArray': (KalturaObjectFactory.createArray, KalturaDistributionFieldConfig), 
-        'itemXpathsToExtend': (KalturaObjectFactory.createArray, KalturaExtendingItemMrssParameter), 
+        'fieldConfigArray': (KalturaObjectFactory.createArray, 'KalturaDistributionFieldConfig'), 
+        'itemXpathsToExtend': (KalturaObjectFactory.createArray, 'KalturaExtendingItemMrssParameter'), 
         'useCategoryEntries': getXmlNodeBool, 
     }
 
@@ -2313,15 +2313,15 @@ class KalturaDistributionJobData(KalturaJobData):
 
     PROPERTY_LOADERS = {
         'distributionProfileId': getXmlNodeInt, 
-        'distributionProfile': (KalturaObjectFactory.create, KalturaDistributionProfile), 
+        'distributionProfile': (KalturaObjectFactory.create, 'KalturaDistributionProfile'), 
         'entryDistributionId': getXmlNodeInt, 
-        'entryDistribution': (KalturaObjectFactory.create, KalturaEntryDistribution), 
+        'entryDistribution': (KalturaObjectFactory.create, 'KalturaEntryDistribution'), 
         'remoteId': getXmlNodeText, 
         'providerType': (KalturaEnumsFactory.createString, "KalturaDistributionProviderType"), 
-        'providerData': (KalturaObjectFactory.create, KalturaDistributionJobProviderData), 
+        'providerData': (KalturaObjectFactory.create, 'KalturaDistributionJobProviderData'), 
         'results': getXmlNodeText, 
         'sentData': getXmlNodeText, 
-        'mediaFiles': (KalturaObjectFactory.createArray, KalturaDistributionRemoteMediaFile), 
+        'mediaFiles': (KalturaObjectFactory.createArray, 'KalturaDistributionRemoteMediaFile'), 
     }
 
     def fromXml(self, node):
@@ -2539,7 +2539,7 @@ class KalturaDistributionProfileListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProfile), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaDistributionProfile'), 
     }
 
     def fromXml(self, node):
@@ -2618,7 +2618,7 @@ class KalturaDistributionProviderListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDistributionProvider), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaDistributionProvider'), 
     }
 
     def fromXml(self, node):
@@ -2868,7 +2868,7 @@ class KalturaDistributionValidationErrorMissingThumbnail(KalturaDistributionVali
 
 
     PROPERTY_LOADERS = {
-        'dimensions': (KalturaObjectFactory.create, KalturaDistributionThumbDimensions), 
+        'dimensions': (KalturaObjectFactory.create, 'KalturaDistributionThumbDimensions'), 
     }
 
     def fromXml(self, node):
@@ -2903,7 +2903,7 @@ class KalturaEntryDistributionListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaEntryDistribution), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaEntryDistribution'), 
     }
 
     def fromXml(self, node):
@@ -3061,10 +3061,10 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
 
     PROPERTY_LOADERS = {
         'genericProviderId': getXmlNodeInt, 
-        'submitAction': (KalturaObjectFactory.create, KalturaGenericDistributionProfileAction), 
-        'updateAction': (KalturaObjectFactory.create, KalturaGenericDistributionProfileAction), 
-        'deleteAction': (KalturaObjectFactory.create, KalturaGenericDistributionProfileAction), 
-        'fetchReportAction': (KalturaObjectFactory.create, KalturaGenericDistributionProfileAction), 
+        'submitAction': (KalturaObjectFactory.create, 'KalturaGenericDistributionProfileAction'), 
+        'updateAction': (KalturaObjectFactory.create, 'KalturaGenericDistributionProfileAction'), 
+        'deleteAction': (KalturaObjectFactory.create, 'KalturaGenericDistributionProfileAction'), 
+        'fetchReportAction': (KalturaObjectFactory.create, 'KalturaGenericDistributionProfileAction'), 
         'updateRequiredEntryFields': getXmlNodeText, 
         'updateRequiredMetadataXPaths': getXmlNodeText, 
     }
@@ -3287,7 +3287,7 @@ class KalturaGenericDistributionProviderActionListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProviderAction), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaGenericDistributionProviderAction'), 
     }
 
     def fromXml(self, node):
@@ -3318,7 +3318,7 @@ class KalturaGenericDistributionProviderListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaGenericDistributionProvider), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaGenericDistributionProvider'), 
     }
 
     def fromXml(self, node):
@@ -4733,7 +4733,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfile')
 
     def delete(self, id):
         """Delete Distribution Profile by id"""
@@ -4754,7 +4754,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfile')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List all distribution providers"""
@@ -4766,7 +4766,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfileListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfileListResponse')
 
     def listByPartner(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
@@ -4776,7 +4776,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfileListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfileListResponse')
 
     def update(self, id, distributionProfile):
         """Update Distribution Profile by id"""
@@ -4788,7 +4788,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfile')
 
     def updateStatus(self, id, status):
         """Update Distribution Profile status by id"""
@@ -4800,7 +4800,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProfile')
 
 
 # @package Kaltura
@@ -4820,7 +4820,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def delete(self, id):
         """Delete Entry Distribution by id"""
@@ -4841,7 +4841,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List all distribution providers"""
@@ -4853,7 +4853,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistributionListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistributionListResponse')
 
     def retrySubmit(self, id):
         """Retries last submit action"""
@@ -4864,7 +4864,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def serveReturnedData(self, id, actionType):
         """Serves entry distribution returned data"""
@@ -4894,7 +4894,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def submitDelete(self, id):
         """Deletes Entry Distribution from the remote destination"""
@@ -4905,7 +4905,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def submitFetchReport(self, id):
         """Submits Entry Distribution report request"""
@@ -4916,7 +4916,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def submitUpdate(self, id):
         """Submits Entry Distribution changes to the remote destination"""
@@ -4927,7 +4927,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def update(self, id, entryDistribution):
         """Update Entry Distribution by id"""
@@ -4939,7 +4939,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
     def validate(self, id):
         """Validates Entry Distribution by id for submission"""
@@ -4950,7 +4950,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEntryDistribution)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryDistribution')
 
 
 # @package Kaltura
@@ -4971,7 +4971,7 @@ class KalturaDistributionProviderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDistributionProviderListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDistributionProviderListResponse')
 
 
 # @package Kaltura
@@ -4991,7 +4991,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProvider)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProvider')
 
     def delete(self, id):
         """Delete Generic Distribution Provider by id"""
@@ -5012,7 +5012,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProvider)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProvider')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List all distribution providers"""
@@ -5024,7 +5024,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderListResponse')
 
     def update(self, id, genericDistributionProvider):
         """Update Generic Distribution Provider by id"""
@@ -5036,7 +5036,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProvider)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProvider')
 
 
 # @package Kaltura
@@ -5056,7 +5056,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addMrssTransform(self, id, xslData):
         """Add MRSS transform file to generic distribution provider action"""
@@ -5068,7 +5068,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addMrssTransformFromFile(self, id, xslFile):
         """Add MRSS transform file to generic distribution provider action"""
@@ -5081,7 +5081,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addMrssValidate(self, id, xsdData):
         """Add MRSS validate file to generic distribution provider action"""
@@ -5093,7 +5093,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addMrssValidateFromFile(self, id, xsdFile):
         """Add MRSS validate file to generic distribution provider action"""
@@ -5106,7 +5106,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addResultsTransform(self, id, transformData):
         """Add results transform file to generic distribution provider action"""
@@ -5118,7 +5118,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def addResultsTransformFromFile(self, id, transformFile):
         """Add MRSS transform file to generic distribution provider action"""
@@ -5131,7 +5131,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def delete(self, id):
         """Delete Generic Distribution Provider Action by id"""
@@ -5163,7 +5163,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def getByProviderId(self, genericDistributionProviderId, actionType):
         """Get Generic Distribution Provider Action by provider id"""
@@ -5175,7 +5175,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List all distribution providers"""
@@ -5187,7 +5187,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderActionListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderActionListResponse')
 
     def update(self, id, genericDistributionProviderAction):
         """Update Generic Distribution Provider Action by id"""
@@ -5199,7 +5199,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
     def updateByProviderId(self, genericDistributionProviderId, actionType, genericDistributionProviderAction):
         """Update Generic Distribution Provider Action by provider id"""
@@ -5212,7 +5212,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaGenericDistributionProviderAction)
+        return KalturaObjectFactory.create(resultNode, 'KalturaGenericDistributionProviderAction')
 
 ########## main ##########
 class KalturaContentDistributionClientPlugin(KalturaClientPlugin):

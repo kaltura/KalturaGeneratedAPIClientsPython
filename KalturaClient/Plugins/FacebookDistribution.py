@@ -213,7 +213,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
         'thumbAssetFilePath': getXmlNodeText, 
-        'captionsInfo': (KalturaObjectFactory.createArray, KalturaFacebookCaptionDistributionInfo), 
+        'captionsInfo': (KalturaObjectFactory.createArray, 'KalturaFacebookCaptionDistributionInfo'), 
     }
 
     def fromXml(self, node):

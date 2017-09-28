@@ -164,7 +164,7 @@ class KalturaHttpNotification(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
-        'object': (KalturaObjectFactory.create, KalturaObjectBase), 
+        'object': (KalturaObjectFactory.create, 'KalturaObjectBase'), 
         'eventObjectType': (KalturaEnumsFactory.createString, "KalturaEventNotificationEventObjectType"), 
         'eventNotificationJobId': getXmlNodeInt, 
         'templateId': getXmlNodeInt, 
@@ -286,7 +286,7 @@ class KalturaHttpNotificationDataText(KalturaHttpNotificationData):
 
 
     PROPERTY_LOADERS = {
-        'content': (KalturaObjectFactory.create, KalturaStringValue), 
+        'content': (KalturaObjectFactory.create, 'KalturaStringValue'), 
     }
 
     def fromXml(self, node):
@@ -514,7 +514,7 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
     PROPERTY_LOADERS = {
         'url': getXmlNodeText, 
         'method': (KalturaEnumsFactory.createInt, "KalturaHttpNotificationMethod"), 
-        'data': (KalturaObjectFactory.create, KalturaHttpNotificationData), 
+        'data': (KalturaObjectFactory.create, 'KalturaHttpNotificationData'), 
         'timeout': getXmlNodeInt, 
         'connectTimeout': getXmlNodeInt, 
         'username': getXmlNodeText, 
@@ -529,7 +529,7 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         'sslKeyType': (KalturaEnumsFactory.createString, "KalturaHttpNotificationSslKeyType"), 
         'sslKey': getXmlNodeText, 
         'sslKeyPassword': getXmlNodeText, 
-        'customHeaders': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'customHeaders': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -794,7 +794,7 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         'sslKeyType': (KalturaEnumsFactory.createString, "KalturaHttpNotificationSslKeyType"), 
         'sslKey': getXmlNodeText, 
         'sslKeyPassword': getXmlNodeText, 
-        'customHeaders': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'customHeaders': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'signSecret': getXmlNodeText, 
     }
 

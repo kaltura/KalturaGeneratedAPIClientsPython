@@ -98,7 +98,7 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
 
     PROPERTY_LOADERS = {
         'csvVersion': (KalturaEnumsFactory.createInt, "KalturaBulkUploadCsvVersion"), 
-        'columns': (KalturaObjectFactory.createArray, KalturaString), 
+        'columns': (KalturaObjectFactory.createArray, 'KalturaString'), 
     }
 
     def fromXml(self, node):

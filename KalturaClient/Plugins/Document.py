@@ -306,7 +306,7 @@ class KalturaDocumentListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDocumentEntry), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaDocumentEntry'), 
     }
 
     def fromXml(self, node):
@@ -2699,7 +2699,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def addFromFlavorAsset(self, sourceFlavorAssetId, documentEntry = NotImplemented):
         """Copy flavor asset into new entry"""
@@ -2711,7 +2711,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def addFromUploadedFile(self, documentEntry, uploadTokenId):
         """Add new document entry after the specific document file was uploaded and the upload token id exists"""
@@ -2723,7 +2723,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def approveReplace(self, entryId):
         """Approves document replacement"""
@@ -2734,7 +2734,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def cancelReplace(self, entryId):
         """Cancels document replacement"""
@@ -2745,7 +2745,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def convert(self, entryId, conversionProfileId = NotImplemented, dynamicConversionAttributes = NotImplemented):
         """Convert entry"""
@@ -2792,7 +2792,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List document entries by filter with paging support."""
@@ -2804,7 +2804,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentListResponse')
 
     def serve(self, entryId, flavorAssetId = NotImplemented, forceProxy = False):
         """Serves the file content"""
@@ -2836,7 +2836,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def updateContent(self, entryId, resource, conversionProfileId = NotImplemented):
         """Replace content associated with the given document entry."""
@@ -2849,7 +2849,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDocumentEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDocumentEntry')
 
     def upload(self, fileData):
         """Upload a document file to Kaltura, then the file can be used to create a document entry."""

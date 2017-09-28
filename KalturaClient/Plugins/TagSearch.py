@@ -272,7 +272,7 @@ class KalturaTagListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaTag), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaTag'), 
     }
 
     def fromXml(self, node):
@@ -326,7 +326,7 @@ class KalturaTagService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaTagListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaTagListResponse')
 
 ########## main ##########
 class KalturaTagSearchClientPlugin(KalturaClientPlugin):

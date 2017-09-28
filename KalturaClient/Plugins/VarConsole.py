@@ -358,8 +358,8 @@ class KalturaPartnerUsageListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'total': (KalturaObjectFactory.create, KalturaVarPartnerUsageItem), 
-        'objects': (KalturaObjectFactory.createArray, KalturaVarPartnerUsageItem), 
+        'total': (KalturaObjectFactory.create, 'KalturaVarPartnerUsageItem'), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaVarPartnerUsageItem'), 
     }
 
     def fromXml(self, node):
@@ -471,7 +471,7 @@ class KalturaVarConsoleService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaPartnerUsageListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaPartnerUsageListResponse')
 
     def updateStatus(self, id, status):
         """Function to change a sub-publisher's status"""

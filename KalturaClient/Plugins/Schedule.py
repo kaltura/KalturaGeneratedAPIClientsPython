@@ -679,7 +679,7 @@ class KalturaScheduleEvent(KalturaObjectBase):
         'tags': getXmlNodeText, 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
-        'recurrence': (KalturaObjectFactory.create, KalturaScheduleEventRecurrence), 
+        'recurrence': (KalturaObjectFactory.create, 'KalturaScheduleEventRecurrence'), 
     }
 
     def fromXml(self, node):
@@ -1317,7 +1317,7 @@ class KalturaScheduleEventListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEvent), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaScheduleEvent'), 
     }
 
     def fromXml(self, node):
@@ -1348,7 +1348,7 @@ class KalturaScheduleEventResourceListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleEventResource), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaScheduleEventResource'), 
     }
 
     def fromXml(self, node):
@@ -1379,7 +1379,7 @@ class KalturaScheduleResourceListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduleResource), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaScheduleResource'), 
     }
 
     def fromXml(self, node):
@@ -3845,7 +3845,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented):
         """Add new bulk upload batch job"""
@@ -3858,7 +3858,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def cancel(self, scheduleEventId):
         """Mark the KalturaScheduleEvent object as cancelled"""
@@ -3869,7 +3869,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
     def delete(self, scheduleEventId):
         """Mark the KalturaScheduleEvent object as deleted"""
@@ -3880,7 +3880,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
     def get(self, scheduleEventId):
         """Retrieve a KalturaScheduleEvent object by ID"""
@@ -3891,7 +3891,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
     def getConflicts(self, resourceIds, scheduleEvent, scheduleEventIdToIgnore = NotImplemented):
         """List conflicting events for resourcesIds by event's dates"""
@@ -3904,7 +3904,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventListResponse')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaScheduleEvent objects"""
@@ -3916,7 +3916,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventListResponse')
 
     def update(self, scheduleEventId, scheduleEvent):
         """Update an existing KalturaScheduleEvent object"""
@@ -3928,7 +3928,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEvent)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
 
 # @package Kaltura
@@ -3948,7 +3948,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleResource')
 
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented):
         """Add new bulk upload batch job"""
@@ -3961,7 +3961,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBulkUpload)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def delete(self, scheduleResourceId):
         """Mark the KalturaScheduleResource object as deleted"""
@@ -3972,7 +3972,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleResource')
 
     def get(self, scheduleResourceId):
         """Retrieve a KalturaScheduleResource object by ID"""
@@ -3983,7 +3983,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleResource')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaScheduleResource objects"""
@@ -3995,7 +3995,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleResourceListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleResourceListResponse')
 
     def update(self, scheduleResourceId, scheduleResource):
         """Update an existing KalturaScheduleResource object"""
@@ -4007,7 +4007,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleResource')
 
 
 # @package Kaltura
@@ -4027,7 +4027,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventResource')
 
     def delete(self, scheduleEventId, scheduleResourceId):
         """Mark the KalturaScheduleEventResource object as deleted"""
@@ -4050,7 +4050,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventResource')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaScheduleEventResource objects"""
@@ -4062,7 +4062,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventResourceListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventResourceListResponse')
 
     def update(self, scheduleEventId, scheduleResourceId, scheduleEventResource):
         """Update an existing KalturaScheduleEventResource object"""
@@ -4075,7 +4075,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduleEventResource)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventResource')
 
 ########## main ##########
 class KalturaScheduleClientPlugin(KalturaClientPlugin):

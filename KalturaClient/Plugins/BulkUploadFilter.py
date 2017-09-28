@@ -55,8 +55,8 @@ class KalturaBulkServiceFilterData(KalturaBulkServiceData):
 
 
     PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, KalturaFilter), 
-        'templateObject': (KalturaObjectFactory.create, KalturaObjectBase), 
+        'filter': (KalturaObjectFactory.create, 'KalturaFilter'), 
+        'templateObject': (KalturaObjectFactory.create, 'KalturaObjectBase'), 
     }
 
     def fromXml(self, node):
@@ -131,8 +131,8 @@ class KalturaBulkUploadFilterJobData(KalturaBulkUploadJobData):
 
 
     PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, KalturaFilter), 
-        'templateObject': (KalturaObjectFactory.create, KalturaObjectBase), 
+        'filter': (KalturaObjectFactory.create, 'KalturaFilter'), 
+        'templateObject': (KalturaObjectFactory.create, 'KalturaObjectBase'), 
     }
 
     def fromXml(self, node):

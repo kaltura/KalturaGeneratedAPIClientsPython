@@ -404,7 +404,7 @@ class KalturaSystemPartnerUsageListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaSystemPartnerUsageItem), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaSystemPartnerUsageItem'), 
     }
 
     def fromXml(self, node):

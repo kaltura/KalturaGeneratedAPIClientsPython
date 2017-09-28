@@ -238,7 +238,7 @@ class KalturaYoutubeApiDistributionJobProviderData(KalturaConfigurableDistributi
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
         'thumbAssetFilePath': getXmlNodeText, 
-        'captionsInfo': (KalturaObjectFactory.createArray, KalturaYouTubeApiCaptionDistributionInfo), 
+        'captionsInfo': (KalturaObjectFactory.createArray, 'KalturaYouTubeApiCaptionDistributionInfo'), 
     }
 
     def fromXml(self, node):

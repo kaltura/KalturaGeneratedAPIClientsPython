@@ -244,7 +244,7 @@ class KalturaTranscriptAssetListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaTranscriptAsset), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaTranscriptAsset'), 
     }
 
     def fromXml(self, node):

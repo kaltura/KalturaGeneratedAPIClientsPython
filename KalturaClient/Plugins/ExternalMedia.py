@@ -275,7 +275,7 @@ class KalturaExternalMediaEntryListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaExternalMediaEntry), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaExternalMediaEntry'), 
     }
 
     def fromXml(self, node):
@@ -814,7 +814,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaExternalMediaEntry')
 
     def count(self, filter = NotImplemented):
         """Count media entries by filter."""
@@ -846,7 +846,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaExternalMediaEntry')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List media entries by filter with paging support."""
@@ -858,7 +858,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntryListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaExternalMediaEntryListResponse')
 
     def update(self, id, entry):
         """Update external media entry. Only the properties that were set will be updated."""
@@ -870,7 +870,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaExternalMediaEntry)
+        return KalturaObjectFactory.create(resultNode, 'KalturaExternalMediaEntry')
 
 ########## main ##########
 class KalturaExternalMediaClientPlugin(KalturaClientPlugin):

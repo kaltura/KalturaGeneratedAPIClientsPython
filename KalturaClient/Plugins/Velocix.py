@@ -80,7 +80,7 @@ class KalturaVelocixProvisionJobData(KalturaProvisionJobData):
 
 
     PROPERTY_LOADERS = {
-        'provisioningParams': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'provisioningParams': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'userName': getXmlNodeText, 
         'password': getXmlNodeText, 
     }

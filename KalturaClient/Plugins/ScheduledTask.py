@@ -241,8 +241,8 @@ class KalturaScheduledTaskProfile(KalturaObjectBase):
         'description': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaScheduledTaskProfileStatus"), 
         'objectFilterEngineType': (KalturaEnumsFactory.createString, "KalturaObjectFilterEngineType"), 
-        'objectFilter': (KalturaObjectFactory.create, KalturaFilter), 
-        'objectTasks': (KalturaObjectFactory.createArray, KalturaObjectTask), 
+        'objectFilter': (KalturaObjectFactory.create, 'KalturaFilter'), 
+        'objectTasks': (KalturaObjectFactory.createArray, 'KalturaObjectTask'), 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'lastExecutionStartedAt': getXmlNodeInt, 
@@ -607,7 +607,7 @@ class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
 
     PROPERTY_LOADERS = {
         'addRemoveType': (KalturaEnumsFactory.createInt, "KalturaScheduledTaskAddOrRemoveType"), 
-        'categoryIds': (KalturaObjectFactory.createArray, KalturaIntegerValue), 
+        'categoryIds': (KalturaObjectFactory.createArray, 'KalturaIntegerValue'), 
     }
 
     def fromXml(self, node):
@@ -682,9 +682,9 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
 
     PROPERTY_LOADERS = {
         'inputMetadataProfileId': getXmlNodeInt, 
-        'inputMetadata': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'inputMetadata': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'outputMetadataProfileId': getXmlNodeInt, 
-        'outputMetadata': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'outputMetadata': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'inputUserId': getXmlNodeText, 
         'inputEntitledUsersEdit': getXmlNodeText, 
         'inputEntitledUsersPublish': getXmlNodeText, 
@@ -1012,7 +1012,7 @@ class KalturaScheduledTaskProfileListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaScheduledTaskProfile), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaScheduledTaskProfile'), 
     }
 
     def fromXml(self, node):
@@ -1136,7 +1136,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduledTaskProfile')
 
     def delete(self, id):
         """Delete a scheduled task profile"""
@@ -1157,7 +1157,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduledTaskProfile')
 
     def getDryRunResults(self, requestId):
         kparams = KalturaParams()
@@ -1166,7 +1166,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaObjectListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaObjectListResponse')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List scheduled task profiles"""
@@ -1178,7 +1178,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfileListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduledTaskProfileListResponse')
 
     def requestDryRun(self, scheduledTaskProfileId, maxResults = 500):
         kparams = KalturaParams()
@@ -1200,7 +1200,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaScheduledTaskProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaScheduledTaskProfile')
 
 ########## main ##########
 class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):

@@ -132,9 +132,9 @@ class KalturaIntegrationJobData(KalturaJobData):
     PROPERTY_LOADERS = {
         'callbackNotificationUrl': getXmlNodeText, 
         'providerType': (KalturaEnumsFactory.createString, "KalturaIntegrationProviderType"), 
-        'providerData': (KalturaObjectFactory.create, KalturaIntegrationJobProviderData), 
+        'providerData': (KalturaObjectFactory.create, 'KalturaIntegrationJobProviderData'), 
         'triggerType': (KalturaEnumsFactory.createString, "KalturaIntegrationTriggerType"), 
-        'triggerData': (KalturaObjectFactory.create, KalturaIntegrationJobTriggerData), 
+        'triggerData': (KalturaObjectFactory.create, 'KalturaIntegrationJobTriggerData'), 
     }
 
     def fromXml(self, node):

@@ -158,7 +158,7 @@ class KalturaVirusScanProfile(KalturaObjectBase):
         'name': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaVirusScanProfileStatus"), 
         'engineType': (KalturaEnumsFactory.createString, "KalturaVirusScanEngineType"), 
-        'entryFilter': (KalturaObjectFactory.create, KalturaBaseEntryFilter), 
+        'entryFilter': (KalturaObjectFactory.create, 'KalturaBaseEntryFilter'), 
         'actionIfInfected': (KalturaEnumsFactory.createInt, "KalturaVirusFoundAction"), 
     }
 
@@ -526,7 +526,7 @@ class KalturaVirusScanProfileListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaVirusScanProfile), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaVirusScanProfile'), 
     }
 
     def fromXml(self, node):
@@ -613,7 +613,7 @@ class KalturaVirusScanProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaVirusScanProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaVirusScanProfile')
 
     def delete(self, virusScanProfileId):
         """Mark the virus scan profile as deleted"""
@@ -624,7 +624,7 @@ class KalturaVirusScanProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaVirusScanProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaVirusScanProfile')
 
     def get(self, virusScanProfileId):
         """Retrieve an virus scan profile object by id"""
@@ -635,7 +635,7 @@ class KalturaVirusScanProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaVirusScanProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaVirusScanProfile')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List virus scan profile objects by filter and pager"""
@@ -647,7 +647,7 @@ class KalturaVirusScanProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaVirusScanProfileListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaVirusScanProfileListResponse')
 
     def scan(self, flavorAssetId, virusScanProfileId = NotImplemented):
         """Scan flavor asset according to virus scan profile"""
@@ -671,7 +671,7 @@ class KalturaVirusScanProfileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaVirusScanProfile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaVirusScanProfile')
 
 ########## main ##########
 class KalturaVirusScanClientPlugin(KalturaClientPlugin):

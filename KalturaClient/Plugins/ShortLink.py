@@ -422,7 +422,7 @@ class KalturaShortLinkListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaShortLink), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaShortLink'), 
     }
 
     def fromXml(self, node):
@@ -513,7 +513,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
+        return KalturaObjectFactory.create(resultNode, 'KalturaShortLink')
 
     def delete(self, id):
         """Mark the short link as deleted"""
@@ -524,7 +524,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
+        return KalturaObjectFactory.create(resultNode, 'KalturaShortLink')
 
     def get(self, id):
         """Retrieve an short link object by id"""
@@ -535,7 +535,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
+        return KalturaObjectFactory.create(resultNode, 'KalturaShortLink')
 
     def goto(self, id, proxy = False):
         """Serves short link"""
@@ -556,7 +556,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLinkListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaShortLinkListResponse')
 
     def update(self, id, shortLink):
         """Update exisitng short link"""
@@ -568,7 +568,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaShortLink)
+        return KalturaObjectFactory.create(resultNode, 'KalturaShortLink')
 
 ########## main ##########
 class KalturaShortLinkClientPlugin(KalturaClientPlugin):

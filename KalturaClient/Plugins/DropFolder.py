@@ -478,7 +478,7 @@ class KalturaDropFolder(KalturaObjectBase):
         'autoFileDeleteDays': getXmlNodeInt, 
         'fileHandlerType': (KalturaEnumsFactory.createString, "KalturaDropFolderFileHandlerType"), 
         'fileNamePatterns': getXmlNodeText, 
-        'fileHandlerConfig': (KalturaObjectFactory.create, KalturaDropFolderFileHandlerConfig), 
+        'fileHandlerConfig': (KalturaObjectFactory.create, 'KalturaDropFolderFileHandlerConfig'), 
         'tags': getXmlNodeText, 
         'errorCode': (KalturaEnumsFactory.createString, "KalturaDropFolderErrorCode"), 
         'errorDescription': getXmlNodeText, 
@@ -1851,7 +1851,7 @@ class KalturaDropFolderFileListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDropFolderFile), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaDropFolderFile'), 
     }
 
     def fromXml(self, node):
@@ -1882,7 +1882,7 @@ class KalturaDropFolderListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaDropFolder), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaDropFolder'), 
     }
 
     def fromXml(self, node):
@@ -3550,7 +3550,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
     def delete(self, dropFolderId):
         """Mark the KalturaDropFolder object as deleted"""
@@ -3561,7 +3561,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
     def freeExclusiveDropFolder(self, dropFolderId, errorCode = NotImplemented, errorDescription = NotImplemented):
         """freeExclusive KalturaDropFolder object"""
@@ -3574,7 +3574,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
     def get(self, dropFolderId):
         """Retrieve a KalturaDropFolder object by ID"""
@@ -3585,7 +3585,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
     def getExclusiveDropFolder(self, tag, maxTime):
         """getExclusive KalturaDropFolder object"""
@@ -3597,7 +3597,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaDropFolder objects"""
@@ -3609,7 +3609,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderListResponse')
 
     def update(self, dropFolderId, dropFolder):
         """Update an existing KalturaDropFolder object"""
@@ -3621,7 +3621,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolder)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
 
 # @package Kaltura
@@ -3641,7 +3641,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
     def delete(self, dropFolderFileId):
         """Mark the KalturaDropFolderFile object as deleted"""
@@ -3652,7 +3652,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
     def get(self, dropFolderFileId):
         """Retrieve a KalturaDropFolderFile object by ID"""
@@ -3663,7 +3663,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
     def ignore(self, dropFolderFileId):
         """Set the KalturaDropFolderFile status to ignore (KalturaDropFolderFileStatus::IGNORE)"""
@@ -3674,7 +3674,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaDropFolderFile objects"""
@@ -3686,7 +3686,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFileListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFileListResponse')
 
     def update(self, dropFolderFileId, dropFolderFile):
         """Update an existing KalturaDropFolderFile object"""
@@ -3698,7 +3698,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
     def updateStatus(self, dropFolderFileId, status):
         """Update status of KalturaDropFolderFile"""
@@ -3710,7 +3710,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaDropFolderFile)
+        return KalturaObjectFactory.create(resultNode, 'KalturaDropFolderFile')
 
 ########## main ##########
 class KalturaDropFolderClientPlugin(KalturaClientPlugin):

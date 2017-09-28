@@ -353,7 +353,7 @@ class KalturaFileSyncListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaFileSync), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaFileSync'), 
     }
 
     def fromXml(self, node):

@@ -65,8 +65,8 @@ class KalturaCaptionAssetItem(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
-        'asset': (KalturaObjectFactory.create, KalturaCaptionAsset), 
-        'entry': (KalturaObjectFactory.create, KalturaBaseEntry), 
+        'asset': (KalturaObjectFactory.create, 'KalturaCaptionAsset'), 
+        'entry': (KalturaObjectFactory.create, 'KalturaBaseEntry'), 
         'startTime': getXmlNodeInt, 
         'endTime': getXmlNodeInt, 
         'content': getXmlNodeText, 
@@ -132,7 +132,7 @@ class KalturaCaptionAssetItemListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCaptionAssetItem), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaCaptionAssetItem'), 
     }
 
     def fromXml(self, node):
@@ -467,7 +467,7 @@ class KalturaCaptionAssetItemService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAssetItemListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAssetItemListResponse')
 
     def search(self, entryFilter = NotImplemented, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
         """Search caption asset items by filter, pager and free text"""
@@ -480,7 +480,7 @@ class KalturaCaptionAssetItemService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAssetItemListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAssetItemListResponse')
 
     def searchEntries(self, entryFilter = NotImplemented, captionAssetItemFilter = NotImplemented, captionAssetItemPager = NotImplemented):
         """Search caption asset items by filter, pager and free text"""
@@ -493,7 +493,7 @@ class KalturaCaptionAssetItemService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaBaseEntryListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBaseEntryListResponse')
 
 ########## main ##########
 class KalturaCaptionSearchClientPlugin(KalturaClientPlugin):

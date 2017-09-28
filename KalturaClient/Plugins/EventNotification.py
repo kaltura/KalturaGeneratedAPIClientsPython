@@ -182,7 +182,7 @@ class KalturaEventNotificationParameter(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'key': getXmlNodeText, 
         'description': getXmlNodeText, 
-        'value': (KalturaObjectFactory.create, KalturaStringValue), 
+        'value': (KalturaObjectFactory.create, 'KalturaStringValue'), 
     }
 
     def fromXml(self, node):
@@ -314,9 +314,9 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
         'automaticDispatchEnabled': getXmlNodeBool, 
         'eventType': (KalturaEnumsFactory.createString, "KalturaEventNotificationEventType"), 
         'eventObjectType': (KalturaEnumsFactory.createString, "KalturaEventNotificationEventObjectType"), 
-        'eventConditions': (KalturaObjectFactory.createArray, KalturaCondition), 
-        'contentParameters': (KalturaObjectFactory.createArray, KalturaEventNotificationParameter), 
-        'userParameters': (KalturaObjectFactory.createArray, KalturaEventNotificationParameter), 
+        'eventConditions': (KalturaObjectFactory.createArray, 'KalturaCondition'), 
+        'contentParameters': (KalturaObjectFactory.createArray, 'KalturaEventNotificationParameter'), 
+        'userParameters': (KalturaObjectFactory.createArray, 'KalturaEventNotificationParameter'), 
     }
 
     def fromXml(self, node):
@@ -440,7 +440,7 @@ class KalturaEventFieldCondition(KalturaCondition):
 
 
     PROPERTY_LOADERS = {
-        'field': (KalturaObjectFactory.create, KalturaBooleanField), 
+        'field': (KalturaObjectFactory.create, 'KalturaBooleanField'), 
     }
 
     def fromXml(self, node):
@@ -483,8 +483,8 @@ class KalturaEventNotificationArrayParameter(KalturaEventNotificationParameter):
 
 
     PROPERTY_LOADERS = {
-        'values': (KalturaObjectFactory.createArray, KalturaString), 
-        'allowedValues': (KalturaObjectFactory.createArray, KalturaStringValue), 
+        'values': (KalturaObjectFactory.createArray, 'KalturaString'), 
+        'allowedValues': (KalturaObjectFactory.createArray, 'KalturaStringValue'), 
     }
 
     def fromXml(self, node):
@@ -529,7 +529,7 @@ class KalturaEventNotificationDispatchJobData(KalturaJobData):
 
     PROPERTY_LOADERS = {
         'templateId': getXmlNodeInt, 
-        'contentParameters': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'contentParameters': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -807,7 +807,7 @@ class KalturaEventNotificationTemplateListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaEventNotificationTemplate), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaEventNotificationTemplate'), 
     }
 
     def fromXml(self, node):
@@ -933,7 +933,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplate')
 
     def clone(self, id, eventNotificationTemplate = NotImplemented):
         """This action allows registering to various backend event. Use this action to create notifications that will react to events such as new video was uploaded or metadata field was updated. To see the list of available event types, call the listTemplates action."""
@@ -945,7 +945,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplate')
 
     def delete(self, id):
         """Delete an event notification template object"""
@@ -978,7 +978,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplate')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """list event notification template objects"""
@@ -990,7 +990,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplateListResponse')
 
     def listByPartner(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
@@ -1000,7 +1000,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplateListResponse')
 
     def listTemplates(self, filter = NotImplemented, pager = NotImplemented):
         """Action lists the template partner event notification templates."""
@@ -1012,7 +1012,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplateListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplateListResponse')
 
     def register(self, notificationTemplateSystemName, pushNotificationParams):
         """Register to a queue from which event messages will be provided according to given template. Queue will be created if not already exists"""
@@ -1024,7 +1024,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaPushNotificationData)
+        return KalturaObjectFactory.create(resultNode, 'KalturaPushNotificationData')
 
     def sendCommand(self, notificationTemplateSystemName, pushNotificationParams, command):
         """Clear queue messages"""
@@ -1048,7 +1048,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplate')
 
     def updateStatus(self, id, status):
         """Update event notification template status by id"""
@@ -1060,7 +1060,7 @@ class KalturaEventNotificationTemplateService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaEventNotificationTemplate)
+        return KalturaObjectFactory.create(resultNode, 'KalturaEventNotificationTemplate')
 
 ########## main ##########
 class KalturaEventNotificationClientPlugin(KalturaClientPlugin):

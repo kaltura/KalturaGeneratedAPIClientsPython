@@ -107,8 +107,8 @@ class KalturaEmailNotificationRecipient(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
-        'email': (KalturaObjectFactory.create, KalturaStringValue), 
-        'name': (KalturaObjectFactory.create, KalturaStringValue), 
+        'email': (KalturaObjectFactory.create, 'KalturaStringValue'), 
+        'name': (KalturaObjectFactory.create, 'KalturaStringValue'), 
     }
 
     def fromXml(self, node):
@@ -373,7 +373,7 @@ class KalturaEmailNotificationCategoryRecipientJobData(KalturaEmailNotificationR
 
 
     PROPERTY_LOADERS = {
-        'categoryUserFilter': (KalturaObjectFactory.create, KalturaCategoryUserFilter), 
+        'categoryUserFilter': (KalturaObjectFactory.create, 'KalturaCategoryUserFilter'), 
     }
 
     def fromXml(self, node):
@@ -412,8 +412,8 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
 
 
     PROPERTY_LOADERS = {
-        'categoryId': (KalturaObjectFactory.create, KalturaStringValue), 
-        'categoryUserFilter': (KalturaObjectFactory.create, KalturaCategoryUserProviderFilter), 
+        'categoryId': (KalturaObjectFactory.create, 'KalturaStringValue'), 
+        'categoryUserFilter': (KalturaObjectFactory.create, 'KalturaCategoryUserProviderFilter'), 
     }
 
     def fromXml(self, node):
@@ -483,7 +483,7 @@ class KalturaEmailNotificationStaticRecipientJobData(KalturaEmailNotificationRec
 
 
     PROPERTY_LOADERS = {
-        'emailRecipients': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'emailRecipients': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -518,7 +518,7 @@ class KalturaEmailNotificationStaticRecipientProvider(KalturaEmailNotificationRe
 
 
     PROPERTY_LOADERS = {
-        'emailRecipients': (KalturaObjectFactory.createArray, KalturaEmailNotificationRecipient), 
+        'emailRecipients': (KalturaObjectFactory.createArray, 'KalturaEmailNotificationRecipient'), 
     }
 
     def fromXml(self, node):
@@ -655,15 +655,15 @@ class KalturaEmailNotificationTemplate(KalturaEventNotificationTemplate):
         'body': getXmlNodeText, 
         'fromEmail': getXmlNodeText, 
         'fromName': getXmlNodeText, 
-        'to': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientProvider), 
-        'cc': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientProvider), 
-        'bcc': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientProvider), 
-        'replyTo': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientProvider), 
+        'to': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientProvider'), 
+        'cc': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientProvider'), 
+        'bcc': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientProvider'), 
+        'replyTo': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientProvider'), 
         'priority': (KalturaEnumsFactory.createInt, "KalturaEmailNotificationTemplatePriority"), 
         'confirmReadingTo': getXmlNodeText, 
         'hostname': getXmlNodeText, 
         'messageID': getXmlNodeText, 
-        'customHeaders': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'customHeaders': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -790,7 +790,7 @@ class KalturaEmailNotificationUserRecipientJobData(KalturaEmailNotificationRecip
 
 
     PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, KalturaUserFilter), 
+        'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
     }
 
     def fromXml(self, node):
@@ -824,7 +824,7 @@ class KalturaEmailNotificationUserRecipientProvider(KalturaEmailNotificationReci
 
 
     PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, KalturaUserFilter), 
+        'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
     }
 
     def fromXml(self, node):
@@ -915,15 +915,15 @@ class KalturaEmailNotificationDispatchJobData(KalturaEventNotificationDispatchJo
     PROPERTY_LOADERS = {
         'fromEmail': getXmlNodeText, 
         'fromName': getXmlNodeText, 
-        'to': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientJobData), 
-        'cc': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientJobData), 
-        'bcc': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientJobData), 
-        'replyTo': (KalturaObjectFactory.create, KalturaEmailNotificationRecipientJobData), 
+        'to': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientJobData'), 
+        'cc': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientJobData'), 
+        'bcc': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientJobData'), 
+        'replyTo': (KalturaObjectFactory.create, 'KalturaEmailNotificationRecipientJobData'), 
         'priority': (KalturaEnumsFactory.createInt, "KalturaEmailNotificationTemplatePriority"), 
         'confirmReadingTo': getXmlNodeText, 
         'hostname': getXmlNodeText, 
         'messageID': getXmlNodeText, 
-        'customHeaders': (KalturaObjectFactory.createArray, KalturaKeyValue), 
+        'customHeaders': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):

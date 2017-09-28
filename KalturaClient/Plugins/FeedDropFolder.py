@@ -236,7 +236,7 @@ class KalturaFeedDropFolder(KalturaDropFolder):
 
     PROPERTY_LOADERS = {
         'itemHandlingLimit': getXmlNodeInt, 
-        'feedItemInfo': (KalturaObjectFactory.create, KalturaFeedItemInfo), 
+        'feedItemInfo': (KalturaObjectFactory.create, 'KalturaFeedItemInfo'), 
     }
 
     def fromXml(self, node):

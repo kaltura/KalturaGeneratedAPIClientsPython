@@ -316,7 +316,7 @@ class KalturaCuePointListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCuePoint), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaCuePoint'), 
     }
 
     def fromXml(self, node):
@@ -827,7 +827,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
 
     def addFromBulk(self, fileData):
         """Allows you to add multiple cue points objects by uploading XML that contains multiple cue point definitions"""
@@ -839,7 +839,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePointListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePointListResponse')
 
     def clone(self, id, entryId):
         """Clone cuePoint with id to given entry"""
@@ -851,7 +851,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
 
     def count(self, filter = NotImplemented):
         """count cue point objects by filter"""
@@ -883,7 +883,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List cue point objects by filter and pager"""
@@ -895,7 +895,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePointListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePointListResponse')
 
     def serveBulk(self, filter = NotImplemented, pager = NotImplemented):
         """Download multiple cue points objects as XML definitions"""
@@ -916,7 +916,7 @@ class KalturaCuePointService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCuePoint)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
 
     def updateStatus(self, id, status):
         """Update cuePoint status by id"""

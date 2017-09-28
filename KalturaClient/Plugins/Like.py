@@ -118,7 +118,7 @@ class KalturaLikeListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaLike), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaLike'), 
     }
 
     def fromXml(self, node):
@@ -289,7 +289,7 @@ class KalturaLikeService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaLikeListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaLikeListResponse')
 
     def unlike(self, entryId):
         kparams = KalturaParams()

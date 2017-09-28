@@ -382,7 +382,7 @@ class KalturaCaptionAssetListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCaptionAsset), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaCaptionAsset'), 
     }
 
     def fromXml(self, node):
@@ -413,7 +413,7 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, KalturaCaptionParams), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaCaptionParams'), 
     }
 
     def fromXml(self, node):
@@ -907,7 +907,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAsset')
 
     def delete(self, captionAssetId):
         kparams = KalturaParams()
@@ -924,7 +924,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAsset')
 
     def getRemotePaths(self, id):
         """Get remote storage existing paths for the asset"""
@@ -935,7 +935,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaRemotePathListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaRemotePathListResponse')
 
     def getUrl(self, id, storageId = NotImplemented):
         """Get download URL for the asset"""
@@ -959,7 +959,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAssetListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAssetListResponse')
 
     def serve(self, captionAssetId):
         """Serves caption by its id"""
@@ -1009,7 +1009,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAsset')
 
     def update(self, id, captionAsset):
         """Update caption asset"""
@@ -1021,7 +1021,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionAsset)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionAsset')
 
 
 # @package Kaltura
@@ -1041,7 +1041,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionParams)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionParams')
 
     def delete(self, id):
         """Delete Caption Params by ID"""
@@ -1062,7 +1062,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionParams)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionParams')
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List Caption Params by filter with paging support (By default - all system default params will be listed too)"""
@@ -1074,7 +1074,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionParamsListResponse)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionParamsListResponse')
 
     def update(self, id, captionParams):
         """Update Caption Params by ID"""
@@ -1086,7 +1086,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, KalturaCaptionParams)
+        return KalturaObjectFactory.create(resultNode, 'KalturaCaptionParams')
 
 ########## main ##########
 class KalturaCaptionClientPlugin(KalturaClientPlugin):
