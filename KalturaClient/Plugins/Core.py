@@ -7095,6 +7095,7 @@ class KalturaBaseEntry(KalturaObjectBase):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented):
@@ -7272,13 +7273,17 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @var array of KalturaOperationAttributes
         self.operationAttributes = operationAttributes
 
-        # list of user ids that are entitled to edit the entry (no server enforcement) The difference between entitledUsersEdit and entitledUsersPublish is applicative only
+        # list of user ids that are entitled to edit the entry (no server enforcement) The difference between entitledUsersEdit, entitledUsersPublish and entitledUsersView is applicative only
         # @var string
         self.entitledUsersEdit = entitledUsersEdit
 
-        # list of user ids that are entitled to publish the entry (no server enforcement) The difference between entitledUsersEdit and entitledUsersPublish is applicative only
+        # list of user ids that are entitled to publish the entry (no server enforcement) The difference between entitledUsersEdit, entitledUsersPublish and entitledUsersView is applicative only
         # @var string
         self.entitledUsersPublish = entitledUsersPublish
+
+        # list of user ids that are entitled to view the entry (no server enforcement) The difference between entitledUsersEdit, entitledUsersPublish and entitledUsersView is applicative only
+        # @var string
+        self.entitledUsersView = entitledUsersView
 
         # Comma seperated string of the capabilities of the entry. Any capability needed can be added to this list.
         # @var string
@@ -7337,6 +7342,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         'operationAttributes': (KalturaObjectFactory.createArray, 'KalturaOperationAttributes'), 
         'entitledUsersEdit': getXmlNodeText, 
         'entitledUsersPublish': getXmlNodeText, 
+        'entitledUsersView': getXmlNodeText, 
         'capabilities': getXmlNodeText, 
         'templateEntryId': getXmlNodeText, 
         'displayInSearch': (KalturaEnumsFactory.createInt, "KalturaEntryDisplayInSearchType"), 
@@ -7372,6 +7378,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addArrayIfDefined("operationAttributes", self.operationAttributes)
         kparams.addStringIfDefined("entitledUsersEdit", self.entitledUsersEdit)
         kparams.addStringIfDefined("entitledUsersPublish", self.entitledUsersPublish)
+        kparams.addStringIfDefined("entitledUsersView", self.entitledUsersView)
         kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
         kparams.addIntEnumIfDefined("displayInSearch", self.displayInSearch)
         return kparams
@@ -7567,6 +7574,12 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setEntitledUsersPublish(self, newEntitledUsersPublish):
         self.entitledUsersPublish = newEntitledUsersPublish
+
+    def getEntitledUsersView(self):
+        return self.entitledUsersView
+
+    def setEntitledUsersView(self, newEntitledUsersView):
+        self.entitledUsersView = newEntitledUsersView
 
     def getCapabilities(self):
         return self.capabilities
@@ -11914,6 +11927,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -11961,6 +11975,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch)
@@ -13627,6 +13642,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -13680,6 +13696,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch)
@@ -13910,6 +13927,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -13975,6 +13993,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -17430,6 +17449,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -17510,6 +17530,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -17763,6 +17784,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -17845,6 +17867,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -18761,6 +18784,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -18857,6 +18881,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -19287,6 +19312,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -19541,6 +19568,12 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         self.entitledUsersPublishMatchOr = entitledUsersPublishMatchOr
 
         # @var string
+        self.entitledUsersViewMatchAnd = entitledUsersViewMatchAnd
+
+        # @var string
+        self.entitledUsersViewMatchOr = entitledUsersViewMatchOr
+
+        # @var string
         self.tagsNameMultiLikeOr = tagsNameMultiLikeOr
 
         # @var string
@@ -19632,6 +19665,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         'entitledUsersEditMatchOr': getXmlNodeText, 
         'entitledUsersPublishMatchAnd': getXmlNodeText, 
         'entitledUsersPublishMatchOr': getXmlNodeText, 
+        'entitledUsersViewMatchAnd': getXmlNodeText, 
+        'entitledUsersViewMatchOr': getXmlNodeText, 
         'tagsNameMultiLikeOr': getXmlNodeText, 
         'tagsAdminTagsMultiLikeOr': getXmlNodeText, 
         'tagsAdminTagsNameMultiLikeOr': getXmlNodeText, 
@@ -19719,6 +19754,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("entitledUsersEditMatchOr", self.entitledUsersEditMatchOr)
         kparams.addStringIfDefined("entitledUsersPublishMatchAnd", self.entitledUsersPublishMatchAnd)
         kparams.addStringIfDefined("entitledUsersPublishMatchOr", self.entitledUsersPublishMatchOr)
+        kparams.addStringIfDefined("entitledUsersViewMatchAnd", self.entitledUsersViewMatchAnd)
+        kparams.addStringIfDefined("entitledUsersViewMatchOr", self.entitledUsersViewMatchOr)
         kparams.addStringIfDefined("tagsNameMultiLikeOr", self.tagsNameMultiLikeOr)
         kparams.addStringIfDefined("tagsAdminTagsMultiLikeOr", self.tagsAdminTagsMultiLikeOr)
         kparams.addStringIfDefined("tagsAdminTagsNameMultiLikeOr", self.tagsAdminTagsNameMultiLikeOr)
@@ -20159,6 +20196,18 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
     def setEntitledUsersPublishMatchOr(self, newEntitledUsersPublishMatchOr):
         self.entitledUsersPublishMatchOr = newEntitledUsersPublishMatchOr
 
+    def getEntitledUsersViewMatchAnd(self):
+        return self.entitledUsersViewMatchAnd
+
+    def setEntitledUsersViewMatchAnd(self, newEntitledUsersViewMatchAnd):
+        self.entitledUsersViewMatchAnd = newEntitledUsersViewMatchAnd
+
+    def getEntitledUsersViewMatchOr(self):
+        return self.entitledUsersViewMatchOr
+
+    def setEntitledUsersViewMatchOr(self, newEntitledUsersViewMatchOr):
+        self.entitledUsersViewMatchOr = newEntitledUsersViewMatchOr
+
     def getTagsNameMultiLikeOr(self):
         return self.tagsNameMultiLikeOr
 
@@ -20274,6 +20323,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -20360,6 +20411,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -20516,6 +20569,8 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -20609,6 +20664,8 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -20790,6 +20847,8 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -20883,6 +20942,8 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -20994,6 +21055,8 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -21097,6 +21160,8 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -21318,6 +21383,8 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -21421,6 +21488,8 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -21542,6 +21611,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -21646,6 +21717,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -21745,6 +21818,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -21801,6 +21875,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -22609,6 +22684,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -22662,6 +22738,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch)
@@ -25689,7 +25766,8 @@ class KalturaUploadToken(KalturaObjectBase):
             fileSize=NotImplemented,
             uploadedFileSize=NotImplemented,
             createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            updatedAt=NotImplemented,
+            uploadUrl=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Upload token unique ID
@@ -25737,6 +25815,11 @@ class KalturaUploadToken(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
+        # Upload url - to explicitly determine to which domain to adress the uploadToken->upload call
+        # @var string
+        # @readonly
+        self.uploadUrl = uploadUrl
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -25748,6 +25831,7 @@ class KalturaUploadToken(KalturaObjectBase):
         'uploadedFileSize': getXmlNodeFloat, 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
+        'uploadUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25793,6 +25877,9 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+    def getUploadUrl(self):
+        return self.uploadUrl
 
 
 # @package Kaltura
@@ -50452,6 +50539,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -50538,6 +50627,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -51504,6 +51595,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -51590,6 +51683,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -52345,6 +52440,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -52431,6 +52528,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -52800,6 +52899,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             operationAttributes=NotImplemented,
             entitledUsersEdit=NotImplemented,
             entitledUsersPublish=NotImplemented,
+            entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
@@ -52896,6 +52996,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             operationAttributes,
             entitledUsersEdit,
             entitledUsersPublish,
+            entitledUsersView,
             capabilities,
             templateEntryId,
             displayInSearch,
@@ -53121,6 +53222,8 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -53207,6 +53310,8 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -53889,6 +53994,8 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -53982,6 +54089,8 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -54371,6 +54480,8 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -54464,6 +54575,8 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -54621,6 +54734,8 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -54724,6 +54839,8 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -54891,6 +55008,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -54997,6 +55116,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -55197,6 +55318,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -55303,6 +55426,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -55427,6 +55552,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -55533,6 +55660,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -55657,6 +55786,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -55763,6 +55894,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -55887,6 +56020,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -55993,6 +56128,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -56117,6 +56254,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -56223,6 +56362,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
@@ -56347,6 +56488,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             entitledUsersEditMatchOr=NotImplemented,
             entitledUsersPublishMatchAnd=NotImplemented,
             entitledUsersPublishMatchOr=NotImplemented,
+            entitledUsersViewMatchAnd=NotImplemented,
+            entitledUsersViewMatchOr=NotImplemented,
             tagsNameMultiLikeOr=NotImplemented,
             tagsAdminTagsMultiLikeOr=NotImplemented,
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
@@ -56453,6 +56596,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             entitledUsersEditMatchOr,
             entitledUsersPublishMatchAnd,
             entitledUsersPublishMatchOr,
+            entitledUsersViewMatchAnd,
+            entitledUsersViewMatchOr,
             tagsNameMultiLikeOr,
             tagsAdminTagsMultiLikeOr,
             tagsAdminTagsNameMultiLikeOr,
