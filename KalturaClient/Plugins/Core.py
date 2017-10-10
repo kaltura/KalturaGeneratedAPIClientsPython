@@ -1596,6 +1596,8 @@ class KalturaBaseEntryCloneOptions(object):
     CATEGORIES = "2"
     CHILD_ENTRIES = "3"
     ACCESS_CONTROL = "4"
+    METADATA = "5"
+    FLAVORS = "6"
 
     def __init__(self, value):
         self.value = value
@@ -59330,6 +59332,14 @@ class KalturaMediaService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
+
+    def getVolumeMap(self, entryId):
+        """Get volume map by entry id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall('media', 'getVolumeMap', None ,kparams)
+        return self.client.getServeUrl()
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List media entries by filter with paging support."""
