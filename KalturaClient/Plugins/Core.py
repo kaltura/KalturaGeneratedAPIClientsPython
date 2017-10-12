@@ -4871,7 +4871,7 @@ class KalturaReportType(object):
     TOP_SYNDICATION = "6"
     CONTENT_CONTRIBUTIONS = "7"
     USER_ENGAGEMENT = "11"
-    SPEFICIC_USER_ENGAGEMENT = "12"
+    SPECIFIC_USER_ENGAGEMENT = "12"
     USER_TOP_CONTENT = "13"
     USER_CONTENT_DROPOFF = "14"
     USER_CONTENT_INTERACTIONS = "15"
@@ -4881,7 +4881,7 @@ class KalturaReportType(object):
     VAR_USAGE = "19"
     TOP_CREATORS = "20"
     PLATFORMS = "21"
-    OPERATION_SYSTEM = "22"
+    OPERATING_SYSTEM = "22"
     BROWSERS = "23"
     LIVE = "24"
     TOP_PLAYBACK_CONTEXT = "25"
@@ -59333,11 +59333,12 @@ class KalturaMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
-    def getVolumeMap(self, entryId):
+    def getVolumeMap(self, entryId, flavorId = NotImplemented):
         """Get volume map by entry id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("flavorId", flavorId)
         self.client.queueServiceActionCall('media', 'getVolumeMap', None ,kparams)
         return self.client.getServeUrl()
 
