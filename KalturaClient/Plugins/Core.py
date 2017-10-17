@@ -58286,6 +58286,14 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
+    def getVolumeMap(self, flavorId):
+        """Get volume map by entry id"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("flavorId", flavorId)
+        self.client.queueServiceActionCall('flavorasset', 'getVolumeMap', None ,kparams)
+        return self.client.getServeUrl()
+
     def getWebPlayableByEntryId(self, entryId):
         """Get web playable Flavor Assets for Entry"""
 
@@ -59334,12 +59342,11 @@ class KalturaMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
-    def getVolumeMap(self, entryId, flavorId = NotImplemented):
+    def getVolumeMap(self, entryId):
         """Get volume map by entry id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kparams.addStringIfDefined("flavorId", flavorId)
         self.client.queueServiceActionCall('media', 'getVolumeMap', None ,kparams)
         return self.client.getServeUrl()
 
