@@ -25770,7 +25770,8 @@ class KalturaUploadToken(KalturaObjectBase):
             uploadedFileSize=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            uploadUrl=NotImplemented):
+            uploadUrl=NotImplemented,
+            autoFinalize=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Upload token unique ID
@@ -25823,6 +25824,11 @@ class KalturaUploadToken(KalturaObjectBase):
         # @readonly
         self.uploadUrl = uploadUrl
 
+        # autoFinalize - Should the upload be finalized once the file size on disk matches the file size reproted when adding the upload token.
+        # @var KalturaNullableBoolean
+        # @insertonly
+        self.autoFinalize = autoFinalize
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -25835,6 +25841,7 @@ class KalturaUploadToken(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'uploadUrl': getXmlNodeText, 
+        'autoFinalize': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -25846,6 +25853,7 @@ class KalturaUploadToken(KalturaObjectBase):
         kparams.put("objectType", "KalturaUploadToken")
         kparams.addStringIfDefined("fileName", self.fileName)
         kparams.addFloatIfDefined("fileSize", self.fileSize)
+        kparams.addIntEnumIfDefined("autoFinalize", self.autoFinalize)
         return kparams
 
     def getId(self):
@@ -25883,6 +25891,12 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def getUploadUrl(self):
         return self.uploadUrl
+
+    def getAutoFinalize(self):
+        return self.autoFinalize
+
+    def setAutoFinalize(self, newAutoFinalize):
+        self.autoFinalize = newAutoFinalize
 
 
 # @package Kaltura
