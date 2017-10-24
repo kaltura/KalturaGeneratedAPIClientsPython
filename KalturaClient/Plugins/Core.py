@@ -58641,6 +58641,8 @@ class KalturaLiveChannelService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
     def createRecordedEntry(self, entryId, mediaServerIndex, liveEntryStatus):
+        """Create recorded entry id if it doesn't exist and make sure it happens on the DC that the live entry was created on."""
+
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
@@ -58712,7 +58714,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
     def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
-        """Sey recorded video to live entry"""
+        """Set recorded video to live entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -58913,6 +58915,8 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
 
     def createRecordedEntry(self, entryId, mediaServerIndex, liveEntryStatus):
+        """Create recorded entry id if it doesn't exist and make sure it happens on the DC that the live entry was created on."""
+
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
@@ -59008,7 +59012,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamEntry')
 
     def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
-        """Sey recorded video to live entry"""
+        """Set recorded video to live entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
