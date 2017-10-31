@@ -33788,7 +33788,7 @@ class KalturaEntryContextDataResult(KalturaContextDataResult):
         kparams.addArrayIfDefined("accessControlActions", self.accessControlActions)
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
         kparams.addIntIfDefined("msDuration", self.msDuration)
-        kparams.addObjectIfDefined("pluginData", self.pluginData)
+        kparams.addMapIfDefined("pluginData", self.pluginData)
         return kparams
 
     def getIsSiteRestricted(self):
