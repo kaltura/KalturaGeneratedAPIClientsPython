@@ -3546,7 +3546,7 @@ class KalturaDropFolderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("dropFolder", dropFolder)
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "add", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "add", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3557,7 +3557,7 @@ class KalturaDropFolderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "delete", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "delete", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3570,7 +3570,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
         kparams.addStringIfDefined("errorCode", errorCode)
         kparams.addStringIfDefined("errorDescription", errorDescription)
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "freeExclusiveDropFolder", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "freeExclusiveDropFolder", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3581,7 +3581,7 @@ class KalturaDropFolderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "get", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "get", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3593,7 +3593,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("tag", tag)
         kparams.addIntIfDefined("maxTime", maxTime);
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "getExclusiveDropFolder", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "getExclusiveDropFolder", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3605,7 +3605,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "list", KalturaDropFolderListResponse, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "list", "KalturaDropFolderListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3617,7 +3617,7 @@ class KalturaDropFolderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderId", dropFolderId);
         kparams.addObjectIfDefined("dropFolder", dropFolder)
-        self.client.queueServiceActionCall("dropfolder_dropfolder", "update", KalturaDropFolder, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "update", "KalturaDropFolder", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3637,7 +3637,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("dropFolderFile", dropFolderFile)
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "add", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "add", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3648,7 +3648,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderFileId", dropFolderFileId);
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "delete", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "delete", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3659,7 +3659,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderFileId", dropFolderFileId);
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "get", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "get", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3670,7 +3670,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderFileId", dropFolderFileId);
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "ignore", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "ignore", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3682,7 +3682,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "list", KalturaDropFolderFileListResponse, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "list", "KalturaDropFolderFileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3694,7 +3694,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderFileId", dropFolderFileId);
         kparams.addObjectIfDefined("dropFolderFile", dropFolderFile)
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "update", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "update", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3706,7 +3706,7 @@ class KalturaDropFolderFileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("dropFolderFileId", dropFolderFileId);
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "updateStatus", KalturaDropFolderFile, kparams)
+        self.client.queueServiceActionCall("dropfolder_dropfolderfile", "updateStatus", "KalturaDropFolderFile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

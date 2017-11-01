@@ -302,7 +302,7 @@ class KalturaTagService(KalturaServiceBase):
         """Action goes over all tags with instanceCount==0 and checks whether they need to be removed from the DB. Returns number of removed tags."""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("tagsearch_tag", "deletePending", None, kparams)
+        self.client.queueServiceActionCall("tagsearch_tag", "deletePending", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -313,7 +313,7 @@ class KalturaTagService(KalturaServiceBase):
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addStringIfDefined("pcToDecrement", pcToDecrement)
         kparams.addStringIfDefined("pcToIncrement", pcToIncrement)
-        self.client.queueServiceActionCall("tagsearch_tag", "indexCategoryEntryTags", None, kparams)
+        self.client.queueServiceActionCall("tagsearch_tag", "indexCategoryEntryTags", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -322,7 +322,7 @@ class KalturaTagService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("tagFilter", tagFilter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("tagsearch_tag", "search", KalturaTagListResponse, kparams)
+        self.client.queueServiceActionCall("tagsearch_tag", "search", "KalturaTagListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

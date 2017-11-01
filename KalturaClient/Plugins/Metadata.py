@@ -1773,7 +1773,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addStringIfDefined("objectType", objectType)
         kparams.addStringIfDefined("objectId", objectId)
         kparams.addStringIfDefined("xmlData", xmlData)
-        self.client.queueServiceActionCall("metadata_metadata", "add", KalturaMetadata, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "add", "KalturaMetadata", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1788,7 +1788,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addStringIfDefined("objectType", objectType)
         kparams.addStringIfDefined("objectId", objectId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("metadata_metadata", "addFromBulk", KalturaMetadata, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "addFromBulk", "KalturaMetadata", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1803,7 +1803,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addStringIfDefined("objectId", objectId)
         kfiles = KalturaFiles()
         kfiles.put("xmlFile", xmlFile);
-        self.client.queueServiceActionCall("metadata_metadata", "addFromFile", KalturaMetadata, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadata", "addFromFile", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1817,7 +1817,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addStringIfDefined("objectType", objectType)
         kparams.addStringIfDefined("objectId", objectId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("metadata_metadata", "addFromUrl", KalturaMetadata, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "addFromUrl", "KalturaMetadata", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1828,7 +1828,7 @@ class KalturaMetadataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("metadata_metadata", "delete", None, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1838,7 +1838,7 @@ class KalturaMetadataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("metadata_metadata", "get", KalturaMetadata, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "get", "KalturaMetadata", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1850,7 +1850,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("metadata_metadata", "index", None, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1863,7 +1863,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("metadata_metadata", "invalidate", None, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "invalidate", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1874,7 +1874,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("metadata_metadata", "list", KalturaMetadataListResponse, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "list", "KalturaMetadataListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1895,7 +1895,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kparams.addStringIfDefined("xmlData", xmlData)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("metadata_metadata", "update", KalturaMetadata, kparams)
+        self.client.queueServiceActionCall("metadata_metadata", "update", "KalturaMetadata", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1908,7 +1908,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xmlFile", xmlFile);
-        self.client.queueServiceActionCall("metadata_metadata", "updateFromFile", KalturaMetadata, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadata", "updateFromFile", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1921,7 +1921,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xslFile", xslFile);
-        self.client.queueServiceActionCall("metadata_metadata", "updateFromXSL", KalturaMetadata, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadata", "updateFromXSL", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1943,7 +1943,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams.addObjectIfDefined("metadataProfile", metadataProfile)
         kparams.addStringIfDefined("xsdData", xsdData)
         kparams.addStringIfDefined("viewsData", viewsData)
-        self.client.queueServiceActionCall("metadata_metadataprofile", "add", KalturaMetadataProfile, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "add", "KalturaMetadataProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1957,7 +1957,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kfiles = KalturaFiles()
         kfiles.put("xsdFile", xsdFile);
         kfiles.put("viewsFile", viewsFile);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "addFromFile", KalturaMetadataProfile, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "addFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1968,7 +1968,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1978,7 +1978,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "get", KalturaMetadataProfile, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "get", "KalturaMetadataProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1990,7 +1990,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("metadata_metadataprofile", "list", KalturaMetadataProfileListResponse, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "list", "KalturaMetadataProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2001,7 +2001,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "listFields", KalturaMetadataProfileFieldListResponse, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "listFields", "KalturaMetadataProfileFieldListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2013,7 +2013,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("toVersion", toVersion);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "revert", KalturaMetadataProfile, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "revert", "KalturaMetadataProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2043,7 +2043,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams.addObjectIfDefined("metadataProfile", metadataProfile)
         kparams.addStringIfDefined("xsdData", xsdData)
         kparams.addStringIfDefined("viewsData", viewsData)
-        self.client.queueServiceActionCall("metadata_metadataprofile", "update", KalturaMetadataProfile, kparams)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "update", "KalturaMetadataProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2056,7 +2056,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xsdFile", xsdFile);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "updateDefinitionFromFile", KalturaMetadataProfile, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "updateDefinitionFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2069,7 +2069,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xsltFile", xsltFile);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "updateTransformationFromFile", KalturaMetadataProfile, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "updateTransformationFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2082,7 +2082,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("viewsFile", viewsFile);
-        self.client.queueServiceActionCall("metadata_metadataprofile", "updateViewsFromFile", KalturaMetadataProfile, kparams, kfiles)
+        self.client.queueServiceActionCall("metadata_metadataprofile", "updateViewsFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

@@ -3841,7 +3841,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "add", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "add", "KalturaScheduleEvent", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3854,7 +3854,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3865,7 +3865,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
-        self.client.queueServiceActionCall("schedule_scheduleevent", "cancel", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "cancel", "KalturaScheduleEvent", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3876,7 +3876,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
-        self.client.queueServiceActionCall("schedule_scheduleevent", "delete", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "delete", "KalturaScheduleEvent", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3887,7 +3887,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
-        self.client.queueServiceActionCall("schedule_scheduleevent", "get", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "get", "KalturaScheduleEvent", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3900,7 +3900,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         kparams.addStringIfDefined("resourceIds", resourceIds)
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
         kparams.addStringIfDefined("scheduleEventIdToIgnore", scheduleEventIdToIgnore)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", KalturaScheduleEventListResponse, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", "KalturaScheduleEventListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3912,7 +3912,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "list", KalturaScheduleEventListResponse, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "list", "KalturaScheduleEventListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3924,7 +3924,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
-        self.client.queueServiceActionCall("schedule_scheduleevent", "update", KalturaScheduleEvent, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "update", "KalturaScheduleEvent", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3944,7 +3944,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("scheduleResource", scheduleResource)
-        self.client.queueServiceActionCall("schedule_scheduleresource", "add", KalturaScheduleResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "add", "KalturaScheduleResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3957,7 +3957,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
-        self.client.queueServiceActionCall("schedule_scheduleresource", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3968,7 +3968,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
-        self.client.queueServiceActionCall("schedule_scheduleresource", "delete", KalturaScheduleResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "delete", "KalturaScheduleResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3979,7 +3979,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
-        self.client.queueServiceActionCall("schedule_scheduleresource", "get", KalturaScheduleResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "get", "KalturaScheduleResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -3991,7 +3991,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("schedule_scheduleresource", "list", KalturaScheduleResourceListResponse, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "list", "KalturaScheduleResourceListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4003,7 +4003,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
         kparams.addObjectIfDefined("scheduleResource", scheduleResource)
-        self.client.queueServiceActionCall("schedule_scheduleresource", "update", KalturaScheduleResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleresource", "update", "KalturaScheduleResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4023,7 +4023,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("scheduleEventResource", scheduleEventResource)
-        self.client.queueServiceActionCall("schedule_scheduleeventresource", "add", KalturaScheduleEventResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleeventresource", "add", "KalturaScheduleEventResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4035,7 +4035,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
-        self.client.queueServiceActionCall("schedule_scheduleeventresource", "delete", None, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleeventresource", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4046,7 +4046,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
-        self.client.queueServiceActionCall("schedule_scheduleeventresource", "get", KalturaScheduleEventResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleeventresource", "get", "KalturaScheduleEventResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4058,7 +4058,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("schedule_scheduleeventresource", "list", KalturaScheduleEventResourceListResponse, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleeventresource", "list", "KalturaScheduleEventResourceListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4071,7 +4071,7 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         kparams.addIntIfDefined("scheduleEventId", scheduleEventId);
         kparams.addIntIfDefined("scheduleResourceId", scheduleResourceId);
         kparams.addObjectIfDefined("scheduleEventResource", scheduleEventResource)
-        self.client.queueServiceActionCall("schedule_scheduleeventresource", "update", KalturaScheduleEventResource, kparams)
+        self.client.queueServiceActionCall("schedule_scheduleeventresource", "update", "KalturaScheduleEventResource", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

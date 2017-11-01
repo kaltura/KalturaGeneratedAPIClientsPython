@@ -440,7 +440,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("attachmentAsset", attachmentAsset)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "add", KalturaAttachmentAsset, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "add", "KalturaAttachmentAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -449,7 +449,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
     def delete(self, attachmentAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("attachmentAssetId", attachmentAssetId)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "delete", None, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -457,7 +457,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
     def get(self, attachmentAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("attachmentAssetId", attachmentAssetId)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "get", KalturaAttachmentAsset, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "get", "KalturaAttachmentAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -468,7 +468,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "getRemotePaths", KalturaRemotePathListResponse, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "getRemotePaths", "KalturaRemotePathListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -480,7 +480,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("storageId", storageId);
-        self.client.queueServiceActionCall("attachment_attachmentasset", "getUrl", None, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "getUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -492,7 +492,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "list", KalturaAttachmentAssetListResponse, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "list", "KalturaAttachmentAssetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -513,7 +513,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("contentResource", contentResource)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "setContent", KalturaAttachmentAsset, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "setContent", "KalturaAttachmentAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -525,7 +525,7 @@ class KalturaAttachmentAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("attachmentAsset", attachmentAsset)
-        self.client.queueServiceActionCall("attachment_attachmentasset", "update", KalturaAttachmentAsset, kparams)
+        self.client.queueServiceActionCall("attachment_attachmentasset", "update", "KalturaAttachmentAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

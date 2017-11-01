@@ -509,7 +509,7 @@ class KalturaShortLinkService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("shortLink", shortLink)
-        self.client.queueServiceActionCall("shortlink_shortlink", "add", KalturaShortLink, kparams)
+        self.client.queueServiceActionCall("shortlink_shortlink", "add", "KalturaShortLink", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -520,7 +520,7 @@ class KalturaShortLinkService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("shortlink_shortlink", "delete", KalturaShortLink, kparams)
+        self.client.queueServiceActionCall("shortlink_shortlink", "delete", "KalturaShortLink", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -531,7 +531,7 @@ class KalturaShortLinkService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("shortlink_shortlink", "get", KalturaShortLink, kparams)
+        self.client.queueServiceActionCall("shortlink_shortlink", "get", "KalturaShortLink", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -552,7 +552,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("shortlink_shortlink", "list", KalturaShortLinkListResponse, kparams)
+        self.client.queueServiceActionCall("shortlink_shortlink", "list", "KalturaShortLinkListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -564,7 +564,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("shortLink", shortLink)
-        self.client.queueServiceActionCall("shortlink_shortlink", "update", KalturaShortLink, kparams)
+        self.client.queueServiceActionCall("shortlink_shortlink", "update", "KalturaShortLink", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

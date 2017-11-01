@@ -903,7 +903,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("captionAsset", captionAsset)
-        self.client.queueServiceActionCall("caption_captionasset", "add", KalturaCaptionAsset, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "add", "KalturaCaptionAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -912,7 +912,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
     def delete(self, captionAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("captionAssetId", captionAssetId)
-        self.client.queueServiceActionCall("caption_captionasset", "delete", None, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -920,7 +920,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
     def get(self, captionAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("captionAssetId", captionAssetId)
-        self.client.queueServiceActionCall("caption_captionasset", "get", KalturaCaptionAsset, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "get", "KalturaCaptionAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -931,7 +931,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("caption_captionasset", "getRemotePaths", KalturaRemotePathListResponse, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "getRemotePaths", "KalturaRemotePathListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -943,7 +943,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("storageId", storageId);
-        self.client.queueServiceActionCall("caption_captionasset", "getUrl", None, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "getUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -955,7 +955,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("caption_captionasset", "list", KalturaCaptionAssetListResponse, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "list", "KalturaCaptionAssetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -994,7 +994,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("captionAssetId", captionAssetId)
-        self.client.queueServiceActionCall("caption_captionasset", "setAsDefault", None, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "setAsDefault", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1005,7 +1005,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("contentResource", contentResource)
-        self.client.queueServiceActionCall("caption_captionasset", "setContent", KalturaCaptionAsset, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "setContent", "KalturaCaptionAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1017,7 +1017,7 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("captionAsset", captionAsset)
-        self.client.queueServiceActionCall("caption_captionasset", "update", KalturaCaptionAsset, kparams)
+        self.client.queueServiceActionCall("caption_captionasset", "update", "KalturaCaptionAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1037,7 +1037,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("captionParams", captionParams)
-        self.client.queueServiceActionCall("caption_captionparams", "add", KalturaCaptionParams, kparams)
+        self.client.queueServiceActionCall("caption_captionparams", "add", "KalturaCaptionParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1048,7 +1048,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("caption_captionparams", "delete", None, kparams)
+        self.client.queueServiceActionCall("caption_captionparams", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1058,7 +1058,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("caption_captionparams", "get", KalturaCaptionParams, kparams)
+        self.client.queueServiceActionCall("caption_captionparams", "get", "KalturaCaptionParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1070,7 +1070,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("caption_captionparams", "list", KalturaCaptionParamsListResponse, kparams)
+        self.client.queueServiceActionCall("caption_captionparams", "list", "KalturaCaptionParamsListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1082,7 +1082,7 @@ class KalturaCaptionParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("captionParams", captionParams)
-        self.client.queueServiceActionCall("caption_captionparams", "update", KalturaCaptionParams, kparams)
+        self.client.queueServiceActionCall("caption_captionparams", "update", "KalturaCaptionParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

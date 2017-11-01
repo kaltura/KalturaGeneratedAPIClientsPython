@@ -820,7 +820,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("entry", entry)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "add", KalturaExternalMediaEntry, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "add", "KalturaExternalMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -831,7 +831,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "count", None, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -842,7 +842,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "delete", None, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -852,7 +852,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "get", KalturaExternalMediaEntry, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "get", "KalturaExternalMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -864,7 +864,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "list", KalturaExternalMediaEntryListResponse, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "list", "KalturaExternalMediaEntryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -876,7 +876,7 @@ class KalturaExternalMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("entry", entry)
-        self.client.queueServiceActionCall("externalmedia_externalmedia", "update", KalturaExternalMediaEntry, kparams)
+        self.client.queueServiceActionCall("externalmedia_externalmedia", "update", "KalturaExternalMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

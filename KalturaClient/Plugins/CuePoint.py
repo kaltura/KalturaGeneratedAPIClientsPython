@@ -823,7 +823,7 @@ class KalturaCuePointService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("cuePoint", cuePoint)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "add", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "add", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -835,7 +835,7 @@ class KalturaCuePointService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "addFromBulk", KalturaCuePointListResponse, kparams, kfiles)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "addFromBulk", "KalturaCuePointListResponse", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -847,7 +847,7 @@ class KalturaCuePointService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "clone", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "clone", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -858,7 +858,7 @@ class KalturaCuePointService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "count", None, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -869,7 +869,7 @@ class KalturaCuePointService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "delete", None, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -879,7 +879,7 @@ class KalturaCuePointService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "get", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "get", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -891,7 +891,7 @@ class KalturaCuePointService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "list", KalturaCuePointListResponse, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "list", "KalturaCuePointListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -912,7 +912,7 @@ class KalturaCuePointService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("cuePoint", cuePoint)
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "update", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "update", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -924,7 +924,7 @@ class KalturaCuePointService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("cuepoint_cuepoint", "updateStatus", None, kparams)
+        self.client.queueServiceActionCall("cuepoint_cuepoint", "updateStatus", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

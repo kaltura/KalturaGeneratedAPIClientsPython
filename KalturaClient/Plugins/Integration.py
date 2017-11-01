@@ -38,6 +38,8 @@ from ..Base import *
 # @subpackage Client
 class KalturaIntegrationProviderType(object):
     CIELO24 = "cielo24.Cielo24"
+    DEXTER = "dexterIntegration.Dexter"
+    EXAMPLE = "exampleIntegration.Example"
     VOICEBASE = "voicebase.Voicebase"
 
     def __init__(self, value):
@@ -195,7 +197,7 @@ class KalturaIntegrationService(KalturaServiceBase):
         kparams.addObjectIfDefined("data", data)
         kparams.addStringIfDefined("objectType", objectType)
         kparams.addStringIfDefined("objectId", objectId)
-        self.client.queueServiceActionCall("integration_integration", "dispatch", None, kparams)
+        self.client.queueServiceActionCall("integration_integration", "dispatch", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -204,7 +206,7 @@ class KalturaIntegrationService(KalturaServiceBase):
     def notify(self, id):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("integration_integration", "notify", None, kparams)
+        self.client.queueServiceActionCall("integration_integration", "notify", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

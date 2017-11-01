@@ -467,7 +467,7 @@ class KalturaVarConsoleService(KalturaServiceBase):
         kparams.addObjectIfDefined("partnerFilter", partnerFilter)
         kparams.addObjectIfDefined("usageFilter", usageFilter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("varconsole_varconsole", "getPartnerUsage", KalturaPartnerUsageListResponse, kparams)
+        self.client.queueServiceActionCall("varconsole_varconsole", "getPartnerUsage", "KalturaPartnerUsageListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -479,7 +479,7 @@ class KalturaVarConsoleService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("varconsole_varconsole", "updateStatus", None, kparams)
+        self.client.queueServiceActionCall("varconsole_varconsole", "updateStatus", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

@@ -266,7 +266,7 @@ class KalturaLikeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("like_like", "checkLikeExists", None, kparams)
+        self.client.queueServiceActionCall("like_like", "checkLikeExists", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -275,7 +275,7 @@ class KalturaLikeService(KalturaServiceBase):
     def like(self, entryId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("like_like", "like", None, kparams)
+        self.client.queueServiceActionCall("like_like", "like", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -285,7 +285,7 @@ class KalturaLikeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("like_like", "list", KalturaLikeListResponse, kparams)
+        self.client.queueServiceActionCall("like_like", "list", "KalturaLikeListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -294,7 +294,7 @@ class KalturaLikeService(KalturaServiceBase):
     def unlike(self, entryId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("like_like", "unlike", None, kparams)
+        self.client.queueServiceActionCall("like_like", "unlike", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

@@ -1598,7 +1598,6 @@ class KalturaBaseEntryCloneOptions(object):
     ACCESS_CONTROL = "4"
     METADATA = "5"
     FLAVORS = "6"
-    CAPTIONS = "7"
 
     def __init__(self, value):
         self.value = value
@@ -1990,6 +1989,7 @@ class KalturaCloneComponentSelectorType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaConditionType(object):
+    ABC_WATERMARK = "abcScreenersWatermarkAccessControl.abcWatermark"
     EVENT_NOTIFICATION_FIELD = "eventNotification.BooleanField"
     EVENT_NOTIFICATION_OBJECT_CHANGED = "eventNotification.ObjectChanged"
     METADATA_FIELD_CHANGED = "metadata.FieldChanged"
@@ -2371,7 +2371,11 @@ class KalturaDeliveryProfileRtmpOrderBy(object):
 class KalturaDeliveryProfileType(object):
     EDGE_CAST_HTTP = "edgeCast.EDGE_CAST_HTTP"
     EDGE_CAST_RTMP = "edgeCast.EDGE_CAST_RTMP"
+    FORENSIC_WATERMARK_APPLE_HTTP = "forensicWatermark.FORENSIC_WATERMARK_APPLE_HTTP"
+    FORENSIC_WATERMARK_DASH = "forensicWatermark.FORENSIC_WATERMARK_DASH"
     KONTIKI_HTTP = "kontiki.KONTIKI_HTTP"
+    UPLYNK_HTTP = "uplynk.UPLYNK_HTTP"
+    UPLYNK_RTMP = "uplynk.UPLYNK_RTMP"
     VELOCIX_HDS = "velocix.VELOCIX_HDS"
     VELOCIX_HLS = "velocix.VELOCIX_HLS"
     APPLE_HTTP = "1"
@@ -3181,9 +3185,7 @@ class KalturaLanguage(object):
     GU = "Gujarati"
     GWI = "Gwichin"
     HAI = "Haida"
-    HNN = "Hainanese"
     HAS = "Haisla"
-    HAK = "Hakka"
     HUR = "Halkomelem"
     HAA = "Han"
     HNI = "Hani"
@@ -3196,7 +3198,6 @@ class KalturaLanguage(object):
     HIL = "Hiligaynon"
     HI = "Hindi"
     HMN = "Hmong"
-    HKK = "Hokkien"
     HOP = "Hopi"
     CZH = "Huizhou Chinese"
     HU = "Hungarian"
@@ -3204,8 +3205,8 @@ class KalturaLanguage(object):
     KPO = "Ikposo"
     ILO = "Iloko"
     SMN = "Inari Sami"
-    IN = "Indonesian"
     ID = "Indonesian"
+    IN = "Indonesian"
     IZH = "Ingrian"
     INH = "Ingush"
     IA = "Interlingua"
@@ -3483,7 +3484,6 @@ class KalturaLanguage(object):
     TTT = "Tat Muslim"
     TT = "Tatar"
     TE = "Telugu"
-    TEO = "Teo Chew"
     TET = "Tetum"
     TH = "Thai"
     NOD = "Thai (Northern)"
@@ -3540,8 +3540,8 @@ class KalturaLanguage(object):
     WYM = "Wymysorys"
     XH = "Xhosa"
     AME = "Yanesha"
-    YI = "Yiddish"
     JI = "Yiddish"
+    YI = "Yiddish"
     YO = "Yoruba"
     ZAI = "Zapotec Isthmus"
     DJE = "Zarma"
@@ -4418,6 +4418,7 @@ class KalturaMediaInfoOrderBy(object):
 # @subpackage Client
 class KalturaMediaParserType(object):
     MEDIAINFO = "0"
+    REMOTE_MEDIAINFO = "remoteMediaInfo.RemoteMediaInfo"
     FFMPEG = "1"
 
     def __init__(self, value):
@@ -4876,7 +4877,7 @@ class KalturaReportType(object):
     TOP_SYNDICATION = "6"
     CONTENT_CONTRIBUTIONS = "7"
     USER_ENGAGEMENT = "11"
-    SPECIFIC_USER_ENGAGEMENT = "12"
+    SPEFICIC_USER_ENGAGEMENT = "12"
     USER_TOP_CONTENT = "13"
     USER_CONTENT_DROPOFF = "14"
     USER_CONTENT_INTERACTIONS = "15"
@@ -4886,7 +4887,7 @@ class KalturaReportType(object):
     VAR_USAGE = "19"
     TOP_CREATORS = "20"
     PLATFORMS = "21"
-    OPERATING_SYSTEM = "22"
+    OPERATION_SYSTEM = "22"
     BROWSERS = "23"
     LIVE = "24"
     TOP_PLAYBACK_CONTEXT = "25"
@@ -5711,7 +5712,7 @@ class KalturaCondition(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createString, "KalturaConditionType"), 
         'description': getXmlNodeText, 
-        'not': getXmlNodeBool, 
+        'not_': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -16127,1082 +16128,6 @@ class KalturaIntegerValue(KalturaValue):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBatchJobListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaBatchJob
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaBatchJob'), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBatchJobListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaBatchJobListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaInfo(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            flavorAssetId=NotImplemented,
-            fileSize=NotImplemented,
-            containerFormat=NotImplemented,
-            containerId=NotImplemented,
-            containerProfile=NotImplemented,
-            containerDuration=NotImplemented,
-            containerBitRate=NotImplemented,
-            videoFormat=NotImplemented,
-            videoCodecId=NotImplemented,
-            videoDuration=NotImplemented,
-            videoBitRate=NotImplemented,
-            videoBitRateMode=NotImplemented,
-            videoWidth=NotImplemented,
-            videoHeight=NotImplemented,
-            videoFrameRate=NotImplemented,
-            videoDar=NotImplemented,
-            videoRotation=NotImplemented,
-            audioFormat=NotImplemented,
-            audioCodecId=NotImplemented,
-            audioDuration=NotImplemented,
-            audioBitRate=NotImplemented,
-            audioBitRateMode=NotImplemented,
-            audioChannels=NotImplemented,
-            audioSamplingRate=NotImplemented,
-            audioResolution=NotImplemented,
-            writingLib=NotImplemented,
-            rawData=NotImplemented,
-            multiStreamInfo=NotImplemented,
-            scanType=NotImplemented,
-            multiStream=NotImplemented,
-            isFastStart=NotImplemented,
-            contentStreams=NotImplemented,
-            complexityValue=NotImplemented,
-            maxGOP=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # The id of the media info
-        # @var int
-        # @readonly
-        self.id = id
-
-        # The id of the related flavor asset
-        # @var string
-        self.flavorAssetId = flavorAssetId
-
-        # The file size
-        # @var int
-        self.fileSize = fileSize
-
-        # The container format
-        # @var string
-        self.containerFormat = containerFormat
-
-        # The container id
-        # @var string
-        self.containerId = containerId
-
-        # The container profile
-        # @var string
-        self.containerProfile = containerProfile
-
-        # The container duration
-        # @var int
-        self.containerDuration = containerDuration
-
-        # The container bit rate
-        # @var int
-        self.containerBitRate = containerBitRate
-
-        # The video format
-        # @var string
-        self.videoFormat = videoFormat
-
-        # The video codec id
-        # @var string
-        self.videoCodecId = videoCodecId
-
-        # The video duration
-        # @var int
-        self.videoDuration = videoDuration
-
-        # The video bit rate
-        # @var int
-        self.videoBitRate = videoBitRate
-
-        # The video bit rate mode
-        # @var KalturaBitRateMode
-        self.videoBitRateMode = videoBitRateMode
-
-        # The video width
-        # @var int
-        self.videoWidth = videoWidth
-
-        # The video height
-        # @var int
-        self.videoHeight = videoHeight
-
-        # The video frame rate
-        # @var float
-        self.videoFrameRate = videoFrameRate
-
-        # The video display aspect ratio (dar)
-        # @var float
-        self.videoDar = videoDar
-
-        # @var int
-        self.videoRotation = videoRotation
-
-        # The audio format
-        # @var string
-        self.audioFormat = audioFormat
-
-        # The audio codec id
-        # @var string
-        self.audioCodecId = audioCodecId
-
-        # The audio duration
-        # @var int
-        self.audioDuration = audioDuration
-
-        # The audio bit rate
-        # @var int
-        self.audioBitRate = audioBitRate
-
-        # The audio bit rate mode
-        # @var KalturaBitRateMode
-        self.audioBitRateMode = audioBitRateMode
-
-        # The number of audio channels
-        # @var int
-        self.audioChannels = audioChannels
-
-        # The audio sampling rate
-        # @var int
-        self.audioSamplingRate = audioSamplingRate
-
-        # The audio resolution
-        # @var int
-        self.audioResolution = audioResolution
-
-        # The writing library
-        # @var string
-        self.writingLib = writingLib
-
-        # The data as returned by the mediainfo command line
-        # @var string
-        self.rawData = rawData
-
-        # @var string
-        self.multiStreamInfo = multiStreamInfo
-
-        # @var int
-        self.scanType = scanType
-
-        # @var string
-        self.multiStream = multiStream
-
-        # @var int
-        self.isFastStart = isFastStart
-
-        # @var string
-        self.contentStreams = contentStreams
-
-        # @var int
-        self.complexityValue = complexityValue
-
-        # @var float
-        self.maxGOP = maxGOP
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeInt, 
-        'flavorAssetId': getXmlNodeText, 
-        'fileSize': getXmlNodeInt, 
-        'containerFormat': getXmlNodeText, 
-        'containerId': getXmlNodeText, 
-        'containerProfile': getXmlNodeText, 
-        'containerDuration': getXmlNodeInt, 
-        'containerBitRate': getXmlNodeInt, 
-        'videoFormat': getXmlNodeText, 
-        'videoCodecId': getXmlNodeText, 
-        'videoDuration': getXmlNodeInt, 
-        'videoBitRate': getXmlNodeInt, 
-        'videoBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
-        'videoWidth': getXmlNodeInt, 
-        'videoHeight': getXmlNodeInt, 
-        'videoFrameRate': getXmlNodeFloat, 
-        'videoDar': getXmlNodeFloat, 
-        'videoRotation': getXmlNodeInt, 
-        'audioFormat': getXmlNodeText, 
-        'audioCodecId': getXmlNodeText, 
-        'audioDuration': getXmlNodeInt, 
-        'audioBitRate': getXmlNodeInt, 
-        'audioBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
-        'audioChannels': getXmlNodeInt, 
-        'audioSamplingRate': getXmlNodeInt, 
-        'audioResolution': getXmlNodeInt, 
-        'writingLib': getXmlNodeText, 
-        'rawData': getXmlNodeText, 
-        'multiStreamInfo': getXmlNodeText, 
-        'scanType': getXmlNodeInt, 
-        'multiStream': getXmlNodeText, 
-        'isFastStart': getXmlNodeInt, 
-        'contentStreams': getXmlNodeText, 
-        'complexityValue': getXmlNodeInt, 
-        'maxGOP': getXmlNodeFloat, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaInfo.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaMediaInfo")
-        kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
-        kparams.addIntIfDefined("fileSize", self.fileSize)
-        kparams.addStringIfDefined("containerFormat", self.containerFormat)
-        kparams.addStringIfDefined("containerId", self.containerId)
-        kparams.addStringIfDefined("containerProfile", self.containerProfile)
-        kparams.addIntIfDefined("containerDuration", self.containerDuration)
-        kparams.addIntIfDefined("containerBitRate", self.containerBitRate)
-        kparams.addStringIfDefined("videoFormat", self.videoFormat)
-        kparams.addStringIfDefined("videoCodecId", self.videoCodecId)
-        kparams.addIntIfDefined("videoDuration", self.videoDuration)
-        kparams.addIntIfDefined("videoBitRate", self.videoBitRate)
-        kparams.addIntEnumIfDefined("videoBitRateMode", self.videoBitRateMode)
-        kparams.addIntIfDefined("videoWidth", self.videoWidth)
-        kparams.addIntIfDefined("videoHeight", self.videoHeight)
-        kparams.addFloatIfDefined("videoFrameRate", self.videoFrameRate)
-        kparams.addFloatIfDefined("videoDar", self.videoDar)
-        kparams.addIntIfDefined("videoRotation", self.videoRotation)
-        kparams.addStringIfDefined("audioFormat", self.audioFormat)
-        kparams.addStringIfDefined("audioCodecId", self.audioCodecId)
-        kparams.addIntIfDefined("audioDuration", self.audioDuration)
-        kparams.addIntIfDefined("audioBitRate", self.audioBitRate)
-        kparams.addIntEnumIfDefined("audioBitRateMode", self.audioBitRateMode)
-        kparams.addIntIfDefined("audioChannels", self.audioChannels)
-        kparams.addIntIfDefined("audioSamplingRate", self.audioSamplingRate)
-        kparams.addIntIfDefined("audioResolution", self.audioResolution)
-        kparams.addStringIfDefined("writingLib", self.writingLib)
-        kparams.addStringIfDefined("rawData", self.rawData)
-        kparams.addStringIfDefined("multiStreamInfo", self.multiStreamInfo)
-        kparams.addIntIfDefined("scanType", self.scanType)
-        kparams.addStringIfDefined("multiStream", self.multiStream)
-        kparams.addIntIfDefined("isFastStart", self.isFastStart)
-        kparams.addStringIfDefined("contentStreams", self.contentStreams)
-        kparams.addIntIfDefined("complexityValue", self.complexityValue)
-        kparams.addFloatIfDefined("maxGOP", self.maxGOP)
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def getFlavorAssetId(self):
-        return self.flavorAssetId
-
-    def setFlavorAssetId(self, newFlavorAssetId):
-        self.flavorAssetId = newFlavorAssetId
-
-    def getFileSize(self):
-        return self.fileSize
-
-    def setFileSize(self, newFileSize):
-        self.fileSize = newFileSize
-
-    def getContainerFormat(self):
-        return self.containerFormat
-
-    def setContainerFormat(self, newContainerFormat):
-        self.containerFormat = newContainerFormat
-
-    def getContainerId(self):
-        return self.containerId
-
-    def setContainerId(self, newContainerId):
-        self.containerId = newContainerId
-
-    def getContainerProfile(self):
-        return self.containerProfile
-
-    def setContainerProfile(self, newContainerProfile):
-        self.containerProfile = newContainerProfile
-
-    def getContainerDuration(self):
-        return self.containerDuration
-
-    def setContainerDuration(self, newContainerDuration):
-        self.containerDuration = newContainerDuration
-
-    def getContainerBitRate(self):
-        return self.containerBitRate
-
-    def setContainerBitRate(self, newContainerBitRate):
-        self.containerBitRate = newContainerBitRate
-
-    def getVideoFormat(self):
-        return self.videoFormat
-
-    def setVideoFormat(self, newVideoFormat):
-        self.videoFormat = newVideoFormat
-
-    def getVideoCodecId(self):
-        return self.videoCodecId
-
-    def setVideoCodecId(self, newVideoCodecId):
-        self.videoCodecId = newVideoCodecId
-
-    def getVideoDuration(self):
-        return self.videoDuration
-
-    def setVideoDuration(self, newVideoDuration):
-        self.videoDuration = newVideoDuration
-
-    def getVideoBitRate(self):
-        return self.videoBitRate
-
-    def setVideoBitRate(self, newVideoBitRate):
-        self.videoBitRate = newVideoBitRate
-
-    def getVideoBitRateMode(self):
-        return self.videoBitRateMode
-
-    def setVideoBitRateMode(self, newVideoBitRateMode):
-        self.videoBitRateMode = newVideoBitRateMode
-
-    def getVideoWidth(self):
-        return self.videoWidth
-
-    def setVideoWidth(self, newVideoWidth):
-        self.videoWidth = newVideoWidth
-
-    def getVideoHeight(self):
-        return self.videoHeight
-
-    def setVideoHeight(self, newVideoHeight):
-        self.videoHeight = newVideoHeight
-
-    def getVideoFrameRate(self):
-        return self.videoFrameRate
-
-    def setVideoFrameRate(self, newVideoFrameRate):
-        self.videoFrameRate = newVideoFrameRate
-
-    def getVideoDar(self):
-        return self.videoDar
-
-    def setVideoDar(self, newVideoDar):
-        self.videoDar = newVideoDar
-
-    def getVideoRotation(self):
-        return self.videoRotation
-
-    def setVideoRotation(self, newVideoRotation):
-        self.videoRotation = newVideoRotation
-
-    def getAudioFormat(self):
-        return self.audioFormat
-
-    def setAudioFormat(self, newAudioFormat):
-        self.audioFormat = newAudioFormat
-
-    def getAudioCodecId(self):
-        return self.audioCodecId
-
-    def setAudioCodecId(self, newAudioCodecId):
-        self.audioCodecId = newAudioCodecId
-
-    def getAudioDuration(self):
-        return self.audioDuration
-
-    def setAudioDuration(self, newAudioDuration):
-        self.audioDuration = newAudioDuration
-
-    def getAudioBitRate(self):
-        return self.audioBitRate
-
-    def setAudioBitRate(self, newAudioBitRate):
-        self.audioBitRate = newAudioBitRate
-
-    def getAudioBitRateMode(self):
-        return self.audioBitRateMode
-
-    def setAudioBitRateMode(self, newAudioBitRateMode):
-        self.audioBitRateMode = newAudioBitRateMode
-
-    def getAudioChannels(self):
-        return self.audioChannels
-
-    def setAudioChannels(self, newAudioChannels):
-        self.audioChannels = newAudioChannels
-
-    def getAudioSamplingRate(self):
-        return self.audioSamplingRate
-
-    def setAudioSamplingRate(self, newAudioSamplingRate):
-        self.audioSamplingRate = newAudioSamplingRate
-
-    def getAudioResolution(self):
-        return self.audioResolution
-
-    def setAudioResolution(self, newAudioResolution):
-        self.audioResolution = newAudioResolution
-
-    def getWritingLib(self):
-        return self.writingLib
-
-    def setWritingLib(self, newWritingLib):
-        self.writingLib = newWritingLib
-
-    def getRawData(self):
-        return self.rawData
-
-    def setRawData(self, newRawData):
-        self.rawData = newRawData
-
-    def getMultiStreamInfo(self):
-        return self.multiStreamInfo
-
-    def setMultiStreamInfo(self, newMultiStreamInfo):
-        self.multiStreamInfo = newMultiStreamInfo
-
-    def getScanType(self):
-        return self.scanType
-
-    def setScanType(self, newScanType):
-        self.scanType = newScanType
-
-    def getMultiStream(self):
-        return self.multiStream
-
-    def setMultiStream(self, newMultiStream):
-        self.multiStream = newMultiStream
-
-    def getIsFastStart(self):
-        return self.isFastStart
-
-    def setIsFastStart(self, newIsFastStart):
-        self.isFastStart = newIsFastStart
-
-    def getContentStreams(self):
-        return self.contentStreams
-
-    def setContentStreams(self, newContentStreams):
-        self.contentStreams = newContentStreams
-
-    def getComplexityValue(self):
-        return self.complexityValue
-
-    def setComplexityValue(self, newComplexityValue):
-        self.complexityValue = newComplexityValue
-
-    def getMaxGOP(self):
-        return self.maxGOP
-
-    def setMaxGOP(self, newMaxGOP):
-        self.maxGOP = newMaxGOP
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaMediaInfoListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaMediaInfo
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaMediaInfo'), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaMediaInfoListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaFlavorParamsOutputListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaFlavorParamsOutput
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaFlavorParamsOutput'), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbAsset(KalturaAsset):
-    def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            thumbParamsId=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            status=NotImplemented):
-        KalturaAsset.__init__(self,
-            id,
-            entryId,
-            partnerId,
-            version,
-            size,
-            tags,
-            fileExt,
-            createdAt,
-            updatedAt,
-            deletedAt,
-            description,
-            partnerData,
-            partnerDescription,
-            actualSourceAssetParamsIds)
-
-        # The Flavor Params used to create this Flavor Asset
-        # @var int
-        # @insertonly
-        self.thumbParamsId = thumbParamsId
-
-        # The width of the Flavor Asset
-        # @var int
-        # @readonly
-        self.width = width
-
-        # The height of the Flavor Asset
-        # @var int
-        # @readonly
-        self.height = height
-
-        # The status of the asset
-        # @var KalturaThumbAssetStatus
-        # @readonly
-        self.status = status
-
-
-    PROPERTY_LOADERS = {
-        'thumbParamsId': getXmlNodeInt, 
-        'width': getXmlNodeInt, 
-        'height': getXmlNodeInt, 
-        'status': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
-    }
-
-    def fromXml(self, node):
-        KalturaAsset.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbAsset.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAsset.toParams(self)
-        kparams.put("objectType", "KalturaThumbAsset")
-        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
-        return kparams
-
-    def getThumbParamsId(self):
-        return self.thumbParamsId
-
-    def setThumbParamsId(self, newThumbParamsId):
-        self.thumbParamsId = newThumbParamsId
-
-    def getWidth(self):
-        return self.width
-
-    def getHeight(self):
-        return self.height
-
-    def getStatus(self):
-        return self.status
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParams(KalturaAssetParams):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            isSystemDefault=NotImplemented,
-            tags=NotImplemented,
-            requiredPermissions=NotImplemented,
-            sourceRemoteStorageProfileId=NotImplemented,
-            remoteStorageProfileIds=NotImplemented,
-            mediaParserType=NotImplemented,
-            sourceAssetParamsIds=NotImplemented,
-            cropType=NotImplemented,
-            quality=NotImplemented,
-            cropX=NotImplemented,
-            cropY=NotImplemented,
-            cropWidth=NotImplemented,
-            cropHeight=NotImplemented,
-            videoOffset=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            scaleWidth=NotImplemented,
-            scaleHeight=NotImplemented,
-            backgroundColor=NotImplemented,
-            sourceParamsId=NotImplemented,
-            format=NotImplemented,
-            density=NotImplemented,
-            stripProfiles=NotImplemented,
-            videoOffsetInPercentage=NotImplemented):
-        KalturaAssetParams.__init__(self,
-            id,
-            partnerId,
-            name,
-            systemName,
-            description,
-            createdAt,
-            isSystemDefault,
-            tags,
-            requiredPermissions,
-            sourceRemoteStorageProfileId,
-            remoteStorageProfileIds,
-            mediaParserType,
-            sourceAssetParamsIds)
-
-        # @var KalturaThumbCropType
-        self.cropType = cropType
-
-        # @var int
-        self.quality = quality
-
-        # @var int
-        self.cropX = cropX
-
-        # @var int
-        self.cropY = cropY
-
-        # @var int
-        self.cropWidth = cropWidth
-
-        # @var int
-        self.cropHeight = cropHeight
-
-        # @var float
-        self.videoOffset = videoOffset
-
-        # @var int
-        self.width = width
-
-        # @var int
-        self.height = height
-
-        # @var float
-        self.scaleWidth = scaleWidth
-
-        # @var float
-        self.scaleHeight = scaleHeight
-
-        # Hexadecimal value
-        # @var string
-        self.backgroundColor = backgroundColor
-
-        # Id of the flavor params or the thumbnail params to be used as source for the thumbnail creation
-        # @var int
-        self.sourceParamsId = sourceParamsId
-
-        # The container format of the Flavor Params
-        # @var KalturaContainerFormat
-        self.format = format
-
-        # The image density (dpi) for example: 72 or 96
-        # @var int
-        self.density = density
-
-        # Strip profiles and comments
-        # @var bool
-        self.stripProfiles = stripProfiles
-
-        # Create thumbnail from the videoLengthpercentage second
-        # @var int
-        self.videoOffsetInPercentage = videoOffsetInPercentage
-
-
-    PROPERTY_LOADERS = {
-        'cropType': (KalturaEnumsFactory.createInt, "KalturaThumbCropType"), 
-        'quality': getXmlNodeInt, 
-        'cropX': getXmlNodeInt, 
-        'cropY': getXmlNodeInt, 
-        'cropWidth': getXmlNodeInt, 
-        'cropHeight': getXmlNodeInt, 
-        'videoOffset': getXmlNodeFloat, 
-        'width': getXmlNodeInt, 
-        'height': getXmlNodeInt, 
-        'scaleWidth': getXmlNodeFloat, 
-        'scaleHeight': getXmlNodeFloat, 
-        'backgroundColor': getXmlNodeText, 
-        'sourceParamsId': getXmlNodeInt, 
-        'format': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
-        'density': getXmlNodeInt, 
-        'stripProfiles': getXmlNodeBool, 
-        'videoOffsetInPercentage': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaAssetParams.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParams.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAssetParams.toParams(self)
-        kparams.put("objectType", "KalturaThumbParams")
-        kparams.addIntEnumIfDefined("cropType", self.cropType)
-        kparams.addIntIfDefined("quality", self.quality)
-        kparams.addIntIfDefined("cropX", self.cropX)
-        kparams.addIntIfDefined("cropY", self.cropY)
-        kparams.addIntIfDefined("cropWidth", self.cropWidth)
-        kparams.addIntIfDefined("cropHeight", self.cropHeight)
-        kparams.addFloatIfDefined("videoOffset", self.videoOffset)
-        kparams.addIntIfDefined("width", self.width)
-        kparams.addIntIfDefined("height", self.height)
-        kparams.addFloatIfDefined("scaleWidth", self.scaleWidth)
-        kparams.addFloatIfDefined("scaleHeight", self.scaleHeight)
-        kparams.addStringIfDefined("backgroundColor", self.backgroundColor)
-        kparams.addIntIfDefined("sourceParamsId", self.sourceParamsId)
-        kparams.addStringEnumIfDefined("format", self.format)
-        kparams.addIntIfDefined("density", self.density)
-        kparams.addBoolIfDefined("stripProfiles", self.stripProfiles)
-        kparams.addIntIfDefined("videoOffsetInPercentage", self.videoOffsetInPercentage)
-        return kparams
-
-    def getCropType(self):
-        return self.cropType
-
-    def setCropType(self, newCropType):
-        self.cropType = newCropType
-
-    def getQuality(self):
-        return self.quality
-
-    def setQuality(self, newQuality):
-        self.quality = newQuality
-
-    def getCropX(self):
-        return self.cropX
-
-    def setCropX(self, newCropX):
-        self.cropX = newCropX
-
-    def getCropY(self):
-        return self.cropY
-
-    def setCropY(self, newCropY):
-        self.cropY = newCropY
-
-    def getCropWidth(self):
-        return self.cropWidth
-
-    def setCropWidth(self, newCropWidth):
-        self.cropWidth = newCropWidth
-
-    def getCropHeight(self):
-        return self.cropHeight
-
-    def setCropHeight(self, newCropHeight):
-        self.cropHeight = newCropHeight
-
-    def getVideoOffset(self):
-        return self.videoOffset
-
-    def setVideoOffset(self, newVideoOffset):
-        self.videoOffset = newVideoOffset
-
-    def getWidth(self):
-        return self.width
-
-    def setWidth(self, newWidth):
-        self.width = newWidth
-
-    def getHeight(self):
-        return self.height
-
-    def setHeight(self, newHeight):
-        self.height = newHeight
-
-    def getScaleWidth(self):
-        return self.scaleWidth
-
-    def setScaleWidth(self, newScaleWidth):
-        self.scaleWidth = newScaleWidth
-
-    def getScaleHeight(self):
-        return self.scaleHeight
-
-    def setScaleHeight(self, newScaleHeight):
-        self.scaleHeight = newScaleHeight
-
-    def getBackgroundColor(self):
-        return self.backgroundColor
-
-    def setBackgroundColor(self, newBackgroundColor):
-        self.backgroundColor = newBackgroundColor
-
-    def getSourceParamsId(self):
-        return self.sourceParamsId
-
-    def setSourceParamsId(self, newSourceParamsId):
-        self.sourceParamsId = newSourceParamsId
-
-    def getFormat(self):
-        return self.format
-
-    def setFormat(self, newFormat):
-        self.format = newFormat
-
-    def getDensity(self):
-        return self.density
-
-    def setDensity(self, newDensity):
-        self.density = newDensity
-
-    def getStripProfiles(self):
-        return self.stripProfiles
-
-    def setStripProfiles(self, newStripProfiles):
-        self.stripProfiles = newStripProfiles
-
-    def getVideoOffsetInPercentage(self):
-        return self.videoOffsetInPercentage
-
-    def setVideoOffsetInPercentage(self, newVideoOffsetInPercentage):
-        self.videoOffsetInPercentage = newVideoOffsetInPercentage
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParamsOutput(KalturaThumbParams):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            isSystemDefault=NotImplemented,
-            tags=NotImplemented,
-            requiredPermissions=NotImplemented,
-            sourceRemoteStorageProfileId=NotImplemented,
-            remoteStorageProfileIds=NotImplemented,
-            mediaParserType=NotImplemented,
-            sourceAssetParamsIds=NotImplemented,
-            cropType=NotImplemented,
-            quality=NotImplemented,
-            cropX=NotImplemented,
-            cropY=NotImplemented,
-            cropWidth=NotImplemented,
-            cropHeight=NotImplemented,
-            videoOffset=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            scaleWidth=NotImplemented,
-            scaleHeight=NotImplemented,
-            backgroundColor=NotImplemented,
-            sourceParamsId=NotImplemented,
-            format=NotImplemented,
-            density=NotImplemented,
-            stripProfiles=NotImplemented,
-            videoOffsetInPercentage=NotImplemented,
-            thumbParamsId=NotImplemented,
-            thumbParamsVersion=NotImplemented,
-            thumbAssetId=NotImplemented,
-            thumbAssetVersion=NotImplemented,
-            rotate=NotImplemented):
-        KalturaThumbParams.__init__(self,
-            id,
-            partnerId,
-            name,
-            systemName,
-            description,
-            createdAt,
-            isSystemDefault,
-            tags,
-            requiredPermissions,
-            sourceRemoteStorageProfileId,
-            remoteStorageProfileIds,
-            mediaParserType,
-            sourceAssetParamsIds,
-            cropType,
-            quality,
-            cropX,
-            cropY,
-            cropWidth,
-            cropHeight,
-            videoOffset,
-            width,
-            height,
-            scaleWidth,
-            scaleHeight,
-            backgroundColor,
-            sourceParamsId,
-            format,
-            density,
-            stripProfiles,
-            videoOffsetInPercentage)
-
-        # @var int
-        self.thumbParamsId = thumbParamsId
-
-        # @var string
-        self.thumbParamsVersion = thumbParamsVersion
-
-        # @var string
-        self.thumbAssetId = thumbAssetId
-
-        # @var string
-        self.thumbAssetVersion = thumbAssetVersion
-
-        # @var int
-        self.rotate = rotate
-
-
-    PROPERTY_LOADERS = {
-        'thumbParamsId': getXmlNodeInt, 
-        'thumbParamsVersion': getXmlNodeText, 
-        'thumbAssetId': getXmlNodeText, 
-        'thumbAssetVersion': getXmlNodeText, 
-        'rotate': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaThumbParams.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsOutput.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaThumbParams.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsOutput")
-        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
-        kparams.addStringIfDefined("thumbParamsVersion", self.thumbParamsVersion)
-        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
-        kparams.addStringIfDefined("thumbAssetVersion", self.thumbAssetVersion)
-        kparams.addIntIfDefined("rotate", self.rotate)
-        return kparams
-
-    def getThumbParamsId(self):
-        return self.thumbParamsId
-
-    def setThumbParamsId(self, newThumbParamsId):
-        self.thumbParamsId = newThumbParamsId
-
-    def getThumbParamsVersion(self):
-        return self.thumbParamsVersion
-
-    def setThumbParamsVersion(self, newThumbParamsVersion):
-        self.thumbParamsVersion = newThumbParamsVersion
-
-    def getThumbAssetId(self):
-        return self.thumbAssetId
-
-    def setThumbAssetId(self, newThumbAssetId):
-        self.thumbAssetId = newThumbAssetId
-
-    def getThumbAssetVersion(self):
-        return self.thumbAssetVersion
-
-    def setThumbAssetVersion(self, newThumbAssetVersion):
-        self.thumbAssetVersion = newThumbAssetVersion
-
-    def getRotate(self):
-        return self.rotate
-
-    def setRotate(self, newRotate):
-        self.rotate = newRotate
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaThumbParamsOutputListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaThumbParamsOutput
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaThumbParamsOutput'), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaLiveStreamConfiguration(KalturaObjectBase):
     """A representation of a live stream configuration"""
 
@@ -21782,6 +20707,470 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaInfo(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            flavorAssetId=NotImplemented,
+            fileSize=NotImplemented,
+            containerFormat=NotImplemented,
+            containerId=NotImplemented,
+            containerProfile=NotImplemented,
+            containerDuration=NotImplemented,
+            containerBitRate=NotImplemented,
+            videoFormat=NotImplemented,
+            videoCodecId=NotImplemented,
+            videoDuration=NotImplemented,
+            videoBitRate=NotImplemented,
+            videoBitRateMode=NotImplemented,
+            videoWidth=NotImplemented,
+            videoHeight=NotImplemented,
+            videoFrameRate=NotImplemented,
+            videoDar=NotImplemented,
+            videoRotation=NotImplemented,
+            audioFormat=NotImplemented,
+            audioCodecId=NotImplemented,
+            audioDuration=NotImplemented,
+            audioBitRate=NotImplemented,
+            audioBitRateMode=NotImplemented,
+            audioChannels=NotImplemented,
+            audioSamplingRate=NotImplemented,
+            audioResolution=NotImplemented,
+            writingLib=NotImplemented,
+            rawData=NotImplemented,
+            multiStreamInfo=NotImplemented,
+            scanType=NotImplemented,
+            multiStream=NotImplemented,
+            isFastStart=NotImplemented,
+            contentStreams=NotImplemented,
+            complexityValue=NotImplemented,
+            maxGOP=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The id of the media info
+        # @var int
+        # @readonly
+        self.id = id
+
+        # The id of the related flavor asset
+        # @var string
+        self.flavorAssetId = flavorAssetId
+
+        # The file size
+        # @var int
+        self.fileSize = fileSize
+
+        # The container format
+        # @var string
+        self.containerFormat = containerFormat
+
+        # The container id
+        # @var string
+        self.containerId = containerId
+
+        # The container profile
+        # @var string
+        self.containerProfile = containerProfile
+
+        # The container duration
+        # @var int
+        self.containerDuration = containerDuration
+
+        # The container bit rate
+        # @var int
+        self.containerBitRate = containerBitRate
+
+        # The video format
+        # @var string
+        self.videoFormat = videoFormat
+
+        # The video codec id
+        # @var string
+        self.videoCodecId = videoCodecId
+
+        # The video duration
+        # @var int
+        self.videoDuration = videoDuration
+
+        # The video bit rate
+        # @var int
+        self.videoBitRate = videoBitRate
+
+        # The video bit rate mode
+        # @var KalturaBitRateMode
+        self.videoBitRateMode = videoBitRateMode
+
+        # The video width
+        # @var int
+        self.videoWidth = videoWidth
+
+        # The video height
+        # @var int
+        self.videoHeight = videoHeight
+
+        # The video frame rate
+        # @var float
+        self.videoFrameRate = videoFrameRate
+
+        # The video display aspect ratio (dar)
+        # @var float
+        self.videoDar = videoDar
+
+        # @var int
+        self.videoRotation = videoRotation
+
+        # The audio format
+        # @var string
+        self.audioFormat = audioFormat
+
+        # The audio codec id
+        # @var string
+        self.audioCodecId = audioCodecId
+
+        # The audio duration
+        # @var int
+        self.audioDuration = audioDuration
+
+        # The audio bit rate
+        # @var int
+        self.audioBitRate = audioBitRate
+
+        # The audio bit rate mode
+        # @var KalturaBitRateMode
+        self.audioBitRateMode = audioBitRateMode
+
+        # The number of audio channels
+        # @var int
+        self.audioChannels = audioChannels
+
+        # The audio sampling rate
+        # @var int
+        self.audioSamplingRate = audioSamplingRate
+
+        # The audio resolution
+        # @var int
+        self.audioResolution = audioResolution
+
+        # The writing library
+        # @var string
+        self.writingLib = writingLib
+
+        # The data as returned by the mediainfo command line
+        # @var string
+        self.rawData = rawData
+
+        # @var string
+        self.multiStreamInfo = multiStreamInfo
+
+        # @var int
+        self.scanType = scanType
+
+        # @var string
+        self.multiStream = multiStream
+
+        # @var int
+        self.isFastStart = isFastStart
+
+        # @var string
+        self.contentStreams = contentStreams
+
+        # @var int
+        self.complexityValue = complexityValue
+
+        # @var float
+        self.maxGOP = maxGOP
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeInt, 
+        'flavorAssetId': getXmlNodeText, 
+        'fileSize': getXmlNodeInt, 
+        'containerFormat': getXmlNodeText, 
+        'containerId': getXmlNodeText, 
+        'containerProfile': getXmlNodeText, 
+        'containerDuration': getXmlNodeInt, 
+        'containerBitRate': getXmlNodeInt, 
+        'videoFormat': getXmlNodeText, 
+        'videoCodecId': getXmlNodeText, 
+        'videoDuration': getXmlNodeInt, 
+        'videoBitRate': getXmlNodeInt, 
+        'videoBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
+        'videoWidth': getXmlNodeInt, 
+        'videoHeight': getXmlNodeInt, 
+        'videoFrameRate': getXmlNodeFloat, 
+        'videoDar': getXmlNodeFloat, 
+        'videoRotation': getXmlNodeInt, 
+        'audioFormat': getXmlNodeText, 
+        'audioCodecId': getXmlNodeText, 
+        'audioDuration': getXmlNodeInt, 
+        'audioBitRate': getXmlNodeInt, 
+        'audioBitRateMode': (KalturaEnumsFactory.createInt, "KalturaBitRateMode"), 
+        'audioChannels': getXmlNodeInt, 
+        'audioSamplingRate': getXmlNodeInt, 
+        'audioResolution': getXmlNodeInt, 
+        'writingLib': getXmlNodeText, 
+        'rawData': getXmlNodeText, 
+        'multiStreamInfo': getXmlNodeText, 
+        'scanType': getXmlNodeInt, 
+        'multiStream': getXmlNodeText, 
+        'isFastStart': getXmlNodeInt, 
+        'contentStreams': getXmlNodeText, 
+        'complexityValue': getXmlNodeInt, 
+        'maxGOP': getXmlNodeFloat, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaInfo.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaMediaInfo")
+        kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
+        kparams.addIntIfDefined("fileSize", self.fileSize)
+        kparams.addStringIfDefined("containerFormat", self.containerFormat)
+        kparams.addStringIfDefined("containerId", self.containerId)
+        kparams.addStringIfDefined("containerProfile", self.containerProfile)
+        kparams.addIntIfDefined("containerDuration", self.containerDuration)
+        kparams.addIntIfDefined("containerBitRate", self.containerBitRate)
+        kparams.addStringIfDefined("videoFormat", self.videoFormat)
+        kparams.addStringIfDefined("videoCodecId", self.videoCodecId)
+        kparams.addIntIfDefined("videoDuration", self.videoDuration)
+        kparams.addIntIfDefined("videoBitRate", self.videoBitRate)
+        kparams.addIntEnumIfDefined("videoBitRateMode", self.videoBitRateMode)
+        kparams.addIntIfDefined("videoWidth", self.videoWidth)
+        kparams.addIntIfDefined("videoHeight", self.videoHeight)
+        kparams.addFloatIfDefined("videoFrameRate", self.videoFrameRate)
+        kparams.addFloatIfDefined("videoDar", self.videoDar)
+        kparams.addIntIfDefined("videoRotation", self.videoRotation)
+        kparams.addStringIfDefined("audioFormat", self.audioFormat)
+        kparams.addStringIfDefined("audioCodecId", self.audioCodecId)
+        kparams.addIntIfDefined("audioDuration", self.audioDuration)
+        kparams.addIntIfDefined("audioBitRate", self.audioBitRate)
+        kparams.addIntEnumIfDefined("audioBitRateMode", self.audioBitRateMode)
+        kparams.addIntIfDefined("audioChannels", self.audioChannels)
+        kparams.addIntIfDefined("audioSamplingRate", self.audioSamplingRate)
+        kparams.addIntIfDefined("audioResolution", self.audioResolution)
+        kparams.addStringIfDefined("writingLib", self.writingLib)
+        kparams.addStringIfDefined("rawData", self.rawData)
+        kparams.addStringIfDefined("multiStreamInfo", self.multiStreamInfo)
+        kparams.addIntIfDefined("scanType", self.scanType)
+        kparams.addStringIfDefined("multiStream", self.multiStream)
+        kparams.addIntIfDefined("isFastStart", self.isFastStart)
+        kparams.addStringIfDefined("contentStreams", self.contentStreams)
+        kparams.addIntIfDefined("complexityValue", self.complexityValue)
+        kparams.addFloatIfDefined("maxGOP", self.maxGOP)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def getFlavorAssetId(self):
+        return self.flavorAssetId
+
+    def setFlavorAssetId(self, newFlavorAssetId):
+        self.flavorAssetId = newFlavorAssetId
+
+    def getFileSize(self):
+        return self.fileSize
+
+    def setFileSize(self, newFileSize):
+        self.fileSize = newFileSize
+
+    def getContainerFormat(self):
+        return self.containerFormat
+
+    def setContainerFormat(self, newContainerFormat):
+        self.containerFormat = newContainerFormat
+
+    def getContainerId(self):
+        return self.containerId
+
+    def setContainerId(self, newContainerId):
+        self.containerId = newContainerId
+
+    def getContainerProfile(self):
+        return self.containerProfile
+
+    def setContainerProfile(self, newContainerProfile):
+        self.containerProfile = newContainerProfile
+
+    def getContainerDuration(self):
+        return self.containerDuration
+
+    def setContainerDuration(self, newContainerDuration):
+        self.containerDuration = newContainerDuration
+
+    def getContainerBitRate(self):
+        return self.containerBitRate
+
+    def setContainerBitRate(self, newContainerBitRate):
+        self.containerBitRate = newContainerBitRate
+
+    def getVideoFormat(self):
+        return self.videoFormat
+
+    def setVideoFormat(self, newVideoFormat):
+        self.videoFormat = newVideoFormat
+
+    def getVideoCodecId(self):
+        return self.videoCodecId
+
+    def setVideoCodecId(self, newVideoCodecId):
+        self.videoCodecId = newVideoCodecId
+
+    def getVideoDuration(self):
+        return self.videoDuration
+
+    def setVideoDuration(self, newVideoDuration):
+        self.videoDuration = newVideoDuration
+
+    def getVideoBitRate(self):
+        return self.videoBitRate
+
+    def setVideoBitRate(self, newVideoBitRate):
+        self.videoBitRate = newVideoBitRate
+
+    def getVideoBitRateMode(self):
+        return self.videoBitRateMode
+
+    def setVideoBitRateMode(self, newVideoBitRateMode):
+        self.videoBitRateMode = newVideoBitRateMode
+
+    def getVideoWidth(self):
+        return self.videoWidth
+
+    def setVideoWidth(self, newVideoWidth):
+        self.videoWidth = newVideoWidth
+
+    def getVideoHeight(self):
+        return self.videoHeight
+
+    def setVideoHeight(self, newVideoHeight):
+        self.videoHeight = newVideoHeight
+
+    def getVideoFrameRate(self):
+        return self.videoFrameRate
+
+    def setVideoFrameRate(self, newVideoFrameRate):
+        self.videoFrameRate = newVideoFrameRate
+
+    def getVideoDar(self):
+        return self.videoDar
+
+    def setVideoDar(self, newVideoDar):
+        self.videoDar = newVideoDar
+
+    def getVideoRotation(self):
+        return self.videoRotation
+
+    def setVideoRotation(self, newVideoRotation):
+        self.videoRotation = newVideoRotation
+
+    def getAudioFormat(self):
+        return self.audioFormat
+
+    def setAudioFormat(self, newAudioFormat):
+        self.audioFormat = newAudioFormat
+
+    def getAudioCodecId(self):
+        return self.audioCodecId
+
+    def setAudioCodecId(self, newAudioCodecId):
+        self.audioCodecId = newAudioCodecId
+
+    def getAudioDuration(self):
+        return self.audioDuration
+
+    def setAudioDuration(self, newAudioDuration):
+        self.audioDuration = newAudioDuration
+
+    def getAudioBitRate(self):
+        return self.audioBitRate
+
+    def setAudioBitRate(self, newAudioBitRate):
+        self.audioBitRate = newAudioBitRate
+
+    def getAudioBitRateMode(self):
+        return self.audioBitRateMode
+
+    def setAudioBitRateMode(self, newAudioBitRateMode):
+        self.audioBitRateMode = newAudioBitRateMode
+
+    def getAudioChannels(self):
+        return self.audioChannels
+
+    def setAudioChannels(self, newAudioChannels):
+        self.audioChannels = newAudioChannels
+
+    def getAudioSamplingRate(self):
+        return self.audioSamplingRate
+
+    def setAudioSamplingRate(self, newAudioSamplingRate):
+        self.audioSamplingRate = newAudioSamplingRate
+
+    def getAudioResolution(self):
+        return self.audioResolution
+
+    def setAudioResolution(self, newAudioResolution):
+        self.audioResolution = newAudioResolution
+
+    def getWritingLib(self):
+        return self.writingLib
+
+    def setWritingLib(self, newWritingLib):
+        self.writingLib = newWritingLib
+
+    def getRawData(self):
+        return self.rawData
+
+    def setRawData(self, newRawData):
+        self.rawData = newRawData
+
+    def getMultiStreamInfo(self):
+        return self.multiStreamInfo
+
+    def setMultiStreamInfo(self, newMultiStreamInfo):
+        self.multiStreamInfo = newMultiStreamInfo
+
+    def getScanType(self):
+        return self.scanType
+
+    def setScanType(self, newScanType):
+        self.scanType = newScanType
+
+    def getMultiStream(self):
+        return self.multiStream
+
+    def setMultiStream(self, newMultiStream):
+        self.multiStream = newMultiStream
+
+    def getIsFastStart(self):
+        return self.isFastStart
+
+    def setIsFastStart(self, newIsFastStart):
+        self.isFastStart = newIsFastStart
+
+    def getContentStreams(self):
+        return self.contentStreams
+
+    def setContentStreams(self, newContentStreams):
+        self.contentStreams = newContentStreams
+
+    def getComplexityValue(self):
+        return self.complexityValue
+
+    def setComplexityValue(self, newComplexityValue):
+        self.complexityValue = newComplexityValue
+
+    def getMaxGOP(self):
+        return self.maxGOP
+
+    def setMaxGOP(self, newMaxGOP):
+        self.maxGOP = newMaxGOP
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMixEntry(KalturaPlayableEntry):
     def __init__(self,
             id=NotImplemented,
@@ -25330,6 +24719,494 @@ class KalturaSyndicationFeedEntryCount(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaThumbAsset(KalturaAsset):
+    def __init__(self,
+            id=NotImplemented,
+            entryId=NotImplemented,
+            partnerId=NotImplemented,
+            version=NotImplemented,
+            size=NotImplemented,
+            tags=NotImplemented,
+            fileExt=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            description=NotImplemented,
+            partnerData=NotImplemented,
+            partnerDescription=NotImplemented,
+            actualSourceAssetParamsIds=NotImplemented,
+            thumbParamsId=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            status=NotImplemented):
+        KalturaAsset.__init__(self,
+            id,
+            entryId,
+            partnerId,
+            version,
+            size,
+            tags,
+            fileExt,
+            createdAt,
+            updatedAt,
+            deletedAt,
+            description,
+            partnerData,
+            partnerDescription,
+            actualSourceAssetParamsIds)
+
+        # The Flavor Params used to create this Flavor Asset
+        # @var int
+        # @insertonly
+        self.thumbParamsId = thumbParamsId
+
+        # The width of the Flavor Asset
+        # @var int
+        # @readonly
+        self.width = width
+
+        # The height of the Flavor Asset
+        # @var int
+        # @readonly
+        self.height = height
+
+        # The status of the asset
+        # @var KalturaThumbAssetStatus
+        # @readonly
+        self.status = status
+
+
+    PROPERTY_LOADERS = {
+        'thumbParamsId': getXmlNodeInt, 
+        'width': getXmlNodeInt, 
+        'height': getXmlNodeInt, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaThumbAssetStatus"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbAsset.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAsset.toParams(self)
+        kparams.put("objectType", "KalturaThumbAsset")
+        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
+        return kparams
+
+    def getThumbParamsId(self):
+        return self.thumbParamsId
+
+    def setThumbParamsId(self, newThumbParamsId):
+        self.thumbParamsId = newThumbParamsId
+
+    def getWidth(self):
+        return self.width
+
+    def getHeight(self):
+        return self.height
+
+    def getStatus(self):
+        return self.status
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParams(KalturaAssetParams):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            isSystemDefault=NotImplemented,
+            tags=NotImplemented,
+            requiredPermissions=NotImplemented,
+            sourceRemoteStorageProfileId=NotImplemented,
+            remoteStorageProfileIds=NotImplemented,
+            mediaParserType=NotImplemented,
+            sourceAssetParamsIds=NotImplemented,
+            cropType=NotImplemented,
+            quality=NotImplemented,
+            cropX=NotImplemented,
+            cropY=NotImplemented,
+            cropWidth=NotImplemented,
+            cropHeight=NotImplemented,
+            videoOffset=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            scaleWidth=NotImplemented,
+            scaleHeight=NotImplemented,
+            backgroundColor=NotImplemented,
+            sourceParamsId=NotImplemented,
+            format=NotImplemented,
+            density=NotImplemented,
+            stripProfiles=NotImplemented,
+            videoOffsetInPercentage=NotImplemented):
+        KalturaAssetParams.__init__(self,
+            id,
+            partnerId,
+            name,
+            systemName,
+            description,
+            createdAt,
+            isSystemDefault,
+            tags,
+            requiredPermissions,
+            sourceRemoteStorageProfileId,
+            remoteStorageProfileIds,
+            mediaParserType,
+            sourceAssetParamsIds)
+
+        # @var KalturaThumbCropType
+        self.cropType = cropType
+
+        # @var int
+        self.quality = quality
+
+        # @var int
+        self.cropX = cropX
+
+        # @var int
+        self.cropY = cropY
+
+        # @var int
+        self.cropWidth = cropWidth
+
+        # @var int
+        self.cropHeight = cropHeight
+
+        # @var float
+        self.videoOffset = videoOffset
+
+        # @var int
+        self.width = width
+
+        # @var int
+        self.height = height
+
+        # @var float
+        self.scaleWidth = scaleWidth
+
+        # @var float
+        self.scaleHeight = scaleHeight
+
+        # Hexadecimal value
+        # @var string
+        self.backgroundColor = backgroundColor
+
+        # Id of the flavor params or the thumbnail params to be used as source for the thumbnail creation
+        # @var int
+        self.sourceParamsId = sourceParamsId
+
+        # The container format of the Flavor Params
+        # @var KalturaContainerFormat
+        self.format = format
+
+        # The image density (dpi) for example: 72 or 96
+        # @var int
+        self.density = density
+
+        # Strip profiles and comments
+        # @var bool
+        self.stripProfiles = stripProfiles
+
+        # Create thumbnail from the videoLengthpercentage second
+        # @var int
+        self.videoOffsetInPercentage = videoOffsetInPercentage
+
+
+    PROPERTY_LOADERS = {
+        'cropType': (KalturaEnumsFactory.createInt, "KalturaThumbCropType"), 
+        'quality': getXmlNodeInt, 
+        'cropX': getXmlNodeInt, 
+        'cropY': getXmlNodeInt, 
+        'cropWidth': getXmlNodeInt, 
+        'cropHeight': getXmlNodeInt, 
+        'videoOffset': getXmlNodeFloat, 
+        'width': getXmlNodeInt, 
+        'height': getXmlNodeInt, 
+        'scaleWidth': getXmlNodeFloat, 
+        'scaleHeight': getXmlNodeFloat, 
+        'backgroundColor': getXmlNodeText, 
+        'sourceParamsId': getXmlNodeInt, 
+        'format': (KalturaEnumsFactory.createString, "KalturaContainerFormat"), 
+        'density': getXmlNodeInt, 
+        'stripProfiles': getXmlNodeBool, 
+        'videoOffsetInPercentage': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaAssetParams.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParams.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAssetParams.toParams(self)
+        kparams.put("objectType", "KalturaThumbParams")
+        kparams.addIntEnumIfDefined("cropType", self.cropType)
+        kparams.addIntIfDefined("quality", self.quality)
+        kparams.addIntIfDefined("cropX", self.cropX)
+        kparams.addIntIfDefined("cropY", self.cropY)
+        kparams.addIntIfDefined("cropWidth", self.cropWidth)
+        kparams.addIntIfDefined("cropHeight", self.cropHeight)
+        kparams.addFloatIfDefined("videoOffset", self.videoOffset)
+        kparams.addIntIfDefined("width", self.width)
+        kparams.addIntIfDefined("height", self.height)
+        kparams.addFloatIfDefined("scaleWidth", self.scaleWidth)
+        kparams.addFloatIfDefined("scaleHeight", self.scaleHeight)
+        kparams.addStringIfDefined("backgroundColor", self.backgroundColor)
+        kparams.addIntIfDefined("sourceParamsId", self.sourceParamsId)
+        kparams.addStringEnumIfDefined("format", self.format)
+        kparams.addIntIfDefined("density", self.density)
+        kparams.addBoolIfDefined("stripProfiles", self.stripProfiles)
+        kparams.addIntIfDefined("videoOffsetInPercentage", self.videoOffsetInPercentage)
+        return kparams
+
+    def getCropType(self):
+        return self.cropType
+
+    def setCropType(self, newCropType):
+        self.cropType = newCropType
+
+    def getQuality(self):
+        return self.quality
+
+    def setQuality(self, newQuality):
+        self.quality = newQuality
+
+    def getCropX(self):
+        return self.cropX
+
+    def setCropX(self, newCropX):
+        self.cropX = newCropX
+
+    def getCropY(self):
+        return self.cropY
+
+    def setCropY(self, newCropY):
+        self.cropY = newCropY
+
+    def getCropWidth(self):
+        return self.cropWidth
+
+    def setCropWidth(self, newCropWidth):
+        self.cropWidth = newCropWidth
+
+    def getCropHeight(self):
+        return self.cropHeight
+
+    def setCropHeight(self, newCropHeight):
+        self.cropHeight = newCropHeight
+
+    def getVideoOffset(self):
+        return self.videoOffset
+
+    def setVideoOffset(self, newVideoOffset):
+        self.videoOffset = newVideoOffset
+
+    def getWidth(self):
+        return self.width
+
+    def setWidth(self, newWidth):
+        self.width = newWidth
+
+    def getHeight(self):
+        return self.height
+
+    def setHeight(self, newHeight):
+        self.height = newHeight
+
+    def getScaleWidth(self):
+        return self.scaleWidth
+
+    def setScaleWidth(self, newScaleWidth):
+        self.scaleWidth = newScaleWidth
+
+    def getScaleHeight(self):
+        return self.scaleHeight
+
+    def setScaleHeight(self, newScaleHeight):
+        self.scaleHeight = newScaleHeight
+
+    def getBackgroundColor(self):
+        return self.backgroundColor
+
+    def setBackgroundColor(self, newBackgroundColor):
+        self.backgroundColor = newBackgroundColor
+
+    def getSourceParamsId(self):
+        return self.sourceParamsId
+
+    def setSourceParamsId(self, newSourceParamsId):
+        self.sourceParamsId = newSourceParamsId
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+    def getDensity(self):
+        return self.density
+
+    def setDensity(self, newDensity):
+        self.density = newDensity
+
+    def getStripProfiles(self):
+        return self.stripProfiles
+
+    def setStripProfiles(self, newStripProfiles):
+        self.stripProfiles = newStripProfiles
+
+    def getVideoOffsetInPercentage(self):
+        return self.videoOffsetInPercentage
+
+    def setVideoOffsetInPercentage(self, newVideoOffsetInPercentage):
+        self.videoOffsetInPercentage = newVideoOffsetInPercentage
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaThumbParamsOutput(KalturaThumbParams):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            isSystemDefault=NotImplemented,
+            tags=NotImplemented,
+            requiredPermissions=NotImplemented,
+            sourceRemoteStorageProfileId=NotImplemented,
+            remoteStorageProfileIds=NotImplemented,
+            mediaParserType=NotImplemented,
+            sourceAssetParamsIds=NotImplemented,
+            cropType=NotImplemented,
+            quality=NotImplemented,
+            cropX=NotImplemented,
+            cropY=NotImplemented,
+            cropWidth=NotImplemented,
+            cropHeight=NotImplemented,
+            videoOffset=NotImplemented,
+            width=NotImplemented,
+            height=NotImplemented,
+            scaleWidth=NotImplemented,
+            scaleHeight=NotImplemented,
+            backgroundColor=NotImplemented,
+            sourceParamsId=NotImplemented,
+            format=NotImplemented,
+            density=NotImplemented,
+            stripProfiles=NotImplemented,
+            videoOffsetInPercentage=NotImplemented,
+            thumbParamsId=NotImplemented,
+            thumbParamsVersion=NotImplemented,
+            thumbAssetId=NotImplemented,
+            thumbAssetVersion=NotImplemented,
+            rotate=NotImplemented):
+        KalturaThumbParams.__init__(self,
+            id,
+            partnerId,
+            name,
+            systemName,
+            description,
+            createdAt,
+            isSystemDefault,
+            tags,
+            requiredPermissions,
+            sourceRemoteStorageProfileId,
+            remoteStorageProfileIds,
+            mediaParserType,
+            sourceAssetParamsIds,
+            cropType,
+            quality,
+            cropX,
+            cropY,
+            cropWidth,
+            cropHeight,
+            videoOffset,
+            width,
+            height,
+            scaleWidth,
+            scaleHeight,
+            backgroundColor,
+            sourceParamsId,
+            format,
+            density,
+            stripProfiles,
+            videoOffsetInPercentage)
+
+        # @var int
+        self.thumbParamsId = thumbParamsId
+
+        # @var string
+        self.thumbParamsVersion = thumbParamsVersion
+
+        # @var string
+        self.thumbAssetId = thumbAssetId
+
+        # @var string
+        self.thumbAssetVersion = thumbAssetVersion
+
+        # @var int
+        self.rotate = rotate
+
+
+    PROPERTY_LOADERS = {
+        'thumbParamsId': getXmlNodeInt, 
+        'thumbParamsVersion': getXmlNodeText, 
+        'thumbAssetId': getXmlNodeText, 
+        'thumbAssetVersion': getXmlNodeText, 
+        'rotate': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaThumbParams.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsOutput.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaThumbParams.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsOutput")
+        kparams.addIntIfDefined("thumbParamsId", self.thumbParamsId)
+        kparams.addStringIfDefined("thumbParamsVersion", self.thumbParamsVersion)
+        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
+        kparams.addStringIfDefined("thumbAssetVersion", self.thumbAssetVersion)
+        kparams.addIntIfDefined("rotate", self.rotate)
+        return kparams
+
+    def getThumbParamsId(self):
+        return self.thumbParamsId
+
+    def setThumbParamsId(self, newThumbParamsId):
+        self.thumbParamsId = newThumbParamsId
+
+    def getThumbParamsVersion(self):
+        return self.thumbParamsVersion
+
+    def setThumbParamsVersion(self, newThumbParamsVersion):
+        self.thumbParamsVersion = newThumbParamsVersion
+
+    def getThumbAssetId(self):
+        return self.thumbAssetId
+
+    def setThumbAssetId(self, newThumbAssetId):
+        self.thumbAssetId = newThumbAssetId
+
+    def getThumbAssetVersion(self):
+        return self.thumbAssetVersion
+
+    def setThumbAssetVersion(self, newThumbAssetVersion):
+        self.thumbAssetVersion = newThumbAssetVersion
+
+    def getRotate(self):
+        return self.rotate
+
+    def setRotate(self, newRotate):
+        self.rotate = newRotate
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUiConf(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -25774,8 +25651,7 @@ class KalturaUploadToken(KalturaObjectBase):
             uploadedFileSize=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            uploadUrl=NotImplemented,
-            autoFinalize=NotImplemented):
+            uploadUrl=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Upload token unique ID
@@ -25828,11 +25704,6 @@ class KalturaUploadToken(KalturaObjectBase):
         # @readonly
         self.uploadUrl = uploadUrl
 
-        # autoFinalize - Should the upload be finalized once the file size on disk matches the file size reproted when adding the upload token.
-        # @var KalturaNullableBoolean
-        # @insertonly
-        self.autoFinalize = autoFinalize
-
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -25845,7 +25716,6 @@ class KalturaUploadToken(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'uploadUrl': getXmlNodeText, 
-        'autoFinalize': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -25857,7 +25727,6 @@ class KalturaUploadToken(KalturaObjectBase):
         kparams.put("objectType", "KalturaUploadToken")
         kparams.addStringIfDefined("fileName", self.fileName)
         kparams.addFloatIfDefined("fileSize", self.fileSize)
-        kparams.addIntEnumIfDefined("autoFinalize", self.autoFinalize)
         return kparams
 
     def getId(self):
@@ -25895,12 +25764,6 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def getUploadUrl(self):
         return self.uploadUrl
-
-    def getAutoFinalize(self):
-        return self.autoFinalize
-
-    def setAutoFinalize(self, newAutoFinalize):
-        self.autoFinalize = newAutoFinalize
 
 
 # @package Kaltura
@@ -28745,6 +28608,37 @@ class KalturaBaseSyndicationFeedListResponse(KalturaListResponse):
     def toParams(self):
         kparams = KalturaListResponse.toParams(self)
         kparams.put("objectType", "KalturaBaseSyndicationFeedListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBatchJobListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaBatchJob
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaBatchJob'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBatchJobListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaBatchJobListResponse")
         return kparams
 
     def getObjects(self):
@@ -34398,6 +34292,37 @@ class KalturaFlavorParamsListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFlavorParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaFlavorParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaFlavorParamsOutput'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFlavorParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFlavorParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaGenericSyndicationFeed(KalturaBaseSyndicationFeed):
     def __init__(self,
             id=NotImplemented,
@@ -35887,6 +35812,37 @@ class KalturaMediaInfoBaseFilter(KalturaFilter):
 
     def setFlavorAssetIdEqual(self, newFlavorAssetIdEqual):
         self.flavorAssetIdEqual = newFlavorAssetIdEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaMediaInfoListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaMediaInfo
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaMediaInfo'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaInfoListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaMediaInfoListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -38480,6 +38436,37 @@ class KalturaThumbParamsListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaThumbParamsOutputListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaThumbParamsOutput
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaThumbParamsOutput'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaThumbParamsOutputListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaThumbParamsOutputListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaThumbnailServeOptions(KalturaAssetServeOptions):
     def __init__(self,
             download=NotImplemented,
@@ -39654,6 +39641,45 @@ class KalturaUrlTokenizerLimeLight(KalturaUrlTokenizer):
         kparams = KalturaUrlTokenizer.toParams(self)
         kparams.put("objectType", "KalturaUrlTokenizerLimeLight")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUrlTokenizerUplynk(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented,
+            accountId=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+        # accountId
+        # @var string
+        self.accountId = accountId
+
+
+    PROPERTY_LOADERS = {
+        'accountId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerUplynk.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerUplynk")
+        kparams.addStringIfDefined("accountId", self.accountId)
+        return kparams
+
+    def getAccountId(self):
+        return self.accountId
+
+    def setAccountId(self, newAccountId):
+        self.accountId = newAccountId
 
 
 # @package Kaltura
@@ -45610,7 +45636,7 @@ class KalturaSearchMatchAttributeCondition(KalturaAttributeCondition):
 
 
     PROPERTY_LOADERS = {
-        'not': getXmlNodeBool, 
+        'not_': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -45646,7 +45672,7 @@ class KalturaSearchMatchCondition(KalturaSearchCondition):
 
 
     PROPERTY_LOADERS = {
-        'not': getXmlNodeBool, 
+        'not_': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -56680,7 +56706,7 @@ class KalturaAccessControlProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("accessControlProfile", accessControlProfile)
-        self.client.queueServiceActionCall("accesscontrolprofile", "add", KalturaAccessControlProfile, kparams)
+        self.client.queueServiceActionCall("accesscontrolprofile", "add", "KalturaAccessControlProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56691,7 +56717,7 @@ class KalturaAccessControlProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("accesscontrolprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("accesscontrolprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56701,7 +56727,7 @@ class KalturaAccessControlProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("accesscontrolprofile", "get", KalturaAccessControlProfile, kparams)
+        self.client.queueServiceActionCall("accesscontrolprofile", "get", "KalturaAccessControlProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56713,7 +56739,7 @@ class KalturaAccessControlProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("accesscontrolprofile", "list", KalturaAccessControlProfileListResponse, kparams)
+        self.client.queueServiceActionCall("accesscontrolprofile", "list", "KalturaAccessControlProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56725,7 +56751,7 @@ class KalturaAccessControlProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("accessControlProfile", accessControlProfile)
-        self.client.queueServiceActionCall("accesscontrolprofile", "update", KalturaAccessControlProfile, kparams)
+        self.client.queueServiceActionCall("accesscontrolprofile", "update", "KalturaAccessControlProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56745,7 +56771,7 @@ class KalturaAccessControlService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("accessControl", accessControl)
-        self.client.queueServiceActionCall("accesscontrol", "add", KalturaAccessControl, kparams)
+        self.client.queueServiceActionCall("accesscontrol", "add", "KalturaAccessControl", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56756,7 +56782,7 @@ class KalturaAccessControlService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("accesscontrol", "delete", None, kparams)
+        self.client.queueServiceActionCall("accesscontrol", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56766,7 +56792,7 @@ class KalturaAccessControlService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("accesscontrol", "get", KalturaAccessControl, kparams)
+        self.client.queueServiceActionCall("accesscontrol", "get", "KalturaAccessControl", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56778,7 +56804,7 @@ class KalturaAccessControlService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("accesscontrol", "list", KalturaAccessControlListResponse, kparams)
+        self.client.queueServiceActionCall("accesscontrol", "list", "KalturaAccessControlListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56790,7 +56816,7 @@ class KalturaAccessControlService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("accessControl", accessControl)
-        self.client.queueServiceActionCall("accesscontrol", "update", KalturaAccessControl, kparams)
+        self.client.queueServiceActionCall("accesscontrol", "update", "KalturaAccessControl", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56812,7 +56838,7 @@ class KalturaAdminUserService(KalturaServiceBase):
         kparams.addStringIfDefined("email", email)
         kparams.addStringIfDefined("password", password)
         kparams.addIntIfDefined("partnerId", partnerId);
-        self.client.queueServiceActionCall("adminuser", "login", None, kparams)
+        self.client.queueServiceActionCall("adminuser", "login", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56823,7 +56849,7 @@ class KalturaAdminUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("email", email)
-        self.client.queueServiceActionCall("adminuser", "resetPassword", None, kparams)
+        self.client.queueServiceActionCall("adminuser", "resetPassword", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56834,7 +56860,7 @@ class KalturaAdminUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("hashKey", hashKey)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("adminuser", "setInitialPassword", None, kparams)
+        self.client.queueServiceActionCall("adminuser", "setInitialPassword", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56847,7 +56873,7 @@ class KalturaAdminUserService(KalturaServiceBase):
         kparams.addStringIfDefined("password", password)
         kparams.addStringIfDefined("newEmail", newEmail)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("adminuser", "updatePassword", KalturaAdminUser, kparams)
+        self.client.queueServiceActionCall("adminuser", "updatePassword", "KalturaAdminUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56868,7 +56894,7 @@ class KalturaAnalyticsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("analytics", "query", KalturaReportResponse, kparams)
+        self.client.queueServiceActionCall("analytics", "query", "KalturaReportResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56888,7 +56914,7 @@ class KalturaAppTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("appToken", appToken)
-        self.client.queueServiceActionCall("apptoken", "add", KalturaAppToken, kparams)
+        self.client.queueServiceActionCall("apptoken", "add", "KalturaAppToken", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56899,7 +56925,7 @@ class KalturaAppTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("apptoken", "delete", None, kparams)
+        self.client.queueServiceActionCall("apptoken", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56909,7 +56935,7 @@ class KalturaAppTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("apptoken", "get", KalturaAppToken, kparams)
+        self.client.queueServiceActionCall("apptoken", "get", "KalturaAppToken", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56921,7 +56947,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("apptoken", "list", KalturaAppTokenListResponse, kparams)
+        self.client.queueServiceActionCall("apptoken", "list", "KalturaAppTokenListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56936,7 +56962,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         kparams.addStringIfDefined("userId", userId)
         kparams.addIntIfDefined("type", type);
         kparams.addIntIfDefined("expiry", expiry);
-        self.client.queueServiceActionCall("apptoken", "startSession", KalturaSessionInfo, kparams)
+        self.client.queueServiceActionCall("apptoken", "startSession", "KalturaSessionInfo", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56948,7 +56974,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("appToken", appToken)
-        self.client.queueServiceActionCall("apptoken", "update", KalturaAppToken, kparams)
+        self.client.queueServiceActionCall("apptoken", "update", "KalturaAppToken", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56969,7 +56995,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("entry", entry)
         kparams.addStringIfDefined("type", type)
-        self.client.queueServiceActionCall("baseentry", "add", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "add", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56981,7 +57007,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("resource", resource)
-        self.client.queueServiceActionCall("baseentry", "addContent", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "addContent", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -56994,7 +57020,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams.addObjectIfDefined("entry", entry)
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
         kparams.addStringIfDefined("type", type)
-        self.client.queueServiceActionCall("baseentry", "addFromUploadedFile", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "addFromUploadedFile", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57006,7 +57032,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("rank", rank);
-        self.client.queueServiceActionCall("baseentry", "anonymousRank", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "anonymousRank", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57016,7 +57042,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("baseentry", "approve", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "approve", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57027,7 +57053,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addArrayIfDefined("cloneOptions", cloneOptions)
-        self.client.queueServiceActionCall("baseentry", "clone", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "clone", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57038,7 +57064,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("baseentry", "count", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57049,7 +57075,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("baseentry", "delete", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57058,7 +57084,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("storageProfileId", storageProfileId);
-        self.client.queueServiceActionCall("baseentry", "export", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "export", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57069,7 +57095,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("moderationFlag", moderationFlag)
-        self.client.queueServiceActionCall("baseentry", "flag", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "flag", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57080,7 +57106,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("baseentry", "get", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "get", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57091,7 +57117,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryIds", entryIds)
-        self.client.queueServiceActionCall("baseentry", "getByIds", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "getByIds", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57103,7 +57129,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("contextDataParams", contextDataParams)
-        self.client.queueServiceActionCall("baseentry", "getContextData", KalturaEntryContextDataResult, kparams)
+        self.client.queueServiceActionCall("baseentry", "getContextData", "KalturaEntryContextDataResult", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57115,7 +57141,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("contextDataParams", contextDataParams)
-        self.client.queueServiceActionCall("baseentry", "getPlaybackContext", KalturaPlaybackContext, kparams)
+        self.client.queueServiceActionCall("baseentry", "getPlaybackContext", "KalturaPlaybackContext", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57126,7 +57152,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("baseentry", "getRemotePaths", KalturaRemotePathListResponse, kparams)
+        self.client.queueServiceActionCall("baseentry", "getRemotePaths", "KalturaRemotePathListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57138,7 +57164,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("baseentry", "index", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57150,7 +57176,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("baseentry", "list", KalturaBaseEntryListResponse, kparams)
+        self.client.queueServiceActionCall("baseentry", "list", "KalturaBaseEntryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57162,7 +57188,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("refId", refId)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("baseentry", "listByReferenceId", KalturaBaseEntryListResponse, kparams)
+        self.client.queueServiceActionCall("baseentry", "listByReferenceId", "KalturaBaseEntryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57174,7 +57200,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("baseentry", "listFlags", KalturaModerationFlagListResponse, kparams)
+        self.client.queueServiceActionCall("baseentry", "listFlags", "KalturaModerationFlagListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57185,7 +57211,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("baseentry", "reject", None, kparams)
+        self.client.queueServiceActionCall("baseentry", "reject", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57196,7 +57222,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("baseEntry", baseEntry)
-        self.client.queueServiceActionCall("baseentry", "update", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "update", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57210,7 +57236,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
         kparams.addObjectIfDefined("advancedOptions", advancedOptions)
-        self.client.queueServiceActionCall("baseentry", "updateContent", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "updateContent", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57223,7 +57249,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("sourceEntryId", sourceEntryId)
         kparams.addIntIfDefined("timeOffset", timeOffset);
-        self.client.queueServiceActionCall("baseentry", "updateThumbnailFromSourceEntry", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "updateThumbnailFromSourceEntry", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57235,7 +57261,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("baseentry", "updateThumbnailFromUrl", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("baseentry", "updateThumbnailFromUrl", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57248,7 +57274,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("baseentry", "updateThumbnailJpeg", KalturaBaseEntry, kparams, kfiles)
+        self.client.queueServiceActionCall("baseentry", "updateThumbnailJpeg", "KalturaBaseEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57260,7 +57286,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("baseentry", "upload", None, kparams, kfiles)
+        self.client.queueServiceActionCall("baseentry", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57281,7 +57307,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("bulkupload", "abort", KalturaBulkUpload, kparams)
+        self.client.queueServiceActionCall("bulkupload", "abort", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57299,7 +57325,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
         kparams.addStringIfDefined("bulkUploadType", bulkUploadType)
         kparams.addStringIfDefined("uploadedBy", uploadedBy)
         kparams.addStringIfDefined("fileName", fileName)
-        self.client.queueServiceActionCall("bulkupload", "add", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("bulkupload", "add", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57310,7 +57336,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("bulkupload", "get", KalturaBulkUpload, kparams)
+        self.client.queueServiceActionCall("bulkupload", "get", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57321,7 +57347,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("bulkupload", "list", KalturaBulkUploadListResponse, kparams)
+        self.client.queueServiceActionCall("bulkupload", "list", "KalturaBulkUploadListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57358,7 +57384,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("categoryId", categoryId);
-        self.client.queueServiceActionCall("categoryentry", "activate", None, kparams)
+        self.client.queueServiceActionCall("categoryentry", "activate", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57368,7 +57394,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("categoryEntry", categoryEntry)
-        self.client.queueServiceActionCall("categoryentry", "add", KalturaCategoryEntry, kparams)
+        self.client.queueServiceActionCall("categoryentry", "add", "KalturaCategoryEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57378,7 +57404,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryEntryData", bulkUploadCategoryEntryData)
-        self.client.queueServiceActionCall("categoryentry", "addFromBulkUpload", KalturaBulkUpload, kparams)
+        self.client.queueServiceActionCall("categoryentry", "addFromBulkUpload", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57390,7 +57416,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("categoryId", categoryId);
-        self.client.queueServiceActionCall("categoryentry", "delete", None, kparams)
+        self.client.queueServiceActionCall("categoryentry", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57402,7 +57428,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("categoryentry", "index", None, kparams)
+        self.client.queueServiceActionCall("categoryentry", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57414,7 +57440,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("categoryentry", "list", KalturaCategoryEntryListResponse, kparams)
+        self.client.queueServiceActionCall("categoryentry", "list", "KalturaCategoryEntryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57426,7 +57452,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("categoryId", categoryId);
-        self.client.queueServiceActionCall("categoryentry", "reject", None, kparams)
+        self.client.queueServiceActionCall("categoryentry", "reject", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57437,7 +57463,7 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("categoryId", categoryId);
-        self.client.queueServiceActionCall("categoryentry", "syncPrivacyContext", None, kparams)
+        self.client.queueServiceActionCall("categoryentry", "syncPrivacyContext", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57456,7 +57482,7 @@ class KalturaCategoryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("category", category)
-        self.client.queueServiceActionCall("category", "add", KalturaCategory, kparams)
+        self.client.queueServiceActionCall("category", "add", "KalturaCategory", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57468,7 +57494,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryData", bulkUploadCategoryData)
-        self.client.queueServiceActionCall("category", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("category", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57480,7 +57506,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("moveEntriesToParentCategory", moveEntriesToParentCategory);
-        self.client.queueServiceActionCall("category", "delete", None, kparams)
+        self.client.queueServiceActionCall("category", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57490,7 +57516,7 @@ class KalturaCategoryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("category", "get", KalturaCategory, kparams)
+        self.client.queueServiceActionCall("category", "get", "KalturaCategory", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57502,7 +57528,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("category", "index", None, kparams)
+        self.client.queueServiceActionCall("category", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57514,7 +57540,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("category", "list", KalturaCategoryListResponse, kparams)
+        self.client.queueServiceActionCall("category", "list", "KalturaCategoryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57526,7 +57552,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("categoryIds", categoryIds)
         kparams.addIntIfDefined("targetCategoryParentId", targetCategoryParentId);
-        self.client.queueServiceActionCall("category", "move", KalturaCategoryListResponse, kparams)
+        self.client.queueServiceActionCall("category", "move", "KalturaCategoryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57536,7 +57562,7 @@ class KalturaCategoryService(KalturaServiceBase):
         """Unlock categories"""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("category", "unlockCategories", None, kparams)
+        self.client.queueServiceActionCall("category", "unlockCategories", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57547,7 +57573,7 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("category", category)
-        self.client.queueServiceActionCall("category", "update", KalturaCategory, kparams)
+        self.client.queueServiceActionCall("category", "update", "KalturaCategory", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57568,7 +57594,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("categoryuser", "activate", KalturaCategoryUser, kparams)
+        self.client.queueServiceActionCall("categoryuser", "activate", "KalturaCategoryUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57579,7 +57605,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("categoryUser", categoryUser)
-        self.client.queueServiceActionCall("categoryuser", "add", KalturaCategoryUser, kparams)
+        self.client.queueServiceActionCall("categoryuser", "add", "KalturaCategoryUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57591,7 +57617,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryUserData", bulkUploadCategoryUserData)
-        self.client.queueServiceActionCall("categoryuser", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("categoryuser", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57602,7 +57628,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
-        self.client.queueServiceActionCall("categoryuser", "copyFromCategory", None, kparams)
+        self.client.queueServiceActionCall("categoryuser", "copyFromCategory", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57613,7 +57639,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("categoryuser", "deactivate", KalturaCategoryUser, kparams)
+        self.client.queueServiceActionCall("categoryuser", "deactivate", "KalturaCategoryUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57625,7 +57651,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("categoryuser", "delete", None, kparams)
+        self.client.queueServiceActionCall("categoryuser", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57636,7 +57662,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("categoryuser", "get", KalturaCategoryUser, kparams)
+        self.client.queueServiceActionCall("categoryuser", "get", "KalturaCategoryUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57649,7 +57675,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams.addStringIfDefined("userId", userId)
         kparams.addIntIfDefined("categoryId", categoryId);
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("categoryuser", "index", None, kparams)
+        self.client.queueServiceActionCall("categoryuser", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57661,7 +57687,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("categoryuser", "list", KalturaCategoryUserListResponse, kparams)
+        self.client.queueServiceActionCall("categoryuser", "list", "KalturaCategoryUserListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57675,7 +57701,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         kparams.addStringIfDefined("userId", userId)
         kparams.addObjectIfDefined("categoryUser", categoryUser)
         kparams.addBoolIfDefined("override", override);
-        self.client.queueServiceActionCall("categoryuser", "update", KalturaCategoryUser, kparams)
+        self.client.queueServiceActionCall("categoryuser", "update", "KalturaCategoryUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57696,7 +57722,7 @@ class KalturaConversionProfileAssetParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("conversionprofileassetparams", "list", KalturaConversionProfileAssetParamsListResponse, kparams)
+        self.client.queueServiceActionCall("conversionprofileassetparams", "list", "KalturaConversionProfileAssetParamsListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57709,7 +57735,7 @@ class KalturaConversionProfileAssetParamsService(KalturaServiceBase):
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
         kparams.addIntIfDefined("assetParamsId", assetParamsId);
         kparams.addObjectIfDefined("conversionProfileAssetParams", conversionProfileAssetParams)
-        self.client.queueServiceActionCall("conversionprofileassetparams", "update", KalturaConversionProfileAssetParams, kparams)
+        self.client.queueServiceActionCall("conversionprofileassetparams", "update", "KalturaConversionProfileAssetParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57729,7 +57755,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("conversionProfile", conversionProfile)
-        self.client.queueServiceActionCall("conversionprofile", "add", KalturaConversionProfile, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "add", "KalturaConversionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57740,7 +57766,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("conversionprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57750,7 +57776,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("conversionprofile", "get", KalturaConversionProfile, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "get", "KalturaConversionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57761,7 +57787,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("type", type)
-        self.client.queueServiceActionCall("conversionprofile", "getDefault", KalturaConversionProfile, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "getDefault", "KalturaConversionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57773,7 +57799,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("conversionprofile", "list", KalturaConversionProfileListResponse, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "list", "KalturaConversionProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57784,7 +57810,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("conversionprofile", "setAsDefault", KalturaConversionProfile, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "setAsDefault", "KalturaConversionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57796,7 +57822,7 @@ class KalturaConversionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("conversionProfile", conversionProfile)
-        self.client.queueServiceActionCall("conversionprofile", "update", KalturaConversionProfile, kparams)
+        self.client.queueServiceActionCall("conversionprofile", "update", "KalturaConversionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57816,7 +57842,7 @@ class KalturaDataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("dataEntry", dataEntry)
-        self.client.queueServiceActionCall("data", "add", KalturaDataEntry, kparams)
+        self.client.queueServiceActionCall("data", "add", "KalturaDataEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57828,7 +57854,7 @@ class KalturaDataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("resource", resource)
-        self.client.queueServiceActionCall("data", "addContent", None, kparams)
+        self.client.queueServiceActionCall("data", "addContent", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57839,7 +57865,7 @@ class KalturaDataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("data", "delete", None, kparams)
+        self.client.queueServiceActionCall("data", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57850,7 +57876,7 @@ class KalturaDataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("data", "get", KalturaDataEntry, kparams)
+        self.client.queueServiceActionCall("data", "get", "KalturaDataEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57862,7 +57888,7 @@ class KalturaDataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("data", "list", KalturaDataListResponse, kparams)
+        self.client.queueServiceActionCall("data", "list", "KalturaDataListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57884,7 +57910,7 @@ class KalturaDataService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("documentEntry", documentEntry)
-        self.client.queueServiceActionCall("data", "update", KalturaDataEntry, kparams)
+        self.client.queueServiceActionCall("data", "update", "KalturaDataEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57904,7 +57930,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("delivery", delivery)
-        self.client.queueServiceActionCall("deliveryprofile", "add", KalturaDeliveryProfile, kparams)
+        self.client.queueServiceActionCall("deliveryprofile", "add", "KalturaDeliveryProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57916,7 +57942,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("deliveryId", deliveryId);
-        self.client.queueServiceActionCall("deliveryprofile", "clone", KalturaDeliveryProfile, kparams)
+        self.client.queueServiceActionCall("deliveryprofile", "clone", "KalturaDeliveryProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57927,7 +57953,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("deliveryprofile", "get", KalturaDeliveryProfile, kparams)
+        self.client.queueServiceActionCall("deliveryprofile", "get", "KalturaDeliveryProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57939,7 +57965,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("deliveryprofile", "list", KalturaDeliveryProfileListResponse, kparams)
+        self.client.queueServiceActionCall("deliveryprofile", "list", "KalturaDeliveryProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57951,7 +57977,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("delivery", delivery)
-        self.client.queueServiceActionCall("deliveryprofile", "update", KalturaDeliveryProfile, kparams)
+        self.client.queueServiceActionCall("deliveryprofile", "update", "KalturaDeliveryProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57971,7 +57997,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("EmailIP", EmailIP)
-        self.client.queueServiceActionCall("emailingestionprofile", "add", KalturaEmailIngestionProfile, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "add", "KalturaEmailIngestionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57986,7 +58012,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
         kparams.addIntIfDefined("emailProfId", emailProfId);
         kparams.addStringIfDefined("fromAddress", fromAddress)
         kparams.addStringIfDefined("emailMsgId", emailMsgId)
-        self.client.queueServiceActionCall("emailingestionprofile", "addMediaEntry", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "addMediaEntry", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -57997,7 +58023,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("emailingestionprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58007,7 +58033,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("emailingestionprofile", "get", KalturaEmailIngestionProfile, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "get", "KalturaEmailIngestionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58018,7 +58044,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("emailAddress", emailAddress)
-        self.client.queueServiceActionCall("emailingestionprofile", "getByEmailAddress", KalturaEmailIngestionProfile, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "getByEmailAddress", "KalturaEmailIngestionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58030,7 +58056,7 @@ class KalturaEmailIngestionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("EmailIP", EmailIP)
-        self.client.queueServiceActionCall("emailingestionprofile", "update", KalturaEmailIngestionProfile, kparams)
+        self.client.queueServiceActionCall("emailingestionprofile", "update", "KalturaEmailIngestionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58048,7 +58074,7 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
     def get(self, id):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("entryservernode", "get", KalturaEntryServerNode, kparams)
+        self.client.queueServiceActionCall("entryservernode", "get", "KalturaEntryServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58058,7 +58084,7 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("entryservernode", "list", KalturaEntryServerNodeListResponse, kparams)
+        self.client.queueServiceActionCall("entryservernode", "list", "KalturaEntryServerNodeListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58068,7 +58094,7 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("entryServerNode", entryServerNode)
-        self.client.queueServiceActionCall("entryservernode", "update", KalturaEntryServerNode, kparams)
+        self.client.queueServiceActionCall("entryservernode", "update", "KalturaEntryServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58079,7 +58105,7 @@ class KalturaEntryServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("entryservernode", "validateRegisteredEntryServerNode", None, kparams)
+        self.client.queueServiceActionCall("entryservernode", "validateRegisteredEntryServerNode", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58098,7 +58124,7 @@ class KalturaFileAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("fileAsset", fileAsset)
-        self.client.queueServiceActionCall("fileasset", "add", KalturaFileAsset, kparams)
+        self.client.queueServiceActionCall("fileasset", "add", "KalturaFileAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58109,7 +58135,7 @@ class KalturaFileAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("fileasset", "delete", None, kparams)
+        self.client.queueServiceActionCall("fileasset", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58119,7 +58145,7 @@ class KalturaFileAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("fileasset", "get", KalturaFileAsset, kparams)
+        self.client.queueServiceActionCall("fileasset", "get", "KalturaFileAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58131,7 +58157,7 @@ class KalturaFileAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("fileasset", "list", KalturaFileAssetListResponse, kparams)
+        self.client.queueServiceActionCall("fileasset", "list", "KalturaFileAssetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58151,7 +58177,7 @@ class KalturaFileAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("contentResource", contentResource)
-        self.client.queueServiceActionCall("fileasset", "setContent", KalturaFileAsset, kparams)
+        self.client.queueServiceActionCall("fileasset", "setContent", "KalturaFileAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58163,7 +58189,7 @@ class KalturaFileAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("fileAsset", fileAsset)
-        self.client.queueServiceActionCall("fileasset", "update", KalturaFileAsset, kparams)
+        self.client.queueServiceActionCall("fileasset", "update", "KalturaFileAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58184,7 +58210,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("flavorAsset", flavorAsset)
-        self.client.queueServiceActionCall("flavorasset", "add", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "add", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58197,7 +58223,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
         kparams.addIntIfDefined("priority", priority);
-        self.client.queueServiceActionCall("flavorasset", "convert", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "convert", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58207,7 +58233,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("flavorasset", "delete", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58217,7 +58243,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("assetId", assetId)
-        self.client.queueServiceActionCall("flavorasset", "deleteLocalContent", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "deleteLocalContent", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58228,7 +58254,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("assetId", assetId)
         kparams.addIntIfDefined("storageProfileId", storageProfileId);
-        self.client.queueServiceActionCall("flavorasset", "export", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "export", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58239,7 +58265,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("flavorasset", "get", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "get", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58250,7 +58276,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("flavorasset", "getByEntryId", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getByEntryId", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58262,7 +58288,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addBoolIfDefined("useCdn", useCdn);
-        self.client.queueServiceActionCall("flavorasset", "getDownloadUrl", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getDownloadUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58273,7 +58299,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("flavorasset", "getFlavorAssetsWithParams", KalturaFlavorAssetWithParams, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getFlavorAssetsWithParams", "KalturaFlavorAssetWithParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58284,7 +58310,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("flavorasset", "getRemotePaths", KalturaRemotePathListResponse, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getRemotePaths", "KalturaRemotePathListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58298,26 +58324,18 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams.addIntIfDefined("storageId", storageId);
         kparams.addBoolIfDefined("forceProxy", forceProxy);
         kparams.addObjectIfDefined("options", options)
-        self.client.queueServiceActionCall("flavorasset", "getUrl", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
-
-    def getVolumeMap(self, flavorId):
-        """Get volume map by entry id"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("flavorId", flavorId)
-        self.client.queueServiceActionCall('flavorasset', 'getVolumeMap', None ,kparams)
-        return self.client.getServeUrl()
 
     def getWebPlayableByEntryId(self, entryId):
         """Get web playable Flavor Assets for Entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("flavorasset", "getWebPlayableByEntryId", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "getWebPlayableByEntryId", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58329,7 +58347,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("flavorasset", "list", KalturaFlavorAssetListResponse, kparams)
+        self.client.queueServiceActionCall("flavorasset", "list", "KalturaFlavorAssetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58340,7 +58358,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("flavorasset", "reconvert", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "reconvert", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58352,7 +58370,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams.addStringIfDefined("assetId", assetId)
         kparams.addStringIfDefined("ffprobeJson", ffprobeJson)
         kparams.addStringIfDefined("duration", duration)
-        self.client.queueServiceActionCall("flavorasset", "serveAdStitchCmd", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "serveAdStitchCmd", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58363,7 +58381,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("assetId", assetId)
-        self.client.queueServiceActionCall("flavorasset", "setAsSource", None, kparams)
+        self.client.queueServiceActionCall("flavorasset", "setAsSource", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58374,7 +58392,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("contentResource", contentResource)
-        self.client.queueServiceActionCall("flavorasset", "setContent", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "setContent", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58386,7 +58404,7 @@ class KalturaFlavorAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("flavorAsset", flavorAsset)
-        self.client.queueServiceActionCall("flavorasset", "update", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("flavorasset", "update", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58406,7 +58424,7 @@ class KalturaFlavorParamsOutputService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("flavorparamsoutput", "get", KalturaFlavorParamsOutput, kparams)
+        self.client.queueServiceActionCall("flavorparamsoutput", "get", "KalturaFlavorParamsOutput", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58418,7 +58436,7 @@ class KalturaFlavorParamsOutputService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("flavorparamsoutput", "list", KalturaFlavorParamsOutputListResponse, kparams)
+        self.client.queueServiceActionCall("flavorparamsoutput", "list", "KalturaFlavorParamsOutputListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58438,7 +58456,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("flavorParams", flavorParams)
-        self.client.queueServiceActionCall("flavorparams", "add", KalturaFlavorParams, kparams)
+        self.client.queueServiceActionCall("flavorparams", "add", "KalturaFlavorParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58449,7 +58467,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("flavorparams", "delete", None, kparams)
+        self.client.queueServiceActionCall("flavorparams", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58459,7 +58477,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("flavorparams", "get", KalturaFlavorParams, kparams)
+        self.client.queueServiceActionCall("flavorparams", "get", "KalturaFlavorParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58470,7 +58488,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        self.client.queueServiceActionCall("flavorparams", "getByConversionProfileId", KalturaFlavorParams, kparams)
+        self.client.queueServiceActionCall("flavorparams", "getByConversionProfileId", "KalturaFlavorParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58482,7 +58500,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("flavorparams", "list", KalturaFlavorParamsListResponse, kparams)
+        self.client.queueServiceActionCall("flavorparams", "list", "KalturaFlavorParamsListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58494,7 +58512,7 @@ class KalturaFlavorParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("flavorParams", flavorParams)
-        self.client.queueServiceActionCall("flavorparams", "update", KalturaFlavorParams, kparams)
+        self.client.queueServiceActionCall("flavorparams", "update", "KalturaFlavorParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58514,7 +58532,7 @@ class KalturaGroupUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("groupUser", groupUser)
-        self.client.queueServiceActionCall("groupuser", "add", KalturaGroupUser, kparams)
+        self.client.queueServiceActionCall("groupuser", "add", "KalturaGroupUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58526,7 +58544,7 @@ class KalturaGroupUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
         kparams.addStringIfDefined("groupId", groupId)
-        self.client.queueServiceActionCall("groupuser", "delete", None, kparams)
+        self.client.queueServiceActionCall("groupuser", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58537,7 +58555,7 @@ class KalturaGroupUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("groupuser", "list", KalturaGroupUserListResponse, kparams)
+        self.client.queueServiceActionCall("groupuser", "list", "KalturaGroupUserListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58557,7 +58575,7 @@ class KalturaLiveChannelSegmentService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("liveChannelSegment", liveChannelSegment)
-        self.client.queueServiceActionCall("livechannelsegment", "add", KalturaLiveChannelSegment, kparams)
+        self.client.queueServiceActionCall("livechannelsegment", "add", "KalturaLiveChannelSegment", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58568,7 +58586,7 @@ class KalturaLiveChannelSegmentService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("livechannelsegment", "delete", None, kparams)
+        self.client.queueServiceActionCall("livechannelsegment", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58578,7 +58596,7 @@ class KalturaLiveChannelSegmentService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("livechannelsegment", "get", KalturaLiveChannelSegment, kparams)
+        self.client.queueServiceActionCall("livechannelsegment", "get", "KalturaLiveChannelSegment", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58590,7 +58608,7 @@ class KalturaLiveChannelSegmentService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("livechannelsegment", "list", KalturaLiveChannelSegmentListResponse, kparams)
+        self.client.queueServiceActionCall("livechannelsegment", "list", "KalturaLiveChannelSegmentListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58602,7 +58620,7 @@ class KalturaLiveChannelSegmentService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("liveChannelSegment", liveChannelSegment)
-        self.client.queueServiceActionCall("livechannelsegment", "update", KalturaLiveChannelSegment, kparams)
+        self.client.queueServiceActionCall("livechannelsegment", "update", "KalturaLiveChannelSegment", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58622,7 +58640,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("liveChannel", liveChannel)
-        self.client.queueServiceActionCall("livechannel", "add", KalturaLiveChannel, kparams)
+        self.client.queueServiceActionCall("livechannel", "add", "KalturaLiveChannel", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58638,20 +58656,18 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addBoolIfDefined("isLastChunk", isLastChunk);
-        self.client.queueServiceActionCall("livechannel", "appendRecording", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livechannel", "appendRecording", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
     def createRecordedEntry(self, entryId, mediaServerIndex, liveEntryStatus):
-        """Create recorded entry id if it doesn't exist and make sure it happens on the DC that the live entry was created on."""
-
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
-        self.client.queueServiceActionCall("livechannel", "createRecordedEntry", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livechannel", "createRecordedEntry", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58662,7 +58678,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("livechannel", "delete", None, kparams)
+        self.client.queueServiceActionCall("livechannel", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58672,7 +58688,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("livechannel", "get", KalturaLiveChannel, kparams)
+        self.client.queueServiceActionCall("livechannel", "get", "KalturaLiveChannel", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58683,7 +58699,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("livechannel", "isLive", None, kparams)
+        self.client.queueServiceActionCall("livechannel", "isLive", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58695,7 +58711,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("livechannel", "list", KalturaLiveChannelListResponse, kparams)
+        self.client.queueServiceActionCall("livechannel", "list", "KalturaLiveChannelListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58711,14 +58727,14 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addStringIfDefined("applicationName", applicationName)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         kparams.addBoolIfDefined("shouldCreateRecordedEntry", shouldCreateRecordedEntry);
-        self.client.queueServiceActionCall("livechannel", "registerMediaServer", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livechannel", "registerMediaServer", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
     def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
-        """Set recorded video to live entry"""
+        """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -58727,7 +58743,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addFloatIfDefined("duration", duration)
         kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
         kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
-        self.client.queueServiceActionCall("livechannel", "setRecordedContent", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livechannel", "setRecordedContent", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58740,7 +58756,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
-        self.client.queueServiceActionCall("livechannel", "unregisterMediaServer", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livechannel", "unregisterMediaServer", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58752,7 +58768,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("liveChannel", liveChannel)
-        self.client.queueServiceActionCall("livechannel", "update", KalturaLiveChannel, kparams)
+        self.client.queueServiceActionCall("livechannel", "update", "KalturaLiveChannel", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58763,7 +58779,7 @@ class KalturaLiveChannelService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("livechannel", "validateRegisteredMediaServers", None, kparams)
+        self.client.queueServiceActionCall("livechannel", "validateRegisteredMediaServers", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58779,7 +58795,7 @@ class KalturaLiveReportsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("reportType", reportType);
         kparams.addObjectIfDefined("params", params)
-        self.client.queueServiceActionCall("livereports", "exportToCsv", KalturaLiveReportExportResponse, kparams)
+        self.client.queueServiceActionCall("livereports", "exportToCsv", "KalturaLiveReportExportResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58790,7 +58806,7 @@ class KalturaLiveReportsService(KalturaServiceBase):
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("livereports", "getEvents", KalturaReportGraph, kparams)
+        self.client.queueServiceActionCall("livereports", "getEvents", "KalturaReportGraph", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58801,7 +58817,7 @@ class KalturaLiveReportsService(KalturaServiceBase):
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("livereports", "getReport", KalturaLiveStatsListResponse, kparams)
+        self.client.queueServiceActionCall("livereports", "getReport", "KalturaLiveStatsListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58812,7 +58828,7 @@ class KalturaLiveReportsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("livereports", "serveReport", None, kparams)
+        self.client.queueServiceActionCall("livereports", "serveReport", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58833,7 +58849,7 @@ class KalturaLiveStatsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("event", event)
-        self.client.queueServiceActionCall("livestats", "collect", None, kparams)
+        self.client.queueServiceActionCall("livestats", "collect", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58855,7 +58871,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("liveStreamEntry", liveStreamEntry)
         kparams.addStringIfDefined("sourceType", sourceType)
-        self.client.queueServiceActionCall("livestream", "add", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "add", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58869,7 +58885,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("protocol", protocol)
         kparams.addStringIfDefined("url", url)
         kparams.addObjectIfDefined("liveStreamConfiguration", liveStreamConfiguration)
-        self.client.queueServiceActionCall("livestream", "addLiveStreamPushPublishConfiguration", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "addLiveStreamPushPublishConfiguration", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58885,7 +58901,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addFloatIfDefined("duration", duration)
         kparams.addBoolIfDefined("isLastChunk", isLastChunk);
-        self.client.queueServiceActionCall("livestream", "appendRecording", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "appendRecording", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58900,7 +58916,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("hostname", hostname)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addStringIfDefined("applicationName", applicationName)
-        self.client.queueServiceActionCall("livestream", "authenticate", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "authenticate", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58913,19 +58929,17 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("interval", interval);
         kparams.addIntIfDefined("duration", duration);
-        self.client.queueServiceActionCall("livestream", "createPeriodicSyncPoints", None, kparams)
+        self.client.queueServiceActionCall("livestream", "createPeriodicSyncPoints", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
     def createRecordedEntry(self, entryId, mediaServerIndex, liveEntryStatus):
-        """Create recorded entry id if it doesn't exist and make sure it happens on the DC that the live entry was created on."""
-
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
-        self.client.queueServiceActionCall("livestream", "createRecordedEntry", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "createRecordedEntry", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58936,7 +58950,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("livestream", "delete", None, kparams)
+        self.client.queueServiceActionCall("livestream", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58947,7 +58961,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("livestream", "get", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "get", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58959,7 +58973,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addStringIfDefined("protocol", protocol)
-        self.client.queueServiceActionCall("livestream", "isLive", None, kparams)
+        self.client.queueServiceActionCall("livestream", "isLive", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58971,7 +58985,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("livestream", "list", KalturaLiveStreamListResponse, kparams)
+        self.client.queueServiceActionCall("livestream", "list", "KalturaLiveStreamListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58982,7 +58996,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("livestream", "regenerateStreamToken", None, kparams)
+        self.client.queueServiceActionCall("livestream", "regenerateStreamToken", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -58997,7 +59011,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("applicationName", applicationName)
         kparams.addIntIfDefined("liveEntryStatus", liveEntryStatus);
         kparams.addBoolIfDefined("shouldCreateRecordedEntry", shouldCreateRecordedEntry);
-        self.client.queueServiceActionCall("livestream", "registerMediaServer", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "registerMediaServer", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59009,14 +59023,14 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("protocol", protocol)
-        self.client.queueServiceActionCall("livestream", "removeLiveStreamPushPublishConfiguration", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "removeLiveStreamPushPublishConfiguration", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamEntry')
 
     def setRecordedContent(self, entryId, mediaServerIndex, resource, duration, recordedEntryId = NotImplemented, flavorParamsId = NotImplemented):
-        """Set recorded video to live entry"""
+        """Sey recorded video to live entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -59025,7 +59039,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addFloatIfDefined("duration", duration)
         kparams.addStringIfDefined("recordedEntryId", recordedEntryId)
         kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
-        self.client.queueServiceActionCall("livestream", "setRecordedContent", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "setRecordedContent", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59038,7 +59052,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("hostname", hostname)
         kparams.addStringIfDefined("mediaServerIndex", mediaServerIndex)
-        self.client.queueServiceActionCall("livestream", "unregisterMediaServer", KalturaLiveEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "unregisterMediaServer", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59050,7 +59064,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("liveStreamEntry", liveStreamEntry)
-        self.client.queueServiceActionCall("livestream", "update", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "update", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59062,7 +59076,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("livestream", "updateOfflineThumbnailFromUrl", KalturaLiveStreamEntry, kparams)
+        self.client.queueServiceActionCall("livestream", "updateOfflineThumbnailFromUrl", "KalturaLiveStreamEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59075,7 +59089,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("livestream", "updateOfflineThumbnailJpeg", KalturaLiveStreamEntry, kparams, kfiles)
+        self.client.queueServiceActionCall("livestream", "updateOfflineThumbnailJpeg", "KalturaLiveStreamEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59086,7 +59100,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("livestream", "validateRegisteredMediaServers", None, kparams)
+        self.client.queueServiceActionCall("livestream", "validateRegisteredMediaServers", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59106,7 +59120,7 @@ class KalturaMediaInfoService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("mediainfo", "list", KalturaMediaInfoListResponse, kparams)
+        self.client.queueServiceActionCall("mediainfo", "list", "KalturaMediaInfoListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59126,7 +59140,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("entry", entry)
-        self.client.queueServiceActionCall("media", "add", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "add", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59139,7 +59153,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("resource", resource)
-        self.client.queueServiceActionCall("media", "addContent", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addContent", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59154,7 +59168,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addStringIfDefined("url", url)
         kparams.addIntIfDefined("bulkUploadId", bulkUploadId);
-        self.client.queueServiceActionCall("media", "addFromBulk", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromBulk", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59167,7 +59181,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("sourceEntryId", sourceEntryId)
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addIntIfDefined("sourceFlavorParamsId", sourceFlavorParamsId);
-        self.client.queueServiceActionCall("media", "addFromEntry", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromEntry", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59179,7 +59193,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("sourceFlavorAssetId", sourceFlavorAssetId)
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
-        self.client.queueServiceActionCall("media", "addFromFlavorAsset", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromFlavorAsset", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59191,7 +59205,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addStringIfDefined("webcamTokenId", webcamTokenId)
-        self.client.queueServiceActionCall("media", "addFromRecordedWebcam", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromRecordedWebcam", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59204,7 +59218,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addObjectIfDefined("searchResult", searchResult)
-        self.client.queueServiceActionCall("media", "addFromSearchResult", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromSearchResult", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59216,7 +59230,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        self.client.queueServiceActionCall("media", "addFromUploadedFile", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromUploadedFile", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59229,7 +59243,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("media", "addFromUrl", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "addFromUrl", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59241,7 +59255,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("rank", rank);
-        self.client.queueServiceActionCall("media", "anonymousRank", None, kparams)
+        self.client.queueServiceActionCall("media", "anonymousRank", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59251,7 +59265,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("media", "approve", None, kparams)
+        self.client.queueServiceActionCall("media", "approve", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59261,7 +59275,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("media", "approveReplace", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "approveReplace", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59277,7 +59291,7 @@ class KalturaMediaService(KalturaServiceBase):
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadEntryData", bulkUploadEntryData)
-        self.client.queueServiceActionCall("media", "bulkUploadAdd", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("media", "bulkUploadAdd", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59288,7 +59302,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("media", "cancelReplace", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "cancelReplace", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59301,7 +59315,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
         kparams.addArrayIfDefined("dynamicConversionAttributes", dynamicConversionAttributes)
-        self.client.queueServiceActionCall("media", "convert", None, kparams)
+        self.client.queueServiceActionCall("media", "convert", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59312,7 +59326,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("media", "count", None, kparams)
+        self.client.queueServiceActionCall("media", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59323,7 +59337,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("media", "delete", None, kparams)
+        self.client.queueServiceActionCall("media", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59333,7 +59347,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("moderationFlag", moderationFlag)
-        self.client.queueServiceActionCall("media", "flag", None, kparams)
+        self.client.queueServiceActionCall("media", "flag", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59344,7 +59358,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("media", "get", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "get", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59358,7 +59372,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addArrayIfDefined("extendingItemsArray", extendingItemsArray)
         kparams.addStringIfDefined("features", features)
-        self.client.queueServiceActionCall("media", "getMrss", None, kparams)
+        self.client.queueServiceActionCall("media", "getMrss", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59378,7 +59392,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("media", "list", KalturaMediaListResponse, kparams)
+        self.client.queueServiceActionCall("media", "list", "KalturaMediaListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59390,7 +59404,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("media", "listFlags", KalturaModerationFlagListResponse, kparams)
+        self.client.queueServiceActionCall("media", "listFlags", "KalturaModerationFlagListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59401,7 +59415,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("media", "reject", None, kparams)
+        self.client.queueServiceActionCall("media", "reject", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59412,7 +59426,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("fileFormat", fileFormat)
-        self.client.queueServiceActionCall("media", "requestConversion", None, kparams)
+        self.client.queueServiceActionCall("media", "requestConversion", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59424,7 +59438,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
-        self.client.queueServiceActionCall("media", "update", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "update", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59438,7 +59452,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addObjectIfDefined("resource", resource)
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
         kparams.addObjectIfDefined("advancedOptions", advancedOptions)
-        self.client.queueServiceActionCall("media", "updateContent", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "updateContent", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59452,7 +59466,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("timeOffset", timeOffset);
         kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
-        self.client.queueServiceActionCall("media", "updateThumbnail", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "updateThumbnail", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59467,7 +59481,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("sourceEntryId", sourceEntryId)
         kparams.addIntIfDefined("timeOffset", timeOffset);
         kparams.addIntIfDefined("flavorParamsId", flavorParamsId);
-        self.client.queueServiceActionCall("media", "updateThumbnailFromSourceEntry", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("media", "updateThumbnailFromSourceEntry", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59479,7 +59493,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("media", "updateThumbnailFromUrl", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("media", "updateThumbnailFromUrl", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59492,7 +59506,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("media", "updateThumbnailJpeg", KalturaMediaEntry, kparams, kfiles)
+        self.client.queueServiceActionCall("media", "updateThumbnailJpeg", "KalturaMediaEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59504,7 +59518,7 @@ class KalturaMediaService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("media", "upload", None, kparams, kfiles)
+        self.client.queueServiceActionCall("media", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59526,7 +59540,7 @@ class KalturaMixingService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mixEntry", mixEntry)
-        self.client.queueServiceActionCall("mixing", "add", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "add", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59538,7 +59552,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("rank", rank);
-        self.client.queueServiceActionCall("mixing", "anonymousRank", None, kparams)
+        self.client.queueServiceActionCall("mixing", "anonymousRank", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59549,7 +59563,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("mixEntryId", mixEntryId)
         kparams.addStringIfDefined("mediaEntryId", mediaEntryId)
-        self.client.queueServiceActionCall("mixing", "appendMediaEntry", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "appendMediaEntry", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59560,7 +59574,7 @@ class KalturaMixingService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("mixing", "clone", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "clone", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59571,7 +59585,7 @@ class KalturaMixingService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("mixing", "count", None, kparams)
+        self.client.queueServiceActionCall("mixing", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59582,7 +59596,7 @@ class KalturaMixingService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("mixing", "delete", None, kparams)
+        self.client.queueServiceActionCall("mixing", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59593,7 +59607,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("mixing", "get", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "get", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59604,7 +59618,7 @@ class KalturaMixingService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("mediaEntryId", mediaEntryId)
-        self.client.queueServiceActionCall("mixing", "getMixesByMediaId", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "getMixesByMediaId", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59616,7 +59630,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("mixId", mixId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("mixing", "getReadyMediaEntries", KalturaMediaEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "getReadyMediaEntries", "KalturaMediaEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59629,7 +59643,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("mixing", "list", KalturaMixListResponse, kparams)
+        self.client.queueServiceActionCall("mixing", "list", "KalturaMixListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59641,7 +59655,7 @@ class KalturaMixingService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("mixEntry", mixEntry)
-        self.client.queueServiceActionCall("mixing", "update", KalturaMixEntry, kparams)
+        self.client.queueServiceActionCall("mixing", "update", "KalturaMixEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59662,7 +59676,7 @@ class KalturaNotificationService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("type", type);
-        self.client.queueServiceActionCall("notification", "getClientNotification", KalturaClientNotification, kparams)
+        self.client.queueServiceActionCall("notification", "getClientNotification", "KalturaClientNotification", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59682,7 +59696,7 @@ class KalturaPartnerService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("partner", "count", None, kparams)
+        self.client.queueServiceActionCall("partner", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59693,7 +59707,7 @@ class KalturaPartnerService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("partner", "get", KalturaPartner, kparams)
+        self.client.queueServiceActionCall("partner", "get", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59704,7 +59718,7 @@ class KalturaPartnerService(KalturaServiceBase):
         	 This action expects no parameters. It returns information for the current KS partnerId."""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("partner", "getInfo", KalturaPartner, kparams)
+        self.client.queueServiceActionCall("partner", "getInfo", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59717,7 +59731,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams.addIntIfDefined("partnerId", partnerId);
         kparams.addStringIfDefined("adminEmail", adminEmail)
         kparams.addStringIfDefined("cmsPassword", cmsPassword)
-        self.client.queueServiceActionCall("partner", "getSecrets", KalturaPartner, kparams)
+        self.client.queueServiceActionCall("partner", "getSecrets", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59728,7 +59742,7 @@ class KalturaPartnerService(KalturaServiceBase):
         	 Calculation is done according to partner's package"""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("partner", "getStatistics", KalturaPartnerStatistics, kparams)
+        self.client.queueServiceActionCall("partner", "getStatistics", "KalturaPartnerStatistics", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59744,7 +59758,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams.addIntIfDefined("year", year);
         kparams.addIntIfDefined("month", month);
         kparams.addStringIfDefined("resolution", resolution)
-        self.client.queueServiceActionCall("partner", "getUsage", KalturaPartnerUsage, kparams)
+        self.client.queueServiceActionCall("partner", "getUsage", "KalturaPartnerUsage", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59758,7 +59772,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("partner", "list", KalturaPartnerListResponse, kparams)
+        self.client.queueServiceActionCall("partner", "list", "KalturaPartnerListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59768,7 +59782,7 @@ class KalturaPartnerService(KalturaServiceBase):
         """List partner's current processes' statuses"""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("partner", "listFeatureStatus", KalturaFeatureStatusListResponse, kparams)
+        self.client.queueServiceActionCall("partner", "listFeatureStatus", "KalturaFeatureStatusListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59780,7 +59794,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("partnerFilter", partnerFilter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("partner", "listPartnersForUser", KalturaPartnerListResponse, kparams)
+        self.client.queueServiceActionCall("partner", "listPartnersForUser", "KalturaPartnerListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59794,7 +59808,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams.addStringIfDefined("cmsPassword", cmsPassword)
         kparams.addIntIfDefined("templatePartnerId", templatePartnerId);
         kparams.addBoolIfDefined("silent", silent);
-        self.client.queueServiceActionCall("partner", "register", KalturaPartner, kparams)
+        self.client.queueServiceActionCall("partner", "register", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59806,7 +59820,7 @@ class KalturaPartnerService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("partner", partner)
         kparams.addBoolIfDefined("allowEmpty", allowEmpty);
-        self.client.queueServiceActionCall("partner", "update", KalturaPartner, kparams)
+        self.client.queueServiceActionCall("partner", "update", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59827,7 +59841,7 @@ class KalturaPermissionItemService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("permissionItem", permissionItem)
-        self.client.queueServiceActionCall("permissionitem", "add", KalturaPermissionItem, kparams)
+        self.client.queueServiceActionCall("permissionitem", "add", "KalturaPermissionItem", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59839,7 +59853,7 @@ class KalturaPermissionItemService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("permissionItemId", permissionItemId);
-        self.client.queueServiceActionCall("permissionitem", "delete", KalturaPermissionItem, kparams)
+        self.client.queueServiceActionCall("permissionitem", "delete", "KalturaPermissionItem", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59850,7 +59864,7 @@ class KalturaPermissionItemService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("permissionItemId", permissionItemId);
-        self.client.queueServiceActionCall("permissionitem", "get", KalturaPermissionItem, kparams)
+        self.client.queueServiceActionCall("permissionitem", "get", "KalturaPermissionItem", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59862,7 +59876,7 @@ class KalturaPermissionItemService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("permissionitem", "list", KalturaPermissionItemListResponse, kparams)
+        self.client.queueServiceActionCall("permissionitem", "list", "KalturaPermissionItemListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59875,7 +59889,7 @@ class KalturaPermissionItemService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("permissionItemId", permissionItemId);
         kparams.addObjectIfDefined("permissionItem", permissionItem)
-        self.client.queueServiceActionCall("permissionitem", "update", KalturaPermissionItem, kparams)
+        self.client.queueServiceActionCall("permissionitem", "update", "KalturaPermissionItem", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59895,7 +59909,7 @@ class KalturaPermissionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("permission", permission)
-        self.client.queueServiceActionCall("permission", "add", KalturaPermission, kparams)
+        self.client.queueServiceActionCall("permission", "add", "KalturaPermission", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59906,7 +59920,7 @@ class KalturaPermissionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("permissionName", permissionName)
-        self.client.queueServiceActionCall("permission", "delete", KalturaPermission, kparams)
+        self.client.queueServiceActionCall("permission", "delete", "KalturaPermission", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59917,7 +59931,7 @@ class KalturaPermissionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("permissionName", permissionName)
-        self.client.queueServiceActionCall("permission", "get", KalturaPermission, kparams)
+        self.client.queueServiceActionCall("permission", "get", "KalturaPermission", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59927,7 +59941,7 @@ class KalturaPermissionService(KalturaServiceBase):
         """Retrieves a list of permissions that apply to the current KS."""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("permission", "getCurrentPermissions", None, kparams)
+        self.client.queueServiceActionCall("permission", "getCurrentPermissions", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59941,7 +59955,7 @@ class KalturaPermissionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("permission", "list", KalturaPermissionListResponse, kparams)
+        self.client.queueServiceActionCall("permission", "list", "KalturaPermissionListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59953,7 +59967,7 @@ class KalturaPermissionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("permissionName", permissionName)
         kparams.addObjectIfDefined("permission", permission)
-        self.client.queueServiceActionCall("permission", "update", KalturaPermission, kparams)
+        self.client.queueServiceActionCall("permission", "update", "KalturaPermission", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59976,7 +59990,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("playlist", playlist)
         kparams.addBoolIfDefined("updateStats", updateStats);
-        self.client.queueServiceActionCall("playlist", "add", KalturaPlaylist, kparams)
+        self.client.queueServiceActionCall("playlist", "add", "KalturaPlaylist", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59988,7 +60002,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("newPlaylist", newPlaylist)
-        self.client.queueServiceActionCall("playlist", "clone", KalturaPlaylist, kparams)
+        self.client.queueServiceActionCall("playlist", "clone", "KalturaPlaylist", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -59999,7 +60013,7 @@ class KalturaPlaylistService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("playlist", "delete", None, kparams)
+        self.client.queueServiceActionCall("playlist", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60013,7 +60027,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams.addObjectIfDefined("playlistContext", playlistContext)
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("playlist", "execute", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("playlist", "execute", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60027,7 +60041,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams.addStringIfDefined("playlistContent", playlistContent)
         kparams.addStringIfDefined("detailed", detailed)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("playlist", "executeFromContent", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("playlist", "executeFromContent", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60041,7 +60055,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams.addIntIfDefined("totalResults", totalResults);
         kparams.addStringIfDefined("detailed", detailed)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("playlist", "executeFromFilters", KalturaBaseEntry, kparams)
+        self.client.queueServiceActionCall("playlist", "executeFromFilters", "KalturaBaseEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60053,7 +60067,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("playlist", "get", KalturaPlaylist, kparams)
+        self.client.queueServiceActionCall("playlist", "get", "KalturaPlaylist", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60065,7 +60079,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("playlistType", playlistType);
         kparams.addStringIfDefined("playlistContent", playlistContent)
-        self.client.queueServiceActionCall("playlist", "getStatsFromContent", KalturaPlaylist, kparams)
+        self.client.queueServiceActionCall("playlist", "getStatsFromContent", "KalturaPlaylist", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60077,7 +60091,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("playlist", "list", KalturaPlaylistListResponse, kparams)
+        self.client.queueServiceActionCall("playlist", "list", "KalturaPlaylistListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60091,7 +60105,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("playlist", playlist)
         kparams.addBoolIfDefined("updateStats", updateStats);
-        self.client.queueServiceActionCall("playlist", "update", KalturaPlaylist, kparams)
+        self.client.queueServiceActionCall("playlist", "update", "KalturaPlaylist", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60110,7 +60124,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addArrayIfDefined("params", params)
-        self.client.queueServiceActionCall("report", "execute", KalturaReportResponse, kparams)
+        self.client.queueServiceActionCall("report", "execute", "KalturaReportResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60123,7 +60137,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
-        self.client.queueServiceActionCall("report", "getBaseTotal", KalturaReportBaseTotal, kparams)
+        self.client.queueServiceActionCall("report", "getBaseTotal", "KalturaReportBaseTotal", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60153,7 +60167,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("dimension", dimension)
         kparams.addStringIfDefined("objectIds", objectIds)
-        self.client.queueServiceActionCall("report", "getGraphs", KalturaReportGraph, kparams)
+        self.client.queueServiceActionCall("report", "getGraphs", "KalturaReportGraph", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60168,7 +60182,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("pager", pager)
         kparams.addStringIfDefined("order", order)
         kparams.addStringIfDefined("objectIds", objectIds)
-        self.client.queueServiceActionCall("report", "getTable", KalturaReportTable, kparams)
+        self.client.queueServiceActionCall("report", "getTable", "KalturaReportTable", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60181,7 +60195,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
-        self.client.queueServiceActionCall("report", "getTotal", KalturaReportTotal, kparams)
+        self.client.queueServiceActionCall("report", "getTotal", "KalturaReportTotal", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60200,7 +60214,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("pager", pager)
         kparams.addStringIfDefined("order", order)
         kparams.addStringIfDefined("objectIds", objectIds)
-        self.client.queueServiceActionCall("report", "getUrlForReportAsCsv", None, kparams)
+        self.client.queueServiceActionCall("report", "getUrlForReportAsCsv", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60211,7 +60225,7 @@ class KalturaReportService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("report", "serve", None, kparams)
+        self.client.queueServiceActionCall("report", "serve", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60231,7 +60245,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("addResponseProfile", addResponseProfile)
-        self.client.queueServiceActionCall("responseprofile", "add", KalturaResponseProfile, kparams)
+        self.client.queueServiceActionCall("responseprofile", "add", "KalturaResponseProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60243,7 +60257,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("profile", profile)
-        self.client.queueServiceActionCall("responseprofile", "clone", KalturaResponseProfile, kparams)
+        self.client.queueServiceActionCall("responseprofile", "clone", "KalturaResponseProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60254,7 +60268,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("responseprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("responseprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60264,7 +60278,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("responseprofile", "get", KalturaResponseProfile, kparams)
+        self.client.queueServiceActionCall("responseprofile", "get", "KalturaResponseProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60276,7 +60290,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("responseprofile", "list", KalturaResponseProfileListResponse, kparams)
+        self.client.queueServiceActionCall("responseprofile", "list", "KalturaResponseProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60287,7 +60301,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("options", options)
-        self.client.queueServiceActionCall("responseprofile", "recalculate", KalturaResponseProfileCacheRecalculateResults, kparams)
+        self.client.queueServiceActionCall("responseprofile", "recalculate", "KalturaResponseProfileCacheRecalculateResults", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60299,7 +60313,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("updateResponseProfile", updateResponseProfile)
-        self.client.queueServiceActionCall("responseprofile", "update", KalturaResponseProfile, kparams)
+        self.client.queueServiceActionCall("responseprofile", "update", "KalturaResponseProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60311,7 +60325,7 @@ class KalturaResponseProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("responseprofile", "updateStatus", KalturaResponseProfile, kparams)
+        self.client.queueServiceActionCall("responseprofile", "updateStatus", "KalturaResponseProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60349,7 +60363,7 @@ class KalturaSearchService(KalturaServiceBase):
         kparams.addIntIfDefined("searchSource", searchSource);
         kparams.addStringIfDefined("userName", userName)
         kparams.addStringIfDefined("password", password)
-        self.client.queueServiceActionCall("search", "externalLogin", KalturaSearchAuthData, kparams)
+        self.client.queueServiceActionCall("search", "externalLogin", "KalturaSearchAuthData", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60361,7 +60375,7 @@ class KalturaSearchService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("searchResult", searchResult)
-        self.client.queueServiceActionCall("search", "getMediaInfo", KalturaSearchResult, kparams)
+        self.client.queueServiceActionCall("search", "getMediaInfo", "KalturaSearchResult", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60373,7 +60387,7 @@ class KalturaSearchService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("search", search)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("search", "search", KalturaSearchResultResponse, kparams)
+        self.client.queueServiceActionCall("search", "search", "KalturaSearchResultResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60387,7 +60401,7 @@ class KalturaSearchService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("mediaType", mediaType);
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("search", "searchUrl", KalturaSearchResult, kparams)
+        self.client.queueServiceActionCall("search", "searchUrl", "KalturaSearchResult", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60407,7 +60421,7 @@ class KalturaServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("serverNode", serverNode)
-        self.client.queueServiceActionCall("servernode", "add", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "add", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60418,7 +60432,7 @@ class KalturaServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("serverNodeId", serverNodeId)
-        self.client.queueServiceActionCall("servernode", "delete", None, kparams)
+        self.client.queueServiceActionCall("servernode", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60428,7 +60442,7 @@ class KalturaServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("serverNodeId", serverNodeId)
-        self.client.queueServiceActionCall("servernode", "disable", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "disable", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60439,7 +60453,7 @@ class KalturaServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("serverNodeId", serverNodeId)
-        self.client.queueServiceActionCall("servernode", "enable", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "enable", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60450,7 +60464,7 @@ class KalturaServerNodeService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("serverNodeId", serverNodeId);
-        self.client.queueServiceActionCall("servernode", "get", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "get", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60460,7 +60474,7 @@ class KalturaServerNodeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("servernode", "list", KalturaServerNodeListResponse, kparams)
+        self.client.queueServiceActionCall("servernode", "list", "KalturaServerNodeListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60472,7 +60486,7 @@ class KalturaServerNodeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("hostName", hostName)
         kparams.addObjectIfDefined("serverNode", serverNode)
-        self.client.queueServiceActionCall("servernode", "reportStatus", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "reportStatus", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60484,7 +60498,7 @@ class KalturaServerNodeService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("serverNodeId", serverNodeId);
         kparams.addObjectIfDefined("serverNode", serverNode)
-        self.client.queueServiceActionCall("servernode", "update", KalturaServerNode, kparams)
+        self.client.queueServiceActionCall("servernode", "update", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60503,7 +60517,7 @@ class KalturaSessionService(KalturaServiceBase):
         """End a session with the Kaltura server, making the current KS invalid."""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("session", "end", None, kparams)
+        self.client.queueServiceActionCall("session", "end", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60513,7 +60527,7 @@ class KalturaSessionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("session", session)
-        self.client.queueServiceActionCall("session", "get", KalturaSessionInfo, kparams)
+        self.client.queueServiceActionCall("session", "get", "KalturaSessionInfo", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60531,7 +60545,7 @@ class KalturaSessionService(KalturaServiceBase):
         kparams.addIntIfDefined("partnerId", partnerId);
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
-        self.client.queueServiceActionCall("session", "impersonate", None, kparams)
+        self.client.queueServiceActionCall("session", "impersonate", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60547,7 +60561,7 @@ class KalturaSessionService(KalturaServiceBase):
         kparams.addIntIfDefined("type", type);
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
-        self.client.queueServiceActionCall("session", "impersonateByKs", KalturaSessionInfo, kparams)
+        self.client.queueServiceActionCall("session", "impersonateByKs", "KalturaSessionInfo", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60564,7 +60578,7 @@ class KalturaSessionService(KalturaServiceBase):
         kparams.addIntIfDefined("partnerId", partnerId);
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
-        self.client.queueServiceActionCall("session", "start", None, kparams)
+        self.client.queueServiceActionCall("session", "start", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60576,7 +60590,7 @@ class KalturaSessionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("widgetId", widgetId)
         kparams.addIntIfDefined("expiry", expiry);
-        self.client.queueServiceActionCall("session", "startWidgetSession", KalturaStartWidgetSessionResponse, kparams)
+        self.client.queueServiceActionCall("session", "startWidgetSession", "KalturaStartWidgetSessionResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60617,7 +60631,7 @@ class KalturaStatsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("event", event)
-        self.client.queueServiceActionCall("stats", "collect", None, kparams)
+        self.client.queueServiceActionCall("stats", "collect", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60629,7 +60643,7 @@ class KalturaStatsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("kmcEvent", kmcEvent)
-        self.client.queueServiceActionCall("stats", "kmcCollect", None, kparams)
+        self.client.queueServiceActionCall("stats", "kmcCollect", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60639,7 +60653,7 @@ class KalturaStatsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("data", data)
-        self.client.queueServiceActionCall("stats", "reportDeviceCapabilities", None, kparams)
+        self.client.queueServiceActionCall("stats", "reportDeviceCapabilities", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60650,7 +60664,7 @@ class KalturaStatsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("errorCode", errorCode)
         kparams.addStringIfDefined("errorMessage", errorMessage)
-        self.client.queueServiceActionCall("stats", "reportError", None, kparams)
+        self.client.queueServiceActionCall("stats", "reportError", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60658,7 +60672,7 @@ class KalturaStatsService(KalturaServiceBase):
     def reportKceError(self, kalturaCEError):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("kalturaCEError", kalturaCEError)
-        self.client.queueServiceActionCall("stats", "reportKceError", KalturaCEError, kparams)
+        self.client.queueServiceActionCall("stats", "reportKceError", "KalturaCEError", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60678,7 +60692,7 @@ class KalturaStorageProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("storageProfile", storageProfile)
-        self.client.queueServiceActionCall("storageprofile", "add", KalturaStorageProfile, kparams)
+        self.client.queueServiceActionCall("storageprofile", "add", "KalturaStorageProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60689,7 +60703,7 @@ class KalturaStorageProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("storageProfileId", storageProfileId);
-        self.client.queueServiceActionCall("storageprofile", "get", KalturaStorageProfile, kparams)
+        self.client.queueServiceActionCall("storageprofile", "get", "KalturaStorageProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60699,7 +60713,7 @@ class KalturaStorageProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("storageprofile", "list", KalturaStorageProfileListResponse, kparams)
+        self.client.queueServiceActionCall("storageprofile", "list", "KalturaStorageProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60711,7 +60725,7 @@ class KalturaStorageProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("storageProfileId", storageProfileId);
         kparams.addObjectIfDefined("storageProfile", storageProfile)
-        self.client.queueServiceActionCall("storageprofile", "update", KalturaStorageProfile, kparams)
+        self.client.queueServiceActionCall("storageprofile", "update", "KalturaStorageProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60721,7 +60735,7 @@ class KalturaStorageProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("storageId", storageId);
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("storageprofile", "updateStatus", None, kparams)
+        self.client.queueServiceActionCall("storageprofile", "updateStatus", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60740,7 +60754,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("syndicationFeed", syndicationFeed)
-        self.client.queueServiceActionCall("syndicationfeed", "add", KalturaBaseSyndicationFeed, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "add", "KalturaBaseSyndicationFeed", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60751,7 +60765,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("syndicationfeed", "delete", None, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60761,7 +60775,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("syndicationfeed", "get", KalturaBaseSyndicationFeed, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "get", "KalturaBaseSyndicationFeed", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60772,7 +60786,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("feedId", feedId)
-        self.client.queueServiceActionCall("syndicationfeed", "getEntryCount", KalturaSyndicationFeedEntryCount, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "getEntryCount", "KalturaSyndicationFeedEntryCount", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60784,7 +60798,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("syndicationfeed", "list", KalturaBaseSyndicationFeedListResponse, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "list", "KalturaBaseSyndicationFeedListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60796,7 +60810,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("feedId", feedId)
-        self.client.queueServiceActionCall("syndicationfeed", "requestConversion", None, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "requestConversion", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60808,7 +60822,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("syndicationFeed", syndicationFeed)
-        self.client.queueServiceActionCall("syndicationfeed", "update", KalturaBaseSyndicationFeed, kparams)
+        self.client.queueServiceActionCall("syndicationfeed", "update", "KalturaBaseSyndicationFeed", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60825,7 +60839,7 @@ class KalturaSystemService(KalturaServiceBase):
 
     def getTime(self):
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("system", "getTime", None, kparams)
+        self.client.queueServiceActionCall("system", "getTime", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60833,7 +60847,7 @@ class KalturaSystemService(KalturaServiceBase):
 
     def getVersion(self):
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("system", "getVersion", None, kparams)
+        self.client.queueServiceActionCall("system", "getVersion", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60841,7 +60855,7 @@ class KalturaSystemService(KalturaServiceBase):
 
     def ping(self):
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("system", "ping", None, kparams)
+        self.client.queueServiceActionCall("system", "ping", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60849,7 +60863,7 @@ class KalturaSystemService(KalturaServiceBase):
 
     def pingDatabase(self):
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("system", "pingDatabase", None, kparams)
+        self.client.queueServiceActionCall("system", "pingDatabase", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60870,7 +60884,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("thumbAsset", thumbAsset)
-        self.client.queueServiceActionCall("thumbasset", "add", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "add", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60881,7 +60895,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("thumbasset", "addFromImage", KalturaThumbAsset, kparams, kfiles)
+        self.client.queueServiceActionCall("thumbasset", "addFromImage", "KalturaThumbAsset", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60891,7 +60905,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addStringIfDefined("url", url)
-        self.client.queueServiceActionCall("thumbasset", "addFromUrl", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "addFromUrl", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60900,7 +60914,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
     def delete(self, thumbAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("thumbAssetId", thumbAssetId)
-        self.client.queueServiceActionCall("thumbasset", "delete", None, kparams)
+        self.client.queueServiceActionCall("thumbasset", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60911,7 +60925,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("assetId", assetId)
         kparams.addIntIfDefined("storageProfileId", storageProfileId);
-        self.client.queueServiceActionCall("thumbasset", "export", KalturaFlavorAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "export", "KalturaFlavorAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60922,7 +60936,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("thumbParams", thumbParams)
         kparams.addStringIfDefined("sourceAssetId", sourceAssetId)
-        self.client.queueServiceActionCall("thumbasset", "generate", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "generate", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60932,7 +60946,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("destThumbParamsId", destThumbParamsId);
-        self.client.queueServiceActionCall("thumbasset", "generateByEntryId", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "generateByEntryId", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60941,7 +60955,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
     def get(self, thumbAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("thumbAssetId", thumbAssetId)
-        self.client.queueServiceActionCall("thumbasset", "get", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "get", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60950,7 +60964,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
     def getByEntryId(self, entryId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("thumbasset", "getByEntryId", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "getByEntryId", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60961,7 +60975,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("thumbasset", "getRemotePaths", KalturaRemotePathListResponse, kparams)
+        self.client.queueServiceActionCall("thumbasset", "getRemotePaths", "KalturaRemotePathListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60974,7 +60988,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("storageId", storageId);
         kparams.addObjectIfDefined("thumbParams", thumbParams)
-        self.client.queueServiceActionCall("thumbasset", "getUrl", None, kparams)
+        self.client.queueServiceActionCall("thumbasset", "getUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60986,7 +61000,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("thumbasset", "list", KalturaThumbAssetListResponse, kparams)
+        self.client.queueServiceActionCall("thumbasset", "list", "KalturaThumbAssetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -60995,7 +61009,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
     def regenerate(self, thumbAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("thumbAssetId", thumbAssetId)
-        self.client.queueServiceActionCall("thumbasset", "regenerate", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "regenerate", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61027,7 +61041,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("thumbAssetId", thumbAssetId)
-        self.client.queueServiceActionCall("thumbasset", "setAsDefault", None, kparams)
+        self.client.queueServiceActionCall("thumbasset", "setAsDefault", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61038,7 +61052,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("contentResource", contentResource)
-        self.client.queueServiceActionCall("thumbasset", "setContent", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "setContent", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61050,7 +61064,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("thumbAsset", thumbAsset)
-        self.client.queueServiceActionCall("thumbasset", "update", KalturaThumbAsset, kparams)
+        self.client.queueServiceActionCall("thumbasset", "update", "KalturaThumbAsset", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61070,7 +61084,7 @@ class KalturaThumbParamsOutputService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("thumbparamsoutput", "get", KalturaThumbParamsOutput, kparams)
+        self.client.queueServiceActionCall("thumbparamsoutput", "get", "KalturaThumbParamsOutput", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61082,7 +61096,7 @@ class KalturaThumbParamsOutputService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("thumbparamsoutput", "list", KalturaThumbParamsOutputListResponse, kparams)
+        self.client.queueServiceActionCall("thumbparamsoutput", "list", "KalturaThumbParamsOutputListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61102,7 +61116,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("thumbParams", thumbParams)
-        self.client.queueServiceActionCall("thumbparams", "add", KalturaThumbParams, kparams)
+        self.client.queueServiceActionCall("thumbparams", "add", "KalturaThumbParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61113,7 +61127,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("thumbparams", "delete", None, kparams)
+        self.client.queueServiceActionCall("thumbparams", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61123,7 +61137,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("thumbparams", "get", KalturaThumbParams, kparams)
+        self.client.queueServiceActionCall("thumbparams", "get", "KalturaThumbParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61134,7 +61148,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        self.client.queueServiceActionCall("thumbparams", "getByConversionProfileId", KalturaThumbParams, kparams)
+        self.client.queueServiceActionCall("thumbparams", "getByConversionProfileId", "KalturaThumbParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61146,7 +61160,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("thumbparams", "list", KalturaThumbParamsListResponse, kparams)
+        self.client.queueServiceActionCall("thumbparams", "list", "KalturaThumbParamsListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61158,7 +61172,7 @@ class KalturaThumbParamsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("thumbParams", thumbParams)
-        self.client.queueServiceActionCall("thumbparams", "update", KalturaThumbParams, kparams)
+        self.client.queueServiceActionCall("thumbparams", "update", "KalturaThumbParams", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61179,7 +61193,7 @@ class KalturaUiConfService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("uiConf", uiConf)
-        self.client.queueServiceActionCall("uiconf", "add", KalturaUiConf, kparams)
+        self.client.queueServiceActionCall("uiconf", "add", "KalturaUiConf", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61190,7 +61204,7 @@ class KalturaUiConfService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("uiconf", "clone", KalturaUiConf, kparams)
+        self.client.queueServiceActionCall("uiconf", "clone", "KalturaUiConf", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61201,7 +61215,7 @@ class KalturaUiConfService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("uiconf", "delete", None, kparams)
+        self.client.queueServiceActionCall("uiconf", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61211,7 +61225,7 @@ class KalturaUiConfService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("uiconf", "get", KalturaUiConf, kparams)
+        self.client.queueServiceActionCall("uiconf", "get", "KalturaUiConf", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61221,7 +61235,7 @@ class KalturaUiConfService(KalturaServiceBase):
         """Retrieve a list of all available versions by object type"""
 
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("uiconf", "getAvailableTypes", KalturaUiConfTypeInfo, kparams)
+        self.client.queueServiceActionCall("uiconf", "getAvailableTypes", "KalturaUiConfTypeInfo", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61233,7 +61247,7 @@ class KalturaUiConfService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("uiconf", "list", KalturaUiConfListResponse, kparams)
+        self.client.queueServiceActionCall("uiconf", "list", "KalturaUiConfListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61245,7 +61259,7 @@ class KalturaUiConfService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("uiconf", "listTemplates", KalturaUiConfListResponse, kparams)
+        self.client.queueServiceActionCall("uiconf", "listTemplates", "KalturaUiConfListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61257,7 +61271,7 @@ class KalturaUiConfService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("uiConf", uiConf)
-        self.client.queueServiceActionCall("uiconf", "update", KalturaUiConf, kparams)
+        self.client.queueServiceActionCall("uiconf", "update", "KalturaUiConf", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61273,7 +61287,7 @@ class KalturaUploadService(KalturaServiceBase):
     def getUploadedFileTokenByFileName(self, fileName):
         kparams = KalturaParams()
         kparams.addStringIfDefined("fileName", fileName)
-        self.client.queueServiceActionCall("upload", "getUploadedFileTokenByFileName", KalturaUploadResponse, kparams)
+        self.client.queueServiceActionCall("upload", "getUploadedFileTokenByFileName", "KalturaUploadResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61283,7 +61297,7 @@ class KalturaUploadService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("upload", "upload", None, kparams, kfiles)
+        self.client.queueServiceActionCall("upload", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61301,7 +61315,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("uploadToken", uploadToken)
-        self.client.queueServiceActionCall("uploadtoken", "add", KalturaUploadToken, kparams)
+        self.client.queueServiceActionCall("uploadtoken", "add", "KalturaUploadToken", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61312,7 +61326,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        self.client.queueServiceActionCall("uploadtoken", "delete", None, kparams)
+        self.client.queueServiceActionCall("uploadtoken", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61322,7 +61336,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        self.client.queueServiceActionCall("uploadtoken", "get", KalturaUploadToken, kparams)
+        self.client.queueServiceActionCall("uploadtoken", "get", "KalturaUploadToken", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61335,7 +61349,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("uploadtoken", "list", KalturaUploadTokenListResponse, kparams)
+        self.client.queueServiceActionCall("uploadtoken", "list", "KalturaUploadTokenListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61359,7 +61373,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
         kparams.addBoolIfDefined("resume", resume);
         kparams.addBoolIfDefined("finalChunk", finalChunk);
         kparams.addFloatIfDefined("resumeAt", resumeAt)
-        self.client.queueServiceActionCall("uploadtoken", "upload", KalturaUploadToken, kparams, kfiles)
+        self.client.queueServiceActionCall("uploadtoken", "upload", "KalturaUploadToken", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61377,7 +61391,7 @@ class KalturaUserEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("userEntry", userEntry)
-        self.client.queueServiceActionCall("userentry", "add", KalturaUserEntry, kparams)
+        self.client.queueServiceActionCall("userentry", "add", "KalturaUserEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61386,7 +61400,7 @@ class KalturaUserEntryService(KalturaServiceBase):
     def bulkDelete(self, filter):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("userentry", "bulkDelete", None, kparams)
+        self.client.queueServiceActionCall("userentry", "bulkDelete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61395,7 +61409,7 @@ class KalturaUserEntryService(KalturaServiceBase):
     def delete(self, id):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("userentry", "delete", KalturaUserEntry, kparams)
+        self.client.queueServiceActionCall("userentry", "delete", "KalturaUserEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61404,7 +61418,7 @@ class KalturaUserEntryService(KalturaServiceBase):
     def get(self, id):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("userentry", "get", KalturaUserEntry, kparams)
+        self.client.queueServiceActionCall("userentry", "get", "KalturaUserEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61414,7 +61428,7 @@ class KalturaUserEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("userentry", "list", KalturaUserEntryListResponse, kparams)
+        self.client.queueServiceActionCall("userentry", "list", "KalturaUserEntryListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61425,7 +61439,7 @@ class KalturaUserEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("userentry", "submitQuiz", KalturaQuizUserEntry, kparams)
+        self.client.queueServiceActionCall("userentry", "submitQuiz", "KalturaQuizUserEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61435,7 +61449,7 @@ class KalturaUserEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("userEntry", userEntry)
-        self.client.queueServiceActionCall("userentry", "update", None, kparams)
+        self.client.queueServiceActionCall("userentry", "update", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61454,7 +61468,7 @@ class KalturaUserRoleService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("userRole", userRole)
-        self.client.queueServiceActionCall("userrole", "add", KalturaUserRole, kparams)
+        self.client.queueServiceActionCall("userrole", "add", "KalturaUserRole", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61465,7 +61479,7 @@ class KalturaUserRoleService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("userRoleId", userRoleId);
-        self.client.queueServiceActionCall("userrole", "clone", KalturaUserRole, kparams)
+        self.client.queueServiceActionCall("userrole", "clone", "KalturaUserRole", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61476,7 +61490,7 @@ class KalturaUserRoleService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("userRoleId", userRoleId);
-        self.client.queueServiceActionCall("userrole", "delete", KalturaUserRole, kparams)
+        self.client.queueServiceActionCall("userrole", "delete", "KalturaUserRole", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61487,7 +61501,7 @@ class KalturaUserRoleService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("userRoleId", userRoleId);
-        self.client.queueServiceActionCall("userrole", "get", KalturaUserRole, kparams)
+        self.client.queueServiceActionCall("userrole", "get", "KalturaUserRole", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61501,7 +61515,7 @@ class KalturaUserRoleService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("userrole", "list", KalturaUserRoleListResponse, kparams)
+        self.client.queueServiceActionCall("userrole", "list", "KalturaUserRoleListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61513,7 +61527,7 @@ class KalturaUserRoleService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("userRoleId", userRoleId);
         kparams.addObjectIfDefined("userRole", userRole)
-        self.client.queueServiceActionCall("userrole", "update", KalturaUserRole, kparams)
+        self.client.queueServiceActionCall("userrole", "update", "KalturaUserRole", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61535,7 +61549,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("user", user)
-        self.client.queueServiceActionCall("user", "add", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "add", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61547,7 +61561,7 @@ class KalturaUserService(KalturaServiceBase):
         kfiles.put("fileData", fileData);
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadUserData", bulkUploadUserData)
-        self.client.queueServiceActionCall("user", "addFromBulkUpload", KalturaBulkUpload, kparams, kfiles)
+        self.client.queueServiceActionCall("user", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61558,7 +61572,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("user", "checkLoginDataExists", None, kparams)
+        self.client.queueServiceActionCall("user", "checkLoginDataExists", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61569,7 +61583,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("user", "delete", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "delete", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61582,7 +61596,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
         kparams.addStringIfDefined("loginId", loginId)
-        self.client.queueServiceActionCall("user", "disableLogin", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "disableLogin", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61595,7 +61609,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addStringIfDefined("userId", userId)
         kparams.addStringIfDefined("loginId", loginId)
         kparams.addStringIfDefined("password", password)
-        self.client.queueServiceActionCall("user", "enableLogin", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "enableLogin", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61606,7 +61620,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("user", "get", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "get", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61618,7 +61632,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("loginId", loginId)
-        self.client.queueServiceActionCall("user", "getByLoginId", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "getByLoginId", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61630,7 +61644,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addBoolIfDefined("shouldUpdate", shouldUpdate);
-        self.client.queueServiceActionCall("user", "index", None, kparams)
+        self.client.queueServiceActionCall("user", "index", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61644,7 +61658,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("user", "list", KalturaUserListResponse, kparams)
+        self.client.queueServiceActionCall("user", "list", "KalturaUserListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61659,7 +61673,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addStringIfDefined("password", password)
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
-        self.client.queueServiceActionCall("user", "login", None, kparams)
+        self.client.queueServiceActionCall("user", "login", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61670,7 +61684,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("requestedPartnerId", requestedPartnerId);
-        self.client.queueServiceActionCall("user", "loginByKs", KalturaSessionResponse, kparams)
+        self.client.queueServiceActionCall("user", "loginByKs", "KalturaSessionResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61686,7 +61700,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addIntIfDefined("expiry", expiry);
         kparams.addStringIfDefined("privileges", privileges)
         kparams.addStringIfDefined("otp", otp)
-        self.client.queueServiceActionCall("user", "loginByLoginId", None, kparams)
+        self.client.queueServiceActionCall("user", "loginByLoginId", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61697,7 +61711,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
-        self.client.queueServiceActionCall("user", "notifyBan", None, kparams)
+        self.client.queueServiceActionCall("user", "notifyBan", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61707,7 +61721,7 @@ class KalturaUserService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("email", email)
-        self.client.queueServiceActionCall("user", "resetPassword", None, kparams)
+        self.client.queueServiceActionCall("user", "resetPassword", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61718,7 +61732,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("hashKey", hashKey)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("user", "setInitialPassword", None, kparams)
+        self.client.queueServiceActionCall("user", "setInitialPassword", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61730,7 +61744,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
         kparams.addObjectIfDefined("user", user)
-        self.client.queueServiceActionCall("user", "update", KalturaUser, kparams)
+        self.client.queueServiceActionCall("user", "update", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61746,7 +61760,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addStringIfDefined("newPassword", newPassword)
         kparams.addStringIfDefined("newFirstName", newFirstName)
         kparams.addStringIfDefined("newLastName", newLastName)
-        self.client.queueServiceActionCall("user", "updateLoginData", None, kparams)
+        self.client.queueServiceActionCall("user", "updateLoginData", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61766,7 +61780,7 @@ class KalturaWidgetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("widget", widget)
-        self.client.queueServiceActionCall("widget", "add", KalturaWidget, kparams)
+        self.client.queueServiceActionCall("widget", "add", "KalturaWidget", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61778,7 +61792,7 @@ class KalturaWidgetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("widget", widget)
-        self.client.queueServiceActionCall("widget", "clone", KalturaWidget, kparams)
+        self.client.queueServiceActionCall("widget", "clone", "KalturaWidget", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61789,7 +61803,7 @@ class KalturaWidgetService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("widget", "get", KalturaWidget, kparams)
+        self.client.queueServiceActionCall("widget", "get", "KalturaWidget", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61801,7 +61815,7 @@ class KalturaWidgetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("widget", "list", KalturaWidgetListResponse, kparams)
+        self.client.queueServiceActionCall("widget", "list", "KalturaWidgetListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -61813,7 +61827,7 @@ class KalturaWidgetService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("widget", widget)
-        self.client.queueServiceActionCall("widget", "update", KalturaWidget, kparams)
+        self.client.queueServiceActionCall("widget", "update", "KalturaWidget", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -62247,14 +62261,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaScheduler': KalturaScheduler,
             'KalturaGroupUser': KalturaGroupUser,
             'KalturaIntegerValue': KalturaIntegerValue,
-            'KalturaBatchJobListResponse': KalturaBatchJobListResponse,
-            'KalturaMediaInfo': KalturaMediaInfo,
-            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
-            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
-            'KalturaThumbAsset': KalturaThumbAsset,
-            'KalturaThumbParams': KalturaThumbParams,
-            'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
-            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaLiveStreamConfiguration': KalturaLiveStreamConfiguration,
             'KalturaLiveStreamPushPublishConfiguration': KalturaLiveStreamPushPublishConfiguration,
             'KalturaLiveEntryRecordingOptions': KalturaLiveEntryRecordingOptions,
@@ -62277,6 +62283,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryBaseFilter': KalturaMediaEntryBaseFilter,
             'KalturaMediaEntryFilter': KalturaMediaEntryFilter,
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
+            'KalturaMediaInfo': KalturaMediaInfo,
             'KalturaMixEntry': KalturaMixEntry,
             'KalturaModerationFlag': KalturaModerationFlag,
             'KalturaPartnerStatistics': KalturaPartnerStatistics,
@@ -62313,6 +62320,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
+            'KalturaThumbAsset': KalturaThumbAsset,
+            'KalturaThumbParams': KalturaThumbParams,
+            'KalturaThumbParamsOutput': KalturaThumbParamsOutput,
             'KalturaUiConf': KalturaUiConf,
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
@@ -62348,6 +62358,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
             'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
+            'KalturaBatchJobListResponse': KalturaBatchJobListResponse,
             'KalturaBulkDownloadJobData': KalturaBulkDownloadJobData,
             'KalturaBulkUploadBaseFilter': KalturaBulkUploadBaseFilter,
             'KalturaBulkUploadCategoryData': KalturaBulkUploadCategoryData,
@@ -62420,6 +62431,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFlattenJobData': KalturaFlattenJobData,
             'KalturaFlavorAssetListResponse': KalturaFlavorAssetListResponse,
             'KalturaFlavorParamsListResponse': KalturaFlavorParamsListResponse,
+            'KalturaFlavorParamsOutputListResponse': KalturaFlavorParamsOutputListResponse,
             'KalturaGenericSyndicationFeed': KalturaGenericSyndicationFeed,
             'KalturaGoogleVideoSyndicationFeed': KalturaGoogleVideoSyndicationFeed,
             'KalturaGroupUserListResponse': KalturaGroupUserListResponse,
@@ -62441,6 +62453,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMailJobData': KalturaMailJobData,
             'KalturaMatchCondition': KalturaMatchCondition,
             'KalturaMediaInfoBaseFilter': KalturaMediaInfoBaseFilter,
+            'KalturaMediaInfoListResponse': KalturaMediaInfoListResponse,
             'KalturaMediaListResponse': KalturaMediaListResponse,
             'KalturaMixListResponse': KalturaMixListResponse,
             'KalturaModerationFlagListResponse': KalturaModerationFlagListResponse,
@@ -62479,6 +62492,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSyncCategoryPrivacyContextJobData': KalturaSyncCategoryPrivacyContextJobData,
             'KalturaThumbAssetListResponse': KalturaThumbAssetListResponse,
             'KalturaThumbParamsListResponse': KalturaThumbParamsListResponse,
+            'KalturaThumbParamsOutputListResponse': KalturaThumbParamsOutputListResponse,
             'KalturaThumbnailServeOptions': KalturaThumbnailServeOptions,
             'KalturaTubeMogulSyndicationFeed': KalturaTubeMogulSyndicationFeed,
             'KalturaUiConfBaseFilter': KalturaUiConfBaseFilter,
@@ -62497,6 +62511,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerKs': KalturaUrlTokenizerKs,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
+            'KalturaUrlTokenizerUplynk': KalturaUrlTokenizerUplynk,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
             'KalturaUrlTokenizerVnpt': KalturaUrlTokenizerVnpt,
             'KalturaUserAgentRestriction': KalturaUserAgentRestriction,

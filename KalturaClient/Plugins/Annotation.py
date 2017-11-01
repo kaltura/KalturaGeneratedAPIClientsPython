@@ -573,7 +573,7 @@ class KalturaAnnotationService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("annotation", annotation)
-        self.client.queueServiceActionCall("annotation_annotation", "add", KalturaAnnotation, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "add", "KalturaAnnotation", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -585,7 +585,7 @@ class KalturaAnnotationService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("annotation_annotation", "addFromBulk", KalturaCuePointListResponse, kparams, kfiles)
+        self.client.queueServiceActionCall("annotation_annotation", "addFromBulk", "KalturaCuePointListResponse", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -597,7 +597,7 @@ class KalturaAnnotationService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("annotation_annotation", "clone", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "clone", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -608,7 +608,7 @@ class KalturaAnnotationService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("annotation_annotation", "count", None, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "count", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -619,7 +619,7 @@ class KalturaAnnotationService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("annotation_annotation", "delete", None, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -629,7 +629,7 @@ class KalturaAnnotationService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
-        self.client.queueServiceActionCall("annotation_annotation", "get", KalturaCuePoint, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "get", "KalturaCuePoint", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -641,7 +641,7 @@ class KalturaAnnotationService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("annotation_annotation", "list", KalturaAnnotationListResponse, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "list", "KalturaAnnotationListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -662,7 +662,7 @@ class KalturaAnnotationService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addObjectIfDefined("annotation", annotation)
-        self.client.queueServiceActionCall("annotation_annotation", "update", KalturaAnnotation, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "update", "KalturaAnnotation", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -674,7 +674,7 @@ class KalturaAnnotationService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("annotation_annotation", "updateStatus", None, kparams)
+        self.client.queueServiceActionCall("annotation_annotation", "updateStatus", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

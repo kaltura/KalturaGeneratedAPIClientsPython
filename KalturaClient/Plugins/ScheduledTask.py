@@ -1132,7 +1132,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("scheduledTaskProfile", scheduledTaskProfile)
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "add", KalturaScheduledTaskProfile, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "add", "KalturaScheduledTaskProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1143,7 +1143,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1153,7 +1153,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "get", KalturaScheduledTaskProfile, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "get", "KalturaScheduledTaskProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1162,7 +1162,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
     def getDryRunResults(self, requestId):
         kparams = KalturaParams()
         kparams.addIntIfDefined("requestId", requestId);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "getDryRunResults", KalturaObjectListResponse, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "getDryRunResults", "KalturaObjectListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1174,7 +1174,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "list", KalturaScheduledTaskProfileListResponse, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "list", "KalturaScheduledTaskProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1184,7 +1184,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("scheduledTaskProfileId", scheduledTaskProfileId);
         kparams.addIntIfDefined("maxResults", maxResults);
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "requestDryRun", None, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "requestDryRun", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1196,7 +1196,7 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("scheduledTaskProfile", scheduledTaskProfile)
-        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "update", KalturaScheduledTaskProfile, kparams)
+        self.client.queueServiceActionCall("scheduledtask_scheduledtaskprofile", "update", "KalturaScheduledTaskProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

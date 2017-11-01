@@ -1117,7 +1117,7 @@ class KalturaQuizService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("quiz", quiz)
-        self.client.queueServiceActionCall("quiz_quiz", "add", KalturaQuiz, kparams)
+        self.client.queueServiceActionCall("quiz_quiz", "add", "KalturaQuiz", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1128,7 +1128,7 @@ class KalturaQuizService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("quiz_quiz", "get", KalturaQuiz, kparams)
+        self.client.queueServiceActionCall("quiz_quiz", "get", "KalturaQuiz", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1140,7 +1140,7 @@ class KalturaQuizService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("quizOutputType", quizOutputType);
-        self.client.queueServiceActionCall("quiz_quiz", "getUrl", None, kparams)
+        self.client.queueServiceActionCall("quiz_quiz", "getUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1152,7 +1152,7 @@ class KalturaQuizService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("quiz_quiz", "list", KalturaQuizListResponse, kparams)
+        self.client.queueServiceActionCall("quiz_quiz", "list", "KalturaQuizListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -1175,7 +1175,7 @@ class KalturaQuizService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("quiz", quiz)
-        self.client.queueServiceActionCall("quiz_quiz", "update", KalturaQuiz, kparams)
+        self.client.queueServiceActionCall("quiz_quiz", "update", "KalturaQuiz", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

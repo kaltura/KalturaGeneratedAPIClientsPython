@@ -2705,7 +2705,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams.addStringIfDefined("sourceEntryId", sourceEntryId)
         kparams.addObjectIfDefined("documentEntry", documentEntry)
         kparams.addIntIfDefined("sourceFlavorParamsId", sourceFlavorParamsId);
-        self.client.queueServiceActionCall("document_documents", "addFromEntry", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "addFromEntry", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2717,7 +2717,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("sourceFlavorAssetId", sourceFlavorAssetId)
         kparams.addObjectIfDefined("documentEntry", documentEntry)
-        self.client.queueServiceActionCall("document_documents", "addFromFlavorAsset", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "addFromFlavorAsset", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2729,7 +2729,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("documentEntry", documentEntry)
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        self.client.queueServiceActionCall("document_documents", "addFromUploadedFile", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "addFromUploadedFile", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2740,7 +2740,7 @@ class KalturaDocumentsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "approveReplace", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "approveReplace", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2751,7 +2751,7 @@ class KalturaDocumentsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "cancelReplace", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "cancelReplace", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2764,7 +2764,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
         kparams.addArrayIfDefined("dynamicConversionAttributes", dynamicConversionAttributes)
-        self.client.queueServiceActionCall("document_documents", "convert", None, kparams)
+        self.client.queueServiceActionCall("document_documents", "convert", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2776,7 +2776,7 @@ class KalturaDocumentsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "convertPptToSwf", None, kparams)
+        self.client.queueServiceActionCall("document_documents", "convertPptToSwf", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2787,7 +2787,7 @@ class KalturaDocumentsService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("document_documents", "delete", None, kparams)
+        self.client.queueServiceActionCall("document_documents", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2798,7 +2798,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addIntIfDefined("version", version);
-        self.client.queueServiceActionCall("document_documents", "get", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "get", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2810,7 +2810,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("document_documents", "list", KalturaDocumentListResponse, kparams)
+        self.client.queueServiceActionCall("document_documents", "list", "KalturaDocumentListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2842,7 +2842,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("documentEntry", documentEntry)
-        self.client.queueServiceActionCall("document_documents", "update", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "update", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2855,7 +2855,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addObjectIfDefined("resource", resource)
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        self.client.queueServiceActionCall("document_documents", "updateContent", KalturaDocumentEntry, kparams)
+        self.client.queueServiceActionCall("document_documents", "updateContent", "KalturaDocumentEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -2867,7 +2867,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         kparams = KalturaParams()
         kfiles = KalturaFiles()
         kfiles.put("fileData", fileData);
-        self.client.queueServiceActionCall("document_documents", "upload", None, kparams, kfiles)
+        self.client.queueServiceActionCall("document_documents", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

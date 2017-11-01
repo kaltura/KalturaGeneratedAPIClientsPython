@@ -253,6 +253,7 @@ class KalturaDistributionProviderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDistributionProviderType(object):
+    ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
     AVN = "avnDistribution.AVN"
     COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
     CROSS_KALTURA = "crossKalturaDistribution.CROSS_KALTURA"
@@ -267,8 +268,18 @@ class KalturaDistributionProviderType(object):
     IDETIC = "ideticDistribution.IDETIC"
     METRO_PCS = "metroPcsDistribution.METRO_PCS"
     MSN = "msnDistribution.MSN"
+    NDN = "ndnDistribution.NDN"
+    PODCAST = "podcastDistribution.PODCAST"
+    PUSH_TO_NEWS = "pushToNewsDistribution.PUSH_TO_NEWS"
     QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
+    SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
+    TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
+    TVCOM = "tvComDistribution.TVCOM"
+    TVINCI = "tvinciDistribution.TVINCI"
     UNICORN = "unicornDistribution.UNICORN"
+    UVERSE_CLICK_TO_ORDER = "uverseClickToOrderDistribution.UVERSE_CLICK_TO_ORDER"
+    UVERSE = "uverseDistribution.UVERSE"
+    VERIZON_VCAST = "verizonVcastDistribution.VERIZON_VCAST"
     YAHOO = "yahooDistribution.YAHOO"
     YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"
@@ -4729,7 +4740,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("distributionProfile", distributionProfile)
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "add", KalturaDistributionProfile, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "add", "KalturaDistributionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4740,7 +4751,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "delete", None, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4750,7 +4761,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "get", KalturaDistributionProfile, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "get", "KalturaDistributionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4762,7 +4773,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "list", KalturaDistributionProfileListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "list", "KalturaDistributionProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4772,7 +4783,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "listByPartner", KalturaDistributionProfileListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "listByPartner", "KalturaDistributionProfileListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4784,7 +4795,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("distributionProfile", distributionProfile)
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "update", KalturaDistributionProfile, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "update", "KalturaDistributionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4796,7 +4807,7 @@ class KalturaDistributionProfileService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addIntIfDefined("status", status);
-        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "updateStatus", KalturaDistributionProfile, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprofile", "updateStatus", "KalturaDistributionProfile", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4816,7 +4827,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("entryDistribution", entryDistribution)
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "add", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "add", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4827,7 +4838,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "delete", None, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4837,7 +4848,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "get", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "get", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4849,7 +4860,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "list", KalturaEntryDistributionListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "list", "KalturaEntryDistributionListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4860,7 +4871,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "retrySubmit", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "retrySubmit", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4890,7 +4901,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addBoolIfDefined("submitWhenReady", submitWhenReady);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitAdd", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitAdd", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4901,7 +4912,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitDelete", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitDelete", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4912,7 +4923,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitFetchReport", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitFetchReport", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4923,7 +4934,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitUpdate", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "submitUpdate", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4935,7 +4946,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("entryDistribution", entryDistribution)
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "update", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "update", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4946,7 +4957,7 @@ class KalturaEntryDistributionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "validate", KalturaEntryDistribution, kparams)
+        self.client.queueServiceActionCall("contentdistribution_entrydistribution", "validate", "KalturaEntryDistribution", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4967,7 +4978,7 @@ class KalturaDistributionProviderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_distributionprovider", "list", KalturaDistributionProviderListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_distributionprovider", "list", "KalturaDistributionProviderListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4987,7 +4998,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("genericDistributionProvider", genericDistributionProvider)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "add", KalturaGenericDistributionProvider, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "add", "KalturaGenericDistributionProvider", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -4998,7 +5009,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "delete", None, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5008,7 +5019,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "get", KalturaGenericDistributionProvider, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "get", "KalturaGenericDistributionProvider", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5020,7 +5031,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "list", KalturaGenericDistributionProviderListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "list", "KalturaGenericDistributionProviderListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5032,7 +5043,7 @@ class KalturaGenericDistributionProviderService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("genericDistributionProvider", genericDistributionProvider)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "update", KalturaGenericDistributionProvider, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovider", "update", "KalturaGenericDistributionProvider", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5052,7 +5063,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("genericDistributionProviderAction", genericDistributionProviderAction)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "add", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "add", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5064,7 +5075,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addStringIfDefined("xslData", xslData)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransform", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransform", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5077,7 +5088,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xslFile", xslFile);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransformFromFile", KalturaGenericDistributionProviderAction, kparams, kfiles)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5089,7 +5100,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addStringIfDefined("xsdData", xsdData)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidate", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidate", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5102,7 +5113,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("xsdFile", xsdFile);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidateFromFile", KalturaGenericDistributionProviderAction, kparams, kfiles)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidateFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5114,7 +5125,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addStringIfDefined("transformData", transformData)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransform", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransform", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5127,7 +5138,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams.addIntIfDefined("id", id);
         kfiles = KalturaFiles()
         kfiles.put("transformFile", transformFile);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransformFromFile", KalturaGenericDistributionProviderAction, kparams, kfiles)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5138,7 +5149,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "delete", None, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "delete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5149,7 +5160,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("genericDistributionProviderId", genericDistributionProviderId);
         kparams.addIntIfDefined("actionType", actionType);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "deleteByProviderId", None, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "deleteByProviderId", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5159,7 +5170,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "get", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "get", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5171,7 +5182,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("genericDistributionProviderId", genericDistributionProviderId);
         kparams.addIntIfDefined("actionType", actionType);
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "getByProviderId", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "getByProviderId", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5183,7 +5194,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "list", KalturaGenericDistributionProviderActionListResponse, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "list", "KalturaGenericDistributionProviderActionListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5195,7 +5206,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("genericDistributionProviderAction", genericDistributionProviderAction)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "update", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "update", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -5208,7 +5219,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
         kparams.addIntIfDefined("genericDistributionProviderId", genericDistributionProviderId);
         kparams.addIntIfDefined("actionType", actionType);
         kparams.addObjectIfDefined("genericDistributionProviderAction", genericDistributionProviderAction)
-        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "updateByProviderId", KalturaGenericDistributionProviderAction, kparams)
+        self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "updateByProviderId", "KalturaGenericDistributionProviderAction", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

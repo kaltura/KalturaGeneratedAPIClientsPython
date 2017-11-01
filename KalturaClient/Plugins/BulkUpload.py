@@ -72,7 +72,7 @@ class KalturaBulkService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("bulkupload_bulk", "abort", KalturaBulkUpload, kparams)
+        self.client.queueServiceActionCall("bulkupload_bulk", "abort", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -83,7 +83,7 @@ class KalturaBulkService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("bulkupload_bulk", "get", KalturaBulkUpload, kparams)
+        self.client.queueServiceActionCall("bulkupload_bulk", "get", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
@@ -95,7 +95,7 @@ class KalturaBulkService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("bulkUploadFilter", bulkUploadFilter)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("bulkupload_bulk", "list", KalturaBulkUploadListResponse, kparams)
+        self.client.queueServiceActionCall("bulkupload_bulk", "list", "KalturaBulkUploadListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
