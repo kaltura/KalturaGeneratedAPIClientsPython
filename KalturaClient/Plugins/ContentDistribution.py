@@ -253,7 +253,6 @@ class KalturaDistributionProviderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDistributionProviderType(object):
-    ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
     AVN = "avnDistribution.AVN"
     COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
     CROSS_KALTURA = "crossKalturaDistribution.CROSS_KALTURA"
@@ -268,18 +267,8 @@ class KalturaDistributionProviderType(object):
     IDETIC = "ideticDistribution.IDETIC"
     METRO_PCS = "metroPcsDistribution.METRO_PCS"
     MSN = "msnDistribution.MSN"
-    NDN = "ndnDistribution.NDN"
-    PODCAST = "podcastDistribution.PODCAST"
-    PUSH_TO_NEWS = "pushToNewsDistribution.PUSH_TO_NEWS"
     QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
-    SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
-    TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
-    TVCOM = "tvComDistribution.TVCOM"
-    TVINCI = "tvinciDistribution.TVINCI"
     UNICORN = "unicornDistribution.UNICORN"
-    UVERSE_CLICK_TO_ORDER = "uverseClickToOrderDistribution.UVERSE_CLICK_TO_ORDER"
-    UVERSE = "uverseDistribution.UVERSE"
-    VERIZON_VCAST = "verizonVcastDistribution.VERIZON_VCAST"
     YAHOO = "yahooDistribution.YAHOO"
     YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"

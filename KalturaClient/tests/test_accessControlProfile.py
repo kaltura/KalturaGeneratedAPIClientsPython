@@ -58,6 +58,8 @@ class AccessControlProfileTests(KalturaBaseTest):
         self.assertIsInstance(createdCondition2, KalturaSiteCondition)
         self.assertEqual(createdCondition2.not_, False)
         
+        self.client.accessControlProfile.delete(createdProfile.id)
+        
         return profile
 
 def test_suite():

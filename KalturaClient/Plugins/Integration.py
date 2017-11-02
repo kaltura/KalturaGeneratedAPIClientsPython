@@ -38,8 +38,6 @@ from ..Base import *
 # @subpackage Client
 class KalturaIntegrationProviderType(object):
     CIELO24 = "cielo24.Cielo24"
-    DEXTER = "dexterIntegration.Dexter"
-    EXAMPLE = "exampleIntegration.Example"
     VOICEBASE = "voicebase.Voicebase"
 
     def __init__(self, value):
