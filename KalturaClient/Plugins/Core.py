@@ -821,6 +821,20 @@ class KalturaRecordStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaRecordingStatus(object):
+    STOPPED = 0
+    PAUSED = 1
+    ACTIVE = 2
+    DISABLED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaResponseProfileStatus(object):
     DISABLED = 1
     ENABLED = 2
@@ -1329,6 +1343,18 @@ class KalturaUserStatus(object):
 class KalturaUserType(object):
     USER = 0
     GROUP = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaViewMode(object):
+    PREVIEW = 0
+    ALLOW_ALL = 1
 
     def __init__(self, value):
         self.value = value
@@ -12774,12 +12800,16 @@ class KalturaDeliveryProfile(KalturaObjectBase):
 class KalturaFileSyncDescriptor(KalturaObjectBase):
     def __init__(self,
             fileSyncLocalPath=NotImplemented,
+            fileEncryptionKey=NotImplemented,
             fileSyncRemoteUrl=NotImplemented,
             fileSyncObjectSubType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
         self.fileSyncLocalPath = fileSyncLocalPath
+
+        # @var string
+        self.fileEncryptionKey = fileEncryptionKey
 
         # The translated path as used by the scheduler
         # @var string
@@ -12791,6 +12821,7 @@ class KalturaFileSyncDescriptor(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'fileSyncLocalPath': getXmlNodeText, 
+        'fileEncryptionKey': getXmlNodeText, 
         'fileSyncRemoteUrl': getXmlNodeText, 
         'fileSyncObjectSubType': getXmlNodeInt, 
     }
@@ -12803,6 +12834,7 @@ class KalturaFileSyncDescriptor(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaFileSyncDescriptor")
         kparams.addStringIfDefined("fileSyncLocalPath", self.fileSyncLocalPath)
+        kparams.addStringIfDefined("fileEncryptionKey", self.fileEncryptionKey)
         kparams.addStringIfDefined("fileSyncRemoteUrl", self.fileSyncRemoteUrl)
         kparams.addIntIfDefined("fileSyncObjectSubType", self.fileSyncObjectSubType)
         return kparams
@@ -12812,6 +12844,12 @@ class KalturaFileSyncDescriptor(KalturaObjectBase):
 
     def setFileSyncLocalPath(self, newFileSyncLocalPath):
         self.fileSyncLocalPath = newFileSyncLocalPath
+
+    def getFileEncryptionKey(self):
+        return self.fileEncryptionKey
+
+    def setFileEncryptionKey(self, newFileEncryptionKey):
+        self.fileEncryptionKey = newFileEncryptionKey
 
     def getFileSyncRemoteUrl(self):
         return self.fileSyncRemoteUrl
@@ -12831,10 +12869,12 @@ class KalturaFileSyncDescriptor(KalturaObjectBase):
 class KalturaDestFileSyncDescriptor(KalturaFileSyncDescriptor):
     def __init__(self,
             fileSyncLocalPath=NotImplemented,
+            fileEncryptionKey=NotImplemented,
             fileSyncRemoteUrl=NotImplemented,
             fileSyncObjectSubType=NotImplemented):
         KalturaFileSyncDescriptor.__init__(self,
             fileSyncLocalPath,
+            fileEncryptionKey,
             fileSyncRemoteUrl,
             fileSyncObjectSubType)
 
@@ -17494,7 +17534,10 @@ class KalturaLiveEntry(KalturaMediaEntry):
             currentBroadcastStartTime=NotImplemented,
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
-            segmentDuration=NotImplemented):
+            segmentDuration=NotImplemented,
+            explicitLive=NotImplemented,
+            viewMode=NotImplemented,
+            recordingStatus=NotImplemented):
         KalturaMediaEntry.__init__(self,
             id,
             name,
@@ -17624,6 +17667,15 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @var int
         self.segmentDuration = segmentDuration
 
+        # @var bool
+        self.explicitLive = explicitLive
+
+        # @var KalturaViewMode
+        self.viewMode = viewMode
+
+        # @var KalturaRecordingStatus
+        self.recordingStatus = recordingStatus
+
 
     PROPERTY_LOADERS = {
         'offlineMessage': getXmlNodeText, 
@@ -17641,6 +17693,9 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'recordingOptions': (KalturaObjectFactory.create, 'KalturaLiveEntryRecordingOptions'), 
         'liveStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
         'segmentDuration': getXmlNodeInt, 
+        'explicitLive': getXmlNodeBool, 
+        'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
+        'recordingStatus': (KalturaEnumsFactory.createInt, "KalturaRecordingStatus"), 
     }
 
     def fromXml(self, node):
@@ -17662,6 +17717,9 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addFloatIfDefined("currentBroadcastStartTime", self.currentBroadcastStartTime)
         kparams.addObjectIfDefined("recordingOptions", self.recordingOptions)
         kparams.addIntIfDefined("segmentDuration", self.segmentDuration)
+        kparams.addBoolIfDefined("explicitLive", self.explicitLive)
+        kparams.addIntEnumIfDefined("viewMode", self.viewMode)
+        kparams.addIntEnumIfDefined("recordingStatus", self.recordingStatus)
         return kparams
 
     def getOfflineMessage(self):
@@ -17744,6 +17802,24 @@ class KalturaLiveEntry(KalturaMediaEntry):
 
     def setSegmentDuration(self, newSegmentDuration):
         self.segmentDuration = newSegmentDuration
+
+    def getExplicitLive(self):
+        return self.explicitLive
+
+    def setExplicitLive(self, newExplicitLive):
+        self.explicitLive = newExplicitLive
+
+    def getViewMode(self):
+        return self.viewMode
+
+    def setViewMode(self, newViewMode):
+        self.viewMode = newViewMode
+
+    def getRecordingStatus(self):
+        return self.recordingStatus
+
+    def setRecordingStatus(self, newRecordingStatus):
+        self.recordingStatus = newRecordingStatus
 
 
 # @package Kaltura
@@ -17830,6 +17906,9 @@ class KalturaLiveChannel(KalturaLiveEntry):
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
             segmentDuration=NotImplemented,
+            explicitLive=NotImplemented,
+            viewMode=NotImplemented,
+            recordingStatus=NotImplemented,
             playlistId=NotImplemented,
             repeat=NotImplemented):
         KalturaLiveEntry.__init__(self,
@@ -17912,7 +17991,10 @@ class KalturaLiveChannel(KalturaLiveEntry):
             currentBroadcastStartTime,
             recordingOptions,
             liveStatus,
-            segmentDuration)
+            segmentDuration,
+            explicitLive,
+            viewMode,
+            recordingStatus)
 
         # Playlist id to be played
         # @var string
@@ -18830,6 +18912,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
             segmentDuration=NotImplemented,
+            explicitLive=NotImplemented,
+            viewMode=NotImplemented,
+            recordingStatus=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -18926,7 +19011,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             currentBroadcastStartTime,
             recordingOptions,
             liveStatus,
-            segmentDuration)
+            segmentDuration,
+            explicitLive,
+            viewMode,
+            recordingStatus)
 
         # The stream id as provided by the provider
         # @var string
@@ -24314,6 +24402,7 @@ class KalturaSessionInfo(KalturaObjectBase):
 class KalturaSourceFileSyncDescriptor(KalturaFileSyncDescriptor):
     def __init__(self,
             fileSyncLocalPath=NotImplemented,
+            fileEncryptionKey=NotImplemented,
             fileSyncRemoteUrl=NotImplemented,
             fileSyncObjectSubType=NotImplemented,
             actualFileSyncLocalPath=NotImplemented,
@@ -24321,6 +24410,7 @@ class KalturaSourceFileSyncDescriptor(KalturaFileSyncDescriptor):
             assetParamsId=NotImplemented):
         KalturaFileSyncDescriptor.__init__(self,
             fileSyncLocalPath,
+            fileEncryptionKey,
             fileSyncRemoteUrl,
             fileSyncObjectSubType)
 
@@ -52959,6 +53049,9 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             recordingOptions=NotImplemented,
             liveStatus=NotImplemented,
             segmentDuration=NotImplemented,
+            explicitLive=NotImplemented,
+            viewMode=NotImplemented,
+            recordingStatus=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -53056,6 +53149,9 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             recordingOptions,
             liveStatus,
             segmentDuration,
+            explicitLive,
+            viewMode,
+            recordingStatus,
             streamRemoteId,
             streamRemoteBackupId,
             bitrates,
@@ -57526,11 +57622,11 @@ class KalturaCategoryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("categoryIds", categoryIds)
         kparams.addIntIfDefined("targetCategoryParentId", targetCategoryParentId);
-        self.client.queueServiceActionCall("category", "move", "KalturaCategoryListResponse", kparams)
+        self.client.queueServiceActionCall("category", "move", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaCategoryListResponse')
+        return getXmlNodeBool(resultNode)
 
     def unlockCategories(self):
         """Unlock categories"""
@@ -61947,6 +62043,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistType': KalturaPlaylistType,
             'KalturaPrivacyType': KalturaPrivacyType,
             'KalturaRecordStatus': KalturaRecordStatus,
+            'KalturaRecordingStatus': KalturaRecordingStatus,
             'KalturaResponseProfileStatus': KalturaResponseProfileStatus,
             'KalturaResponseProfileType': KalturaResponseProfileType,
             'KalturaResponseType': KalturaResponseType,
@@ -61976,6 +62073,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserRoleStatus': KalturaUserRoleStatus,
             'KalturaUserStatus': KalturaUserStatus,
             'KalturaUserType': KalturaUserType,
+            'KalturaViewMode': KalturaViewMode,
             'KalturaWidgetSecurityType': KalturaWidgetSecurityType,
             'KalturaAccessControlOrderBy': KalturaAccessControlOrderBy,
             'KalturaAccessControlProfileOrderBy': KalturaAccessControlProfileOrderBy,

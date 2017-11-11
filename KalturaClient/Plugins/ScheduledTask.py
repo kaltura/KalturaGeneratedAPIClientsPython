@@ -492,6 +492,7 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
             sender=NotImplemented,
             subject=NotImplemented,
             message=NotImplemented,
+            footer=NotImplemented,
             link=NotImplemented,
             sendToUsers=NotImplemented):
         KalturaObjectTask.__init__(self,
@@ -514,6 +515,10 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
         # @var string
         self.message = message
 
+        # The footer of the message to send in the notification mail
+        # @var string
+        self.footer = footer
+
         # The basic link for the KMC site
         # @var string
         self.link = link
@@ -528,6 +533,7 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
         'sender': getXmlNodeText, 
         'subject': getXmlNodeText, 
         'message': getXmlNodeText, 
+        'footer': getXmlNodeText, 
         'link': getXmlNodeText, 
         'sendToUsers': getXmlNodeBool, 
     }
@@ -543,6 +549,7 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
         kparams.addStringIfDefined("sender", self.sender)
         kparams.addStringIfDefined("subject", self.subject)
         kparams.addStringIfDefined("message", self.message)
+        kparams.addStringIfDefined("footer", self.footer)
         kparams.addStringIfDefined("link", self.link)
         kparams.addBoolIfDefined("sendToUsers", self.sendToUsers)
         return kparams
@@ -570,6 +577,12 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
 
     def setMessage(self, newMessage):
         self.message = newMessage
+
+    def getFooter(self):
+        return self.footer
+
+    def setFooter(self, newFooter):
+        self.footer = newFooter
 
     def getLink(self):
         return self.link

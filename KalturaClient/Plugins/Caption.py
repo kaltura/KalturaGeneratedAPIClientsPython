@@ -519,7 +519,8 @@ class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
     def __init__(self,
             multiLanaguageCaptionAssetId=NotImplemented,
             entryId=NotImplemented,
-            fileLocation=NotImplemented):
+            fileLocation=NotImplemented,
+            fileEncryptionKey=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
@@ -531,11 +532,15 @@ class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
         # @var string
         self.fileLocation = fileLocation
 
+        # @var string
+        self.fileEncryptionKey = fileEncryptionKey
+
 
     PROPERTY_LOADERS = {
         'multiLanaguageCaptionAssetId': getXmlNodeText, 
         'entryId': getXmlNodeText, 
         'fileLocation': getXmlNodeText, 
+        'fileEncryptionKey': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -548,6 +553,7 @@ class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
         kparams.addStringIfDefined("multiLanaguageCaptionAssetId", self.multiLanaguageCaptionAssetId)
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringIfDefined("fileLocation", self.fileLocation)
+        kparams.addStringIfDefined("fileEncryptionKey", self.fileEncryptionKey)
         return kparams
 
     def getMultiLanaguageCaptionAssetId(self):
@@ -567,6 +573,12 @@ class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
 
     def setFileLocation(self, newFileLocation):
         self.fileLocation = newFileLocation
+
+    def getFileEncryptionKey(self):
+        return self.fileEncryptionKey
+
+    def setFileEncryptionKey(self, newFileEncryptionKey):
+        self.fileEncryptionKey = newFileEncryptionKey
 
 
 # @package Kaltura
