@@ -1426,7 +1426,8 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             recurrence=NotImplemented,
             templateEntryId=NotImplemented,
             entryIds=NotImplemented,
-            categoryIds=NotImplemented):
+            categoryIds=NotImplemented,
+            projectedAudience=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1457,8 +1458,13 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             entryIds,
             categoryIds)
 
+        # Defines the expected audience.
+        # @var int
+        self.projectedAudience = projectedAudience
+
 
     PROPERTY_LOADERS = {
+        'projectedAudience': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1468,7 +1474,14 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
     def toParams(self):
         kparams = KalturaEntryScheduleEvent.toParams(self)
         kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
+        kparams.addIntIfDefined("projectedAudience", self.projectedAudience)
         return kparams
+
+    def getProjectedAudience(self):
+        return self.projectedAudience
+
+    def setProjectedAudience(self, newProjectedAudience):
+        self.projectedAudience = newProjectedAudience
 
 
 # @package Kaltura

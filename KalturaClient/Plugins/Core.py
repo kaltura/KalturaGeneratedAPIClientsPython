@@ -14413,7 +14413,8 @@ class KalturaFlavorAsset(KalturaAsset):
             videoCodecId=NotImplemented,
             status=NotImplemented,
             language=NotImplemented,
-            label=NotImplemented):
+            label=NotImplemented,
+            isDefault=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -14488,6 +14489,10 @@ class KalturaFlavorAsset(KalturaAsset):
         # @var string
         self.label = label
 
+        # Is default flavor asset of the entry (This field will be taken into account selectign which audio flavor will be selected as default)
+        # @var KalturaNullableBoolean
+        self.isDefault = isDefault
+
 
     PROPERTY_LOADERS = {
         'flavorParamsId': getXmlNodeInt, 
@@ -14502,6 +14507,7 @@ class KalturaFlavorAsset(KalturaAsset):
         'status': (KalturaEnumsFactory.createInt, "KalturaFlavorAssetStatus"), 
         'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
         'label': getXmlNodeText, 
+        'isDefault': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -14514,6 +14520,7 @@ class KalturaFlavorAsset(KalturaAsset):
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
         kparams.addStringEnumIfDefined("language", self.language)
         kparams.addStringIfDefined("label", self.label)
+        kparams.addIntEnumIfDefined("isDefault", self.isDefault)
         return kparams
 
     def getFlavorParamsId(self):
@@ -14560,6 +14567,12 @@ class KalturaFlavorAsset(KalturaAsset):
 
     def setLabel(self, newLabel):
         self.label = newLabel
+
+    def getIsDefault(self):
+        return self.isDefault
+
+    def setIsDefault(self, newIsDefault):
+        self.isDefault = newIsDefault
 
 
 # @package Kaltura
@@ -26142,7 +26155,7 @@ class KalturaUser(KalturaObjectBase):
         self.deletedAt = deletedAt
 
         # @var bool
-        # @readonly
+        # @insertonly
         self.loginEnabled = loginEnabled
 
         # @var string
@@ -26153,7 +26166,7 @@ class KalturaUser(KalturaObjectBase):
         self.roleNames = roleNames
 
         # @var bool
-        # @readonly
+        # @insertonly
         self.isAccountOwner = isAccountOwner
 
         # @var string
@@ -26234,7 +26247,9 @@ class KalturaUser(KalturaObjectBase):
         kparams.addStringIfDefined("lastName", self.lastName)
         kparams.addBoolIfDefined("isAdmin", self.isAdmin)
         kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
         kparams.addStringIfDefined("roleIds", self.roleIds)
+        kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
         kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
         kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
         return kparams
@@ -26407,6 +26422,9 @@ class KalturaUser(KalturaObjectBase):
     def getLoginEnabled(self):
         return self.loginEnabled
 
+    def setLoginEnabled(self, newLoginEnabled):
+        self.loginEnabled = newLoginEnabled
+
     def getRoleIds(self):
         return self.roleIds
 
@@ -26418,6 +26436,9 @@ class KalturaUser(KalturaObjectBase):
 
     def getIsAccountOwner(self):
         return self.isAccountOwner
+
+    def setIsAccountOwner(self, newIsAccountOwner):
+        self.isAccountOwner = newIsAccountOwner
 
     def getAllowedPartnerIds(self):
         return self.allowedPartnerIds
@@ -44057,6 +44078,7 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             status=NotImplemented,
             language=NotImplemented,
             label=NotImplemented,
+            isDefault=NotImplemented,
             multicastIP=NotImplemented,
             multicastPort=NotImplemented):
         KalturaFlavorAsset.__init__(self,
@@ -44085,7 +44107,8 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             videoCodecId,
             status,
             language,
-            label)
+            label,
+            isDefault)
 
         # @var string
         self.multicastIP = multicastIP
