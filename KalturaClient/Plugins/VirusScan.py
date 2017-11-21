@@ -255,14 +255,14 @@ class KalturaParseCaptionAssetJobData(KalturaJobData):
 # @subpackage Client
 class KalturaVirusScanJobData(KalturaJobData):
     def __init__(self,
-            srcFilePath=NotImplemented,
+            fileContainer=NotImplemented,
             flavorAssetId=NotImplemented,
             scanResult=NotImplemented,
             virusFoundAction=NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
-        self.srcFilePath = srcFilePath
+        # @var KalturaFileContainer
+        self.fileContainer = fileContainer
 
         # @var string
         self.flavorAssetId = flavorAssetId
@@ -275,7 +275,7 @@ class KalturaVirusScanJobData(KalturaJobData):
 
 
     PROPERTY_LOADERS = {
-        'srcFilePath': getXmlNodeText, 
+        'fileContainer': (KalturaObjectFactory.create, 'KalturaFileContainer'), 
         'flavorAssetId': getXmlNodeText, 
         'scanResult': (KalturaEnumsFactory.createInt, "KalturaVirusScanJobResult"), 
         'virusFoundAction': (KalturaEnumsFactory.createInt, "KalturaVirusFoundAction"), 
@@ -288,17 +288,17 @@ class KalturaVirusScanJobData(KalturaJobData):
     def toParams(self):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaVirusScanJobData")
-        kparams.addStringIfDefined("srcFilePath", self.srcFilePath)
+        kparams.addObjectIfDefined("fileContainer", self.fileContainer)
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
         kparams.addIntEnumIfDefined("scanResult", self.scanResult)
         kparams.addIntEnumIfDefined("virusFoundAction", self.virusFoundAction)
         return kparams
 
-    def getSrcFilePath(self):
-        return self.srcFilePath
+    def getFileContainer(self):
+        return self.fileContainer
 
-    def setSrcFilePath(self, newSrcFilePath):
-        self.srcFilePath = newSrcFilePath
+    def setFileContainer(self, newFileContainer):
+        self.fileContainer = newFileContainer
 
     def getFlavorAssetId(self):
         return self.flavorAssetId

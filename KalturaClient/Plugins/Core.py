@@ -14386,6 +14386,62 @@ class KalturaFileAsset(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFileContainer(KalturaObjectBase):
+    def __init__(self,
+            filePath=NotImplemented,
+            encryptionKey=NotImplemented,
+            fileSize=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.filePath = filePath
+
+        # @var string
+        self.encryptionKey = encryptionKey
+
+        # @var int
+        self.fileSize = fileSize
+
+
+    PROPERTY_LOADERS = {
+        'filePath': getXmlNodeText, 
+        'encryptionKey': getXmlNodeText, 
+        'fileSize': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileContainer.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaFileContainer")
+        kparams.addStringIfDefined("filePath", self.filePath)
+        kparams.addStringIfDefined("encryptionKey", self.encryptionKey)
+        kparams.addIntIfDefined("fileSize", self.fileSize)
+        return kparams
+
+    def getFilePath(self):
+        return self.filePath
+
+    def setFilePath(self, newFilePath):
+        self.filePath = newFilePath
+
+    def getEncryptionKey(self):
+        return self.encryptionKey
+
+    def setEncryptionKey(self, newEncryptionKey):
+        self.encryptionKey = newEncryptionKey
+
+    def getFileSize(self):
+        return self.fileSize
+
+    def setFileSize(self, newFileSize):
+        self.fileSize = newFileSize
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFlavorAsset(KalturaAsset):
     def __init__(self,
             id=NotImplemented,
@@ -62357,6 +62413,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntry': KalturaMediaEntry,
             'KalturaFeatureStatus': KalturaFeatureStatus,
             'KalturaFileAsset': KalturaFileAsset,
+            'KalturaFileContainer': KalturaFileContainer,
             'KalturaFlavorAsset': KalturaFlavorAsset,
             'KalturaFlavorAssetUrlOptions': KalturaFlavorAssetUrlOptions,
             'KalturaFlavorParams': KalturaFlavorParams,
