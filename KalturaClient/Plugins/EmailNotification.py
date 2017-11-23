@@ -400,6 +400,7 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
 
     def __init__(self,
             categoryId=NotImplemented,
+            categoryIds=NotImplemented,
             categoryUserFilter=NotImplemented):
         KalturaEmailNotificationRecipientProvider.__init__(self)
 
@@ -407,12 +408,17 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
         # @var KalturaStringValue
         self.categoryId = categoryId
 
+        # The IDs of the categories whose subscribers should receive the email notification.
+        # @var KalturaStringValue
+        self.categoryIds = categoryIds
+
         # @var KalturaCategoryUserProviderFilter
         self.categoryUserFilter = categoryUserFilter
 
 
     PROPERTY_LOADERS = {
         'categoryId': (KalturaObjectFactory.create, 'KalturaStringValue'), 
+        'categoryIds': (KalturaObjectFactory.create, 'KalturaStringValue'), 
         'categoryUserFilter': (KalturaObjectFactory.create, 'KalturaCategoryUserProviderFilter'), 
     }
 
@@ -424,6 +430,7 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
         kparams = KalturaEmailNotificationRecipientProvider.toParams(self)
         kparams.put("objectType", "KalturaEmailNotificationCategoryRecipientProvider")
         kparams.addObjectIfDefined("categoryId", self.categoryId)
+        kparams.addObjectIfDefined("categoryIds", self.categoryIds)
         kparams.addObjectIfDefined("categoryUserFilter", self.categoryUserFilter)
         return kparams
 
@@ -432,6 +439,12 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
 
     def setCategoryId(self, newCategoryId):
         self.categoryId = newCategoryId
+
+    def getCategoryIds(self):
+        return self.categoryIds
+
+    def setCategoryIds(self, newCategoryIds):
+        self.categoryIds = newCategoryIds
 
     def getCategoryUserFilter(self):
         return self.categoryUserFilter

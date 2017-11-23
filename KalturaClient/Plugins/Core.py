@@ -2546,6 +2546,49 @@ class KalturaDurationType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchLanguage(object):
+    ARABIC = "Arabic"
+    BASQUE = "Basque"
+    BRAZILIAN = "Brazilian"
+    BULGARIAN = "Bulgarian"
+    CATALAN = "Catalan"
+    CHINESE = "Chinese"
+    CZECH = "Czech"
+    DANISH = "Danish"
+    DUTCH = "Dutch"
+    ENGLISH = "English"
+    FINNISH = "Finnish"
+    FRENCH = "French"
+    GALICIAN = "Galician"
+    GERMAN = "German"
+    GREEK = "Greek"
+    HINDI = "Hindi"
+    HUNGRIAN = "Hungarian"
+    INDONESIAN = "Indonesian"
+    ITALIAN = "Italian"
+    JAPANESE = "Japanese"
+    KOREAN = "Korean"
+    LATVIAN = "Latvian"
+    LITHUANIAN = "Lithuanian"
+    NORWEGIAN = "Norwegian"
+    PERSIAN = "Persian"
+    PORTUGUESE = "Prtuguese"
+    ROMANIAN = "Romanian"
+    RUSSIAN = "Russian"
+    SORANI = "Sorani"
+    SPANISH = "Spanish"
+    SWEDISH = "Swedish"
+    THAI = "Thai"
+    TURKISH = "Turkish"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEdgeServerNodeOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     HEARTBEAT_TIME_ASC = "+heartbeatTime"
@@ -6401,7 +6444,8 @@ class KalturaAppToken(KalturaObjectBase):
             sessionUserId=NotImplemented,
             sessionDuration=NotImplemented,
             sessionPrivileges=NotImplemented,
-            hashType=NotImplemented):
+            hashType=NotImplemented,
+            description=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the application token
@@ -6456,6 +6500,9 @@ class KalturaAppToken(KalturaObjectBase):
         # @var KalturaAppTokenHashType
         self.hashType = hashType
 
+        # @var string
+        self.description = description
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -6470,6 +6517,7 @@ class KalturaAppToken(KalturaObjectBase):
         'sessionDuration': getXmlNodeInt, 
         'sessionPrivileges': getXmlNodeText, 
         'hashType': (KalturaEnumsFactory.createString, "KalturaAppTokenHashType"), 
+        'description': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -6485,6 +6533,7 @@ class KalturaAppToken(KalturaObjectBase):
         kparams.addIntIfDefined("sessionDuration", self.sessionDuration)
         kparams.addStringIfDefined("sessionPrivileges", self.sessionPrivileges)
         kparams.addStringEnumIfDefined("hashType", self.hashType)
+        kparams.addStringIfDefined("description", self.description)
         return kparams
 
     def getId(self):
@@ -6540,6 +6589,12 @@ class KalturaAppToken(KalturaObjectBase):
 
     def setHashType(self, newHashType):
         self.hashType = newHashType
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
 
 
 # @package Kaltura
@@ -8706,6 +8761,38 @@ class KalturaPlayerEmbedCodeType(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchLanguageItem(KalturaObjectBase):
+    def __init__(self,
+            eSerachLanguage=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaESearchLanguage
+        self.eSerachLanguage = eSerachLanguage
+
+
+    PROPERTY_LOADERS = {
+        'eSerachLanguage': (KalturaEnumsFactory.createString, "KalturaESearchLanguage"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchLanguageItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchLanguageItem")
+        kparams.addStringEnumIfDefined("eSerachLanguage", self.eSerachLanguage)
+        return kparams
+
+    def getESerachLanguage(self):
+        return self.eSerachLanguage
+
+    def setESerachLanguage(self, newESerachLanguage):
+        self.eSerachLanguage = newESerachLanguage
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPartner(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -8760,7 +8847,8 @@ class KalturaPartner(KalturaObjectBase):
             partnerParentId=NotImplemented,
             crmId=NotImplemented,
             referenceId=NotImplemented,
-            timeAlignedRenditions=NotImplemented):
+            timeAlignedRenditions=NotImplemented,
+            eSearchLanguages=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -8950,6 +9038,9 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.timeAlignedRenditions = timeAlignedRenditions
 
+        # @var array of KalturaESearchLanguageItem
+        self.eSearchLanguages = eSearchLanguages
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9005,6 +9096,7 @@ class KalturaPartner(KalturaObjectBase):
         'crmId': getXmlNodeText, 
         'referenceId': getXmlNodeText, 
         'timeAlignedRenditions': getXmlNodeBool, 
+        'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
     }
 
     def fromXml(self, node):
@@ -9045,6 +9137,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addArrayIfDefined("additionalParams", self.additionalParams)
         kparams.addIntIfDefined("partnerParentId", self.partnerParentId)
         kparams.addStringIfDefined("referenceId", self.referenceId)
+        kparams.addArrayIfDefined("eSearchLanguages", self.eSearchLanguages)
         return kparams
 
     def getId(self):
@@ -9298,6 +9391,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def getTimeAlignedRenditions(self):
         return self.timeAlignedRenditions
+
+    def getESearchLanguages(self):
+        return self.eSearchLanguages
+
+    def setESearchLanguages(self, newESearchLanguages):
+        self.eSearchLanguages = newESearchLanguages
 
 
 # @package Kaltura
@@ -17736,7 +17835,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @var int
         self.segmentDuration = segmentDuration
 
-        # @var bool
+        # @var KalturaNullableBoolean
         self.explicitLive = explicitLive
 
         # @var KalturaViewMode
@@ -17762,7 +17861,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'recordingOptions': (KalturaObjectFactory.create, 'KalturaLiveEntryRecordingOptions'), 
         'liveStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
         'segmentDuration': getXmlNodeInt, 
-        'explicitLive': getXmlNodeBool, 
+        'explicitLive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
         'recordingStatus': (KalturaEnumsFactory.createInt, "KalturaRecordingStatus"), 
     }
@@ -17786,7 +17885,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addFloatIfDefined("currentBroadcastStartTime", self.currentBroadcastStartTime)
         kparams.addObjectIfDefined("recordingOptions", self.recordingOptions)
         kparams.addIntIfDefined("segmentDuration", self.segmentDuration)
-        kparams.addBoolIfDefined("explicitLive", self.explicitLive)
+        kparams.addIntEnumIfDefined("explicitLive", self.explicitLive)
         kparams.addIntEnumIfDefined("viewMode", self.viewMode)
         kparams.addIntEnumIfDefined("recordingStatus", self.recordingStatus)
         return kparams
@@ -28387,7 +28486,8 @@ class KalturaAppTokenBaseFilter(KalturaFilter):
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            sessionUserIdEqual=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -28416,6 +28516,9 @@ class KalturaAppTokenBaseFilter(KalturaFilter):
         # @var string
         self.statusIn = statusIn
 
+        # @var string
+        self.sessionUserIdEqual = sessionUserIdEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeText, 
@@ -28426,6 +28529,7 @@ class KalturaAppTokenBaseFilter(KalturaFilter):
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
         'statusEqual': (KalturaEnumsFactory.createInt, "KalturaAppTokenStatus"), 
         'statusIn': getXmlNodeText, 
+        'sessionUserIdEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -28443,6 +28547,7 @@ class KalturaAppTokenBaseFilter(KalturaFilter):
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
         kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("sessionUserIdEqual", self.sessionUserIdEqual)
         return kparams
 
     def getIdEqual(self):
@@ -28492,6 +28597,12 @@ class KalturaAppTokenBaseFilter(KalturaFilter):
 
     def setStatusIn(self, newStatusIn):
         self.statusIn = newStatusIn
+
+    def getSessionUserIdEqual(self):
+        return self.sessionUserIdEqual
+
+    def setSessionUserIdEqual(self, newSessionUserIdEqual):
+        self.sessionUserIdEqual = newSessionUserIdEqual
 
 
 # @package Kaltura
@@ -30384,7 +30495,7 @@ class KalturaBulkUploadUserData(KalturaBulkUploadObjectData):
 # @subpackage Client
 class KalturaCaptureThumbJobData(KalturaJobData):
     def __init__(self,
-            srcFileSyncLocalPath=NotImplemented,
+            fileContainer=NotImplemented,
             actualSrcFileSyncLocalPath=NotImplemented,
             srcFileSyncRemoteUrl=NotImplemented,
             thumbParamsOutputId=NotImplemented,
@@ -30394,8 +30505,8 @@ class KalturaCaptureThumbJobData(KalturaJobData):
             thumbPath=NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
-        self.srcFileSyncLocalPath = srcFileSyncLocalPath
+        # @var KalturaFileContainer
+        self.fileContainer = fileContainer
 
         # The translated path as used by the scheduler
         # @var string
@@ -30421,7 +30532,7 @@ class KalturaCaptureThumbJobData(KalturaJobData):
 
 
     PROPERTY_LOADERS = {
-        'srcFileSyncLocalPath': getXmlNodeText, 
+        'fileContainer': (KalturaObjectFactory.create, 'KalturaFileContainer'), 
         'actualSrcFileSyncLocalPath': getXmlNodeText, 
         'srcFileSyncRemoteUrl': getXmlNodeText, 
         'thumbParamsOutputId': getXmlNodeInt, 
@@ -30438,7 +30549,7 @@ class KalturaCaptureThumbJobData(KalturaJobData):
     def toParams(self):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaCaptureThumbJobData")
-        kparams.addStringIfDefined("srcFileSyncLocalPath", self.srcFileSyncLocalPath)
+        kparams.addObjectIfDefined("fileContainer", self.fileContainer)
         kparams.addStringIfDefined("actualSrcFileSyncLocalPath", self.actualSrcFileSyncLocalPath)
         kparams.addStringIfDefined("srcFileSyncRemoteUrl", self.srcFileSyncRemoteUrl)
         kparams.addIntIfDefined("thumbParamsOutputId", self.thumbParamsOutputId)
@@ -30448,11 +30559,11 @@ class KalturaCaptureThumbJobData(KalturaJobData):
         kparams.addStringIfDefined("thumbPath", self.thumbPath)
         return kparams
 
-    def getSrcFileSyncLocalPath(self):
-        return self.srcFileSyncLocalPath
+    def getFileContainer(self):
+        return self.fileContainer
 
-    def setSrcFileSyncLocalPath(self, newSrcFileSyncLocalPath):
-        self.srcFileSyncLocalPath = newSrcFileSyncLocalPath
+    def setFileContainer(self, newFileContainer):
+        self.fileContainer = newFileContainer
 
     def getActualSrcFileSyncLocalPath(self):
         return self.actualSrcFileSyncLocalPath
@@ -41052,7 +41163,8 @@ class KalturaAppTokenFilter(KalturaAppTokenBaseFilter):
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            statusIn=NotImplemented,
+            sessionUserIdEqual=NotImplemented):
         KalturaAppTokenBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -41063,7 +41175,8 @@ class KalturaAppTokenFilter(KalturaAppTokenBaseFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             statusEqual,
-            statusIn)
+            statusIn,
+            sessionUserIdEqual)
 
 
     PROPERTY_LOADERS = {
@@ -62217,6 +62330,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDocumentEntryMatchAttribute': KalturaDocumentEntryMatchAttribute,
             'KalturaDrmSchemeName': KalturaDrmSchemeName,
             'KalturaDurationType': KalturaDurationType,
+            'KalturaESearchLanguage': KalturaESearchLanguage,
             'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
@@ -62361,6 +62475,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBatchJob': KalturaBatchJob,
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
             'KalturaPlayerEmbedCodeType': KalturaPlayerEmbedCodeType,
+            'KalturaESearchLanguageItem': KalturaESearchLanguageItem,
             'KalturaPartner': KalturaPartner,
             'KalturaValue': KalturaValue,
             'KalturaBooleanValue': KalturaBooleanValue,
