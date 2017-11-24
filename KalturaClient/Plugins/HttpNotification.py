@@ -315,7 +315,8 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
             apiObjectType=NotImplemented,
             format=NotImplemented,
             ignoreNull=NotImplemented,
-            code=NotImplemented):
+            code=NotImplemented,
+            dataStringReplacements=NotImplemented):
         KalturaHttpNotificationData.__init__(self)
 
         # Kaltura API object type
@@ -334,12 +335,17 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         # @var string
         self.code = code
 
+        # An array of pattern-replacement pairs used for data string regex replacements
+        # @var array of KalturaKeyValue
+        self.dataStringReplacements = dataStringReplacements
+
 
     PROPERTY_LOADERS = {
         'apiObjectType': getXmlNodeText, 
         'format': (KalturaEnumsFactory.createInt, "KalturaResponseType"), 
         'ignoreNull': getXmlNodeBool, 
         'code': getXmlNodeText, 
+        'dataStringReplacements': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -353,6 +359,7 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         kparams.addIntEnumIfDefined("format", self.format)
         kparams.addBoolIfDefined("ignoreNull", self.ignoreNull)
         kparams.addStringIfDefined("code", self.code)
+        kparams.addArrayIfDefined("dataStringReplacements", self.dataStringReplacements)
         return kparams
 
     def getApiObjectType(self):
@@ -378,6 +385,12 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
 
     def setCode(self, newCode):
         self.code = newCode
+
+    def getDataStringReplacements(self):
+        return self.dataStringReplacements
+
+    def setDataStringReplacements(self, newDataStringReplacements):
+        self.dataStringReplacements = newDataStringReplacements
 
 
 # @package Kaltura
