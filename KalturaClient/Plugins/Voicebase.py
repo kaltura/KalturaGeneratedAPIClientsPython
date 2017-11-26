@@ -48,7 +48,8 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
             apiPassword=NotImplemented,
             spokenLanguage=NotImplemented,
             fileLocation=NotImplemented,
-            replaceMediaContent=NotImplemented):
+            replaceMediaContent=NotImplemented,
+            additionalParameters=NotImplemented):
         KalturaIntegrationJobProviderData.__init__(self)
 
         # Entry ID
@@ -90,6 +91,11 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
         # @var bool
         self.replaceMediaContent = replaceMediaContent
 
+        # additional parameters to send to VoiceBase
+        # @var string
+        # @readonly
+        self.additionalParameters = additionalParameters
+
 
     PROPERTY_LOADERS = {
         'entryId': getXmlNodeText, 
@@ -101,6 +107,7 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
         'spokenLanguage': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
         'fileLocation': getXmlNodeText, 
         'replaceMediaContent': getXmlNodeBool, 
+        'additionalParameters': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -162,6 +169,9 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
 
     def setReplaceMediaContent(self, newReplaceMediaContent):
         self.replaceMediaContent = newReplaceMediaContent
+
+    def getAdditionalParameters(self):
+        return self.additionalParameters
 
 
 ########## services ##########
