@@ -156,6 +156,7 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented,
             contentMoid=NotImplemented,
@@ -169,6 +170,7 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
             serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
+            srcFileEncryptionKey,
             srcFileSyncId,
             destFileSyncStoredPath)
 
@@ -221,6 +223,7 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
@@ -237,6 +240,7 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
+            srcFileEncryptionKey,
             srcFileSyncId,
             destFileSyncStoredPath,
             force,

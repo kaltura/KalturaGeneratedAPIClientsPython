@@ -928,15 +928,15 @@ class KalturaMetadataResponseProfileMapping(KalturaResponseProfileMapping):
 # @subpackage Client
 class KalturaTransformMetadataJobData(KalturaJobData):
     def __init__(self,
-            srcXslPath=NotImplemented,
+            srcXsl=NotImplemented,
             srcVersion=NotImplemented,
             destVersion=NotImplemented,
             destXsdPath=NotImplemented,
             metadataProfileId=NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
-        self.srcXslPath = srcXslPath
+        # @var KalturaFileContainer
+        self.srcXsl = srcXsl
 
         # @var int
         self.srcVersion = srcVersion
@@ -952,7 +952,7 @@ class KalturaTransformMetadataJobData(KalturaJobData):
 
 
     PROPERTY_LOADERS = {
-        'srcXslPath': getXmlNodeText, 
+        'srcXsl': (KalturaObjectFactory.create, 'KalturaFileContainer'), 
         'srcVersion': getXmlNodeInt, 
         'destVersion': getXmlNodeInt, 
         'destXsdPath': getXmlNodeText, 
@@ -966,18 +966,18 @@ class KalturaTransformMetadataJobData(KalturaJobData):
     def toParams(self):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaTransformMetadataJobData")
-        kparams.addStringIfDefined("srcXslPath", self.srcXslPath)
+        kparams.addObjectIfDefined("srcXsl", self.srcXsl)
         kparams.addIntIfDefined("srcVersion", self.srcVersion)
         kparams.addIntIfDefined("destVersion", self.destVersion)
         kparams.addStringIfDefined("destXsdPath", self.destXsdPath)
         kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
         return kparams
 
-    def getSrcXslPath(self):
-        return self.srcXslPath
+    def getSrcXsl(self):
+        return self.srcXsl
 
-    def setSrcXslPath(self, newSrcXslPath):
-        self.srcXslPath = newSrcXslPath
+    def setSrcXsl(self, newSrcXsl):
+        self.srcXsl = newSrcXsl
 
     def getSrcVersion(self):
         return self.srcVersion

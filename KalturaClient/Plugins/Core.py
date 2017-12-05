@@ -38282,6 +38282,7 @@ class KalturaStorageJobData(KalturaJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented):
         KalturaJobData.__init__(self)
@@ -38311,6 +38312,9 @@ class KalturaStorageJobData(KalturaJobData):
         self.srcFileSyncLocalPath = srcFileSyncLocalPath
 
         # @var string
+        self.srcFileEncryptionKey = srcFileEncryptionKey
+
+        # @var string
         self.srcFileSyncId = srcFileSyncId
 
         # @var string
@@ -38326,6 +38330,7 @@ class KalturaStorageJobData(KalturaJobData):
         'serverPassPhrase': getXmlNodeText, 
         'ftpPassiveMode': getXmlNodeBool, 
         'srcFileSyncLocalPath': getXmlNodeText, 
+        'srcFileEncryptionKey': getXmlNodeText, 
         'srcFileSyncId': getXmlNodeText, 
         'destFileSyncStoredPath': getXmlNodeText, 
     }
@@ -38345,6 +38350,7 @@ class KalturaStorageJobData(KalturaJobData):
         kparams.addStringIfDefined("serverPassPhrase", self.serverPassPhrase)
         kparams.addBoolIfDefined("ftpPassiveMode", self.ftpPassiveMode)
         kparams.addStringIfDefined("srcFileSyncLocalPath", self.srcFileSyncLocalPath)
+        kparams.addStringIfDefined("srcFileEncryptionKey", self.srcFileEncryptionKey)
         kparams.addStringIfDefined("srcFileSyncId", self.srcFileSyncId)
         kparams.addStringIfDefined("destFileSyncStoredPath", self.destFileSyncStoredPath)
         return kparams
@@ -38396,6 +38402,12 @@ class KalturaStorageJobData(KalturaJobData):
 
     def setSrcFileSyncLocalPath(self, newSrcFileSyncLocalPath):
         self.srcFileSyncLocalPath = newSrcFileSyncLocalPath
+
+    def getSrcFileEncryptionKey(self):
+        return self.srcFileEncryptionKey
+
+    def setSrcFileEncryptionKey(self, newSrcFileEncryptionKey):
+        self.srcFileEncryptionKey = newSrcFileEncryptionKey
 
     def getSrcFileSyncId(self):
         return self.srcFileSyncId
@@ -46132,6 +46144,7 @@ class KalturaStorageDeleteJobData(KalturaStorageJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented):
         KalturaStorageJobData.__init__(self,
@@ -46143,6 +46156,7 @@ class KalturaStorageDeleteJobData(KalturaStorageJobData):
             serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
+            srcFileEncryptionKey,
             srcFileSyncId,
             destFileSyncStoredPath)
 
@@ -46172,6 +46186,7 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
@@ -46185,6 +46200,7 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
             serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
+            srcFileEncryptionKey,
             srcFileSyncId,
             destFileSyncStoredPath)
 
@@ -47053,6 +47069,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             serverPassPhrase=NotImplemented,
             ftpPassiveMode=NotImplemented,
             srcFileSyncLocalPath=NotImplemented,
+            srcFileEncryptionKey=NotImplemented,
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
@@ -47072,6 +47089,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             serverPassPhrase,
             ftpPassiveMode,
             srcFileSyncLocalPath,
+            srcFileEncryptionKey,
             srcFileSyncId,
             destFileSyncStoredPath,
             force,
