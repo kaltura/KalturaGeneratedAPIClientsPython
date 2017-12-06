@@ -21904,7 +21904,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            limit=NotImplemented):
+            limit=NotImplemented,
+            name=NotImplemented):
         KalturaMediaEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -22014,9 +22015,13 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
         # @var int
         self.limit = limit
 
+        # @var string
+        self.name = name
+
 
     PROPERTY_LOADERS = {
         'limit': getXmlNodeInt, 
+        'name': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -22027,6 +22032,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
         kparams = KalturaMediaEntryFilter.toParams(self)
         kparams.put("objectType", "KalturaMediaEntryFilterForPlaylist")
         kparams.addIntIfDefined("limit", self.limit)
+        kparams.addStringIfDefined("name", self.name)
         return kparams
 
     def getLimit(self):
@@ -22034,6 +22040,12 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
 
     def setLimit(self, newLimit):
         self.limit = newLimit
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
 
 
 # @package Kaltura
