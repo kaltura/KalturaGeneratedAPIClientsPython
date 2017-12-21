@@ -14096,7 +14096,9 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
-            streams=NotImplemented):
+            streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
@@ -14209,6 +14211,14 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         # @var array of KalturaStreamContainer
         self.streams = streams
 
+        # True if the entry is a sequence entry
+        # @var KalturaNullableBoolean
+        self.isSequenceEntry = isSequenceEntry
+
+        # The sequence entries of the entry
+        # @var string
+        self.sequenceEntryIds = sequenceEntryIds
+
 
     PROPERTY_LOADERS = {
         'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
@@ -14223,6 +14233,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         'flavorParamsIds': getXmlNodeText, 
         'isTrimDisabled': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'streams': (KalturaObjectFactory.createArray, 'KalturaStreamContainer'), 
+        'isSequenceEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'sequenceEntryIds': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14240,6 +14252,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         kparams.addStringIfDefined("creditUserName", self.creditUserName)
         kparams.addStringIfDefined("creditUrl", self.creditUrl)
         kparams.addArrayIfDefined("streams", self.streams)
+        kparams.addIntEnumIfDefined("isSequenceEntry", self.isSequenceEntry)
+        kparams.addStringIfDefined("sequenceEntryIds", self.sequenceEntryIds)
         return kparams
 
     def getMediaType(self):
@@ -14301,6 +14315,18 @@ class KalturaMediaEntry(KalturaPlayableEntry):
 
     def setStreams(self, newStreams):
         self.streams = newStreams
+
+    def getIsSequenceEntry(self):
+        return self.isSequenceEntry
+
+    def setIsSequenceEntry(self, newIsSequenceEntry):
+        self.isSequenceEntry = newIsSequenceEntry
+
+    def getSequenceEntryIds(self):
+        return self.sequenceEntryIds
+
+    def setSequenceEntryIds(self, newSequenceEntryIds):
+        self.sequenceEntryIds = newSequenceEntryIds
 
 
 # @package Kaltura
@@ -17688,6 +17714,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -17771,7 +17799,9 @@ class KalturaLiveEntry(KalturaMediaEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
-            streams)
+            streams,
+            isSequenceEntry,
+            sequenceEntryIds)
 
         # The message to be presented when the stream is offline
         # @var string
@@ -18059,6 +18089,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -18145,6 +18177,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
+            isSequenceEntry,
+            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -19065,6 +19099,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -19165,6 +19201,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
+            isSequenceEntry,
+            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -21675,7 +21713,9 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             mediaDateGreaterThanOrEqual=NotImplemented,
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
-            flavorParamsIdsMatchAnd=NotImplemented):
+            flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented):
         KalturaMediaEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -21782,8 +21822,16 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd)
 
+        # @var KalturaNullableBoolean
+        self.isSequenceEntry = isSequenceEntry
+
+        # @var string
+        self.sequenceEntryIdsIn = sequenceEntryIdsIn
+
 
     PROPERTY_LOADERS = {
+        'isSequenceEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'sequenceEntryIdsIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -21793,7 +21841,21 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
     def toParams(self):
         kparams = KalturaMediaEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaMediaEntryFilter")
+        kparams.addIntEnumIfDefined("isSequenceEntry", self.isSequenceEntry)
+        kparams.addStringIfDefined("sequenceEntryIdsIn", self.sequenceEntryIdsIn)
         return kparams
+
+    def getIsSequenceEntry(self):
+        return self.isSequenceEntry
+
+    def setIsSequenceEntry(self, newIsSequenceEntry):
+        self.isSequenceEntry = newIsSequenceEntry
+
+    def getSequenceEntryIdsIn(self):
+        return self.sequenceEntryIdsIn
+
+    def setSequenceEntryIdsIn(self, newSequenceEntryIdsIn):
+        self.sequenceEntryIdsIn = newSequenceEntryIdsIn
 
 
 # @package Kaltura
@@ -21904,6 +21966,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             limit=NotImplemented,
             name=NotImplemented):
         KalturaMediaEntryFilter.__init__(self,
@@ -22010,7 +22074,9 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd)
+            flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn)
 
         # @var int
         self.limit = limit
@@ -53256,6 +53322,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -53356,6 +53424,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
+            isSequenceEntry,
+            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -55102,7 +55172,9 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual=NotImplemented,
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
-            flavorParamsIdsMatchAnd=NotImplemented):
+            flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented):
         KalturaMediaEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -55207,7 +55279,9 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd)
+            flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn)
 
 
     PROPERTY_LOADERS = {
@@ -55377,6 +55451,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -55484,7 +55560,9 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd)
+            flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn)
 
         # @var KalturaNullableBoolean
         self.isLive = isLive
@@ -55687,6 +55765,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -55795,6 +55875,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -55921,6 +56003,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56029,6 +56113,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56155,6 +56241,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56263,6 +56351,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56389,6 +56479,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56497,6 +56589,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56623,6 +56717,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56731,6 +56827,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56857,6 +56955,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56965,6 +57065,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
