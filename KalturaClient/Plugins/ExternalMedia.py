@@ -405,8 +405,6 @@ class KalturaExternalMediaEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             externalSourceTypeEqual=NotImplemented,
             externalSourceTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -515,9 +513,7 @@ class KalturaExternalMediaEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn)
+            flavorParamsIdsMatchAnd)
 
         # @var KalturaExternalMediaSourceType
         self.externalSourceTypeEqual = externalSourceTypeEqual
@@ -685,8 +681,6 @@ class KalturaExternalMediaEntryFilter(KalturaExternalMediaEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             externalSourceTypeEqual=NotImplemented,
             externalSourceTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -796,8 +790,6 @@ class KalturaExternalMediaEntryFilter(KalturaExternalMediaEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             externalSourceTypeEqual,
             externalSourceTypeIn,
             assetParamsIdsMatchOr,

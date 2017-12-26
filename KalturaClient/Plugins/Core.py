@@ -8848,7 +8848,10 @@ class KalturaPartner(KalturaObjectBase):
             crmId=NotImplemented,
             referenceId=NotImplemented,
             timeAlignedRenditions=NotImplemented,
-            eSearchLanguages=NotImplemented):
+            eSearchLanguages=NotImplemented,
+            publisherEnvironmentType=NotImplemented,
+            ovpEnvironmentUrl=NotImplemented,
+            ottEnvironmentUrl=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9041,6 +9044,18 @@ class KalturaPartner(KalturaObjectBase):
         # @var array of KalturaESearchLanguageItem
         self.eSearchLanguages = eSearchLanguages
 
+        # @var int
+        # @readonly
+        self.publisherEnvironmentType = publisherEnvironmentType
+
+        # @var string
+        # @readonly
+        self.ovpEnvironmentUrl = ovpEnvironmentUrl
+
+        # @var string
+        # @readonly
+        self.ottEnvironmentUrl = ottEnvironmentUrl
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9097,6 +9112,9 @@ class KalturaPartner(KalturaObjectBase):
         'referenceId': getXmlNodeText, 
         'timeAlignedRenditions': getXmlNodeBool, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
+        'publisherEnvironmentType': getXmlNodeInt, 
+        'ovpEnvironmentUrl': getXmlNodeText, 
+        'ottEnvironmentUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -9397,6 +9415,15 @@ class KalturaPartner(KalturaObjectBase):
 
     def setESearchLanguages(self, newESearchLanguages):
         self.eSearchLanguages = newESearchLanguages
+
+    def getPublisherEnvironmentType(self):
+        return self.publisherEnvironmentType
+
+    def getOvpEnvironmentUrl(self):
+        return self.ovpEnvironmentUrl
+
+    def getOttEnvironmentUrl(self):
+        return self.ottEnvironmentUrl
 
 
 # @package Kaltura
@@ -21713,9 +21740,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             mediaDateGreaterThanOrEqual=NotImplemented,
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
-            flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented):
+            flavorParamsIdsMatchAnd=NotImplemented):
         KalturaMediaEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -21822,16 +21847,8 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd)
 
-        # @var KalturaNullableBoolean
-        self.isSequenceEntry = isSequenceEntry
-
-        # @var string
-        self.sequenceEntryIdsIn = sequenceEntryIdsIn
-
 
     PROPERTY_LOADERS = {
-        'isSequenceEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'sequenceEntryIdsIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -21841,21 +21858,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
     def toParams(self):
         kparams = KalturaMediaEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaMediaEntryFilter")
-        kparams.addIntEnumIfDefined("isSequenceEntry", self.isSequenceEntry)
-        kparams.addStringIfDefined("sequenceEntryIdsIn", self.sequenceEntryIdsIn)
         return kparams
-
-    def getIsSequenceEntry(self):
-        return self.isSequenceEntry
-
-    def setIsSequenceEntry(self, newIsSequenceEntry):
-        self.isSequenceEntry = newIsSequenceEntry
-
-    def getSequenceEntryIdsIn(self):
-        return self.sequenceEntryIdsIn
-
-    def setSequenceEntryIdsIn(self, newSequenceEntryIdsIn):
-        self.sequenceEntryIdsIn = newSequenceEntryIdsIn
 
 
 # @package Kaltura
@@ -21966,8 +21969,6 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             limit=NotImplemented,
             name=NotImplemented):
         KalturaMediaEntryFilter.__init__(self,
@@ -22074,9 +22075,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn)
+            flavorParamsIdsMatchAnd)
 
         # @var int
         self.limit = limit
@@ -55172,9 +55171,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual=NotImplemented,
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
-            flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented):
+            flavorParamsIdsMatchAnd=NotImplemented):
         KalturaMediaEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -55279,9 +55276,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn)
+            flavorParamsIdsMatchAnd)
 
 
     PROPERTY_LOADERS = {
@@ -55451,8 +55446,6 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -55560,9 +55553,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn)
+            flavorParamsIdsMatchAnd)
 
         # @var KalturaNullableBoolean
         self.isLive = isLive
@@ -55765,8 +55756,6 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -55875,8 +55864,6 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56003,8 +55990,6 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56113,8 +56098,6 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56241,8 +56224,6 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56351,8 +56332,6 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56479,8 +56458,6 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56589,8 +56566,6 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56717,8 +56692,6 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -56827,8 +56800,6 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
@@ -56955,8 +56926,6 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIdsIn=NotImplemented,
             isLive=NotImplemented,
             isRecordedEntryIdEmpty=NotImplemented,
             hasMediaServerHostname=NotImplemented):
@@ -57065,8 +57034,6 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
-            isSequenceEntry,
-            sequenceEntryIdsIn,
             isLive,
             isRecordedEntryIdEmpty,
             hasMediaServerHostname)
