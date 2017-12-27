@@ -157,8 +157,6 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented,
             externalSourceType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaMediaEntry.__init__(self,
@@ -226,9 +224,7 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
-            streams,
-            isSequenceEntry,
-            sequenceEntryIds)
+            streams)
 
         # The source type of the external media
         # @var KalturaExternalMediaSourceType

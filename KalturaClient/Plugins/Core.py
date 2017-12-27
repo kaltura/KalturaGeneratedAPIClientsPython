@@ -14123,9 +14123,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             dataUrl=NotImplemented,
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
-            streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented):
+            streams=NotImplemented):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
@@ -14238,14 +14236,6 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         # @var array of KalturaStreamContainer
         self.streams = streams
 
-        # True if the entry is a sequence entry
-        # @var KalturaNullableBoolean
-        self.isSequenceEntry = isSequenceEntry
-
-        # The sequence entries of the entry
-        # @var string
-        self.sequenceEntryIds = sequenceEntryIds
-
 
     PROPERTY_LOADERS = {
         'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
@@ -14260,8 +14250,6 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         'flavorParamsIds': getXmlNodeText, 
         'isTrimDisabled': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'streams': (KalturaObjectFactory.createArray, 'KalturaStreamContainer'), 
-        'isSequenceEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'sequenceEntryIds': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14279,8 +14267,6 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         kparams.addStringIfDefined("creditUserName", self.creditUserName)
         kparams.addStringIfDefined("creditUrl", self.creditUrl)
         kparams.addArrayIfDefined("streams", self.streams)
-        kparams.addIntEnumIfDefined("isSequenceEntry", self.isSequenceEntry)
-        kparams.addStringIfDefined("sequenceEntryIds", self.sequenceEntryIds)
         return kparams
 
     def getMediaType(self):
@@ -14342,18 +14328,6 @@ class KalturaMediaEntry(KalturaPlayableEntry):
 
     def setStreams(self, newStreams):
         self.streams = newStreams
-
-    def getIsSequenceEntry(self):
-        return self.isSequenceEntry
-
-    def setIsSequenceEntry(self, newIsSequenceEntry):
-        self.isSequenceEntry = newIsSequenceEntry
-
-    def getSequenceEntryIds(self):
-        return self.sequenceEntryIds
-
-    def setSequenceEntryIds(self, newSequenceEntryIds):
-        self.sequenceEntryIds = newSequenceEntryIds
 
 
 # @package Kaltura
@@ -17741,8 +17715,6 @@ class KalturaLiveEntry(KalturaMediaEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -17826,9 +17798,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
-            streams,
-            isSequenceEntry,
-            sequenceEntryIds)
+            streams)
 
         # The message to be presented when the stream is offline
         # @var string
@@ -18116,8 +18086,6 @@ class KalturaLiveChannel(KalturaLiveEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -18204,8 +18172,6 @@ class KalturaLiveChannel(KalturaLiveEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
-            isSequenceEntry,
-            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -19126,8 +19092,6 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -19228,8 +19192,6 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
-            isSequenceEntry,
-            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
@@ -53321,8 +53283,6 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
-            isSequenceEntry=NotImplemented,
-            sequenceEntryIds=NotImplemented,
             offlineMessage=NotImplemented,
             recordStatus=NotImplemented,
             dvrStatus=NotImplemented,
@@ -53423,8 +53383,6 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             flavorParamsIds,
             isTrimDisabled,
             streams,
-            isSequenceEntry,
-            sequenceEntryIds,
             offlineMessage,
             recordStatus,
             dvrStatus,
