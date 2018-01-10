@@ -2036,6 +2036,7 @@ class KalturaConditionType(object):
     DELIVERY_PROFILE = "13"
     ACTIVE_EDGE_VALIDATE = "14"
     ANONYMOUS_IP = "15"
+    ASSET_TYPE = "16"
 
     def __init__(self, value):
         self.value = value
@@ -28831,6 +28832,44 @@ class KalturaAssetPropertiesCompareCondition(KalturaCondition):
 
     def setProperties(self, newProperties):
         self.properties = newProperties
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAssetTypeCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            assetTypes=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+        # @var string
+        self.assetTypes = assetTypes
+
+
+    PROPERTY_LOADERS = {
+        'assetTypes': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAssetTypeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaAssetTypeCondition")
+        kparams.addStringIfDefined("assetTypes", self.assetTypes)
+        return kparams
+
+    def getAssetTypes(self):
+        return self.assetTypes
+
+    def setAssetTypes(self, newAssetTypes):
+        self.assetTypes = newAssetTypes
 
 
 # @package Kaltura
@@ -62691,6 +62730,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAppTokenListResponse': KalturaAppTokenListResponse,
             'KalturaAssetParamsOutput': KalturaAssetParamsOutput,
             'KalturaAssetPropertiesCompareCondition': KalturaAssetPropertiesCompareCondition,
+            'KalturaAssetTypeCondition': KalturaAssetTypeCondition,
             'KalturaAssetsParamsResourceContainers': KalturaAssetsParamsResourceContainers,
             'KalturaAttributeCondition': KalturaAttributeCondition,
             'KalturaAuthenticatedCondition': KalturaAuthenticatedCondition,
