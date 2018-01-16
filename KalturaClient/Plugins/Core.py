@@ -1784,7 +1784,6 @@ class KalturaBatchJobType(object):
     PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
     PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
     DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
-    CONVERT = "0"
     DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
     DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
     DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
@@ -1792,6 +1791,7 @@ class KalturaBatchJobType(object):
     DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
+    CONVERT = "0"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
     INTEGRATION = "integration.Integration"
@@ -1840,6 +1840,7 @@ class KalturaBatchJobType(object):
     LIVE_TO_VOD = "42"
     COPY_CAPTIONS = "43"
     CHUNKED_ENCODE_JOB_SCHEDULER = "44"
+    SERVER_NODE_MONITOR = "45"
 
     def __init__(self, value):
         self.value = value
@@ -60849,6 +60850,17 @@ class KalturaServerNodeService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaServerNodeListResponse')
+
+    def markOffline(self, serverNodeId):
+        """Mark server node offline"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("serverNodeId", serverNodeId)
+        self.client.queueServiceActionCall("servernode", "markOffline", "KalturaServerNode", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaServerNode')
 
     def reportStatus(self, hostName, serverNode = NotImplemented):
         """Update server node status"""
