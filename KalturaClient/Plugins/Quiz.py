@@ -400,7 +400,8 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             optionalAnswers=NotImplemented,
             hint=NotImplemented,
             question=NotImplemented,
-            explanation=NotImplemented):
+            explanation=NotImplemented,
+            questionType=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             cuePointType,
@@ -432,12 +433,16 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
         # @var string
         self.explanation = explanation
 
+        # @var KalturaQuestionType
+        self.questionType = questionType
+
 
     PROPERTY_LOADERS = {
         'optionalAnswers': (KalturaObjectFactory.createArray, 'KalturaOptionalAnswer'), 
         'hint': getXmlNodeText, 
         'question': getXmlNodeText, 
         'explanation': getXmlNodeText, 
+        'questionType': (KalturaEnumsFactory.createInt, "KalturaQuestionType"), 
     }
 
     def fromXml(self, node):
@@ -451,6 +456,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
         kparams.addStringIfDefined("hint", self.hint)
         kparams.addStringIfDefined("question", self.question)
         kparams.addStringIfDefined("explanation", self.explanation)
+        kparams.addIntEnumIfDefined("questionType", self.questionType)
         return kparams
 
     def getOptionalAnswers(self):
@@ -476,6 +482,12 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
 
     def setExplanation(self, newExplanation):
         self.explanation = newExplanation
+
+    def getQuestionType(self):
+        return self.questionType
+
+    def setQuestionType(self, newQuestionType):
+        self.questionType = newQuestionType
 
 
 # @package Kaltura
