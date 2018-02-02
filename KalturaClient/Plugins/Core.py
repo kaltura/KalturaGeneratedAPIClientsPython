@@ -1790,8 +1790,8 @@ class KalturaBatchJobType(object):
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
     DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
-    DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
     CONVERT = "0"
+    DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
     INTEGRATION = "integration.Integration"
@@ -1841,6 +1841,7 @@ class KalturaBatchJobType(object):
     COPY_CAPTIONS = "43"
     CHUNKED_ENCODE_JOB_SCHEDULER = "44"
     SERVER_NODE_MONITOR = "45"
+    USERS_CSV = "46"
 
     def __init__(self, value):
         self.value = value
@@ -4339,6 +4340,7 @@ class KalturaMailType(object):
     MAIL_TYPE_LIVE_REPORT_EXPORT_SUCCESS = "130"
     MAIL_TYPE_LIVE_REPORT_EXPORT_FAILURE = "131"
     MAIL_TYPE_LIVE_REPORT_EXPORT_ABORT = "132"
+    MAIL_TYPE_USERS_CSV = "133"
 
     def __init__(self, value):
         self.value = value
@@ -12041,6 +12043,50 @@ class KalturaCoordinate(KalturaObjectBase):
 
     def setName(self, newName):
         self.name = newName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCsvAdditionalFieldInfo(KalturaObjectBase):
+    def __init__(self,
+            fieldName=NotImplemented,
+            xpath=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.fieldName = fieldName
+
+        # @var string
+        self.xpath = xpath
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': getXmlNodeText, 
+        'xpath': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCsvAdditionalFieldInfo.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaCsvAdditionalFieldInfo")
+        kparams.addStringIfDefined("fieldName", self.fieldName)
+        kparams.addStringIfDefined("xpath", self.xpath)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+    def getXpath(self):
+        return self.xpath
+
+    def setXpath(self, newXpath):
+        self.xpath = newXpath
 
 
 # @package Kaltura
@@ -40351,6 +40397,104 @@ class KalturaUserRoleListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUsersCsvJobData(KalturaJobData):
+    def __init__(self,
+            filter=NotImplemented,
+            metadataProfileId=NotImplemented,
+            additionalFields=NotImplemented,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # The filter should return the list of users that need to be specified in the csv.
+        # @var KalturaUserFilter
+        self.filter = filter
+
+        # The metadata profile we should look the xpath in
+        # @var int
+        self.metadataProfileId = metadataProfileId
+
+        # The xpath to look in the metadataProfileId  and the wanted csv field name
+        # @var array of KalturaCsvAdditionalFieldInfo
+        self.additionalFields = additionalFields
+
+        # The users name
+        # @var string
+        self.userName = userName
+
+        # The users email
+        # @var string
+        self.userMail = userMail
+
+        # The file location
+        # @var string
+        self.outputPath = outputPath
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
+        'metadataProfileId': getXmlNodeInt, 
+        'additionalFields': (KalturaObjectFactory.createArray, 'KalturaCsvAdditionalFieldInfo'), 
+        'userName': getXmlNodeText, 
+        'userMail': getXmlNodeText, 
+        'outputPath': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUsersCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaUsersCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
+        kparams.addArrayIfDefined("additionalFields", self.additionalFields)
+        kparams.addStringIfDefined("userName", self.userName)
+        kparams.addStringIfDefined("userMail", self.userMail)
+        kparams.addStringIfDefined("outputPath", self.outputPath)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
+
+    def getMetadataProfileId(self):
+        return self.metadataProfileId
+
+    def setMetadataProfileId(self, newMetadataProfileId):
+        self.metadataProfileId = newMetadataProfileId
+
+    def getAdditionalFields(self):
+        return self.additionalFields
+
+    def setAdditionalFields(self, newAdditionalFields):
+        self.additionalFields = newAdditionalFields
+
+    def getUserName(self):
+        return self.userName
+
+    def setUserName(self, newUserName):
+        self.userName = newUserName
+
+    def getUserMail(self):
+        return self.userMail
+
+    def setUserMail(self, newUserMail):
+        self.userMail = newUserMail
+
+    def getOutputPath(self):
+        return self.outputPath
+
+    def setOutputPath(self, newOutputPath):
+        self.outputPath = newOutputPath
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaValidateActiveEdgeCondition(KalturaCondition):
     def __init__(self,
             type=NotImplemented,
@@ -61997,6 +62141,19 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
+    def exportToCsv(self, filter, metadataProfileId = NotImplemented, additionalFields = NotImplemented):
+        """add batch job that sends an email with a link to download an updated CSV that contains list of users"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
+        kparams.addArrayIfDefined("additionalFields", additionalFields)
+        self.client.queueServiceActionCall("user", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def get(self, userId = NotImplemented):
         """Retrieves a user object for a specified user ID."""
 
@@ -62107,6 +62264,17 @@ class KalturaUserService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def serveCsv(self, id):
+        """Will serve a requested csv"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("user", "serveCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def setInitialPassword(self, hashKey, newPassword):
         """Set initial users password"""
@@ -62608,6 +62776,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaConversionProfileAssetParams': KalturaConversionProfileAssetParams,
             'KalturaConvertCollectionFlavorData': KalturaConvertCollectionFlavorData,
             'KalturaCoordinate': KalturaCoordinate,
+            'KalturaCsvAdditionalFieldInfo': KalturaCsvAdditionalFieldInfo,
             'KalturaDataEntry': KalturaDataEntry,
             'KalturaUrlRecognizer': KalturaUrlRecognizer,
             'KalturaUrlTokenizer': KalturaUrlTokenizer,
@@ -62907,6 +63076,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserLoginDataListResponse': KalturaUserLoginDataListResponse,
             'KalturaUserRoleCondition': KalturaUserRoleCondition,
             'KalturaUserRoleListResponse': KalturaUserRoleListResponse,
+            'KalturaUsersCsvJobData': KalturaUsersCsvJobData,
             'KalturaValidateActiveEdgeCondition': KalturaValidateActiveEdgeCondition,
             'KalturaWidgetBaseFilter': KalturaWidgetBaseFilter,
             'KalturaWidgetListResponse': KalturaWidgetListResponse,
