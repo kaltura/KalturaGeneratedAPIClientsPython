@@ -931,7 +931,7 @@ class KalturaTransformMetadataJobData(KalturaJobData):
             srcXsl=NotImplemented,
             srcVersion=NotImplemented,
             destVersion=NotImplemented,
-            destXsdPath=NotImplemented,
+            destXsd=NotImplemented,
             metadataProfileId=NotImplemented):
         KalturaJobData.__init__(self)
 
@@ -944,8 +944,8 @@ class KalturaTransformMetadataJobData(KalturaJobData):
         # @var int
         self.destVersion = destVersion
 
-        # @var string
-        self.destXsdPath = destXsdPath
+        # @var KalturaFileContainer
+        self.destXsd = destXsd
 
         # @var int
         self.metadataProfileId = metadataProfileId
@@ -955,7 +955,7 @@ class KalturaTransformMetadataJobData(KalturaJobData):
         'srcXsl': (KalturaObjectFactory.create, 'KalturaFileContainer'), 
         'srcVersion': getXmlNodeInt, 
         'destVersion': getXmlNodeInt, 
-        'destXsdPath': getXmlNodeText, 
+        'destXsd': (KalturaObjectFactory.create, 'KalturaFileContainer'), 
         'metadataProfileId': getXmlNodeInt, 
     }
 
@@ -969,7 +969,7 @@ class KalturaTransformMetadataJobData(KalturaJobData):
         kparams.addObjectIfDefined("srcXsl", self.srcXsl)
         kparams.addIntIfDefined("srcVersion", self.srcVersion)
         kparams.addIntIfDefined("destVersion", self.destVersion)
-        kparams.addStringIfDefined("destXsdPath", self.destXsdPath)
+        kparams.addObjectIfDefined("destXsd", self.destXsd)
         kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
         return kparams
 
@@ -991,11 +991,11 @@ class KalturaTransformMetadataJobData(KalturaJobData):
     def setDestVersion(self, newDestVersion):
         self.destVersion = newDestVersion
 
-    def getDestXsdPath(self):
-        return self.destXsdPath
+    def getDestXsd(self):
+        return self.destXsd
 
-    def setDestXsdPath(self, newDestXsdPath):
-        self.destXsdPath = newDestXsdPath
+    def setDestXsd(self, newDestXsd):
+        self.destXsd = newDestXsd
 
     def getMetadataProfileId(self):
         return self.metadataProfileId
