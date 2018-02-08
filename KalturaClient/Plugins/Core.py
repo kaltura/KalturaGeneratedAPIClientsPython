@@ -3168,8 +3168,6 @@ class KalturaLanguage(object):
     CIC = "Chickasaw"
     CLC = "Chilcotin"
     ZH = "Chinese"
-    ZH_HANS = "Chinese (Simplified)"
-    ZH_HANT = "Chinese (Traditional)"
     CHN = "Chinook jargon"
     CHP = "Chipewyan"
     CIW = "Chippewa"
@@ -3614,8 +3612,8 @@ class KalturaLanguage(object):
     WYM = "Wymysorys"
     XH = "Xhosa"
     AME = "Yanesha"
-    JI = "Yiddish"
     YI = "Yiddish"
+    JI = "Yiddish"
     YO = "Yoruba"
     ZAI = "Zapotec Isthmus"
     DJE = "Zarma"
@@ -3775,8 +3773,6 @@ class KalturaLanguageCode(object):
     YI = "yi"
     YO = "yo"
     ZH = "zh"
-    ZH_HANS = "zh_s"
-    ZH_HANT = "zh_t"
     ZU = "zu"
 
     def __init__(self, value):
