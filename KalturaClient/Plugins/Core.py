@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2017  Kaltura Inc.
+# Copyright (C) 2006-2018  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -35613,7 +35613,8 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
             status=NotImplemented,
             serverType=NotImplemented,
             streams=NotImplemented,
-            recordingInfo=NotImplemented):
+            recordingInfo=NotImplemented,
+            isPlayableUser=NotImplemented):
         KalturaEntryServerNode.__init__(self,
             id,
             entryId,
@@ -35631,10 +35632,14 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         # @var array of KalturaLiveEntryServerNodeRecordingInfo
         self.recordingInfo = recordingInfo
 
+        # @var bool
+        self.isPlayableUser = isPlayableUser
+
 
     PROPERTY_LOADERS = {
         'streams': (KalturaObjectFactory.createArray, 'KalturaLiveStreamParams'), 
         'recordingInfo': (KalturaObjectFactory.createArray, 'KalturaLiveEntryServerNodeRecordingInfo'), 
+        'isPlayableUser': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -35646,6 +35651,7 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         kparams.put("objectType", "KalturaLiveEntryServerNode")
         kparams.addArrayIfDefined("streams", self.streams)
         kparams.addArrayIfDefined("recordingInfo", self.recordingInfo)
+        kparams.addBoolIfDefined("isPlayableUser", self.isPlayableUser)
         return kparams
 
     def getStreams(self):
@@ -35659,6 +35665,12 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
 
     def setRecordingInfo(self, newRecordingInfo):
         self.recordingInfo = newRecordingInfo
+
+    def getIsPlayableUser(self):
+        return self.isPlayableUser
+
+    def setIsPlayableUser(self, newIsPlayableUser):
+        self.isPlayableUser = newIsPlayableUser
 
 
 # @package Kaltura
