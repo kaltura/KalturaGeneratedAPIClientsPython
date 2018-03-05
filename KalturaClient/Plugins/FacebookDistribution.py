@@ -195,7 +195,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
     def __init__(self,
             fieldValues=NotImplemented,
             videoAssetFilePath=NotImplemented,
-            thumbAssetFilePath=NotImplemented,
+            thumbAssetId=NotImplemented,
             captionsInfo=NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
@@ -204,7 +204,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
         self.videoAssetFilePath = videoAssetFilePath
 
         # @var string
-        self.thumbAssetFilePath = thumbAssetFilePath
+        self.thumbAssetId = thumbAssetId
 
         # @var array of KalturaFacebookCaptionDistributionInfo
         self.captionsInfo = captionsInfo
@@ -212,7 +212,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
 
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
-        'thumbAssetFilePath': getXmlNodeText, 
+        'thumbAssetId': getXmlNodeText, 
         'captionsInfo': (KalturaObjectFactory.createArray, 'KalturaFacebookCaptionDistributionInfo'), 
     }
 
@@ -224,7 +224,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
         kparams = KalturaConfigurableDistributionJobProviderData.toParams(self)
         kparams.put("objectType", "KalturaFacebookDistributionJobProviderData")
         kparams.addStringIfDefined("videoAssetFilePath", self.videoAssetFilePath)
-        kparams.addStringIfDefined("thumbAssetFilePath", self.thumbAssetFilePath)
+        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
         kparams.addArrayIfDefined("captionsInfo", self.captionsInfo)
         return kparams
 
@@ -234,11 +234,11 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
     def setVideoAssetFilePath(self, newVideoAssetFilePath):
         self.videoAssetFilePath = newVideoAssetFilePath
 
-    def getThumbAssetFilePath(self):
-        return self.thumbAssetFilePath
+    def getThumbAssetId(self):
+        return self.thumbAssetId
 
-    def setThumbAssetFilePath(self, newThumbAssetFilePath):
-        self.thumbAssetFilePath = newThumbAssetFilePath
+    def setThumbAssetId(self, newThumbAssetId):
+        self.thumbAssetId = newThumbAssetId
 
     def getCaptionsInfo(self):
         return self.captionsInfo

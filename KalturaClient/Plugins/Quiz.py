@@ -401,7 +401,8 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             hint=NotImplemented,
             question=NotImplemented,
             explanation=NotImplemented,
-            questionType=NotImplemented):
+            questionType=NotImplemented,
+            presentationOrder=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             cuePointType,
@@ -436,6 +437,9 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
         # @var KalturaQuestionType
         self.questionType = questionType
 
+        # @var int
+        self.presentationOrder = presentationOrder
+
 
     PROPERTY_LOADERS = {
         'optionalAnswers': (KalturaObjectFactory.createArray, 'KalturaOptionalAnswer'), 
@@ -443,6 +447,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
         'question': getXmlNodeText, 
         'explanation': getXmlNodeText, 
         'questionType': (KalturaEnumsFactory.createInt, "KalturaQuestionType"), 
+        'presentationOrder': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -457,6 +462,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
         kparams.addStringIfDefined("question", self.question)
         kparams.addStringIfDefined("explanation", self.explanation)
         kparams.addIntEnumIfDefined("questionType", self.questionType)
+        kparams.addIntIfDefined("presentationOrder", self.presentationOrder)
         return kparams
 
     def getOptionalAnswers(self):
@@ -488,6 +494,12 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
 
     def setQuestionType(self, newQuestionType):
         self.questionType = newQuestionType
+
+    def getPresentationOrder(self):
+        return self.presentationOrder
+
+    def setPresentationOrder(self, newPresentationOrder):
+        self.presentationOrder = newPresentationOrder
 
 
 # @package Kaltura
