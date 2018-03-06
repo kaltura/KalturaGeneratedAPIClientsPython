@@ -434,6 +434,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
             userFriendlyFieldName=NotImplemented,
             entryMrssXslt=NotImplemented,
             isRequired=NotImplemented,
+            type=NotImplemented,
             updateOnChange=NotImplemented,
             updateParams=NotImplemented,
             isDefault=NotImplemented,
@@ -458,6 +459,9 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         # @var KalturaDistributionFieldRequiredStatus
         self.isRequired = isRequired
 
+        # @var string
+        self.type = type
+
         # Trigger distribution update when this field changes or not ?
         # @var bool
         self.updateOnChange = updateOnChange
@@ -481,6 +485,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         'userFriendlyFieldName': getXmlNodeText, 
         'entryMrssXslt': getXmlNodeText, 
         'isRequired': (KalturaEnumsFactory.createInt, "KalturaDistributionFieldRequiredStatus"), 
+        'type': getXmlNodeText, 
         'updateOnChange': getXmlNodeBool, 
         'updateParams': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'isDefault': getXmlNodeBool, 
@@ -498,6 +503,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         kparams.addStringIfDefined("userFriendlyFieldName", self.userFriendlyFieldName)
         kparams.addStringIfDefined("entryMrssXslt", self.entryMrssXslt)
         kparams.addIntEnumIfDefined("isRequired", self.isRequired)
+        kparams.addStringIfDefined("type", self.type)
         kparams.addBoolIfDefined("updateOnChange", self.updateOnChange)
         kparams.addArrayIfDefined("updateParams", self.updateParams)
         kparams.addBoolIfDefined("triggerDeleteOnError", self.triggerDeleteOnError)
@@ -526,6 +532,12 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
 
     def setIsRequired(self, newIsRequired):
         self.isRequired = newIsRequired
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
 
     def getUpdateOnChange(self):
         return self.updateOnChange
