@@ -2759,6 +2759,7 @@ class KalturaExternalMediaEntryMatchAttribute(object):
 # @subpackage Client
 class KalturaFileAssetObjectType(object):
     UI_CONF = "2"
+    ENTRY = "3"
 
     def __init__(self, value):
         self.value = value
