@@ -31,7 +31,18 @@ from __future__ import absolute_import
 
 from .Core import *
 from .Metadata import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -253,6 +264,7 @@ class KalturaDistributionProviderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDistributionProviderType(object):
+    ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
     AVN = "avnDistribution.AVN"
     COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
     CROSS_KALTURA = "crossKalturaDistribution.CROSS_KALTURA"
@@ -267,8 +279,18 @@ class KalturaDistributionProviderType(object):
     IDETIC = "ideticDistribution.IDETIC"
     METRO_PCS = "metroPcsDistribution.METRO_PCS"
     MSN = "msnDistribution.MSN"
+    NDN = "ndnDistribution.NDN"
+    PODCAST = "podcastDistribution.PODCAST"
+    PUSH_TO_NEWS = "pushToNewsDistribution.PUSH_TO_NEWS"
     QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
+    SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
+    TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
+    TVCOM = "tvComDistribution.TVCOM"
+    TVINCI = "tvinciDistribution.TVINCI"
     UNICORN = "unicornDistribution.UNICORN"
+    UVERSE_CLICK_TO_ORDER = "uverseClickToOrderDistribution.UVERSE_CLICK_TO_ORDER"
+    UVERSE = "uverseDistribution.UVERSE"
+    VERIZON_VCAST = "verizonVcastDistribution.VERIZON_VCAST"
     YAHOO = "yahooDistribution.YAHOO"
     YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"
@@ -434,7 +456,6 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
             userFriendlyFieldName=NotImplemented,
             entryMrssXslt=NotImplemented,
             isRequired=NotImplemented,
-            type=NotImplemented,
             updateOnChange=NotImplemented,
             updateParams=NotImplemented,
             isDefault=NotImplemented,
@@ -459,9 +480,6 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         # @var KalturaDistributionFieldRequiredStatus
         self.isRequired = isRequired
 
-        # @var string
-        self.type = type
-
         # Trigger distribution update when this field changes or not ?
         # @var bool
         self.updateOnChange = updateOnChange
@@ -485,7 +503,6 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         'userFriendlyFieldName': getXmlNodeText, 
         'entryMrssXslt': getXmlNodeText, 
         'isRequired': (KalturaEnumsFactory.createInt, "KalturaDistributionFieldRequiredStatus"), 
-        'type': getXmlNodeText, 
         'updateOnChange': getXmlNodeBool, 
         'updateParams': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'isDefault': getXmlNodeBool, 
@@ -503,7 +520,6 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         kparams.addStringIfDefined("userFriendlyFieldName", self.userFriendlyFieldName)
         kparams.addStringIfDefined("entryMrssXslt", self.entryMrssXslt)
         kparams.addIntEnumIfDefined("isRequired", self.isRequired)
-        kparams.addStringIfDefined("type", self.type)
         kparams.addBoolIfDefined("updateOnChange", self.updateOnChange)
         kparams.addArrayIfDefined("updateParams", self.updateParams)
         kparams.addBoolIfDefined("triggerDeleteOnError", self.triggerDeleteOnError)
@@ -532,12 +548,6 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
 
     def setIsRequired(self, newIsRequired):
         self.isRequired = newIsRequired
-
-    def getType(self):
-        return self.type
-
-    def setType(self, newType):
-        self.type = newType
 
     def getUpdateOnChange(self):
         return self.updateOnChange
@@ -5087,8 +5097,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xslFile", xslFile);
+        kfiles = {"xslFile": xslFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -5112,8 +5121,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xsdFile", xsdFile);
+        kfiles = {"xsdFile": xsdFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidateFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -5137,8 +5145,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("transformFile", transformFile);
+        kfiles = {"transformFile": transformFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

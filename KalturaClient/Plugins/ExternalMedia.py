@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -157,6 +168,8 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             flavorParamsIds=NotImplemented,
             isTrimDisabled=NotImplemented,
             streams=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIds=NotImplemented,
             externalSourceType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaMediaEntry.__init__(self,
@@ -224,7 +237,9 @@ class KalturaExternalMediaEntry(KalturaMediaEntry):
             dataUrl,
             flavorParamsIds,
             isTrimDisabled,
-            streams)
+            streams,
+            isSequenceEntry,
+            sequenceEntryIds)
 
         # The source type of the external media
         # @var KalturaExternalMediaSourceType
@@ -401,6 +416,8 @@ class KalturaExternalMediaEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             externalSourceTypeEqual=NotImplemented,
             externalSourceTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -509,7 +526,9 @@ class KalturaExternalMediaEntryBaseFilter(KalturaMediaEntryFilter):
             mediaDateGreaterThanOrEqual,
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
-            flavorParamsIdsMatchAnd)
+            flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn)
 
         # @var KalturaExternalMediaSourceType
         self.externalSourceTypeEqual = externalSourceTypeEqual
@@ -677,6 +696,8 @@ class KalturaExternalMediaEntryFilter(KalturaExternalMediaEntryBaseFilter):
             mediaDateLessThanOrEqual=NotImplemented,
             flavorParamsIdsMatchOr=NotImplemented,
             flavorParamsIdsMatchAnd=NotImplemented,
+            isSequenceEntry=NotImplemented,
+            sequenceEntryIdsIn=NotImplemented,
             externalSourceTypeEqual=NotImplemented,
             externalSourceTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -786,6 +807,8 @@ class KalturaExternalMediaEntryFilter(KalturaExternalMediaEntryBaseFilter):
             mediaDateLessThanOrEqual,
             flavorParamsIdsMatchOr,
             flavorParamsIdsMatchAnd,
+            isSequenceEntry,
+            sequenceEntryIdsIn,
             externalSourceTypeEqual,
             externalSourceTypeIn,
             assetParamsIdsMatchOr,

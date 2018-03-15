@@ -31,13 +31,26 @@ from __future__ import absolute_import
 
 from .Core import *
 from .Metadata import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
 class KalturaIntegrationProviderType(object):
     CIELO24 = "cielo24.Cielo24"
+    DEXTER = "dexterIntegration.Dexter"
+    EXAMPLE = "exampleIntegration.Example"
     VOICEBASE = "voicebase.Voicebase"
 
     def __init__(self, value):

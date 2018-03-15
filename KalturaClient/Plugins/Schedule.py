@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -3864,8 +3875,7 @@ class KalturaScheduleEventService(KalturaServiceBase):
         """Add new bulk upload batch job"""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         self.client.queueServiceActionCall("schedule_scheduleevent", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
@@ -3967,8 +3977,7 @@ class KalturaScheduleResourceService(KalturaServiceBase):
         """Add new bulk upload batch job"""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         self.client.queueServiceActionCall("schedule_scheduleresource", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():

@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -40,23 +51,6 @@ class KalturaCuePointStatus(object):
     DELETED = 2
     HANDLED = 3
     PENDING = 4
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaQuestionType(object):
-    MULTIPLE_CHOICE_ANSWER = 1
-    TRUE_FALSE = 2
-    REFLECTION_POINT = 3
-    MULTIPLE_ANSWER_QUESTION = 4
-    FILL_IN_BLANK = 5
-    HOT_SPOT = 6
-    GO_TO = 7
 
     def __init__(self, value):
         self.value = value
@@ -850,8 +844,7 @@ class KalturaCuePointService(KalturaServiceBase):
         """Allows you to add multiple cue points objects by uploading XML that contains multiple cue point definitions"""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("cuepoint_cuepoint", "addFromBulk", "KalturaCuePointListResponse", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -967,7 +960,6 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaCuePointStatus': KalturaCuePointStatus,
-            'KalturaQuestionType': KalturaQuestionType,
             'KalturaQuizOutputType': KalturaQuizOutputType,
             'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,

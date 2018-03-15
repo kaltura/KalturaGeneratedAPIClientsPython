@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -95,7 +106,6 @@ class KalturaEventNotificationEventObjectType(object):
     WIDGET = "36"
     CATEGORYENTRY = "37"
     LIVE_STREAM = "38"
-    SERVER_NODE = "39"
 
     def __init__(self, value):
         self.value = value

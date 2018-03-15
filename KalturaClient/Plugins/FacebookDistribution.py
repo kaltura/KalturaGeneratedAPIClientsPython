@@ -31,7 +31,18 @@ from __future__ import absolute_import
 
 from .Core import *
 from .ContentDistribution import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -195,7 +206,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
     def __init__(self,
             fieldValues=NotImplemented,
             videoAssetFilePath=NotImplemented,
-            thumbAssetId=NotImplemented,
+            thumbAssetFilePath=NotImplemented,
             captionsInfo=NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
@@ -204,7 +215,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
         self.videoAssetFilePath = videoAssetFilePath
 
         # @var string
-        self.thumbAssetId = thumbAssetId
+        self.thumbAssetFilePath = thumbAssetFilePath
 
         # @var array of KalturaFacebookCaptionDistributionInfo
         self.captionsInfo = captionsInfo
@@ -212,7 +223,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
 
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
-        'thumbAssetId': getXmlNodeText, 
+        'thumbAssetFilePath': getXmlNodeText, 
         'captionsInfo': (KalturaObjectFactory.createArray, 'KalturaFacebookCaptionDistributionInfo'), 
     }
 
@@ -224,7 +235,7 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
         kparams = KalturaConfigurableDistributionJobProviderData.toParams(self)
         kparams.put("objectType", "KalturaFacebookDistributionJobProviderData")
         kparams.addStringIfDefined("videoAssetFilePath", self.videoAssetFilePath)
-        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
+        kparams.addStringIfDefined("thumbAssetFilePath", self.thumbAssetFilePath)
         kparams.addArrayIfDefined("captionsInfo", self.captionsInfo)
         return kparams
 
@@ -234,11 +245,11 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
     def setVideoAssetFilePath(self, newVideoAssetFilePath):
         self.videoAssetFilePath = newVideoAssetFilePath
 
-    def getThumbAssetId(self):
-        return self.thumbAssetId
+    def getThumbAssetFilePath(self):
+        return self.thumbAssetFilePath
 
-    def setThumbAssetId(self, newThumbAssetId):
-        self.thumbAssetId = newThumbAssetId
+    def setThumbAssetFilePath(self, newThumbAssetFilePath):
+        self.thumbAssetFilePath = newThumbAssetFilePath
 
     def getCaptionsInfo(self):
         return self.captionsInfo
