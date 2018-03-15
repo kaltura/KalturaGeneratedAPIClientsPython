@@ -34470,7 +34470,8 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
-            serverTypeEqual=NotImplemented):
+            serverTypeEqual=NotImplemented,
+            serverTypeIn=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -34505,6 +34506,9 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         # @var KalturaEntryServerNodeType
         self.serverTypeEqual = serverTypeEqual
 
+        # @var string
+        self.serverTypeIn = serverTypeIn
+
 
     PROPERTY_LOADERS = {
         'entryIdEqual': getXmlNodeText, 
@@ -34517,6 +34521,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
         'statusIn': getXmlNodeText, 
         'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
+        'serverTypeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -34536,6 +34541,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
         kparams.addStringIfDefined("statusIn", self.statusIn)
         kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
+        kparams.addStringIfDefined("serverTypeIn", self.serverTypeIn)
         return kparams
 
     def getEntryIdEqual(self):
@@ -34597,6 +34603,12 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
     def setServerTypeEqual(self, newServerTypeEqual):
         self.serverTypeEqual = newServerTypeEqual
+
+    def getServerTypeIn(self):
+        return self.serverTypeIn
+
+    def setServerTypeIn(self, newServerTypeIn):
+        self.serverTypeIn = newServerTypeIn
 
 
 # @package Kaltura
@@ -43512,7 +43524,8 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             updatedAtLessThanOrEqual=NotImplemented,
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
-            serverTypeEqual=NotImplemented):
+            serverTypeEqual=NotImplemented,
+            serverTypeIn=NotImplemented):
         KalturaEntryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -43525,7 +43538,8 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             updatedAtLessThanOrEqual,
             statusEqual,
             statusIn,
-            serverTypeEqual)
+            serverTypeEqual,
+            serverTypeIn)
 
 
     PROPERTY_LOADERS = {
@@ -49543,6 +49557,52 @@ class KalturaLiveEntryMatchAttributeCondition(KalturaSearchMatchAttributeConditi
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            serverNodeIdEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serverTypeEqual=NotImplemented,
+            serverTypeIn=NotImplemented):
+        KalturaEntryServerNodeFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            entryIdEqual,
+            entryIdIn,
+            serverNodeIdEqual,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serverTypeEqual,
+            serverTypeIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryServerNodeFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryServerNodeBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryServerNodeFilter.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryServerNodeBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveStreamAdminEntryCompareAttributeCondition(KalturaSearchComparableAttributeCondition):
     """Auto-generated class.
      Used to search KalturaLiveStreamAdminEntry attributes. Use KalturaLiveStreamAdminEntryCompareAttribute enum to provide attribute name.
@@ -51995,6 +52055,52 @@ class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter)
     def toParams(self):
         kparams = KalturaITunesSyndicationFeedBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaITunesSyndicationFeedFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            serverNodeIdEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serverTypeEqual=NotImplemented,
+            serverTypeIn=NotImplemented):
+        KalturaLiveEntryServerNodeBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            entryIdEqual,
+            entryIdIn,
+            serverNodeIdEqual,
+            createdAtLessThanOrEqual,
+            createdAtGreaterThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serverTypeEqual,
+            serverTypeIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaLiveEntryServerNodeBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryServerNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLiveEntryServerNodeBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryServerNodeFilter")
         return kparams
 
 
@@ -63214,6 +63320,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveChannelSegmentFilter': KalturaLiveChannelSegmentFilter,
             'KalturaLiveEntryCompareAttributeCondition': KalturaLiveEntryCompareAttributeCondition,
             'KalturaLiveEntryMatchAttributeCondition': KalturaLiveEntryMatchAttributeCondition,
+            'KalturaLiveEntryServerNodeBaseFilter': KalturaLiveEntryServerNodeBaseFilter,
             'KalturaLiveStreamAdminEntryCompareAttributeCondition': KalturaLiveStreamAdminEntryCompareAttributeCondition,
             'KalturaLiveStreamAdminEntryMatchAttributeCondition': KalturaLiveStreamAdminEntryMatchAttributeCondition,
             'KalturaLiveStreamEntryCompareAttributeCondition': KalturaLiveStreamEntryCompareAttributeCondition,
@@ -63262,6 +63369,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGenericSyndicationFeedFilter': KalturaGenericSyndicationFeedFilter,
             'KalturaGoogleVideoSyndicationFeedFilter': KalturaGoogleVideoSyndicationFeedFilter,
             'KalturaITunesSyndicationFeedFilter': KalturaITunesSyndicationFeedFilter,
+            'KalturaLiveEntryServerNodeFilter': KalturaLiveEntryServerNodeFilter,
             'KalturaOperaSyndicationFeed': KalturaOperaSyndicationFeed,
             'KalturaPlaylistBaseFilter': KalturaPlaylistBaseFilter,
             'KalturaQuizUserEntryBaseFilter': KalturaQuizUserEntryBaseFilter,
