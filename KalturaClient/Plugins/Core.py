@@ -11417,7 +11417,8 @@ class KalturaConversionProfile(KalturaObjectBase):
             conditionalProfiles=NotImplemented,
             detectGOP=NotImplemented,
             mediaInfoXslTransformation=NotImplemented,
-            defaultReplacementOptions=NotImplemented):
+            defaultReplacementOptions=NotImplemented,
+            defaultAudioLang=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Conversion Profile
@@ -11523,6 +11524,9 @@ class KalturaConversionProfile(KalturaObjectBase):
         # @var KalturaEntryReplacementOptions
         self.defaultReplacementOptions = defaultReplacementOptions
 
+        # @var KalturaLanguage
+        self.defaultAudioLang = defaultAudioLang
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -11550,6 +11554,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         'detectGOP': getXmlNodeInt, 
         'mediaInfoXslTransformation': getXmlNodeText, 
         'defaultReplacementOptions': (KalturaObjectFactory.create, 'KalturaEntryReplacementOptions'), 
+        'defaultAudioLang': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
     }
 
     def fromXml(self, node):
@@ -11580,6 +11585,7 @@ class KalturaConversionProfile(KalturaObjectBase):
         kparams.addIntIfDefined("detectGOP", self.detectGOP)
         kparams.addStringIfDefined("mediaInfoXslTransformation", self.mediaInfoXslTransformation)
         kparams.addObjectIfDefined("defaultReplacementOptions", self.defaultReplacementOptions)
+        kparams.addStringEnumIfDefined("defaultAudioLang", self.defaultAudioLang)
         return kparams
 
     def getId(self):
@@ -11719,6 +11725,12 @@ class KalturaConversionProfile(KalturaObjectBase):
 
     def setDefaultReplacementOptions(self, newDefaultReplacementOptions):
         self.defaultReplacementOptions = newDefaultReplacementOptions
+
+    def getDefaultAudioLang(self):
+        return self.defaultAudioLang
+
+    def setDefaultAudioLang(self, newDefaultAudioLang):
+        self.defaultAudioLang = newDefaultAudioLang
 
 
 # @package Kaltura
