@@ -48,6 +48,18 @@ class KalturaDeleteFlavorsLogicType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDryRunFileType(object):
+    LIST_RESPONSE = 1
+    CSV = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduledTaskAddOrRemoveType(object):
     ADD = 1
     REMOVE = 2
@@ -767,12 +779,20 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
 class KalturaScheduledTaskJobData(KalturaJobData):
     def __init__(self,
             maxResults=NotImplemented,
+            totalCount=NotImplemented,
+            fileFormat=NotImplemented,
             resultsFilePath=NotImplemented,
             referenceTime=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
         self.maxResults = maxResults
+
+        # @var int
+        self.totalCount = totalCount
+
+        # @var KalturaDryRunFileType
+        self.fileFormat = fileFormat
 
         # @var string
         self.resultsFilePath = resultsFilePath
@@ -783,6 +803,8 @@ class KalturaScheduledTaskJobData(KalturaJobData):
 
     PROPERTY_LOADERS = {
         'maxResults': getXmlNodeInt, 
+        'totalCount': getXmlNodeInt, 
+        'fileFormat': (KalturaEnumsFactory.createInt, "KalturaDryRunFileType"), 
         'resultsFilePath': getXmlNodeText, 
         'referenceTime': getXmlNodeInt, 
     }
@@ -795,6 +817,8 @@ class KalturaScheduledTaskJobData(KalturaJobData):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaScheduledTaskJobData")
         kparams.addIntIfDefined("maxResults", self.maxResults)
+        kparams.addIntIfDefined("totalCount", self.totalCount)
+        kparams.addIntEnumIfDefined("fileFormat", self.fileFormat)
         kparams.addStringIfDefined("resultsFilePath", self.resultsFilePath)
         kparams.addIntIfDefined("referenceTime", self.referenceTime)
         return kparams
@@ -804,6 +828,18 @@ class KalturaScheduledTaskJobData(KalturaJobData):
 
     def setMaxResults(self, newMaxResults):
         self.maxResults = newMaxResults
+
+    def getTotalCount(self):
+        return self.totalCount
+
+    def setTotalCount(self, newTotalCount):
+        self.totalCount = newTotalCount
+
+    def getFileFormat(self):
+        return self.fileFormat
+
+    def setFileFormat(self, newFileFormat):
+        self.fileFormat = newFileFormat
 
     def getResultsFilePath(self):
         return self.resultsFilePath
@@ -1203,6 +1239,14 @@ class KalturaScheduledTaskProfileService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeInt(resultNode)
 
+    def serveDryRunResults(self, requestId):
+        """Serves dry run results by its request id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("requestId", requestId);
+        self.client.queueServiceActionCall('scheduledtask_scheduledtaskprofile', 'serveDryRunResults', None ,kparams)
+        return self.client.getServeUrl()
+
     def update(self, id, scheduledTaskProfile):
         """Update an existing scheduled task profile"""
 
@@ -1236,6 +1280,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaDeleteFlavorsLogicType': KalturaDeleteFlavorsLogicType,
+            'KalturaDryRunFileType': KalturaDryRunFileType,
             'KalturaScheduledTaskAddOrRemoveType': KalturaScheduledTaskAddOrRemoveType,
             'KalturaScheduledTaskProfileStatus': KalturaScheduledTaskProfileStatus,
             'KalturaObjectFilterEngineType': KalturaObjectFilterEngineType,
