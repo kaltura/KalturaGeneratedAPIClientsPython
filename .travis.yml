@@ -3,9 +3,9 @@ python:
   - "2.7"
   - "3.6"
 # command to install dependencies
-install: "python setup.py install"
+install: "pip install tox tox-travis"
 # command to run tests
-script: python -m unittest discover 
+script: tox
 notifications:
   email:
     recipients:
@@ -15,4 +15,4 @@ notifications:
       - Elad.cohen@kaltura.com
       - Jonathan.Kanarek@kaltura.com
     on_success: change
-    on_failure: always
+on_failure: always
