@@ -1,4 +1,4 @@
-# Python auto generated clients libs which will then be built and test by Travis CI
+# Python auto generated clients libs
 #### Please note that you should not make pull requests to the repo as the clientlibs are auto generated upon every Core release.
 #### Instead, please submit pulls to:
 
