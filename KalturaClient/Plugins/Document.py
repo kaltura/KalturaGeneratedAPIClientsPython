@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -2865,8 +2876,7 @@ class KalturaDocumentsService(KalturaServiceBase):
         """Upload a document file to Kaltura, then the file can be used to create a document entry."""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("document_documents", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

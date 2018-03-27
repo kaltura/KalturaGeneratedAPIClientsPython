@@ -29,7 +29,18 @@
 # @subpackage Client
 from __future__ import absolute_import
 
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 API_VERSION = '3.3.0'
 
@@ -57906,8 +57917,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("baseentry", "updateThumbnailJpeg", "KalturaBaseEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57918,8 +57928,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         """Upload a file to Kaltura, that can be used to create an entry."""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("baseentry", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -57954,8 +57963,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("conversionProfileId", conversionProfileId);
-        kfiles = KalturaFiles()
-        kfiles.put("csvFileData", csvFileData);
+        kfiles = {"csvFileData": csvFileData}
         kparams.addStringIfDefined("bulkUploadType", bulkUploadType)
         kparams.addStringIfDefined("uploadedBy", uploadedBy)
         kparams.addStringIfDefined("fileName", fileName)
@@ -58124,8 +58132,7 @@ class KalturaCategoryService(KalturaServiceBase):
 
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented, bulkUploadCategoryData = NotImplemented):
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryData", bulkUploadCategoryData)
         self.client.queueServiceActionCall("category", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
@@ -58247,8 +58254,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
 
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented, bulkUploadCategoryUserData = NotImplemented):
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryUserData", bulkUploadCategoryUserData)
         self.client.queueServiceActionCall("categoryuser", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
@@ -59733,8 +59739,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("livestream", "updateOfflineThumbnailJpeg", "KalturaLiveStreamEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -59933,8 +59938,7 @@ class KalturaMediaService(KalturaServiceBase):
         	 If no conversion profile was specified, partner's default will be used"""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadEntryData", bulkUploadEntryData)
         self.client.queueServiceActionCall("media", "bulkUploadAdd", "KalturaBulkUpload", kparams, kfiles)
@@ -60150,8 +60154,7 @@ class KalturaMediaService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("media", "updateThumbnailJpeg", "KalturaMediaEntry", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -60162,8 +60165,7 @@ class KalturaMediaService(KalturaServiceBase):
         """Upload a media file to Kaltura, then the file can be used to create a media entry."""
 
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("media", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -61550,8 +61552,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
     def addFromImage(self, entryId, fileData):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("thumbasset", "addFromImage", "KalturaThumbAsset", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -61952,8 +61953,7 @@ class KalturaUploadService(KalturaServiceBase):
 
     def upload(self, fileData):
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         self.client.queueServiceActionCall("upload", "upload", "None", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -62025,8 +62025,7 @@ class KalturaUploadTokenService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("uploadTokenId", uploadTokenId)
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addBoolIfDefined("resume", resume);
         kparams.addBoolIfDefined("finalChunk", finalChunk);
         kparams.addFloatIfDefined("resumeAt", resumeAt)
@@ -62214,8 +62213,7 @@ class KalturaUserService(KalturaServiceBase):
 
     def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented, bulkUploadUserData = NotImplemented):
         kparams = KalturaParams()
-        kfiles = KalturaFiles()
-        kfiles.put("fileData", fileData);
+        kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadUserData", bulkUploadUserData)
         self.client.queueServiceActionCall("user", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)

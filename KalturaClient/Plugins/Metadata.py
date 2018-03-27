@@ -30,7 +30,18 @@
 from __future__ import absolute_import
 
 from .Core import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -1801,8 +1812,7 @@ class KalturaMetadataService(KalturaServiceBase):
         kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
         kparams.addStringIfDefined("objectType", objectType)
         kparams.addStringIfDefined("objectId", objectId)
-        kfiles = KalturaFiles()
-        kfiles.put("xmlFile", xmlFile);
+        kfiles = {"xmlFile": xmlFile}
         self.client.queueServiceActionCall("metadata_metadata", "addFromFile", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -1906,8 +1916,7 @@ class KalturaMetadataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xmlFile", xmlFile);
+        kfiles = {"xmlFile": xmlFile}
         self.client.queueServiceActionCall("metadata_metadata", "updateFromFile", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -1919,8 +1928,7 @@ class KalturaMetadataService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xslFile", xslFile);
+        kfiles = {"xslFile": xslFile}
         self.client.queueServiceActionCall("metadata_metadata", "updateFromXSL", "KalturaMetadata", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -1954,9 +1962,8 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("metadataProfile", metadataProfile)
-        kfiles = KalturaFiles()
-        kfiles.put("xsdFile", xsdFile);
-        kfiles.put("viewsFile", viewsFile);
+        kfiles = {"xsdFile": xsdFile}
+        kfiles = {"viewsFile": viewsFile}
         self.client.queueServiceActionCall("metadata_metadataprofile", "addFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -2054,8 +2061,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xsdFile", xsdFile);
+        kfiles = {"xsdFile": xsdFile}
         self.client.queueServiceActionCall("metadata_metadataprofile", "updateDefinitionFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -2067,8 +2073,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xsltFile", xsltFile);
+        kfiles = {"xsltFile": xsltFile}
         self.client.queueServiceActionCall("metadata_metadataprofile", "updateTransformationFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -2080,8 +2085,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("viewsFile", viewsFile);
+        kfiles = {"viewsFile": viewsFile}
         self.client.queueServiceActionCall("metadata_metadataprofile", "updateViewsFromFile", "KalturaMetadataProfile", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

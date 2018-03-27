@@ -31,7 +31,18 @@ from __future__ import absolute_import
 
 from .Core import *
 from .Metadata import *
-from ..Base import *
+from ..Base import (
+    getXmlNodeBool,
+    getXmlNodeFloat,
+    getXmlNodeInt,
+    getXmlNodeText,
+    KalturaClientPlugin,
+    KalturaEnumsFactory,
+    KalturaObjectBase,
+    KalturaObjectFactory,
+    KalturaParams,
+    KalturaServiceBase,
+)
 
 ########## enums ##########
 # @package Kaltura
@@ -5087,8 +5098,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xslFile", xslFile);
+        kfiles = {"xslFile": xslFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -5112,8 +5122,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("xsdFile", xsdFile);
+        kfiles = {"xsdFile": xsdFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addMrssValidateFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -5137,8 +5146,7 @@ class KalturaGenericDistributionProviderActionService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kfiles = KalturaFiles()
-        kfiles.put("transformFile", transformFile);
+        kfiles = {"transformFile": transformFile}
         self.client.queueServiceActionCall("contentdistribution_genericdistributionprovideraction", "addResultsTransformFromFile", "KalturaGenericDistributionProviderAction", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
