@@ -13392,35 +13392,6 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaObject(KalturaObjectBase):
-    def __init__(self,
-            relatedObjects=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var map
-        # @readonly
-        self.relatedObjects = relatedObjects
-
-
-    PROPERTY_LOADERS = {
-        'relatedObjects': (KalturaObjectFactory.createMap, 'KalturaListResponse'), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaObject.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaObject")
-        return kparams
-
-    def getRelatedObjects(self):
-        return self.relatedObjects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEmailIngestionProfile(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -16394,6 +16365,35 @@ class KalturaGroupUser(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaObject(KalturaObjectBase):
+    def __init__(self,
+            relatedObjects=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var map
+        # @readonly
+        self.relatedObjects = relatedObjects
+
+
+    PROPERTY_LOADERS = {
+        'relatedObjects': (KalturaObjectFactory.createMap, 'KalturaListResponse'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaObject.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaObject")
+        return kparams
+
+    def getRelatedObjects(self):
+        return self.relatedObjects
 
 
 # @package Kaltura
@@ -62270,7 +62270,7 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
-    def exportToCsv(self, filter, metadataProfileId = NotImplemented, additionalFields = NotImplemented):
+    def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented):
         """add batch job that sends an email with a link to download an updated CSV that contains list of users"""
 
         kparams = KalturaParams()
@@ -62923,7 +62923,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaPluginData': KalturaPluginData,
             'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
-            'KalturaObject': KalturaObject,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryServerNode': KalturaEntryServerNode,
@@ -62945,6 +62944,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSchedulerWorker': KalturaSchedulerWorker,
             'KalturaScheduler': KalturaScheduler,
             'KalturaGroupUser': KalturaGroupUser,
+            'KalturaObject': KalturaObject,
             'KalturaIntegerValue': KalturaIntegerValue,
             'KalturaBatchJobListResponse': KalturaBatchJobListResponse,
             'KalturaMediaInfo': KalturaMediaInfo,
