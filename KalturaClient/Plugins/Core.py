@@ -17804,7 +17804,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             segmentDuration=NotImplemented,
             explicitLive=NotImplemented,
             viewMode=NotImplemented,
-            recordingStatus=NotImplemented):
+            recordingStatus=NotImplemented,
+            lastBroadcastEndTime=NotImplemented):
         KalturaMediaEntry.__init__(self,
             id,
             name,
@@ -17943,6 +17944,11 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @var KalturaRecordingStatus
         self.recordingStatus = recordingStatus
 
+        # The time the last broadcast finished.
+        # @var int
+        # @readonly
+        self.lastBroadcastEndTime = lastBroadcastEndTime
+
 
     PROPERTY_LOADERS = {
         'offlineMessage': getXmlNodeText, 
@@ -17963,6 +17969,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'explicitLive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
         'recordingStatus': (KalturaEnumsFactory.createInt, "KalturaRecordingStatus"), 
+        'lastBroadcastEndTime': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -18088,6 +18095,9 @@ class KalturaLiveEntry(KalturaMediaEntry):
     def setRecordingStatus(self, newRecordingStatus):
         self.recordingStatus = newRecordingStatus
 
+    def getLastBroadcastEndTime(self):
+        return self.lastBroadcastEndTime
+
 
 # @package Kaltura
 # @subpackage Client
@@ -18176,6 +18186,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             explicitLive=NotImplemented,
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
+            lastBroadcastEndTime=NotImplemented,
             playlistId=NotImplemented,
             repeat=NotImplemented):
         KalturaLiveEntry.__init__(self,
@@ -18261,7 +18272,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             segmentDuration,
             explicitLive,
             viewMode,
-            recordingStatus)
+            recordingStatus,
+            lastBroadcastEndTime)
 
         # Playlist id to be played
         # @var string
@@ -19182,6 +19194,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             explicitLive=NotImplemented,
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
+            lastBroadcastEndTime=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -19281,7 +19294,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             segmentDuration,
             explicitLive,
             viewMode,
-            recordingStatus)
+            recordingStatus,
+            lastBroadcastEndTime)
 
         # The stream id as provided by the provider
         # @var string
@@ -53627,6 +53641,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             explicitLive=NotImplemented,
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
+            lastBroadcastEndTime=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -53727,6 +53742,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             explicitLive,
             viewMode,
             recordingStatus,
+            lastBroadcastEndTime,
             streamRemoteId,
             streamRemoteBackupId,
             bitrates,
