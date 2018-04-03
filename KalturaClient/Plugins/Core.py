@@ -1799,10 +1799,10 @@ class KalturaBatchJobType(object):
     DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
     DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
-    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
-    CONVERT = "0"
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
+    CONVERT = "0"
+    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
     INTEGRATION = "integration.Integration"
@@ -1853,6 +1853,8 @@ class KalturaBatchJobType(object):
     CHUNKED_ENCODE_JOB_SCHEDULER = "44"
     SERVER_NODE_MONITOR = "45"
     USERS_CSV = "46"
+    CLIP_CONCAT = "47"
+    COPY_CUE_POINTS = "48"
 
     def __init__(self, value):
         self.value = value
@@ -31042,7 +31044,8 @@ class KalturaClipAttributes(KalturaOperationAttributes):
 
     def __init__(self,
             offset=NotImplemented,
-            duration=NotImplemented):
+            duration=NotImplemented,
+            globalOffsetInDestination=NotImplemented):
         KalturaOperationAttributes.__init__(self)
 
         # Offset in milliseconds
@@ -31053,10 +31056,15 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         # @var int
         self.duration = duration
 
+        # global Offset In Destination in milliseconds
+        # @var int
+        self.globalOffsetInDestination = globalOffsetInDestination
+
 
     PROPERTY_LOADERS = {
         'offset': getXmlNodeInt, 
         'duration': getXmlNodeInt, 
+        'globalOffsetInDestination': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -31068,6 +31076,7 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         kparams.put("objectType", "KalturaClipAttributes")
         kparams.addIntIfDefined("offset", self.offset)
         kparams.addIntIfDefined("duration", self.duration)
+        kparams.addIntIfDefined("globalOffsetInDestination", self.globalOffsetInDestination)
         return kparams
 
     def getOffset(self):
@@ -31081,6 +31090,77 @@ class KalturaClipAttributes(KalturaOperationAttributes):
 
     def setDuration(self, newDuration):
         self.duration = newDuration
+
+    def getGlobalOffsetInDestination(self):
+        return self.globalOffsetInDestination
+
+    def setGlobalOffsetInDestination(self, newGlobalOffsetInDestination):
+        self.globalOffsetInDestination = newGlobalOffsetInDestination
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaClipConcatJobData(KalturaJobData):
+    """Created by IntelliJ IDEA.
+     User: roie.beck
+     Date: 3/12/2018
+     Time: 11:20 AM
+     /"""
+
+    def __init__(self,
+            partnerId=NotImplemented,
+            priority=NotImplemented,
+            operationAttributes=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # $partnerId
+        # @var int
+        self.partnerId = partnerId
+
+        # $priority
+        # @var int
+        self.priority = priority
+
+        # clip operations
+        # @var array of KalturaObject
+        self.operationAttributes = operationAttributes
+
+
+    PROPERTY_LOADERS = {
+        'partnerId': getXmlNodeInt, 
+        'priority': getXmlNodeInt, 
+        'operationAttributes': (KalturaObjectFactory.createArray, 'KalturaObject'), 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaClipConcatJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaClipConcatJobData")
+        kparams.addIntIfDefined("partnerId", self.partnerId)
+        kparams.addIntIfDefined("priority", self.priority)
+        kparams.addArrayIfDefined("operationAttributes", self.operationAttributes)
+        return kparams
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def setPartnerId(self, newPartnerId):
+        self.partnerId = newPartnerId
+
+    def getPriority(self):
+        return self.priority
+
+    def setPriority(self, newPriority):
+        self.priority = newPriority
+
+    def getOperationAttributes(self):
+        return self.operationAttributes
+
+    def setOperationAttributes(self, newOperationAttributes):
+        self.operationAttributes = newOperationAttributes
 
 
 # @package Kaltura
@@ -31199,7 +31279,8 @@ class KalturaConcatJobData(KalturaJobData):
             flavorAssetId=NotImplemented,
             offset=NotImplemented,
             duration=NotImplemented,
-            concatenatedDuration=NotImplemented):
+            concatenatedDuration=NotImplemented,
+            shouldSort=NotImplemented):
         KalturaJobData.__init__(self)
 
         # Source files to be concatenated
@@ -31226,6 +31307,10 @@ class KalturaConcatJobData(KalturaJobData):
         # @var float
         self.concatenatedDuration = concatenatedDuration
 
+        # Should Sort the clip parts
+        # @var bool
+        self.shouldSort = shouldSort
+
 
     PROPERTY_LOADERS = {
         'srcFiles': (KalturaObjectFactory.createArray, 'KalturaString'), 
@@ -31234,6 +31319,7 @@ class KalturaConcatJobData(KalturaJobData):
         'offset': getXmlNodeFloat, 
         'duration': getXmlNodeFloat, 
         'concatenatedDuration': getXmlNodeFloat, 
+        'shouldSort': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -31249,6 +31335,7 @@ class KalturaConcatJobData(KalturaJobData):
         kparams.addFloatIfDefined("offset", self.offset)
         kparams.addFloatIfDefined("duration", self.duration)
         kparams.addFloatIfDefined("concatenatedDuration", self.concatenatedDuration)
+        kparams.addBoolIfDefined("shouldSort", self.shouldSort)
         return kparams
 
     def getSrcFiles(self):
@@ -31286,6 +31373,12 @@ class KalturaConcatJobData(KalturaJobData):
 
     def setConcatenatedDuration(self, newConcatenatedDuration):
         self.concatenatedDuration = newConcatenatedDuration
+
+    def getShouldSort(self):
+        return self.shouldSort
+
+    def setShouldSort(self, newShouldSort):
+        self.shouldSort = newShouldSort
 
 
 # @package Kaltura
@@ -63086,6 +63179,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryUserAdvancedFilter': KalturaCategoryUserAdvancedFilter,
             'KalturaCategoryUserListResponse': KalturaCategoryUserListResponse,
             'KalturaClipAttributes': KalturaClipAttributes,
+            'KalturaClipConcatJobData': KalturaClipConcatJobData,
             'KalturaCompareCondition': KalturaCompareCondition,
             'KalturaDataCenterContentResource': KalturaDataCenterContentResource,
             'KalturaConcatAttributes': KalturaConcatAttributes,

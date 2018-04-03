@@ -678,6 +678,17 @@ class KalturaAnnotationService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaAnnotation')
 
+    def updateCuePointsTimes(self, id, startTime, endTime = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        kparams.addIntIfDefined("startTime", startTime);
+        kparams.addIntIfDefined("endTime", endTime);
+        self.client.queueServiceActionCall("annotation_annotation", "updateCuePointsTimes", "KalturaCuePoint", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
+
     def updateStatus(self, id, status):
         """Update cuePoint status by id"""
 
