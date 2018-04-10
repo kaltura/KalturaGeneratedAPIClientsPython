@@ -444,38 +444,26 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaCopyCaptionsJobData(KalturaJobData):
     def __init__(self,
-            sourceEntryId=NotImplemented,
             entryId=NotImplemented,
-            offset=NotImplemented,
-            duration=NotImplemented,
+            clipsDescriptionArray=NotImplemented,
             fullCopy=NotImplemented):
         KalturaJobData.__init__(self)
-
-        # source entry Id
-        # @var string
-        self.sourceEntryId = sourceEntryId
 
         # entry Id
         # @var string
         self.entryId = entryId
 
-        # clip offset
-        # @var int
-        self.offset = offset
-
-        # clip duration
-        # @var int
-        self.duration = duration
+        # an array of source start time and duration
+        # @var array of KalturaClipDescription
+        self.clipsDescriptionArray = clipsDescriptionArray
 
         # @var bool
         self.fullCopy = fullCopy
 
 
     PROPERTY_LOADERS = {
-        'sourceEntryId': getXmlNodeText, 
         'entryId': getXmlNodeText, 
-        'offset': getXmlNodeInt, 
-        'duration': getXmlNodeInt, 
+        'clipsDescriptionArray': (KalturaObjectFactory.createArray, 'KalturaClipDescription'), 
         'fullCopy': getXmlNodeBool, 
     }
 
@@ -486,18 +474,10 @@ class KalturaCopyCaptionsJobData(KalturaJobData):
     def toParams(self):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaCopyCaptionsJobData")
-        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
         kparams.addStringIfDefined("entryId", self.entryId)
-        kparams.addIntIfDefined("offset", self.offset)
-        kparams.addIntIfDefined("duration", self.duration)
+        kparams.addArrayIfDefined("clipsDescriptionArray", self.clipsDescriptionArray)
         kparams.addBoolIfDefined("fullCopy", self.fullCopy)
         return kparams
-
-    def getSourceEntryId(self):
-        return self.sourceEntryId
-
-    def setSourceEntryId(self, newSourceEntryId):
-        self.sourceEntryId = newSourceEntryId
 
     def getEntryId(self):
         return self.entryId
@@ -505,17 +485,11 @@ class KalturaCopyCaptionsJobData(KalturaJobData):
     def setEntryId(self, newEntryId):
         self.entryId = newEntryId
 
-    def getOffset(self):
-        return self.offset
+    def getClipsDescriptionArray(self):
+        return self.clipsDescriptionArray
 
-    def setOffset(self, newOffset):
-        self.offset = newOffset
-
-    def getDuration(self):
-        return self.duration
-
-    def setDuration(self, newDuration):
-        self.duration = newDuration
+    def setClipsDescriptionArray(self, newClipsDescriptionArray):
+        self.clipsDescriptionArray = newClipsDescriptionArray
 
     def getFullCopy(self):
         return self.fullCopy

@@ -4978,6 +4978,7 @@ class KalturaReportType(object):
     LIVE = "24"
     TOP_PLAYBACK_CONTEXT = "25"
     VPAAS_USAGE = "26"
+    ENTRY_USAGE = "27"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -10903,6 +10904,74 @@ class KalturaClientNotification(KalturaObjectBase):
 
     def setData(self, newData):
         self.data = newData
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaClipDescription(KalturaObjectBase):
+    def __init__(self,
+            sourceEntryId=NotImplemented,
+            startTime=NotImplemented,
+            duration=NotImplemented,
+            offsetInDestination=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.sourceEntryId = sourceEntryId
+
+        # @var int
+        self.startTime = startTime
+
+        # @var int
+        self.duration = duration
+
+        # @var int
+        self.offsetInDestination = offsetInDestination
+
+
+    PROPERTY_LOADERS = {
+        'sourceEntryId': getXmlNodeText, 
+        'startTime': getXmlNodeInt, 
+        'duration': getXmlNodeInt, 
+        'offsetInDestination': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaClipDescription.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaClipDescription")
+        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
+        kparams.addIntIfDefined("startTime", self.startTime)
+        kparams.addIntIfDefined("duration", self.duration)
+        kparams.addIntIfDefined("offsetInDestination", self.offsetInDestination)
+        return kparams
+
+    def getSourceEntryId(self):
+        return self.sourceEntryId
+
+    def setSourceEntryId(self, newSourceEntryId):
+        self.sourceEntryId = newSourceEntryId
+
+    def getStartTime(self):
+        return self.startTime
+
+    def setStartTime(self, newStartTime):
+        self.startTime = newStartTime
+
+    def getDuration(self):
+        return self.duration
+
+    def setDuration(self, newDuration):
+        self.duration = newDuration
+
+    def getOffsetInDestination(self):
+        return self.offsetInDestination
+
+    def setOffsetInDestination(self, newOffsetInDestination):
+        self.offsetInDestination = newOffsetInDestination
 
 
 # @package Kaltura
@@ -63003,6 +63072,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryUser': KalturaCategoryUser,
             'KalturaClientConfiguration': KalturaClientConfiguration,
             'KalturaClientNotification': KalturaClientNotification,
+            'KalturaClipDescription': KalturaClipDescription,
             'KalturaContext': KalturaContext,
             'KalturaContextDataResult': KalturaContextDataResult,
             'KalturaControlPanelCommand': KalturaControlPanelCommand,
