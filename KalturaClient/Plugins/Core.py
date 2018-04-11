@@ -59826,10 +59826,11 @@ class KalturaLiveStreamService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("livestream", "regenerateStreamToken", "None", kparams)
+        self.client.queueServiceActionCall("livestream", "regenerateStreamToken", "KalturaLiveEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
     def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented, liveEntryStatus = 1, shouldCreateRecordedEntry = True):
         """Register media server to live entry"""
