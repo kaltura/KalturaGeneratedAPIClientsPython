@@ -90,7 +90,6 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
             language=NotImplemented,
             label=NotImplemented,
             filePath=NotImplemented,
-            encryptionKey=NotImplemented,
             remoteId=NotImplemented,
             action=NotImplemented,
             version=NotImplemented,
@@ -105,9 +104,6 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
 
         # @var string
         self.filePath = filePath
-
-        # @var string
-        self.encryptionKey = encryptionKey
 
         # @var string
         self.remoteId = remoteId
@@ -126,7 +122,6 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
         'language': getXmlNodeText, 
         'label': getXmlNodeText, 
         'filePath': getXmlNodeText, 
-        'encryptionKey': getXmlNodeText, 
         'remoteId': getXmlNodeText, 
         'action': (KalturaEnumsFactory.createInt, "KalturaYouTubeApiDistributionCaptionAction"), 
         'version': getXmlNodeText, 
@@ -143,7 +138,6 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
         kparams.addStringIfDefined("language", self.language)
         kparams.addStringIfDefined("label", self.label)
         kparams.addStringIfDefined("filePath", self.filePath)
-        kparams.addStringIfDefined("encryptionKey", self.encryptionKey)
         kparams.addStringIfDefined("remoteId", self.remoteId)
         kparams.addIntEnumIfDefined("action", self.action)
         kparams.addStringIfDefined("version", self.version)
@@ -167,12 +161,6 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
 
     def setFilePath(self, newFilePath):
         self.filePath = newFilePath
-
-    def getEncryptionKey(self):
-        return self.encryptionKey
-
-    def setEncryptionKey(self, newEncryptionKey):
-        self.encryptionKey = newEncryptionKey
 
     def getRemoteId(self):
         return self.remoteId
