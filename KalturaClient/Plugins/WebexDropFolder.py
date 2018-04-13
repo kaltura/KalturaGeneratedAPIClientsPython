@@ -130,6 +130,7 @@ class KalturaWebexDropFolder(KalturaDropFolder):
             webexHostIdMetadataFieldName=NotImplemented,
             deleteFromRecycleBin=NotImplemented,
             webexServiceType=NotImplemented,
+            webexSiteName=NotImplemented,
             deleteFromTimestamp=NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
@@ -185,6 +186,9 @@ class KalturaWebexDropFolder(KalturaDropFolder):
         # @var string
         self.webexServiceType = webexServiceType
 
+        # @var string
+        self.webexSiteName = webexSiteName
+
         # @var int
         self.deleteFromTimestamp = deleteFromTimestamp
 
@@ -198,6 +202,7 @@ class KalturaWebexDropFolder(KalturaDropFolder):
         'webexHostIdMetadataFieldName': getXmlNodeText, 
         'deleteFromRecycleBin': getXmlNodeBool, 
         'webexServiceType': getXmlNodeText, 
+        'webexSiteName': getXmlNodeText, 
         'deleteFromTimestamp': getXmlNodeInt, 
     }
 
@@ -216,6 +221,7 @@ class KalturaWebexDropFolder(KalturaDropFolder):
         kparams.addStringIfDefined("webexHostIdMetadataFieldName", self.webexHostIdMetadataFieldName)
         kparams.addBoolIfDefined("deleteFromRecycleBin", self.deleteFromRecycleBin)
         kparams.addStringIfDefined("webexServiceType", self.webexServiceType)
+        kparams.addStringIfDefined("webexSiteName", self.webexSiteName)
         kparams.addIntIfDefined("deleteFromTimestamp", self.deleteFromTimestamp)
         return kparams
 
@@ -266,6 +272,12 @@ class KalturaWebexDropFolder(KalturaDropFolder):
 
     def setWebexServiceType(self, newWebexServiceType):
         self.webexServiceType = newWebexServiceType
+
+    def getWebexSiteName(self):
+        return self.webexSiteName
+
+    def setWebexSiteName(self, newWebexSiteName):
+        self.webexSiteName = newWebexSiteName
 
     def getDeleteFromTimestamp(self):
         return self.deleteFromTimestamp
