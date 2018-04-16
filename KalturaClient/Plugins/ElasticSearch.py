@@ -129,7 +129,6 @@ class KalturaESearchCategoryFieldName(object):
     TAGS = "tags"
     UPDATED_AT = "updated_at"
     USER_ID = "user_id"
-    USER_IDS = "user_ids"
 
     def __init__(self, value):
         self.value = value
@@ -145,6 +144,17 @@ class KalturaESearchCategoryOrderByFieldName(object):
     MEMBERS_COUNT = "members_count"
     NAME = "name"
     UPDATED_AT = "updated_at"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchCategoryUserFieldName(object):
+    USER_ID = "user_id"
 
     def __init__(self, value):
         self.value = value
@@ -2118,6 +2128,70 @@ class KalturaESearchCategoryMetadataItem(KalturaESearchAbstractCategoryItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchCategoryUserItem(KalturaESearchAbstractCategoryItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented,
+            addHighlight=NotImplemented,
+            fieldName=NotImplemented,
+            permissionLevel=NotImplemented,
+            permissionName=NotImplemented):
+        KalturaESearchAbstractCategoryItem.__init__(self,
+            searchTerm,
+            itemType,
+            range,
+            addHighlight)
+
+        # @var KalturaESearchCategoryUserFieldName
+        self.fieldName = fieldName
+
+        # @var KalturaCategoryUserPermissionLevel
+        self.permissionLevel = permissionLevel
+
+        # @var string
+        self.permissionName = permissionName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchCategoryUserFieldName"), 
+        'permissionLevel': (KalturaEnumsFactory.createInt, "KalturaCategoryUserPermissionLevel"), 
+        'permissionName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAbstractCategoryItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchCategoryUserItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAbstractCategoryItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchCategoryUserItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        kparams.addIntEnumIfDefined("permissionLevel", self.permissionLevel)
+        kparams.addStringIfDefined("permissionName", self.permissionName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+    def getPermissionLevel(self):
+        return self.permissionLevel
+
+    def setPermissionLevel(self, newPermissionLevel):
+        self.permissionLevel = newPermissionLevel
+
+    def getPermissionName(self):
+        return self.permissionName
+
+    def setPermissionName(self, newPermissionName):
+        self.permissionName = newPermissionName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchEntryItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2608,6 +2682,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCategoryEntryFieldName': KalturaESearchCategoryEntryFieldName,
             'KalturaESearchCategoryFieldName': KalturaESearchCategoryFieldName,
             'KalturaESearchCategoryOrderByFieldName': KalturaESearchCategoryOrderByFieldName,
+            'KalturaESearchCategoryUserFieldName': KalturaESearchCategoryUserFieldName,
             'KalturaESearchCuePointFieldName': KalturaESearchCuePointFieldName,
             'KalturaESearchEntryFieldName': KalturaESearchEntryFieldName,
             'KalturaESearchEntryOrderByFieldName': KalturaESearchEntryOrderByFieldName,
@@ -2658,6 +2733,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCategoryEntryItem': KalturaESearchCategoryEntryItem,
             'KalturaESearchCategoryItem': KalturaESearchCategoryItem,
             'KalturaESearchCategoryMetadataItem': KalturaESearchCategoryMetadataItem,
+            'KalturaESearchCategoryUserItem': KalturaESearchCategoryUserItem,
             'KalturaESearchEntryItem': KalturaESearchEntryItem,
             'KalturaESearchUnifiedItem': KalturaESearchUnifiedItem,
             'KalturaESearchUserItem': KalturaESearchUserItem,
