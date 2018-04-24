@@ -35321,6 +35321,7 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
             category=NotImplemented,
             adultContent=NotImplemented,
             feedAuthor=NotImplemented,
+            enforceFeedAuthor=NotImplemented,
             enforceOrder=NotImplemented):
         KalturaBaseSyndicationFeed.__init__(self,
             id,
@@ -35380,6 +35381,9 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
         # @var string
         self.feedAuthor = feedAuthor
 
+        # @var bool
+        self.enforceFeedAuthor = enforceFeedAuthor
+
         # true in case you want to enfore the palylist order on the
         # @var KalturaNullableBoolean
         self.enforceOrder = enforceOrder
@@ -35395,6 +35399,7 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
         'category': (KalturaEnumsFactory.createString, "KalturaITunesSyndicationFeedCategories"), 
         'adultContent': (KalturaEnumsFactory.createString, "KalturaITunesSyndicationFeedAdultValues"), 
         'feedAuthor': getXmlNodeText, 
+        'enforceFeedAuthor': getXmlNodeBool, 
         'enforceOrder': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
@@ -35413,6 +35418,7 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
         kparams.addStringIfDefined("feedImageUrl", self.feedImageUrl)
         kparams.addStringEnumIfDefined("adultContent", self.adultContent)
         kparams.addStringIfDefined("feedAuthor", self.feedAuthor)
+        kparams.addBoolIfDefined("enforceFeedAuthor", self.enforceFeedAuthor)
         kparams.addIntEnumIfDefined("enforceOrder", self.enforceOrder)
         return kparams
 
@@ -35466,6 +35472,12 @@ class KalturaITunesSyndicationFeed(KalturaBaseSyndicationFeed):
 
     def setFeedAuthor(self, newFeedAuthor):
         self.feedAuthor = newFeedAuthor
+
+    def getEnforceFeedAuthor(self):
+        return self.enforceFeedAuthor
+
+    def setEnforceFeedAuthor(self, newEnforceFeedAuthor):
+        self.enforceFeedAuthor = newEnforceFeedAuthor
 
     def getEnforceOrder(self):
         return self.enforceOrder
