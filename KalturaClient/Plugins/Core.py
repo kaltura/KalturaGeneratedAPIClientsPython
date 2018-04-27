@@ -343,6 +343,18 @@ class KalturaEditorType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEffectType(object):
+    VIDEO_FADE_IN = 1
+    VIDEO_FADE_OUT = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEmailIngestionProfileStatus(object):
     INACTIVE = 0
     ACTIVE = 1
@@ -13459,6 +13471,53 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
     def setLicenseURL(self, newLicenseURL):
         self.licenseURL = newLicenseURL
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEffect(KalturaObjectBase):
+    """Effects attributes"""
+
+    def __init__(self,
+            effectType=NotImplemented,
+            value=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaEffectType
+        self.effectType = effectType
+
+        # value
+        # @var string
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'effectType': (KalturaEnumsFactory.createInt, "KalturaEffectType"), 
+        'value': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEffect.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaEffect")
+        kparams.addIntEnumIfDefined("effectType", self.effectType)
+        kparams.addStringIfDefined("value", self.value)
+        return kparams
+
+    def getEffectType(self):
+        return self.effectType
+
+    def setEffectType(self, newEffectType):
+        self.effectType = newEffectType
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
 
 
 # @package Kaltura
@@ -31114,7 +31173,8 @@ class KalturaClipAttributes(KalturaOperationAttributes):
     def __init__(self,
             offset=NotImplemented,
             duration=NotImplemented,
-            globalOffsetInDestination=NotImplemented):
+            globalOffsetInDestination=NotImplemented,
+            effectArray=NotImplemented):
         KalturaOperationAttributes.__init__(self)
 
         # Offset in milliseconds
@@ -31129,11 +31189,16 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         # @var int
         self.globalOffsetInDestination = globalOffsetInDestination
 
+        # global Offset In Destination in milliseconds
+        # @var array of KalturaEffect
+        self.effectArray = effectArray
+
 
     PROPERTY_LOADERS = {
         'offset': getXmlNodeInt, 
         'duration': getXmlNodeInt, 
         'globalOffsetInDestination': getXmlNodeInt, 
+        'effectArray': (KalturaObjectFactory.createArray, 'KalturaEffect'), 
     }
 
     def fromXml(self, node):
@@ -31146,6 +31211,7 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         kparams.addIntIfDefined("offset", self.offset)
         kparams.addIntIfDefined("duration", self.duration)
         kparams.addIntIfDefined("globalOffsetInDestination", self.globalOffsetInDestination)
+        kparams.addArrayIfDefined("effectArray", self.effectArray)
         return kparams
 
     def getOffset(self):
@@ -31166,16 +31232,16 @@ class KalturaClipAttributes(KalturaOperationAttributes):
     def setGlobalOffsetInDestination(self, newGlobalOffsetInDestination):
         self.globalOffsetInDestination = newGlobalOffsetInDestination
 
+    def getEffectArray(self):
+        return self.effectArray
+
+    def setEffectArray(self, newEffectArray):
+        self.effectArray = newEffectArray
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaClipConcatJobData(KalturaJobData):
-    """Created by IntelliJ IDEA.
-     User: roie.beck
-     Date: 3/12/2018
-     Time: 11:20 AM
-     /"""
-
     def __init__(self,
             partnerId=NotImplemented,
             priority=NotImplemented,
@@ -62798,6 +62864,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryStatus': KalturaDeliveryStatus,
             'KalturaDirectoryRestrictionType': KalturaDirectoryRestrictionType,
             'KalturaEditorType': KalturaEditorType,
+            'KalturaEffectType': KalturaEffectType,
             'KalturaEmailIngestionProfileStatus': KalturaEmailIngestionProfileStatus,
             'KalturaEntryDisplayInSearchType': KalturaEntryDisplayInSearchType,
             'KalturaEntryModerationStatus': KalturaEntryModerationStatus,
@@ -63115,6 +63182,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaPluginData': KalturaPluginData,
             'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
+            'KalturaEffect': KalturaEffect,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryServerNode': KalturaEntryServerNode,
