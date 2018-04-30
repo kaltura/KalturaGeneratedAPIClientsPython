@@ -107,6 +107,7 @@ class KalturaEventNotificationEventObjectType(object):
     CATEGORYENTRY = "37"
     LIVE_STREAM = "38"
     SERVER_NODE = "39"
+    ENTRY_SERVER_NODE = "40"
 
     def __init__(self, value):
         self.value = value
