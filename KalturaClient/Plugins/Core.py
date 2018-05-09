@@ -13482,6 +13482,453 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUser(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            type=NotImplemented,
+            screenName=NotImplemented,
+            fullName=NotImplemented,
+            email=NotImplemented,
+            dateOfBirth=NotImplemented,
+            country=NotImplemented,
+            state=NotImplemented,
+            city=NotImplemented,
+            zip=NotImplemented,
+            thumbnailUrl=NotImplemented,
+            description=NotImplemented,
+            tags=NotImplemented,
+            adminTags=NotImplemented,
+            gender=NotImplemented,
+            status=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            partnerData=NotImplemented,
+            indexedPartnerDataInt=NotImplemented,
+            indexedPartnerDataString=NotImplemented,
+            storageSize=NotImplemented,
+            password=NotImplemented,
+            firstName=NotImplemented,
+            lastName=NotImplemented,
+            isAdmin=NotImplemented,
+            language=NotImplemented,
+            lastLoginTime=NotImplemented,
+            statusUpdatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            loginEnabled=NotImplemented,
+            roleIds=NotImplemented,
+            roleNames=NotImplemented,
+            isAccountOwner=NotImplemented,
+            allowedPartnerIds=NotImplemented,
+            allowedPartnerPackages=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.id = id
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var KalturaUserType
+        self.type = type
+
+        # @var string
+        self.screenName = screenName
+
+        # @var string
+        self.fullName = fullName
+
+        # @var string
+        self.email = email
+
+        # @var int
+        self.dateOfBirth = dateOfBirth
+
+        # @var string
+        self.country = country
+
+        # @var string
+        self.state = state
+
+        # @var string
+        self.city = city
+
+        # @var string
+        self.zip = zip
+
+        # @var string
+        self.thumbnailUrl = thumbnailUrl
+
+        # @var string
+        self.description = description
+
+        # @var string
+        self.tags = tags
+
+        # Admin tags can be updated only by using an admin session
+        # @var string
+        self.adminTags = adminTags
+
+        # @var KalturaGender
+        self.gender = gender
+
+        # @var KalturaUserStatus
+        self.status = status
+
+        # Creation date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # Last update date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # Can be used to store various partner related data as a string
+        # @var string
+        self.partnerData = partnerData
+
+        # @var int
+        self.indexedPartnerDataInt = indexedPartnerDataInt
+
+        # @var string
+        self.indexedPartnerDataString = indexedPartnerDataString
+
+        # @var int
+        # @readonly
+        self.storageSize = storageSize
+
+        # @var string
+        # @insertonly
+        self.password = password
+
+        # @var string
+        self.firstName = firstName
+
+        # @var string
+        self.lastName = lastName
+
+        # @var bool
+        self.isAdmin = isAdmin
+
+        # @var KalturaLanguageCode
+        self.language = language
+
+        # @var int
+        # @readonly
+        self.lastLoginTime = lastLoginTime
+
+        # @var int
+        # @readonly
+        self.statusUpdatedAt = statusUpdatedAt
+
+        # @var int
+        # @readonly
+        self.deletedAt = deletedAt
+
+        # @var bool
+        # @insertonly
+        self.loginEnabled = loginEnabled
+
+        # @var string
+        self.roleIds = roleIds
+
+        # @var string
+        # @readonly
+        self.roleNames = roleNames
+
+        # @var bool
+        # @insertonly
+        self.isAccountOwner = isAccountOwner
+
+        # @var string
+        self.allowedPartnerIds = allowedPartnerIds
+
+        # @var string
+        self.allowedPartnerPackages = allowedPartnerPackages
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
+        'partnerId': getXmlNodeInt, 
+        'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
+        'screenName': getXmlNodeText, 
+        'fullName': getXmlNodeText, 
+        'email': getXmlNodeText, 
+        'dateOfBirth': getXmlNodeInt, 
+        'country': getXmlNodeText, 
+        'state': getXmlNodeText, 
+        'city': getXmlNodeText, 
+        'zip': getXmlNodeText, 
+        'thumbnailUrl': getXmlNodeText, 
+        'description': getXmlNodeText, 
+        'tags': getXmlNodeText, 
+        'adminTags': getXmlNodeText, 
+        'gender': (KalturaEnumsFactory.createInt, "KalturaGender"), 
+        'status': (KalturaEnumsFactory.createInt, "KalturaUserStatus"), 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'partnerData': getXmlNodeText, 
+        'indexedPartnerDataInt': getXmlNodeInt, 
+        'indexedPartnerDataString': getXmlNodeText, 
+        'storageSize': getXmlNodeInt, 
+        'password': getXmlNodeText, 
+        'firstName': getXmlNodeText, 
+        'lastName': getXmlNodeText, 
+        'isAdmin': getXmlNodeBool, 
+        'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
+        'lastLoginTime': getXmlNodeInt, 
+        'statusUpdatedAt': getXmlNodeInt, 
+        'deletedAt': getXmlNodeInt, 
+        'loginEnabled': getXmlNodeBool, 
+        'roleIds': getXmlNodeText, 
+        'roleNames': getXmlNodeText, 
+        'isAccountOwner': getXmlNodeBool, 
+        'allowedPartnerIds': getXmlNodeText, 
+        'allowedPartnerPackages': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUser.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaUser")
+        kparams.addStringIfDefined("id", self.id)
+        kparams.addIntEnumIfDefined("type", self.type)
+        kparams.addStringIfDefined("screenName", self.screenName)
+        kparams.addStringIfDefined("fullName", self.fullName)
+        kparams.addStringIfDefined("email", self.email)
+        kparams.addIntIfDefined("dateOfBirth", self.dateOfBirth)
+        kparams.addStringIfDefined("country", self.country)
+        kparams.addStringIfDefined("state", self.state)
+        kparams.addStringIfDefined("city", self.city)
+        kparams.addStringIfDefined("zip", self.zip)
+        kparams.addStringIfDefined("thumbnailUrl", self.thumbnailUrl)
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addStringIfDefined("tags", self.tags)
+        kparams.addStringIfDefined("adminTags", self.adminTags)
+        kparams.addIntEnumIfDefined("gender", self.gender)
+        kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addStringIfDefined("partnerData", self.partnerData)
+        kparams.addIntIfDefined("indexedPartnerDataInt", self.indexedPartnerDataInt)
+        kparams.addStringIfDefined("indexedPartnerDataString", self.indexedPartnerDataString)
+        kparams.addStringIfDefined("password", self.password)
+        kparams.addStringIfDefined("firstName", self.firstName)
+        kparams.addStringIfDefined("lastName", self.lastName)
+        kparams.addBoolIfDefined("isAdmin", self.isAdmin)
+        kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
+        kparams.addStringIfDefined("roleIds", self.roleIds)
+        kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
+        kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
+        kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getType(self):
+        return self.type
+
+    def setType(self, newType):
+        self.type = newType
+
+    def getScreenName(self):
+        return self.screenName
+
+    def setScreenName(self, newScreenName):
+        self.screenName = newScreenName
+
+    def getFullName(self):
+        return self.fullName
+
+    def setFullName(self, newFullName):
+        self.fullName = newFullName
+
+    def getEmail(self):
+        return self.email
+
+    def setEmail(self, newEmail):
+        self.email = newEmail
+
+    def getDateOfBirth(self):
+        return self.dateOfBirth
+
+    def setDateOfBirth(self, newDateOfBirth):
+        self.dateOfBirth = newDateOfBirth
+
+    def getCountry(self):
+        return self.country
+
+    def setCountry(self, newCountry):
+        self.country = newCountry
+
+    def getState(self):
+        return self.state
+
+    def setState(self, newState):
+        self.state = newState
+
+    def getCity(self):
+        return self.city
+
+    def setCity(self, newCity):
+        self.city = newCity
+
+    def getZip(self):
+        return self.zip
+
+    def setZip(self, newZip):
+        self.zip = newZip
+
+    def getThumbnailUrl(self):
+        return self.thumbnailUrl
+
+    def setThumbnailUrl(self, newThumbnailUrl):
+        self.thumbnailUrl = newThumbnailUrl
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getTags(self):
+        return self.tags
+
+    def setTags(self, newTags):
+        self.tags = newTags
+
+    def getAdminTags(self):
+        return self.adminTags
+
+    def setAdminTags(self, newAdminTags):
+        self.adminTags = newAdminTags
+
+    def getGender(self):
+        return self.gender
+
+    def setGender(self, newGender):
+        self.gender = newGender
+
+    def getStatus(self):
+        return self.status
+
+    def setStatus(self, newStatus):
+        self.status = newStatus
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getPartnerData(self):
+        return self.partnerData
+
+    def setPartnerData(self, newPartnerData):
+        self.partnerData = newPartnerData
+
+    def getIndexedPartnerDataInt(self):
+        return self.indexedPartnerDataInt
+
+    def setIndexedPartnerDataInt(self, newIndexedPartnerDataInt):
+        self.indexedPartnerDataInt = newIndexedPartnerDataInt
+
+    def getIndexedPartnerDataString(self):
+        return self.indexedPartnerDataString
+
+    def setIndexedPartnerDataString(self, newIndexedPartnerDataString):
+        self.indexedPartnerDataString = newIndexedPartnerDataString
+
+    def getStorageSize(self):
+        return self.storageSize
+
+    def getPassword(self):
+        return self.password
+
+    def setPassword(self, newPassword):
+        self.password = newPassword
+
+    def getFirstName(self):
+        return self.firstName
+
+    def setFirstName(self, newFirstName):
+        self.firstName = newFirstName
+
+    def getLastName(self):
+        return self.lastName
+
+    def setLastName(self, newLastName):
+        self.lastName = newLastName
+
+    def getIsAdmin(self):
+        return self.isAdmin
+
+    def setIsAdmin(self, newIsAdmin):
+        self.isAdmin = newIsAdmin
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getLastLoginTime(self):
+        return self.lastLoginTime
+
+    def getStatusUpdatedAt(self):
+        return self.statusUpdatedAt
+
+    def getDeletedAt(self):
+        return self.deletedAt
+
+    def getLoginEnabled(self):
+        return self.loginEnabled
+
+    def setLoginEnabled(self, newLoginEnabled):
+        self.loginEnabled = newLoginEnabled
+
+    def getRoleIds(self):
+        return self.roleIds
+
+    def setRoleIds(self, newRoleIds):
+        self.roleIds = newRoleIds
+
+    def getRoleNames(self):
+        return self.roleNames
+
+    def getIsAccountOwner(self):
+        return self.isAccountOwner
+
+    def setIsAccountOwner(self, newIsAccountOwner):
+        self.isAccountOwner = newIsAccountOwner
+
+    def getAllowedPartnerIds(self):
+        return self.allowedPartnerIds
+
+    def setAllowedPartnerIds(self, newAllowedPartnerIds):
+        self.allowedPartnerIds = newAllowedPartnerIds
+
+    def getAllowedPartnerPackages(self):
+        return self.allowedPartnerPackages
+
+    def setAllowedPartnerPackages(self, newAllowedPartnerPackages):
+        self.allowedPartnerPackages = newAllowedPartnerPackages
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEffect(KalturaObjectBase):
     """Effects attributes"""
 
@@ -26421,453 +26868,6 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def setAutoFinalize(self, newAutoFinalize):
         self.autoFinalize = newAutoFinalize
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUser(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            type=NotImplemented,
-            screenName=NotImplemented,
-            fullName=NotImplemented,
-            email=NotImplemented,
-            dateOfBirth=NotImplemented,
-            country=NotImplemented,
-            state=NotImplemented,
-            city=NotImplemented,
-            zip=NotImplemented,
-            thumbnailUrl=NotImplemented,
-            description=NotImplemented,
-            tags=NotImplemented,
-            adminTags=NotImplemented,
-            gender=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerData=NotImplemented,
-            indexedPartnerDataInt=NotImplemented,
-            indexedPartnerDataString=NotImplemented,
-            storageSize=NotImplemented,
-            password=NotImplemented,
-            firstName=NotImplemented,
-            lastName=NotImplemented,
-            isAdmin=NotImplemented,
-            language=NotImplemented,
-            lastLoginTime=NotImplemented,
-            statusUpdatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            loginEnabled=NotImplemented,
-            roleIds=NotImplemented,
-            roleNames=NotImplemented,
-            isAccountOwner=NotImplemented,
-            allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.id = id
-
-        # @var int
-        # @readonly
-        self.partnerId = partnerId
-
-        # @var KalturaUserType
-        self.type = type
-
-        # @var string
-        self.screenName = screenName
-
-        # @var string
-        self.fullName = fullName
-
-        # @var string
-        self.email = email
-
-        # @var int
-        self.dateOfBirth = dateOfBirth
-
-        # @var string
-        self.country = country
-
-        # @var string
-        self.state = state
-
-        # @var string
-        self.city = city
-
-        # @var string
-        self.zip = zip
-
-        # @var string
-        self.thumbnailUrl = thumbnailUrl
-
-        # @var string
-        self.description = description
-
-        # @var string
-        self.tags = tags
-
-        # Admin tags can be updated only by using an admin session
-        # @var string
-        self.adminTags = adminTags
-
-        # @var KalturaGender
-        self.gender = gender
-
-        # @var KalturaUserStatus
-        self.status = status
-
-        # Creation date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.createdAt = createdAt
-
-        # Last update date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.updatedAt = updatedAt
-
-        # Can be used to store various partner related data as a string
-        # @var string
-        self.partnerData = partnerData
-
-        # @var int
-        self.indexedPartnerDataInt = indexedPartnerDataInt
-
-        # @var string
-        self.indexedPartnerDataString = indexedPartnerDataString
-
-        # @var int
-        # @readonly
-        self.storageSize = storageSize
-
-        # @var string
-        # @insertonly
-        self.password = password
-
-        # @var string
-        self.firstName = firstName
-
-        # @var string
-        self.lastName = lastName
-
-        # @var bool
-        self.isAdmin = isAdmin
-
-        # @var KalturaLanguageCode
-        self.language = language
-
-        # @var int
-        # @readonly
-        self.lastLoginTime = lastLoginTime
-
-        # @var int
-        # @readonly
-        self.statusUpdatedAt = statusUpdatedAt
-
-        # @var int
-        # @readonly
-        self.deletedAt = deletedAt
-
-        # @var bool
-        # @insertonly
-        self.loginEnabled = loginEnabled
-
-        # @var string
-        self.roleIds = roleIds
-
-        # @var string
-        # @readonly
-        self.roleNames = roleNames
-
-        # @var bool
-        # @insertonly
-        self.isAccountOwner = isAccountOwner
-
-        # @var string
-        self.allowedPartnerIds = allowedPartnerIds
-
-        # @var string
-        self.allowedPartnerPackages = allowedPartnerPackages
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeText, 
-        'partnerId': getXmlNodeInt, 
-        'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
-        'screenName': getXmlNodeText, 
-        'fullName': getXmlNodeText, 
-        'email': getXmlNodeText, 
-        'dateOfBirth': getXmlNodeInt, 
-        'country': getXmlNodeText, 
-        'state': getXmlNodeText, 
-        'city': getXmlNodeText, 
-        'zip': getXmlNodeText, 
-        'thumbnailUrl': getXmlNodeText, 
-        'description': getXmlNodeText, 
-        'tags': getXmlNodeText, 
-        'adminTags': getXmlNodeText, 
-        'gender': (KalturaEnumsFactory.createInt, "KalturaGender"), 
-        'status': (KalturaEnumsFactory.createInt, "KalturaUserStatus"), 
-        'createdAt': getXmlNodeInt, 
-        'updatedAt': getXmlNodeInt, 
-        'partnerData': getXmlNodeText, 
-        'indexedPartnerDataInt': getXmlNodeInt, 
-        'indexedPartnerDataString': getXmlNodeText, 
-        'storageSize': getXmlNodeInt, 
-        'password': getXmlNodeText, 
-        'firstName': getXmlNodeText, 
-        'lastName': getXmlNodeText, 
-        'isAdmin': getXmlNodeBool, 
-        'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
-        'lastLoginTime': getXmlNodeInt, 
-        'statusUpdatedAt': getXmlNodeInt, 
-        'deletedAt': getXmlNodeInt, 
-        'loginEnabled': getXmlNodeBool, 
-        'roleIds': getXmlNodeText, 
-        'roleNames': getXmlNodeText, 
-        'isAccountOwner': getXmlNodeBool, 
-        'allowedPartnerIds': getXmlNodeText, 
-        'allowedPartnerPackages': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUser.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaUser")
-        kparams.addStringIfDefined("id", self.id)
-        kparams.addIntEnumIfDefined("type", self.type)
-        kparams.addStringIfDefined("screenName", self.screenName)
-        kparams.addStringIfDefined("fullName", self.fullName)
-        kparams.addStringIfDefined("email", self.email)
-        kparams.addIntIfDefined("dateOfBirth", self.dateOfBirth)
-        kparams.addStringIfDefined("country", self.country)
-        kparams.addStringIfDefined("state", self.state)
-        kparams.addStringIfDefined("city", self.city)
-        kparams.addStringIfDefined("zip", self.zip)
-        kparams.addStringIfDefined("thumbnailUrl", self.thumbnailUrl)
-        kparams.addStringIfDefined("description", self.description)
-        kparams.addStringIfDefined("tags", self.tags)
-        kparams.addStringIfDefined("adminTags", self.adminTags)
-        kparams.addIntEnumIfDefined("gender", self.gender)
-        kparams.addIntEnumIfDefined("status", self.status)
-        kparams.addStringIfDefined("partnerData", self.partnerData)
-        kparams.addIntIfDefined("indexedPartnerDataInt", self.indexedPartnerDataInt)
-        kparams.addStringIfDefined("indexedPartnerDataString", self.indexedPartnerDataString)
-        kparams.addStringIfDefined("password", self.password)
-        kparams.addStringIfDefined("firstName", self.firstName)
-        kparams.addStringIfDefined("lastName", self.lastName)
-        kparams.addBoolIfDefined("isAdmin", self.isAdmin)
-        kparams.addStringEnumIfDefined("language", self.language)
-        kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
-        kparams.addStringIfDefined("roleIds", self.roleIds)
-        kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
-        kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
-        kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def setId(self, newId):
-        self.id = newId
-
-    def getPartnerId(self):
-        return self.partnerId
-
-    def getType(self):
-        return self.type
-
-    def setType(self, newType):
-        self.type = newType
-
-    def getScreenName(self):
-        return self.screenName
-
-    def setScreenName(self, newScreenName):
-        self.screenName = newScreenName
-
-    def getFullName(self):
-        return self.fullName
-
-    def setFullName(self, newFullName):
-        self.fullName = newFullName
-
-    def getEmail(self):
-        return self.email
-
-    def setEmail(self, newEmail):
-        self.email = newEmail
-
-    def getDateOfBirth(self):
-        return self.dateOfBirth
-
-    def setDateOfBirth(self, newDateOfBirth):
-        self.dateOfBirth = newDateOfBirth
-
-    def getCountry(self):
-        return self.country
-
-    def setCountry(self, newCountry):
-        self.country = newCountry
-
-    def getState(self):
-        return self.state
-
-    def setState(self, newState):
-        self.state = newState
-
-    def getCity(self):
-        return self.city
-
-    def setCity(self, newCity):
-        self.city = newCity
-
-    def getZip(self):
-        return self.zip
-
-    def setZip(self, newZip):
-        self.zip = newZip
-
-    def getThumbnailUrl(self):
-        return self.thumbnailUrl
-
-    def setThumbnailUrl(self, newThumbnailUrl):
-        self.thumbnailUrl = newThumbnailUrl
-
-    def getDescription(self):
-        return self.description
-
-    def setDescription(self, newDescription):
-        self.description = newDescription
-
-    def getTags(self):
-        return self.tags
-
-    def setTags(self, newTags):
-        self.tags = newTags
-
-    def getAdminTags(self):
-        return self.adminTags
-
-    def setAdminTags(self, newAdminTags):
-        self.adminTags = newAdminTags
-
-    def getGender(self):
-        return self.gender
-
-    def setGender(self, newGender):
-        self.gender = newGender
-
-    def getStatus(self):
-        return self.status
-
-    def setStatus(self, newStatus):
-        self.status = newStatus
-
-    def getCreatedAt(self):
-        return self.createdAt
-
-    def getUpdatedAt(self):
-        return self.updatedAt
-
-    def getPartnerData(self):
-        return self.partnerData
-
-    def setPartnerData(self, newPartnerData):
-        self.partnerData = newPartnerData
-
-    def getIndexedPartnerDataInt(self):
-        return self.indexedPartnerDataInt
-
-    def setIndexedPartnerDataInt(self, newIndexedPartnerDataInt):
-        self.indexedPartnerDataInt = newIndexedPartnerDataInt
-
-    def getIndexedPartnerDataString(self):
-        return self.indexedPartnerDataString
-
-    def setIndexedPartnerDataString(self, newIndexedPartnerDataString):
-        self.indexedPartnerDataString = newIndexedPartnerDataString
-
-    def getStorageSize(self):
-        return self.storageSize
-
-    def getPassword(self):
-        return self.password
-
-    def setPassword(self, newPassword):
-        self.password = newPassword
-
-    def getFirstName(self):
-        return self.firstName
-
-    def setFirstName(self, newFirstName):
-        self.firstName = newFirstName
-
-    def getLastName(self):
-        return self.lastName
-
-    def setLastName(self, newLastName):
-        self.lastName = newLastName
-
-    def getIsAdmin(self):
-        return self.isAdmin
-
-    def setIsAdmin(self, newIsAdmin):
-        self.isAdmin = newIsAdmin
-
-    def getLanguage(self):
-        return self.language
-
-    def setLanguage(self, newLanguage):
-        self.language = newLanguage
-
-    def getLastLoginTime(self):
-        return self.lastLoginTime
-
-    def getStatusUpdatedAt(self):
-        return self.statusUpdatedAt
-
-    def getDeletedAt(self):
-        return self.deletedAt
-
-    def getLoginEnabled(self):
-        return self.loginEnabled
-
-    def setLoginEnabled(self, newLoginEnabled):
-        self.loginEnabled = newLoginEnabled
-
-    def getRoleIds(self):
-        return self.roleIds
-
-    def setRoleIds(self, newRoleIds):
-        self.roleIds = newRoleIds
-
-    def getRoleNames(self):
-        return self.roleNames
-
-    def getIsAccountOwner(self):
-        return self.isAccountOwner
-
-    def setIsAccountOwner(self, newIsAccountOwner):
-        self.isAccountOwner = newIsAccountOwner
-
-    def getAllowedPartnerIds(self):
-        return self.allowedPartnerIds
-
-    def setAllowedPartnerIds(self, newAllowedPartnerIds):
-        self.allowedPartnerIds = newAllowedPartnerIds
-
-    def getAllowedPartnerPackages(self):
-        return self.allowedPartnerPackages
-
-    def setAllowedPartnerPackages(self, newAllowedPartnerPackages):
-        self.allowedPartnerPackages = newAllowedPartnerPackages
 
 
 # @package Kaltura
@@ -63307,6 +63307,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaPluginData': KalturaPluginData,
             'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
+            'KalturaUser': KalturaUser,
             'KalturaEffect': KalturaEffect,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
@@ -63401,7 +63402,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUiConfTypeInfo': KalturaUiConfTypeInfo,
             'KalturaUploadResponse': KalturaUploadResponse,
             'KalturaUploadToken': KalturaUploadToken,
-            'KalturaUser': KalturaUser,
             'KalturaUserEntry': KalturaUserEntry,
             'KalturaUserLoginData': KalturaUserLoginData,
             'KalturaUserRole': KalturaUserRole,

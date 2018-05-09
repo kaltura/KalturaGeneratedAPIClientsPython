@@ -334,66 +334,6 @@ class KalturaESearchCategoryBaseItem(KalturaESearchBaseItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchEntryBaseItem(KalturaESearchBaseItem):
-    def __init__(self):
-        KalturaESearchBaseItem.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaESearchBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryBaseItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryBaseItem")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchEntryBaseNestedObject(KalturaESearchEntryBaseItem):
-    def __init__(self):
-        KalturaESearchEntryBaseItem.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaESearchEntryBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryBaseNestedObject.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchEntryBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryBaseNestedObject")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchEntryNestedBaseItem(KalturaESearchEntryBaseNestedObject):
-    def __init__(self):
-        KalturaESearchEntryBaseNestedObject.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaESearchEntryBaseNestedObject.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryNestedBaseItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchEntryBaseNestedObject.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryNestedBaseItem")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchHighlight(KalturaObjectBase):
     def __init__(self,
             fieldName=NotImplemented,
@@ -522,6 +462,182 @@ class KalturaESearchItemDataResult(KalturaObjectBase):
 
     def setItemsType(self, newItemsType):
         self.itemsType = newItemsType
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchResult(KalturaObjectBase):
+    def __init__(self,
+            highlight=NotImplemented,
+            itemsData=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var array of KalturaESearchHighlight
+        self.highlight = highlight
+
+        # @var array of KalturaESearchItemDataResult
+        self.itemsData = itemsData
+
+
+    PROPERTY_LOADERS = {
+        'highlight': (KalturaObjectFactory.createArray, 'KalturaESearchHighlight'), 
+        'itemsData': (KalturaObjectFactory.createArray, 'KalturaESearchItemDataResult'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchResult.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchResult")
+        kparams.addArrayIfDefined("highlight", self.highlight)
+        kparams.addArrayIfDefined("itemsData", self.itemsData)
+        return kparams
+
+    def getHighlight(self):
+        return self.highlight
+
+    def setHighlight(self, newHighlight):
+        self.highlight = newHighlight
+
+    def getItemsData(self):
+        return self.itemsData
+
+    def setItemsData(self, newItemsData):
+        self.itemsData = newItemsData
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchCategoryResult(KalturaESearchResult):
+    def __init__(self,
+            highlight=NotImplemented,
+            itemsData=NotImplemented,
+            object=NotImplemented):
+        KalturaESearchResult.__init__(self,
+            highlight,
+            itemsData)
+
+        # @var KalturaCategory
+        self.object = object
+
+
+    PROPERTY_LOADERS = {
+        'object': (KalturaObjectFactory.create, 'KalturaCategory'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchCategoryResult.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchResult.toParams(self)
+        kparams.put("objectType", "KalturaESearchCategoryResult")
+        kparams.addObjectIfDefined("object", self.object)
+        return kparams
+
+    def getObject(self):
+        return self.object
+
+    def setObject(self, newObject):
+        self.object = newObject
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryBaseItem(KalturaESearchBaseItem):
+    def __init__(self):
+        KalturaESearchBaseItem.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaESearchBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryBaseItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryBaseItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryBaseNestedObject(KalturaESearchEntryBaseItem):
+    def __init__(self):
+        KalturaESearchEntryBaseItem.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaESearchEntryBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryBaseNestedObject.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchEntryBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryBaseNestedObject")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryNestedBaseItem(KalturaESearchEntryBaseNestedObject):
+    def __init__(self):
+        KalturaESearchEntryBaseNestedObject.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaESearchEntryBaseNestedObject.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryNestedBaseItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchEntryBaseNestedObject.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryNestedBaseItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryResult(KalturaESearchResult):
+    def __init__(self,
+            highlight=NotImplemented,
+            itemsData=NotImplemented,
+            object=NotImplemented):
+        KalturaESearchResult.__init__(self,
+            highlight,
+            itemsData)
+
+        # @var KalturaBaseEntry
+        self.object = object
+
+
+    PROPERTY_LOADERS = {
+        'object': (KalturaObjectFactory.create, 'KalturaBaseEntry'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryResult.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchResult.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryResult")
+        kparams.addObjectIfDefined("object", self.object)
+        return kparams
+
+    def getObject(self):
+        return self.object
+
+    def setObject(self, newObject):
+        self.object = newObject
 
 
 # @package Kaltura
@@ -714,68 +830,18 @@ class KalturaESearchRange(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchResult(KalturaObjectBase):
-    def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaESearchHighlight
-        self.highlight = highlight
-
-        # @var array of KalturaESearchItemDataResult
-        self.itemsData = itemsData
-
-
-    PROPERTY_LOADERS = {
-        'highlight': (KalturaObjectFactory.createArray, 'KalturaESearchHighlight'), 
-        'itemsData': (KalturaObjectFactory.createArray, 'KalturaESearchItemDataResult'), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchResult.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaESearchResult")
-        kparams.addArrayIfDefined("highlight", self.highlight)
-        kparams.addArrayIfDefined("itemsData", self.itemsData)
-        return kparams
-
-    def getHighlight(self):
-        return self.highlight
-
-    def setHighlight(self, newHighlight):
-        self.highlight = newHighlight
-
-    def getItemsData(self):
-        return self.itemsData
-
-    def setItemsData(self, newItemsData):
-        self.itemsData = newItemsData
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchResponse(KalturaObjectBase):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
         # @readonly
         self.totalCount = totalCount
 
-        # @var array of KalturaESearchResult
-        # @readonly
-        self.objects = objects
-
 
     PROPERTY_LOADERS = {
         'totalCount': getXmlNodeInt, 
-        'objects': (KalturaObjectFactory.createArray, 'KalturaESearchResult'), 
     }
 
     def fromXml(self, node):
@@ -789,9 +855,6 @@ class KalturaESearchResponse(KalturaObjectBase):
 
     def getTotalCount(self):
         return self.totalCount
-
-    def getObjects(self):
-        return self.objects
 
 
 # @package Kaltura
@@ -812,6 +875,42 @@ class KalturaESearchUserBaseItem(KalturaESearchBaseItem):
         kparams = KalturaESearchBaseItem.toParams(self)
         kparams.put("objectType", "KalturaESearchUserBaseItem")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchUserResult(KalturaESearchResult):
+    def __init__(self,
+            highlight=NotImplemented,
+            itemsData=NotImplemented,
+            object=NotImplemented):
+        KalturaESearchResult.__init__(self,
+            highlight,
+            itemsData)
+
+        # @var KalturaUser
+        self.object = object
+
+
+    PROPERTY_LOADERS = {
+        'object': (KalturaObjectFactory.create, 'KalturaUser'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchUserResult.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchResult.toParams(self)
+        kparams.put("objectType", "KalturaESearchUserResult")
+        kparams.addObjectIfDefined("object", self.object)
+        return kparams
+
+    def getObject(self):
+        return self.object
+
+    def setObject(self, newObject):
+        self.object = newObject
 
 
 # @package Kaltura
@@ -1026,38 +1125,33 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchCategoryResult(KalturaESearchResult):
+class KalturaESearchCategoryResponse(KalturaESearchResponse):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
-        KalturaESearchResult.__init__(self,
-            highlight,
-            itemsData)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaESearchResponse.__init__(self,
+            totalCount)
 
-        # @var KalturaCategory
-        self.object = object
+        # @var array of KalturaESearchCategoryResult
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'object': (KalturaObjectFactory.create, 'KalturaCategory'), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaESearchCategoryResult'), 
     }
 
     def fromXml(self, node):
-        KalturaESearchResult.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchCategoryResult.PROPERTY_LOADERS)
+        KalturaESearchResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchCategoryResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaESearchResult.toParams(self)
-        kparams.put("objectType", "KalturaESearchCategoryResult")
-        kparams.addObjectIfDefined("object", self.object)
+        kparams = KalturaESearchResponse.toParams(self)
+        kparams.put("objectType", "KalturaESearchCategoryResponse")
         return kparams
 
-    def getObject(self):
-        return self.object
-
-    def setObject(self, newObject):
-        self.object = newObject
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -1356,38 +1450,33 @@ class KalturaESearchEntryParams(KalturaESearchParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchEntryResult(KalturaESearchResult):
+class KalturaESearchEntryResponse(KalturaESearchResponse):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
-        KalturaESearchResult.__init__(self,
-            highlight,
-            itemsData)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaESearchResponse.__init__(self,
+            totalCount)
 
-        # @var KalturaBaseEntry
-        self.object = object
+        # @var array of KalturaESearchEntryResult
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'object': (KalturaObjectFactory.create, 'KalturaBaseEntry'), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaESearchEntryResult'), 
     }
 
     def fromXml(self, node):
-        KalturaESearchResult.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryResult.PROPERTY_LOADERS)
+        KalturaESearchResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaESearchResult.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryResult")
-        kparams.addObjectIfDefined("object", self.object)
+        kparams = KalturaESearchResponse.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryResponse")
         return kparams
 
-    def getObject(self):
-        return self.object
-
-    def setObject(self, newObject):
-        self.object = newObject
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -1636,38 +1725,33 @@ class KalturaESearchUserParams(KalturaESearchParams):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchUserResult(KalturaESearchResult):
+class KalturaESearchUserResponse(KalturaESearchResponse):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
-        KalturaESearchResult.__init__(self,
-            highlight,
-            itemsData)
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaESearchResponse.__init__(self,
+            totalCount)
 
-        # @var KalturaUser
-        self.object = object
+        # @var array of KalturaESearchUserResult
+        # @readonly
+        self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'object': (KalturaObjectFactory.create, 'KalturaUser'), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaESearchUserResult'), 
     }
 
     def fromXml(self, node):
-        KalturaESearchResult.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchUserResult.PROPERTY_LOADERS)
+        KalturaESearchResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchUserResponse.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaESearchResult.toParams(self)
-        kparams.put("objectType", "KalturaESearchUserResult")
-        kparams.addObjectIfDefined("object", self.object)
+        kparams = KalturaESearchResponse.toParams(self)
+        kparams.put("objectType", "KalturaESearchUserResponse")
         return kparams
 
-    def getObject(self):
-        return self.object
-
-    def setObject(self, newObject):
-        self.object = newObject
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -2630,31 +2714,31 @@ class KalturaESearchService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("searchParams", searchParams)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("elasticsearch_esearch", "searchCategory", "KalturaESearchResponse", kparams)
+        self.client.queueServiceActionCall("elasticsearch_esearch", "searchCategory", "KalturaESearchCategoryResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaESearchResponse')
+        return KalturaObjectFactory.create(resultNode, 'KalturaESearchCategoryResponse')
 
     def searchEntry(self, searchParams, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("searchParams", searchParams)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("elasticsearch_esearch", "searchEntry", "KalturaESearchResponse", kparams)
+        self.client.queueServiceActionCall("elasticsearch_esearch", "searchEntry", "KalturaESearchEntryResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaESearchResponse')
+        return KalturaObjectFactory.create(resultNode, 'KalturaESearchEntryResponse')
 
     def searchUser(self, searchParams, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("searchParams", searchParams)
         kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("elasticsearch_esearch", "searchUser", "KalturaESearchResponse", kparams)
+        self.client.queueServiceActionCall("elasticsearch_esearch", "searchUser", "KalturaESearchUserResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaESearchResponse')
+        return KalturaObjectFactory.create(resultNode, 'KalturaESearchUserResponse')
 
 ########## main ##########
 class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
@@ -2695,35 +2779,38 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
         return {
             'KalturaESearchBaseItem': KalturaESearchBaseItem,
             'KalturaESearchCategoryBaseItem': KalturaESearchCategoryBaseItem,
-            'KalturaESearchEntryBaseItem': KalturaESearchEntryBaseItem,
-            'KalturaESearchEntryBaseNestedObject': KalturaESearchEntryBaseNestedObject,
-            'KalturaESearchEntryNestedBaseItem': KalturaESearchEntryNestedBaseItem,
             'KalturaESearchHighlight': KalturaESearchHighlight,
             'KalturaESearchItemData': KalturaESearchItemData,
             'KalturaESearchItemDataResult': KalturaESearchItemDataResult,
+            'KalturaESearchResult': KalturaESearchResult,
+            'KalturaESearchCategoryResult': KalturaESearchCategoryResult,
+            'KalturaESearchEntryBaseItem': KalturaESearchEntryBaseItem,
+            'KalturaESearchEntryBaseNestedObject': KalturaESearchEntryBaseNestedObject,
+            'KalturaESearchEntryNestedBaseItem': KalturaESearchEntryNestedBaseItem,
+            'KalturaESearchEntryResult': KalturaESearchEntryResult,
             'KalturaESearchOrderByItem': KalturaESearchOrderByItem,
             'KalturaESearchOrderBy': KalturaESearchOrderBy,
             'KalturaESearchParams': KalturaESearchParams,
             'KalturaESearchRange': KalturaESearchRange,
-            'KalturaESearchResult': KalturaESearchResult,
             'KalturaESearchResponse': KalturaESearchResponse,
             'KalturaESearchUserBaseItem': KalturaESearchUserBaseItem,
+            'KalturaESearchUserResult': KalturaESearchUserResult,
             'KalturaESearchCaptionItemData': KalturaESearchCaptionItemData,
             'KalturaESearchCategoryOrderByItem': KalturaESearchCategoryOrderByItem,
             'KalturaESearchCategoryOperator': KalturaESearchCategoryOperator,
             'KalturaESearchCategoryParams': KalturaESearchCategoryParams,
-            'KalturaESearchCategoryResult': KalturaESearchCategoryResult,
+            'KalturaESearchCategoryResponse': KalturaESearchCategoryResponse,
             'KalturaESearchCuePointItemData': KalturaESearchCuePointItemData,
             'KalturaESearchEntryOrderByItem': KalturaESearchEntryOrderByItem,
             'KalturaESearchEntryOperator': KalturaESearchEntryOperator,
             'KalturaESearchEntryParams': KalturaESearchEntryParams,
-            'KalturaESearchEntryResult': KalturaESearchEntryResult,
+            'KalturaESearchEntryResponse': KalturaESearchEntryResponse,
             'KalturaESearchMetadataItemData': KalturaESearchMetadataItemData,
             'KalturaESearchMetadataOrderByItem': KalturaESearchMetadataOrderByItem,
             'KalturaESearchUserOrderByItem': KalturaESearchUserOrderByItem,
             'KalturaESearchUserOperator': KalturaESearchUserOperator,
             'KalturaESearchUserParams': KalturaESearchUserParams,
-            'KalturaESearchUserResult': KalturaESearchUserResult,
+            'KalturaESearchUserResponse': KalturaESearchUserResponse,
             'KalturaESearchAbstractCategoryItem': KalturaESearchAbstractCategoryItem,
             'KalturaESearchAbstractEntryItem': KalturaESearchAbstractEntryItem,
             'KalturaESearchAbstractUserItem': KalturaESearchAbstractUserItem,
