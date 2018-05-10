@@ -914,6 +914,7 @@ class KalturaSchedulerStatusType(object):
     RUNNING_BATCHES_DISC_IO = 5
     RUNNING_BATCHES_DISC_SPACE = 6
     RUNNING_BATCHES_IS_RUNNING = 7
+    RUNNING_BATCHES_LAST_EXECUTION_TIME = 8
 
     def __init__(self, value):
         self.value = value
