@@ -496,6 +496,18 @@ class KalturaGender(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaGroupUserCreationMode(object):
+    MANUAL = 1
+    AUTOMATIC = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaGroupUserStatus(object):
     ACTIVE = 0
     DELETED = 1
@@ -1335,6 +1347,18 @@ class KalturaUserJoinPolicyType(object):
     AUTO_JOIN = 1
     REQUEST_TO_JOIN = 2
     NOT_ALLOWED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserMode(object):
+    NONE = 0
+    PROTECTED_USER = 1
 
     def __init__(self, value):
         self.value = value
@@ -13521,7 +13545,8 @@ class KalturaUser(KalturaObjectBase):
             roleNames=NotImplemented,
             isAccountOwner=NotImplemented,
             allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented):
+            allowedPartnerPackages=NotImplemented,
+            userMode=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -13650,6 +13675,9 @@ class KalturaUser(KalturaObjectBase):
         # @var string
         self.allowedPartnerPackages = allowedPartnerPackages
 
+        # @var KalturaUserMode
+        self.userMode = userMode
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -13689,6 +13717,7 @@ class KalturaUser(KalturaObjectBase):
         'isAccountOwner': getXmlNodeBool, 
         'allowedPartnerIds': getXmlNodeText, 
         'allowedPartnerPackages': getXmlNodeText, 
+        'userMode': (KalturaEnumsFactory.createInt, "KalturaUserMode"), 
     }
 
     def fromXml(self, node):
@@ -13727,6 +13756,7 @@ class KalturaUser(KalturaObjectBase):
         kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
         kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
         kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
+        kparams.addIntEnumIfDefined("userMode", self.userMode)
         return kparams
 
     def getId(self):
@@ -13926,6 +13956,12 @@ class KalturaUser(KalturaObjectBase):
 
     def setAllowedPartnerPackages(self, newAllowedPartnerPackages):
         self.allowedPartnerPackages = newAllowedPartnerPackages
+
+    def getUserMode(self):
+        return self.userMode
+
+    def setUserMode(self, newUserMode):
+        self.userMode = newUserMode
 
 
 # @package Kaltura
@@ -16877,7 +16913,8 @@ class KalturaGroupUser(KalturaObjectBase):
             status=NotImplemented,
             partnerId=NotImplemented,
             createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            updatedAt=NotImplemented,
+            creationMode=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -16906,6 +16943,10 @@ class KalturaGroupUser(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
+        # @var KalturaGroupUserCreationMode
+        # @insertonly
+        self.creationMode = creationMode
+
 
     PROPERTY_LOADERS = {
         'userId': getXmlNodeText, 
@@ -16914,6 +16955,7 @@ class KalturaGroupUser(KalturaObjectBase):
         'partnerId': getXmlNodeInt, 
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
+        'creationMode': (KalturaEnumsFactory.createInt, "KalturaGroupUserCreationMode"), 
     }
 
     def fromXml(self, node):
@@ -16925,6 +16967,7 @@ class KalturaGroupUser(KalturaObjectBase):
         kparams.put("objectType", "KalturaGroupUser")
         kparams.addStringIfDefined("userId", self.userId)
         kparams.addStringIfDefined("groupId", self.groupId)
+        kparams.addIntEnumIfDefined("creationMode", self.creationMode)
         return kparams
 
     def getUserId(self):
@@ -16950,6 +16993,12 @@ class KalturaGroupUser(KalturaObjectBase):
 
     def getUpdatedAt(self):
         return self.updatedAt
+
+    def getCreationMode(self):
+        return self.creationMode
+
+    def setCreationMode(self, newCreationMode):
+        self.creationMode = newCreationMode
 
 
 # @package Kaltura
@@ -28402,7 +28451,8 @@ class KalturaAdminUser(KalturaUser):
             roleNames=NotImplemented,
             isAccountOwner=NotImplemented,
             allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented):
+            allowedPartnerPackages=NotImplemented,
+            userMode=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -28440,7 +28490,8 @@ class KalturaAdminUser(KalturaUser):
             roleNames,
             isAccountOwner,
             allowedPartnerIds,
-            allowedPartnerPackages)
+            allowedPartnerPackages,
+            userMode)
 
 
     PROPERTY_LOADERS = {
@@ -59591,6 +59642,18 @@ class KalturaGroupUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaGroupUserListResponse')
 
+    def sync(self, userId, groupIds):
+        """sync by userId and groupIds"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("userId", userId)
+        kparams.addStringIfDefined("groupIds", groupIds)
+        self.client.queueServiceActionCall("groupuser", "sync", "KalturaBulkUpload", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
+
 
 # @package Kaltura
 # @subpackage Client
@@ -63000,6 +63063,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFlavorAssetStatus': KalturaFlavorAssetStatus,
             'KalturaFlavorReadyBehaviorType': KalturaFlavorReadyBehaviorType,
             'KalturaGender': KalturaGender,
+            'KalturaGroupUserCreationMode': KalturaGroupUserCreationMode,
             'KalturaGroupUserStatus': KalturaGroupUserStatus,
             'KalturaInheritanceType': KalturaInheritanceType,
             'KalturaIpAddressRestrictionType': KalturaIpAddressRestrictionType,
@@ -63051,6 +63115,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUploadTokenStatus': KalturaUploadTokenStatus,
             'KalturaUserAgentRestrictionType': KalturaUserAgentRestrictionType,
             'KalturaUserJoinPolicyType': KalturaUserJoinPolicyType,
+            'KalturaUserMode': KalturaUserMode,
             'KalturaUserRoleStatus': KalturaUserRoleStatus,
             'KalturaUserStatus': KalturaUserStatus,
             'KalturaUserType': KalturaUserType,
