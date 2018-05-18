@@ -62640,7 +62640,7 @@ class KalturaUserRoleService(KalturaServiceBase):
 # @subpackage Client
 class KalturaUserService(KalturaServiceBase):
     """Manage partner users on Kaltura's side
-     The userId in kaltura is the unique Id in the partner's system, and the [partnerId,Id] couple are unique key in kaltura's DB"""
+     The userId in kaltura is the unique ID in the partner's system, and the [partnerId,Id] couple are unique key in kaltura's DB"""
 
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
@@ -62717,7 +62717,7 @@ class KalturaUserService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
     def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented):
-        """add batch job that sends an email with a link to download an updated CSV that contains list of users"""
+        """Creates a batch job that sends an email with a link to download a CSV containing a list of users"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
@@ -62794,7 +62794,7 @@ class KalturaUserService(KalturaServiceBase):
         return getXmlNodeText(resultNode)
 
     def loginByKs(self, requestedPartnerId):
-        """Loges a user to the destination account as long the ks user id exists in the desc acount and the loginData id match for both accounts"""
+        """Logs a user to the destination account provided the KS' user ID is associated with the destination account and the loginData ID matches"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("requestedPartnerId", requestedPartnerId);
@@ -62841,7 +62841,7 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
 
     def serveCsv(self, id):
-        """Will serve a requested csv"""
+        """Will serve a requested CSV"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -62852,7 +62852,7 @@ class KalturaUserService(KalturaServiceBase):
         return getXmlNodeText(resultNode)
 
     def setInitialPassword(self, hashKey, newPassword):
-        """Set initial users password"""
+        """Set initial user password"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("hashKey", hashKey)
