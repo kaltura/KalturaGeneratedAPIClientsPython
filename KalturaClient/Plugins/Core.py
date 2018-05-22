@@ -59642,12 +59642,14 @@ class KalturaGroupUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaGroupUserListResponse')
 
-    def sync(self, userId, groupIds):
+    def sync(self, userId, groupIds, removeFromExistingGroups = True, createNewGroups = True):
         """sync by userId and groupIds"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
         kparams.addStringIfDefined("groupIds", groupIds)
+        kparams.addBoolIfDefined("removeFromExistingGroups", removeFromExistingGroups);
+        kparams.addBoolIfDefined("createNewGroups", createNewGroups);
         self.client.queueServiceActionCall("groupuser", "sync", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
