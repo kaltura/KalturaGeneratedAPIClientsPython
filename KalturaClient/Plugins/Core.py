@@ -8911,10 +8911,9 @@ class KalturaPartner(KalturaObjectBase):
             crmId=NotImplemented,
             referenceId=NotImplemented,
             timeAlignedRenditions=NotImplemented,
-            eSearchLanguages=NotImplemented,
-            publisherEnvironmentType=NotImplemented,
             ovpEnvironmentUrl=NotImplemented,
-            ottEnvironmentUrl=NotImplemented):
+            ottEnvironmentUrl=NotImplemented,
+            eSearchLanguages=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9104,13 +9103,6 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.timeAlignedRenditions = timeAlignedRenditions
 
-        # @var array of KalturaESearchLanguageItem
-        self.eSearchLanguages = eSearchLanguages
-
-        # @var int
-        # @readonly
-        self.publisherEnvironmentType = publisherEnvironmentType
-
         # @var string
         # @readonly
         self.ovpEnvironmentUrl = ovpEnvironmentUrl
@@ -9118,6 +9110,9 @@ class KalturaPartner(KalturaObjectBase):
         # @var string
         # @readonly
         self.ottEnvironmentUrl = ottEnvironmentUrl
+
+        # @var array of KalturaESearchLanguageItem
+        self.eSearchLanguages = eSearchLanguages
 
 
     PROPERTY_LOADERS = {
@@ -9174,10 +9169,9 @@ class KalturaPartner(KalturaObjectBase):
         'crmId': getXmlNodeText, 
         'referenceId': getXmlNodeText, 
         'timeAlignedRenditions': getXmlNodeBool, 
-        'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
-        'publisherEnvironmentType': getXmlNodeInt, 
         'ovpEnvironmentUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
+        'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
     }
 
     def fromXml(self, node):
@@ -9473,20 +9467,17 @@ class KalturaPartner(KalturaObjectBase):
     def getTimeAlignedRenditions(self):
         return self.timeAlignedRenditions
 
-    def getESearchLanguages(self):
-        return self.eSearchLanguages
-
-    def setESearchLanguages(self, newESearchLanguages):
-        self.eSearchLanguages = newESearchLanguages
-
-    def getPublisherEnvironmentType(self):
-        return self.publisherEnvironmentType
-
     def getOvpEnvironmentUrl(self):
         return self.ovpEnvironmentUrl
 
     def getOttEnvironmentUrl(self):
         return self.ottEnvironmentUrl
+
+    def getESearchLanguages(self):
+        return self.eSearchLanguages
+
+    def setESearchLanguages(self, newESearchLanguages):
+        self.eSearchLanguages = newESearchLanguages
 
 
 # @package Kaltura

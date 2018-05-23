@@ -1223,6 +1223,37 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryVendorTaskListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaEntryVendorTask
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaEntryVendorTask'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryVendorTaskListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaEntryVendorTaskListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveEntryScheduleResource(KalturaScheduleResource):
     def __init__(self,
             id=NotImplemented,
@@ -1311,6 +1342,37 @@ class KalturaLocationScheduleResource(KalturaScheduleResource):
         kparams = KalturaScheduleResource.toParams(self)
         kparams.put("objectType", "KalturaLocationScheduleResource")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReachProfileListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaReachProfile
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaReachProfile'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReachProfileListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaReachProfileListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -4147,8 +4209,10 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaScheduleResource': KalturaScheduleResource,
             'KalturaCameraScheduleResource': KalturaCameraScheduleResource,
             'KalturaEntryScheduleEvent': KalturaEntryScheduleEvent,
+            'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
             'KalturaLiveEntryScheduleResource': KalturaLiveEntryScheduleResource,
             'KalturaLocationScheduleResource': KalturaLocationScheduleResource,
+            'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaScheduleEventListResponse': KalturaScheduleEventListResponse,
             'KalturaScheduleEventResourceListResponse': KalturaScheduleEventResourceListResponse,
             'KalturaScheduleResourceListResponse': KalturaScheduleResourceListResponse,

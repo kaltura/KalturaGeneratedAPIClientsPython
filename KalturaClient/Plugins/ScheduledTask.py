@@ -101,6 +101,7 @@ class KalturaScheduledTaskProfileStatus(object):
 # @subpackage Client
 class KalturaObjectFilterEngineType(object):
     ENTRY = "1"
+    ENTRY_VENDOR_TASK = "2"
 
     def __init__(self, value):
         self.value = value

@@ -129,7 +129,8 @@ class KalturaCaptionAsset(KalturaAsset):
             format=NotImplemented,
             status=NotImplemented,
             parentId=NotImplemented,
-            accuracy=NotImplemented):
+            accuracy=NotImplemented,
+            displayOnPlayer=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -187,6 +188,10 @@ class KalturaCaptionAsset(KalturaAsset):
         # @var int
         self.accuracy = accuracy
 
+        # The Accuracy of the caption content
+        # @var bool
+        self.displayOnPlayer = displayOnPlayer
+
 
     PROPERTY_LOADERS = {
         'captionParamsId': getXmlNodeInt, 
@@ -198,6 +203,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'status': (KalturaEnumsFactory.createInt, "KalturaCaptionAssetStatus"), 
         'parentId': getXmlNodeText, 
         'accuracy': getXmlNodeInt, 
+        'displayOnPlayer': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -214,6 +220,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addStringEnumIfDefined("format", self.format)
         kparams.addStringIfDefined("parentId", self.parentId)
         kparams.addIntIfDefined("accuracy", self.accuracy)
+        kparams.addBoolIfDefined("displayOnPlayer", self.displayOnPlayer)
         return kparams
 
     def getCaptionParamsId(self):
@@ -263,6 +270,12 @@ class KalturaCaptionAsset(KalturaAsset):
 
     def setAccuracy(self, newAccuracy):
         self.accuracy = newAccuracy
+
+    def getDisplayOnPlayer(self):
+        return self.displayOnPlayer
+
+    def setDisplayOnPlayer(self, newDisplayOnPlayer):
+        self.displayOnPlayer = newDisplayOnPlayer
 
 
 # @package Kaltura

@@ -76,6 +76,7 @@ class KalturaEmailNotificationRecipientProviderType(object):
     STATIC_LIST = "1"
     CATEGORY = "2"
     USER = "3"
+    GROUP = "4"
 
     def __init__(self, value):
         self.value = value
@@ -462,6 +463,76 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
 
     def setCategoryUserFilter(self, newCategoryUserFilter):
         self.categoryUserFilter = newCategoryUserFilter
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEmailNotificationGroupRecipientJobData(KalturaEmailNotificationRecipientJobData):
+    """JobData representing the dynamic user receipient array"""
+
+    def __init__(self,
+            providerType=NotImplemented,
+            groupId=NotImplemented):
+        KalturaEmailNotificationRecipientJobData.__init__(self,
+            providerType)
+
+        # @var string
+        self.groupId = groupId
+
+
+    PROPERTY_LOADERS = {
+        'groupId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaEmailNotificationRecipientJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEmailNotificationGroupRecipientJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEmailNotificationRecipientJobData.toParams(self)
+        kparams.put("objectType", "KalturaEmailNotificationGroupRecipientJobData")
+        kparams.addStringIfDefined("groupId", self.groupId)
+        return kparams
+
+    def getGroupId(self):
+        return self.groupId
+
+    def setGroupId(self, newGroupId):
+        self.groupId = newGroupId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEmailNotificationGroupRecipientProvider(KalturaEmailNotificationRecipientProvider):
+    """API class for recipient provider which constructs a dynamic list of recipients according to a user filter"""
+
+    def __init__(self,
+            groupId=NotImplemented):
+        KalturaEmailNotificationRecipientProvider.__init__(self)
+
+        # @var string
+        self.groupId = groupId
+
+
+    PROPERTY_LOADERS = {
+        'groupId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaEmailNotificationRecipientProvider.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEmailNotificationGroupRecipientProvider.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEmailNotificationRecipientProvider.toParams(self)
+        kparams.put("objectType", "KalturaEmailNotificationGroupRecipientProvider")
+        kparams.addStringIfDefined("groupId", self.groupId)
+        return kparams
+
+    def getGroupId(self):
+        return self.groupId
+
+    def setGroupId(self, newGroupId):
+        self.groupId = newGroupId
 
 
 # @package Kaltura
@@ -1175,6 +1246,8 @@ class KalturaEmailNotificationClientPlugin(KalturaClientPlugin):
             'KalturaCategoryUserProviderFilter': KalturaCategoryUserProviderFilter,
             'KalturaEmailNotificationCategoryRecipientJobData': KalturaEmailNotificationCategoryRecipientJobData,
             'KalturaEmailNotificationCategoryRecipientProvider': KalturaEmailNotificationCategoryRecipientProvider,
+            'KalturaEmailNotificationGroupRecipientJobData': KalturaEmailNotificationGroupRecipientJobData,
+            'KalturaEmailNotificationGroupRecipientProvider': KalturaEmailNotificationGroupRecipientProvider,
             'KalturaEmailNotificationParameter': KalturaEmailNotificationParameter,
             'KalturaEmailNotificationStaticRecipientJobData': KalturaEmailNotificationStaticRecipientJobData,
             'KalturaEmailNotificationStaticRecipientProvider': KalturaEmailNotificationStaticRecipientProvider,
