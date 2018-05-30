@@ -155,7 +155,8 @@ class KalturaCuePoint(KalturaObjectBase):
             partnerSortValue=NotImplemented,
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
-            systemName=NotImplemented):
+            systemName=NotImplemented,
+            isMomentary=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -215,6 +216,9 @@ class KalturaCuePoint(KalturaObjectBase):
         # @var string
         self.systemName = systemName
 
+        # @var bool
+        self.isMomentary = isMomentary
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -233,6 +237,7 @@ class KalturaCuePoint(KalturaObjectBase):
         'forceStop': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'thumbOffset': getXmlNodeInt, 
         'systemName': getXmlNodeText, 
+        'isMomentary': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -251,6 +256,7 @@ class KalturaCuePoint(KalturaObjectBase):
         kparams.addIntEnumIfDefined("forceStop", self.forceStop)
         kparams.addIntIfDefined("thumbOffset", self.thumbOffset)
         kparams.addStringIfDefined("systemName", self.systemName)
+        kparams.addBoolIfDefined("isMomentary", self.isMomentary)
         return kparams
 
     def getId(self):
@@ -327,6 +333,12 @@ class KalturaCuePoint(KalturaObjectBase):
 
     def setSystemName(self, newSystemName):
         self.systemName = newSystemName
+
+    def getIsMomentary(self):
+        return self.isMomentary
+
+    def setIsMomentary(self, newIsMomentary):
+        self.isMomentary = newIsMomentary
 
 
 # @package Kaltura

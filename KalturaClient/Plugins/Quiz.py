@@ -290,6 +290,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
+            isMomentary=NotImplemented,
             parentId=NotImplemented,
             quizUserEntryId=NotImplemented,
             answerKey=NotImplemented,
@@ -312,7 +313,8 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             partnerSortValue,
             forceStop,
             thumbOffset,
-            systemName)
+            systemName,
+            isMomentary)
 
         # @var string
         # @insertonly
@@ -408,6 +410,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
+            isMomentary=NotImplemented,
             optionalAnswers=NotImplemented,
             hint=NotImplemented,
             question=NotImplemented,
@@ -431,7 +434,8 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             partnerSortValue,
             forceStop,
             thumbOffset,
-            systemName)
+            systemName,
+            isMomentary)
 
         # Array of key value answerKey->optionAnswer objects
         # @var array of KalturaOptionalAnswer

@@ -90,6 +90,7 @@ class KalturaCodeCuePoint(KalturaCuePoint):
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
+            isMomentary=NotImplemented,
             code=NotImplemented,
             description=NotImplemented,
             endTime=NotImplemented,
@@ -110,7 +111,8 @@ class KalturaCodeCuePoint(KalturaCuePoint):
             partnerSortValue,
             forceStop,
             thumbOffset,
-            systemName)
+            systemName,
+            isMomentary)
 
         # @var string
         self.code = code

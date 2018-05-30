@@ -98,6 +98,7 @@ class KalturaEventCuePoint(KalturaCuePoint):
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
+            isMomentary=NotImplemented,
             eventType=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
@@ -115,7 +116,8 @@ class KalturaEventCuePoint(KalturaCuePoint):
             partnerSortValue,
             forceStop,
             thumbOffset,
-            systemName)
+            systemName,
+            isMomentary)
 
         # @var KalturaEventType
         self.eventType = eventType
