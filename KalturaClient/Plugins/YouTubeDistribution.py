@@ -50,6 +50,7 @@ from ..Base import (
 class KalturaYouTubeDistributionFeedSpecVersion(object):
     VERSION_1 = "1"
     VERSION_2 = "2"
+    VERSION_3 = "3"
 
     def __init__(self, value):
         self.value = value
@@ -137,7 +138,11 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
             deleteXml=NotImplemented,
             googleClientId=NotImplemented,
             googleClientSecret=NotImplemented,
-            googleTokenData=NotImplemented):
+            googleTokenData=NotImplemented,
+            captionsCsvMap=NotImplemented,
+            submitCsvMap=NotImplemented,
+            updateCsvMap=NotImplemented,
+            deleteVideoIds=NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
@@ -180,6 +185,18 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
         # @var string
         self.googleTokenData = googleTokenData
 
+        # @var string
+        self.captionsCsvMap = captionsCsvMap
+
+        # @var string
+        self.submitCsvMap = submitCsvMap
+
+        # @var string
+        self.updateCsvMap = updateCsvMap
+
+        # @var string
+        self.deleteVideoIds = deleteVideoIds
+
 
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
@@ -195,6 +212,10 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
         'googleClientId': getXmlNodeText, 
         'googleClientSecret': getXmlNodeText, 
         'googleTokenData': getXmlNodeText, 
+        'captionsCsvMap': getXmlNodeText, 
+        'submitCsvMap': getXmlNodeText, 
+        'updateCsvMap': getXmlNodeText, 
+        'deleteVideoIds': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -217,6 +238,10 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
         kparams.addStringIfDefined("googleClientId", self.googleClientId)
         kparams.addStringIfDefined("googleClientSecret", self.googleClientSecret)
         kparams.addStringIfDefined("googleTokenData", self.googleTokenData)
+        kparams.addStringIfDefined("captionsCsvMap", self.captionsCsvMap)
+        kparams.addStringIfDefined("submitCsvMap", self.submitCsvMap)
+        kparams.addStringIfDefined("updateCsvMap", self.updateCsvMap)
+        kparams.addStringIfDefined("deleteVideoIds", self.deleteVideoIds)
         return kparams
 
     def getVideoAssetFilePath(self):
@@ -297,6 +322,30 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
     def setGoogleTokenData(self, newGoogleTokenData):
         self.googleTokenData = newGoogleTokenData
 
+    def getCaptionsCsvMap(self):
+        return self.captionsCsvMap
+
+    def setCaptionsCsvMap(self, newCaptionsCsvMap):
+        self.captionsCsvMap = newCaptionsCsvMap
+
+    def getSubmitCsvMap(self):
+        return self.submitCsvMap
+
+    def setSubmitCsvMap(self, newSubmitCsvMap):
+        self.submitCsvMap = newSubmitCsvMap
+
+    def getUpdateCsvMap(self):
+        return self.updateCsvMap
+
+    def setUpdateCsvMap(self, newUpdateCsvMap):
+        self.updateCsvMap = newUpdateCsvMap
+
+    def getDeleteVideoIds(self):
+        return self.deleteVideoIds
+
+    def setDeleteVideoIds(self, newDeleteVideoIds):
+        self.deleteVideoIds = newDeleteVideoIds
+
 
 # @package Kaltura
 # @subpackage Client
@@ -366,7 +415,13 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
             captionAutosync=NotImplemented,
             deleteReference=NotImplemented,
             releaseClaims=NotImplemented,
-            apiAuthorizeUrl=NotImplemented):
+            apiAuthorizeUrl=NotImplemented,
+            privacyStatus=NotImplemented,
+            enableContentId=NotImplemented,
+            thirdPartyAds=NotImplemented,
+            productListingAds=NotImplemented,
+            domainWhitelist=NotImplemented,
+            notifySubscribers=NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -510,6 +565,24 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var string
         self.apiAuthorizeUrl = apiAuthorizeUrl
 
+        # @var string
+        self.privacyStatus = privacyStatus
+
+        # @var string
+        self.enableContentId = enableContentId
+
+        # @var string
+        self.thirdPartyAds = thirdPartyAds
+
+        # @var string
+        self.productListingAds = productListingAds
+
+        # @var string
+        self.domainWhitelist = domainWhitelist
+
+        # @var string
+        self.notifySubscribers = notifySubscribers
+
 
     PROPERTY_LOADERS = {
         'feedSpecVersion': (KalturaEnumsFactory.createString, "KalturaYouTubeDistributionFeedSpecVersion"), 
@@ -550,6 +623,12 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         'deleteReference': getXmlNodeBool, 
         'releaseClaims': getXmlNodeBool, 
         'apiAuthorizeUrl': getXmlNodeText, 
+        'privacyStatus': getXmlNodeText, 
+        'enableContentId': getXmlNodeText, 
+        'thirdPartyAds': getXmlNodeText, 
+        'productListingAds': getXmlNodeText, 
+        'domainWhitelist': getXmlNodeText, 
+        'notifySubscribers': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -597,6 +676,12 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         kparams.addBoolIfDefined("deleteReference", self.deleteReference)
         kparams.addBoolIfDefined("releaseClaims", self.releaseClaims)
         kparams.addStringIfDefined("apiAuthorizeUrl", self.apiAuthorizeUrl)
+        kparams.addStringIfDefined("privacyStatus", self.privacyStatus)
+        kparams.addStringIfDefined("enableContentId", self.enableContentId)
+        kparams.addStringIfDefined("thirdPartyAds", self.thirdPartyAds)
+        kparams.addStringIfDefined("productListingAds", self.productListingAds)
+        kparams.addStringIfDefined("domainWhitelist", self.domainWhitelist)
+        kparams.addStringIfDefined("notifySubscribers", self.notifySubscribers)
         return kparams
 
     def getFeedSpecVersion(self):
@@ -826,6 +911,42 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
 
     def setApiAuthorizeUrl(self, newApiAuthorizeUrl):
         self.apiAuthorizeUrl = newApiAuthorizeUrl
+
+    def getPrivacyStatus(self):
+        return self.privacyStatus
+
+    def setPrivacyStatus(self, newPrivacyStatus):
+        self.privacyStatus = newPrivacyStatus
+
+    def getEnableContentId(self):
+        return self.enableContentId
+
+    def setEnableContentId(self, newEnableContentId):
+        self.enableContentId = newEnableContentId
+
+    def getThirdPartyAds(self):
+        return self.thirdPartyAds
+
+    def setThirdPartyAds(self, newThirdPartyAds):
+        self.thirdPartyAds = newThirdPartyAds
+
+    def getProductListingAds(self):
+        return self.productListingAds
+
+    def setProductListingAds(self, newProductListingAds):
+        self.productListingAds = newProductListingAds
+
+    def getDomainWhitelist(self):
+        return self.domainWhitelist
+
+    def setDomainWhitelist(self, newDomainWhitelist):
+        self.domainWhitelist = newDomainWhitelist
+
+    def getNotifySubscribers(self):
+        return self.notifySubscribers
+
+    def setNotifySubscribers(self, newNotifySubscribers):
+        self.notifySubscribers = newNotifySubscribers
 
 
 # @package Kaltura

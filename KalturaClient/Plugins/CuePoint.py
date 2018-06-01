@@ -217,6 +217,7 @@ class KalturaCuePoint(KalturaObjectBase):
         self.systemName = systemName
 
         # @var bool
+        # @readonly
         self.isMomentary = isMomentary
 
 
@@ -256,7 +257,6 @@ class KalturaCuePoint(KalturaObjectBase):
         kparams.addIntEnumIfDefined("forceStop", self.forceStop)
         kparams.addIntIfDefined("thumbOffset", self.thumbOffset)
         kparams.addStringIfDefined("systemName", self.systemName)
-        kparams.addBoolIfDefined("isMomentary", self.isMomentary)
         return kparams
 
     def getId(self):
@@ -336,9 +336,6 @@ class KalturaCuePoint(KalturaObjectBase):
 
     def getIsMomentary(self):
         return self.isMomentary
-
-    def setIsMomentary(self, newIsMomentary):
-        self.isMomentary = newIsMomentary
 
 
 # @package Kaltura
