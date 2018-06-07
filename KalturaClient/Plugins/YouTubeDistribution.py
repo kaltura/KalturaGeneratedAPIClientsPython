@@ -128,6 +128,7 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
             fieldValues=NotImplemented,
             videoAssetFilePath=NotImplemented,
             thumbAssetFilePath=NotImplemented,
+            thumbAssetId=NotImplemented,
             captionAssetIds=NotImplemented,
             sftpDirectory=NotImplemented,
             sftpMetadataFilename=NotImplemented,
@@ -151,6 +152,9 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
 
         # @var string
         self.thumbAssetFilePath = thumbAssetFilePath
+
+        # @var string
+        self.thumbAssetId = thumbAssetId
 
         # @var string
         self.captionAssetIds = captionAssetIds
@@ -201,6 +205,7 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
         'thumbAssetFilePath': getXmlNodeText, 
+        'thumbAssetId': getXmlNodeText, 
         'captionAssetIds': getXmlNodeText, 
         'sftpDirectory': getXmlNodeText, 
         'sftpMetadataFilename': getXmlNodeText, 
@@ -227,6 +232,7 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
         kparams.put("objectType", "KalturaYouTubeDistributionJobProviderData")
         kparams.addStringIfDefined("videoAssetFilePath", self.videoAssetFilePath)
         kparams.addStringIfDefined("thumbAssetFilePath", self.thumbAssetFilePath)
+        kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
         kparams.addStringIfDefined("captionAssetIds", self.captionAssetIds)
         kparams.addStringIfDefined("sftpDirectory", self.sftpDirectory)
         kparams.addStringIfDefined("sftpMetadataFilename", self.sftpMetadataFilename)
@@ -255,6 +261,12 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
 
     def setThumbAssetFilePath(self, newThumbAssetFilePath):
         self.thumbAssetFilePath = newThumbAssetFilePath
+
+    def getThumbAssetId(self):
+        return self.thumbAssetId
+
+    def setThumbAssetId(self, newThumbAssetId):
+        self.thumbAssetId = newThumbAssetId
 
     def getCaptionAssetIds(self):
         return self.captionAssetIds
