@@ -33219,6 +33219,79 @@ class KalturaDeliveryProfileLiveAppleHttp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileLivePackager(KalturaDeliveryProfile):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            livePackagerSigningDomain=NotImplemented):
+        KalturaDeliveryProfile.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter)
+
+        # Domain used to sign the live url
+        # @var string
+        self.livePackagerSigningDomain = livePackagerSigningDomain
+
+
+    PROPERTY_LOADERS = {
+        'livePackagerSigningDomain': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileLivePackager.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfile.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileLivePackager")
+        kparams.addStringIfDefined("livePackagerSigningDomain", self.livePackagerSigningDomain)
+        return kparams
+
+    def getLivePackagerSigningDomain(self):
+        return self.livePackagerSigningDomain
+
+    def setLivePackagerSigningDomain(self, newLivePackagerSigningDomain):
+        self.livePackagerSigningDomain = newLivePackagerSigningDomain
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
     def __init__(self,
             id=NotImplemented,
@@ -43578,6 +43651,92 @@ class KalturaDeliveryProfileGenericRtmp(KalturaDeliveryProfileRtmp):
 
     def setRendererClass(self, newRendererClass):
         self.rendererClass = newRendererClass
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryProfileLivePackagerHls(KalturaDeliveryProfileLivePackager):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            livePackagerSigningDomain=NotImplemented,
+            disableExtraAttributes=NotImplemented,
+            forceProxy=NotImplemented):
+        KalturaDeliveryProfileLivePackager.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter,
+            livePackagerSigningDomain)
+
+        # @var bool
+        self.disableExtraAttributes = disableExtraAttributes
+
+        # @var bool
+        self.forceProxy = forceProxy
+
+
+    PROPERTY_LOADERS = {
+        'disableExtraAttributes': getXmlNodeBool, 
+        'forceProxy': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileLivePackager.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileLivePackagerHls.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileLivePackager.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileLivePackagerHls")
+        kparams.addBoolIfDefined("disableExtraAttributes", self.disableExtraAttributes)
+        kparams.addBoolIfDefined("forceProxy", self.forceProxy)
+        return kparams
+
+    def getDisableExtraAttributes(self):
+        return self.disableExtraAttributes
+
+    def setDisableExtraAttributes(self, newDisableExtraAttributes):
+        self.disableExtraAttributes = newDisableExtraAttributes
+
+    def getForceProxy(self):
+        return self.forceProxy
+
+    def setForceProxy(self, newForceProxy):
+        self.forceProxy = newForceProxy
 
 
 # @package Kaltura
@@ -63542,6 +63701,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLight': KalturaDeliveryProfileGenericSilverLight,
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
+            'KalturaDeliveryProfileLivePackager': KalturaDeliveryProfileLivePackager,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
             'KalturaDeliveryProfileVodPackagerPlayServer': KalturaDeliveryProfileVodPackagerPlayServer,
             'KalturaDeliveryServerNode': KalturaDeliveryServerNode,
@@ -63677,6 +63837,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCountryCondition': KalturaCountryCondition,
             'KalturaDeliveryProfileFilter': KalturaDeliveryProfileFilter,
             'KalturaDeliveryProfileGenericRtmp': KalturaDeliveryProfileGenericRtmp,
+            'KalturaDeliveryProfileLivePackagerHls': KalturaDeliveryProfileLivePackagerHls,
             'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
             'KalturaEdgeServerNode': KalturaEdgeServerNode,
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
