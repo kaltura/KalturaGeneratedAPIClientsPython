@@ -8911,6 +8911,7 @@ class KalturaPartner(KalturaObjectBase):
             crmId=NotImplemented,
             referenceId=NotImplemented,
             timeAlignedRenditions=NotImplemented,
+            publisherEnvironmentType=NotImplemented,
             ovpEnvironmentUrl=NotImplemented,
             ottEnvironmentUrl=NotImplemented,
             eSearchLanguages=NotImplemented):
@@ -9103,6 +9104,10 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.timeAlignedRenditions = timeAlignedRenditions
 
+        # @var int
+        # @readonly
+        self.publisherEnvironmentType = publisherEnvironmentType
+
         # @var string
         # @readonly
         self.ovpEnvironmentUrl = ovpEnvironmentUrl
@@ -9169,6 +9174,7 @@ class KalturaPartner(KalturaObjectBase):
         'crmId': getXmlNodeText, 
         'referenceId': getXmlNodeText, 
         'timeAlignedRenditions': getXmlNodeBool, 
+        'publisherEnvironmentType': getXmlNodeInt, 
         'ovpEnvironmentUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
@@ -9466,6 +9472,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def getTimeAlignedRenditions(self):
         return self.timeAlignedRenditions
+
+    def getPublisherEnvironmentType(self):
+        return self.publisherEnvironmentType
 
     def getOvpEnvironmentUrl(self):
         return self.ovpEnvironmentUrl
