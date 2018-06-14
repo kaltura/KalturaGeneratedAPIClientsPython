@@ -127,6 +127,8 @@ class KalturaBatchJobStatus(object):
     FATAL = 10
     DONT_PROCESS = 11
     FINISHED_PARTIALLY = 12
+    SUSPEND = 13
+    SUSPEND_ALMOST_DONE = 14
 
     def __init__(self, value):
         self.value = value
@@ -40658,6 +40660,56 @@ class KalturaUrlTokenizerVnpt(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerWowzaSecureToken(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented,
+            paramPrefix=NotImplemented,
+            hashAlgorithm=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+        # @var string
+        self.paramPrefix = paramPrefix
+
+        # @var string
+        self.hashAlgorithm = hashAlgorithm
+
+
+    PROPERTY_LOADERS = {
+        'paramPrefix': getXmlNodeText, 
+        'hashAlgorithm': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerWowzaSecureToken.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerWowzaSecureToken")
+        kparams.addStringIfDefined("paramPrefix", self.paramPrefix)
+        kparams.addStringIfDefined("hashAlgorithm", self.hashAlgorithm)
+        return kparams
+
+    def getParamPrefix(self):
+        return self.paramPrefix
+
+    def setParamPrefix(self, newParamPrefix):
+        self.paramPrefix = newParamPrefix
+
+    def getHashAlgorithm(self):
+        return self.hashAlgorithm
+
+    def setHashAlgorithm(self, newHashAlgorithm):
+        self.hashAlgorithm = newHashAlgorithm
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUserAgentRestriction(KalturaBaseRestriction):
     def __init__(self,
             userAgentRestrictionType=NotImplemented,
@@ -63814,6 +63866,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
             'KalturaUrlTokenizerVnpt': KalturaUrlTokenizerVnpt,
+            'KalturaUrlTokenizerWowzaSecureToken': KalturaUrlTokenizerWowzaSecureToken,
             'KalturaUserAgentRestriction': KalturaUserAgentRestriction,
             'KalturaUserEntryListResponse': KalturaUserEntryListResponse,
             'KalturaUserListResponse': KalturaUserListResponse,
