@@ -58200,7 +58200,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaAppToken')
 
     def delete(self, id):
-        """Delete application authentication token by id"""
+        """Delete application authentication token by ID"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -58210,7 +58210,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         resultNode = self.client.doQueue()
 
     def get(self, id):
-        """Get application authentication token by id"""
+        """Get application authentication token by ID"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -58233,7 +58233,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaAppTokenListResponse')
 
     def startSession(self, id, tokenHash, userId = NotImplemented, type = NotImplemented, expiry = NotImplemented):
-        """Starts a new KS (kaltura Session) based on application authentication token id"""
+        """Starts a new KS (kaltura Session) based on an application authentication token ID"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -58248,7 +58248,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaSessionInfo')
 
     def update(self, id, appToken):
-        """Update application authentication token by id"""
+        """Update application authentication token by ID"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
