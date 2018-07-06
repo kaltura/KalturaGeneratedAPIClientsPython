@@ -156,7 +156,8 @@ class KalturaCuePoint(KalturaObjectBase):
             forceStop=NotImplemented,
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
-            isMomentary=NotImplemented):
+            isMomentary=NotImplemented,
+            copiedFrom=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -220,6 +221,10 @@ class KalturaCuePoint(KalturaObjectBase):
         # @readonly
         self.isMomentary = isMomentary
 
+        # @var string
+        # @readonly
+        self.copiedFrom = copiedFrom
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -239,6 +244,7 @@ class KalturaCuePoint(KalturaObjectBase):
         'thumbOffset': getXmlNodeInt, 
         'systemName': getXmlNodeText, 
         'isMomentary': getXmlNodeBool, 
+        'copiedFrom': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -336,6 +342,9 @@ class KalturaCuePoint(KalturaObjectBase):
 
     def getIsMomentary(self):
         return self.isMomentary
+
+    def getCopiedFrom(self):
+        return self.copiedFrom
 
 
 # @package Kaltura

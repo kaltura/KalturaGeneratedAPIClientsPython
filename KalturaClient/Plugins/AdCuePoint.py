@@ -117,6 +117,7 @@ class KalturaAdCuePoint(KalturaCuePoint):
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
             isMomentary=NotImplemented,
+            copiedFrom=NotImplemented,
             protocolType=NotImplemented,
             sourceUrl=NotImplemented,
             adType=NotImplemented,
@@ -140,7 +141,8 @@ class KalturaAdCuePoint(KalturaCuePoint):
             forceStop,
             thumbOffset,
             systemName,
-            isMomentary)
+            isMomentary,
+            copiedFrom)
 
         # @var KalturaAdProtocolType
         # @insertonly

@@ -91,6 +91,7 @@ class KalturaAnnotation(KalturaCuePoint):
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
             isMomentary=NotImplemented,
+            copiedFrom=NotImplemented,
             parentId=NotImplemented,
             text=NotImplemented,
             endTime=NotImplemented,
@@ -117,7 +118,8 @@ class KalturaAnnotation(KalturaCuePoint):
             forceStop,
             thumbOffset,
             systemName,
-            isMomentary)
+            isMomentary,
+            copiedFrom)
 
         # @var string
         # @insertonly

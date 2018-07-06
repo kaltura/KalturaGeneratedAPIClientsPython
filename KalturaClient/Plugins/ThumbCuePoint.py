@@ -105,6 +105,7 @@ class KalturaThumbCuePoint(KalturaCuePoint):
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
             isMomentary=NotImplemented,
+            copiedFrom=NotImplemented,
             assetId=NotImplemented,
             description=NotImplemented,
             title=NotImplemented,
@@ -126,7 +127,8 @@ class KalturaThumbCuePoint(KalturaCuePoint):
             forceStop,
             thumbOffset,
             systemName,
-            isMomentary)
+            isMomentary,
+            copiedFrom)
 
         # @var string
         self.assetId = assetId

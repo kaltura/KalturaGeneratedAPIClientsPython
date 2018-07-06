@@ -91,6 +91,7 @@ class KalturaCodeCuePoint(KalturaCuePoint):
             thumbOffset=NotImplemented,
             systemName=NotImplemented,
             isMomentary=NotImplemented,
+            copiedFrom=NotImplemented,
             code=NotImplemented,
             description=NotImplemented,
             endTime=NotImplemented,
@@ -112,7 +113,8 @@ class KalturaCodeCuePoint(KalturaCuePoint):
             forceStop,
             thumbOffset,
             systemName,
-            isMomentary)
+            isMomentary,
+            copiedFrom)
 
         # @var string
         self.code = code
