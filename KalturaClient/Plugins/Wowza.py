@@ -80,6 +80,7 @@ class KalturaWowzaMediaServerNode(KalturaMediaServerNode):
             dc=NotImplemented,
             parentId=NotImplemented,
             deliveryProfileIds=NotImplemented,
+            config=NotImplemented,
             applicationName=NotImplemented,
             mediaServerPortConfig=NotImplemented,
             mediaServerPlaybackDomainConfig=NotImplemented,
@@ -105,6 +106,7 @@ class KalturaWowzaMediaServerNode(KalturaMediaServerNode):
             dc,
             parentId,
             deliveryProfileIds,
+            config,
             applicationName,
             mediaServerPortConfig,
             mediaServerPlaybackDomainConfig)

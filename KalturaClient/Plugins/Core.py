@@ -33477,7 +33477,8 @@ class KalturaDeliveryServerNode(KalturaServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
-            deliveryProfileIds=NotImplemented):
+            deliveryProfileIds=NotImplemented,
+            config=NotImplemented):
         KalturaServerNode.__init__(self,
             id,
             partnerId,
@@ -33498,9 +33499,14 @@ class KalturaDeliveryServerNode(KalturaServerNode):
         # @var array of KalturaKeyValue
         self.deliveryProfileIds = deliveryProfileIds
 
+        # Override server node default configuration - json format
+        # @var string
+        self.config = config
+
 
     PROPERTY_LOADERS = {
         'deliveryProfileIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+        'config': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -33511,6 +33517,7 @@ class KalturaDeliveryServerNode(KalturaServerNode):
         kparams = KalturaServerNode.toParams(self)
         kparams.put("objectType", "KalturaDeliveryServerNode")
         kparams.addArrayIfDefined("deliveryProfileIds", self.deliveryProfileIds)
+        kparams.addStringIfDefined("config", self.config)
         return kparams
 
     def getDeliveryProfileIds(self):
@@ -33518,6 +33525,12 @@ class KalturaDeliveryServerNode(KalturaServerNode):
 
     def setDeliveryProfileIds(self, newDeliveryProfileIds):
         self.deliveryProfileIds = newDeliveryProfileIds
+
+    def getConfig(self):
+        return self.config
+
+    def setConfig(self, newConfig):
+        self.config = newConfig
 
 
 # @package Kaltura
@@ -43893,8 +43906,8 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             dc=NotImplemented,
             parentId=NotImplemented,
             deliveryProfileIds=NotImplemented,
-            playbackDomain=NotImplemented,
-            config=NotImplemented):
+            config=NotImplemented,
+            playbackDomain=NotImplemented):
         KalturaDeliveryServerNode.__init__(self,
             id,
             partnerId,
@@ -43910,20 +43923,16 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
-            deliveryProfileIds)
+            deliveryProfileIds,
+            config)
 
         # Delivery server playback Domain
         # @var string
         self.playbackDomain = playbackDomain
 
-        # Overdie edge server default configuration - json format
-        # @var string
-        self.config = config
-
 
     PROPERTY_LOADERS = {
         'playbackDomain': getXmlNodeText, 
-        'config': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -43934,7 +43943,6 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
         kparams = KalturaDeliveryServerNode.toParams(self)
         kparams.put("objectType", "KalturaEdgeServerNode")
         kparams.addStringIfDefined("playbackDomain", self.playbackDomain)
-        kparams.addStringIfDefined("config", self.config)
         return kparams
 
     def getPlaybackDomain(self):
@@ -43942,12 +43950,6 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
 
     def setPlaybackDomain(self, newPlaybackDomain):
         self.playbackDomain = newPlaybackDomain
-
-    def getConfig(self):
-        return self.config
-
-    def setConfig(self, newConfig):
-        self.config = newConfig
 
 
 # @package Kaltura
@@ -45686,6 +45688,7 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             dc=NotImplemented,
             parentId=NotImplemented,
             deliveryProfileIds=NotImplemented,
+            config=NotImplemented,
             applicationName=NotImplemented,
             mediaServerPortConfig=NotImplemented,
             mediaServerPlaybackDomainConfig=NotImplemented):
@@ -45704,7 +45707,8 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
-            deliveryProfileIds)
+            deliveryProfileIds,
+            config)
 
         # Media server application name
         # @var string
