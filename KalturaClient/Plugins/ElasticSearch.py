@@ -1960,102 +1960,6 @@ class KalturaESearchAbstractUserItem(KalturaESearchUserBaseItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchCategoryQuery(KalturaESearchCategoryBaseItem):
-    def __init__(self,
-            eSearchQuery=NotImplemented):
-        KalturaESearchCategoryBaseItem.__init__(self)
-
-        # @var string
-        self.eSearchQuery = eSearchQuery
-
-
-    PROPERTY_LOADERS = {
-        'eSearchQuery': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchCategoryBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchCategoryQuery.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchCategoryBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchCategoryQuery")
-        kparams.addStringIfDefined("eSearchQuery", self.eSearchQuery)
-        return kparams
-
-    def getESearchQuery(self):
-        return self.eSearchQuery
-
-    def setESearchQuery(self, newESearchQuery):
-        self.eSearchQuery = newESearchQuery
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchEntryQuery(KalturaESearchEntryBaseItem):
-    def __init__(self,
-            eSearchQuery=NotImplemented):
-        KalturaESearchEntryBaseItem.__init__(self)
-
-        # @var string
-        self.eSearchQuery = eSearchQuery
-
-
-    PROPERTY_LOADERS = {
-        'eSearchQuery': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchEntryBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryQuery.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchEntryBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryQuery")
-        kparams.addStringIfDefined("eSearchQuery", self.eSearchQuery)
-        return kparams
-
-    def getESearchQuery(self):
-        return self.eSearchQuery
-
-    def setESearchQuery(self, newESearchQuery):
-        self.eSearchQuery = newESearchQuery
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchUserQuery(KalturaESearchUserBaseItem):
-    def __init__(self,
-            eSearchQuery=NotImplemented):
-        KalturaESearchUserBaseItem.__init__(self)
-
-        # @var string
-        self.eSearchQuery = eSearchQuery
-
-
-    PROPERTY_LOADERS = {
-        'eSearchQuery': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchUserBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchUserQuery.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchUserBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchUserQuery")
-        kparams.addStringIfDefined("eSearchQuery", self.eSearchQuery)
-        return kparams
-
-    def getESearchQuery(self):
-        return self.eSearchQuery
-
-    def setESearchQuery(self, newESearchQuery):
-        self.eSearchQuery = newESearchQuery
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchCategoryEntryItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2814,9 +2718,6 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchAbstractCategoryItem': KalturaESearchAbstractCategoryItem,
             'KalturaESearchAbstractEntryItem': KalturaESearchAbstractEntryItem,
             'KalturaESearchAbstractUserItem': KalturaESearchAbstractUserItem,
-            'KalturaESearchCategoryQuery': KalturaESearchCategoryQuery,
-            'KalturaESearchEntryQuery': KalturaESearchEntryQuery,
-            'KalturaESearchUserQuery': KalturaESearchUserQuery,
             'KalturaESearchCategoryEntryItem': KalturaESearchCategoryEntryItem,
             'KalturaESearchCategoryItem': KalturaESearchCategoryItem,
             'KalturaESearchCategoryMetadataItem': KalturaESearchCategoryMetadataItem,
