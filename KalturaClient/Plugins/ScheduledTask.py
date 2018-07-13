@@ -885,7 +885,8 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             lastExecutionStartedAtGreaterThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqual=NotImplemented):
+            lastExecutionStartedAtLessThanOrEqual=NotImplemented,
+            lastExecutionStartedAtLessThanOrEqualOrNull=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -932,6 +933,9 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         # @var int
         self.lastExecutionStartedAtLessThanOrEqual = lastExecutionStartedAtLessThanOrEqual
 
+        # @var int
+        self.lastExecutionStartedAtLessThanOrEqualOrNull = lastExecutionStartedAtLessThanOrEqualOrNull
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -948,6 +952,7 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
         'lastExecutionStartedAtGreaterThanOrEqual': getXmlNodeInt, 
         'lastExecutionStartedAtLessThanOrEqual': getXmlNodeInt, 
+        'lastExecutionStartedAtLessThanOrEqualOrNull': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -971,6 +976,7 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         kparams.addIntIfDefined("lastExecutionStartedAtGreaterThanOrEqual", self.lastExecutionStartedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("lastExecutionStartedAtLessThanOrEqual", self.lastExecutionStartedAtLessThanOrEqual)
+        kparams.addIntIfDefined("lastExecutionStartedAtLessThanOrEqualOrNull", self.lastExecutionStartedAtLessThanOrEqualOrNull)
         return kparams
 
     def getIdEqual(self):
@@ -1056,6 +1062,12 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
 
     def setLastExecutionStartedAtLessThanOrEqual(self, newLastExecutionStartedAtLessThanOrEqual):
         self.lastExecutionStartedAtLessThanOrEqual = newLastExecutionStartedAtLessThanOrEqual
+
+    def getLastExecutionStartedAtLessThanOrEqualOrNull(self):
+        return self.lastExecutionStartedAtLessThanOrEqualOrNull
+
+    def setLastExecutionStartedAtLessThanOrEqualOrNull(self, newLastExecutionStartedAtLessThanOrEqualOrNull):
+        self.lastExecutionStartedAtLessThanOrEqualOrNull = newLastExecutionStartedAtLessThanOrEqualOrNull
 
 
 # @package Kaltura
@@ -1145,7 +1157,8 @@ class KalturaScheduledTaskProfileFilter(KalturaScheduledTaskProfileBaseFilter):
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
             lastExecutionStartedAtGreaterThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqual=NotImplemented):
+            lastExecutionStartedAtLessThanOrEqual=NotImplemented,
+            lastExecutionStartedAtLessThanOrEqualOrNull=NotImplemented):
         KalturaScheduledTaskProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1162,7 +1175,8 @@ class KalturaScheduledTaskProfileFilter(KalturaScheduledTaskProfileBaseFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
             lastExecutionStartedAtGreaterThanOrEqual,
-            lastExecutionStartedAtLessThanOrEqual)
+            lastExecutionStartedAtLessThanOrEqual,
+            lastExecutionStartedAtLessThanOrEqualOrNull)
 
 
     PROPERTY_LOADERS = {
