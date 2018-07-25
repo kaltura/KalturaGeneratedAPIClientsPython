@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='KalturaApiClient',
-    version='14.2.0',
+    version='14.3.0',
     url='https://github.com/kaltura/KalturaGeneratedAPIClientsPython',
     packages=['KalturaClient', 'KalturaClient.Plugins'],
     install_requires=['requests>=2.4.2', 'requests-toolbelt', 'six'],
