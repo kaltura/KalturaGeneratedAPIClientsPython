@@ -5025,6 +5025,7 @@ class KalturaReportType(object):
     TOP_PLAYBACK_CONTEXT = "25"
     VPAAS_USAGE = "26"
     ENTRY_USAGE = "27"
+    REACH_USAGE = "28"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
