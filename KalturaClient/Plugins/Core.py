@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.5.0'
+API_VERSION = '14.6.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -58237,7 +58237,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaAppTokenListResponse')
 
-    def startSession(self, id, tokenHash, userId = NotImplemented, type = NotImplemented, expiry = NotImplemented):
+    def startSession(self, id, tokenHash, userId = NotImplemented, type = NotImplemented, expiry = NotImplemented, sessionPrivileges = NotImplemented):
         """Starts a new KS (kaltura Session) based on an application authentication token ID"""
 
         kparams = KalturaParams()
@@ -58246,6 +58246,7 @@ class KalturaAppTokenService(KalturaServiceBase):
         kparams.addStringIfDefined("userId", userId)
         kparams.addIntIfDefined("type", type);
         kparams.addIntIfDefined("expiry", expiry);
+        kparams.addStringIfDefined("sessionPrivileges", sessionPrivileges)
         self.client.queueServiceActionCall("apptoken", "startSession", "KalturaSessionInfo", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
