@@ -981,6 +981,7 @@ class KalturaServerNodeStatus(object):
     DISABLED = 2
     DELETED = 3
     NOT_REGISTERED = 4
+    NOT_HEALTHY = 5
 
     def __init__(self, value):
         self.value = value
@@ -28384,7 +28385,8 @@ class KalturaAccessControlProfileListResponse(KalturaListResponse):
 class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
     def __init__(self,
             type=NotImplemented,
-            edgeServerIds=NotImplemented):
+            edgeServerIds=NotImplemented,
+            seamlessFallbackEnabled=NotImplemented):
         KalturaRuleAction.__init__(self,
             type)
 
@@ -28392,9 +28394,13 @@ class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
         # @var string
         self.edgeServerIds = edgeServerIds
 
+        # @var KalturaNullableBoolean
+        self.seamlessFallbackEnabled = seamlessFallbackEnabled
+
 
     PROPERTY_LOADERS = {
         'edgeServerIds': getXmlNodeText, 
+        'seamlessFallbackEnabled': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -28405,6 +28411,7 @@ class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
         kparams = KalturaRuleAction.toParams(self)
         kparams.put("objectType", "KalturaAccessControlServeRemoteEdgeServerAction")
         kparams.addStringIfDefined("edgeServerIds", self.edgeServerIds)
+        kparams.addIntEnumIfDefined("seamlessFallbackEnabled", self.seamlessFallbackEnabled)
         return kparams
 
     def getEdgeServerIds(self):
@@ -28412,6 +28419,12 @@ class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
 
     def setEdgeServerIds(self, newEdgeServerIds):
         self.edgeServerIds = newEdgeServerIds
+
+    def getSeamlessFallbackEnabled(self):
+        return self.seamlessFallbackEnabled
+
+    def setSeamlessFallbackEnabled(self, newSeamlessFallbackEnabled):
+        self.seamlessFallbackEnabled = newSeamlessFallbackEnabled
 
 
 # @package Kaltura
@@ -61783,6 +61796,20 @@ class KalturaServerNodeService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaServerNode')
 
+    def getFullPath(self, hostName, protocol = "http", deliveryFormat = NotImplemented, deliveryType = NotImplemented):
+        """Get the edge server node full path"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("hostName", hostName)
+        kparams.addStringIfDefined("protocol", protocol)
+        kparams.addStringIfDefined("deliveryFormat", deliveryFormat)
+        kparams.addStringIfDefined("deliveryType", deliveryType)
+        self.client.queueServiceActionCall("servernode", "getFullPath", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def list(self, filter = NotImplemented, pager = NotImplemented):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
@@ -61804,12 +61831,13 @@ class KalturaServerNodeService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaServerNode')
 
-    def reportStatus(self, hostName, serverNode = NotImplemented):
+    def reportStatus(self, hostName, serverNode = NotImplemented, serverNodeStatus = 1):
         """Update server node status"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("hostName", hostName)
         kparams.addObjectIfDefined("serverNode", serverNode)
+        kparams.addIntIfDefined("serverNodeStatus", serverNodeStatus);
         self.client.queueServiceActionCall("servernode", "reportStatus", "KalturaServerNode", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
