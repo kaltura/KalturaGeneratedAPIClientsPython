@@ -30869,6 +30869,7 @@ class KalturaCaptureThumbJobData(KalturaJobData):
             thumbParamsOutputId=NotImplemented,
             thumbAssetId=NotImplemented,
             srcAssetId=NotImplemented,
+            srcAssetEncryptionKey=NotImplemented,
             srcAssetType=NotImplemented,
             thumbPath=NotImplemented):
         KalturaJobData.__init__(self)
@@ -30892,6 +30893,9 @@ class KalturaCaptureThumbJobData(KalturaJobData):
         # @var string
         self.srcAssetId = srcAssetId
 
+        # @var string
+        self.srcAssetEncryptionKey = srcAssetEncryptionKey
+
         # @var KalturaAssetType
         self.srcAssetType = srcAssetType
 
@@ -30906,6 +30910,7 @@ class KalturaCaptureThumbJobData(KalturaJobData):
         'thumbParamsOutputId': getXmlNodeInt, 
         'thumbAssetId': getXmlNodeText, 
         'srcAssetId': getXmlNodeText, 
+        'srcAssetEncryptionKey': getXmlNodeText, 
         'srcAssetType': (KalturaEnumsFactory.createString, "KalturaAssetType"), 
         'thumbPath': getXmlNodeText, 
     }
@@ -30923,6 +30928,7 @@ class KalturaCaptureThumbJobData(KalturaJobData):
         kparams.addIntIfDefined("thumbParamsOutputId", self.thumbParamsOutputId)
         kparams.addStringIfDefined("thumbAssetId", self.thumbAssetId)
         kparams.addStringIfDefined("srcAssetId", self.srcAssetId)
+        kparams.addStringIfDefined("srcAssetEncryptionKey", self.srcAssetEncryptionKey)
         kparams.addStringEnumIfDefined("srcAssetType", self.srcAssetType)
         kparams.addStringIfDefined("thumbPath", self.thumbPath)
         return kparams
@@ -30962,6 +30968,12 @@ class KalturaCaptureThumbJobData(KalturaJobData):
 
     def setSrcAssetId(self, newSrcAssetId):
         self.srcAssetId = newSrcAssetId
+
+    def getSrcAssetEncryptionKey(self):
+        return self.srcAssetEncryptionKey
+
+    def setSrcAssetEncryptionKey(self, newSrcAssetEncryptionKey):
+        self.srcAssetEncryptionKey = newSrcAssetEncryptionKey
 
     def getSrcAssetType(self):
         return self.srcAssetType
@@ -46380,6 +46392,7 @@ class KalturaPostConvertJobData(KalturaConvartableJobData):
             currentOperationIndex=NotImplemented,
             pluginData=NotImplemented,
             flavorAssetId=NotImplemented,
+            flavorAssetEncryptionKey=NotImplemented,
             createThumb=NotImplemented,
             thumbPath=NotImplemented,
             thumbOffset=NotImplemented,
@@ -46401,6 +46414,9 @@ class KalturaPostConvertJobData(KalturaConvartableJobData):
 
         # @var string
         self.flavorAssetId = flavorAssetId
+
+        # @var string
+        self.flavorAssetEncryptionKey = flavorAssetEncryptionKey
 
         # Indicates if a thumbnail should be created
         # @var bool
@@ -46428,6 +46444,7 @@ class KalturaPostConvertJobData(KalturaConvartableJobData):
 
     PROPERTY_LOADERS = {
         'flavorAssetId': getXmlNodeText, 
+        'flavorAssetEncryptionKey': getXmlNodeText, 
         'createThumb': getXmlNodeBool, 
         'thumbPath': getXmlNodeText, 
         'thumbOffset': getXmlNodeInt, 
@@ -46444,6 +46461,7 @@ class KalturaPostConvertJobData(KalturaConvartableJobData):
         kparams = KalturaConvartableJobData.toParams(self)
         kparams.put("objectType", "KalturaPostConvertJobData")
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
+        kparams.addStringIfDefined("flavorAssetEncryptionKey", self.flavorAssetEncryptionKey)
         kparams.addBoolIfDefined("createThumb", self.createThumb)
         kparams.addStringIfDefined("thumbPath", self.thumbPath)
         kparams.addIntIfDefined("thumbOffset", self.thumbOffset)
@@ -46457,6 +46475,12 @@ class KalturaPostConvertJobData(KalturaConvartableJobData):
 
     def setFlavorAssetId(self, newFlavorAssetId):
         self.flavorAssetId = newFlavorAssetId
+
+    def getFlavorAssetEncryptionKey(self):
+        return self.flavorAssetEncryptionKey
+
+    def setFlavorAssetEncryptionKey(self, newFlavorAssetEncryptionKey):
+        self.flavorAssetEncryptionKey = newFlavorAssetEncryptionKey
 
     def getCreateThumb(self):
         return self.createThumb
