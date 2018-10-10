@@ -5027,6 +5027,7 @@ class KalturaReportType(object):
     VPAAS_USAGE = "26"
     ENTRY_USAGE = "27"
     REACH_USAGE = "28"
+    TOP_CUSTOM_VAR1 = "29"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -37881,6 +37882,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             searchInTags=NotImplemented,
             searchInAdminTags=NotImplemented,
             categories=NotImplemented,
+            customVar1In=NotImplemented,
+            customVar2In=NotImplemented,
+            customVar3In=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
@@ -37905,6 +37909,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.categories = categories
 
+        # Filter by customVar1
+        # @var string
+        self.customVar1In = customVar1In
+
+        # Filter by customVar2
+        # @var string
+        self.customVar2In = customVar2In
+
+        # Filter by customVar3
+        # @var string
+        self.customVar3In = customVar3In
+
         # Time zone offset in minutes
         # @var int
         self.timeZoneOffset = timeZoneOffset
@@ -37919,6 +37935,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'searchInTags': getXmlNodeBool, 
         'searchInAdminTags': getXmlNodeBool, 
         'categories': getXmlNodeText, 
+        'customVar1In': getXmlNodeText, 
+        'customVar2In': getXmlNodeText, 
+        'customVar3In': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
     }
@@ -37934,6 +37953,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addBoolIfDefined("searchInTags", self.searchInTags)
         kparams.addBoolIfDefined("searchInAdminTags", self.searchInAdminTags)
         kparams.addStringIfDefined("categories", self.categories)
+        kparams.addStringIfDefined("customVar1In", self.customVar1In)
+        kparams.addStringIfDefined("customVar2In", self.customVar2In)
+        kparams.addStringIfDefined("customVar3In", self.customVar3In)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
         return kparams
@@ -37961,6 +37983,24 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCategories(self, newCategories):
         self.categories = newCategories
+
+    def getCustomVar1In(self):
+        return self.customVar1In
+
+    def setCustomVar1In(self, newCustomVar1In):
+        self.customVar1In = newCustomVar1In
+
+    def getCustomVar2In(self):
+        return self.customVar2In
+
+    def setCustomVar2In(self, newCustomVar2In):
+        self.customVar2In = newCustomVar2In
+
+    def getCustomVar3In(self):
+        return self.customVar3In
+
+    def setCustomVar3In(self, newCustomVar3In):
+        self.customVar3In = newCustomVar3In
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -43990,6 +44030,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             searchInTags=NotImplemented,
             searchInAdminTags=NotImplemented,
             categories=NotImplemented,
+            customVar1In=NotImplemented,
+            customVar2In=NotImplemented,
+            customVar3In=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             application=NotImplemented,
@@ -44005,6 +44048,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             searchInTags,
             searchInAdminTags,
             categories,
+            customVar1In,
+            customVar2In,
+            customVar3In,
             timeZoneOffset,
             interval)
 
