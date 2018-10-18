@@ -65,7 +65,8 @@ class KalturaBulkUploadXmlJobData(KalturaBulkUploadJobData):
             objectData=NotImplemented,
             type=NotImplemented,
             emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented):
+            numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
             uploadedBy,
@@ -80,7 +81,8 @@ class KalturaBulkUploadXmlJobData(KalturaBulkUploadJobData):
             objectData,
             type,
             emailRecipients,
-            numOfErrorObjects)
+            numOfErrorObjects,
+            privileges)
 
 
     PROPERTY_LOADERS = {

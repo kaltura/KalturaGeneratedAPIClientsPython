@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.6.0'
+API_VERSION = '14.7.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -29687,7 +29687,8 @@ class KalturaBulkUploadJobData(KalturaJobData):
             objectData=NotImplemented,
             type=NotImplemented,
             emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented):
+            numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
@@ -29756,6 +29757,10 @@ class KalturaBulkUploadJobData(KalturaJobData):
         # @var int
         self.numOfErrorObjects = numOfErrorObjects
 
+        # privileges for the job
+        # @var string
+        self.privileges = privileges
+
 
     PROPERTY_LOADERS = {
         'userId': getXmlNodeText, 
@@ -29772,6 +29777,7 @@ class KalturaBulkUploadJobData(KalturaJobData):
         'type': (KalturaEnumsFactory.createString, "KalturaBulkUploadType"), 
         'emailRecipients': getXmlNodeText, 
         'numOfErrorObjects': getXmlNodeInt, 
+        'privileges': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -29784,6 +29790,7 @@ class KalturaBulkUploadJobData(KalturaJobData):
         kparams.addStringIfDefined("fileName", self.fileName)
         kparams.addStringIfDefined("emailRecipients", self.emailRecipients)
         kparams.addIntIfDefined("numOfErrorObjects", self.numOfErrorObjects)
+        kparams.addStringIfDefined("privileges", self.privileges)
         return kparams
 
     def getUserId(self):
@@ -29836,6 +29843,12 @@ class KalturaBulkUploadJobData(KalturaJobData):
 
     def setNumOfErrorObjects(self, newNumOfErrorObjects):
         self.numOfErrorObjects = newNumOfErrorObjects
+
+    def getPrivileges(self):
+        return self.privileges
+
+    def setPrivileges(self, newPrivileges):
+        self.privileges = newPrivileges
 
 
 # @package Kaltura
@@ -58719,7 +58732,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaBulkUploadListResponse')
 
     def serve(self, id):
-        """serve action returan the original file."""
+        """serve action return the original file."""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);

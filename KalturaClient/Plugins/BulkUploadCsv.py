@@ -79,6 +79,7 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
             type=NotImplemented,
             emailRecipients=NotImplemented,
             numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented,
             csvVersion=NotImplemented,
             columns=NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
@@ -95,7 +96,8 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
             objectData,
             type,
             emailRecipients,
-            numOfErrorObjects)
+            numOfErrorObjects,
+            privileges)
 
         # The version of the csv file
         # @var KalturaBulkUploadCsvVersion

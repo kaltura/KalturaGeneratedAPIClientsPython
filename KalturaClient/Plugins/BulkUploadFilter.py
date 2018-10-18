@@ -114,6 +114,7 @@ class KalturaBulkUploadFilterJobData(KalturaBulkUploadJobData):
             type=NotImplemented,
             emailRecipients=NotImplemented,
             numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented,
             filter=NotImplemented,
             templateObject=NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
@@ -130,7 +131,8 @@ class KalturaBulkUploadFilterJobData(KalturaBulkUploadJobData):
             objectData,
             type,
             emailRecipients,
-            numOfErrorObjects)
+            numOfErrorObjects,
+            privileges)
 
         # Filter for extracting the objects list to upload
         # @var KalturaFilter

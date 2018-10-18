@@ -279,6 +279,7 @@ class KalturaBulkUploadICalJobData(KalturaBulkUploadJobData):
             type=NotImplemented,
             emailRecipients=NotImplemented,
             numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented,
             eventsType=NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
@@ -294,7 +295,8 @@ class KalturaBulkUploadICalJobData(KalturaBulkUploadJobData):
             objectData,
             type,
             emailRecipients,
-            numOfErrorObjects)
+            numOfErrorObjects,
+            privileges)
 
         # The type of the events that ill be created by this upload
         # @var KalturaScheduleEventType
