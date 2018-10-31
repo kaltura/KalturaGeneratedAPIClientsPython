@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.7.0'
+API_VERSION = '14.8.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -11879,7 +11879,8 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
             contentAwareness=NotImplemented,
             chunkedEncodeMode=NotImplemented,
             twoPass=NotImplemented,
-            tags=NotImplemented):
+            tags=NotImplemented,
+            overloadParams=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the conversion profile
@@ -11927,6 +11928,10 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         # @var string
         self.tags = tags
 
+        # JSON string containing an array of flavotParams field-value pairs.
+        # @var string
+        self.overloadParams = overloadParams
+
 
     PROPERTY_LOADERS = {
         'conversionProfileId': getXmlNodeInt, 
@@ -11941,6 +11946,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         'chunkedEncodeMode': getXmlNodeInt, 
         'twoPass': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'tags': getXmlNodeText, 
+        'overloadParams': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -11960,6 +11966,7 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
         kparams.addIntIfDefined("chunkedEncodeMode", self.chunkedEncodeMode)
         kparams.addIntEnumIfDefined("twoPass", self.twoPass)
         kparams.addStringIfDefined("tags", self.tags)
+        kparams.addStringIfDefined("overloadParams", self.overloadParams)
         return kparams
 
     def getConversionProfileId(self):
@@ -12027,6 +12034,12 @@ class KalturaConversionProfileAssetParams(KalturaObjectBase):
 
     def setTags(self, newTags):
         self.tags = newTags
+
+    def getOverloadParams(self):
+        return self.overloadParams
+
+    def setOverloadParams(self, newOverloadParams):
+        self.overloadParams = newOverloadParams
 
 
 # @package Kaltura
