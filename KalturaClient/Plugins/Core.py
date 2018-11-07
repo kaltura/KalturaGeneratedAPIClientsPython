@@ -49754,6 +49754,71 @@ class KalturaDocumentEntryMatchAttributeCondition(KalturaSearchMatchAttributeCon
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDropFolderXmlBulkUploadJobData(KalturaBulkUploadXmlJobData):
+    """Represents the Bulk upload job data for drop folder xml bulk upload"""
+
+    def __init__(self,
+            userId=NotImplemented,
+            uploadedBy=NotImplemented,
+            conversionProfileId=NotImplemented,
+            resultsFileLocalPath=NotImplemented,
+            resultsFileUrl=NotImplemented,
+            numOfEntries=NotImplemented,
+            numOfObjects=NotImplemented,
+            filePath=NotImplemented,
+            bulkUploadObjectType=NotImplemented,
+            fileName=NotImplemented,
+            objectData=NotImplemented,
+            type=NotImplemented,
+            emailRecipients=NotImplemented,
+            numOfErrorObjects=NotImplemented,
+            privileges=NotImplemented,
+            dropFolderId=NotImplemented):
+        KalturaBulkUploadXmlJobData.__init__(self,
+            userId,
+            uploadedBy,
+            conversionProfileId,
+            resultsFileLocalPath,
+            resultsFileUrl,
+            numOfEntries,
+            numOfObjects,
+            filePath,
+            bulkUploadObjectType,
+            fileName,
+            objectData,
+            type,
+            emailRecipients,
+            numOfErrorObjects,
+            privileges)
+
+        # the job drop folder id
+        # @var int
+        self.dropFolderId = dropFolderId
+
+
+    PROPERTY_LOADERS = {
+        'dropFolderId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaBulkUploadXmlJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDropFolderXmlBulkUploadJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBulkUploadXmlJobData.toParams(self)
+        kparams.put("objectType", "KalturaDropFolderXmlBulkUploadJobData")
+        kparams.addIntIfDefined("dropFolderId", self.dropFolderId)
+        return kparams
+
+    def getDropFolderId(self):
+        return self.dropFolderId
+
+    def setDropFolderId(self, newDropFolderId):
+        self.dropFolderId = newDropFolderId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEvalBooleanField(KalturaBooleanField):
     """Evaluates PHP statement, depends on the execution context"""
 
@@ -64114,6 +64179,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
+            'KalturaDropFolderXmlBulkUploadJobData': KalturaDropFolderXmlBulkUploadJobData,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
             'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
