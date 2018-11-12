@@ -25115,7 +25115,8 @@ class KalturaServerNode(KalturaObjectBase):
             type=NotImplemented,
             tags=NotImplemented,
             dc=NotImplemented,
-            parentId=NotImplemented):
+            parentId=NotImplemented,
+            environment=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -25174,6 +25175,10 @@ class KalturaServerNode(KalturaObjectBase):
         # @var string
         self.parentId = parentId
 
+        # Environment
+        # @var string
+        self.environment = environment
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -25190,6 +25195,7 @@ class KalturaServerNode(KalturaObjectBase):
         'tags': getXmlNodeText, 
         'dc': getXmlNodeInt, 
         'parentId': getXmlNodeText, 
+        'environment': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25205,6 +25211,7 @@ class KalturaServerNode(KalturaObjectBase):
         kparams.addStringIfDefined("hostName", self.hostName)
         kparams.addStringIfDefined("tags", self.tags)
         kparams.addStringIfDefined("parentId", self.parentId)
+        kparams.addStringIfDefined("environment", self.environment)
         return kparams
 
     def getId(self):
@@ -25266,6 +25273,12 @@ class KalturaServerNode(KalturaObjectBase):
 
     def setParentId(self, newParentId):
         self.parentId = newParentId
+
+    def getEnvironment(self):
+        return self.environment
+
+    def setEnvironment(self, newEnvironment):
+        self.environment = newEnvironment
 
 
 # @package Kaltura
@@ -33530,6 +33543,7 @@ class KalturaDeliveryServerNode(KalturaServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
+            environment=NotImplemented,
             deliveryProfileIds=NotImplemented,
             config=NotImplemented):
         KalturaServerNode.__init__(self,
@@ -33546,7 +33560,8 @@ class KalturaDeliveryServerNode(KalturaServerNode):
             type,
             tags,
             dc,
-            parentId)
+            parentId,
+            environment)
 
         # Delivery profile ids
         # @var array of KalturaKeyValue
@@ -38475,7 +38490,9 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -38561,6 +38578,12 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         # @var string
         self.parentIdMultiLikeAnd = parentIdMultiLikeAnd
 
+        # @var string
+        self.environmentEqual = environmentEqual
+
+        # @var string
+        self.environmentIn = environmentIn
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -38590,6 +38613,8 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         'parentIdLike': getXmlNodeText, 
         'parentIdMultiLikeOr': getXmlNodeText, 
         'parentIdMultiLikeAnd': getXmlNodeText, 
+        'environmentEqual': getXmlNodeText, 
+        'environmentIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38626,6 +38651,8 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("parentIdLike", self.parentIdLike)
         kparams.addStringIfDefined("parentIdMultiLikeOr", self.parentIdMultiLikeOr)
         kparams.addStringIfDefined("parentIdMultiLikeAnd", self.parentIdMultiLikeAnd)
+        kparams.addStringIfDefined("environmentEqual", self.environmentEqual)
+        kparams.addStringIfDefined("environmentIn", self.environmentIn)
         return kparams
 
     def getIdEqual(self):
@@ -38789,6 +38816,18 @@ class KalturaServerNodeBaseFilter(KalturaFilter):
 
     def setParentIdMultiLikeAnd(self, newParentIdMultiLikeAnd):
         self.parentIdMultiLikeAnd = newParentIdMultiLikeAnd
+
+    def getEnvironmentEqual(self):
+        return self.environmentEqual
+
+    def setEnvironmentEqual(self, newEnvironmentEqual):
+        self.environmentEqual = newEnvironmentEqual
+
+    def getEnvironmentIn(self):
+        return self.environmentIn
+
+    def setEnvironmentIn(self, newEnvironmentIn):
+        self.environmentIn = newEnvironmentIn
 
 
 # @package Kaltura
@@ -43997,6 +44036,7 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
+            environment=NotImplemented,
             deliveryProfileIds=NotImplemented,
             config=NotImplemented,
             playbackDomain=NotImplemented):
@@ -44015,6 +44055,7 @@ class KalturaEdgeServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
+            environment,
             deliveryProfileIds,
             config)
 
@@ -45785,6 +45826,7 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
+            environment=NotImplemented,
             deliveryProfileIds=NotImplemented,
             config=NotImplemented,
             applicationName=NotImplemented,
@@ -45805,6 +45847,7 @@ class KalturaMediaServerNode(KalturaDeliveryServerNode):
             tags,
             dc,
             parentId,
+            environment,
             deliveryProfileIds,
             config)
 
@@ -47011,7 +47054,9 @@ class KalturaServerNodeFilter(KalturaServerNodeBaseFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -47041,7 +47086,9 @@ class KalturaServerNodeFilter(KalturaServerNodeBaseFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
@@ -49626,7 +49673,9 @@ class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -49656,7 +49705,9 @@ class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
@@ -52541,7 +52592,9 @@ class KalturaDeliveryServerNodeFilter(KalturaDeliveryServerNodeBaseFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaDeliveryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -52571,7 +52624,9 @@ class KalturaDeliveryServerNodeFilter(KalturaDeliveryServerNodeBaseFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
@@ -54073,6 +54128,8 @@ class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
             parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented,
             playbackDomainLike=NotImplemented,
             playbackDomainMultiLikeOr=NotImplemented,
             playbackDomainMultiLikeAnd=NotImplemented):
@@ -54105,7 +54162,9 @@ class KalturaEdgeServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
         # @var string
         self.playbackDomainLike = playbackDomainLike
@@ -54538,7 +54597,9 @@ class KalturaMediaServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaDeliveryServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -54568,7 +54629,9 @@ class KalturaMediaServerNodeBaseFilter(KalturaDeliveryServerNodeFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
@@ -54971,6 +55034,8 @@ class KalturaEdgeServerNodeFilter(KalturaEdgeServerNodeBaseFilter):
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
             parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented,
             playbackDomainLike=NotImplemented,
             playbackDomainMultiLikeOr=NotImplemented,
             playbackDomainMultiLikeAnd=NotImplemented):
@@ -55004,6 +55069,8 @@ class KalturaEdgeServerNodeFilter(KalturaEdgeServerNodeBaseFilter):
             parentIdLike,
             parentIdMultiLikeOr,
             parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn,
             playbackDomainLike,
             playbackDomainMultiLikeOr,
             playbackDomainMultiLikeAnd)
@@ -55310,7 +55377,9 @@ class KalturaMediaServerNodeFilter(KalturaMediaServerNodeBaseFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaMediaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -55340,7 +55409,9 @@ class KalturaMediaServerNodeFilter(KalturaMediaServerNodeBaseFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {

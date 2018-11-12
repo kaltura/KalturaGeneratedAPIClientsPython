@@ -79,6 +79,7 @@ class KalturaWowzaMediaServerNode(KalturaMediaServerNode):
             tags=NotImplemented,
             dc=NotImplemented,
             parentId=NotImplemented,
+            environment=NotImplemented,
             deliveryProfileIds=NotImplemented,
             config=NotImplemented,
             applicationName=NotImplemented,
@@ -105,6 +106,7 @@ class KalturaWowzaMediaServerNode(KalturaMediaServerNode):
             tags,
             dc,
             parentId,
+            environment,
             deliveryProfileIds,
             config,
             applicationName,
@@ -229,7 +231,9 @@ class KalturaWowzaMediaServerNodeBaseFilter(KalturaMediaServerNodeFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaMediaServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -259,7 +263,9 @@ class KalturaWowzaMediaServerNodeBaseFilter(KalturaMediaServerNodeFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
@@ -307,7 +313,9 @@ class KalturaWowzaMediaServerNodeFilter(KalturaWowzaMediaServerNodeBaseFilter):
             dcIn=NotImplemented,
             parentIdLike=NotImplemented,
             parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented):
+            parentIdMultiLikeAnd=NotImplemented,
+            environmentEqual=NotImplemented,
+            environmentIn=NotImplemented):
         KalturaWowzaMediaServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -337,7 +345,9 @@ class KalturaWowzaMediaServerNodeFilter(KalturaWowzaMediaServerNodeBaseFilter):
             dcIn,
             parentIdLike,
             parentIdMultiLikeOr,
-            parentIdMultiLikeAnd)
+            parentIdMultiLikeAnd,
+            environmentEqual,
+            environmentIn)
 
 
     PROPERTY_LOADERS = {
