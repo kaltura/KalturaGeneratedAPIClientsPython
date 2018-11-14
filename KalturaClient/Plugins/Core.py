@@ -37926,6 +37926,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
+            devicesIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
@@ -37962,6 +37963,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.customVar3In = customVar3In
 
+        # Filter by device
+        # @var string
+        self.devicesIn = devicesIn
+
         # Time zone offset in minutes
         # @var int
         self.timeZoneOffset = timeZoneOffset
@@ -37979,6 +37984,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'customVar1In': getXmlNodeText, 
         'customVar2In': getXmlNodeText, 
         'customVar3In': getXmlNodeText, 
+        'devicesIn': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
     }
@@ -37997,6 +38003,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("customVar1In", self.customVar1In)
         kparams.addStringIfDefined("customVar2In", self.customVar2In)
         kparams.addStringIfDefined("customVar3In", self.customVar3In)
+        kparams.addStringIfDefined("devicesIn", self.devicesIn)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
         return kparams
@@ -38042,6 +38049,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCustomVar3In(self, newCustomVar3In):
         self.customVar3In = newCustomVar3In
+
+    def getDevicesIn(self):
+        return self.devicesIn
+
+    def setDevicesIn(self, newDevicesIn):
+        self.devicesIn = newDevicesIn
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -44100,6 +44113,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
+            devicesIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             application=NotImplemented,
@@ -44118,6 +44132,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar1In,
             customVar2In,
             customVar3In,
+            devicesIn,
             timeZoneOffset,
             interval)
 
@@ -58824,7 +58839,7 @@ class KalturaBulkUploadService(KalturaServiceBase):
         return self.client.getServeUrl()
 
     def serveLog(self, id):
-        """serveLog action returan the original file."""
+        """serveLog action return the original file."""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
