@@ -5028,6 +5028,7 @@ class KalturaReportType(object):
     ENTRY_USAGE = "27"
     REACH_USAGE = "28"
     TOP_CUSTOM_VAR1 = "29"
+    CITIES = "30"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -37927,6 +37928,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
             devicesIn=NotImplemented,
+            countriesIn=NotImplemented,
+            regionsIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
@@ -37967,6 +37970,14 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.devicesIn = devicesIn
 
+        # Filter by country
+        # @var string
+        self.countriesIn = countriesIn
+
+        # Filter by region
+        # @var string
+        self.regionsIn = regionsIn
+
         # Time zone offset in minutes
         # @var int
         self.timeZoneOffset = timeZoneOffset
@@ -37985,6 +37996,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'customVar2In': getXmlNodeText, 
         'customVar3In': getXmlNodeText, 
         'devicesIn': getXmlNodeText, 
+        'countriesIn': getXmlNodeText, 
+        'regionsIn': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
     }
@@ -38004,6 +38017,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("customVar2In", self.customVar2In)
         kparams.addStringIfDefined("customVar3In", self.customVar3In)
         kparams.addStringIfDefined("devicesIn", self.devicesIn)
+        kparams.addStringIfDefined("countriesIn", self.countriesIn)
+        kparams.addStringIfDefined("regionsIn", self.regionsIn)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
         return kparams
@@ -38055,6 +38070,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setDevicesIn(self, newDevicesIn):
         self.devicesIn = newDevicesIn
+
+    def getCountriesIn(self):
+        return self.countriesIn
+
+    def setCountriesIn(self, newCountriesIn):
+        self.countriesIn = newCountriesIn
+
+    def getRegionsIn(self):
+        return self.regionsIn
+
+    def setRegionsIn(self, newRegionsIn):
+        self.regionsIn = newRegionsIn
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -44114,6 +44141,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
             devicesIn=NotImplemented,
+            countriesIn=NotImplemented,
+            regionsIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             application=NotImplemented,
@@ -44133,6 +44162,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar2In,
             customVar3In,
             devicesIn,
+            countriesIn,
+            regionsIn,
             timeZoneOffset,
             interval)
 
