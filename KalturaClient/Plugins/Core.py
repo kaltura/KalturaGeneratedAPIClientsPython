@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.8.0'
+API_VERSION = '14.9.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1918,6 +1918,8 @@ class KalturaBulkUploadAction(object):
     REPLACE = "4"
     TRANSFORM_XSLT = "5"
     ADD_OR_UPDATE = "6"
+    ACTIVATE = "7"
+    REJECT = "8"
 
     def __init__(self, value):
         self.value = value
@@ -58975,6 +58977,17 @@ class KalturaCategoryEntryService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def updateStatusfrombulk(self, fileData, bulkUploadData = NotImplemented, bulkUploadCategoryEntryData = NotImplemented):
+        kparams = KalturaParams()
+        kfiles = {"fileData": fileData}
+        kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
+        kparams.addObjectIfDefined("bulkUploadCategoryEntryData", bulkUploadCategoryEntryData)
+        self.client.queueServiceActionCall("categoryentry", "updateStatusfrombulk", "KalturaBulkUpload", kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
 
 # @package Kaltura
