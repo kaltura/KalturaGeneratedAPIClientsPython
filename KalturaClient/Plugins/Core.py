@@ -5031,6 +5031,8 @@ class KalturaReportType(object):
     REACH_USAGE = "28"
     TOP_CUSTOM_VAR1 = "29"
     CITIES = "30"
+    OPERATING_SYSTEM_FAMILIES = "32"
+    BROWSERS_FAMIILES = "33"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -37929,9 +37931,11 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
-            devicesIn=NotImplemented,
-            countriesIn=NotImplemented,
-            regionsIn=NotImplemented,
+            deviceIn=NotImplemented,
+            countryIn=NotImplemented,
+            regionIn=NotImplemented,
+            operatingSystemFamilyIn=NotImplemented,
+            browserFamilyIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
@@ -37970,15 +37974,23 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
         # Filter by device
         # @var string
-        self.devicesIn = devicesIn
+        self.deviceIn = deviceIn
 
         # Filter by country
         # @var string
-        self.countriesIn = countriesIn
+        self.countryIn = countryIn
 
         # Filter by region
         # @var string
-        self.regionsIn = regionsIn
+        self.regionIn = regionIn
+
+        # Filter by operating system family
+        # @var string
+        self.operatingSystemFamilyIn = operatingSystemFamilyIn
+
+        # Filter by browser family
+        # @var string
+        self.browserFamilyIn = browserFamilyIn
 
         # Time zone offset in minutes
         # @var int
@@ -37997,9 +38009,11 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'customVar1In': getXmlNodeText, 
         'customVar2In': getXmlNodeText, 
         'customVar3In': getXmlNodeText, 
-        'devicesIn': getXmlNodeText, 
-        'countriesIn': getXmlNodeText, 
-        'regionsIn': getXmlNodeText, 
+        'deviceIn': getXmlNodeText, 
+        'countryIn': getXmlNodeText, 
+        'regionIn': getXmlNodeText, 
+        'operatingSystemFamilyIn': getXmlNodeText, 
+        'browserFamilyIn': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
     }
@@ -38018,9 +38032,11 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("customVar1In", self.customVar1In)
         kparams.addStringIfDefined("customVar2In", self.customVar2In)
         kparams.addStringIfDefined("customVar3In", self.customVar3In)
-        kparams.addStringIfDefined("devicesIn", self.devicesIn)
-        kparams.addStringIfDefined("countriesIn", self.countriesIn)
-        kparams.addStringIfDefined("regionsIn", self.regionsIn)
+        kparams.addStringIfDefined("deviceIn", self.deviceIn)
+        kparams.addStringIfDefined("countryIn", self.countryIn)
+        kparams.addStringIfDefined("regionIn", self.regionIn)
+        kparams.addStringIfDefined("operatingSystemFamilyIn", self.operatingSystemFamilyIn)
+        kparams.addStringIfDefined("browserFamilyIn", self.browserFamilyIn)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
         return kparams
@@ -38067,23 +38083,35 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setCustomVar3In(self, newCustomVar3In):
         self.customVar3In = newCustomVar3In
 
-    def getDevicesIn(self):
-        return self.devicesIn
+    def getDeviceIn(self):
+        return self.deviceIn
 
-    def setDevicesIn(self, newDevicesIn):
-        self.devicesIn = newDevicesIn
+    def setDeviceIn(self, newDeviceIn):
+        self.deviceIn = newDeviceIn
 
-    def getCountriesIn(self):
-        return self.countriesIn
+    def getCountryIn(self):
+        return self.countryIn
 
-    def setCountriesIn(self, newCountriesIn):
-        self.countriesIn = newCountriesIn
+    def setCountryIn(self, newCountryIn):
+        self.countryIn = newCountryIn
 
-    def getRegionsIn(self):
-        return self.regionsIn
+    def getRegionIn(self):
+        return self.regionIn
 
-    def setRegionsIn(self, newRegionsIn):
-        self.regionsIn = newRegionsIn
+    def setRegionIn(self, newRegionIn):
+        self.regionIn = newRegionIn
+
+    def getOperatingSystemFamilyIn(self):
+        return self.operatingSystemFamilyIn
+
+    def setOperatingSystemFamilyIn(self, newOperatingSystemFamilyIn):
+        self.operatingSystemFamilyIn = newOperatingSystemFamilyIn
+
+    def getBrowserFamilyIn(self):
+        return self.browserFamilyIn
+
+    def setBrowserFamilyIn(self, newBrowserFamilyIn):
+        self.browserFamilyIn = newBrowserFamilyIn
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -44142,9 +44170,11 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
-            devicesIn=NotImplemented,
-            countriesIn=NotImplemented,
-            regionsIn=NotImplemented,
+            deviceIn=NotImplemented,
+            countryIn=NotImplemented,
+            regionIn=NotImplemented,
+            operatingSystemFamilyIn=NotImplemented,
+            browserFamilyIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             application=NotImplemented,
@@ -44163,9 +44193,11 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             customVar1In,
             customVar2In,
             customVar3In,
-            devicesIn,
-            countriesIn,
-            regionsIn,
+            deviceIn,
+            countryIn,
+            regionIn,
+            operatingSystemFamilyIn,
+            browserFamilyIn,
             timeZoneOffset,
             interval)
 
