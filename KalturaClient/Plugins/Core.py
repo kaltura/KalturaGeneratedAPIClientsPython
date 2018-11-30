@@ -59012,12 +59012,12 @@ class KalturaCategoryEntryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def updateStatusfrombulk(self, fileData, bulkUploadData = NotImplemented, bulkUploadCategoryEntryData = NotImplemented):
+    def updateStatusFromBulk(self, fileData, bulkUploadData = NotImplemented, bulkUploadCategoryEntryData = NotImplemented):
         kparams = KalturaParams()
         kfiles = {"fileData": fileData}
         kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
         kparams.addObjectIfDefined("bulkUploadCategoryEntryData", bulkUploadCategoryEntryData)
-        self.client.queueServiceActionCall("categoryentry", "updateStatusfrombulk", "KalturaBulkUpload", kparams, kfiles)
+        self.client.queueServiceActionCall("categoryentry", "updateStatusFromBulk", "KalturaBulkUpload", kparams, kfiles)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
