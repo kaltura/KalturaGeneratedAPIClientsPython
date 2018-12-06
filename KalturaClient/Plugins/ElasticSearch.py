@@ -317,6 +317,26 @@ class KalturaESearchBaseItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBeaconScheduledResourceBaseItem(KalturaESearchBaseItem):
+    def __init__(self):
+        KalturaESearchBaseItem.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaESearchBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBeaconScheduledResourceBaseItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaBeaconScheduledResourceBaseItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCategoryBaseItem(KalturaESearchBaseItem):
     def __init__(self):
         KalturaESearchBaseItem.__init__(self)
@@ -1759,6 +1779,62 @@ class KalturaESearchUserResponse(KalturaESearchResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBeaconAbstractScheduledResourceItem(KalturaBeaconScheduledResourceBaseItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented):
+        KalturaBeaconScheduledResourceBaseItem.__init__(self)
+
+        # @var string
+        self.searchTerm = searchTerm
+
+        # @var KalturaESearchItemType
+        self.itemType = itemType
+
+        # @var KalturaESearchRange
+        self.range = range
+
+
+    PROPERTY_LOADERS = {
+        'searchTerm': getXmlNodeText, 
+        'itemType': (KalturaEnumsFactory.createInt, "KalturaESearchItemType"), 
+        'range': (KalturaObjectFactory.create, 'KalturaESearchRange'), 
+    }
+
+    def fromXml(self, node):
+        KalturaBeaconScheduledResourceBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBeaconAbstractScheduledResourceItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBeaconScheduledResourceBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaBeaconAbstractScheduledResourceItem")
+        kparams.addStringIfDefined("searchTerm", self.searchTerm)
+        kparams.addIntEnumIfDefined("itemType", self.itemType)
+        kparams.addObjectIfDefined("range", self.range)
+        return kparams
+
+    def getSearchTerm(self):
+        return self.searchTerm
+
+    def setSearchTerm(self, newSearchTerm):
+        self.searchTerm = newSearchTerm
+
+    def getItemType(self):
+        return self.itemType
+
+    def setItemType(self, newItemType):
+        self.itemType = newItemType
+
+    def getRange(self):
+        return self.range
+
+    def setRange(self, newRange):
+        self.range = newRange
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchAbstractCategoryItem(KalturaESearchCategoryBaseItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2685,6 +2761,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaESearchBaseItem': KalturaESearchBaseItem,
+            'KalturaBeaconScheduledResourceBaseItem': KalturaBeaconScheduledResourceBaseItem,
             'KalturaESearchCategoryBaseItem': KalturaESearchCategoryBaseItem,
             'KalturaESearchHighlight': KalturaESearchHighlight,
             'KalturaESearchItemData': KalturaESearchItemData,
@@ -2718,6 +2795,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchUserOperator': KalturaESearchUserOperator,
             'KalturaESearchUserParams': KalturaESearchUserParams,
             'KalturaESearchUserResponse': KalturaESearchUserResponse,
+            'KalturaBeaconAbstractScheduledResourceItem': KalturaBeaconAbstractScheduledResourceItem,
             'KalturaESearchAbstractCategoryItem': KalturaESearchAbstractCategoryItem,
             'KalturaESearchAbstractEntryItem': KalturaESearchAbstractEntryItem,
             'KalturaESearchAbstractUserItem': KalturaESearchAbstractUserItem,
