@@ -37930,16 +37930,20 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             searchInTags=NotImplemented,
             searchInAdminTags=NotImplemented,
             categories=NotImplemented,
+            categoriesIdsIn=NotImplemented,
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
             deviceIn=NotImplemented,
             countryIn=NotImplemented,
             regionIn=NotImplemented,
+            citiesIn=NotImplemented,
             operatingSystemFamilyIn=NotImplemented,
             browserFamilyIn=NotImplemented,
             timeZoneOffset=NotImplemented,
-            interval=NotImplemented):
+            interval=NotImplemented,
+            mediaTypeIn=NotImplemented,
+            sourceTypeIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -37950,17 +37954,21 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.keywords = keywords
 
-        # Search keywords in onjects tags
+        # Search keywords in objects tags
         # @var bool
         self.searchInTags = searchInTags
 
-        # Search keywords in onjects admin tags
+        # Search keywords in objects admin tags
         # @var bool
         self.searchInAdminTags = searchInAdminTags
 
-        # Search onjects in specified categories
+        # Search objects in specified categories
         # @var string
         self.categories = categories
+
+        # Search objects in specified category ids
+        # @var string
+        self.categoriesIdsIn = categoriesIdsIn
 
         # Filter by customVar1
         # @var string
@@ -37986,6 +37994,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.regionIn = regionIn
 
+        # Filter by city
+        # @var string
+        self.citiesIn = citiesIn
+
         # Filter by operating system family
         # @var string
         self.operatingSystemFamilyIn = operatingSystemFamilyIn
@@ -38002,22 +38014,34 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var KalturaReportInterval
         self.interval = interval
 
+        # Filter by media types
+        # @var string
+        self.mediaTypeIn = mediaTypeIn
+
+        # Filter by source types
+        # @var string
+        self.sourceTypeIn = sourceTypeIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
         'searchInTags': getXmlNodeBool, 
         'searchInAdminTags': getXmlNodeBool, 
         'categories': getXmlNodeText, 
+        'categoriesIdsIn': getXmlNodeText, 
         'customVar1In': getXmlNodeText, 
         'customVar2In': getXmlNodeText, 
         'customVar3In': getXmlNodeText, 
         'deviceIn': getXmlNodeText, 
         'countryIn': getXmlNodeText, 
         'regionIn': getXmlNodeText, 
+        'citiesIn': getXmlNodeText, 
         'operatingSystemFamilyIn': getXmlNodeText, 
         'browserFamilyIn': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
+        'mediaTypeIn': getXmlNodeText, 
+        'sourceTypeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38031,16 +38055,20 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addBoolIfDefined("searchInTags", self.searchInTags)
         kparams.addBoolIfDefined("searchInAdminTags", self.searchInAdminTags)
         kparams.addStringIfDefined("categories", self.categories)
+        kparams.addStringIfDefined("categoriesIdsIn", self.categoriesIdsIn)
         kparams.addStringIfDefined("customVar1In", self.customVar1In)
         kparams.addStringIfDefined("customVar2In", self.customVar2In)
         kparams.addStringIfDefined("customVar3In", self.customVar3In)
         kparams.addStringIfDefined("deviceIn", self.deviceIn)
         kparams.addStringIfDefined("countryIn", self.countryIn)
         kparams.addStringIfDefined("regionIn", self.regionIn)
+        kparams.addStringIfDefined("citiesIn", self.citiesIn)
         kparams.addStringIfDefined("operatingSystemFamilyIn", self.operatingSystemFamilyIn)
         kparams.addStringIfDefined("browserFamilyIn", self.browserFamilyIn)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
+        kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
+        kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
         return kparams
 
     def getKeywords(self):
@@ -38066,6 +38094,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCategories(self, newCategories):
         self.categories = newCategories
+
+    def getCategoriesIdsIn(self):
+        return self.categoriesIdsIn
+
+    def setCategoriesIdsIn(self, newCategoriesIdsIn):
+        self.categoriesIdsIn = newCategoriesIdsIn
 
     def getCustomVar1In(self):
         return self.customVar1In
@@ -38103,6 +38137,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setRegionIn(self, newRegionIn):
         self.regionIn = newRegionIn
 
+    def getCitiesIn(self):
+        return self.citiesIn
+
+    def setCitiesIn(self, newCitiesIn):
+        self.citiesIn = newCitiesIn
+
     def getOperatingSystemFamilyIn(self):
         return self.operatingSystemFamilyIn
 
@@ -38126,6 +38166,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setInterval(self, newInterval):
         self.interval = newInterval
+
+    def getMediaTypeIn(self):
+        return self.mediaTypeIn
+
+    def setMediaTypeIn(self, newMediaTypeIn):
+        self.mediaTypeIn = newMediaTypeIn
+
+    def getSourceTypeIn(self):
+        return self.sourceTypeIn
+
+    def setSourceTypeIn(self, newSourceTypeIn):
+        self.sourceTypeIn = newSourceTypeIn
 
 
 # @package Kaltura
@@ -44169,16 +44221,20 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             searchInTags=NotImplemented,
             searchInAdminTags=NotImplemented,
             categories=NotImplemented,
+            categoriesIdsIn=NotImplemented,
             customVar1In=NotImplemented,
             customVar2In=NotImplemented,
             customVar3In=NotImplemented,
             deviceIn=NotImplemented,
             countryIn=NotImplemented,
             regionIn=NotImplemented,
+            citiesIn=NotImplemented,
             operatingSystemFamilyIn=NotImplemented,
             browserFamilyIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
+            mediaTypeIn=NotImplemented,
+            sourceTypeIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -44192,16 +44248,20 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             searchInTags,
             searchInAdminTags,
             categories,
+            categoriesIdsIn,
             customVar1In,
             customVar2In,
             customVar3In,
             deviceIn,
             countryIn,
             regionIn,
+            citiesIn,
             operatingSystemFamilyIn,
             browserFamilyIn,
             timeZoneOffset,
-            interval)
+            interval,
+            mediaTypeIn,
+            sourceTypeIn)
 
         # @var string
         self.application = application
