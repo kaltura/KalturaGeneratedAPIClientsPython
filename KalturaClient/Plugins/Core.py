@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.10.0'
+API_VERSION = '14.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5030,11 +5030,13 @@ class KalturaReportType(object):
     ENTRY_USAGE = "27"
     REACH_USAGE = "28"
     TOP_CUSTOM_VAR1 = "29"
-    CITIES = "30"
+    MAP_OVERLAY_CITY = "30"
     OPERATING_SYSTEM_FAMILIES = "32"
     BROWSERS_FAMILIES = "33"
     USER_ENGAGEMENT_TIMELINE = "34"
     UNIQUE_USERS_PLAY = "35"
+    MAP_OVERLAY_COUNTRY = "36"
+    MAP_OVERLAY_REGION = "37"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -58863,7 +58865,7 @@ class KalturaBaseEntryService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaBaseEntry')
 
     def updateThumbnailFromUrl(self, entryId, url):
-        """Update entry thumbnail using url."""
+        """Update entry thumbnail using URL."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -59237,7 +59239,7 @@ class KalturaCategoryUserService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def copyFromCategory(self, categoryId):
-        """Copy all memeber from parent category"""
+        """Copy all member from parent category"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("categoryId", categoryId);
@@ -59508,7 +59510,7 @@ class KalturaDataService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaDataListResponse')
 
     def serve(self, entryId, version = -1, forceProxy = False):
-        """serve action returan the file from dataContent field."""
+        """return the file from dataContent field."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -59585,7 +59587,7 @@ class KalturaDeliveryProfileService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaDeliveryProfileListResponse')
 
     def update(self, id, delivery):
-        """Update exisiting delivery"""
+        """Update existing delivery profile"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -60849,7 +60851,7 @@ class KalturaMediaService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaMediaEntry')
 
     def addFromRecordedWebcam(self, mediaEntry, webcamTokenId):
-        """Add new entry after the file was recored on the server and the token id exists"""
+        """Add new entry after the file was recorded on the server and the token id exists"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("mediaEntry", mediaEntry)
@@ -61136,7 +61138,7 @@ class KalturaMediaService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaMediaEntry')
 
     def updateThumbnailFromUrl(self, entryId, url):
-        """Update entry thumbnail using url"""
+        """Update entry thumbnail using URL"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -61204,7 +61206,7 @@ class KalturaMixingService(KalturaServiceBase):
         resultNode = self.client.doQueue()
 
     def appendMediaEntry(self, mixEntryId, mediaEntryId):
-        """Appends a media entry to a the end of the mix timeline, this will save the mix timeline as a new version."""
+        """Appends a media entry to the end of the mix timeline, this will save the mix timeline as a new version."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("mixEntryId", mixEntryId)
@@ -61397,7 +61399,7 @@ class KalturaPartnerService(KalturaServiceBase):
     def getUsage(self, year = "", month = 1, resolution = NotImplemented):
         """Get usage statistics for a partner
         	 Calculation is done according to partner's package
-        	 Additional data returned is a graph points of streaming usage in a timeframe
+        	 Additional data returned is a graph points of streaming usage in a time frame
         	 The resolution can be "days" or "months" """
 
         kparams = KalturaParams()
@@ -61412,7 +61414,7 @@ class KalturaPartnerService(KalturaServiceBase):
 
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List partners by filter with paging support
-        	 Current implementation will only list the sub partners of the partner initiating the api call (using the current KS).
+        	 Current implementation will only list the sub partners of the partner initiating the API call (using the current KS).
         	 This action is only partially implemented to support listing sub partners of a VAR partner."""
 
         kparams = KalturaParams()
@@ -61624,7 +61626,7 @@ class KalturaPermissionService(KalturaServiceBase):
 # @subpackage Client
 class KalturaPlaylistService(KalturaServiceBase):
     """Playlist service lets you create,manage and play your playlists
-     Playlists could be static (containing a fixed list of entries) or dynamic (baseed on a filter)"""
+     Playlists could be static (containing a fixed list of entries) or dynamic (based on a filter)"""
 
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
@@ -61694,7 +61696,7 @@ class KalturaPlaylistService(KalturaServiceBase):
         return KalturaObjectFactory.createArray(resultNode, 'KalturaBaseEntry')
 
     def executeFromFilters(self, filters, totalResults, detailed = "1", pager = NotImplemented):
-        """Revrieve playlist for playing purpose, based on media entry filters"""
+        """Retrieve playlist for playing purpose, based on media entry filters"""
 
         kparams = KalturaParams()
         kparams.addArrayIfDefined("filters", filters)
@@ -61745,7 +61747,7 @@ class KalturaPlaylistService(KalturaServiceBase):
 
     def update(self, id, playlist, updateStats = False):
         """Update existing playlist
-        	 Note - you cannot change playlist type. updated playlist must be of the same type."""
+        	 Note - you cannot change playlist type. Updated playlist must be of the same type."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
@@ -61777,7 +61779,7 @@ class KalturaReportService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaReportResponse')
 
     def getBaseTotal(self, reportType, reportInputFilter, objectIds = NotImplemented):
-        """report getBaseTotal action allows to get a the total base for storage reports"""
+        """report getBaseTotal action allows to get the total base for storage reports"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("reportType", reportType)
@@ -61848,7 +61850,7 @@ class KalturaReportService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaReportTotal')
 
     def getUrlForReportAsCsv(self, reportTitle, reportText, headers, reportType, reportInputFilter, dimension = NotImplemented, pager = NotImplemented, order = NotImplemented, objectIds = NotImplemented):
-        """will create a Csv file for the given report and return the URL to access it"""
+        """will create a CSV file for the given report and return the URL to access it"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("reportTitle", reportTitle)
@@ -62477,7 +62479,7 @@ class KalturaSyndicationFeedService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaBaseSyndicationFeedListResponse')
 
     def requestConversion(self, feedId):
-        """request conversion for all entries that doesnt have the required flavor param
+        """request conversion for all entries that doesn't have the required flavor param
         	 returns a comma-separated ids of conversion jobs"""
 
         kparams = KalturaParams()
@@ -63514,7 +63516,7 @@ class KalturaWidgetService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaWidgetListResponse')
 
     def update(self, id, widget):
-        """Update exisiting widget"""
+        """Update existing widget"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)

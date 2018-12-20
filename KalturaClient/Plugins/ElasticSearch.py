@@ -75,6 +75,7 @@ class KalturaESearchOperatorType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchCaptionFieldName(object):
+    CAPTION_ASSET_ID = "caption_asset_id"
     CONTENT = "content"
     END_TIME = "end_time"
     LABEL = "label"
