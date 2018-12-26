@@ -5037,6 +5037,7 @@ class KalturaReportType(object):
     UNIQUE_USERS_PLAY = "35"
     MAP_OVERLAY_COUNTRY = "36"
     MAP_OVERLAY_REGION = "37"
+    TOP_CONTENT_CREATOR = "38"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
