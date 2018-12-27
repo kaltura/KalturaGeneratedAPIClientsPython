@@ -23624,6 +23624,7 @@ class KalturaPlaybackSource(KalturaObjectBase):
 class KalturaPlaybackContext(KalturaObjectBase):
     def __init__(self,
             sources=NotImplemented,
+            playbackCaptions=NotImplemented,
             flavorAssets=NotImplemented,
             actions=NotImplemented,
             messages=NotImplemented):
@@ -23631,6 +23632,9 @@ class KalturaPlaybackContext(KalturaObjectBase):
 
         # @var array of KalturaPlaybackSource
         self.sources = sources
+
+        # @var array of KalturaCaptionPlaybackPluginData
+        self.playbackCaptions = playbackCaptions
 
         # @var array of KalturaFlavorAsset
         self.flavorAssets = flavorAssets
@@ -23646,6 +23650,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'sources': (KalturaObjectFactory.createArray, 'KalturaPlaybackSource'), 
+        'playbackCaptions': (KalturaObjectFactory.createArray, 'KalturaCaptionPlaybackPluginData'), 
         'flavorAssets': (KalturaObjectFactory.createArray, 'KalturaFlavorAsset'), 
         'actions': (KalturaObjectFactory.createArray, 'KalturaRuleAction'), 
         'messages': (KalturaObjectFactory.createArray, 'KalturaAccessControlMessage'), 
@@ -23659,6 +23664,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaPlaybackContext")
         kparams.addArrayIfDefined("sources", self.sources)
+        kparams.addArrayIfDefined("playbackCaptions", self.playbackCaptions)
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("messages", self.messages)
@@ -23669,6 +23675,12 @@ class KalturaPlaybackContext(KalturaObjectBase):
 
     def setSources(self, newSources):
         self.sources = newSources
+
+    def getPlaybackCaptions(self):
+        return self.playbackCaptions
+
+    def setPlaybackCaptions(self, newPlaybackCaptions):
+        self.playbackCaptions = newPlaybackCaptions
 
     def getFlavorAssets(self):
         return self.flavorAssets

@@ -393,6 +393,98 @@ class KalturaCaptionParams(KalturaAssetParams):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
+    def __init__(self,
+            label=NotImplemented,
+            format=NotImplemented,
+            language=NotImplemented,
+            webVttUrl=NotImplemented,
+            url=NotImplemented,
+            isDefault=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.label = label
+
+        # @var string
+        self.format = format
+
+        # @var string
+        self.language = language
+
+        # @var string
+        self.webVttUrl = webVttUrl
+
+        # @var string
+        self.url = url
+
+        # @var bool
+        self.isDefault = isDefault
+
+
+    PROPERTY_LOADERS = {
+        'label': getXmlNodeText, 
+        'format': getXmlNodeText, 
+        'language': getXmlNodeText, 
+        'webVttUrl': getXmlNodeText, 
+        'url': getXmlNodeText, 
+        'isDefault': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCaptionPlaybackPluginData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaCaptionPlaybackPluginData")
+        kparams.addStringIfDefined("label", self.label)
+        kparams.addStringIfDefined("format", self.format)
+        kparams.addStringIfDefined("language", self.language)
+        kparams.addStringIfDefined("webVttUrl", self.webVttUrl)
+        kparams.addStringIfDefined("url", self.url)
+        kparams.addBoolIfDefined("isDefault", self.isDefault)
+        return kparams
+
+    def getLabel(self):
+        return self.label
+
+    def setLabel(self, newLabel):
+        self.label = newLabel
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getWebVttUrl(self):
+        return self.webVttUrl
+
+    def setWebVttUrl(self, newWebVttUrl):
+        self.webVttUrl = newWebVttUrl
+
+    def getUrl(self):
+        return self.url
+
+    def setUrl(self, newUrl):
+        self.url = newUrl
+
+    def getIsDefault(self):
+        return self.isDefault
+
+    def setIsDefault(self, newIsDefault):
+        self.isDefault = newIsDefault
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCaptionAssetListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -1129,6 +1221,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
         return {
             'KalturaCaptionAsset': KalturaCaptionAsset,
             'KalturaCaptionParams': KalturaCaptionParams,
+            'KalturaCaptionPlaybackPluginData': KalturaCaptionPlaybackPluginData,
             'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParamsListResponse': KalturaCaptionParamsListResponse,
             'KalturaCopyCaptionsJobData': KalturaCopyCaptionsJobData,
