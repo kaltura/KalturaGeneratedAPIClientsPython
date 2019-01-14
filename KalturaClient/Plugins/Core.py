@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.11.0'
+API_VERSION = '14.12.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1930,6 +1930,7 @@ class KalturaBulkUploadAction(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaBulkUploadObjectType(object):
+    JOB = "bulkUploadFilter.JOB"
     SCHEDULE_EVENT = "scheduleBulkUpload.SCHEDULE_EVENT"
     SCHEDULE_RESOURCE = "scheduleBulkUpload.SCHEDULE_RESOURCE"
     ENTRY = "1"

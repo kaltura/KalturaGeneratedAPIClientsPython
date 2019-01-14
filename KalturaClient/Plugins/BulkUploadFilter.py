@@ -31,6 +31,7 @@ from __future__ import absolute_import
 
 from .Core import *
 from .BulkUpload import *
+from .BulkUploadXml import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
@@ -92,6 +93,71 @@ class KalturaBulkServiceFilterData(KalturaBulkServiceData):
 
     def setTemplateObject(self, newTemplateObject):
         self.templateObject = newTemplateObject
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBulkUploadResultJob(KalturaBulkUploadResult):
+    def __init__(self,
+            id=NotImplemented,
+            bulkUploadJobId=NotImplemented,
+            lineIndex=NotImplemented,
+            partnerId=NotImplemented,
+            status=NotImplemented,
+            action=NotImplemented,
+            objectId=NotImplemented,
+            objectStatus=NotImplemented,
+            bulkUploadResultObjectType=NotImplemented,
+            rowData=NotImplemented,
+            partnerData=NotImplemented,
+            objectErrorDescription=NotImplemented,
+            pluginsData=NotImplemented,
+            errorDescription=NotImplemented,
+            errorCode=NotImplemented,
+            errorType=NotImplemented,
+            jobObjectId=NotImplemented):
+        KalturaBulkUploadResult.__init__(self,
+            id,
+            bulkUploadJobId,
+            lineIndex,
+            partnerId,
+            status,
+            action,
+            objectId,
+            objectStatus,
+            bulkUploadResultObjectType,
+            rowData,
+            partnerData,
+            objectErrorDescription,
+            pluginsData,
+            errorDescription,
+            errorCode,
+            errorType)
+
+        # ID of object being processed by the job
+        # @var int
+        self.jobObjectId = jobObjectId
+
+
+    PROPERTY_LOADERS = {
+        'jobObjectId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaBulkUploadResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBulkUploadResultJob.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBulkUploadResult.toParams(self)
+        kparams.put("objectType", "KalturaBulkUploadResultJob")
+        kparams.addIntIfDefined("jobObjectId", self.jobObjectId)
+        return kparams
+
+    def getJobObjectId(self):
+        return self.jobObjectId
+
+    def setJobObjectId(self, newJobObjectId):
+        self.jobObjectId = newJobObjectId
 
 
 # @package Kaltura
@@ -197,6 +263,7 @@ class KalturaBulkUploadFilterClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaBulkServiceFilterData': KalturaBulkServiceFilterData,
+            'KalturaBulkUploadResultJob': KalturaBulkUploadResultJob,
             'KalturaBulkUploadFilterJobData': KalturaBulkUploadFilterJobData,
         }
 
