@@ -59,6 +59,19 @@ class KalturaScheduleEventClassificationType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaScheduleEventConflictType(object):
+    RESOURCE_CONFLICT = 1
+    BLACKOUT_CONFLICT = 2
+    BOTH = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduleEventRecurrenceType(object):
     NONE = 0
     RECURRING = 1
@@ -88,6 +101,7 @@ class KalturaScheduleEventStatus(object):
 class KalturaScheduleEventType(object):
     RECORD = 1
     LIVE_STREAM = 2
+    BLACKOUT = 3
 
     def __init__(self, value):
         self.value = value
@@ -1061,6 +1075,76 @@ class KalturaScheduleResource(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBlackoutScheduleEvent(KalturaScheduleEvent):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            parentId=NotImplemented,
+            summary=NotImplemented,
+            description=NotImplemented,
+            status=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            classificationType=NotImplemented,
+            geoLatitude=NotImplemented,
+            geoLongitude=NotImplemented,
+            location=NotImplemented,
+            organizer=NotImplemented,
+            ownerId=NotImplemented,
+            priority=NotImplemented,
+            sequence=NotImplemented,
+            recurrenceType=NotImplemented,
+            duration=NotImplemented,
+            contact=NotImplemented,
+            comment=NotImplemented,
+            tags=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            recurrence=NotImplemented):
+        KalturaScheduleEvent.__init__(self,
+            id,
+            partnerId,
+            parentId,
+            summary,
+            description,
+            status,
+            startDate,
+            endDate,
+            referenceId,
+            classificationType,
+            geoLatitude,
+            geoLongitude,
+            location,
+            organizer,
+            ownerId,
+            priority,
+            sequence,
+            recurrenceType,
+            duration,
+            contact,
+            comment,
+            tags,
+            createdAt,
+            updatedAt,
+            recurrence)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaScheduleEvent.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBlackoutScheduleEvent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaScheduleEvent.toParams(self)
+        kparams.put("objectType", "KalturaBlackoutScheduleEvent")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCameraScheduleResource(KalturaScheduleResource):
     def __init__(self,
             id=NotImplemented,
@@ -1143,7 +1227,8 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
             recurrence=NotImplemented,
             templateEntryId=NotImplemented,
             entryIds=NotImplemented,
-            categoryIds=NotImplemented):
+            categoryIds=NotImplemented,
+            blackoutConflicts=NotImplemented):
         KalturaScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1183,11 +1268,17 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
         # @var string
         self.categoryIds = categoryIds
 
+        # Blackout schedule events the conflict with this event
+        # @var array of KalturaScheduleEvent
+        # @readonly
+        self.blackoutConflicts = blackoutConflicts
+
 
     PROPERTY_LOADERS = {
         'templateEntryId': getXmlNodeText, 
         'entryIds': getXmlNodeText, 
         'categoryIds': getXmlNodeText, 
+        'blackoutConflicts': (KalturaObjectFactory.createArray, 'KalturaScheduleEvent'), 
     }
 
     def fromXml(self, node):
@@ -1219,6 +1310,9 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
 
     def setCategoryIds(self, newCategoryIds):
         self.categoryIds = newCategoryIds
+
+    def getBlackoutConflicts(self):
+        return self.blackoutConflicts
 
 
 # @package Kaltura
@@ -1438,6 +1532,7 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             templateEntryId=NotImplemented,
             entryIds=NotImplemented,
             categoryIds=NotImplemented,
+            blackoutConflicts=NotImplemented,
             projectedAudience=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
@@ -1467,7 +1562,8 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             recurrence,
             templateEntryId,
             entryIds,
-            categoryIds)
+            categoryIds,
+            blackoutConflicts)
 
         # Defines the expected audience.
         # @var int
@@ -1526,7 +1622,8 @@ class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
             recurrence=NotImplemented,
             templateEntryId=NotImplemented,
             entryIds=NotImplemented,
-            categoryIds=NotImplemented):
+            categoryIds=NotImplemented,
+            blackoutConflicts=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1555,7 +1652,8 @@ class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
             recurrence,
             templateEntryId,
             entryIds,
-            categoryIds)
+            categoryIds,
+            blackoutConflicts)
 
 
     PROPERTY_LOADERS = {
@@ -3596,6 +3694,134 @@ class KalturaRecordScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBlackoutScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            parentIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            startDateGreaterThanOrEqual=NotImplemented,
+            startDateLessThanOrEqual=NotImplemented,
+            endDateGreaterThanOrEqual=NotImplemented,
+            endDateLessThanOrEqual=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdIn=NotImplemented,
+            ownerIdEqual=NotImplemented,
+            ownerIdIn=NotImplemented,
+            priorityEqual=NotImplemented,
+            priorityIn=NotImplemented,
+            priorityGreaterThanOrEqual=NotImplemented,
+            priorityLessThanOrEqual=NotImplemented,
+            recurrenceTypeEqual=NotImplemented,
+            recurrenceTypeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            resourceIdsLike=NotImplemented,
+            resourceIdsMultiLikeOr=NotImplemented,
+            resourceIdsMultiLikeAnd=NotImplemented,
+            parentResourceIdsLike=NotImplemented,
+            parentResourceIdsMultiLikeOr=NotImplemented,
+            parentResourceIdsMultiLikeAnd=NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
+            templateEntryCategoriesIdsLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            resourceIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            entryIdsLike=NotImplemented,
+            entryIdsMultiLikeOr=NotImplemented,
+            entryIdsMultiLikeAnd=NotImplemented,
+            categoryIdsLike=NotImplemented,
+            categoryIdsMultiLikeOr=NotImplemented,
+            categoryIdsMultiLikeAnd=NotImplemented,
+            parentCategoryIdsLike=NotImplemented,
+            parentCategoryIdsMultiLikeOr=NotImplemented,
+            parentCategoryIdsMultiLikeAnd=NotImplemented):
+        KalturaRecordScheduleEventBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            parentIdEqual,
+            parentIdIn,
+            parentIdNotIn,
+            statusEqual,
+            statusIn,
+            startDateGreaterThanOrEqual,
+            startDateLessThanOrEqual,
+            endDateGreaterThanOrEqual,
+            endDateLessThanOrEqual,
+            referenceIdEqual,
+            referenceIdIn,
+            ownerIdEqual,
+            ownerIdIn,
+            priorityEqual,
+            priorityIn,
+            priorityGreaterThanOrEqual,
+            priorityLessThanOrEqual,
+            recurrenceTypeEqual,
+            recurrenceTypeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            resourceIdsLike,
+            resourceIdsMultiLikeOr,
+            resourceIdsMultiLikeAnd,
+            parentResourceIdsLike,
+            parentResourceIdsMultiLikeOr,
+            parentResourceIdsMultiLikeAnd,
+            templateEntryCategoriesIdsMultiLikeAnd,
+            templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
+            templateEntryCategoriesIdsLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            resourceIdEqual,
+            templateEntryIdEqual,
+            entryIdsLike,
+            entryIdsMultiLikeOr,
+            entryIdsMultiLikeAnd,
+            categoryIdsLike,
+            categoryIdsMultiLikeOr,
+            categoryIdsMultiLikeAnd,
+            parentCategoryIdsLike,
+            parentCategoryIdsMultiLikeOr,
+            parentCategoryIdsMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaRecordScheduleEventBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBlackoutScheduleEventFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRecordScheduleEventBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaBlackoutScheduleEventFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -3916,13 +4142,14 @@ class KalturaScheduleEventService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
-    def getConflicts(self, resourceIds, scheduleEvent, scheduleEventIdToIgnore = NotImplemented):
+    def getConflicts(self, resourceIds, scheduleEvent, scheduleEventIdToIgnore = NotImplemented, scheduleEventConflictType = 1):
         """List conflicting events for resourcesIds by event's dates"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("resourceIds", resourceIds)
         kparams.addObjectIfDefined("scheduleEvent", scheduleEvent)
         kparams.addStringIfDefined("scheduleEventIdToIgnore", scheduleEventIdToIgnore)
+        kparams.addIntIfDefined("scheduleEventConflictType", scheduleEventConflictType);
         self.client.queueServiceActionCall("schedule_scheduleevent", "getConflicts", "KalturaScheduleEventListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -4074,12 +4301,13 @@ class KalturaScheduleEventResourceService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEventResource')
 
-    def list(self, filter = NotImplemented, pager = NotImplemented):
+    def list(self, filter = NotImplemented, pager = NotImplemented, filterBlackoutConflicts = True):
         """List KalturaScheduleEventResource objects"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addObjectIfDefined("pager", pager)
+        kparams.addBoolIfDefined("filterBlackoutConflicts", filterBlackoutConflicts);
         self.client.queueServiceActionCall("schedule_scheduleeventresource", "list", "KalturaScheduleEventResourceListResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -4122,6 +4350,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaScheduleEventClassificationType': KalturaScheduleEventClassificationType,
+            'KalturaScheduleEventConflictType': KalturaScheduleEventConflictType,
             'KalturaScheduleEventRecurrenceType': KalturaScheduleEventRecurrenceType,
             'KalturaScheduleEventStatus': KalturaScheduleEventStatus,
             'KalturaScheduleEventType': KalturaScheduleEventType,
@@ -4145,6 +4374,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaScheduleEvent': KalturaScheduleEvent,
             'KalturaScheduleEventResource': KalturaScheduleEventResource,
             'KalturaScheduleResource': KalturaScheduleResource,
+            'KalturaBlackoutScheduleEvent': KalturaBlackoutScheduleEvent,
             'KalturaCameraScheduleResource': KalturaCameraScheduleResource,
             'KalturaEntryScheduleEvent': KalturaEntryScheduleEvent,
             'KalturaLiveEntryScheduleResource': KalturaLiveEntryScheduleResource,
@@ -4170,6 +4400,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaLocationScheduleResourceFilter': KalturaLocationScheduleResourceFilter,
             'KalturaLiveStreamScheduleEventBaseFilter': KalturaLiveStreamScheduleEventBaseFilter,
             'KalturaRecordScheduleEventBaseFilter': KalturaRecordScheduleEventBaseFilter,
+            'KalturaBlackoutScheduleEventFilter': KalturaBlackoutScheduleEventFilter,
             'KalturaLiveStreamScheduleEventFilter': KalturaLiveStreamScheduleEventFilter,
             'KalturaRecordScheduleEventFilter': KalturaRecordScheduleEventFilter,
         }
