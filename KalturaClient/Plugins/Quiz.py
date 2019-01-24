@@ -295,6 +295,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             parentId=NotImplemented,
             quizUserEntryId=NotImplemented,
             answerKey=NotImplemented,
+            openAnswer=NotImplemented,
             isCorrect=NotImplemented,
             correctAnswerKeys=NotImplemented,
             explanation=NotImplemented):
@@ -329,6 +330,9 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         # @var string
         self.answerKey = answerKey
 
+        # @var string
+        self.openAnswer = openAnswer
+
         # @var KalturaNullableBoolean
         # @readonly
         self.isCorrect = isCorrect
@@ -347,6 +351,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         'parentId': getXmlNodeText, 
         'quizUserEntryId': getXmlNodeText, 
         'answerKey': getXmlNodeText, 
+        'openAnswer': getXmlNodeText, 
         'isCorrect': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'correctAnswerKeys': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'explanation': getXmlNodeText, 
@@ -362,6 +367,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         kparams.addStringIfDefined("parentId", self.parentId)
         kparams.addStringIfDefined("quizUserEntryId", self.quizUserEntryId)
         kparams.addStringIfDefined("answerKey", self.answerKey)
+        kparams.addStringIfDefined("openAnswer", self.openAnswer)
         return kparams
 
     def getParentId(self):
@@ -381,6 +387,12 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
 
     def setAnswerKey(self, newAnswerKey):
         self.answerKey = newAnswerKey
+
+    def getOpenAnswer(self):
+        return self.openAnswer
+
+    def setOpenAnswer(self, newOpenAnswer):
+        self.openAnswer = newOpenAnswer
 
     def getIsCorrect(self):
         return self.isCorrect

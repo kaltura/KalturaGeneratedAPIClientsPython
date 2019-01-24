@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.12.0'
+API_VERSION = '14.13.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5041,6 +5041,7 @@ class KalturaReportType(object):
     TOP_CONTENT_CREATOR = "38"
     TOP_CONTENT_CONTRIBUTORS = "39"
     APP_DOMAIN_UNIQUE_ACTIVE_USERS = "40"
+    TOP_SOURCES = "41"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -37755,7 +37756,8 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             updatedAt=NotImplemented,
             type=NotImplemented,
             extendedStatus=NotImplemented,
-            score=NotImplemented):
+            score=NotImplemented,
+            feedback=NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -37771,9 +37773,13 @@ class KalturaQuizUserEntry(KalturaUserEntry):
         # @readonly
         self.score = score
 
+        # @var string
+        self.feedback = feedback
+
 
     PROPERTY_LOADERS = {
         'score': getXmlNodeFloat, 
+        'feedback': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -37783,10 +37789,17 @@ class KalturaQuizUserEntry(KalturaUserEntry):
     def toParams(self):
         kparams = KalturaUserEntry.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntry")
+        kparams.addStringIfDefined("feedback", self.feedback)
         return kparams
 
     def getScore(self):
         return self.score
+
+    def getFeedback(self):
+        return self.feedback
+
+    def setFeedback(self, newFeedback):
+        self.feedback = newFeedback
 
 
 # @package Kaltura
