@@ -1299,7 +1299,8 @@ class KalturaAuditTrailFilter(KalturaAuditTrailBaseFilter):
 # @package Kaltura
 # @subpackage Client
 class KalturaAuditTrailService(KalturaServiceBase):
-    """Audit Trail service"""
+    """The Audit Trail service allows you to keep track of changes made to various Kaltura objects. 
+     This service is disabled by default."""
 
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)

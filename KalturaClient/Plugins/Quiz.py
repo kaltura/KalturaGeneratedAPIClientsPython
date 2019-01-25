@@ -298,7 +298,8 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             openAnswer=NotImplemented,
             isCorrect=NotImplemented,
             correctAnswerKeys=NotImplemented,
-            explanation=NotImplemented):
+            explanation=NotImplemented,
+            feedback=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             cuePointType,
@@ -346,6 +347,9 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         # @readonly
         self.explanation = explanation
 
+        # @var string
+        self.feedback = feedback
+
 
     PROPERTY_LOADERS = {
         'parentId': getXmlNodeText, 
@@ -355,6 +359,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         'isCorrect': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'correctAnswerKeys': (KalturaObjectFactory.createArray, 'KalturaString'), 
         'explanation': getXmlNodeText, 
+        'feedback': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -368,6 +373,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         kparams.addStringIfDefined("quizUserEntryId", self.quizUserEntryId)
         kparams.addStringIfDefined("answerKey", self.answerKey)
         kparams.addStringIfDefined("openAnswer", self.openAnswer)
+        kparams.addStringIfDefined("feedback", self.feedback)
         return kparams
 
     def getParentId(self):
@@ -402,6 +408,12 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
 
     def getExplanation(self):
         return self.explanation
+
+    def getFeedback(self):
+        return self.feedback
+
+    def setFeedback(self, newFeedback):
+        self.feedback = newFeedback
 
 
 # @package Kaltura

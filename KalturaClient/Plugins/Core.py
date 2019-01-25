@@ -60601,7 +60601,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamEntry')
 
     def createPeriodicSyncPoints(self, entryId, interval, duration):
-        """Creates perioding metadata sync-point events on a live stream"""
+        """Creates periodic metadata sync-point events on a live stream"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
@@ -62385,7 +62385,8 @@ class KalturaStatsService(KalturaServiceBase):
 # @package Kaltura
 # @subpackage Client
 class KalturaStorageProfileService(KalturaServiceBase):
-    """Storage Profiles service"""
+    """The Storage Profile service allows you to export your Kaltura content to external storage volumes.
+     This service is disabled by default, please contact your account manager if you wish to enable it for your partner."""
 
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)

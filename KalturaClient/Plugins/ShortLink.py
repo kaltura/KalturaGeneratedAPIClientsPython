@@ -570,7 +570,7 @@ class KalturaShortLinkService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaShortLinkListResponse')
 
     def update(self, id, shortLink):
-        """Update exisitng short link"""
+        """Update existing short link"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)

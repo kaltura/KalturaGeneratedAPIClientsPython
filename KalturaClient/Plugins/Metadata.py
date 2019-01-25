@@ -1791,7 +1791,7 @@ class KalturaMetadataService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaMetadata')
 
     def addFromBulk(self, metadataProfileId, objectType, objectId, url):
-        """Allows you to add a metadata xml data from remote URL.
+        """Allows you to add a metadata XML data from remote URL.
         	 Enables different permissions than addFromUrl action."""
 
         kparams = KalturaParams()
@@ -1820,7 +1820,7 @@ class KalturaMetadataService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaMetadata')
 
     def addFromUrl(self, metadataProfileId, objectType, objectId, url):
-        """Allows you to add a metadata xml data from remote URL"""
+        """Allows you to add a metadata XML data from remote URL"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
@@ -2069,7 +2069,7 @@ class KalturaMetadataProfileService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaMetadataProfile')
 
     def updateTransformationFromFile(self, id, xsltFile):
-        """Update an existing metadata object xslt file"""
+        """Update an existing metadata object XSLT file"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
