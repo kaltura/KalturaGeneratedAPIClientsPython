@@ -400,7 +400,8 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
             language=NotImplemented,
             webVttUrl=NotImplemented,
             url=NotImplemented,
-            isDefault=NotImplemented):
+            isDefault=NotImplemented,
+            languageCode=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -421,6 +422,9 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
         # @var bool
         self.isDefault = isDefault
 
+        # @var string
+        self.languageCode = languageCode
+
 
     PROPERTY_LOADERS = {
         'label': getXmlNodeText, 
@@ -429,6 +433,7 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
         'webVttUrl': getXmlNodeText, 
         'url': getXmlNodeText, 
         'isDefault': getXmlNodeBool, 
+        'languageCode': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -444,6 +449,7 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
         kparams.addStringIfDefined("webVttUrl", self.webVttUrl)
         kparams.addStringIfDefined("url", self.url)
         kparams.addBoolIfDefined("isDefault", self.isDefault)
+        kparams.addStringIfDefined("languageCode", self.languageCode)
         return kparams
 
     def getLabel(self):
@@ -481,6 +487,12 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
 
     def setIsDefault(self, newIsDefault):
         self.isDefault = newIsDefault
+
+    def getLanguageCode(self):
+        return self.languageCode
+
+    def setLanguageCode(self, newLanguageCode):
+        self.languageCode = newLanguageCode
 
 
 # @package Kaltura
