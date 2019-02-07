@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.13.0'
+API_VERSION = '14.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -37974,7 +37974,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
-            sourceTypeIn=NotImplemented):
+            sourceTypeIn=NotImplemented,
+            ownerIdsIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -38053,6 +38054,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.sourceTypeIn = sourceTypeIn
 
+        # Filter by entry owner
+        # @var string
+        self.ownerIdsIn = ownerIdsIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -38073,6 +38078,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
         'mediaTypeIn': getXmlNodeText, 
         'sourceTypeIn': getXmlNodeText, 
+        'ownerIdsIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38100,6 +38106,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringEnumIfDefined("interval", self.interval)
         kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
         kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
+        kparams.addStringIfDefined("ownerIdsIn", self.ownerIdsIn)
         return kparams
 
     def getKeywords(self):
@@ -38209,6 +38216,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setSourceTypeIn(self, newSourceTypeIn):
         self.sourceTypeIn = newSourceTypeIn
+
+    def getOwnerIdsIn(self):
+        return self.ownerIdsIn
+
+    def setOwnerIdsIn(self, newOwnerIdsIn):
+        self.ownerIdsIn = newOwnerIdsIn
 
 
 # @package Kaltura
@@ -44266,6 +44279,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
             sourceTypeIn=NotImplemented,
+            ownerIdsIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -44292,7 +44306,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             timeZoneOffset,
             interval,
             mediaTypeIn,
-            sourceTypeIn)
+            sourceTypeIn,
+            ownerIdsIn)
 
         # @var string
         self.application = application
