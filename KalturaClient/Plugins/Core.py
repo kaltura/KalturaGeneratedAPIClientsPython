@@ -5042,6 +5042,7 @@ class KalturaReportType(object):
     TOP_CONTENT_CONTRIBUTORS = "39"
     APP_DOMAIN_UNIQUE_ACTIVE_USERS = "40"
     TOP_SOURCES = "41"
+    VPAAS_USAGE_MULTI = "42"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
