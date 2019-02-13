@@ -37976,7 +37976,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
             sourceTypeIn=NotImplemented,
-            ownerIdsIn=NotImplemented):
+            ownerIdsIn=NotImplemented,
+            entryOperator=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -38059,6 +38060,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.ownerIdsIn = ownerIdsIn
 
+        # @var KalturaESearchEntryOperator
+        self.entryOperator = entryOperator
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -38080,6 +38084,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'mediaTypeIn': getXmlNodeText, 
         'sourceTypeIn': getXmlNodeText, 
         'ownerIdsIn': getXmlNodeText, 
+        'entryOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
     }
 
     def fromXml(self, node):
@@ -38108,6 +38113,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
         kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
         kparams.addStringIfDefined("ownerIdsIn", self.ownerIdsIn)
+        kparams.addObjectIfDefined("entryOperator", self.entryOperator)
         return kparams
 
     def getKeywords(self):
@@ -38223,6 +38229,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setOwnerIdsIn(self, newOwnerIdsIn):
         self.ownerIdsIn = newOwnerIdsIn
+
+    def getEntryOperator(self):
+        return self.entryOperator
+
+    def setEntryOperator(self, newEntryOperator):
+        self.entryOperator = newEntryOperator
 
 
 # @package Kaltura
@@ -44281,6 +44293,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             mediaTypeIn=NotImplemented,
             sourceTypeIn=NotImplemented,
             ownerIdsIn=NotImplemented,
+            entryOperator=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -44308,7 +44321,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             interval,
             mediaTypeIn,
             sourceTypeIn,
-            ownerIdsIn)
+            ownerIdsIn,
+            entryOperator)
 
         # @var string
         self.application = application
