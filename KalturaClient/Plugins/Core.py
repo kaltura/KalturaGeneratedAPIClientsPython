@@ -24356,6 +24356,38 @@ class KalturaReportResponse(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaReportResponseOptions(KalturaObjectBase):
+    def __init__(self,
+            delimiter=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.delimiter = delimiter
+
+
+    PROPERTY_LOADERS = {
+        'delimiter': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportResponseOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportResponseOptions")
+        kparams.addStringIfDefined("delimiter", self.delimiter)
+        return kparams
+
+    def getDelimiter(self):
+        return self.delimiter
+
+    def setDelimiter(self, newDelimiter):
+        self.delimiter = newDelimiter
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReportTable(KalturaObjectBase):
     def __init__(self,
             header=NotImplemented,
@@ -61837,13 +61869,14 @@ class KalturaReportService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaReportResponse')
 
-    def getBaseTotal(self, reportType, reportInputFilter, objectIds = NotImplemented):
+    def getBaseTotal(self, reportType, reportInputFilter, objectIds = NotImplemented, responseOptions = NotImplemented):
         """report getBaseTotal action allows to get the total base for storage reports"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
+        kparams.addObjectIfDefined("responseOptions", responseOptions)
         self.client.queueServiceActionCall("report", "getBaseTotal", "KalturaReportBaseTotal", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -61866,7 +61899,7 @@ class KalturaReportService(KalturaServiceBase):
         self.client.queueServiceActionCall('report', 'getCsvFromStringParams', None ,kparams)
         return self.client.getServeUrl()
 
-    def getGraphs(self, reportType, reportInputFilter, dimension = NotImplemented, objectIds = NotImplemented):
+    def getGraphs(self, reportType, reportInputFilter, dimension = NotImplemented, objectIds = NotImplemented, responseOptions = NotImplemented):
         """report getGraphs action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
@@ -61874,13 +61907,14 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("dimension", dimension)
         kparams.addStringIfDefined("objectIds", objectIds)
+        kparams.addObjectIfDefined("responseOptions", responseOptions)
         self.client.queueServiceActionCall("report", "getGraphs", "KalturaReportGraph", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.createArray(resultNode, 'KalturaReportGraph')
 
-    def getTable(self, reportType, reportInputFilter, pager, order = NotImplemented, objectIds = NotImplemented):
+    def getTable(self, reportType, reportInputFilter, pager, order = NotImplemented, objectIds = NotImplemented, responseOptions = NotImplemented):
         """report getTable action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
@@ -61889,26 +61923,28 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("pager", pager)
         kparams.addStringIfDefined("order", order)
         kparams.addStringIfDefined("objectIds", objectIds)
+        kparams.addObjectIfDefined("responseOptions", responseOptions)
         self.client.queueServiceActionCall("report", "getTable", "KalturaReportTable", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaReportTable')
 
-    def getTotal(self, reportType, reportInputFilter, objectIds = NotImplemented):
+    def getTotal(self, reportType, reportInputFilter, objectIds = NotImplemented, responseOptions = NotImplemented):
         """report getTotal action allows to get a graph data for a specific report."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("reportType", reportType)
         kparams.addObjectIfDefined("reportInputFilter", reportInputFilter)
         kparams.addStringIfDefined("objectIds", objectIds)
+        kparams.addObjectIfDefined("responseOptions", responseOptions)
         self.client.queueServiceActionCall("report", "getTotal", "KalturaReportTotal", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaReportTotal')
 
-    def getUrlForReportAsCsv(self, reportTitle, reportText, headers, reportType, reportInputFilter, dimension = NotImplemented, pager = NotImplemented, order = NotImplemented, objectIds = NotImplemented):
+    def getUrlForReportAsCsv(self, reportTitle, reportText, headers, reportType, reportInputFilter, dimension = NotImplemented, pager = NotImplemented, order = NotImplemented, objectIds = NotImplemented, responseOptions = NotImplemented):
         """will create a CSV file for the given report and return the URL to access it"""
 
         kparams = KalturaParams()
@@ -61921,6 +61957,7 @@ class KalturaReportService(KalturaServiceBase):
         kparams.addObjectIfDefined("pager", pager)
         kparams.addStringIfDefined("order", order)
         kparams.addStringIfDefined("objectIds", objectIds)
+        kparams.addObjectIfDefined("responseOptions", responseOptions)
         self.client.queueServiceActionCall("report", "getUrlForReportAsCsv", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -64074,6 +64111,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportGraph': KalturaReportGraph,
             'KalturaReportInputBaseFilter': KalturaReportInputBaseFilter,
             'KalturaReportResponse': KalturaReportResponse,
+            'KalturaReportResponseOptions': KalturaReportResponseOptions,
             'KalturaReportTable': KalturaReportTable,
             'KalturaReportTotal': KalturaReportTotal,
             'KalturaRequestConfiguration': KalturaRequestConfiguration,
