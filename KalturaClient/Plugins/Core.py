@@ -24358,15 +24358,20 @@ class KalturaReportResponse(KalturaObjectBase):
 # @subpackage Client
 class KalturaReportResponseOptions(KalturaObjectBase):
     def __init__(self,
-            delimiter=NotImplemented):
+            delimiter=NotImplemented,
+            skipEmptyDates=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
         self.delimiter = delimiter
 
+        # @var bool
+        self.skipEmptyDates = skipEmptyDates
+
 
     PROPERTY_LOADERS = {
         'delimiter': getXmlNodeText, 
+        'skipEmptyDates': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -24377,6 +24382,7 @@ class KalturaReportResponseOptions(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaReportResponseOptions")
         kparams.addStringIfDefined("delimiter", self.delimiter)
+        kparams.addBoolIfDefined("skipEmptyDates", self.skipEmptyDates)
         return kparams
 
     def getDelimiter(self):
@@ -24384,6 +24390,12 @@ class KalturaReportResponseOptions(KalturaObjectBase):
 
     def setDelimiter(self, newDelimiter):
         self.delimiter = newDelimiter
+
+    def getSkipEmptyDates(self):
+        return self.skipEmptyDates
+
+    def setSkipEmptyDates(self, newSkipEmptyDates):
+        self.skipEmptyDates = newSkipEmptyDates
 
 
 # @package Kaltura
