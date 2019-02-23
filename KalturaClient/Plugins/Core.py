@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.14.0'
+API_VERSION = '14.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -31455,14 +31455,14 @@ class KalturaClipConcatJobData(KalturaJobData):
         self.priority = priority
 
         # clip operations
-        # @var array of KalturaObject
+        # @var array of KalturaOperationAttributes
         self.operationAttributes = operationAttributes
 
 
     PROPERTY_LOADERS = {
         'partnerId': getXmlNodeInt, 
         'priority': getXmlNodeInt, 
-        'operationAttributes': (KalturaObjectFactory.createArray, 'KalturaObject'), 
+        'operationAttributes': (KalturaObjectFactory.createArray, 'KalturaOperationAttributes'), 
     }
 
     def fromXml(self, node):
@@ -38021,7 +38021,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             mediaTypeIn=NotImplemented,
             sourceTypeIn=NotImplemented,
             ownerIdsIn=NotImplemented,
-            entryOperator=NotImplemented):
+            entryOperator=NotImplemented,
+            entryCreatedAtGreaterThanOrEqual=NotImplemented,
+            entryCreatedAtLessThanOrEqual=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -38107,6 +38109,14 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var KalturaESearchEntryOperator
         self.entryOperator = entryOperator
 
+        # Entry created at greater than or equal as Unix timestamp
+        # @var int
+        self.entryCreatedAtGreaterThanOrEqual = entryCreatedAtGreaterThanOrEqual
+
+        # Entry created at less than or equal as Unix timestamp
+        # @var int
+        self.entryCreatedAtLessThanOrEqual = entryCreatedAtLessThanOrEqual
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -38129,6 +38139,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'sourceTypeIn': getXmlNodeText, 
         'ownerIdsIn': getXmlNodeText, 
         'entryOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
+        'entryCreatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'entryCreatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -38158,6 +38170,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
         kparams.addStringIfDefined("ownerIdsIn", self.ownerIdsIn)
         kparams.addObjectIfDefined("entryOperator", self.entryOperator)
+        kparams.addIntIfDefined("entryCreatedAtGreaterThanOrEqual", self.entryCreatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("entryCreatedAtLessThanOrEqual", self.entryCreatedAtLessThanOrEqual)
         return kparams
 
     def getKeywords(self):
@@ -38279,6 +38293,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setEntryOperator(self, newEntryOperator):
         self.entryOperator = newEntryOperator
+
+    def getEntryCreatedAtGreaterThanOrEqual(self):
+        return self.entryCreatedAtGreaterThanOrEqual
+
+    def setEntryCreatedAtGreaterThanOrEqual(self, newEntryCreatedAtGreaterThanOrEqual):
+        self.entryCreatedAtGreaterThanOrEqual = newEntryCreatedAtGreaterThanOrEqual
+
+    def getEntryCreatedAtLessThanOrEqual(self):
+        return self.entryCreatedAtLessThanOrEqual
+
+    def setEntryCreatedAtLessThanOrEqual(self, newEntryCreatedAtLessThanOrEqual):
+        self.entryCreatedAtLessThanOrEqual = newEntryCreatedAtLessThanOrEqual
 
 
 # @package Kaltura
@@ -44338,6 +44364,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             sourceTypeIn=NotImplemented,
             ownerIdsIn=NotImplemented,
             entryOperator=NotImplemented,
+            entryCreatedAtGreaterThanOrEqual=NotImplemented,
+            entryCreatedAtLessThanOrEqual=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -44366,7 +44394,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             mediaTypeIn,
             sourceTypeIn,
             ownerIdsIn,
-            entryOperator)
+            entryOperator,
+            entryCreatedAtGreaterThanOrEqual,
+            entryCreatedAtLessThanOrEqual)
 
         # @var string
         self.application = application
