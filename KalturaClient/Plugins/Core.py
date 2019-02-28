@@ -38023,7 +38023,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             ownerIdsIn=NotImplemented,
             entryOperator=NotImplemented,
             entryCreatedAtGreaterThanOrEqual=NotImplemented,
-            entryCreatedAtLessThanOrEqual=NotImplemented):
+            entryCreatedAtLessThanOrEqual=NotImplemented,
+            entryIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -38117,6 +38118,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var int
         self.entryCreatedAtLessThanOrEqual = entryCreatedAtLessThanOrEqual
 
+        # @var string
+        self.entryIdIn = entryIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -38141,6 +38145,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'entryOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
         'entryCreatedAtGreaterThanOrEqual': getXmlNodeInt, 
         'entryCreatedAtLessThanOrEqual': getXmlNodeInt, 
+        'entryIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38172,6 +38177,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addObjectIfDefined("entryOperator", self.entryOperator)
         kparams.addIntIfDefined("entryCreatedAtGreaterThanOrEqual", self.entryCreatedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("entryCreatedAtLessThanOrEqual", self.entryCreatedAtLessThanOrEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         return kparams
 
     def getKeywords(self):
@@ -38305,6 +38311,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setEntryCreatedAtLessThanOrEqual(self, newEntryCreatedAtLessThanOrEqual):
         self.entryCreatedAtLessThanOrEqual = newEntryCreatedAtLessThanOrEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
 
 
 # @package Kaltura
@@ -44366,6 +44378,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryOperator=NotImplemented,
             entryCreatedAtGreaterThanOrEqual=NotImplemented,
             entryCreatedAtLessThanOrEqual=NotImplemented,
+            entryIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -44396,7 +44409,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             ownerIdsIn,
             entryOperator,
             entryCreatedAtGreaterThanOrEqual,
-            entryCreatedAtLessThanOrEqual)
+            entryCreatedAtLessThanOrEqual,
+            entryIdIn)
 
         # @var string
         self.application = application
@@ -63259,10 +63273,11 @@ class KalturaUserEntryService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addObjectIfDefined("userEntry", userEntry)
-        self.client.queueServiceActionCall("userentry", "update", "None", kparams)
+        self.client.queueServiceActionCall("userentry", "update", "KalturaUserEntry", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaUserEntry')
 
 
 # @package Kaltura
