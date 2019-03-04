@@ -345,6 +345,58 @@ class KalturaBeaconScheduledResourceBaseItem(KalturaESearchBaseItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchOrderByItem(KalturaObjectBase):
+    def __init__(self,
+            sortOrder=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaESearchSortOrder
+        self.sortOrder = sortOrder
+
+
+    PROPERTY_LOADERS = {
+        'sortOrder': (KalturaEnumsFactory.createString, "KalturaESearchSortOrder"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchOrderByItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchOrderByItem")
+        kparams.addStringEnumIfDefined("sortOrder", self.sortOrder)
+        return kparams
+
+    def getSortOrder(self):
+        return self.sortOrder
+
+    def setSortOrder(self, newSortOrder):
+        self.sortOrder = newSortOrder
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchBaseFilter(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCategoryBaseItem(KalturaESearchBaseItem):
     def __init__(self):
         KalturaESearchBaseItem.__init__(self)
@@ -669,38 +721,6 @@ class KalturaESearchEntryResult(KalturaESearchResult):
 
     def setObject(self, newObject):
         self.object = newObject
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchOrderByItem(KalturaObjectBase):
-    def __init__(self,
-            sortOrder=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var KalturaESearchSortOrder
-        self.sortOrder = sortOrder
-
-
-    PROPERTY_LOADERS = {
-        'sortOrder': (KalturaEnumsFactory.createString, "KalturaESearchSortOrder"), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchOrderByItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaESearchOrderByItem")
-        kparams.addStringEnumIfDefined("sortOrder", self.sortOrder)
-        return kparams
-
-    def getSortOrder(self):
-        return self.sortOrder
-
-    def setSortOrder(self, newSortOrder):
-        self.sortOrder = newSortOrder
 
 
 # @package Kaltura
@@ -2770,6 +2790,8 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
         return {
             'KalturaESearchBaseItem': KalturaESearchBaseItem,
             'KalturaBeaconScheduledResourceBaseItem': KalturaBeaconScheduledResourceBaseItem,
+            'KalturaESearchOrderByItem': KalturaESearchOrderByItem,
+            'KalturaESearchBaseFilter': KalturaESearchBaseFilter,
             'KalturaESearchCategoryBaseItem': KalturaESearchCategoryBaseItem,
             'KalturaESearchHighlight': KalturaESearchHighlight,
             'KalturaESearchItemData': KalturaESearchItemData,
@@ -2780,7 +2802,6 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchEntryBaseNestedObject': KalturaESearchEntryBaseNestedObject,
             'KalturaESearchEntryNestedBaseItem': KalturaESearchEntryNestedBaseItem,
             'KalturaESearchEntryResult': KalturaESearchEntryResult,
-            'KalturaESearchOrderByItem': KalturaESearchOrderByItem,
             'KalturaESearchOrderBy': KalturaESearchOrderBy,
             'KalturaESearchParams': KalturaESearchParams,
             'KalturaESearchRange': KalturaESearchRange,

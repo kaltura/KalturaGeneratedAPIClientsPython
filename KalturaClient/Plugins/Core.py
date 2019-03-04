@@ -2110,6 +2110,18 @@ class KalturaConditionType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaConfMapsSourceLocation(object):
+    FS = "FileSystem"
+    DB = "database"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaContainerFormat(object):
     _3GP = "3gp"
     APPLEHTTP = "applehttp"
@@ -63880,6 +63892,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaCategoryUserOrderBy': KalturaCategoryUserOrderBy,
             'KalturaCloneComponentSelectorType': KalturaCloneComponentSelectorType,
             'KalturaConditionType': KalturaConditionType,
+            'KalturaConfMapsSourceLocation': KalturaConfMapsSourceLocation,
             'KalturaContainerFormat': KalturaContainerFormat,
             'KalturaContextType': KalturaContextType,
             'KalturaControlPanelCommandOrderBy': KalturaControlPanelCommandOrderBy,
