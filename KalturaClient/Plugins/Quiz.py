@@ -167,7 +167,8 @@ class KalturaQuiz(KalturaObjectBase):
             allowAnswerUpdate=NotImplemented,
             showCorrectAfterSubmission=NotImplemented,
             allowDownload=NotImplemented,
-            showGradeAfterSubmission=NotImplemented):
+            showGradeAfterSubmission=NotImplemented,
+            maxRetakesAllowed=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -196,6 +197,9 @@ class KalturaQuiz(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.showGradeAfterSubmission = showGradeAfterSubmission
 
+        # @var int
+        self.maxRetakesAllowed = maxRetakesAllowed
+
 
     PROPERTY_LOADERS = {
         'version': getXmlNodeInt, 
@@ -206,6 +210,7 @@ class KalturaQuiz(KalturaObjectBase):
         'showCorrectAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'allowDownload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showGradeAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'maxRetakesAllowed': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -222,6 +227,7 @@ class KalturaQuiz(KalturaObjectBase):
         kparams.addIntEnumIfDefined("showCorrectAfterSubmission", self.showCorrectAfterSubmission)
         kparams.addIntEnumIfDefined("allowDownload", self.allowDownload)
         kparams.addIntEnumIfDefined("showGradeAfterSubmission", self.showGradeAfterSubmission)
+        kparams.addIntIfDefined("maxRetakesAllowed", self.maxRetakesAllowed)
         return kparams
 
     def getVersion(self):
@@ -268,6 +274,12 @@ class KalturaQuiz(KalturaObjectBase):
 
     def setShowGradeAfterSubmission(self, newShowGradeAfterSubmission):
         self.showGradeAfterSubmission = newShowGradeAfterSubmission
+
+    def getMaxRetakesAllowed(self):
+        return self.maxRetakesAllowed
+
+    def setMaxRetakesAllowed(self, newMaxRetakesAllowed):
+        self.maxRetakesAllowed = newMaxRetakesAllowed
 
 
 # @package Kaltura
@@ -1139,7 +1151,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented):
+            privacyContextIn=NotImplemented,
+            versionEqual=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1166,8 +1179,12 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             privacyContextEqual,
             privacyContextIn)
 
+        # @var int
+        self.versionEqual = versionEqual
+
 
     PROPERTY_LOADERS = {
+        'versionEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1177,7 +1194,14 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
     def toParams(self):
         kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntryFilter")
+        kparams.addIntIfDefined("versionEqual", self.versionEqual)
         return kparams
+
+    def getVersionEqual(self):
+        return self.versionEqual
+
+    def setVersionEqual(self, newVersionEqual):
+        self.versionEqual = newVersionEqual
 
 
 ########## services ##########

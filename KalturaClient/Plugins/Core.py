@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.15.0'
+API_VERSION = '14.16.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -501,6 +501,18 @@ class KalturaGender(object):
 class KalturaGroupUserCreationMode(object):
     MANUAL = 1
     AUTOMATIC = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGroupUserRole(object):
+    MEMBER = 1
+    MANAGER = 2
 
     def __init__(self, value):
         self.value = value
@@ -2126,6 +2138,7 @@ class KalturaContainerFormat(object):
     _3GP = "3gp"
     APPLEHTTP = "applehttp"
     AVI = "avi"
+    BIF = "bif"
     BMP = "bmp"
     COPY = "copy"
     FLV = "flv"
@@ -16953,14 +16966,20 @@ class KalturaScheduler(KalturaObjectBase):
 # @subpackage Client
 class KalturaGroupUser(KalturaObjectBase):
     def __init__(self,
+            id=NotImplemented,
             userId=NotImplemented,
             groupId=NotImplemented,
             status=NotImplemented,
             partnerId=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            creationMode=NotImplemented):
+            creationMode=NotImplemented,
+            userRole=NotImplemented):
         KalturaObjectBase.__init__(self)
+
+        # @var string
+        # @readonly
+        self.id = id
 
         # @var string
         # @insertonly
@@ -16992,8 +17011,12 @@ class KalturaGroupUser(KalturaObjectBase):
         # @insertonly
         self.creationMode = creationMode
 
+        # @var KalturaGroupUserRole
+        self.userRole = userRole
+
 
     PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
         'userId': getXmlNodeText, 
         'groupId': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaGroupUserStatus"), 
@@ -17001,6 +17024,7 @@ class KalturaGroupUser(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'creationMode': (KalturaEnumsFactory.createInt, "KalturaGroupUserCreationMode"), 
+        'userRole': (KalturaEnumsFactory.createInt, "KalturaGroupUserRole"), 
     }
 
     def fromXml(self, node):
@@ -17013,7 +17037,11 @@ class KalturaGroupUser(KalturaObjectBase):
         kparams.addStringIfDefined("userId", self.userId)
         kparams.addStringIfDefined("groupId", self.groupId)
         kparams.addIntEnumIfDefined("creationMode", self.creationMode)
+        kparams.addIntEnumIfDefined("userRole", self.userRole)
         return kparams
+
+    def getId(self):
+        return self.id
 
     def getUserId(self):
         return self.userId
@@ -17044,6 +17072,12 @@ class KalturaGroupUser(KalturaObjectBase):
 
     def setCreationMode(self, newCreationMode):
         self.creationMode = newCreationMode
+
+    def getUserRole(self):
+        return self.userRole
+
+    def setUserRole(self, newUserRole):
+        self.userRole = newUserRole
 
 
 # @package Kaltura
@@ -17793,7 +17827,8 @@ class KalturaThumbParams(KalturaAssetParams):
             format=NotImplemented,
             density=NotImplemented,
             stripProfiles=NotImplemented,
-            videoOffsetInPercentage=NotImplemented):
+            videoOffsetInPercentage=NotImplemented,
+            interval=NotImplemented):
         KalturaAssetParams.__init__(self,
             id,
             partnerId,
@@ -17866,6 +17901,10 @@ class KalturaThumbParams(KalturaAssetParams):
         # @var int
         self.videoOffsetInPercentage = videoOffsetInPercentage
 
+        # interval in seconds for creating thumbnail
+        # @var int
+        self.interval = interval
+
 
     PROPERTY_LOADERS = {
         'cropType': (KalturaEnumsFactory.createInt, "KalturaThumbCropType"), 
@@ -17885,6 +17924,7 @@ class KalturaThumbParams(KalturaAssetParams):
         'density': getXmlNodeInt, 
         'stripProfiles': getXmlNodeBool, 
         'videoOffsetInPercentage': getXmlNodeInt, 
+        'interval': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -17911,6 +17951,7 @@ class KalturaThumbParams(KalturaAssetParams):
         kparams.addIntIfDefined("density", self.density)
         kparams.addBoolIfDefined("stripProfiles", self.stripProfiles)
         kparams.addIntIfDefined("videoOffsetInPercentage", self.videoOffsetInPercentage)
+        kparams.addIntIfDefined("interval", self.interval)
         return kparams
 
     def getCropType(self):
@@ -18015,6 +18056,12 @@ class KalturaThumbParams(KalturaAssetParams):
     def setVideoOffsetInPercentage(self, newVideoOffsetInPercentage):
         self.videoOffsetInPercentage = newVideoOffsetInPercentage
 
+    def getInterval(self):
+        return self.interval
+
+    def setInterval(self, newInterval):
+        self.interval = newInterval
+
 
 # @package Kaltura
 # @subpackage Client
@@ -18050,6 +18097,7 @@ class KalturaThumbParamsOutput(KalturaThumbParams):
             density=NotImplemented,
             stripProfiles=NotImplemented,
             videoOffsetInPercentage=NotImplemented,
+            interval=NotImplemented,
             thumbParamsId=NotImplemented,
             thumbParamsVersion=NotImplemented,
             thumbAssetId=NotImplemented,
@@ -18085,7 +18133,8 @@ class KalturaThumbParamsOutput(KalturaThumbParams):
             format,
             density,
             stripProfiles,
-            videoOffsetInPercentage)
+            videoOffsetInPercentage,
+            interval)
 
         # @var int
         self.thumbParamsId = thumbParamsId
@@ -37814,7 +37863,8 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             type=NotImplemented,
             extendedStatus=NotImplemented,
             score=NotImplemented,
-            feedback=NotImplemented):
+            feedback=NotImplemented,
+            version=NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -37833,10 +37883,15 @@ class KalturaQuizUserEntry(KalturaUserEntry):
         # @var string
         self.feedback = feedback
 
+        # @var int
+        # @readonly
+        self.version = version
+
 
     PROPERTY_LOADERS = {
         'score': getXmlNodeFloat, 
         'feedback': getXmlNodeText, 
+        'version': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -37857,6 +37912,9 @@ class KalturaQuizUserEntry(KalturaUserEntry):
 
     def setFeedback(self, newFeedback):
         self.feedback = newFeedback
+
+    def getVersion(self):
+        return self.version
 
 
 # @package Kaltura
@@ -60367,6 +60425,18 @@ class KalturaGroupUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
+    def update(self, groupUserId, groupUser):
+        """update GroupUser"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("groupUserId", groupUserId)
+        kparams.addObjectIfDefined("groupUser", groupUser)
+        self.client.queueServiceActionCall("groupuser", "update", "KalturaGroupUser", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaGroupUser')
+
 
 # @package Kaltura
 # @subpackage Client
@@ -63799,6 +63869,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFlavorReadyBehaviorType': KalturaFlavorReadyBehaviorType,
             'KalturaGender': KalturaGender,
             'KalturaGroupUserCreationMode': KalturaGroupUserCreationMode,
+            'KalturaGroupUserRole': KalturaGroupUserRole,
             'KalturaGroupUserStatus': KalturaGroupUserStatus,
             'KalturaInheritanceType': KalturaInheritanceType,
             'KalturaIpAddressRestrictionType': KalturaIpAddressRestrictionType,
