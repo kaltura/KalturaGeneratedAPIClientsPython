@@ -168,7 +168,8 @@ class KalturaQuiz(KalturaObjectBase):
             showCorrectAfterSubmission=NotImplemented,
             allowDownload=NotImplemented,
             showGradeAfterSubmission=NotImplemented,
-            maxRetakesAllowed=NotImplemented):
+            maxRetakesAllowed=NotImplemented,
+            scoreType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -200,6 +201,9 @@ class KalturaQuiz(KalturaObjectBase):
         # @var int
         self.maxRetakesAllowed = maxRetakesAllowed
 
+        # @var KalturaScoreType
+        self.scoreType = scoreType
+
 
     PROPERTY_LOADERS = {
         'version': getXmlNodeInt, 
@@ -211,6 +215,7 @@ class KalturaQuiz(KalturaObjectBase):
         'allowDownload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showGradeAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'maxRetakesAllowed': getXmlNodeInt, 
+        'scoreType': (KalturaEnumsFactory.createInt, "KalturaScoreType"), 
     }
 
     def fromXml(self, node):
@@ -228,6 +233,7 @@ class KalturaQuiz(KalturaObjectBase):
         kparams.addIntEnumIfDefined("allowDownload", self.allowDownload)
         kparams.addIntEnumIfDefined("showGradeAfterSubmission", self.showGradeAfterSubmission)
         kparams.addIntIfDefined("maxRetakesAllowed", self.maxRetakesAllowed)
+        kparams.addIntEnumIfDefined("scoreType", self.scoreType)
         return kparams
 
     def getVersion(self):
@@ -280,6 +286,12 @@ class KalturaQuiz(KalturaObjectBase):
 
     def setMaxRetakesAllowed(self, newMaxRetakesAllowed):
         self.maxRetakesAllowed = newMaxRetakesAllowed
+
+    def getScoreType(self):
+        return self.scoreType
+
+    def setScoreType(self, newScoreType):
+        self.scoreType = newScoreType
 
 
 # @package Kaltura

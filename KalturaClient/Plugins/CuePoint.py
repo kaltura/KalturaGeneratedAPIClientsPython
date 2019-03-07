@@ -89,6 +89,21 @@ class KalturaQuizOutputType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaScoreType(object):
+    HIGHEST = 1
+    LOWEST = 2
+    LATEST = 3
+    FIRST = 4
+    AVERAGE = 5
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaThumbCuePointSubType(object):
     SLIDE = 1
     CHAPTER = 2
@@ -1009,6 +1024,7 @@ class KalturaCuePointClientPlugin(KalturaClientPlugin):
             'KalturaCuePointStatus': KalturaCuePointStatus,
             'KalturaQuestionType': KalturaQuestionType,
             'KalturaQuizOutputType': KalturaQuizOutputType,
+            'KalturaScoreType': KalturaScoreType,
             'KalturaThumbCuePointSubType': KalturaThumbCuePointSubType,
             'KalturaCuePointOrderBy': KalturaCuePointOrderBy,
             'KalturaCuePointType': KalturaCuePointType,

@@ -1856,14 +1856,16 @@ class KalturaBatchJobType(object):
     DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
     DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
     DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
+    CONVERT = "0"
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
+    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
     DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
-    CONVERT = "0"
-    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
     EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
     INTEGRATION = "integration.Integration"
+    ENTRY_VENDOR_TASK_CSV = "reach.EntryVendorTasksCsv"
+    SYNC_REACH_CREDIT_TASK = "reach.SyncReachCreditTask"
     SCHEDULED_TASK = "scheduledTask.ScheduledTask"
     INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
     TAG_RESOLVE = "tagSearch.TagResolve"
@@ -2097,6 +2099,7 @@ class KalturaConditionType(object):
     METADATA_FIELD_CHANGED = "metadata.FieldChanged"
     METADATA_FIELD_COMPARE = "metadata.FieldCompare"
     METADATA_FIELD_MATCH = "metadata.FieldMatch"
+    EVENT_CATEGORY_ENTRY = "reach.CategoryEntry"
     AUTHENTICATED = "1"
     COUNTRY = "2"
     IP_ADDRESS = "3"
@@ -4990,8 +4993,10 @@ class KalturaPlaylistOrderBy(object):
 class KalturaQuizUserEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     UPDATED_AT_ASC = "+updatedAt"
+    VERSION_ASC = "+version"
     CREATED_AT_DESC = "-createdAt"
     UPDATED_AT_DESC = "-updatedAt"
+    VERSION_DESC = "-version"
 
     def __init__(self, value):
         self.value = value
@@ -5068,6 +5073,7 @@ class KalturaReportType(object):
     APP_DOMAIN_UNIQUE_ACTIVE_USERS = "40"
     TOP_SOURCES = "41"
     VPAAS_USAGE_MULTI = "42"
+    CONTENT_REPORT_REASONS = "44"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -5094,6 +5100,7 @@ class KalturaResponseProfileOrderBy(object):
 # @subpackage Client
 class KalturaRuleActionType(object):
     DRM_POLICY = "drm.DRM_POLICY"
+    ADD_ENTRY_VENDOR_TASK = "reach.ADD_ENTRY_VENDOR_TASK"
     BLOCK = "1"
     PREVIEW = "2"
     LIMIT_FLAVORS = "3"
@@ -37863,6 +37870,7 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             type=NotImplemented,
             extendedStatus=NotImplemented,
             score=NotImplemented,
+            calculatedScore=NotImplemented,
             feedback=NotImplemented,
             version=NotImplemented):
         KalturaUserEntry.__init__(self,
@@ -37880,6 +37888,10 @@ class KalturaQuizUserEntry(KalturaUserEntry):
         # @readonly
         self.score = score
 
+        # @var float
+        # @readonly
+        self.calculatedScore = calculatedScore
+
         # @var string
         self.feedback = feedback
 
@@ -37890,6 +37902,7 @@ class KalturaQuizUserEntry(KalturaUserEntry):
 
     PROPERTY_LOADERS = {
         'score': getXmlNodeFloat, 
+        'calculatedScore': getXmlNodeFloat, 
         'feedback': getXmlNodeText, 
         'version': getXmlNodeInt, 
     }
@@ -37906,6 +37919,9 @@ class KalturaQuizUserEntry(KalturaUserEntry):
 
     def getScore(self):
         return self.score
+
+    def getCalculatedScore(self):
+        return self.calculatedScore
 
     def getFeedback(self):
         return self.feedback
