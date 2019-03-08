@@ -168,7 +168,7 @@ class KalturaQuiz(KalturaObjectBase):
             showCorrectAfterSubmission=NotImplemented,
             allowDownload=NotImplemented,
             showGradeAfterSubmission=NotImplemented,
-            maxRetakesAllowed=NotImplemented,
+            attemptsAllowed=NotImplemented,
             scoreType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -199,7 +199,7 @@ class KalturaQuiz(KalturaObjectBase):
         self.showGradeAfterSubmission = showGradeAfterSubmission
 
         # @var int
-        self.maxRetakesAllowed = maxRetakesAllowed
+        self.attemptsAllowed = attemptsAllowed
 
         # @var KalturaScoreType
         self.scoreType = scoreType
@@ -214,7 +214,7 @@ class KalturaQuiz(KalturaObjectBase):
         'showCorrectAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'allowDownload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'showGradeAfterSubmission': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'maxRetakesAllowed': getXmlNodeInt, 
+        'attemptsAllowed': getXmlNodeInt, 
         'scoreType': (KalturaEnumsFactory.createInt, "KalturaScoreType"), 
     }
 
@@ -232,7 +232,7 @@ class KalturaQuiz(KalturaObjectBase):
         kparams.addIntEnumIfDefined("showCorrectAfterSubmission", self.showCorrectAfterSubmission)
         kparams.addIntEnumIfDefined("allowDownload", self.allowDownload)
         kparams.addIntEnumIfDefined("showGradeAfterSubmission", self.showGradeAfterSubmission)
-        kparams.addIntIfDefined("maxRetakesAllowed", self.maxRetakesAllowed)
+        kparams.addIntIfDefined("attemptsAllowed", self.attemptsAllowed)
         kparams.addIntEnumIfDefined("scoreType", self.scoreType)
         return kparams
 
@@ -281,11 +281,11 @@ class KalturaQuiz(KalturaObjectBase):
     def setShowGradeAfterSubmission(self, newShowGradeAfterSubmission):
         self.showGradeAfterSubmission = newShowGradeAfterSubmission
 
-    def getMaxRetakesAllowed(self):
-        return self.maxRetakesAllowed
+    def getAttemptsAllowed(self):
+        return self.attemptsAllowed
 
-    def setMaxRetakesAllowed(self, newMaxRetakesAllowed):
-        self.maxRetakesAllowed = newMaxRetakesAllowed
+    def setAttemptsAllowed(self, newAttemptsAllowed):
+        self.attemptsAllowed = newAttemptsAllowed
 
     def getScoreType(self):
         return self.scoreType

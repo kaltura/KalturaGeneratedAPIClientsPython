@@ -307,67 +307,6 @@ class KalturaConfMapsFilter(KalturaConfMapsBaseFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaConfMapsService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, map):
-        """Add configuration map"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("map", map)
-        self.client.queueServiceActionCall("confmaps_confmaps", "add", "KalturaConfMaps", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaConfMaps')
-
-    def get(self, filter):
-        """Get configuration map"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("confmaps_confmaps", "get", "KalturaConfMaps", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaConfMaps')
-
-    def getMapNames(self):
-        """List configuration maps names"""
-
-        kparams = KalturaParams()
-        self.client.queueServiceActionCall("confmaps_confmaps", "getMapNames", "KalturaString", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.createArray(resultNode, 'KalturaString')
-
-    def list(self, filter):
-        """List configuration maps"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("confmaps_confmaps", "list", "KalturaConfMapsListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaConfMapsListResponse')
-
-    def update(self, map):
-        """Update configuration map"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("map", map)
-        self.client.queueServiceActionCall("confmaps_confmaps", "update", "KalturaConfMaps", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaConfMaps')
-
 ########## main ##########
 class KalturaConfMapsClientPlugin(KalturaClientPlugin):
     # KalturaConfMapsClientPlugin
@@ -383,7 +322,6 @@ class KalturaConfMapsClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'confMaps': KalturaConfMapsService,
         }
 
     def getEnums(self):

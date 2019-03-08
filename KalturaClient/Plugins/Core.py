@@ -2116,6 +2116,7 @@ class KalturaConditionType(object):
     ACTIVE_EDGE_VALIDATE = "14"
     ANONYMOUS_IP = "15"
     ASSET_TYPE = "16"
+    BOOLEAN = "17"
 
     def __init__(self, value):
         self.value = value
@@ -29561,6 +29562,45 @@ class KalturaBaseSyndicationFeedListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBooleanEventNotificationCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            booleanEventNotificationIds=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+        # The boolean event notification ids
+        # @var string
+        self.booleanEventNotificationIds = booleanEventNotificationIds
+
+
+    PROPERTY_LOADERS = {
+        'booleanEventNotificationIds': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBooleanEventNotificationCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaBooleanEventNotificationCondition")
+        kparams.addStringIfDefined("booleanEventNotificationIds", self.booleanEventNotificationIds)
+        return kparams
+
+    def getBooleanEventNotificationIds(self):
+        return self.booleanEventNotificationIds
+
+    def setBooleanEventNotificationIds(self, newBooleanEventNotificationIds):
+        self.booleanEventNotificationIds = newBooleanEventNotificationIds
 
 
 # @package Kaltura
@@ -64323,6 +64363,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryListResponse': KalturaBaseEntryListResponse,
             'KalturaBaseSyndicationFeedBaseFilter': KalturaBaseSyndicationFeedBaseFilter,
             'KalturaBaseSyndicationFeedListResponse': KalturaBaseSyndicationFeedListResponse,
+            'KalturaBooleanEventNotificationCondition': KalturaBooleanEventNotificationCondition,
             'KalturaBulkDownloadJobData': KalturaBulkDownloadJobData,
             'KalturaBulkUploadBaseFilter': KalturaBulkUploadBaseFilter,
             'KalturaBulkUploadCategoryData': KalturaBulkUploadCategoryData,
