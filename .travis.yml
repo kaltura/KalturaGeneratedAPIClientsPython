@@ -6,7 +6,7 @@ python:
 install: "pip install tox tox-travis"
 # command to run tests
 script:
-    - sed -e "s#@YOUR_PARTNER_ID@#$PARTNER_ID#g" -e "s#@YOUR_ADMIN_SECRET@#$ADMIN_SECRET#g" -e "s#https://www.kaltura.com#https://www.kaltura.com#g" KalturaClient/tests/config.template.ini > KalturaClient/tests/config.ini
+    - sed -e "s#@YOUR_PARTNER_ID@#$PARTNER_ID#g" -e "s#@YOUR_ADMIN_SECRET@#$ADMIN_SECRET#g" -e "s#@SERVICE_URL@#https://www.kaltura.com#g" KalturaClient/tests/config.template.ini > KalturaClient/tests/config.ini
     - tox
 notifications:
   email:
