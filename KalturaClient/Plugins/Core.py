@@ -4994,10 +4994,8 @@ class KalturaPlaylistOrderBy(object):
 class KalturaQuizUserEntryOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     UPDATED_AT_ASC = "+updatedAt"
-    VERSION_ASC = "+version"
     CREATED_AT_DESC = "-createdAt"
     UPDATED_AT_DESC = "-updatedAt"
-    VERSION_DESC = "-version"
 
     def __init__(self, value):
         self.value = value
@@ -5077,6 +5075,7 @@ class KalturaReportType(object):
     PERCENTILES = "43"
     CONTENT_REPORT_REASONS = "44"
     PLAYER_RELATED_INTERACTIONS = "45"
+    PLAYBACK_RATE = "46"
     PARTNER_USAGE = "201"
 
     def __init__(self, value):
@@ -8125,6 +8124,333 @@ class KalturaBaseSyndicationFeed(KalturaObjectBase):
 
     def setFeedContentTypeHeader(self, newFeedContentTypeHeader):
         self.feedContentTypeHeader = newFeedContentTypeHeader
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseUser(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            screenName=NotImplemented,
+            fullName=NotImplemented,
+            email=NotImplemented,
+            country=NotImplemented,
+            state=NotImplemented,
+            city=NotImplemented,
+            zip=NotImplemented,
+            thumbnailUrl=NotImplemented,
+            description=NotImplemented,
+            tags=NotImplemented,
+            adminTags=NotImplemented,
+            status=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            partnerData=NotImplemented,
+            indexedPartnerDataInt=NotImplemented,
+            indexedPartnerDataString=NotImplemented,
+            storageSize=NotImplemented,
+            language=NotImplemented,
+            lastLoginTime=NotImplemented,
+            statusUpdatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            allowedPartnerIds=NotImplemented,
+            allowedPartnerPackages=NotImplemented,
+            userMode=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.id = id
+
+        # @var int
+        # @readonly
+        self.partnerId = partnerId
+
+        # @var string
+        self.screenName = screenName
+
+        # @var string
+        self.fullName = fullName
+
+        # @var string
+        self.email = email
+
+        # @var string
+        self.country = country
+
+        # @var string
+        self.state = state
+
+        # @var string
+        self.city = city
+
+        # @var string
+        self.zip = zip
+
+        # @var string
+        self.thumbnailUrl = thumbnailUrl
+
+        # @var string
+        self.description = description
+
+        # @var string
+        self.tags = tags
+
+        # Admin tags can be updated only by using an admin session
+        # @var string
+        self.adminTags = adminTags
+
+        # @var KalturaUserStatus
+        self.status = status
+
+        # Creation date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.createdAt = createdAt
+
+        # Last update date as Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.updatedAt = updatedAt
+
+        # Can be used to store various partner related data as a string
+        # @var string
+        self.partnerData = partnerData
+
+        # @var int
+        self.indexedPartnerDataInt = indexedPartnerDataInt
+
+        # @var string
+        self.indexedPartnerDataString = indexedPartnerDataString
+
+        # @var int
+        # @readonly
+        self.storageSize = storageSize
+
+        # @var KalturaLanguageCode
+        self.language = language
+
+        # @var int
+        # @readonly
+        self.lastLoginTime = lastLoginTime
+
+        # @var int
+        # @readonly
+        self.statusUpdatedAt = statusUpdatedAt
+
+        # @var int
+        # @readonly
+        self.deletedAt = deletedAt
+
+        # @var string
+        self.allowedPartnerIds = allowedPartnerIds
+
+        # @var string
+        self.allowedPartnerPackages = allowedPartnerPackages
+
+        # @var KalturaUserMode
+        self.userMode = userMode
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
+        'partnerId': getXmlNodeInt, 
+        'screenName': getXmlNodeText, 
+        'fullName': getXmlNodeText, 
+        'email': getXmlNodeText, 
+        'country': getXmlNodeText, 
+        'state': getXmlNodeText, 
+        'city': getXmlNodeText, 
+        'zip': getXmlNodeText, 
+        'thumbnailUrl': getXmlNodeText, 
+        'description': getXmlNodeText, 
+        'tags': getXmlNodeText, 
+        'adminTags': getXmlNodeText, 
+        'status': (KalturaEnumsFactory.createInt, "KalturaUserStatus"), 
+        'createdAt': getXmlNodeInt, 
+        'updatedAt': getXmlNodeInt, 
+        'partnerData': getXmlNodeText, 
+        'indexedPartnerDataInt': getXmlNodeInt, 
+        'indexedPartnerDataString': getXmlNodeText, 
+        'storageSize': getXmlNodeInt, 
+        'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
+        'lastLoginTime': getXmlNodeInt, 
+        'statusUpdatedAt': getXmlNodeInt, 
+        'deletedAt': getXmlNodeInt, 
+        'allowedPartnerIds': getXmlNodeText, 
+        'allowedPartnerPackages': getXmlNodeText, 
+        'userMode': (KalturaEnumsFactory.createInt, "KalturaUserMode"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseUser.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaBaseUser")
+        kparams.addStringIfDefined("id", self.id)
+        kparams.addStringIfDefined("screenName", self.screenName)
+        kparams.addStringIfDefined("fullName", self.fullName)
+        kparams.addStringIfDefined("email", self.email)
+        kparams.addStringIfDefined("country", self.country)
+        kparams.addStringIfDefined("state", self.state)
+        kparams.addStringIfDefined("city", self.city)
+        kparams.addStringIfDefined("zip", self.zip)
+        kparams.addStringIfDefined("thumbnailUrl", self.thumbnailUrl)
+        kparams.addStringIfDefined("description", self.description)
+        kparams.addStringIfDefined("tags", self.tags)
+        kparams.addStringIfDefined("adminTags", self.adminTags)
+        kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addStringIfDefined("partnerData", self.partnerData)
+        kparams.addIntIfDefined("indexedPartnerDataInt", self.indexedPartnerDataInt)
+        kparams.addStringIfDefined("indexedPartnerDataString", self.indexedPartnerDataString)
+        kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
+        kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
+        kparams.addIntEnumIfDefined("userMode", self.userMode)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def getScreenName(self):
+        return self.screenName
+
+    def setScreenName(self, newScreenName):
+        self.screenName = newScreenName
+
+    def getFullName(self):
+        return self.fullName
+
+    def setFullName(self, newFullName):
+        self.fullName = newFullName
+
+    def getEmail(self):
+        return self.email
+
+    def setEmail(self, newEmail):
+        self.email = newEmail
+
+    def getCountry(self):
+        return self.country
+
+    def setCountry(self, newCountry):
+        self.country = newCountry
+
+    def getState(self):
+        return self.state
+
+    def setState(self, newState):
+        self.state = newState
+
+    def getCity(self):
+        return self.city
+
+    def setCity(self, newCity):
+        self.city = newCity
+
+    def getZip(self):
+        return self.zip
+
+    def setZip(self, newZip):
+        self.zip = newZip
+
+    def getThumbnailUrl(self):
+        return self.thumbnailUrl
+
+    def setThumbnailUrl(self, newThumbnailUrl):
+        self.thumbnailUrl = newThumbnailUrl
+
+    def getDescription(self):
+        return self.description
+
+    def setDescription(self, newDescription):
+        self.description = newDescription
+
+    def getTags(self):
+        return self.tags
+
+    def setTags(self, newTags):
+        self.tags = newTags
+
+    def getAdminTags(self):
+        return self.adminTags
+
+    def setAdminTags(self, newAdminTags):
+        self.adminTags = newAdminTags
+
+    def getStatus(self):
+        return self.status
+
+    def setStatus(self, newStatus):
+        self.status = newStatus
+
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def getPartnerData(self):
+        return self.partnerData
+
+    def setPartnerData(self, newPartnerData):
+        self.partnerData = newPartnerData
+
+    def getIndexedPartnerDataInt(self):
+        return self.indexedPartnerDataInt
+
+    def setIndexedPartnerDataInt(self, newIndexedPartnerDataInt):
+        self.indexedPartnerDataInt = newIndexedPartnerDataInt
+
+    def getIndexedPartnerDataString(self):
+        return self.indexedPartnerDataString
+
+    def setIndexedPartnerDataString(self, newIndexedPartnerDataString):
+        self.indexedPartnerDataString = newIndexedPartnerDataString
+
+    def getStorageSize(self):
+        return self.storageSize
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getLastLoginTime(self):
+        return self.lastLoginTime
+
+    def getStatusUpdatedAt(self):
+        return self.statusUpdatedAt
+
+    def getDeletedAt(self):
+        return self.deletedAt
+
+    def getAllowedPartnerIds(self):
+        return self.allowedPartnerIds
+
+    def setAllowedPartnerIds(self, newAllowedPartnerIds):
+        self.allowedPartnerIds = newAllowedPartnerIds
+
+    def getAllowedPartnerPackages(self):
+        return self.allowedPartnerPackages
+
+    def setAllowedPartnerPackages(self, newAllowedPartnerPackages):
+        self.allowedPartnerPackages = newAllowedPartnerPackages
+
+    def getUserMode(self):
+        return self.userMode
+
+    def setUserMode(self, newUserMode):
+        self.userMode = newUserMode
 
 
 # @package Kaltura
@@ -13575,15 +13901,13 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUser(KalturaObjectBase):
+class KalturaUser(KalturaBaseUser):
     def __init__(self,
             id=NotImplemented,
             partnerId=NotImplemented,
-            type=NotImplemented,
             screenName=NotImplemented,
             fullName=NotImplemented,
             email=NotImplemented,
-            dateOfBirth=NotImplemented,
             country=NotImplemented,
             state=NotImplemented,
             city=NotImplemented,
@@ -13592,7 +13916,6 @@ class KalturaUser(KalturaObjectBase):
             description=NotImplemented,
             tags=NotImplemented,
             adminTags=NotImplemented,
-            gender=NotImplemented,
             status=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
@@ -13600,131 +13923,64 @@ class KalturaUser(KalturaObjectBase):
             indexedPartnerDataInt=NotImplemented,
             indexedPartnerDataString=NotImplemented,
             storageSize=NotImplemented,
-            password=NotImplemented,
-            firstName=NotImplemented,
-            lastName=NotImplemented,
-            isAdmin=NotImplemented,
             language=NotImplemented,
             lastLoginTime=NotImplemented,
             statusUpdatedAt=NotImplemented,
             deletedAt=NotImplemented,
-            loginEnabled=NotImplemented,
+            allowedPartnerIds=NotImplemented,
+            allowedPartnerPackages=NotImplemented,
+            userMode=NotImplemented,
+            type=NotImplemented,
+            dateOfBirth=NotImplemented,
+            gender=NotImplemented,
+            isAdmin=NotImplemented,
             roleIds=NotImplemented,
             roleNames=NotImplemented,
             isAccountOwner=NotImplemented,
-            allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented,
-            userMode=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.id = id
-
-        # @var int
-        # @readonly
-        self.partnerId = partnerId
+            password=NotImplemented,
+            firstName=NotImplemented,
+            lastName=NotImplemented,
+            loginEnabled=NotImplemented):
+        KalturaBaseUser.__init__(self,
+            id,
+            partnerId,
+            screenName,
+            fullName,
+            email,
+            country,
+            state,
+            city,
+            zip,
+            thumbnailUrl,
+            description,
+            tags,
+            adminTags,
+            status,
+            createdAt,
+            updatedAt,
+            partnerData,
+            indexedPartnerDataInt,
+            indexedPartnerDataString,
+            storageSize,
+            language,
+            lastLoginTime,
+            statusUpdatedAt,
+            deletedAt,
+            allowedPartnerIds,
+            allowedPartnerPackages,
+            userMode)
 
         # @var KalturaUserType
         self.type = type
 
-        # @var string
-        self.screenName = screenName
-
-        # @var string
-        self.fullName = fullName
-
-        # @var string
-        self.email = email
-
         # @var int
         self.dateOfBirth = dateOfBirth
-
-        # @var string
-        self.country = country
-
-        # @var string
-        self.state = state
-
-        # @var string
-        self.city = city
-
-        # @var string
-        self.zip = zip
-
-        # @var string
-        self.thumbnailUrl = thumbnailUrl
-
-        # @var string
-        self.description = description
-
-        # @var string
-        self.tags = tags
-
-        # Admin tags can be updated only by using an admin session
-        # @var string
-        self.adminTags = adminTags
 
         # @var KalturaGender
         self.gender = gender
 
-        # @var KalturaUserStatus
-        self.status = status
-
-        # Creation date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.createdAt = createdAt
-
-        # Last update date as Unix timestamp (In seconds)
-        # @var int
-        # @readonly
-        self.updatedAt = updatedAt
-
-        # Can be used to store various partner related data as a string
-        # @var string
-        self.partnerData = partnerData
-
-        # @var int
-        self.indexedPartnerDataInt = indexedPartnerDataInt
-
-        # @var string
-        self.indexedPartnerDataString = indexedPartnerDataString
-
-        # @var int
-        # @readonly
-        self.storageSize = storageSize
-
-        # @var string
-        # @insertonly
-        self.password = password
-
-        # @var string
-        self.firstName = firstName
-
-        # @var string
-        self.lastName = lastName
-
         # @var bool
         self.isAdmin = isAdmin
-
-        # @var KalturaLanguageCode
-        self.language = language
-
-        # @var int
-        # @readonly
-        self.lastLoginTime = lastLoginTime
-
-        # @var int
-        # @readonly
-        self.statusUpdatedAt = statusUpdatedAt
-
-        # @var int
-        # @readonly
-        self.deletedAt = deletedAt
-
-        # @var bool
-        # @insertonly
-        self.loginEnabled = loginEnabled
 
         # @var string
         self.roleIds = roleIds
@@ -13738,103 +13994,52 @@ class KalturaUser(KalturaObjectBase):
         self.isAccountOwner = isAccountOwner
 
         # @var string
-        self.allowedPartnerIds = allowedPartnerIds
+        # @insertonly
+        self.password = password
 
         # @var string
-        self.allowedPartnerPackages = allowedPartnerPackages
+        self.firstName = firstName
 
-        # @var KalturaUserMode
-        self.userMode = userMode
+        # @var string
+        self.lastName = lastName
+
+        # @var bool
+        # @insertonly
+        self.loginEnabled = loginEnabled
 
 
     PROPERTY_LOADERS = {
-        'id': getXmlNodeText, 
-        'partnerId': getXmlNodeInt, 
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
-        'screenName': getXmlNodeText, 
-        'fullName': getXmlNodeText, 
-        'email': getXmlNodeText, 
         'dateOfBirth': getXmlNodeInt, 
-        'country': getXmlNodeText, 
-        'state': getXmlNodeText, 
-        'city': getXmlNodeText, 
-        'zip': getXmlNodeText, 
-        'thumbnailUrl': getXmlNodeText, 
-        'description': getXmlNodeText, 
-        'tags': getXmlNodeText, 
-        'adminTags': getXmlNodeText, 
         'gender': (KalturaEnumsFactory.createInt, "KalturaGender"), 
-        'status': (KalturaEnumsFactory.createInt, "KalturaUserStatus"), 
-        'createdAt': getXmlNodeInt, 
-        'updatedAt': getXmlNodeInt, 
-        'partnerData': getXmlNodeText, 
-        'indexedPartnerDataInt': getXmlNodeInt, 
-        'indexedPartnerDataString': getXmlNodeText, 
-        'storageSize': getXmlNodeInt, 
-        'password': getXmlNodeText, 
-        'firstName': getXmlNodeText, 
-        'lastName': getXmlNodeText, 
         'isAdmin': getXmlNodeBool, 
-        'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
-        'lastLoginTime': getXmlNodeInt, 
-        'statusUpdatedAt': getXmlNodeInt, 
-        'deletedAt': getXmlNodeInt, 
-        'loginEnabled': getXmlNodeBool, 
         'roleIds': getXmlNodeText, 
         'roleNames': getXmlNodeText, 
         'isAccountOwner': getXmlNodeBool, 
-        'allowedPartnerIds': getXmlNodeText, 
-        'allowedPartnerPackages': getXmlNodeText, 
-        'userMode': (KalturaEnumsFactory.createInt, "KalturaUserMode"), 
+        'password': getXmlNodeText, 
+        'firstName': getXmlNodeText, 
+        'lastName': getXmlNodeText, 
+        'loginEnabled': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
+        KalturaBaseUser.fromXml(self, node)
         self.fromXmlImpl(node, KalturaUser.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
+        kparams = KalturaBaseUser.toParams(self)
         kparams.put("objectType", "KalturaUser")
-        kparams.addStringIfDefined("id", self.id)
         kparams.addIntEnumIfDefined("type", self.type)
-        kparams.addStringIfDefined("screenName", self.screenName)
-        kparams.addStringIfDefined("fullName", self.fullName)
-        kparams.addStringIfDefined("email", self.email)
         kparams.addIntIfDefined("dateOfBirth", self.dateOfBirth)
-        kparams.addStringIfDefined("country", self.country)
-        kparams.addStringIfDefined("state", self.state)
-        kparams.addStringIfDefined("city", self.city)
-        kparams.addStringIfDefined("zip", self.zip)
-        kparams.addStringIfDefined("thumbnailUrl", self.thumbnailUrl)
-        kparams.addStringIfDefined("description", self.description)
-        kparams.addStringIfDefined("tags", self.tags)
-        kparams.addStringIfDefined("adminTags", self.adminTags)
         kparams.addIntEnumIfDefined("gender", self.gender)
-        kparams.addIntEnumIfDefined("status", self.status)
-        kparams.addStringIfDefined("partnerData", self.partnerData)
-        kparams.addIntIfDefined("indexedPartnerDataInt", self.indexedPartnerDataInt)
-        kparams.addStringIfDefined("indexedPartnerDataString", self.indexedPartnerDataString)
+        kparams.addBoolIfDefined("isAdmin", self.isAdmin)
+        kparams.addStringIfDefined("roleIds", self.roleIds)
+        kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
         kparams.addStringIfDefined("password", self.password)
         kparams.addStringIfDefined("firstName", self.firstName)
         kparams.addStringIfDefined("lastName", self.lastName)
-        kparams.addBoolIfDefined("isAdmin", self.isAdmin)
-        kparams.addStringEnumIfDefined("language", self.language)
         kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
-        kparams.addStringIfDefined("roleIds", self.roleIds)
-        kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
-        kparams.addStringIfDefined("allowedPartnerIds", self.allowedPartnerIds)
-        kparams.addStringIfDefined("allowedPartnerPackages", self.allowedPartnerPackages)
-        kparams.addIntEnumIfDefined("userMode", self.userMode)
         return kparams
-
-    def getId(self):
-        return self.id
-
-    def setId(self, newId):
-        self.id = newId
-
-    def getPartnerId(self):
-        return self.partnerId
 
     def getType(self):
         return self.type
@@ -13842,77 +14047,11 @@ class KalturaUser(KalturaObjectBase):
     def setType(self, newType):
         self.type = newType
 
-    def getScreenName(self):
-        return self.screenName
-
-    def setScreenName(self, newScreenName):
-        self.screenName = newScreenName
-
-    def getFullName(self):
-        return self.fullName
-
-    def setFullName(self, newFullName):
-        self.fullName = newFullName
-
-    def getEmail(self):
-        return self.email
-
-    def setEmail(self, newEmail):
-        self.email = newEmail
-
     def getDateOfBirth(self):
         return self.dateOfBirth
 
     def setDateOfBirth(self, newDateOfBirth):
         self.dateOfBirth = newDateOfBirth
-
-    def getCountry(self):
-        return self.country
-
-    def setCountry(self, newCountry):
-        self.country = newCountry
-
-    def getState(self):
-        return self.state
-
-    def setState(self, newState):
-        self.state = newState
-
-    def getCity(self):
-        return self.city
-
-    def setCity(self, newCity):
-        self.city = newCity
-
-    def getZip(self):
-        return self.zip
-
-    def setZip(self, newZip):
-        self.zip = newZip
-
-    def getThumbnailUrl(self):
-        return self.thumbnailUrl
-
-    def setThumbnailUrl(self, newThumbnailUrl):
-        self.thumbnailUrl = newThumbnailUrl
-
-    def getDescription(self):
-        return self.description
-
-    def setDescription(self, newDescription):
-        self.description = newDescription
-
-    def getTags(self):
-        return self.tags
-
-    def setTags(self, newTags):
-        self.tags = newTags
-
-    def getAdminTags(self):
-        return self.adminTags
-
-    def setAdminTags(self, newAdminTags):
-        self.adminTags = newAdminTags
 
     def getGender(self):
         return self.gender
@@ -13920,38 +14059,26 @@ class KalturaUser(KalturaObjectBase):
     def setGender(self, newGender):
         self.gender = newGender
 
-    def getStatus(self):
-        return self.status
+    def getIsAdmin(self):
+        return self.isAdmin
 
-    def setStatus(self, newStatus):
-        self.status = newStatus
+    def setIsAdmin(self, newIsAdmin):
+        self.isAdmin = newIsAdmin
 
-    def getCreatedAt(self):
-        return self.createdAt
+    def getRoleIds(self):
+        return self.roleIds
 
-    def getUpdatedAt(self):
-        return self.updatedAt
+    def setRoleIds(self, newRoleIds):
+        self.roleIds = newRoleIds
 
-    def getPartnerData(self):
-        return self.partnerData
+    def getRoleNames(self):
+        return self.roleNames
 
-    def setPartnerData(self, newPartnerData):
-        self.partnerData = newPartnerData
+    def getIsAccountOwner(self):
+        return self.isAccountOwner
 
-    def getIndexedPartnerDataInt(self):
-        return self.indexedPartnerDataInt
-
-    def setIndexedPartnerDataInt(self, newIndexedPartnerDataInt):
-        self.indexedPartnerDataInt = newIndexedPartnerDataInt
-
-    def getIndexedPartnerDataString(self):
-        return self.indexedPartnerDataString
-
-    def setIndexedPartnerDataString(self, newIndexedPartnerDataString):
-        self.indexedPartnerDataString = newIndexedPartnerDataString
-
-    def getStorageSize(self):
-        return self.storageSize
+    def setIsAccountOwner(self, newIsAccountOwner):
+        self.isAccountOwner = newIsAccountOwner
 
     def getPassword(self):
         return self.password
@@ -13971,65 +14098,11 @@ class KalturaUser(KalturaObjectBase):
     def setLastName(self, newLastName):
         self.lastName = newLastName
 
-    def getIsAdmin(self):
-        return self.isAdmin
-
-    def setIsAdmin(self, newIsAdmin):
-        self.isAdmin = newIsAdmin
-
-    def getLanguage(self):
-        return self.language
-
-    def setLanguage(self, newLanguage):
-        self.language = newLanguage
-
-    def getLastLoginTime(self):
-        return self.lastLoginTime
-
-    def getStatusUpdatedAt(self):
-        return self.statusUpdatedAt
-
-    def getDeletedAt(self):
-        return self.deletedAt
-
     def getLoginEnabled(self):
         return self.loginEnabled
 
     def setLoginEnabled(self, newLoginEnabled):
         self.loginEnabled = newLoginEnabled
-
-    def getRoleIds(self):
-        return self.roleIds
-
-    def setRoleIds(self, newRoleIds):
-        self.roleIds = newRoleIds
-
-    def getRoleNames(self):
-        return self.roleNames
-
-    def getIsAccountOwner(self):
-        return self.isAccountOwner
-
-    def setIsAccountOwner(self, newIsAccountOwner):
-        self.isAccountOwner = newIsAccountOwner
-
-    def getAllowedPartnerIds(self):
-        return self.allowedPartnerIds
-
-    def setAllowedPartnerIds(self, newAllowedPartnerIds):
-        self.allowedPartnerIds = newAllowedPartnerIds
-
-    def getAllowedPartnerPackages(self):
-        return self.allowedPartnerPackages
-
-    def setAllowedPartnerPackages(self, newAllowedPartnerPackages):
-        self.allowedPartnerPackages = newAllowedPartnerPackages
-
-    def getUserMode(self):
-        return self.userMode
-
-    def setUserMode(self, newUserMode):
-        self.userMode = newUserMode
 
 
 # @package Kaltura
@@ -28598,102 +28671,6 @@ class KalturaAccessControlServeRemoteEdgeServerAction(KalturaRuleAction):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAdminUser(KalturaUser):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            type=NotImplemented,
-            screenName=NotImplemented,
-            fullName=NotImplemented,
-            email=NotImplemented,
-            dateOfBirth=NotImplemented,
-            country=NotImplemented,
-            state=NotImplemented,
-            city=NotImplemented,
-            zip=NotImplemented,
-            thumbnailUrl=NotImplemented,
-            description=NotImplemented,
-            tags=NotImplemented,
-            adminTags=NotImplemented,
-            gender=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerData=NotImplemented,
-            indexedPartnerDataInt=NotImplemented,
-            indexedPartnerDataString=NotImplemented,
-            storageSize=NotImplemented,
-            password=NotImplemented,
-            firstName=NotImplemented,
-            lastName=NotImplemented,
-            isAdmin=NotImplemented,
-            language=NotImplemented,
-            lastLoginTime=NotImplemented,
-            statusUpdatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            loginEnabled=NotImplemented,
-            roleIds=NotImplemented,
-            roleNames=NotImplemented,
-            isAccountOwner=NotImplemented,
-            allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented,
-            userMode=NotImplemented):
-        KalturaUser.__init__(self,
-            id,
-            partnerId,
-            type,
-            screenName,
-            fullName,
-            email,
-            dateOfBirth,
-            country,
-            state,
-            city,
-            zip,
-            thumbnailUrl,
-            description,
-            tags,
-            adminTags,
-            gender,
-            status,
-            createdAt,
-            updatedAt,
-            partnerData,
-            indexedPartnerDataInt,
-            indexedPartnerDataString,
-            storageSize,
-            password,
-            firstName,
-            lastName,
-            isAdmin,
-            language,
-            lastLoginTime,
-            statusUpdatedAt,
-            deletedAt,
-            loginEnabled,
-            roleIds,
-            roleNames,
-            isAccountOwner,
-            allowedPartnerIds,
-            allowedPartnerPackages,
-            userMode)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaUser.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAdminUser.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaUser.toParams(self)
-        kparams.put("objectType", "KalturaAdminUser")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
     def __init__(self,
             id=NotImplemented,
@@ -42113,6 +42090,102 @@ class KalturaAccessControlProfileBaseFilter(KalturaRelatedFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAdminUser(KalturaUser):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            screenName=NotImplemented,
+            fullName=NotImplemented,
+            email=NotImplemented,
+            country=NotImplemented,
+            state=NotImplemented,
+            city=NotImplemented,
+            zip=NotImplemented,
+            thumbnailUrl=NotImplemented,
+            description=NotImplemented,
+            tags=NotImplemented,
+            adminTags=NotImplemented,
+            status=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            partnerData=NotImplemented,
+            indexedPartnerDataInt=NotImplemented,
+            indexedPartnerDataString=NotImplemented,
+            storageSize=NotImplemented,
+            language=NotImplemented,
+            lastLoginTime=NotImplemented,
+            statusUpdatedAt=NotImplemented,
+            deletedAt=NotImplemented,
+            allowedPartnerIds=NotImplemented,
+            allowedPartnerPackages=NotImplemented,
+            userMode=NotImplemented,
+            type=NotImplemented,
+            dateOfBirth=NotImplemented,
+            gender=NotImplemented,
+            isAdmin=NotImplemented,
+            roleIds=NotImplemented,
+            roleNames=NotImplemented,
+            isAccountOwner=NotImplemented,
+            password=NotImplemented,
+            firstName=NotImplemented,
+            lastName=NotImplemented,
+            loginEnabled=NotImplemented):
+        KalturaUser.__init__(self,
+            id,
+            partnerId,
+            screenName,
+            fullName,
+            email,
+            country,
+            state,
+            city,
+            zip,
+            thumbnailUrl,
+            description,
+            tags,
+            adminTags,
+            status,
+            createdAt,
+            updatedAt,
+            partnerData,
+            indexedPartnerDataInt,
+            indexedPartnerDataString,
+            storageSize,
+            language,
+            lastLoginTime,
+            statusUpdatedAt,
+            deletedAt,
+            allowedPartnerIds,
+            allowedPartnerPackages,
+            userMode,
+            type,
+            dateOfBirth,
+            gender,
+            isAdmin,
+            roleIds,
+            roleNames,
+            isAccountOwner,
+            password,
+            firstName,
+            lastName,
+            loginEnabled)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUser.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAdminUser.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUser.toParams(self)
+        kparams.put("objectType", "KalturaAdminUser")
+        return kparams
 
 
 # @package Kaltura
@@ -64189,6 +64262,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryCloneOptionItem': KalturaBaseEntryCloneOptionItem,
             'KalturaBaseResponseProfile': KalturaBaseResponseProfile,
             'KalturaBaseSyndicationFeed': KalturaBaseSyndicationFeed,
+            'KalturaBaseUser': KalturaBaseUser,
             'KalturaJobData': KalturaJobData,
             'KalturaBatchHistoryData': KalturaBatchHistoryData,
             'KalturaBatchJob': KalturaBatchJob,
@@ -64349,7 +64423,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlPreviewAction': KalturaAccessControlPreviewAction,
             'KalturaAccessControlProfileListResponse': KalturaAccessControlProfileListResponse,
             'KalturaAccessControlServeRemoteEdgeServerAction': KalturaAccessControlServeRemoteEdgeServerAction,
-            'KalturaAdminUser': KalturaAdminUser,
             'KalturaAmazonS3StorageProfile': KalturaAmazonS3StorageProfile,
             'KalturaApiActionPermissionItem': KalturaApiActionPermissionItem,
             'KalturaApiParameterPermissionItem': KalturaApiParameterPermissionItem,
@@ -64534,6 +64607,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaYahooSyndicationFeed': KalturaYahooSyndicationFeed,
             'KalturaAccessControlBaseFilter': KalturaAccessControlBaseFilter,
             'KalturaAccessControlProfileBaseFilter': KalturaAccessControlProfileBaseFilter,
+            'KalturaAdminUser': KalturaAdminUser,
             'KalturaAkamaiProvisionJobData': KalturaAkamaiProvisionJobData,
             'KalturaAkamaiUniversalProvisionJobData': KalturaAkamaiUniversalProvisionJobData,
             'KalturaAnonymousIPCondition': KalturaAnonymousIPCondition,

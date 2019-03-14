@@ -1163,8 +1163,7 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented,
-            versionEqual=NotImplemented):
+            privacyContextIn=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1191,12 +1190,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             privacyContextEqual,
             privacyContextIn)
 
-        # @var int
-        self.versionEqual = versionEqual
-
 
     PROPERTY_LOADERS = {
-        'versionEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1206,14 +1201,7 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
     def toParams(self):
         kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntryFilter")
-        kparams.addIntIfDefined("versionEqual", self.versionEqual)
         return kparams
-
-    def getVersionEqual(self):
-        return self.versionEqual
-
-    def setVersionEqual(self, newVersionEqual):
-        self.versionEqual = newVersionEqual
 
 
 ########## services ##########
