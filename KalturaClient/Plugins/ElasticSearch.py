@@ -258,42 +258,6 @@ class KalturaESearchEntryOrderByFieldName(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchGroupFieldName(object):
-    CREATED_AT = "created_at"
-    EMAIL = "email"
-    FIRST_NAME = "first_name"
-    GROUP_IDS = "group_ids"
-    LAST_NAME = "last_name"
-    PERMISSION_NAMES = "permission_names"
-    ROLE_IDS = "role_ids"
-    SCREEN_NAME = "screen_name"
-    TAGS = "tags"
-    UPDATED_AT = "updated_at"
-    USER_ID = "user_id"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchGroupOrderByFieldName(object):
-    CREATED_AT = "created_at"
-    MEMBERS_COUNT = "members_count"
-    USER_ID = "puser_id"
-    SCREEN_NAME = "screen_name"
-    UPDATED_AT = "updated_at"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchSortOrder(object):
     ORDER_BY_ASC = "asc"
     ORDER_BY_DESC = "desc"
@@ -1640,74 +1604,6 @@ class KalturaESearchGroupOrderByItem(KalturaESearchOrderByItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchUserOperator(KalturaESearchUserBaseItem):
-    def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
-        KalturaESearchUserBaseItem.__init__(self)
-
-        # @var KalturaESearchOperatorType
-        self.operator = operator
-
-        # @var array of KalturaESearchUserBaseItem
-        self.searchItems = searchItems
-
-
-    PROPERTY_LOADERS = {
-        'operator': (KalturaEnumsFactory.createInt, "KalturaESearchOperatorType"), 
-        'searchItems': (KalturaObjectFactory.createArray, 'KalturaESearchUserBaseItem'), 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchUserBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchUserOperator.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchUserBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchUserOperator")
-        kparams.addIntEnumIfDefined("operator", self.operator)
-        kparams.addArrayIfDefined("searchItems", self.searchItems)
-        return kparams
-
-    def getOperator(self):
-        return self.operator
-
-    def setOperator(self, newOperator):
-        self.operator = newOperator
-
-    def getSearchItems(self):
-        return self.searchItems
-
-    def setSearchItems(self, newSearchItems):
-        self.searchItems = newSearchItems
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchGroupOperator(KalturaESearchUserOperator):
-    def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
-        KalturaESearchUserOperator.__init__(self,
-            operator,
-            searchItems)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaESearchUserOperator.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchGroupOperator.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchUserOperator.toParams(self)
-        kparams.put("objectType", "KalturaESearchGroupOperator")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchGroupParams(KalturaESearchParams):
     def __init__(self,
             objectStatuses=NotImplemented,
@@ -1935,6 +1831,50 @@ class KalturaESearchUserOrderByItem(KalturaESearchOrderByItem):
 
     def setSortField(self, newSortField):
         self.sortField = newSortField
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchUserOperator(KalturaESearchUserBaseItem):
+    def __init__(self,
+            operator=NotImplemented,
+            searchItems=NotImplemented):
+        KalturaESearchUserBaseItem.__init__(self)
+
+        # @var KalturaESearchOperatorType
+        self.operator = operator
+
+        # @var array of KalturaESearchUserBaseItem
+        self.searchItems = searchItems
+
+
+    PROPERTY_LOADERS = {
+        'operator': (KalturaEnumsFactory.createInt, "KalturaESearchOperatorType"), 
+        'searchItems': (KalturaObjectFactory.createArray, 'KalturaESearchUserBaseItem'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchUserBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchUserOperator.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchUserBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchUserOperator")
+        kparams.addIntEnumIfDefined("operator", self.operator)
+        kparams.addArrayIfDefined("searchItems", self.searchItems)
+        return kparams
+
+    def getOperator(self):
+        return self.operator
+
+    def setOperator(self, newOperator):
+        self.operator = newOperator
+
+    def getSearchItems(self):
+        return self.searchItems
+
+    def setSearchItems(self, newSearchItems):
+        self.searchItems = newSearchItems
 
 
 # @package Kaltura
@@ -2528,46 +2468,6 @@ class KalturaESearchEntryItem(KalturaESearchAbstractEntryItem):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchGroupItem(KalturaESearchAbstractUserItem):
-    def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
-        KalturaESearchAbstractUserItem.__init__(self,
-            searchTerm,
-            itemType,
-            range,
-            addHighlight)
-
-        # @var KalturaESearchGroupFieldName
-        self.fieldName = fieldName
-
-
-    PROPERTY_LOADERS = {
-        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchGroupFieldName"), 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchAbstractUserItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchGroupItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchAbstractUserItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchGroupItem")
-        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
-        return kparams
-
-    def getFieldName(self):
-        return self.fieldName
-
-    def setFieldName(self, newFieldName):
-        self.fieldName = newFieldName
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchUnifiedItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2764,40 +2664,6 @@ class KalturaESearchEntryAbstractNestedItem(KalturaESearchEntryNestedBaseItem):
 
     def setAddHighlight(self, newAddHighlight):
         self.addHighlight = newAddHighlight
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchGroupMetadataItem(KalturaESearchUserMetadataItem):
-    def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented):
-        KalturaESearchUserMetadataItem.__init__(self,
-            searchTerm,
-            itemType,
-            range,
-            addHighlight,
-            xpath,
-            metadataProfileId,
-            metadataFieldId)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaESearchUserMetadataItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchGroupMetadataItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchUserMetadataItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchGroupMetadataItem")
-        return kparams
 
 
 # @package Kaltura
@@ -3066,8 +2932,6 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCuePointFieldName': KalturaESearchCuePointFieldName,
             'KalturaESearchEntryFieldName': KalturaESearchEntryFieldName,
             'KalturaESearchEntryOrderByFieldName': KalturaESearchEntryOrderByFieldName,
-            'KalturaESearchGroupFieldName': KalturaESearchGroupFieldName,
-            'KalturaESearchGroupOrderByFieldName': KalturaESearchGroupOrderByFieldName,
             'KalturaESearchSortOrder': KalturaESearchSortOrder,
             'KalturaESearchUserFieldName': KalturaESearchUserFieldName,
             'KalturaESearchUserOrderByFieldName': KalturaESearchUserOrderByFieldName,
@@ -3107,13 +2971,12 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchEntryParams': KalturaESearchEntryParams,
             'KalturaESearchEntryResponse': KalturaESearchEntryResponse,
             'KalturaESearchGroupOrderByItem': KalturaESearchGroupOrderByItem,
-            'KalturaESearchUserOperator': KalturaESearchUserOperator,
-            'KalturaESearchGroupOperator': KalturaESearchGroupOperator,
             'KalturaESearchGroupParams': KalturaESearchGroupParams,
             'KalturaESearchGroupResponse': KalturaESearchGroupResponse,
             'KalturaESearchMetadataItemData': KalturaESearchMetadataItemData,
             'KalturaESearchMetadataOrderByItem': KalturaESearchMetadataOrderByItem,
             'KalturaESearchUserOrderByItem': KalturaESearchUserOrderByItem,
+            'KalturaESearchUserOperator': KalturaESearchUserOperator,
             'KalturaESearchUserParams': KalturaESearchUserParams,
             'KalturaESearchUserResponse': KalturaESearchUserResponse,
             'KalturaBeaconAbstractScheduledResourceItem': KalturaBeaconAbstractScheduledResourceItem,
@@ -3125,12 +2988,10 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCategoryMetadataItem': KalturaESearchCategoryMetadataItem,
             'KalturaESearchCategoryUserItem': KalturaESearchCategoryUserItem,
             'KalturaESearchEntryItem': KalturaESearchEntryItem,
-            'KalturaESearchGroupItem': KalturaESearchGroupItem,
             'KalturaESearchUnifiedItem': KalturaESearchUnifiedItem,
             'KalturaESearchUserItem': KalturaESearchUserItem,
             'KalturaESearchUserMetadataItem': KalturaESearchUserMetadataItem,
             'KalturaESearchEntryAbstractNestedItem': KalturaESearchEntryAbstractNestedItem,
-            'KalturaESearchGroupMetadataItem': KalturaESearchGroupMetadataItem,
             'KalturaESearchNestedOperator': KalturaESearchNestedOperator,
             'KalturaESearchCaptionItem': KalturaESearchCaptionItem,
             'KalturaESearchCuePointItem': KalturaESearchCuePointItem,

@@ -30,6 +30,7 @@
 from __future__ import absolute_import
 
 from .Core import *
+from .ElasticSearch import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
@@ -44,7 +45,63 @@ from ..Base import (
 )
 
 ########## enums ##########
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchGroupFieldName(object):
+    CREATED_AT = "created_at"
+    EMAIL = "email"
+    FIRST_NAME = "first_name"
+    GROUP_IDS = "group_ids"
+    LAST_NAME = "last_name"
+    PERMISSION_NAMES = "permission_names"
+    ROLE_IDS = "role_ids"
+    SCREEN_NAME = "screen_name"
+    TAGS = "tags"
+    UPDATED_AT = "updated_at"
+    USER_ID = "user_id"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchGroupOrderByFieldName(object):
+    CREATED_AT = "created_at"
+    MEMBERS_COUNT = "members_count"
+    USER_ID = "puser_id"
+    SCREEN_NAME = "screen_name"
+    UPDATED_AT = "updated_at"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchGroupBaseItem(KalturaESearchBaseItem):
+    def __init__(self):
+        KalturaESearchBaseItem.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaESearchBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchGroupBaseItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchGroupBaseItem")
+        return kparams
+
+
 # @package Kaltura
 # @subpackage Client
 class KalturaGroup(KalturaBaseUser):
@@ -130,6 +187,50 @@ class KalturaGroup(KalturaBaseUser):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchGroupOperator(KalturaESearchGroupBaseItem):
+    def __init__(self,
+            operator=NotImplemented,
+            searchItems=NotImplemented):
+        KalturaESearchGroupBaseItem.__init__(self)
+
+        # @var KalturaESearchOperatorType
+        self.operator = operator
+
+        # @var array of KalturaESearchGroupBaseItem
+        self.searchItems = searchItems
+
+
+    PROPERTY_LOADERS = {
+        'operator': (KalturaEnumsFactory.createInt, "KalturaESearchOperatorType"), 
+        'searchItems': (KalturaObjectFactory.createArray, 'KalturaESearchGroupBaseItem'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchGroupBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchGroupOperator.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchGroupBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchGroupOperator")
+        kparams.addIntEnumIfDefined("operator", self.operator)
+        kparams.addArrayIfDefined("searchItems", self.searchItems)
+        return kparams
+
+    def getOperator(self):
+        return self.operator
+
+    def setOperator(self, newOperator):
+        self.operator = newOperator
+
+    def getSearchItems(self):
+        return self.searchItems
+
+    def setSearchItems(self, newSearchItems):
+        self.searchItems = newSearchItems
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaGroupListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -157,6 +258,178 @@ class KalturaGroupListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchAbstractGroupItem(KalturaESearchGroupBaseItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented,
+            addHighlight=NotImplemented):
+        KalturaESearchGroupBaseItem.__init__(self)
+
+        # @var string
+        self.searchTerm = searchTerm
+
+        # @var KalturaESearchItemType
+        self.itemType = itemType
+
+        # @var KalturaESearchRange
+        self.range = range
+
+        # @var bool
+        self.addHighlight = addHighlight
+
+
+    PROPERTY_LOADERS = {
+        'searchTerm': getXmlNodeText, 
+        'itemType': (KalturaEnumsFactory.createInt, "KalturaESearchItemType"), 
+        'range': (KalturaObjectFactory.create, 'KalturaESearchRange'), 
+        'addHighlight': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchGroupBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchAbstractGroupItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchGroupBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchAbstractGroupItem")
+        kparams.addStringIfDefined("searchTerm", self.searchTerm)
+        kparams.addIntEnumIfDefined("itemType", self.itemType)
+        kparams.addObjectIfDefined("range", self.range)
+        kparams.addBoolIfDefined("addHighlight", self.addHighlight)
+        return kparams
+
+    def getSearchTerm(self):
+        return self.searchTerm
+
+    def setSearchTerm(self, newSearchTerm):
+        self.searchTerm = newSearchTerm
+
+    def getItemType(self):
+        return self.itemType
+
+    def setItemType(self, newItemType):
+        self.itemType = newItemType
+
+    def getRange(self):
+        return self.range
+
+    def setRange(self, newRange):
+        self.range = newRange
+
+    def getAddHighlight(self):
+        return self.addHighlight
+
+    def setAddHighlight(self, newAddHighlight):
+        self.addHighlight = newAddHighlight
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchGroupItem(KalturaESearchAbstractGroupItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented,
+            addHighlight=NotImplemented,
+            fieldName=NotImplemented):
+        KalturaESearchAbstractGroupItem.__init__(self,
+            searchTerm,
+            itemType,
+            range,
+            addHighlight)
+
+        # @var KalturaESearchGroupFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchGroupFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAbstractGroupItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchGroupItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAbstractGroupItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchGroupItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchGroupMetadataItem(KalturaESearchAbstractGroupItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented,
+            addHighlight=NotImplemented,
+            xpath=NotImplemented,
+            metadataProfileId=NotImplemented,
+            metadataFieldId=NotImplemented):
+        KalturaESearchAbstractGroupItem.__init__(self,
+            searchTerm,
+            itemType,
+            range,
+            addHighlight)
+
+        # @var string
+        self.xpath = xpath
+
+        # @var int
+        self.metadataProfileId = metadataProfileId
+
+        # @var int
+        self.metadataFieldId = metadataFieldId
+
+
+    PROPERTY_LOADERS = {
+        'xpath': getXmlNodeText, 
+        'metadataProfileId': getXmlNodeInt, 
+        'metadataFieldId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAbstractGroupItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchGroupMetadataItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAbstractGroupItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchGroupMetadataItem")
+        kparams.addStringIfDefined("xpath", self.xpath)
+        kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
+        kparams.addIntIfDefined("metadataFieldId", self.metadataFieldId)
+        return kparams
+
+    def getXpath(self):
+        return self.xpath
+
+    def setXpath(self, newXpath):
+        self.xpath = newXpath
+
+    def getMetadataProfileId(self):
+        return self.metadataProfileId
+
+    def setMetadataProfileId(self, newMetadataProfileId):
+        self.metadataProfileId = newMetadataProfileId
+
+    def getMetadataFieldId(self):
+        return self.metadataFieldId
+
+    def setMetadataFieldId(self, newMetadataFieldId):
+        self.metadataFieldId = newMetadataFieldId
 
 
 # @package Kaltura
@@ -322,12 +595,19 @@ class KalturaGroupClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaESearchGroupFieldName': KalturaESearchGroupFieldName,
+            'KalturaESearchGroupOrderByFieldName': KalturaESearchGroupOrderByFieldName,
         }
 
     def getTypes(self):
         return {
+            'KalturaESearchGroupBaseItem': KalturaESearchGroupBaseItem,
             'KalturaGroup': KalturaGroup,
+            'KalturaESearchGroupOperator': KalturaESearchGroupOperator,
             'KalturaGroupListResponse': KalturaGroupListResponse,
+            'KalturaESearchAbstractGroupItem': KalturaESearchAbstractGroupItem,
+            'KalturaESearchGroupItem': KalturaESearchGroupItem,
+            'KalturaESearchGroupMetadataItem': KalturaESearchGroupMetadataItem,
             'KalturaGroupFilter': KalturaGroupFilter,
         }
 
