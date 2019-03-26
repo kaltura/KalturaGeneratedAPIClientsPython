@@ -2208,6 +2208,45 @@ class KalturaESearchAbstractUserItem(KalturaESearchUserBaseItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            searchParams=NotImplemented):
+        KalturaExportCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath)
+
+        # Esearch parameters for the entry search
+        # @var KalturaESearchEntryParams
+        self.searchParams = searchParams
+
+
+    PROPERTY_LOADERS = {
+        'searchParams': (KalturaObjectFactory.create, 'KalturaESearchEntryParams'), 
+    }
+
+    def fromXml(self, node):
+        KalturaExportCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaEsearchExportToCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaExportCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaMediaEsearchExportToCsvJobData")
+        kparams.addObjectIfDefined("searchParams", self.searchParams)
+        return kparams
+
+    def getSearchParams(self):
+        return self.searchParams
+
+    def setSearchParams(self, newSearchParams):
+        self.searchParams = newSearchParams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCategoryEntryItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2983,6 +3022,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchAbstractCategoryItem': KalturaESearchAbstractCategoryItem,
             'KalturaESearchAbstractEntryItem': KalturaESearchAbstractEntryItem,
             'KalturaESearchAbstractUserItem': KalturaESearchAbstractUserItem,
+            'KalturaMediaEsearchExportToCsvJobData': KalturaMediaEsearchExportToCsvJobData,
             'KalturaESearchCategoryEntryItem': KalturaESearchCategoryEntryItem,
             'KalturaESearchCategoryItem': KalturaESearchCategoryItem,
             'KalturaESearchCategoryMetadataItem': KalturaESearchCategoryMetadataItem,

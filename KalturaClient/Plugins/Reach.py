@@ -166,6 +166,7 @@ class KalturaVendorServiceTurnAroundTime(object):
     TWELVE_HOURS = 43200
     TWENTY_FOUR_HOURS = 86400
     FORTY_EIGHT_HOURS = 172800
+    FOUR_DAYS = 345600
     TEN_DAYS = 864000
 
     def __init__(self, value):
@@ -179,6 +180,18 @@ class KalturaVendorServiceTurnAroundTime(object):
 class KalturaVendorServiceType(object):
     HUMAN = 1
     MACHINE = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorTaskProcessingRegion(object):
+    US = 1
+    EU = 2
 
     def __init__(self, value):
         self.value = value
@@ -736,7 +749,8 @@ class KalturaReachProfile(KalturaObjectBase):
             credit=NotImplemented,
             usedCredit=NotImplemented,
             dictionaries=NotImplemented,
-            flavorParamsIds=NotImplemented):
+            flavorParamsIds=NotImplemented,
+            vendorTaskProcessingRegion=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -816,6 +830,10 @@ class KalturaReachProfile(KalturaObjectBase):
         # @var string
         self.flavorParamsIds = flavorParamsIds
 
+        # Indicates in which region the task processing should task place
+        # @var KalturaVendorTaskProcessingRegion
+        self.vendorTaskProcessingRegion = vendorTaskProcessingRegion
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -841,6 +859,7 @@ class KalturaReachProfile(KalturaObjectBase):
         'usedCredit': getXmlNodeFloat, 
         'dictionaries': (KalturaObjectFactory.createArray, 'KalturaDictionary'), 
         'flavorParamsIds': getXmlNodeText, 
+        'vendorTaskProcessingRegion': (KalturaEnumsFactory.createInt, "KalturaVendorTaskProcessingRegion"), 
     }
 
     def fromXml(self, node):
@@ -867,6 +886,7 @@ class KalturaReachProfile(KalturaObjectBase):
         kparams.addObjectIfDefined("credit", self.credit)
         kparams.addArrayIfDefined("dictionaries", self.dictionaries)
         kparams.addStringIfDefined("flavorParamsIds", self.flavorParamsIds)
+        kparams.addIntEnumIfDefined("vendorTaskProcessingRegion", self.vendorTaskProcessingRegion)
         return kparams
 
     def getId(self):
@@ -988,6 +1008,12 @@ class KalturaReachProfile(KalturaObjectBase):
 
     def setFlavorParamsIds(self, newFlavorParamsIds):
         self.flavorParamsIds = newFlavorParamsIds
+
+    def getVendorTaskProcessingRegion(self):
+        return self.vendorTaskProcessingRegion
+
+    def setVendorTaskProcessingRegion(self, newVendorTaskProcessingRegion):
+        self.vendorTaskProcessingRegion = newVendorTaskProcessingRegion
 
 
 # @package Kaltura
@@ -1450,432 +1476,6 @@ class KalturaCategoryEntryCondition(KalturaCondition):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            vendorPartnerIdEqual=NotImplemented,
-            vendorPartnerIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            queueTimeGreaterThanOrEqual=NotImplemented,
-            queueTimeLessThanOrEqual=NotImplemented,
-            finishTimeGreaterThanOrEqual=NotImplemented,
-            finishTimeLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            reachProfileIdEqual=NotImplemented,
-            reachProfileIdIn=NotImplemented,
-            catalogItemIdEqual=NotImplemented,
-            catalogItemIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            contextEqual=NotImplemented):
-        KalturaRelatedFilter.__init__(self,
-            orderBy,
-            advancedSearch)
-
-        # @var int
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
-
-        # @var int
-        self.vendorPartnerIdEqual = vendorPartnerIdEqual
-
-        # @var string
-        self.vendorPartnerIdIn = vendorPartnerIdIn
-
-        # @var int
-        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
-
-        # @var int
-        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
-
-        # @var int
-        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
-
-        # @var int
-        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
-
-        # @var int
-        self.queueTimeGreaterThanOrEqual = queueTimeGreaterThanOrEqual
-
-        # @var int
-        self.queueTimeLessThanOrEqual = queueTimeLessThanOrEqual
-
-        # @var int
-        self.finishTimeGreaterThanOrEqual = finishTimeGreaterThanOrEqual
-
-        # @var int
-        self.finishTimeLessThanOrEqual = finishTimeLessThanOrEqual
-
-        # @var string
-        self.entryIdEqual = entryIdEqual
-
-        # @var KalturaEntryVendorTaskStatus
-        self.statusEqual = statusEqual
-
-        # @var string
-        self.statusIn = statusIn
-
-        # @var int
-        self.reachProfileIdEqual = reachProfileIdEqual
-
-        # @var string
-        self.reachProfileIdIn = reachProfileIdIn
-
-        # @var int
-        self.catalogItemIdEqual = catalogItemIdEqual
-
-        # @var string
-        self.catalogItemIdIn = catalogItemIdIn
-
-        # @var string
-        self.userIdEqual = userIdEqual
-
-        # @var string
-        self.contextEqual = contextEqual
-
-
-    PROPERTY_LOADERS = {
-        'idEqual': getXmlNodeInt, 
-        'idIn': getXmlNodeText, 
-        'vendorPartnerIdEqual': getXmlNodeInt, 
-        'vendorPartnerIdIn': getXmlNodeText, 
-        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
-        'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'updatedAtLessThanOrEqual': getXmlNodeInt, 
-        'queueTimeGreaterThanOrEqual': getXmlNodeInt, 
-        'queueTimeLessThanOrEqual': getXmlNodeInt, 
-        'finishTimeGreaterThanOrEqual': getXmlNodeInt, 
-        'finishTimeLessThanOrEqual': getXmlNodeInt, 
-        'entryIdEqual': getXmlNodeText, 
-        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryVendorTaskStatus"), 
-        'statusIn': getXmlNodeText, 
-        'reachProfileIdEqual': getXmlNodeInt, 
-        'reachProfileIdIn': getXmlNodeText, 
-        'catalogItemIdEqual': getXmlNodeInt, 
-        'catalogItemIdIn': getXmlNodeText, 
-        'userIdEqual': getXmlNodeText, 
-        'contextEqual': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaRelatedFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryVendorTaskBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaRelatedFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryVendorTaskBaseFilter")
-        kparams.addIntIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
-        kparams.addIntIfDefined("vendorPartnerIdEqual", self.vendorPartnerIdEqual)
-        kparams.addStringIfDefined("vendorPartnerIdIn", self.vendorPartnerIdIn)
-        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
-        kparams.addIntIfDefined("queueTimeGreaterThanOrEqual", self.queueTimeGreaterThanOrEqual)
-        kparams.addIntIfDefined("queueTimeLessThanOrEqual", self.queueTimeLessThanOrEqual)
-        kparams.addIntIfDefined("finishTimeGreaterThanOrEqual", self.finishTimeGreaterThanOrEqual)
-        kparams.addIntIfDefined("finishTimeLessThanOrEqual", self.finishTimeLessThanOrEqual)
-        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
-        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
-        kparams.addStringIfDefined("statusIn", self.statusIn)
-        kparams.addIntIfDefined("reachProfileIdEqual", self.reachProfileIdEqual)
-        kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
-        kparams.addIntIfDefined("catalogItemIdEqual", self.catalogItemIdEqual)
-        kparams.addStringIfDefined("catalogItemIdIn", self.catalogItemIdIn)
-        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
-        kparams.addStringIfDefined("contextEqual", self.contextEqual)
-        return kparams
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
-
-    def getVendorPartnerIdEqual(self):
-        return self.vendorPartnerIdEqual
-
-    def setVendorPartnerIdEqual(self, newVendorPartnerIdEqual):
-        self.vendorPartnerIdEqual = newVendorPartnerIdEqual
-
-    def getVendorPartnerIdIn(self):
-        return self.vendorPartnerIdIn
-
-    def setVendorPartnerIdIn(self, newVendorPartnerIdIn):
-        self.vendorPartnerIdIn = newVendorPartnerIdIn
-
-    def getCreatedAtGreaterThanOrEqual(self):
-        return self.createdAtGreaterThanOrEqual
-
-    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
-        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
-
-    def getCreatedAtLessThanOrEqual(self):
-        return self.createdAtLessThanOrEqual
-
-    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
-        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
-
-    def getUpdatedAtGreaterThanOrEqual(self):
-        return self.updatedAtGreaterThanOrEqual
-
-    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
-        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
-
-    def getUpdatedAtLessThanOrEqual(self):
-        return self.updatedAtLessThanOrEqual
-
-    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
-        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
-
-    def getQueueTimeGreaterThanOrEqual(self):
-        return self.queueTimeGreaterThanOrEqual
-
-    def setQueueTimeGreaterThanOrEqual(self, newQueueTimeGreaterThanOrEqual):
-        self.queueTimeGreaterThanOrEqual = newQueueTimeGreaterThanOrEqual
-
-    def getQueueTimeLessThanOrEqual(self):
-        return self.queueTimeLessThanOrEqual
-
-    def setQueueTimeLessThanOrEqual(self, newQueueTimeLessThanOrEqual):
-        self.queueTimeLessThanOrEqual = newQueueTimeLessThanOrEqual
-
-    def getFinishTimeGreaterThanOrEqual(self):
-        return self.finishTimeGreaterThanOrEqual
-
-    def setFinishTimeGreaterThanOrEqual(self, newFinishTimeGreaterThanOrEqual):
-        self.finishTimeGreaterThanOrEqual = newFinishTimeGreaterThanOrEqual
-
-    def getFinishTimeLessThanOrEqual(self):
-        return self.finishTimeLessThanOrEqual
-
-    def setFinishTimeLessThanOrEqual(self, newFinishTimeLessThanOrEqual):
-        self.finishTimeLessThanOrEqual = newFinishTimeLessThanOrEqual
-
-    def getEntryIdEqual(self):
-        return self.entryIdEqual
-
-    def setEntryIdEqual(self, newEntryIdEqual):
-        self.entryIdEqual = newEntryIdEqual
-
-    def getStatusEqual(self):
-        return self.statusEqual
-
-    def setStatusEqual(self, newStatusEqual):
-        self.statusEqual = newStatusEqual
-
-    def getStatusIn(self):
-        return self.statusIn
-
-    def setStatusIn(self, newStatusIn):
-        self.statusIn = newStatusIn
-
-    def getReachProfileIdEqual(self):
-        return self.reachProfileIdEqual
-
-    def setReachProfileIdEqual(self, newReachProfileIdEqual):
-        self.reachProfileIdEqual = newReachProfileIdEqual
-
-    def getReachProfileIdIn(self):
-        return self.reachProfileIdIn
-
-    def setReachProfileIdIn(self, newReachProfileIdIn):
-        self.reachProfileIdIn = newReachProfileIdIn
-
-    def getCatalogItemIdEqual(self):
-        return self.catalogItemIdEqual
-
-    def setCatalogItemIdEqual(self, newCatalogItemIdEqual):
-        self.catalogItemIdEqual = newCatalogItemIdEqual
-
-    def getCatalogItemIdIn(self):
-        return self.catalogItemIdIn
-
-    def setCatalogItemIdIn(self, newCatalogItemIdIn):
-        self.catalogItemIdIn = newCatalogItemIdIn
-
-    def getUserIdEqual(self):
-        return self.userIdEqual
-
-    def setUserIdEqual(self, newUserIdEqual):
-        self.userIdEqual = newUserIdEqual
-
-    def getContextEqual(self):
-        return self.contextEqual
-
-    def setContextEqual(self, newContextEqual):
-        self.contextEqual = newContextEqual
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            vendorPartnerIdEqual=NotImplemented,
-            vendorPartnerIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            queueTimeGreaterThanOrEqual=NotImplemented,
-            queueTimeLessThanOrEqual=NotImplemented,
-            finishTimeGreaterThanOrEqual=NotImplemented,
-            finishTimeLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            reachProfileIdEqual=NotImplemented,
-            reachProfileIdIn=NotImplemented,
-            catalogItemIdEqual=NotImplemented,
-            catalogItemIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            contextEqual=NotImplemented,
-            freeText=NotImplemented):
-        KalturaEntryVendorTaskBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            idEqual,
-            idIn,
-            vendorPartnerIdEqual,
-            vendorPartnerIdIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            updatedAtGreaterThanOrEqual,
-            updatedAtLessThanOrEqual,
-            queueTimeGreaterThanOrEqual,
-            queueTimeLessThanOrEqual,
-            finishTimeGreaterThanOrEqual,
-            finishTimeLessThanOrEqual,
-            entryIdEqual,
-            statusEqual,
-            statusIn,
-            reachProfileIdEqual,
-            reachProfileIdIn,
-            catalogItemIdEqual,
-            catalogItemIdIn,
-            userIdEqual,
-            contextEqual)
-
-        # @var string
-        self.freeText = freeText
-
-
-    PROPERTY_LOADERS = {
-        'freeText': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaEntryVendorTaskBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryVendorTaskFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaEntryVendorTaskBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaEntryVendorTaskFilter")
-        kparams.addStringIfDefined("freeText", self.freeText)
-        return kparams
-
-    def getFreeText(self):
-        return self.freeText
-
-    def setFreeText(self, newFreeText):
-        self.freeText = newFreeText
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaEntryVendorTaskCsvJobData(KalturaJobData):
-    def __init__(self,
-            filter=NotImplemented,
-            userName=NotImplemented,
-            userMail=NotImplemented,
-            outputPath=NotImplemented):
-        KalturaJobData.__init__(self)
-
-        # The filter should return the list of users that need to be specified in the csv.
-        # @var KalturaEntryVendorTaskFilter
-        self.filter = filter
-
-        # The users name
-        # @var string
-        self.userName = userName
-
-        # The users email
-        # @var string
-        self.userMail = userMail
-
-        # The file location
-        # @var string
-        self.outputPath = outputPath
-
-
-    PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, 'KalturaEntryVendorTaskFilter'), 
-        'userName': getXmlNodeText, 
-        'userMail': getXmlNodeText, 
-        'outputPath': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaJobData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryVendorTaskCsvJobData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaJobData.toParams(self)
-        kparams.put("objectType", "KalturaEntryVendorTaskCsvJobData")
-        kparams.addObjectIfDefined("filter", self.filter)
-        kparams.addStringIfDefined("userName", self.userName)
-        kparams.addStringIfDefined("userMail", self.userMail)
-        kparams.addStringIfDefined("outputPath", self.outputPath)
-        return kparams
-
-    def getFilter(self):
-        return self.filter
-
-    def setFilter(self, newFilter):
-        self.filter = newFilter
-
-    def getUserName(self):
-        return self.userName
-
-    def setUserName(self, newUserName):
-        self.userName = newUserName
-
-    def getUserMail(self):
-        return self.userMail
-
-    def setUserMail(self, newUserMail):
-        self.userMail = newUserMail
-
-    def getOutputPath(self):
-        return self.outputPath
-
-    def setOutputPath(self, newOutputPath):
-        self.outputPath = newOutputPath
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEntryVendorTaskListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -2242,6 +1842,399 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
 
     def setAddOn(self, newAddOn):
         self.addOn = newAddOn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            queueTimeGreaterThanOrEqual=NotImplemented,
+            queueTimeLessThanOrEqual=NotImplemented,
+            finishTimeGreaterThanOrEqual=NotImplemented,
+            finishTimeLessThanOrEqual=NotImplemented,
+            entryIdEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            reachProfileIdEqual=NotImplemented,
+            reachProfileIdIn=NotImplemented,
+            catalogItemIdEqual=NotImplemented,
+            catalogItemIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            contextEqual=NotImplemented):
+        KalturaRelatedFilter.__init__(self,
+            orderBy,
+            advancedSearch)
+
+        # @var int
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
+        # @var int
+        self.vendorPartnerIdEqual = vendorPartnerIdEqual
+
+        # @var string
+        self.vendorPartnerIdIn = vendorPartnerIdIn
+
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
+
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
+
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
+
+        # @var int
+        self.queueTimeGreaterThanOrEqual = queueTimeGreaterThanOrEqual
+
+        # @var int
+        self.queueTimeLessThanOrEqual = queueTimeLessThanOrEqual
+
+        # @var int
+        self.finishTimeGreaterThanOrEqual = finishTimeGreaterThanOrEqual
+
+        # @var int
+        self.finishTimeLessThanOrEqual = finishTimeLessThanOrEqual
+
+        # @var string
+        self.entryIdEqual = entryIdEqual
+
+        # @var KalturaEntryVendorTaskStatus
+        self.statusEqual = statusEqual
+
+        # @var string
+        self.statusIn = statusIn
+
+        # @var int
+        self.reachProfileIdEqual = reachProfileIdEqual
+
+        # @var string
+        self.reachProfileIdIn = reachProfileIdIn
+
+        # @var int
+        self.catalogItemIdEqual = catalogItemIdEqual
+
+        # @var string
+        self.catalogItemIdIn = catalogItemIdIn
+
+        # @var string
+        self.userIdEqual = userIdEqual
+
+        # @var string
+        self.contextEqual = contextEqual
+
+
+    PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeInt, 
+        'idIn': getXmlNodeText, 
+        'vendorPartnerIdEqual': getXmlNodeInt, 
+        'vendorPartnerIdIn': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'createdAtLessThanOrEqual': getXmlNodeInt, 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'queueTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'queueTimeLessThanOrEqual': getXmlNodeInt, 
+        'finishTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'finishTimeLessThanOrEqual': getXmlNodeInt, 
+        'entryIdEqual': getXmlNodeText, 
+        'statusEqual': (KalturaEnumsFactory.createInt, "KalturaEntryVendorTaskStatus"), 
+        'statusIn': getXmlNodeText, 
+        'reachProfileIdEqual': getXmlNodeInt, 
+        'reachProfileIdIn': getXmlNodeText, 
+        'catalogItemIdEqual': getXmlNodeInt, 
+        'catalogItemIdIn': getXmlNodeText, 
+        'userIdEqual': getXmlNodeText, 
+        'contextEqual': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRelatedFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryVendorTaskBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRelatedFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryVendorTaskBaseFilter")
+        kparams.addIntIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("vendorPartnerIdEqual", self.vendorPartnerIdEqual)
+        kparams.addStringIfDefined("vendorPartnerIdIn", self.vendorPartnerIdIn)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addIntIfDefined("queueTimeGreaterThanOrEqual", self.queueTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("queueTimeLessThanOrEqual", self.queueTimeLessThanOrEqual)
+        kparams.addIntIfDefined("finishTimeGreaterThanOrEqual", self.finishTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("finishTimeLessThanOrEqual", self.finishTimeLessThanOrEqual)
+        kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
+        kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
+        kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addIntIfDefined("reachProfileIdEqual", self.reachProfileIdEqual)
+        kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
+        kparams.addIntIfDefined("catalogItemIdEqual", self.catalogItemIdEqual)
+        kparams.addStringIfDefined("catalogItemIdIn", self.catalogItemIdIn)
+        kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
+        kparams.addStringIfDefined("contextEqual", self.contextEqual)
+        return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
+
+    def getVendorPartnerIdEqual(self):
+        return self.vendorPartnerIdEqual
+
+    def setVendorPartnerIdEqual(self, newVendorPartnerIdEqual):
+        self.vendorPartnerIdEqual = newVendorPartnerIdEqual
+
+    def getVendorPartnerIdIn(self):
+        return self.vendorPartnerIdIn
+
+    def setVendorPartnerIdIn(self, newVendorPartnerIdIn):
+        self.vendorPartnerIdIn = newVendorPartnerIdIn
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getCreatedAtLessThanOrEqual(self):
+        return self.createdAtLessThanOrEqual
+
+    def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
+        self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
+
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getQueueTimeGreaterThanOrEqual(self):
+        return self.queueTimeGreaterThanOrEqual
+
+    def setQueueTimeGreaterThanOrEqual(self, newQueueTimeGreaterThanOrEqual):
+        self.queueTimeGreaterThanOrEqual = newQueueTimeGreaterThanOrEqual
+
+    def getQueueTimeLessThanOrEqual(self):
+        return self.queueTimeLessThanOrEqual
+
+    def setQueueTimeLessThanOrEqual(self, newQueueTimeLessThanOrEqual):
+        self.queueTimeLessThanOrEqual = newQueueTimeLessThanOrEqual
+
+    def getFinishTimeGreaterThanOrEqual(self):
+        return self.finishTimeGreaterThanOrEqual
+
+    def setFinishTimeGreaterThanOrEqual(self, newFinishTimeGreaterThanOrEqual):
+        self.finishTimeGreaterThanOrEqual = newFinishTimeGreaterThanOrEqual
+
+    def getFinishTimeLessThanOrEqual(self):
+        return self.finishTimeLessThanOrEqual
+
+    def setFinishTimeLessThanOrEqual(self, newFinishTimeLessThanOrEqual):
+        self.finishTimeLessThanOrEqual = newFinishTimeLessThanOrEqual
+
+    def getEntryIdEqual(self):
+        return self.entryIdEqual
+
+    def setEntryIdEqual(self, newEntryIdEqual):
+        self.entryIdEqual = newEntryIdEqual
+
+    def getStatusEqual(self):
+        return self.statusEqual
+
+    def setStatusEqual(self, newStatusEqual):
+        self.statusEqual = newStatusEqual
+
+    def getStatusIn(self):
+        return self.statusIn
+
+    def setStatusIn(self, newStatusIn):
+        self.statusIn = newStatusIn
+
+    def getReachProfileIdEqual(self):
+        return self.reachProfileIdEqual
+
+    def setReachProfileIdEqual(self, newReachProfileIdEqual):
+        self.reachProfileIdEqual = newReachProfileIdEqual
+
+    def getReachProfileIdIn(self):
+        return self.reachProfileIdIn
+
+    def setReachProfileIdIn(self, newReachProfileIdIn):
+        self.reachProfileIdIn = newReachProfileIdIn
+
+    def getCatalogItemIdEqual(self):
+        return self.catalogItemIdEqual
+
+    def setCatalogItemIdEqual(self, newCatalogItemIdEqual):
+        self.catalogItemIdEqual = newCatalogItemIdEqual
+
+    def getCatalogItemIdIn(self):
+        return self.catalogItemIdIn
+
+    def setCatalogItemIdIn(self, newCatalogItemIdIn):
+        self.catalogItemIdIn = newCatalogItemIdIn
+
+    def getUserIdEqual(self):
+        return self.userIdEqual
+
+    def setUserIdEqual(self, newUserIdEqual):
+        self.userIdEqual = newUserIdEqual
+
+    def getContextEqual(self):
+        return self.contextEqual
+
+    def setContextEqual(self, newContextEqual):
+        self.contextEqual = newContextEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            queueTimeGreaterThanOrEqual=NotImplemented,
+            queueTimeLessThanOrEqual=NotImplemented,
+            finishTimeGreaterThanOrEqual=NotImplemented,
+            finishTimeLessThanOrEqual=NotImplemented,
+            entryIdEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            reachProfileIdEqual=NotImplemented,
+            reachProfileIdIn=NotImplemented,
+            catalogItemIdEqual=NotImplemented,
+            catalogItemIdIn=NotImplemented,
+            userIdEqual=NotImplemented,
+            contextEqual=NotImplemented,
+            freeText=NotImplemented):
+        KalturaEntryVendorTaskBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            queueTimeGreaterThanOrEqual,
+            queueTimeLessThanOrEqual,
+            finishTimeGreaterThanOrEqual,
+            finishTimeLessThanOrEqual,
+            entryIdEqual,
+            statusEqual,
+            statusIn,
+            reachProfileIdEqual,
+            reachProfileIdIn,
+            catalogItemIdEqual,
+            catalogItemIdIn,
+            userIdEqual,
+            contextEqual)
+
+        # @var string
+        self.freeText = freeText
+
+
+    PROPERTY_LOADERS = {
+        'freeText': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaEntryVendorTaskBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryVendorTaskFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryVendorTaskBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaEntryVendorTaskFilter")
+        kparams.addStringIfDefined("freeText", self.freeText)
+        return kparams
+
+    def getFreeText(self):
+        return self.freeText
+
+    def setFreeText(self, newFreeText):
+        self.freeText = newFreeText
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryVendorTaskCsvJobData(KalturaExportCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            filter=NotImplemented):
+        KalturaExportCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath)
+
+        # The filter should return the list of users that need to be specified in the csv.
+        # @var KalturaEntryVendorTaskFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaEntryVendorTaskFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaExportCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryVendorTaskCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaExportCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaEntryVendorTaskCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
 
 
 # @package Kaltura
@@ -3768,6 +3761,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorServiceFeature': KalturaVendorServiceFeature,
             'KalturaVendorServiceTurnAroundTime': KalturaVendorServiceTurnAroundTime,
             'KalturaVendorServiceType': KalturaVendorServiceType,
+            'KalturaVendorTaskProcessingRegion': KalturaVendorTaskProcessingRegion,
             'KalturaCatalogItemLanguage': KalturaCatalogItemLanguage,
             'KalturaEntryVendorTaskOrderBy': KalturaEntryVendorTaskOrderBy,
             'KalturaReachProfileOrderBy': KalturaReachProfileOrderBy,
@@ -3791,9 +3785,6 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
             'KalturaCatalogItemAdvancedFilter': KalturaCatalogItemAdvancedFilter,
             'KalturaCategoryEntryCondition': KalturaCategoryEntryCondition,
-            'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
-            'KalturaEntryVendorTaskFilter': KalturaEntryVendorTaskFilter,
-            'KalturaEntryVendorTaskCsvJobData': KalturaEntryVendorTaskCsvJobData,
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
@@ -3801,6 +3792,9 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCaptionsCatalogItem': KalturaVendorCaptionsCatalogItem,
             'KalturaVendorCatalogItemListResponse': KalturaVendorCatalogItemListResponse,
             'KalturaVendorCredit': KalturaVendorCredit,
+            'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
+            'KalturaEntryVendorTaskFilter': KalturaEntryVendorTaskFilter,
+            'KalturaEntryVendorTaskCsvJobData': KalturaEntryVendorTaskCsvJobData,
             'KalturaReachProfileBaseFilter': KalturaReachProfileBaseFilter,
             'KalturaReachReportInputFilter': KalturaReachReportInputFilter,
             'KalturaTimeRangeVendorCredit': KalturaTimeRangeVendorCredit,
