@@ -23972,6 +23972,7 @@ class KalturaPlaylist(KalturaBaseEntry):
 
         # Type of playlist
         # @var KalturaPlaylistType
+        # @insertonly
         self.playlistType = playlistType
 
         # Number of plays
