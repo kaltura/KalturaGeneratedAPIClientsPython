@@ -1004,6 +1004,50 @@ class KalturaESearchUserResult(KalturaESearchResult):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchEntryOperator(KalturaESearchEntryBaseItem):
+    def __init__(self,
+            operator=NotImplemented,
+            searchItems=NotImplemented):
+        KalturaESearchEntryBaseItem.__init__(self)
+
+        # @var KalturaESearchOperatorType
+        self.operator = operator
+
+        # @var array of KalturaESearchEntryBaseItem
+        self.searchItems = searchItems
+
+
+    PROPERTY_LOADERS = {
+        'operator': (KalturaEnumsFactory.createInt, "KalturaESearchOperatorType"), 
+        'searchItems': (KalturaObjectFactory.createArray, 'KalturaESearchEntryBaseItem'), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchEntryBaseItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryOperator.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchEntryBaseItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryOperator")
+        kparams.addIntEnumIfDefined("operator", self.operator)
+        kparams.addArrayIfDefined("searchItems", self.searchItems)
+        return kparams
+
+    def getOperator(self):
+        return self.operator
+
+    def setOperator(self, newOperator):
+        self.operator = newOperator
+
+    def getSearchItems(self):
+        return self.searchItems
+
+    def setSearchItems(self, newSearchItems):
+        self.searchItems = newSearchItems
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCaptionItemData(KalturaESearchItemData):
     def __init__(self,
             highlight=NotImplemented,
@@ -1453,50 +1497,6 @@ class KalturaESearchEntryOrderByItem(KalturaESearchOrderByItem):
 
     def setSortField(self, newSortField):
         self.sortField = newSortField
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaESearchEntryOperator(KalturaESearchEntryBaseItem):
-    def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
-        KalturaESearchEntryBaseItem.__init__(self)
-
-        # @var KalturaESearchOperatorType
-        self.operator = operator
-
-        # @var array of KalturaESearchEntryBaseItem
-        self.searchItems = searchItems
-
-
-    PROPERTY_LOADERS = {
-        'operator': (KalturaEnumsFactory.createInt, "KalturaESearchOperatorType"), 
-        'searchItems': (KalturaObjectFactory.createArray, 'KalturaESearchEntryBaseItem'), 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchEntryBaseItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchEntryOperator.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchEntryBaseItem.toParams(self)
-        kparams.put("objectType", "KalturaESearchEntryOperator")
-        kparams.addIntEnumIfDefined("operator", self.operator)
-        kparams.addArrayIfDefined("searchItems", self.searchItems)
-        return kparams
-
-    def getOperator(self):
-        return self.operator
-
-    def setOperator(self, newOperator):
-        self.operator = newOperator
-
-    def getSearchItems(self):
-        return self.searchItems
-
-    def setSearchItems(self, newSearchItems):
-        self.searchItems = newSearchItems
 
 
 # @package Kaltura
@@ -2999,6 +2999,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchResponse': KalturaESearchResponse,
             'KalturaESearchUserBaseItem': KalturaESearchUserBaseItem,
             'KalturaESearchUserResult': KalturaESearchUserResult,
+            'KalturaESearchEntryOperator': KalturaESearchEntryOperator,
             'KalturaESearchCaptionItemData': KalturaESearchCaptionItemData,
             'KalturaESearchCategoryOrderByItem': KalturaESearchCategoryOrderByItem,
             'KalturaESearchCategoryOperator': KalturaESearchCategoryOperator,
@@ -3006,7 +3007,6 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCategoryResponse': KalturaESearchCategoryResponse,
             'KalturaESearchCuePointItemData': KalturaESearchCuePointItemData,
             'KalturaESearchEntryOrderByItem': KalturaESearchEntryOrderByItem,
-            'KalturaESearchEntryOperator': KalturaESearchEntryOperator,
             'KalturaESearchEntryParams': KalturaESearchEntryParams,
             'KalturaESearchEntryResponse': KalturaESearchEntryResponse,
             'KalturaESearchGroupOrderByItem': KalturaESearchGroupOrderByItem,

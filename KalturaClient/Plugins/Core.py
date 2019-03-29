@@ -890,6 +890,19 @@ class KalturaRecordingStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaReportExportItemType(object):
+    TABLE = 1
+    TOTAL = 2
+    GRAPH = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaResponseProfileStatus(object):
     DISABLED = 1
     ENABLED = 2
@@ -1853,10 +1866,10 @@ class KalturaBatchJobType(object):
     PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
     PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
     DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
-    CONVERT = "0"
     DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
     DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
     DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
+    CONVERT = "0"
     DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
     DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
     DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
@@ -1916,6 +1929,7 @@ class KalturaBatchJobType(object):
     CLIP_CONCAT = "47"
     COPY_CUE_POINTS = "48"
     EXPORT_CSV = "49"
+    REPORT_EXPORT = "50"
 
     def __init__(self, value):
         self.value = value
@@ -4436,6 +4450,9 @@ class KalturaMailType(object):
     MAIL_TYPE_LIVE_REPORT_EXPORT_ABORT = "132"
     MAIL_TYPE_USERS_CSV = "133"
     MAIL_TYPE_OBJECTS_CSV = "135"
+    MAIL_TYPE_REPORT_EXPORT_SUCCESS = "136"
+    MAIL_TYPE_REPORT_EXPORT_FAILURE = "137"
+    MAIL_TYPE_REPORT_EXPORT_ABORT = "138"
 
     def __init__(self, value):
         self.value = value
@@ -24343,50 +24360,6 @@ class KalturaReportBaseTotal(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaReportGraph(KalturaObjectBase):
-    def __init__(self,
-            id=NotImplemented,
-            data=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.id = id
-
-        # @var string
-        self.data = data
-
-
-    PROPERTY_LOADERS = {
-        'id': getXmlNodeText, 
-        'data': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaReportGraph.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaReportGraph")
-        kparams.addStringIfDefined("id", self.id)
-        kparams.addStringIfDefined("data", self.data)
-        return kparams
-
-    def getId(self):
-        return self.id
-
-    def setId(self, newId):
-        self.id = newId
-
-    def getData(self):
-        return self.data
-
-    def setData(self, newData):
-        self.data = newData
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaReportInputBaseFilter(KalturaObjectBase):
     def __init__(self,
             fromDate=NotImplemented,
@@ -24459,46 +24432,327 @@ class KalturaReportInputBaseFilter(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaReportResponse(KalturaObjectBase):
+class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def __init__(self,
-            columns=NotImplemented,
-            results=NotImplemented):
-        KalturaObjectBase.__init__(self)
+            fromDate=NotImplemented,
+            toDate=NotImplemented,
+            fromDay=NotImplemented,
+            toDay=NotImplemented,
+            keywords=NotImplemented,
+            searchInTags=NotImplemented,
+            searchInAdminTags=NotImplemented,
+            categories=NotImplemented,
+            categoriesIdsIn=NotImplemented,
+            customVar1In=NotImplemented,
+            customVar2In=NotImplemented,
+            customVar3In=NotImplemented,
+            deviceIn=NotImplemented,
+            countryIn=NotImplemented,
+            regionIn=NotImplemented,
+            citiesIn=NotImplemented,
+            operatingSystemFamilyIn=NotImplemented,
+            browserFamilyIn=NotImplemented,
+            timeZoneOffset=NotImplemented,
+            interval=NotImplemented,
+            mediaTypeIn=NotImplemented,
+            sourceTypeIn=NotImplemented,
+            ownerIdsIn=NotImplemented,
+            entryOperator=NotImplemented,
+            entryCreatedAtGreaterThanOrEqual=NotImplemented,
+            entryCreatedAtLessThanOrEqual=NotImplemented,
+            entryIdIn=NotImplemented):
+        KalturaReportInputBaseFilter.__init__(self,
+            fromDate,
+            toDate,
+            fromDay,
+            toDay)
+
+        # Search keywords to filter objects
+        # @var string
+        self.keywords = keywords
+
+        # Search keywords in objects tags
+        # @var bool
+        self.searchInTags = searchInTags
+
+        # Search keywords in objects admin tags
+        # @var bool
+        self.searchInAdminTags = searchInAdminTags
+
+        # Search objects in specified categories
+        # @var string
+        self.categories = categories
+
+        # Search objects in specified category ids
+        # @var string
+        self.categoriesIdsIn = categoriesIdsIn
+
+        # Filter by customVar1
+        # @var string
+        self.customVar1In = customVar1In
+
+        # Filter by customVar2
+        # @var string
+        self.customVar2In = customVar2In
+
+        # Filter by customVar3
+        # @var string
+        self.customVar3In = customVar3In
+
+        # Filter by device
+        # @var string
+        self.deviceIn = deviceIn
+
+        # Filter by country
+        # @var string
+        self.countryIn = countryIn
+
+        # Filter by region
+        # @var string
+        self.regionIn = regionIn
+
+        # Filter by city
+        # @var string
+        self.citiesIn = citiesIn
+
+        # Filter by operating system family
+        # @var string
+        self.operatingSystemFamilyIn = operatingSystemFamilyIn
+
+        # Filter by browser family
+        # @var string
+        self.browserFamilyIn = browserFamilyIn
+
+        # Time zone offset in minutes
+        # @var int
+        self.timeZoneOffset = timeZoneOffset
+
+        # Aggregated results according to interval
+        # @var KalturaReportInterval
+        self.interval = interval
+
+        # Filter by media types
+        # @var string
+        self.mediaTypeIn = mediaTypeIn
+
+        # Filter by source types
+        # @var string
+        self.sourceTypeIn = sourceTypeIn
+
+        # Filter by entry owner
+        # @var string
+        self.ownerIdsIn = ownerIdsIn
+
+        # @var KalturaESearchEntryOperator
+        self.entryOperator = entryOperator
+
+        # Entry created at greater than or equal as Unix timestamp
+        # @var int
+        self.entryCreatedAtGreaterThanOrEqual = entryCreatedAtGreaterThanOrEqual
+
+        # Entry created at less than or equal as Unix timestamp
+        # @var int
+        self.entryCreatedAtLessThanOrEqual = entryCreatedAtLessThanOrEqual
 
         # @var string
-        self.columns = columns
-
-        # @var array of KalturaString
-        self.results = results
+        self.entryIdIn = entryIdIn
 
 
     PROPERTY_LOADERS = {
-        'columns': getXmlNodeText, 
-        'results': (KalturaObjectFactory.createArray, 'KalturaString'), 
+        'keywords': getXmlNodeText, 
+        'searchInTags': getXmlNodeBool, 
+        'searchInAdminTags': getXmlNodeBool, 
+        'categories': getXmlNodeText, 
+        'categoriesIdsIn': getXmlNodeText, 
+        'customVar1In': getXmlNodeText, 
+        'customVar2In': getXmlNodeText, 
+        'customVar3In': getXmlNodeText, 
+        'deviceIn': getXmlNodeText, 
+        'countryIn': getXmlNodeText, 
+        'regionIn': getXmlNodeText, 
+        'citiesIn': getXmlNodeText, 
+        'operatingSystemFamilyIn': getXmlNodeText, 
+        'browserFamilyIn': getXmlNodeText, 
+        'timeZoneOffset': getXmlNodeInt, 
+        'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
+        'mediaTypeIn': getXmlNodeText, 
+        'sourceTypeIn': getXmlNodeText, 
+        'ownerIdsIn': getXmlNodeText, 
+        'entryOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
+        'entryCreatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'entryCreatedAtLessThanOrEqual': getXmlNodeInt, 
+        'entryIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaReportResponse.PROPERTY_LOADERS)
+        KalturaReportInputBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportInputFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaReportResponse")
-        kparams.addStringIfDefined("columns", self.columns)
-        kparams.addArrayIfDefined("results", self.results)
+        kparams = KalturaReportInputBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaReportInputFilter")
+        kparams.addStringIfDefined("keywords", self.keywords)
+        kparams.addBoolIfDefined("searchInTags", self.searchInTags)
+        kparams.addBoolIfDefined("searchInAdminTags", self.searchInAdminTags)
+        kparams.addStringIfDefined("categories", self.categories)
+        kparams.addStringIfDefined("categoriesIdsIn", self.categoriesIdsIn)
+        kparams.addStringIfDefined("customVar1In", self.customVar1In)
+        kparams.addStringIfDefined("customVar2In", self.customVar2In)
+        kparams.addStringIfDefined("customVar3In", self.customVar3In)
+        kparams.addStringIfDefined("deviceIn", self.deviceIn)
+        kparams.addStringIfDefined("countryIn", self.countryIn)
+        kparams.addStringIfDefined("regionIn", self.regionIn)
+        kparams.addStringIfDefined("citiesIn", self.citiesIn)
+        kparams.addStringIfDefined("operatingSystemFamilyIn", self.operatingSystemFamilyIn)
+        kparams.addStringIfDefined("browserFamilyIn", self.browserFamilyIn)
+        kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
+        kparams.addStringEnumIfDefined("interval", self.interval)
+        kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
+        kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
+        kparams.addStringIfDefined("ownerIdsIn", self.ownerIdsIn)
+        kparams.addObjectIfDefined("entryOperator", self.entryOperator)
+        kparams.addIntIfDefined("entryCreatedAtGreaterThanOrEqual", self.entryCreatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("entryCreatedAtLessThanOrEqual", self.entryCreatedAtLessThanOrEqual)
+        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         return kparams
 
-    def getColumns(self):
-        return self.columns
+    def getKeywords(self):
+        return self.keywords
 
-    def setColumns(self, newColumns):
-        self.columns = newColumns
+    def setKeywords(self, newKeywords):
+        self.keywords = newKeywords
 
-    def getResults(self):
-        return self.results
+    def getSearchInTags(self):
+        return self.searchInTags
 
-    def setResults(self, newResults):
-        self.results = newResults
+    def setSearchInTags(self, newSearchInTags):
+        self.searchInTags = newSearchInTags
+
+    def getSearchInAdminTags(self):
+        return self.searchInAdminTags
+
+    def setSearchInAdminTags(self, newSearchInAdminTags):
+        self.searchInAdminTags = newSearchInAdminTags
+
+    def getCategories(self):
+        return self.categories
+
+    def setCategories(self, newCategories):
+        self.categories = newCategories
+
+    def getCategoriesIdsIn(self):
+        return self.categoriesIdsIn
+
+    def setCategoriesIdsIn(self, newCategoriesIdsIn):
+        self.categoriesIdsIn = newCategoriesIdsIn
+
+    def getCustomVar1In(self):
+        return self.customVar1In
+
+    def setCustomVar1In(self, newCustomVar1In):
+        self.customVar1In = newCustomVar1In
+
+    def getCustomVar2In(self):
+        return self.customVar2In
+
+    def setCustomVar2In(self, newCustomVar2In):
+        self.customVar2In = newCustomVar2In
+
+    def getCustomVar3In(self):
+        return self.customVar3In
+
+    def setCustomVar3In(self, newCustomVar3In):
+        self.customVar3In = newCustomVar3In
+
+    def getDeviceIn(self):
+        return self.deviceIn
+
+    def setDeviceIn(self, newDeviceIn):
+        self.deviceIn = newDeviceIn
+
+    def getCountryIn(self):
+        return self.countryIn
+
+    def setCountryIn(self, newCountryIn):
+        self.countryIn = newCountryIn
+
+    def getRegionIn(self):
+        return self.regionIn
+
+    def setRegionIn(self, newRegionIn):
+        self.regionIn = newRegionIn
+
+    def getCitiesIn(self):
+        return self.citiesIn
+
+    def setCitiesIn(self, newCitiesIn):
+        self.citiesIn = newCitiesIn
+
+    def getOperatingSystemFamilyIn(self):
+        return self.operatingSystemFamilyIn
+
+    def setOperatingSystemFamilyIn(self, newOperatingSystemFamilyIn):
+        self.operatingSystemFamilyIn = newOperatingSystemFamilyIn
+
+    def getBrowserFamilyIn(self):
+        return self.browserFamilyIn
+
+    def setBrowserFamilyIn(self, newBrowserFamilyIn):
+        self.browserFamilyIn = newBrowserFamilyIn
+
+    def getTimeZoneOffset(self):
+        return self.timeZoneOffset
+
+    def setTimeZoneOffset(self, newTimeZoneOffset):
+        self.timeZoneOffset = newTimeZoneOffset
+
+    def getInterval(self):
+        return self.interval
+
+    def setInterval(self, newInterval):
+        self.interval = newInterval
+
+    def getMediaTypeIn(self):
+        return self.mediaTypeIn
+
+    def setMediaTypeIn(self, newMediaTypeIn):
+        self.mediaTypeIn = newMediaTypeIn
+
+    def getSourceTypeIn(self):
+        return self.sourceTypeIn
+
+    def setSourceTypeIn(self, newSourceTypeIn):
+        self.sourceTypeIn = newSourceTypeIn
+
+    def getOwnerIdsIn(self):
+        return self.ownerIdsIn
+
+    def setOwnerIdsIn(self, newOwnerIdsIn):
+        self.ownerIdsIn = newOwnerIdsIn
+
+    def getEntryOperator(self):
+        return self.entryOperator
+
+    def setEntryOperator(self, newEntryOperator):
+        self.entryOperator = newEntryOperator
+
+    def getEntryCreatedAtGreaterThanOrEqual(self):
+        return self.entryCreatedAtGreaterThanOrEqual
+
+    def setEntryCreatedAtGreaterThanOrEqual(self, newEntryCreatedAtGreaterThanOrEqual):
+        self.entryCreatedAtGreaterThanOrEqual = newEntryCreatedAtGreaterThanOrEqual
+
+    def getEntryCreatedAtLessThanOrEqual(self):
+        return self.entryCreatedAtLessThanOrEqual
+
+    def setEntryCreatedAtLessThanOrEqual(self, newEntryCreatedAtLessThanOrEqual):
+        self.entryCreatedAtLessThanOrEqual = newEntryCreatedAtLessThanOrEqual
+
+    def getEntryIdIn(self):
+        return self.entryIdIn
+
+    def setEntryIdIn(self, newEntryIdIn):
+        self.entryIdIn = newEntryIdIn
 
 
 # @package Kaltura
@@ -24543,6 +24797,299 @@ class KalturaReportResponseOptions(KalturaObjectBase):
 
     def setSkipEmptyDates(self, newSkipEmptyDates):
         self.skipEmptyDates = newSkipEmptyDates
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportExportItem(KalturaObjectBase):
+    def __init__(self,
+            reportTitle=NotImplemented,
+            action=NotImplemented,
+            reportType=NotImplemented,
+            filter=NotImplemented,
+            order=NotImplemented,
+            objectIds=NotImplemented,
+            responseOptions=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.reportTitle = reportTitle
+
+        # @var KalturaReportExportItemType
+        self.action = action
+
+        # @var KalturaReportType
+        self.reportType = reportType
+
+        # @var KalturaReportInputFilter
+        self.filter = filter
+
+        # @var string
+        self.order = order
+
+        # @var string
+        self.objectIds = objectIds
+
+        # @var KalturaReportResponseOptions
+        self.responseOptions = responseOptions
+
+
+    PROPERTY_LOADERS = {
+        'reportTitle': getXmlNodeText, 
+        'action': (KalturaEnumsFactory.createInt, "KalturaReportExportItemType"), 
+        'reportType': (KalturaEnumsFactory.createString, "KalturaReportType"), 
+        'filter': (KalturaObjectFactory.create, 'KalturaReportInputFilter'), 
+        'order': getXmlNodeText, 
+        'objectIds': getXmlNodeText, 
+        'responseOptions': (KalturaObjectFactory.create, 'KalturaReportResponseOptions'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportExportItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportExportItem")
+        kparams.addStringIfDefined("reportTitle", self.reportTitle)
+        kparams.addIntEnumIfDefined("action", self.action)
+        kparams.addStringEnumIfDefined("reportType", self.reportType)
+        kparams.addObjectIfDefined("filter", self.filter)
+        kparams.addStringIfDefined("order", self.order)
+        kparams.addStringIfDefined("objectIds", self.objectIds)
+        kparams.addObjectIfDefined("responseOptions", self.responseOptions)
+        return kparams
+
+    def getReportTitle(self):
+        return self.reportTitle
+
+    def setReportTitle(self, newReportTitle):
+        self.reportTitle = newReportTitle
+
+    def getAction(self):
+        return self.action
+
+    def setAction(self, newAction):
+        self.action = newAction
+
+    def getReportType(self):
+        return self.reportType
+
+    def setReportType(self, newReportType):
+        self.reportType = newReportType
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
+
+    def getOrder(self):
+        return self.order
+
+    def setOrder(self, newOrder):
+        self.order = newOrder
+
+    def getObjectIds(self):
+        return self.objectIds
+
+    def setObjectIds(self, newObjectIds):
+        self.objectIds = newObjectIds
+
+    def getResponseOptions(self):
+        return self.responseOptions
+
+    def setResponseOptions(self, newResponseOptions):
+        self.responseOptions = newResponseOptions
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportExportParams(KalturaObjectBase):
+    def __init__(self,
+            recipientEmail=NotImplemented,
+            timeZoneOffset=NotImplemented,
+            reportItems=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.recipientEmail = recipientEmail
+
+        # Time zone offset in minutes (between client to UTC)
+        # @var int
+        self.timeZoneOffset = timeZoneOffset
+
+        # @var array of KalturaReportExportItem
+        self.reportItems = reportItems
+
+
+    PROPERTY_LOADERS = {
+        'recipientEmail': getXmlNodeText, 
+        'timeZoneOffset': getXmlNodeInt, 
+        'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportExportParams.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportExportParams")
+        kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
+        kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
+        kparams.addArrayIfDefined("reportItems", self.reportItems)
+        return kparams
+
+    def getRecipientEmail(self):
+        return self.recipientEmail
+
+    def setRecipientEmail(self, newRecipientEmail):
+        self.recipientEmail = newRecipientEmail
+
+    def getTimeZoneOffset(self):
+        return self.timeZoneOffset
+
+    def setTimeZoneOffset(self, newTimeZoneOffset):
+        self.timeZoneOffset = newTimeZoneOffset
+
+    def getReportItems(self):
+        return self.reportItems
+
+    def setReportItems(self, newReportItems):
+        self.reportItems = newReportItems
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportExportResponse(KalturaObjectBase):
+    def __init__(self,
+            referenceJobId=NotImplemented,
+            reportEmail=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        self.referenceJobId = referenceJobId
+
+        # @var string
+        self.reportEmail = reportEmail
+
+
+    PROPERTY_LOADERS = {
+        'referenceJobId': getXmlNodeInt, 
+        'reportEmail': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportExportResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportExportResponse")
+        kparams.addIntIfDefined("referenceJobId", self.referenceJobId)
+        kparams.addStringIfDefined("reportEmail", self.reportEmail)
+        return kparams
+
+    def getReferenceJobId(self):
+        return self.referenceJobId
+
+    def setReferenceJobId(self, newReferenceJobId):
+        self.referenceJobId = newReferenceJobId
+
+    def getReportEmail(self):
+        return self.reportEmail
+
+    def setReportEmail(self, newReportEmail):
+        self.reportEmail = newReportEmail
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportGraph(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            data=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.id = id
+
+        # @var string
+        self.data = data
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
+        'data': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportGraph.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportGraph")
+        kparams.addStringIfDefined("id", self.id)
+        kparams.addStringIfDefined("data", self.data)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
+
+    def getData(self):
+        return self.data
+
+    def setData(self, newData):
+        self.data = newData
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReportResponse(KalturaObjectBase):
+    def __init__(self,
+            columns=NotImplemented,
+            results=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.columns = columns
+
+        # @var array of KalturaString
+        self.results = results
+
+
+    PROPERTY_LOADERS = {
+        'columns': getXmlNodeText, 
+        'results': (KalturaObjectFactory.createArray, 'KalturaString'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportResponse")
+        kparams.addStringIfDefined("columns", self.columns)
+        kparams.addArrayIfDefined("results", self.results)
+        return kparams
+
+    def getColumns(self):
+        return self.columns
+
+    def setColumns(self, newColumns):
+        self.columns = newColumns
+
+    def getResults(self):
+        return self.results
+
+    def setResults(self, newResults):
+        self.results = newResults
 
 
 # @package Kaltura
@@ -38163,327 +38710,58 @@ class KalturaReportBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaReportInputFilter(KalturaReportInputBaseFilter):
+class KalturaReportExportJobData(KalturaJobData):
     def __init__(self,
-            fromDate=NotImplemented,
-            toDate=NotImplemented,
-            fromDay=NotImplemented,
-            toDay=NotImplemented,
-            keywords=NotImplemented,
-            searchInTags=NotImplemented,
-            searchInAdminTags=NotImplemented,
-            categories=NotImplemented,
-            categoriesIdsIn=NotImplemented,
-            customVar1In=NotImplemented,
-            customVar2In=NotImplemented,
-            customVar3In=NotImplemented,
-            deviceIn=NotImplemented,
-            countryIn=NotImplemented,
-            regionIn=NotImplemented,
-            citiesIn=NotImplemented,
-            operatingSystemFamilyIn=NotImplemented,
-            browserFamilyIn=NotImplemented,
-            timeZoneOffset=NotImplemented,
-            interval=NotImplemented,
-            mediaTypeIn=NotImplemented,
-            sourceTypeIn=NotImplemented,
-            ownerIdsIn=NotImplemented,
-            entryOperator=NotImplemented,
-            entryCreatedAtGreaterThanOrEqual=NotImplemented,
-            entryCreatedAtLessThanOrEqual=NotImplemented,
-            entryIdIn=NotImplemented):
-        KalturaReportInputBaseFilter.__init__(self,
-            fromDate,
-            toDate,
-            fromDay,
-            toDay)
-
-        # Search keywords to filter objects
-        # @var string
-        self.keywords = keywords
-
-        # Search keywords in objects tags
-        # @var bool
-        self.searchInTags = searchInTags
-
-        # Search keywords in objects admin tags
-        # @var bool
-        self.searchInAdminTags = searchInAdminTags
-
-        # Search objects in specified categories
-        # @var string
-        self.categories = categories
-
-        # Search objects in specified category ids
-        # @var string
-        self.categoriesIdsIn = categoriesIdsIn
-
-        # Filter by customVar1
-        # @var string
-        self.customVar1In = customVar1In
-
-        # Filter by customVar2
-        # @var string
-        self.customVar2In = customVar2In
-
-        # Filter by customVar3
-        # @var string
-        self.customVar3In = customVar3In
-
-        # Filter by device
-        # @var string
-        self.deviceIn = deviceIn
-
-        # Filter by country
-        # @var string
-        self.countryIn = countryIn
-
-        # Filter by region
-        # @var string
-        self.regionIn = regionIn
-
-        # Filter by city
-        # @var string
-        self.citiesIn = citiesIn
-
-        # Filter by operating system family
-        # @var string
-        self.operatingSystemFamilyIn = operatingSystemFamilyIn
-
-        # Filter by browser family
-        # @var string
-        self.browserFamilyIn = browserFamilyIn
-
-        # Time zone offset in minutes
-        # @var int
-        self.timeZoneOffset = timeZoneOffset
-
-        # Aggregated results according to interval
-        # @var KalturaReportInterval
-        self.interval = interval
-
-        # Filter by media types
-        # @var string
-        self.mediaTypeIn = mediaTypeIn
-
-        # Filter by source types
-        # @var string
-        self.sourceTypeIn = sourceTypeIn
-
-        # Filter by entry owner
-        # @var string
-        self.ownerIdsIn = ownerIdsIn
-
-        # @var KalturaESearchEntryOperator
-        self.entryOperator = entryOperator
-
-        # Entry created at greater than or equal as Unix timestamp
-        # @var int
-        self.entryCreatedAtGreaterThanOrEqual = entryCreatedAtGreaterThanOrEqual
-
-        # Entry created at less than or equal as Unix timestamp
-        # @var int
-        self.entryCreatedAtLessThanOrEqual = entryCreatedAtLessThanOrEqual
+            recipientEmail=NotImplemented,
+            reportItems=NotImplemented,
+            filePaths=NotImplemented):
+        KalturaJobData.__init__(self)
 
         # @var string
-        self.entryIdIn = entryIdIn
+        self.recipientEmail = recipientEmail
+
+        # @var array of KalturaReportExportItem
+        self.reportItems = reportItems
+
+        # @var string
+        self.filePaths = filePaths
 
 
     PROPERTY_LOADERS = {
-        'keywords': getXmlNodeText, 
-        'searchInTags': getXmlNodeBool, 
-        'searchInAdminTags': getXmlNodeBool, 
-        'categories': getXmlNodeText, 
-        'categoriesIdsIn': getXmlNodeText, 
-        'customVar1In': getXmlNodeText, 
-        'customVar2In': getXmlNodeText, 
-        'customVar3In': getXmlNodeText, 
-        'deviceIn': getXmlNodeText, 
-        'countryIn': getXmlNodeText, 
-        'regionIn': getXmlNodeText, 
-        'citiesIn': getXmlNodeText, 
-        'operatingSystemFamilyIn': getXmlNodeText, 
-        'browserFamilyIn': getXmlNodeText, 
-        'timeZoneOffset': getXmlNodeInt, 
-        'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
-        'mediaTypeIn': getXmlNodeText, 
-        'sourceTypeIn': getXmlNodeText, 
-        'ownerIdsIn': getXmlNodeText, 
-        'entryOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
-        'entryCreatedAtGreaterThanOrEqual': getXmlNodeInt, 
-        'entryCreatedAtLessThanOrEqual': getXmlNodeInt, 
-        'entryIdIn': getXmlNodeText, 
+        'recipientEmail': getXmlNodeText, 
+        'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
+        'filePaths': getXmlNodeText, 
     }
 
     def fromXml(self, node):
-        KalturaReportInputBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaReportInputFilter.PROPERTY_LOADERS)
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportExportJobData.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaReportInputBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaReportInputFilter")
-        kparams.addStringIfDefined("keywords", self.keywords)
-        kparams.addBoolIfDefined("searchInTags", self.searchInTags)
-        kparams.addBoolIfDefined("searchInAdminTags", self.searchInAdminTags)
-        kparams.addStringIfDefined("categories", self.categories)
-        kparams.addStringIfDefined("categoriesIdsIn", self.categoriesIdsIn)
-        kparams.addStringIfDefined("customVar1In", self.customVar1In)
-        kparams.addStringIfDefined("customVar2In", self.customVar2In)
-        kparams.addStringIfDefined("customVar3In", self.customVar3In)
-        kparams.addStringIfDefined("deviceIn", self.deviceIn)
-        kparams.addStringIfDefined("countryIn", self.countryIn)
-        kparams.addStringIfDefined("regionIn", self.regionIn)
-        kparams.addStringIfDefined("citiesIn", self.citiesIn)
-        kparams.addStringIfDefined("operatingSystemFamilyIn", self.operatingSystemFamilyIn)
-        kparams.addStringIfDefined("browserFamilyIn", self.browserFamilyIn)
-        kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
-        kparams.addStringEnumIfDefined("interval", self.interval)
-        kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
-        kparams.addStringIfDefined("sourceTypeIn", self.sourceTypeIn)
-        kparams.addStringIfDefined("ownerIdsIn", self.ownerIdsIn)
-        kparams.addObjectIfDefined("entryOperator", self.entryOperator)
-        kparams.addIntIfDefined("entryCreatedAtGreaterThanOrEqual", self.entryCreatedAtGreaterThanOrEqual)
-        kparams.addIntIfDefined("entryCreatedAtLessThanOrEqual", self.entryCreatedAtLessThanOrEqual)
-        kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaReportExportJobData")
+        kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
+        kparams.addArrayIfDefined("reportItems", self.reportItems)
+        kparams.addStringIfDefined("filePaths", self.filePaths)
         return kparams
 
-    def getKeywords(self):
-        return self.keywords
+    def getRecipientEmail(self):
+        return self.recipientEmail
 
-    def setKeywords(self, newKeywords):
-        self.keywords = newKeywords
+    def setRecipientEmail(self, newRecipientEmail):
+        self.recipientEmail = newRecipientEmail
 
-    def getSearchInTags(self):
-        return self.searchInTags
+    def getReportItems(self):
+        return self.reportItems
 
-    def setSearchInTags(self, newSearchInTags):
-        self.searchInTags = newSearchInTags
+    def setReportItems(self, newReportItems):
+        self.reportItems = newReportItems
 
-    def getSearchInAdminTags(self):
-        return self.searchInAdminTags
+    def getFilePaths(self):
+        return self.filePaths
 
-    def setSearchInAdminTags(self, newSearchInAdminTags):
-        self.searchInAdminTags = newSearchInAdminTags
-
-    def getCategories(self):
-        return self.categories
-
-    def setCategories(self, newCategories):
-        self.categories = newCategories
-
-    def getCategoriesIdsIn(self):
-        return self.categoriesIdsIn
-
-    def setCategoriesIdsIn(self, newCategoriesIdsIn):
-        self.categoriesIdsIn = newCategoriesIdsIn
-
-    def getCustomVar1In(self):
-        return self.customVar1In
-
-    def setCustomVar1In(self, newCustomVar1In):
-        self.customVar1In = newCustomVar1In
-
-    def getCustomVar2In(self):
-        return self.customVar2In
-
-    def setCustomVar2In(self, newCustomVar2In):
-        self.customVar2In = newCustomVar2In
-
-    def getCustomVar3In(self):
-        return self.customVar3In
-
-    def setCustomVar3In(self, newCustomVar3In):
-        self.customVar3In = newCustomVar3In
-
-    def getDeviceIn(self):
-        return self.deviceIn
-
-    def setDeviceIn(self, newDeviceIn):
-        self.deviceIn = newDeviceIn
-
-    def getCountryIn(self):
-        return self.countryIn
-
-    def setCountryIn(self, newCountryIn):
-        self.countryIn = newCountryIn
-
-    def getRegionIn(self):
-        return self.regionIn
-
-    def setRegionIn(self, newRegionIn):
-        self.regionIn = newRegionIn
-
-    def getCitiesIn(self):
-        return self.citiesIn
-
-    def setCitiesIn(self, newCitiesIn):
-        self.citiesIn = newCitiesIn
-
-    def getOperatingSystemFamilyIn(self):
-        return self.operatingSystemFamilyIn
-
-    def setOperatingSystemFamilyIn(self, newOperatingSystemFamilyIn):
-        self.operatingSystemFamilyIn = newOperatingSystemFamilyIn
-
-    def getBrowserFamilyIn(self):
-        return self.browserFamilyIn
-
-    def setBrowserFamilyIn(self, newBrowserFamilyIn):
-        self.browserFamilyIn = newBrowserFamilyIn
-
-    def getTimeZoneOffset(self):
-        return self.timeZoneOffset
-
-    def setTimeZoneOffset(self, newTimeZoneOffset):
-        self.timeZoneOffset = newTimeZoneOffset
-
-    def getInterval(self):
-        return self.interval
-
-    def setInterval(self, newInterval):
-        self.interval = newInterval
-
-    def getMediaTypeIn(self):
-        return self.mediaTypeIn
-
-    def setMediaTypeIn(self, newMediaTypeIn):
-        self.mediaTypeIn = newMediaTypeIn
-
-    def getSourceTypeIn(self):
-        return self.sourceTypeIn
-
-    def setSourceTypeIn(self, newSourceTypeIn):
-        self.sourceTypeIn = newSourceTypeIn
-
-    def getOwnerIdsIn(self):
-        return self.ownerIdsIn
-
-    def setOwnerIdsIn(self, newOwnerIdsIn):
-        self.ownerIdsIn = newOwnerIdsIn
-
-    def getEntryOperator(self):
-        return self.entryOperator
-
-    def setEntryOperator(self, newEntryOperator):
-        self.entryOperator = newEntryOperator
-
-    def getEntryCreatedAtGreaterThanOrEqual(self):
-        return self.entryCreatedAtGreaterThanOrEqual
-
-    def setEntryCreatedAtGreaterThanOrEqual(self, newEntryCreatedAtGreaterThanOrEqual):
-        self.entryCreatedAtGreaterThanOrEqual = newEntryCreatedAtGreaterThanOrEqual
-
-    def getEntryCreatedAtLessThanOrEqual(self):
-        return self.entryCreatedAtLessThanOrEqual
-
-    def setEntryCreatedAtLessThanOrEqual(self, newEntryCreatedAtLessThanOrEqual):
-        self.entryCreatedAtLessThanOrEqual = newEntryCreatedAtLessThanOrEqual
-
-    def getEntryIdIn(self):
-        return self.entryIdIn
-
-    def setEntryIdIn(self, newEntryIdIn):
-        self.entryIdIn = newEntryIdIn
+    def setFilePaths(self, newFilePaths):
+        self.filePaths = newFilePaths
 
 
 # @package Kaltura
@@ -62198,6 +62476,15 @@ class KalturaReportService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaReportResponse')
 
+    def exportToCsv(self, params):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("params", params)
+        self.client.queueServiceActionCall("report", "exportToCsv", "KalturaReportExportResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReportExportResponse')
+
     def getBaseTotal(self, reportType, reportInputFilter, objectIds = NotImplemented, responseOptions = NotImplemented):
         """report getBaseTotal action allows to get the total base for storage reports"""
 
@@ -64087,6 +64374,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPrivacyType': KalturaPrivacyType,
             'KalturaRecordStatus': KalturaRecordStatus,
             'KalturaRecordingStatus': KalturaRecordingStatus,
+            'KalturaReportExportItemType': KalturaReportExportItemType,
             'KalturaResponseProfileStatus': KalturaResponseProfileStatus,
             'KalturaResponseProfileType': KalturaResponseProfileType,
             'KalturaResponseType': KalturaResponseType,
@@ -64442,10 +64730,14 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
             'KalturaReport': KalturaReport,
             'KalturaReportBaseTotal': KalturaReportBaseTotal,
-            'KalturaReportGraph': KalturaReportGraph,
             'KalturaReportInputBaseFilter': KalturaReportInputBaseFilter,
-            'KalturaReportResponse': KalturaReportResponse,
+            'KalturaReportInputFilter': KalturaReportInputFilter,
             'KalturaReportResponseOptions': KalturaReportResponseOptions,
+            'KalturaReportExportItem': KalturaReportExportItem,
+            'KalturaReportExportParams': KalturaReportExportParams,
+            'KalturaReportExportResponse': KalturaReportExportResponse,
+            'KalturaReportGraph': KalturaReportGraph,
+            'KalturaReportResponse': KalturaReportResponse,
             'KalturaReportTable': KalturaReportTable,
             'KalturaReportTotal': KalturaReportTotal,
             'KalturaRequestConfiguration': KalturaRequestConfiguration,
@@ -64613,7 +64905,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRecalculateCacheJobData': KalturaRecalculateCacheJobData,
             'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
-            'KalturaReportInputFilter': KalturaReportInputFilter,
+            'KalturaReportExportJobData': KalturaReportExportJobData,
             'KalturaReportListResponse': KalturaReportListResponse,
             'KalturaResponseProfileBaseFilter': KalturaResponseProfileBaseFilter,
             'KalturaResponseProfileHolder': KalturaResponseProfileHolder,
