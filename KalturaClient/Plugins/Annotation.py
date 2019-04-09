@@ -605,17 +605,18 @@ class KalturaAnnotationService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaCuePointListResponse')
 
-    def clone(self, id, entryId):
+    def clone(self, id, entryId, parentId = NotImplemented):
         """Clone cuePoint with id to given entry"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("id", id)
         kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("annotation_annotation", "clone", "KalturaCuePoint", kparams)
+        kparams.addStringIfDefined("parentId", parentId)
+        self.client.queueServiceActionCall("annotation_annotation", "clone", "KalturaAnnotation", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaCuePoint')
+        return KalturaObjectFactory.create(resultNode, 'KalturaAnnotation')
 
     def count(self, filter = NotImplemented):
         """count cue point objects by filter"""

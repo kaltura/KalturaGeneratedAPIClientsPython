@@ -1163,7 +1163,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented):
+            privacyContextIn=NotImplemented,
+            partnerId=NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1188,7 +1189,8 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,
-            privacyContextIn)
+            privacyContextIn,
+            partnerId)
 
 
     PROPERTY_LOADERS = {

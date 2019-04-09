@@ -264,7 +264,8 @@ class KalturaViewHistoryUserEntryFilter(KalturaUserEntryFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented):
+            privacyContextIn=NotImplemented,
+            partnerId=NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -289,7 +290,8 @@ class KalturaViewHistoryUserEntryFilter(KalturaUserEntryFilter):
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,
-            privacyContextIn)
+            privacyContextIn,
+            partnerId)
 
 
     PROPERTY_LOADERS = {

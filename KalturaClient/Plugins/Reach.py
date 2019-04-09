@@ -146,6 +146,7 @@ class KalturaVendorServiceFeature(object):
     CAPTIONS = 1
     TRANSLATION = 2
     ALIGNMENT = 3
+    AUDIO_DESCRIPTION = 4
 
     def __init__(self, value):
         self.value = value
@@ -205,21 +206,26 @@ class KalturaCatalogItemLanguage(object):
     AR = "Arabic"
     YUE = "Cantonese"
     ZH = "Chinese"
+    DA = "Danish"
     NL = "Dutch"
     EN = "English"
     EN_US = "English (American)"
     EN_GB = "English (British)"
+    FI = "Finnish"
     FR = "French"
     DE = "German"
     HE = "Hebrew"
     HI = "Hindi"
+    IS = "Icelandic"
     IT = "Italian"
     JA = "Japanese"
     KO = "Korean"
     CMN = "Mandarin Chinese"
+    NO = "Norwegian"
     PT = "Portuguese"
     RU = "Russian"
     ES = "Spanish"
+    SV = "Swedish"
     TH = "Thai"
     TR = "Turkish"
 
@@ -1653,6 +1659,72 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
 
     def setOutputFormat(self, newOutputFormat):
         self.outputFormat = newOutputFormat
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented,
+            pricing=NotImplemented,
+            sourceLanguage=NotImplemented,
+            flavorParamsId=NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing)
+
+        # @var KalturaCatalogItemLanguage
+        self.sourceLanguage = sourceLanguage
+
+        # @var int
+        self.flavorParamsId = flavorParamsId
+
+
+    PROPERTY_LOADERS = {
+        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
+        'flavorParamsId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorAudioDescriptionCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorAudioDescriptionCatalogItem")
+        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
+        kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
+        return kparams
+
+    def getSourceLanguage(self):
+        return self.sourceLanguage
+
+    def setSourceLanguage(self, newSourceLanguage):
+        self.sourceLanguage = newSourceLanguage
+
+    def getFlavorParamsId(self):
+        return self.flavorParamsId
+
+    def setFlavorParamsId(self, newFlavorParamsId):
+        self.flavorParamsId = newFlavorParamsId
 
 
 # @package Kaltura
@@ -3155,6 +3227,74 @@ class KalturaVendorAlignmentCatalogItemFilter(KalturaVendorCaptionsCatalogItemBa
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorAudioDescriptionCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serviceTypeEqual=NotImplemented,
+            serviceTypeIn=NotImplemented,
+            serviceFeatureEqual=NotImplemented,
+            serviceFeatureIn=NotImplemented,
+            turnAroundTimeEqual=NotImplemented,
+            turnAroundTimeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            sourceLanguageEqual=NotImplemented,
+            sourceLanguageIn=NotImplemented,
+            outputFormatEqual=NotImplemented,
+            outputFormatIn=NotImplemented):
+        KalturaVendorCaptionsCatalogItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            sourceLanguageEqual,
+            sourceLanguageIn,
+            outputFormatEqual,
+            outputFormatIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCaptionsCatalogItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorAudioDescriptionCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCaptionsCatalogItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorAudioDescriptionCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorCaptionsCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -3789,6 +3929,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
             'KalturaVendorAlignmentCatalogItem': KalturaVendorAlignmentCatalogItem,
+            'KalturaVendorAudioDescriptionCatalogItem': KalturaVendorAudioDescriptionCatalogItem,
             'KalturaVendorCaptionsCatalogItem': KalturaVendorCaptionsCatalogItem,
             'KalturaVendorCatalogItemListResponse': KalturaVendorCatalogItemListResponse,
             'KalturaVendorCredit': KalturaVendorCredit,
@@ -3805,6 +3946,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCatalogItemFilter': KalturaVendorCatalogItemFilter,
             'KalturaVendorCaptionsCatalogItemBaseFilter': KalturaVendorCaptionsCatalogItemBaseFilter,
             'KalturaVendorAlignmentCatalogItemFilter': KalturaVendorAlignmentCatalogItemFilter,
+            'KalturaVendorAudioDescriptionCatalogItemFilter': KalturaVendorAudioDescriptionCatalogItemFilter,
             'KalturaVendorCaptionsCatalogItemFilter': KalturaVendorCaptionsCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemBaseFilter': KalturaVendorTranslationCatalogItemBaseFilter,
             'KalturaVendorTranslationCatalogItemFilter': KalturaVendorTranslationCatalogItemFilter,

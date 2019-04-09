@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.17.0'
+API_VERSION = '14.18.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1967,6 +1967,7 @@ class KalturaBulkUploadObjectType(object):
     USER = "3"
     CATEGORY_USER = "4"
     CATEGORY_ENTRY = "5"
+    USER_ENTRY = "6"
 
     def __init__(self, value):
         self.value = value
@@ -31586,6 +31587,70 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBulkUploadResultUserEntry(KalturaBulkUploadResult):
+    def __init__(self,
+            id=NotImplemented,
+            bulkUploadJobId=NotImplemented,
+            lineIndex=NotImplemented,
+            partnerId=NotImplemented,
+            status=NotImplemented,
+            action=NotImplemented,
+            objectId=NotImplemented,
+            objectStatus=NotImplemented,
+            bulkUploadResultObjectType=NotImplemented,
+            rowData=NotImplemented,
+            partnerData=NotImplemented,
+            objectErrorDescription=NotImplemented,
+            pluginsData=NotImplemented,
+            errorDescription=NotImplemented,
+            errorCode=NotImplemented,
+            errorType=NotImplemented,
+            userEntryId=NotImplemented):
+        KalturaBulkUploadResult.__init__(self,
+            id,
+            bulkUploadJobId,
+            lineIndex,
+            partnerId,
+            status,
+            action,
+            objectId,
+            objectStatus,
+            bulkUploadResultObjectType,
+            rowData,
+            partnerData,
+            objectErrorDescription,
+            pluginsData,
+            errorDescription,
+            errorCode,
+            errorType)
+
+        # @var int
+        self.userEntryId = userEntryId
+
+
+    PROPERTY_LOADERS = {
+        'userEntryId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaBulkUploadResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBulkUploadResultUserEntry.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBulkUploadResult.toParams(self)
+        kparams.put("objectType", "KalturaBulkUploadResultUserEntry")
+        kparams.addIntIfDefined("userEntryId", self.userEntryId)
+        return kparams
+
+    def getUserEntryId(self):
+        return self.userEntryId
+
+    def setUserEntryId(self, newUserEntryId):
+        self.userEntryId = newUserEntryId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBulkUploadUserData(KalturaBulkUploadObjectData):
     """This class represents object-specific data passed to the 
      bulk upload job."""
@@ -38000,7 +38065,9 @@ class KalturaPartnerBaseFilter(KalturaFilter):
             partnerPackageLessThanOrEqual=NotImplemented,
             partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
-            partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented):
+            partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            idGreaterThan=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -38050,6 +38117,12 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         # @var string
         self.partnerNameDescriptionWebsiteAdminNameAdminEmailLike = partnerNameDescriptionWebsiteAdminNameAdminEmailLike
 
+        # @var int
+        self.createdAtGreaterThanOrEqual = createdAtGreaterThanOrEqual
+
+        # @var int
+        self.idGreaterThan = idGreaterThan
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -38067,6 +38140,8 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         'partnerPackageIn': getXmlNodeText, 
         'partnerGroupTypeEqual': (KalturaEnumsFactory.createInt, "KalturaPartnerGroupType"), 
         'partnerNameDescriptionWebsiteAdminNameAdminEmailLike': getXmlNodeText, 
+        'createdAtGreaterThanOrEqual': getXmlNodeInt, 
+        'idGreaterThan': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -38091,6 +38166,8 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("partnerPackageIn", self.partnerPackageIn)
         kparams.addIntEnumIfDefined("partnerGroupTypeEqual", self.partnerGroupTypeEqual)
         kparams.addStringIfDefined("partnerNameDescriptionWebsiteAdminNameAdminEmailLike", self.partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
+        kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("idGreaterThan", self.idGreaterThan)
         return kparams
 
     def getIdEqual(self):
@@ -38182,6 +38259,18 @@ class KalturaPartnerBaseFilter(KalturaFilter):
 
     def setPartnerNameDescriptionWebsiteAdminNameAdminEmailLike(self, newPartnerNameDescriptionWebsiteAdminNameAdminEmailLike):
         self.partnerNameDescriptionWebsiteAdminNameAdminEmailLike = newPartnerNameDescriptionWebsiteAdminNameAdminEmailLike
+
+    def getCreatedAtGreaterThanOrEqual(self):
+        return self.createdAtGreaterThanOrEqual
+
+    def setCreatedAtGreaterThanOrEqual(self, newCreatedAtGreaterThanOrEqual):
+        self.createdAtGreaterThanOrEqual = newCreatedAtGreaterThanOrEqual
+
+    def getIdGreaterThan(self):
+        return self.idGreaterThan
+
+    def setIdGreaterThan(self, newIdGreaterThan):
+        self.idGreaterThan = newIdGreaterThan
 
 
 # @package Kaltura
@@ -46715,7 +46804,9 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerPackageLessThanOrEqual=NotImplemented,
             partnerPackageIn=NotImplemented,
             partnerGroupTypeEqual=NotImplemented,
-            partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented):
+            partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            idGreaterThan=NotImplemented):
         KalturaPartnerBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -46733,7 +46824,9 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerPackageLessThanOrEqual,
             partnerPackageIn,
             partnerGroupTypeEqual,
-            partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
+            partnerNameDescriptionWebsiteAdminNameAdminEmailLike,
+            createdAtGreaterThanOrEqual,
+            idGreaterThan)
 
 
     PROPERTY_LOADERS = {
@@ -52213,7 +52306,8 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented):
+            privacyContextIn=NotImplemented,
+            partnerId=NotImplemented):
         KalturaUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -52248,12 +52342,16 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
         # @var string
         self.privacyContextIn = privacyContextIn
 
+        # @var int
+        self.partnerId = partnerId
+
 
     PROPERTY_LOADERS = {
         'userIdEqualCurrent': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'isAnonymous': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'privacyContextEqual': getXmlNodeText, 
         'privacyContextIn': getXmlNodeText, 
+        'partnerId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -52267,6 +52365,7 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
         kparams.addIntEnumIfDefined("isAnonymous", self.isAnonymous)
         kparams.addStringIfDefined("privacyContextEqual", self.privacyContextEqual)
         kparams.addStringIfDefined("privacyContextIn", self.privacyContextIn)
+        kparams.addIntIfDefined("partnerId", self.partnerId)
         return kparams
 
     def getUserIdEqualCurrent(self):
@@ -52292,6 +52391,12 @@ class KalturaUserEntryFilter(KalturaUserEntryBaseFilter):
 
     def setPrivacyContextIn(self, newPrivacyContextIn):
         self.privacyContextIn = newPrivacyContextIn
+
+    def getPartnerId(self):
+        return self.partnerId
+
+    def setPartnerId(self, newPartnerId):
+        self.partnerId = newPartnerId
 
 
 # @package Kaltura
@@ -54024,7 +54129,8 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             userIdEqualCurrent=NotImplemented,
             isAnonymous=NotImplemented,
             privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented):
+            privacyContextIn=NotImplemented,
+            partnerId=NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -54049,7 +54155,8 @@ class KalturaQuizUserEntryBaseFilter(KalturaUserEntryFilter):
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,
-            privacyContextIn)
+            privacyContextIn,
+            partnerId)
 
 
     PROPERTY_LOADERS = {
@@ -63784,11 +63891,11 @@ class KalturaUserEntryService(KalturaServiceBase):
     def bulkDelete(self, filter):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("userentry", "bulkDelete", "None", kparams)
+        self.client.queueServiceActionCall("userentry", "bulkDelete", "KalturaBulkUpload", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
 
     def delete(self, id):
         kparams = KalturaParams()
@@ -64805,6 +64912,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBulkUploadResultCategoryUser': KalturaBulkUploadResultCategoryUser,
             'KalturaBulkUploadResultEntry': KalturaBulkUploadResultEntry,
             'KalturaBulkUploadResultUser': KalturaBulkUploadResultUser,
+            'KalturaBulkUploadResultUserEntry': KalturaBulkUploadResultUserEntry,
             'KalturaBulkUploadUserData': KalturaBulkUploadUserData,
             'KalturaCaptureThumbJobData': KalturaCaptureThumbJobData,
             'KalturaCategoryEntryAdvancedFilter': KalturaCategoryEntryAdvancedFilter,
