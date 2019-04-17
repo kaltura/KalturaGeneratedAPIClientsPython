@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '14.18.0'
+API_VERSION = '14.19.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -63891,11 +63891,11 @@ class KalturaUserEntryService(KalturaServiceBase):
     def bulkDelete(self, filter):
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("userentry", "bulkDelete", "KalturaBulkUpload", kparams)
+        self.client.queueServiceActionCall("userentry", "bulkDelete", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
+        return getXmlNodeInt(resultNode)
 
     def delete(self, id):
         kparams = KalturaParams()
