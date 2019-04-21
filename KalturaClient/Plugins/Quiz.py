@@ -49,11 +49,13 @@ from ..Base import (
 # @subpackage Client
 class KalturaAnswerCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
+    INT_ID_ASC = "+intId"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
     START_TIME_ASC = "+startTime"
     TRIGGERED_AT_ASC = "+triggeredAt"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
+    INT_ID_DESC = "-intId"
     PARTNER_SORT_VALUE_DESC = "-partnerSortValue"
     START_TIME_DESC = "-startTime"
     TRIGGERED_AT_DESC = "-triggeredAt"
@@ -69,11 +71,13 @@ class KalturaAnswerCuePointOrderBy(object):
 # @subpackage Client
 class KalturaQuestionCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
+    INT_ID_ASC = "+intId"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
     START_TIME_ASC = "+startTime"
     TRIGGERED_AT_ASC = "+triggeredAt"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
+    INT_ID_DESC = "-intId"
     PARTNER_SORT_VALUE_DESC = "-partnerSortValue"
     START_TIME_DESC = "-startTime"
     TRIGGERED_AT_DESC = "-triggeredAt"
@@ -299,6 +303,7 @@ class KalturaQuiz(KalturaObjectBase):
 class KalturaAnswerCuePoint(KalturaCuePoint):
     def __init__(self,
             id=NotImplemented,
+            intId=NotImplemented,
             cuePointType=NotImplemented,
             status=NotImplemented,
             entryId=NotImplemented,
@@ -326,6 +331,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             feedback=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
+            intId,
             cuePointType,
             status,
             entryId,
@@ -445,6 +451,7 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
 class KalturaQuestionCuePoint(KalturaCuePoint):
     def __init__(self,
             id=NotImplemented,
+            intId=NotImplemented,
             cuePointType=NotImplemented,
             status=NotImplemented,
             entryId=NotImplemented,
@@ -471,6 +478,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             excludeFromScore=NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
+            intId,
             cuePointType,
             status,
             entryId,

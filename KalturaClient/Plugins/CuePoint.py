@@ -118,11 +118,13 @@ class KalturaThumbCuePointSubType(object):
 # @subpackage Client
 class KalturaCuePointOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
+    INT_ID_ASC = "+intId"
     PARTNER_SORT_VALUE_ASC = "+partnerSortValue"
     START_TIME_ASC = "+startTime"
     TRIGGERED_AT_ASC = "+triggeredAt"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
+    INT_ID_DESC = "-intId"
     PARTNER_SORT_VALUE_DESC = "-partnerSortValue"
     START_TIME_DESC = "-startTime"
     TRIGGERED_AT_DESC = "-triggeredAt"
@@ -157,6 +159,7 @@ class KalturaCuePointType(object):
 class KalturaCuePoint(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
+            intId=NotImplemented,
             cuePointType=NotImplemented,
             status=NotImplemented,
             entryId=NotImplemented,
@@ -179,6 +182,10 @@ class KalturaCuePoint(KalturaObjectBase):
         # @var string
         # @readonly
         self.id = id
+
+        # @var int
+        # @readonly
+        self.intId = intId
 
         # @var KalturaCuePointType
         # @readonly
@@ -244,6 +251,7 @@ class KalturaCuePoint(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
+        'intId': getXmlNodeInt, 
         'cuePointType': (KalturaEnumsFactory.createString, "KalturaCuePointType"), 
         'status': (KalturaEnumsFactory.createInt, "KalturaCuePointStatus"), 
         'entryId': getXmlNodeText, 
@@ -283,6 +291,9 @@ class KalturaCuePoint(KalturaObjectBase):
 
     def getId(self):
         return self.id
+
+    def getIntId(self):
+        return self.intId
 
     def getCuePointType(self):
         return self.cuePointType
