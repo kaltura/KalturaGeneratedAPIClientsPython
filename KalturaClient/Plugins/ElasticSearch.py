@@ -304,6 +304,17 @@ class KalturaESearchUserOrderByFieldName(object):
     def getValue(self):
         return self.value
 
+# @package Kaltura
+# @subpackage Client
+class KalturaEsearchGroupUserFieldName(object):
+    GROUP_IDS = "group_ids"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -2507,6 +2518,58 @@ class KalturaESearchEntryItem(KalturaESearchAbstractEntryItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchGroupUserItem(KalturaESearchAbstractUserItem):
+    def __init__(self,
+            searchTerm=NotImplemented,
+            itemType=NotImplemented,
+            range=NotImplemented,
+            addHighlight=NotImplemented,
+            fieldName=NotImplemented,
+            creationMode=NotImplemented):
+        KalturaESearchAbstractUserItem.__init__(self,
+            searchTerm,
+            itemType,
+            range,
+            addHighlight)
+
+        # @var KalturaEsearchGroupUserFieldName
+        self.fieldName = fieldName
+
+        # @var KalturaGroupUserCreationMode
+        self.creationMode = creationMode
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaEsearchGroupUserFieldName"), 
+        'creationMode': (KalturaEnumsFactory.createInt, "KalturaGroupUserCreationMode"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAbstractUserItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchGroupUserItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAbstractUserItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchGroupUserItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        kparams.addIntEnumIfDefined("creationMode", self.creationMode)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+    def getCreationMode(self):
+        return self.creationMode
+
+    def setCreationMode(self, newCreationMode):
+        self.creationMode = newCreationMode
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchUnifiedItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -2974,6 +3037,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchSortOrder': KalturaESearchSortOrder,
             'KalturaESearchUserFieldName': KalturaESearchUserFieldName,
             'KalturaESearchUserOrderByFieldName': KalturaESearchUserOrderByFieldName,
+            'KalturaEsearchGroupUserFieldName': KalturaEsearchGroupUserFieldName,
         }
 
     def getTypes(self):
@@ -3028,6 +3092,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchCategoryMetadataItem': KalturaESearchCategoryMetadataItem,
             'KalturaESearchCategoryUserItem': KalturaESearchCategoryUserItem,
             'KalturaESearchEntryItem': KalturaESearchEntryItem,
+            'KalturaESearchGroupUserItem': KalturaESearchGroupUserItem,
             'KalturaESearchUnifiedItem': KalturaESearchUnifiedItem,
             'KalturaESearchUserItem': KalturaESearchUserItem,
             'KalturaESearchUserMetadataItem': KalturaESearchUserMetadataItem,
