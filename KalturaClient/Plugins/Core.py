@@ -8505,7 +8505,8 @@ class KalturaBatchHistoryData(KalturaObjectBase):
             errType=NotImplemented,
             errNumber=NotImplemented,
             hostName=NotImplemented,
-            sessionId=NotImplemented):
+            sessionId=NotImplemented,
+            schedulerName=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -8535,6 +8536,9 @@ class KalturaBatchHistoryData(KalturaObjectBase):
         # @var string
         self.sessionId = sessionId
 
+        # @var string
+        self.schedulerName = schedulerName
+
 
     PROPERTY_LOADERS = {
         'schedulerId': getXmlNodeInt, 
@@ -8546,6 +8550,7 @@ class KalturaBatchHistoryData(KalturaObjectBase):
         'errNumber': getXmlNodeInt, 
         'hostName': getXmlNodeText, 
         'sessionId': getXmlNodeText, 
+        'schedulerName': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -8564,6 +8569,7 @@ class KalturaBatchHistoryData(KalturaObjectBase):
         kparams.addIntIfDefined("errNumber", self.errNumber)
         kparams.addStringIfDefined("hostName", self.hostName)
         kparams.addStringIfDefined("sessionId", self.sessionId)
+        kparams.addStringIfDefined("schedulerName", self.schedulerName)
         return kparams
 
     def getSchedulerId(self):
@@ -8619,6 +8625,12 @@ class KalturaBatchHistoryData(KalturaObjectBase):
 
     def setSessionId(self, newSessionId):
         self.sessionId = newSessionId
+
+    def getSchedulerName(self):
+        return self.schedulerName
+
+    def setSchedulerName(self, newSchedulerName):
+        self.schedulerName = newSchedulerName
 
 
 # @package Kaltura

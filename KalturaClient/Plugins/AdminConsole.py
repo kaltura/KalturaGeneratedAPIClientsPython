@@ -96,7 +96,8 @@ class KalturaTrackEntry(KalturaObjectBase):
             description=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            userIp=NotImplemented):
+            userIp=NotImplemented,
+            sessionId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -150,6 +151,9 @@ class KalturaTrackEntry(KalturaObjectBase):
         # @var string
         self.userIp = userIp
 
+        # @var int
+        self.sessionId = sessionId
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -169,6 +173,7 @@ class KalturaTrackEntry(KalturaObjectBase):
         'createdAt': getXmlNodeInt, 
         'updatedAt': getXmlNodeInt, 
         'userIp': getXmlNodeText, 
+        'sessionId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -195,6 +200,7 @@ class KalturaTrackEntry(KalturaObjectBase):
         kparams.addIntIfDefined("createdAt", self.createdAt)
         kparams.addIntIfDefined("updatedAt", self.updatedAt)
         kparams.addStringIfDefined("userIp", self.userIp)
+        kparams.addIntIfDefined("sessionId", self.sessionId)
         return kparams
 
     def getId(self):
@@ -298,6 +304,12 @@ class KalturaTrackEntry(KalturaObjectBase):
 
     def setUserIp(self, newUserIp):
         self.userIp = newUserIp
+
+    def getSessionId(self):
+        return self.sessionId
+
+    def setSessionId(self, newSessionId):
+        self.sessionId = newSessionId
 
 
 # @package Kaltura
