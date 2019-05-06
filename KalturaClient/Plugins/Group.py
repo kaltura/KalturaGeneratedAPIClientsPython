@@ -527,11 +527,12 @@ class KalturaGroupService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaGroup')
 
-    def clone(self, originalGroupId, newGroupName):
+    def clone(self, originalGroupId, newGroupId, newGroupName = NotImplemented):
         """clone the group (groupId), and set group id with the neeGroupName."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("originalGroupId", originalGroupId)
+        kparams.addStringIfDefined("newGroupId", newGroupId)
         kparams.addStringIfDefined("newGroupName", newGroupName)
         self.client.queueServiceActionCall("group_group", "clone", "KalturaGroup", kparams)
         if self.client.isMultiRequest():
