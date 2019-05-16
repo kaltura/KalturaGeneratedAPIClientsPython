@@ -3370,8 +3370,8 @@ class KalturaLanguage(object):
     HNI = "Hani"
     HA = "Hausa"
     HAW = "Hawaiian"
-    HE = "Hebrew"
     IW = "Hebrew"
+    HE = "Hebrew"
     HEI = "Heiltsuk"
     HID = "Hidatsa"
     HIL = "Hiligaynon"
@@ -3478,6 +3478,7 @@ class KalturaLanguage(object):
     LUN = "Lunda"
     LUO = "Luo (Kenya and Tanzania)"
     LUT = "Lushootseed"
+    LB = "Luxembourgish (Letzeburgesch)"
     MK = "Macedonian"
     MAD = "Madurese"
     MAG = "Magahi"
@@ -3721,8 +3722,8 @@ class KalturaLanguage(object):
     WYM = "Wymysorys"
     XH = "Xhosa"
     AME = "Yanesha"
-    YI = "Yiddish"
     JI = "Yiddish"
+    YI = "Yiddish"
     YO = "Yoruba"
     ZAI = "Zapotec Isthmus"
     DJE = "Zarma"
@@ -3808,6 +3809,7 @@ class KalturaLanguageCode(object):
     KU = "ku"
     KY = "ky"
     LA = "la"
+    LB = "lb"
     LI = "li"
     LN = "ln"
     LO = "lo"
@@ -20053,7 +20055,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
-            primaryServerNodeId=NotImplemented):
+            primaryServerNodeId=NotImplemented,
+            sipToken=NotImplemented):
         KalturaLiveEntry.__init__(self,
             id,
             name,
@@ -20203,6 +20206,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         # @readonly
         self.primaryServerNodeId = primaryServerNodeId
 
+        # @var string
+        # @readonly
+        self.sipToken = sipToken
+
 
     PROPERTY_LOADERS = {
         'streamRemoteId': getXmlNodeText, 
@@ -20221,6 +20228,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'streamPassword': getXmlNodeText, 
         'streamUsername': getXmlNodeText, 
         'primaryServerNodeId': getXmlNodeInt, 
+        'sipToken': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -20327,6 +20335,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def getPrimaryServerNodeId(self):
         return self.primaryServerNodeId
+
+    def getSipToken(self):
+        return self.sipToken
 
 
 # @package Kaltura
@@ -55366,7 +55377,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
-            primaryServerNodeId=NotImplemented):
+            primaryServerNodeId=NotImplemented,
+            sipToken=NotImplemented):
         KalturaLiveStreamEntry.__init__(self,
             id,
             name,
@@ -55467,7 +55479,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP2,
             streamPassword,
             streamUsername,
-            primaryServerNodeId)
+            primaryServerNodeId,
+            sipToken)
 
 
     PROPERTY_LOADERS = {
