@@ -23317,6 +23317,50 @@ class KalturaModerationFlag(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPartnerPublicInfo(KalturaObjectBase):
+    def __init__(self,
+            analyticsUrl=NotImplemented,
+            ottEnvironmentUrl=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.analyticsUrl = analyticsUrl
+
+        # @var string
+        self.ottEnvironmentUrl = ottEnvironmentUrl
+
+
+    PROPERTY_LOADERS = {
+        'analyticsUrl': getXmlNodeText, 
+        'ottEnvironmentUrl': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPartnerPublicInfo.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPartnerPublicInfo")
+        kparams.addStringIfDefined("analyticsUrl", self.analyticsUrl)
+        kparams.addStringIfDefined("ottEnvironmentUrl", self.ottEnvironmentUrl)
+        return kparams
+
+    def getAnalyticsUrl(self):
+        return self.analyticsUrl
+
+    def setAnalyticsUrl(self, newAnalyticsUrl):
+        self.analyticsUrl = newAnalyticsUrl
+
+    def getOttEnvironmentUrl(self):
+        return self.ottEnvironmentUrl
+
+    def setOttEnvironmentUrl(self, newOttEnvironmentUrl):
+        self.ottEnvironmentUrl = newOttEnvironmentUrl
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPartnerStatistics(KalturaObjectBase):
     def __init__(self,
             packageBandwidthAndStorage=NotImplemented,
@@ -62202,6 +62246,17 @@ class KalturaPartnerService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaPartner')
 
+    def getPublicInfo(self, id = NotImplemented):
+        """Returns partner public info by Id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("partner", "getPublicInfo", "KalturaPartnerPublicInfo", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaPartnerPublicInfo')
+
     def getSecrets(self, partnerId, adminEmail, cmsPassword):
         """Retrieve partner secret and admin secret"""
 
@@ -64850,6 +64905,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaEntryFilterForPlaylist': KalturaMediaEntryFilterForPlaylist,
             'KalturaMixEntry': KalturaMixEntry,
             'KalturaModerationFlag': KalturaModerationFlag,
+            'KalturaPartnerPublicInfo': KalturaPartnerPublicInfo,
             'KalturaPartnerStatistics': KalturaPartnerStatistics,
             'KalturaPartnerUsage': KalturaPartnerUsage,
             'KalturaPermission': KalturaPermission,
