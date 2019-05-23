@@ -23321,7 +23321,8 @@ class KalturaModerationFlag(KalturaObjectBase):
 class KalturaPartnerPublicInfo(KalturaObjectBase):
     def __init__(self,
             analyticsUrl=NotImplemented,
-            ottEnvironmentUrl=NotImplemented):
+            ottEnvironmentUrl=NotImplemented,
+            analyticsPersistentSessionId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -23330,10 +23331,14 @@ class KalturaPartnerPublicInfo(KalturaObjectBase):
         # @var string
         self.ottEnvironmentUrl = ottEnvironmentUrl
 
+        # @var bool
+        self.analyticsPersistentSessionId = analyticsPersistentSessionId
+
 
     PROPERTY_LOADERS = {
         'analyticsUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
+        'analyticsPersistentSessionId': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -23345,6 +23350,7 @@ class KalturaPartnerPublicInfo(KalturaObjectBase):
         kparams.put("objectType", "KalturaPartnerPublicInfo")
         kparams.addStringIfDefined("analyticsUrl", self.analyticsUrl)
         kparams.addStringIfDefined("ottEnvironmentUrl", self.ottEnvironmentUrl)
+        kparams.addBoolIfDefined("analyticsPersistentSessionId", self.analyticsPersistentSessionId)
         return kparams
 
     def getAnalyticsUrl(self):
@@ -23358,6 +23364,12 @@ class KalturaPartnerPublicInfo(KalturaObjectBase):
 
     def setOttEnvironmentUrl(self, newOttEnvironmentUrl):
         self.ottEnvironmentUrl = newOttEnvironmentUrl
+
+    def getAnalyticsPersistentSessionId(self):
+        return self.analyticsPersistentSessionId
+
+    def setAnalyticsPersistentSessionId(self, newAnalyticsPersistentSessionId):
+        self.analyticsPersistentSessionId = newAnalyticsPersistentSessionId
 
 
 # @package Kaltura
