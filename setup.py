@@ -1,8 +1,12 @@
 from setuptools import setup
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.txt')) as f:
+        long_description = f.read()
 
 setup(
     name='KalturaApiClient',
-    version='15.0.0',
+    version='15.1.0',
     url='https://github.com/kaltura/KalturaGeneratedAPIClientsPython',
     packages=['KalturaClient', 'KalturaClient.Plugins'],
     install_requires=['requests>=2.4.2', 'requests-toolbelt', 'six'],
@@ -23,5 +27,6 @@ setup(
     ],
     keywords='Kaltura API client',
     description='A Python module for accessing the Kaltura API.',
-    long_description=open('README.txt').read(),
+    long_description=long_description,
+    long_description_content_type="text/plain"
 )
