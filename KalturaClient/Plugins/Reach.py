@@ -222,6 +222,7 @@ class KalturaCatalogItemLanguage(object):
     KO = "Korean"
     CMN = "Mandarin Chinese"
     NO = "Norwegian"
+    PL = "Polish"
     PT = "Portuguese"
     RU = "Russian"
     ES = "Spanish"
