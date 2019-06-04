@@ -47,6 +47,18 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaGroupProcessStatus(object):
+    NONE = 0
+    PROCESSING = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchGroupFieldName(object):
     CREATED_AT = "created_at"
     EMAIL = "email"
@@ -133,7 +145,8 @@ class KalturaGroup(KalturaBaseUser):
             allowedPartnerIds=NotImplemented,
             allowedPartnerPackages=NotImplemented,
             userMode=NotImplemented,
-            membersCount=NotImplemented):
+            membersCount=NotImplemented,
+            processStatus=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -167,9 +180,13 @@ class KalturaGroup(KalturaBaseUser):
         # @readonly
         self.membersCount = membersCount
 
+        # @var KalturaGroupProcessStatus
+        self.processStatus = processStatus
+
 
     PROPERTY_LOADERS = {
         'membersCount': getXmlNodeInt, 
+        'processStatus': (KalturaEnumsFactory.createInt, "KalturaGroupProcessStatus"), 
     }
 
     def fromXml(self, node):
@@ -179,10 +196,17 @@ class KalturaGroup(KalturaBaseUser):
     def toParams(self):
         kparams = KalturaBaseUser.toParams(self)
         kparams.put("objectType", "KalturaGroup")
+        kparams.addIntEnumIfDefined("processStatus", self.processStatus)
         return kparams
 
     def getMembersCount(self):
         return self.membersCount
+
+    def getProcessStatus(self):
+        return self.processStatus
+
+    def setProcessStatus(self, newProcessStatus):
+        self.processStatus = newProcessStatus
 
 
 # @package Kaltura
@@ -608,6 +632,7 @@ class KalturaGroupClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaGroupProcessStatus': KalturaGroupProcessStatus,
             'KalturaESearchGroupFieldName': KalturaESearchGroupFieldName,
             'KalturaESearchGroupOrderByFieldName': KalturaESearchGroupOrderByFieldName,
         }

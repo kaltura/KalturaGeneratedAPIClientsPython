@@ -81,7 +81,9 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
             numOfErrorObjects=NotImplemented,
             privileges=NotImplemented,
             csvVersion=NotImplemented,
-            columns=NotImplemented):
+            columns=NotImplemented,
+            processObjectId=NotImplemented,
+            processObjectType=NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
             uploadedBy,
@@ -108,10 +110,20 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
         # @var array of KalturaString
         self.columns = columns
 
+        # The object in process
+        # @var string
+        self.processObjectId = processObjectId
+
+        # The type of the object in process
+        # @var string
+        self.processObjectType = processObjectType
+
 
     PROPERTY_LOADERS = {
         'csvVersion': (KalturaEnumsFactory.createInt, "KalturaBulkUploadCsvVersion"), 
         'columns': (KalturaObjectFactory.createArray, 'KalturaString'), 
+        'processObjectId': getXmlNodeText, 
+        'processObjectType': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -122,6 +134,8 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
         kparams = KalturaBulkUploadJobData.toParams(self)
         kparams.put("objectType", "KalturaBulkUploadCsvJobData")
         kparams.addArrayIfDefined("columns", self.columns)
+        kparams.addStringIfDefined("processObjectId", self.processObjectId)
+        kparams.addStringIfDefined("processObjectType", self.processObjectType)
         return kparams
 
     def getCsvVersion(self):
@@ -132,6 +146,18 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
 
     def setColumns(self, newColumns):
         self.columns = newColumns
+
+    def getProcessObjectId(self):
+        return self.processObjectId
+
+    def setProcessObjectId(self, newProcessObjectId):
+        self.processObjectId = newProcessObjectId
+
+    def getProcessObjectType(self):
+        return self.processObjectType
+
+    def setProcessObjectType(self, newProcessObjectType):
+        self.processObjectType = newProcessObjectType
 
 
 ########## services ##########
