@@ -9331,7 +9331,8 @@ class KalturaPartner(KalturaObjectBase):
             publisherEnvironmentType=NotImplemented,
             ovpEnvironmentUrl=NotImplemented,
             ottEnvironmentUrl=NotImplemented,
-            eSearchLanguages=NotImplemented):
+            eSearchLanguages=NotImplemented,
+            authenticationType=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9536,6 +9537,10 @@ class KalturaPartner(KalturaObjectBase):
         # @var array of KalturaESearchLanguageItem
         self.eSearchLanguages = eSearchLanguages
 
+        # @var bool
+        # @readonly
+        self.authenticationType = authenticationType
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9595,6 +9600,7 @@ class KalturaPartner(KalturaObjectBase):
         'ovpEnvironmentUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
+        'authenticationType': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -9904,6 +9910,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def setESearchLanguages(self, newESearchLanguages):
         self.eSearchLanguages = newESearchLanguages
+
+    def getAuthenticationType(self):
+        return self.authenticationType
 
 
 # @package Kaltura
@@ -64208,6 +64217,17 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
         kparams.addArrayIfDefined("additionalFields", additionalFields)
         self.client.queueServiceActionCall("user", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def generateQrCode(self, hashKey):
+        """get QR image content"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("hashKey", hashKey)
+        self.client.queueServiceActionCall("user", "generateQrCode", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
