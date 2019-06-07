@@ -9537,7 +9537,7 @@ class KalturaPartner(KalturaObjectBase):
         # @var array of KalturaESearchLanguageItem
         self.eSearchLanguages = eSearchLanguages
 
-        # @var bool
+        # @var int
         # @readonly
         self.authenticationType = authenticationType
 
@@ -9600,7 +9600,7 @@ class KalturaPartner(KalturaObjectBase):
         'ovpEnvironmentUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
-        'authenticationType': getXmlNodeBool, 
+        'authenticationType': getXmlNodeInt, 
     }
 
     def fromXml(self, node):

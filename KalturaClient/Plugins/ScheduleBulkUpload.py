@@ -108,7 +108,7 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
         # @var string
         self.templateEntryId = templateEntryId
 
-        # @var KalturaScheduleEventType
+        # @var int
         self.eventType = eventType
 
         # @var string
@@ -158,7 +158,7 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
     PROPERTY_LOADERS = {
         'referenceId': getXmlNodeText, 
         'templateEntryId': getXmlNodeText, 
-        'eventType': (KalturaEnumsFactory.createInt, "KalturaScheduleEventType"), 
+        'eventType': getXmlNodeInt, 
         'title': getXmlNodeText, 
         'description': getXmlNodeText, 
         'tags': getXmlNodeText, 
@@ -184,7 +184,7 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
         kparams.put("objectType", "KalturaBulkUploadResultScheduleEvent")
         kparams.addStringIfDefined("referenceId", self.referenceId)
         kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
-        kparams.addIntEnumIfDefined("eventType", self.eventType)
+        kparams.addIntIfDefined("eventType", self.eventType)
         kparams.addStringIfDefined("title", self.title)
         kparams.addStringIfDefined("description", self.description)
         kparams.addStringIfDefined("tags", self.tags)

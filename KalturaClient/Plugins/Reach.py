@@ -147,6 +147,7 @@ class KalturaVendorServiceFeature(object):
     TRANSLATION = 2
     ALIGNMENT = 3
     AUDIO_DESCRIPTION = 4
+    CHAPTERING = 5
 
     def __init__(self, value):
         self.value = value
@@ -1424,6 +1425,7 @@ class KalturaCategoryEntryCondition(KalturaCondition):
             description=NotImplemented,
             not_=NotImplemented,
             categoryId=NotImplemented,
+            categoryIds=NotImplemented,
             categoryUserPermission=NotImplemented,
             comparison=NotImplemented):
         KalturaCondition.__init__(self,
@@ -1434,6 +1436,10 @@ class KalturaCategoryEntryCondition(KalturaCondition):
         # Category id to check condition for
         # @var int
         self.categoryId = categoryId
+
+        # Category id's to check condition for
+        # @var string
+        self.categoryIds = categoryIds
 
         # Minimum category user level permission to validate
         # @var KalturaCategoryUserPermissionLevel
@@ -1446,6 +1452,7 @@ class KalturaCategoryEntryCondition(KalturaCondition):
 
     PROPERTY_LOADERS = {
         'categoryId': getXmlNodeInt, 
+        'categoryIds': getXmlNodeText, 
         'categoryUserPermission': (KalturaEnumsFactory.createInt, "KalturaCategoryUserPermissionLevel"), 
         'comparison': (KalturaEnumsFactory.createString, "KalturaSearchConditionComparison"), 
     }
@@ -1458,6 +1465,7 @@ class KalturaCategoryEntryCondition(KalturaCondition):
         kparams = KalturaCondition.toParams(self)
         kparams.put("objectType", "KalturaCategoryEntryCondition")
         kparams.addIntIfDefined("categoryId", self.categoryId)
+        kparams.addStringIfDefined("categoryIds", self.categoryIds)
         kparams.addIntEnumIfDefined("categoryUserPermission", self.categoryUserPermission)
         kparams.addStringEnumIfDefined("comparison", self.comparison)
         return kparams
@@ -1467,6 +1475,12 @@ class KalturaCategoryEntryCondition(KalturaCondition):
 
     def setCategoryId(self, newCategoryId):
         self.categoryId = newCategoryId
+
+    def getCategoryIds(self):
+        return self.categoryIds
+
+    def setCategoryIds(self, newCategoryIds):
+        self.categoryIds = newCategoryIds
 
     def getCategoryUserPermission(self):
         return self.categoryUserPermission
@@ -1847,6 +1861,60 @@ class KalturaVendorCatalogItemListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented,
+            pricing=NotImplemented,
+            sourceLanguage=NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing)
+
+        # @var KalturaCatalogItemLanguage
+        self.sourceLanguage = sourceLanguage
+
+
+    PROPERTY_LOADERS = {
+        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorChapteringCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorChapteringCatalogItem")
+        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
+        return kparams
+
+    def getSourceLanguage(self):
+        return self.sourceLanguage
+
+    def setSourceLanguage(self, newSourceLanguage):
+        self.sourceLanguage = newSourceLanguage
 
 
 # @package Kaltura
@@ -3364,6 +3432,74 @@ class KalturaVendorCaptionsCatalogItemFilter(KalturaVendorCaptionsCatalogItemBas
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorChapteringCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serviceTypeEqual=NotImplemented,
+            serviceTypeIn=NotImplemented,
+            serviceFeatureEqual=NotImplemented,
+            serviceFeatureIn=NotImplemented,
+            turnAroundTimeEqual=NotImplemented,
+            turnAroundTimeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            sourceLanguageEqual=NotImplemented,
+            sourceLanguageIn=NotImplemented,
+            outputFormatEqual=NotImplemented,
+            outputFormatIn=NotImplemented):
+        KalturaVendorCaptionsCatalogItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            sourceLanguageEqual,
+            sourceLanguageIn,
+            outputFormatEqual,
+            outputFormatIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCaptionsCatalogItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorChapteringCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCaptionsCatalogItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorChapteringCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorTranslationCatalogItemBaseFilter(KalturaVendorCaptionsCatalogItemFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -3933,6 +4069,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorAudioDescriptionCatalogItem': KalturaVendorAudioDescriptionCatalogItem,
             'KalturaVendorCaptionsCatalogItem': KalturaVendorCaptionsCatalogItem,
             'KalturaVendorCatalogItemListResponse': KalturaVendorCatalogItemListResponse,
+            'KalturaVendorChapteringCatalogItem': KalturaVendorChapteringCatalogItem,
             'KalturaVendorCredit': KalturaVendorCredit,
             'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
             'KalturaEntryVendorTaskFilter': KalturaEntryVendorTaskFilter,
@@ -3949,6 +4086,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorAlignmentCatalogItemFilter': KalturaVendorAlignmentCatalogItemFilter,
             'KalturaVendorAudioDescriptionCatalogItemFilter': KalturaVendorAudioDescriptionCatalogItemFilter,
             'KalturaVendorCaptionsCatalogItemFilter': KalturaVendorCaptionsCatalogItemFilter,
+            'KalturaVendorChapteringCatalogItemFilter': KalturaVendorChapteringCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemBaseFilter': KalturaVendorTranslationCatalogItemBaseFilter,
             'KalturaVendorTranslationCatalogItemFilter': KalturaVendorTranslationCatalogItemFilter,
         }
