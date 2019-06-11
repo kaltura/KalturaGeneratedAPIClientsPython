@@ -761,6 +761,19 @@ class KalturaNullableBoolean(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPartnerAuthenticationType(object):
+    PASSWORD_ONLY = 0
+    TWO_FACTOR_AUTH = 1
+    SSO = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPartnerGroupType(object):
     PUBLISHER = 1
     VAR_GROUP = 2
@@ -7259,6 +7272,38 @@ class KalturaAssetServeOptions(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAuthentication(KalturaObjectBase):
+    def __init__(self,
+            qrCode=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.qrCode = qrCode
+
+
+    PROPERTY_LOADERS = {
+        'qrCode': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAuthentication.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAuthentication")
+        kparams.addStringIfDefined("qrCode", self.qrCode)
+        return kparams
+
+    def getQrCode(self):
+        return self.qrCode
+
+    def setQrCode(self, newQrCode):
+        self.qrCode = newQrCode
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaOperationAttributes(KalturaObjectBase):
     """Base class to all operation attributes types"""
 
@@ -9537,7 +9582,7 @@ class KalturaPartner(KalturaObjectBase):
         # @var array of KalturaESearchLanguageItem
         self.eSearchLanguages = eSearchLanguages
 
-        # @var int
+        # @var KalturaPartnerAuthenticationType
         # @readonly
         self.authenticationType = authenticationType
 
@@ -9600,7 +9645,7 @@ class KalturaPartner(KalturaObjectBase):
         'ovpEnvironmentUrl': getXmlNodeText, 
         'ottEnvironmentUrl': getXmlNodeText, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
-        'authenticationType': getXmlNodeInt, 
+        'authenticationType': (KalturaEnumsFactory.createInt, "KalturaPartnerAuthenticationType"), 
     }
 
     def fromXml(self, node):
@@ -59322,10 +59367,11 @@ class KalturaAdminUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("hashKey", hashKey)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("adminuser", "setInitialPassword", "None", kparams)
+        self.client.queueServiceActionCall("adminuser", "setInitialPassword", "KalturaAuthentication", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaAuthentication')
 
     def updatePassword(self, email, password, newEmail = "", newPassword = ""):
         """Update admin user password and email"""
@@ -64361,10 +64407,11 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("hashKey", hashKey)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("user", "setInitialPassword", "None", kparams)
+        self.client.queueServiceActionCall("user", "setInitialPassword", "KalturaAuthentication", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaAuthentication')
 
     def update(self, userId, user):
         """Updates an existing user object.
@@ -64586,6 +64633,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaNotificationStatus': KalturaNotificationStatus,
             'KalturaNotificationType': KalturaNotificationType,
             'KalturaNullableBoolean': KalturaNullableBoolean,
+            'KalturaPartnerAuthenticationType': KalturaPartnerAuthenticationType,
             'KalturaPartnerGroupType': KalturaPartnerGroupType,
             'KalturaPartnerStatus': KalturaPartnerStatus,
             'KalturaPartnerType': KalturaPartnerType,
@@ -64827,6 +64875,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaContentResource': KalturaContentResource,
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaAssetServeOptions': KalturaAssetServeOptions,
+            'KalturaAuthentication': KalturaAuthentication,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
             'KalturaBaseEntryCloneOptionItem': KalturaBaseEntryCloneOptionItem,
