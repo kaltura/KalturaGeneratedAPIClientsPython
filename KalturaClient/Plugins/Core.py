@@ -5075,7 +5075,10 @@ class KalturaQuizUserEntryOrderBy(object):
 # @subpackage Client
 class KalturaReportInterval(object):
     DAYS = "days"
+    HOURS = "hours"
+    MINUTES = "minutes"
     MONTHS = "months"
+    TEN_SECONDS = "ten_seconds"
 
     def __init__(self, value):
         self.value = value
@@ -5145,6 +5148,18 @@ class KalturaReportType(object):
     PLAYER_RELATED_INTERACTIONS = "45"
     PLAYBACK_RATE = "46"
     PARTNER_USAGE = "201"
+    MAP_OVERLAY_COUNTRY_REALTIME = "10001"
+    MAP_OVERLAY_REGION_REALTIME = "10002"
+    MAP_OVERLAY_CITY_REALTIME = "10003"
+    PLATFORMS_REALTIME = "10004"
+    USERS_OVERVIEW_REALTIME = "10005"
+    QOS_OVERVIEW_REALTIME = "10006"
+    DISCOVERY_REALTIME = "10007"
+    ENTRY_LEVEL_USERS_DISCOVERY_REALTIME = "10008"
+    ENTRY_LEVEL_USERS_STATUS_REALTIME = "10009"
+    PLATFORMS_DISCOVERY_REALTIME = "10010"
+    PLAYBACK_TYPE_REALTIME = "10011"
+    CONTENT_REALTIME = "10012"
 
     def __init__(self, value):
         self.value = value
