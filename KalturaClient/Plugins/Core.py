@@ -27770,7 +27770,8 @@ class KalturaUploadToken(KalturaObjectBase):
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
             uploadUrl=NotImplemented,
-            autoFinalize=NotImplemented):
+            autoFinalize=NotImplemented,
+            minimumChunkSize=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Upload token unique ID
@@ -27828,6 +27829,11 @@ class KalturaUploadToken(KalturaObjectBase):
         # @insertonly
         self.autoFinalize = autoFinalize
 
+        # set the minimum size in bytes for each uploaded part of the file
+        # @var float
+        # @insertonly
+        self.minimumChunkSize = minimumChunkSize
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -27841,6 +27847,7 @@ class KalturaUploadToken(KalturaObjectBase):
         'updatedAt': getXmlNodeInt, 
         'uploadUrl': getXmlNodeText, 
         'autoFinalize': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'minimumChunkSize': getXmlNodeFloat, 
     }
 
     def fromXml(self, node):
@@ -27853,6 +27860,7 @@ class KalturaUploadToken(KalturaObjectBase):
         kparams.addStringIfDefined("fileName", self.fileName)
         kparams.addFloatIfDefined("fileSize", self.fileSize)
         kparams.addIntEnumIfDefined("autoFinalize", self.autoFinalize)
+        kparams.addFloatIfDefined("minimumChunkSize", self.minimumChunkSize)
         return kparams
 
     def getId(self):
@@ -27896,6 +27904,12 @@ class KalturaUploadToken(KalturaObjectBase):
 
     def setAutoFinalize(self, newAutoFinalize):
         self.autoFinalize = newAutoFinalize
+
+    def getMinimumChunkSize(self):
+        return self.minimumChunkSize
+
+    def setMinimumChunkSize(self, newMinimumChunkSize):
+        self.minimumChunkSize = newMinimumChunkSize
 
 
 # @package Kaltura
