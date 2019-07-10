@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.2.0'
+API_VERSION = '15.3.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -9389,6 +9389,7 @@ class KalturaPartner(KalturaObjectBase):
             allowQuickEdit=NotImplemented,
             mergeEntryLists=NotImplemented,
             notificationsConfig=NotImplemented,
+            allowedFromEmailWhiteList=NotImplemented,
             maxUploadSize=NotImplemented,
             partnerPackage=NotImplemented,
             secret=NotImplemented,
@@ -9498,6 +9499,9 @@ class KalturaPartner(KalturaObjectBase):
 
         # @var string
         self.notificationsConfig = notificationsConfig
+
+        # @var string
+        self.allowedFromEmailWhiteList = allowedFromEmailWhiteList
 
         # @var int
         self.maxUploadSize = maxUploadSize
@@ -9657,6 +9661,7 @@ class KalturaPartner(KalturaObjectBase):
         'allowQuickEdit': getXmlNodeInt, 
         'mergeEntryLists': getXmlNodeInt, 
         'notificationsConfig': getXmlNodeText, 
+        'allowedFromEmailWhiteList': getXmlNodeText, 
         'maxUploadSize': getXmlNodeInt, 
         'partnerPackage': getXmlNodeInt, 
         'secret': getXmlNodeText, 
@@ -9721,6 +9726,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addIntIfDefined("allowQuickEdit", self.allowQuickEdit)
         kparams.addIntIfDefined("mergeEntryLists", self.mergeEntryLists)
         kparams.addStringIfDefined("notificationsConfig", self.notificationsConfig)
+        kparams.addStringIfDefined("allowedFromEmailWhiteList", self.allowedFromEmailWhiteList)
         kparams.addIntIfDefined("maxUploadSize", self.maxUploadSize)
         kparams.addIntIfDefined("partnerPackage", self.partnerPackage)
         kparams.addIntIfDefined("allowMultiNotification", self.allowMultiNotification)
@@ -9863,6 +9869,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def setNotificationsConfig(self, newNotificationsConfig):
         self.notificationsConfig = newNotificationsConfig
+
+    def getAllowedFromEmailWhiteList(self):
+        return self.allowedFromEmailWhiteList
+
+    def setAllowedFromEmailWhiteList(self, newAllowedFromEmailWhiteList):
+        self.allowedFromEmailWhiteList = newAllowedFromEmailWhiteList
 
     def getMaxUploadSize(self):
         return self.maxUploadSize
@@ -62372,13 +62384,14 @@ class KalturaPartnerService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaPartnerPublicInfo')
 
-    def getSecrets(self, partnerId, adminEmail, cmsPassword):
+    def getSecrets(self, partnerId, adminEmail, cmsPassword, otp = NotImplemented):
         """Retrieve partner secret and admin secret"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("partnerId", partnerId);
         kparams.addStringIfDefined("adminEmail", adminEmail)
         kparams.addStringIfDefined("cmsPassword", cmsPassword)
+        kparams.addStringIfDefined("otp", otp)
         self.client.queueServiceActionCall("partner", "getSecrets", "KalturaPartner", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

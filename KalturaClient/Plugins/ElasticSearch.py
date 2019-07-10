@@ -212,6 +212,7 @@ class KalturaESearchEntryFieldName(object):
     MODERATION_STATUS = "moderation_status"
     NAME = "name"
     PARENT_ENTRY_ID = "parent_id"
+    PARTNER_SORT_VALUE = "partner_sort_value"
     PUSH_PUBLISH = "push_publish"
     RECORDED_ENTRY_ID = "recorded_entry_id"
     REDIRECT_ENTRY_ID = "redirect_entry_id"
