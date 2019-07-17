@@ -311,6 +311,7 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -351,6 +352,7 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
+            distributeTrigger,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

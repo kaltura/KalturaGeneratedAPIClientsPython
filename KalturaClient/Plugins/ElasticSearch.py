@@ -90,6 +90,17 @@ class KalturaESearchCaptionFieldName(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchCategoryAggregateByFieldName(object):
+    CATEGORY_NAME = "category_name"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCategoryEntryFieldName(object):
     ANCESTOR_ID = "ancestor_id"
     ANCESTOR_NAME = "ancestor_name"
@@ -167,6 +178,18 @@ class KalturaESearchCategoryUserFieldName(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchCuePointAggregateByFieldName(object):
+    TAGS = "tags"
+    TYPE = "type"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCuePointFieldName(object):
     ANSWERS = "answers"
     END_TIME = "end_time"
@@ -180,6 +203,20 @@ class KalturaESearchCuePointFieldName(object):
     TAGS = "tags"
     TEXT = "text"
     TYPE = "type"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryAggregateByFieldName(object):
+    ACCESS_CONTROL_PROFILE = "access_control_profile_id"
+    ENTRY_TYPE = "entry_type"
+    MEDIA_TYPE = "media_type"
+    TAGS = "tags"
 
     def __init__(self, value):
         self.value = value
@@ -250,6 +287,16 @@ class KalturaESearchEntryOrderByFieldName(object):
     VIEWS_LAST_30_DAYS = "views_last_30_days"
     VIEWS_LAST_7_DAYS = "views_last_7_days"
     VOTES = "votes"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchMetadataAggregateByFieldName(object):
 
     def __init__(self, value):
         self.value = value
@@ -387,6 +434,170 @@ class KalturaESearchOrderByItem(KalturaObjectBase):
 
     def setSortOrder(self, newSortOrder):
         self.sortOrder = newSortOrder
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchAggregationItem(KalturaObjectBase):
+    def __init__(self,
+            size=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        self.size = size
+
+
+    PROPERTY_LOADERS = {
+        'size': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchAggregationItem")
+        kparams.addIntIfDefined("size", self.size)
+        return kparams
+
+    def getSize(self):
+        return self.size
+
+    def setSize(self, newSize):
+        self.size = newSize
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchAggregation(KalturaObjectBase):
+    def __init__(self,
+            aggregations=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var array of KalturaESearchAggregationItem
+        self.aggregations = aggregations
+
+
+    PROPERTY_LOADERS = {
+        'aggregations': (KalturaObjectFactory.createArray, 'KalturaESearchAggregationItem'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchAggregation.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchAggregation")
+        kparams.addArrayIfDefined("aggregations", self.aggregations)
+        return kparams
+
+    def getAggregations(self):
+        return self.aggregations
+
+    def setAggregations(self, newAggregations):
+        self.aggregations = newAggregations
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchAggregationBucket(KalturaObjectBase):
+    def __init__(self,
+            value=NotImplemented,
+            count=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.value = value
+
+        # @var int
+        self.count = count
+
+
+    PROPERTY_LOADERS = {
+        'value': getXmlNodeText, 
+        'count': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchAggregationBucket.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchAggregationBucket")
+        kparams.addStringIfDefined("value", self.value)
+        kparams.addIntIfDefined("count", self.count)
+        return kparams
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+    def getCount(self):
+        return self.count
+
+    def setCount(self, newCount):
+        self.count = newCount
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchAggregationResponseItem(KalturaObjectBase):
+    def __init__(self,
+            name=NotImplemented,
+            fieldName=NotImplemented,
+            buckets=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.name = name
+
+        # @var string
+        self.fieldName = fieldName
+
+        # @var array of KalturaESearchAggregationBucket
+        self.buckets = buckets
+
+
+    PROPERTY_LOADERS = {
+        'name': getXmlNodeText, 
+        'fieldName': getXmlNodeText, 
+        'buckets': (KalturaObjectFactory.createArray, 'KalturaESearchAggregationBucket'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchAggregationResponseItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchAggregationResponseItem")
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addStringIfDefined("fieldName", self.fieldName)
+        kparams.addArrayIfDefined("buckets", self.buckets)
+        return kparams
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+    def getBuckets(self):
+        return self.buckets
+
+    def setBuckets(self, newBuckets):
+        self.buckets = newBuckets
 
 
 # @package Kaltura
@@ -1154,6 +1365,40 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchCategoryAggregationItem(KalturaESearchAggregationItem):
+    def __init__(self,
+            size=NotImplemented,
+            fieldName=NotImplemented):
+        KalturaESearchAggregationItem.__init__(self,
+            size)
+
+        # @var KalturaESearchCategoryAggregateByFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchCategoryAggregateByFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAggregationItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchCategoryAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAggregationItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchCategoryAggregationItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchCategoryOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
             sortOrder=NotImplemented,
@@ -1479,6 +1724,74 @@ class KalturaESearchCuePointItemData(KalturaESearchItemData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchCuepointsAggregationItem(KalturaESearchAggregationItem):
+    def __init__(self,
+            size=NotImplemented,
+            fieldName=NotImplemented):
+        KalturaESearchAggregationItem.__init__(self,
+            size)
+
+        # @var KalturaESearchCuePointAggregateByFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchCuePointAggregateByFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAggregationItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchCuepointsAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAggregationItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchCuepointsAggregationItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchEntryAggregationItem(KalturaESearchAggregationItem):
+    def __init__(self,
+            size=NotImplemented,
+            fieldName=NotImplemented):
+        KalturaESearchAggregationItem.__init__(self,
+            size)
+
+        # @var KalturaESearchEntryAggregateByFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchEntryAggregateByFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAggregationItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchEntryAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAggregationItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchEntryAggregationItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchEntryOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
             sortOrder=NotImplemented,
@@ -1518,7 +1831,8 @@ class KalturaESearchEntryParams(KalturaESearchParams):
             objectStatuses=NotImplemented,
             objectId=NotImplemented,
             orderBy=NotImplemented,
-            searchOperator=NotImplemented):
+            searchOperator=NotImplemented,
+            aggregations=NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
@@ -1527,9 +1841,13 @@ class KalturaESearchEntryParams(KalturaESearchParams):
         # @var KalturaESearchEntryOperator
         self.searchOperator = searchOperator
 
+        # @var KalturaESearchAggregation
+        self.aggregations = aggregations
+
 
     PROPERTY_LOADERS = {
         'searchOperator': (KalturaObjectFactory.create, 'KalturaESearchEntryOperator'), 
+        'aggregations': (KalturaObjectFactory.create, 'KalturaESearchAggregation'), 
     }
 
     def fromXml(self, node):
@@ -1540,6 +1858,7 @@ class KalturaESearchEntryParams(KalturaESearchParams):
         kparams = KalturaESearchParams.toParams(self)
         kparams.put("objectType", "KalturaESearchEntryParams")
         kparams.addObjectIfDefined("searchOperator", self.searchOperator)
+        kparams.addObjectIfDefined("aggregations", self.aggregations)
         return kparams
 
     def getSearchOperator(self):
@@ -1548,13 +1867,20 @@ class KalturaESearchEntryParams(KalturaESearchParams):
     def setSearchOperator(self, newSearchOperator):
         self.searchOperator = newSearchOperator
 
+    def getAggregations(self):
+        return self.aggregations
+
+    def setAggregations(self, newAggregations):
+        self.aggregations = newAggregations
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchEntryResponse(KalturaESearchResponse):
     def __init__(self,
             totalCount=NotImplemented,
-            objects=NotImplemented):
+            objects=NotImplemented,
+            aggregations=NotImplemented):
         KalturaESearchResponse.__init__(self,
             totalCount)
 
@@ -1562,9 +1888,14 @@ class KalturaESearchEntryResponse(KalturaESearchResponse):
         # @readonly
         self.objects = objects
 
+        # @var array of KalturaESearchAggregationResponseItem
+        # @readonly
+        self.aggregations = aggregations
+
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, 'KalturaESearchEntryResult'), 
+        'aggregations': (KalturaObjectFactory.createArray, 'KalturaESearchAggregationResponseItem'), 
     }
 
     def fromXml(self, node):
@@ -1578,6 +1909,9 @@ class KalturaESearchEntryResponse(KalturaESearchResponse):
 
     def getObjects(self):
         return self.objects
+
+    def getAggregations(self):
+        return self.aggregations
 
 
 # @package Kaltura
@@ -1681,6 +2015,40 @@ class KalturaESearchGroupResponse(KalturaESearchResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchMetadataAggregationItem(KalturaESearchAggregationItem):
+    def __init__(self,
+            size=NotImplemented,
+            fieldName=NotImplemented):
+        KalturaESearchAggregationItem.__init__(self,
+            size)
+
+        # @var KalturaESearchMetadataAggregateByFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchMetadataAggregateByFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAggregationItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchMetadataAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAggregationItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchMetadataAggregationItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
 
 
 # @package Kaltura
@@ -3028,13 +3396,17 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchItemType': KalturaESearchItemType,
             'KalturaESearchOperatorType': KalturaESearchOperatorType,
             'KalturaESearchCaptionFieldName': KalturaESearchCaptionFieldName,
+            'KalturaESearchCategoryAggregateByFieldName': KalturaESearchCategoryAggregateByFieldName,
             'KalturaESearchCategoryEntryFieldName': KalturaESearchCategoryEntryFieldName,
             'KalturaESearchCategoryFieldName': KalturaESearchCategoryFieldName,
             'KalturaESearchCategoryOrderByFieldName': KalturaESearchCategoryOrderByFieldName,
             'KalturaESearchCategoryUserFieldName': KalturaESearchCategoryUserFieldName,
+            'KalturaESearchCuePointAggregateByFieldName': KalturaESearchCuePointAggregateByFieldName,
             'KalturaESearchCuePointFieldName': KalturaESearchCuePointFieldName,
+            'KalturaESearchEntryAggregateByFieldName': KalturaESearchEntryAggregateByFieldName,
             'KalturaESearchEntryFieldName': KalturaESearchEntryFieldName,
             'KalturaESearchEntryOrderByFieldName': KalturaESearchEntryOrderByFieldName,
+            'KalturaESearchMetadataAggregateByFieldName': KalturaESearchMetadataAggregateByFieldName,
             'KalturaESearchSortOrder': KalturaESearchSortOrder,
             'KalturaESearchUserFieldName': KalturaESearchUserFieldName,
             'KalturaESearchUserOrderByFieldName': KalturaESearchUserOrderByFieldName,
@@ -3046,6 +3418,10 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchBaseItem': KalturaESearchBaseItem,
             'KalturaBeaconScheduledResourceBaseItem': KalturaBeaconScheduledResourceBaseItem,
             'KalturaESearchOrderByItem': KalturaESearchOrderByItem,
+            'KalturaESearchAggregationItem': KalturaESearchAggregationItem,
+            'KalturaESearchAggregation': KalturaESearchAggregation,
+            'KalturaESearchAggregationBucket': KalturaESearchAggregationBucket,
+            'KalturaESearchAggregationResponseItem': KalturaESearchAggregationResponseItem,
             'KalturaESearchBaseFilter': KalturaESearchBaseFilter,
             'KalturaESearchCategoryBaseItem': KalturaESearchCategoryBaseItem,
             'KalturaESearchHighlight': KalturaESearchHighlight,
@@ -3066,17 +3442,21 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchUserResult': KalturaESearchUserResult,
             'KalturaESearchEntryOperator': KalturaESearchEntryOperator,
             'KalturaESearchCaptionItemData': KalturaESearchCaptionItemData,
+            'KalturaESearchCategoryAggregationItem': KalturaESearchCategoryAggregationItem,
             'KalturaESearchCategoryOrderByItem': KalturaESearchCategoryOrderByItem,
             'KalturaESearchCategoryOperator': KalturaESearchCategoryOperator,
             'KalturaESearchCategoryParams': KalturaESearchCategoryParams,
             'KalturaESearchCategoryResponse': KalturaESearchCategoryResponse,
             'KalturaESearchCuePointItemData': KalturaESearchCuePointItemData,
+            'KalturaESearchCuepointsAggregationItem': KalturaESearchCuepointsAggregationItem,
+            'KalturaESearchEntryAggregationItem': KalturaESearchEntryAggregationItem,
             'KalturaESearchEntryOrderByItem': KalturaESearchEntryOrderByItem,
             'KalturaESearchEntryParams': KalturaESearchEntryParams,
             'KalturaESearchEntryResponse': KalturaESearchEntryResponse,
             'KalturaESearchGroupOrderByItem': KalturaESearchGroupOrderByItem,
             'KalturaESearchGroupParams': KalturaESearchGroupParams,
             'KalturaESearchGroupResponse': KalturaESearchGroupResponse,
+            'KalturaESearchMetadataAggregationItem': KalturaESearchMetadataAggregationItem,
             'KalturaESearchMetadataItemData': KalturaESearchMetadataItemData,
             'KalturaESearchMetadataOrderByItem': KalturaESearchMetadataOrderByItem,
             'KalturaESearchUserOrderByItem': KalturaESearchUserOrderByItem,

@@ -176,6 +176,7 @@ class KalturaFreewheelDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             apikey=NotImplemented,
             email=NotImplemented,
             sftpPass=NotImplemented,
@@ -206,7 +207,8 @@ class KalturaFreewheelDistributionProfile(KalturaDistributionProfile):
             sunsetDefaultOffset,
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
-            recommendedDcForExecute)
+            recommendedDcForExecute,
+            distributeTrigger)
 
         # @var string
         self.apikey = apikey

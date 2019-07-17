@@ -170,6 +170,7 @@ class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -213,6 +214,7 @@ class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
+            distributeTrigger,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

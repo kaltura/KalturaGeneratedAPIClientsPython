@@ -1877,6 +1877,7 @@ class KalturaBatchJobOrderBy(object):
 # @subpackage Client
 class KalturaBatchJobType(object):
     CONVERT = "0"
+    CONVERT_CAPTION_ASSET = "caption.convertcaptionasset"
     PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
     PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
     DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
@@ -59431,7 +59432,7 @@ class KalturaAdminUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaAuthentication')
 
-    def updatePassword(self, email, password, newEmail = "", newPassword = ""):
+    def updatePassword(self, email, password, newEmail = "", newPassword = "", otp = NotImplemented):
         """Update admin user password and email"""
 
         kparams = KalturaParams()
@@ -59439,6 +59440,7 @@ class KalturaAdminUserService(KalturaServiceBase):
         kparams.addStringIfDefined("password", password)
         kparams.addStringIfDefined("newEmail", newEmail)
         kparams.addStringIfDefined("newPassword", newPassword)
+        kparams.addStringIfDefined("otp", otp)
         self.client.queueServiceActionCall("adminuser", "updatePassword", "KalturaAdminUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -64485,7 +64487,7 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
-    def updateLoginData(self, oldLoginId, password, newLoginId = "", newPassword = "", newFirstName = NotImplemented, newLastName = NotImplemented):
+    def updateLoginData(self, oldLoginId, password, newLoginId = "", newPassword = "", newFirstName = NotImplemented, newLastName = NotImplemented, otp = NotImplemented):
         """Updates a user's login data: email, password, name."""
 
         kparams = KalturaParams()
@@ -64495,6 +64497,7 @@ class KalturaUserService(KalturaServiceBase):
         kparams.addStringIfDefined("newPassword", newPassword)
         kparams.addStringIfDefined("newFirstName", newFirstName)
         kparams.addStringIfDefined("newLastName", newLastName)
+        kparams.addStringIfDefined("otp", otp)
         self.client.queueServiceActionCall("user", "updateLoginData", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

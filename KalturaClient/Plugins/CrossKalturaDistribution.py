@@ -249,6 +249,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -295,6 +296,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
+            distributeTrigger,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

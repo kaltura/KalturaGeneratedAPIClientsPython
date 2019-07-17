@@ -206,6 +206,7 @@ class KalturaYahooDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -241,6 +242,7 @@ class KalturaYahooDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
+            distributeTrigger,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

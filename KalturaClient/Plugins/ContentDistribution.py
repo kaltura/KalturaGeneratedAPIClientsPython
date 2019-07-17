@@ -47,6 +47,18 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaDistributeTrigger(object):
+    ENTRY_READY = 1
+    MODERATION_APPROVED = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDistributionAction(object):
     SUBMIT = 1
     UPDATE = 2
@@ -663,7 +675,8 @@ class KalturaDistributionProfile(KalturaObjectBase):
             sunsetDefaultOffset=NotImplemented,
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented):
+            recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated unique id
@@ -759,6 +772,10 @@ class KalturaDistributionProfile(KalturaObjectBase):
         # @var int
         self.recommendedDcForExecute = recommendedDcForExecute
 
+        # The event that trigger the automatic distribute
+        # @var KalturaDistributeTrigger
+        self.distributeTrigger = distributeTrigger
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -785,6 +802,7 @@ class KalturaDistributionProfile(KalturaObjectBase):
         'recommendedStorageProfileForDownload': getXmlNodeInt, 
         'recommendedDcForDownload': getXmlNodeInt, 
         'recommendedDcForExecute': getXmlNodeInt, 
+        'distributeTrigger': (KalturaEnumsFactory.createInt, "KalturaDistributeTrigger"), 
     }
 
     def fromXml(self, node):
@@ -814,6 +832,7 @@ class KalturaDistributionProfile(KalturaObjectBase):
         kparams.addIntIfDefined("recommendedStorageProfileForDownload", self.recommendedStorageProfileForDownload)
         kparams.addIntIfDefined("recommendedDcForDownload", self.recommendedDcForDownload)
         kparams.addIntIfDefined("recommendedDcForExecute", self.recommendedDcForExecute)
+        kparams.addIntEnumIfDefined("distributeTrigger", self.distributeTrigger)
         return kparams
 
     def getId(self):
@@ -947,6 +966,12 @@ class KalturaDistributionProfile(KalturaObjectBase):
 
     def setRecommendedDcForExecute(self, newRecommendedDcForExecute):
         self.recommendedDcForExecute = newRecommendedDcForExecute
+
+    def getDistributeTrigger(self):
+        return self.distributeTrigger
+
+    def setDistributeTrigger(self, newDistributeTrigger):
+        self.distributeTrigger = newDistributeTrigger
 
 
 # @package Kaltura
@@ -2099,6 +2124,7 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented):
@@ -2126,7 +2152,8 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             sunsetDefaultOffset,
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
-            recommendedDcForExecute)
+            recommendedDcForExecute,
+            distributeTrigger)
 
         # @var array of KalturaDistributionFieldConfig
         self.fieldConfigArray = fieldConfigArray
@@ -3026,6 +3053,7 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             genericProviderId=NotImplemented,
             submitAction=NotImplemented,
             updateAction=NotImplemented,
@@ -3057,7 +3085,8 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
             sunsetDefaultOffset,
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
-            recommendedDcForExecute)
+            recommendedDcForExecute,
+            distributeTrigger)
 
         # @var int
         # @insertonly
@@ -3385,6 +3414,7 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
+            distributeTrigger=NotImplemented,
             xsl=NotImplemented,
             feedId=NotImplemented):
         KalturaDistributionProfile.__init__(self,
@@ -3411,7 +3441,8 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
             sunsetDefaultOffset,
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
-            recommendedDcForExecute)
+            recommendedDcForExecute,
+            distributeTrigger)
 
         # @var string
         self.xsl = xsl
@@ -5258,6 +5289,7 @@ class KalturaContentDistributionClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaDistributeTrigger': KalturaDistributeTrigger,
             'KalturaDistributionAction': KalturaDistributionAction,
             'KalturaDistributionErrorType': KalturaDistributionErrorType,
             'KalturaDistributionFieldRequiredStatus': KalturaDistributionFieldRequiredStatus,

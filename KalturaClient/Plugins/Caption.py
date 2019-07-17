@@ -95,6 +95,7 @@ class KalturaCaptionType(object):
     DFXP = "2"
     WEBVTT = "3"
     CAP = "4"
+    SCC = "5"
 
     def __init__(self, value):
         self.value = value
@@ -555,6 +556,86 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaConvertCaptionAssetJobData(KalturaJobData):
+    def __init__(self,
+            captionAssetId=NotImplemented,
+            fileLocation=NotImplemented,
+            fileEncryptionKey=NotImplemented,
+            fromType=NotImplemented,
+            toType=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # @var string
+        self.captionAssetId = captionAssetId
+
+        # @var string
+        self.fileLocation = fileLocation
+
+        # @var string
+        self.fileEncryptionKey = fileEncryptionKey
+
+        # @var string
+        self.fromType = fromType
+
+        # @var string
+        self.toType = toType
+
+
+    PROPERTY_LOADERS = {
+        'captionAssetId': getXmlNodeText, 
+        'fileLocation': getXmlNodeText, 
+        'fileEncryptionKey': getXmlNodeText, 
+        'fromType': getXmlNodeText, 
+        'toType': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaConvertCaptionAssetJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaConvertCaptionAssetJobData")
+        kparams.addStringIfDefined("captionAssetId", self.captionAssetId)
+        kparams.addStringIfDefined("fileLocation", self.fileLocation)
+        kparams.addStringIfDefined("fileEncryptionKey", self.fileEncryptionKey)
+        kparams.addStringIfDefined("fromType", self.fromType)
+        kparams.addStringIfDefined("toType", self.toType)
+        return kparams
+
+    def getCaptionAssetId(self):
+        return self.captionAssetId
+
+    def setCaptionAssetId(self, newCaptionAssetId):
+        self.captionAssetId = newCaptionAssetId
+
+    def getFileLocation(self):
+        return self.fileLocation
+
+    def setFileLocation(self, newFileLocation):
+        self.fileLocation = newFileLocation
+
+    def getFileEncryptionKey(self):
+        return self.fileEncryptionKey
+
+    def setFileEncryptionKey(self, newFileEncryptionKey):
+        self.fileEncryptionKey = newFileEncryptionKey
+
+    def getFromType(self):
+        return self.fromType
+
+    def setFromType(self, newFromType):
+        self.fromType = newFromType
+
+    def getToType(self):
+        return self.toType
+
+    def setToType(self, newToType):
+        self.toType = newToType
 
 
 # @package Kaltura
@@ -1236,6 +1317,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
             'KalturaCaptionPlaybackPluginData': KalturaCaptionPlaybackPluginData,
             'KalturaCaptionAssetListResponse': KalturaCaptionAssetListResponse,
             'KalturaCaptionParamsListResponse': KalturaCaptionParamsListResponse,
+            'KalturaConvertCaptionAssetJobData': KalturaConvertCaptionAssetJobData,
             'KalturaCopyCaptionsJobData': KalturaCopyCaptionsJobData,
             'KalturaParseMultiLanguageCaptionAssetJobData': KalturaParseMultiLanguageCaptionAssetJobData,
             'KalturaCaptionAssetBaseFilter': KalturaCaptionAssetBaseFilter,
