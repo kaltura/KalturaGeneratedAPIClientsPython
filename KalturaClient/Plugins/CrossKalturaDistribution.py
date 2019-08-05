@@ -117,6 +117,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
             distributedThumbAssets=NotImplemented,
             distributedMetadata=NotImplemented,
             distributedCaptionAssets=NotImplemented,
+            distributedAttachmentAssets=NotImplemented,
             distributedCuePoints=NotImplemented,
             distributedThumbCuePoints=NotImplemented,
             distributedTimedThumbAssets=NotImplemented):
@@ -139,6 +140,10 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         # @var string
         self.distributedCaptionAssets = distributedCaptionAssets
 
+        # Key-value array where the keys are IDs of distributed caption assets in the source account and the values are the matching IDs in the target account
+        # @var string
+        self.distributedAttachmentAssets = distributedAttachmentAssets
+
         # Key-value array where the keys are IDs of distributed cue points in the source account and the values are the matching IDs in the target account
         # @var string
         self.distributedCuePoints = distributedCuePoints
@@ -157,6 +162,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         'distributedThumbAssets': getXmlNodeText, 
         'distributedMetadata': getXmlNodeText, 
         'distributedCaptionAssets': getXmlNodeText, 
+        'distributedAttachmentAssets': getXmlNodeText, 
         'distributedCuePoints': getXmlNodeText, 
         'distributedThumbCuePoints': getXmlNodeText, 
         'distributedTimedThumbAssets': getXmlNodeText, 
@@ -173,6 +179,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         kparams.addStringIfDefined("distributedThumbAssets", self.distributedThumbAssets)
         kparams.addStringIfDefined("distributedMetadata", self.distributedMetadata)
         kparams.addStringIfDefined("distributedCaptionAssets", self.distributedCaptionAssets)
+        kparams.addStringIfDefined("distributedAttachmentAssets", self.distributedAttachmentAssets)
         kparams.addStringIfDefined("distributedCuePoints", self.distributedCuePoints)
         kparams.addStringIfDefined("distributedThumbCuePoints", self.distributedThumbCuePoints)
         kparams.addStringIfDefined("distributedTimedThumbAssets", self.distributedTimedThumbAssets)
@@ -201,6 +208,12 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
 
     def setDistributedCaptionAssets(self, newDistributedCaptionAssets):
         self.distributedCaptionAssets = newDistributedCaptionAssets
+
+    def getDistributedAttachmentAssets(self):
+        return self.distributedAttachmentAssets
+
+    def setDistributedAttachmentAssets(self, newDistributedAttachmentAssets):
+        self.distributedAttachmentAssets = newDistributedAttachmentAssets
 
     def getDistributedCuePoints(self):
         return self.distributedCuePoints
@@ -260,6 +273,10 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             metadataXslt=NotImplemented,
             metadataXpathsTriggerUpdate=NotImplemented,
             distributeCaptions=NotImplemented,
+            designatedCategories=NotImplemented,
+            distributeCategories=NotImplemented,
+            collaboratorsCustomMetadataProfileId=NotImplemented,
+            collaboratorsFromCustomMetadataProfile=NotImplemented,
             distributeCuePoints=NotImplemented,
             distributeRemoteFlavorAssetContent=NotImplemented,
             distributeRemoteThumbAssetContent=NotImplemented,
@@ -270,7 +287,8 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             mapStorageProfileIds=NotImplemented,
             mapFlavorParamsIds=NotImplemented,
             mapThumbParamsIds=NotImplemented,
-            mapCaptionParamsIds=NotImplemented):
+            mapCaptionParamsIds=NotImplemented,
+            mapAttachmentParamsIds=NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -322,6 +340,18 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         # @var bool
         self.distributeCaptions = distributeCaptions
 
+        # @var string
+        self.designatedCategories = designatedCategories
+
+        # @var bool
+        self.distributeCategories = distributeCategories
+
+        # @var string
+        self.collaboratorsCustomMetadataProfileId = collaboratorsCustomMetadataProfileId
+
+        # @var bool
+        self.collaboratorsFromCustomMetadataProfile = collaboratorsFromCustomMetadataProfile
+
         # @var bool
         self.distributeCuePoints = distributeCuePoints
 
@@ -355,6 +385,9 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         # @var array of KalturaKeyValue
         self.mapCaptionParamsIds = mapCaptionParamsIds
 
+        # @var array of KalturaKeyValue
+        self.mapAttachmentParamsIds = mapAttachmentParamsIds
+
 
     PROPERTY_LOADERS = {
         'targetServiceUrl': getXmlNodeText, 
@@ -364,6 +397,10 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         'metadataXslt': getXmlNodeText, 
         'metadataXpathsTriggerUpdate': (KalturaObjectFactory.createArray, 'KalturaStringValue'), 
         'distributeCaptions': getXmlNodeBool, 
+        'designatedCategories': getXmlNodeText, 
+        'distributeCategories': getXmlNodeBool, 
+        'collaboratorsCustomMetadataProfileId': getXmlNodeText, 
+        'collaboratorsFromCustomMetadataProfile': getXmlNodeBool, 
         'distributeCuePoints': getXmlNodeBool, 
         'distributeRemoteFlavorAssetContent': getXmlNodeBool, 
         'distributeRemoteThumbAssetContent': getXmlNodeBool, 
@@ -375,6 +412,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         'mapFlavorParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'mapThumbParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'mapCaptionParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+        'mapAttachmentParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -391,6 +429,10 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         kparams.addStringIfDefined("metadataXslt", self.metadataXslt)
         kparams.addArrayIfDefined("metadataXpathsTriggerUpdate", self.metadataXpathsTriggerUpdate)
         kparams.addBoolIfDefined("distributeCaptions", self.distributeCaptions)
+        kparams.addStringIfDefined("designatedCategories", self.designatedCategories)
+        kparams.addBoolIfDefined("distributeCategories", self.distributeCategories)
+        kparams.addStringIfDefined("collaboratorsCustomMetadataProfileId", self.collaboratorsCustomMetadataProfileId)
+        kparams.addBoolIfDefined("collaboratorsFromCustomMetadataProfile", self.collaboratorsFromCustomMetadataProfile)
         kparams.addBoolIfDefined("distributeCuePoints", self.distributeCuePoints)
         kparams.addBoolIfDefined("distributeRemoteFlavorAssetContent", self.distributeRemoteFlavorAssetContent)
         kparams.addBoolIfDefined("distributeRemoteThumbAssetContent", self.distributeRemoteThumbAssetContent)
@@ -402,6 +444,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         kparams.addArrayIfDefined("mapFlavorParamsIds", self.mapFlavorParamsIds)
         kparams.addArrayIfDefined("mapThumbParamsIds", self.mapThumbParamsIds)
         kparams.addArrayIfDefined("mapCaptionParamsIds", self.mapCaptionParamsIds)
+        kparams.addArrayIfDefined("mapAttachmentParamsIds", self.mapAttachmentParamsIds)
         return kparams
 
     def getTargetServiceUrl(self):
@@ -445,6 +488,30 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
 
     def setDistributeCaptions(self, newDistributeCaptions):
         self.distributeCaptions = newDistributeCaptions
+
+    def getDesignatedCategories(self):
+        return self.designatedCategories
+
+    def setDesignatedCategories(self, newDesignatedCategories):
+        self.designatedCategories = newDesignatedCategories
+
+    def getDistributeCategories(self):
+        return self.distributeCategories
+
+    def setDistributeCategories(self, newDistributeCategories):
+        self.distributeCategories = newDistributeCategories
+
+    def getCollaboratorsCustomMetadataProfileId(self):
+        return self.collaboratorsCustomMetadataProfileId
+
+    def setCollaboratorsCustomMetadataProfileId(self, newCollaboratorsCustomMetadataProfileId):
+        self.collaboratorsCustomMetadataProfileId = newCollaboratorsCustomMetadataProfileId
+
+    def getCollaboratorsFromCustomMetadataProfile(self):
+        return self.collaboratorsFromCustomMetadataProfile
+
+    def setCollaboratorsFromCustomMetadataProfile(self, newCollaboratorsFromCustomMetadataProfile):
+        self.collaboratorsFromCustomMetadataProfile = newCollaboratorsFromCustomMetadataProfile
 
     def getDistributeCuePoints(self):
         return self.distributeCuePoints
@@ -511,6 +578,12 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
 
     def setMapCaptionParamsIds(self, newMapCaptionParamsIds):
         self.mapCaptionParamsIds = newMapCaptionParamsIds
+
+    def getMapAttachmentParamsIds(self):
+        return self.mapAttachmentParamsIds
+
+    def setMapAttachmentParamsIds(self, newMapAttachmentParamsIds):
+        self.mapAttachmentParamsIds = newMapAttachmentParamsIds
 
 
 # @package Kaltura
