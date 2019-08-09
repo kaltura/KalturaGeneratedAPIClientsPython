@@ -880,6 +880,42 @@ class KalturaEventObjectChangedCondition(KalturaCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEventNotificationDispatchScope(KalturaEventNotificationScope):
+    def __init__(self,
+            objectId=NotImplemented,
+            scopeObjectType=NotImplemented,
+            dynamicValues=NotImplemented):
+        KalturaEventNotificationScope.__init__(self,
+            objectId,
+            scopeObjectType)
+
+        # @var array of KalturaKeyValue
+        self.dynamicValues = dynamicValues
+
+
+    PROPERTY_LOADERS = {
+        'dynamicValues': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+    }
+
+    def fromXml(self, node):
+        KalturaEventNotificationScope.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEventNotificationDispatchScope.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEventNotificationScope.toParams(self)
+        kparams.put("objectType", "KalturaEventNotificationDispatchScope")
+        kparams.addArrayIfDefined("dynamicValues", self.dynamicValues)
+        return kparams
+
+    def getDynamicValues(self):
+        return self.dynamicValues
+
+    def setDynamicValues(self, newDynamicValues):
+        self.dynamicValues = newDynamicValues
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEventNotificationTemplateFilter(KalturaEventNotificationTemplateBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -1116,6 +1152,7 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
             'KalturaEventNotificationTemplateBaseFilter': KalturaEventNotificationTemplateBaseFilter,
             'KalturaEventNotificationTemplateListResponse': KalturaEventNotificationTemplateListResponse,
             'KalturaEventObjectChangedCondition': KalturaEventObjectChangedCondition,
+            'KalturaEventNotificationDispatchScope': KalturaEventNotificationDispatchScope,
             'KalturaEventNotificationTemplateFilter': KalturaEventNotificationTemplateFilter,
         }
 
