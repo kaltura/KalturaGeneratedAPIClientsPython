@@ -1693,7 +1693,8 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
             sourceLanguage=NotImplemented,
-            flavorParamsId=NotImplemented):
+            flavorParamsId=NotImplemented,
+            clearAudioFlavorParamsId=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
             vendorPartnerId,
@@ -1713,10 +1714,14 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
         # @var int
         self.flavorParamsId = flavorParamsId
 
+        # @var int
+        self.clearAudioFlavorParamsId = clearAudioFlavorParamsId
+
 
     PROPERTY_LOADERS = {
         'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
         'flavorParamsId': getXmlNodeInt, 
+        'clearAudioFlavorParamsId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1728,6 +1733,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
         kparams.put("objectType", "KalturaVendorAudioDescriptionCatalogItem")
         kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
+        kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
         return kparams
 
     def getSourceLanguage(self):
@@ -1741,6 +1747,12 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
 
     def setFlavorParamsId(self, newFlavorParamsId):
         self.flavorParamsId = newFlavorParamsId
+
+    def getClearAudioFlavorParamsId(self):
+        return self.clearAudioFlavorParamsId
+
+    def setClearAudioFlavorParamsId(self, newClearAudioFlavorParamsId):
+        self.clearAudioFlavorParamsId = newClearAudioFlavorParamsId
 
 
 # @package Kaltura
