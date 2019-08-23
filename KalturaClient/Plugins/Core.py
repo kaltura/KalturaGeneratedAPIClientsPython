@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.5.0'
+API_VERSION = '15.6.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -41589,6 +41589,58 @@ class KalturaUrlTokenizerKs(KalturaUrlTokenizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlTokenizerL3(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented,
+            gen=NotImplemented,
+            paramName=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+        # gen
+        # @var string
+        self.gen = gen
+
+        # paramName
+        # @var string
+        self.paramName = paramName
+
+
+    PROPERTY_LOADERS = {
+        'gen': getXmlNodeText, 
+        'paramName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerL3.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerL3")
+        kparams.addStringIfDefined("gen", self.gen)
+        kparams.addStringIfDefined("paramName", self.paramName)
+        return kparams
+
+    def getGen(self):
+        return self.gen
+
+    def setGen(self, newGen):
+        self.gen = newGen
+
+    def getParamName(self):
+        return self.paramName
+
+    def setParamName(self, newParamName):
+        self.paramName = newParamName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerLevel3(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -65277,6 +65329,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerCht': KalturaUrlTokenizerCht,
             'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
             'KalturaUrlTokenizerKs': KalturaUrlTokenizerKs,
+            'KalturaUrlTokenizerL3': KalturaUrlTokenizerL3,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
             'KalturaUrlTokenizerLimeLight': KalturaUrlTokenizerLimeLight,
             'KalturaUrlTokenizerVelocix': KalturaUrlTokenizerVelocix,
