@@ -131,7 +131,8 @@ class KalturaCaptionAsset(KalturaAsset):
             status=NotImplemented,
             parentId=NotImplemented,
             accuracy=NotImplemented,
-            displayOnPlayer=NotImplemented):
+            displayOnPlayer=NotImplemented,
+            associatedTranscriptIds=NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -193,6 +194,10 @@ class KalturaCaptionAsset(KalturaAsset):
         # @var bool
         self.displayOnPlayer = displayOnPlayer
 
+        # List of associated transcript asset id's, comma separated
+        # @var string
+        self.associatedTranscriptIds = associatedTranscriptIds
+
 
     PROPERTY_LOADERS = {
         'captionParamsId': getXmlNodeInt, 
@@ -205,6 +210,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'parentId': getXmlNodeText, 
         'accuracy': getXmlNodeInt, 
         'displayOnPlayer': getXmlNodeBool, 
+        'associatedTranscriptIds': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -222,6 +228,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addStringIfDefined("parentId", self.parentId)
         kparams.addIntIfDefined("accuracy", self.accuracy)
         kparams.addBoolIfDefined("displayOnPlayer", self.displayOnPlayer)
+        kparams.addStringIfDefined("associatedTranscriptIds", self.associatedTranscriptIds)
         return kparams
 
     def getCaptionParamsId(self):
@@ -277,6 +284,12 @@ class KalturaCaptionAsset(KalturaAsset):
 
     def setDisplayOnPlayer(self, newDisplayOnPlayer):
         self.displayOnPlayer = newDisplayOnPlayer
+
+    def getAssociatedTranscriptIds(self):
+        return self.associatedTranscriptIds
+
+    def setAssociatedTranscriptIds(self, newAssociatedTranscriptIds):
+        self.associatedTranscriptIds = newAssociatedTranscriptIds
 
 
 # @package Kaltura
