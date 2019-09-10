@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.6.0'
+API_VERSION = '15.7.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5148,6 +5148,8 @@ class KalturaReportType(object):
     CONTENT_REPORT_REASONS = "44"
     PLAYER_RELATED_INTERACTIONS = "45"
     PLAYBACK_RATE = "46"
+    TOP_USER_CONTENT = "47"
+    USER_HIGHLIGHTS = "48"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
