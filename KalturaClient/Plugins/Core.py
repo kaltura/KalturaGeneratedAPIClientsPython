@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.8.0'
+API_VERSION = '15.9.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -21952,6 +21952,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -22053,6 +22054,9 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
         self.lastPlayedAtLessThanOrEqual = lastPlayedAtLessThanOrEqual
 
         # @var int
+        self.lastPlayedAtLessThanOrEqualOrNull = lastPlayedAtLessThanOrEqualOrNull
+
+        # @var int
         self.durationLessThan = durationLessThan
 
         # @var int
@@ -22071,6 +22075,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
     PROPERTY_LOADERS = {
         'lastPlayedAtGreaterThanOrEqual': getXmlNodeInt, 
         'lastPlayedAtLessThanOrEqual': getXmlNodeInt, 
+        'lastPlayedAtLessThanOrEqualOrNull': getXmlNodeInt, 
         'durationLessThan': getXmlNodeInt, 
         'durationGreaterThan': getXmlNodeInt, 
         'durationLessThanOrEqual': getXmlNodeInt, 
@@ -22087,6 +22092,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
         kparams.put("objectType", "KalturaPlayableEntryBaseFilter")
         kparams.addIntIfDefined("lastPlayedAtGreaterThanOrEqual", self.lastPlayedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("lastPlayedAtLessThanOrEqual", self.lastPlayedAtLessThanOrEqual)
+        kparams.addIntIfDefined("lastPlayedAtLessThanOrEqualOrNull", self.lastPlayedAtLessThanOrEqualOrNull)
         kparams.addIntIfDefined("durationLessThan", self.durationLessThan)
         kparams.addIntIfDefined("durationGreaterThan", self.durationGreaterThan)
         kparams.addIntIfDefined("durationLessThanOrEqual", self.durationLessThanOrEqual)
@@ -22105,6 +22111,12 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
 
     def setLastPlayedAtLessThanOrEqual(self, newLastPlayedAtLessThanOrEqual):
         self.lastPlayedAtLessThanOrEqual = newLastPlayedAtLessThanOrEqual
+
+    def getLastPlayedAtLessThanOrEqualOrNull(self):
+        return self.lastPlayedAtLessThanOrEqualOrNull
+
+    def setLastPlayedAtLessThanOrEqualOrNull(self, newLastPlayedAtLessThanOrEqualOrNull):
+        self.lastPlayedAtLessThanOrEqualOrNull = newLastPlayedAtLessThanOrEqualOrNull
 
     def getDurationLessThan(self):
         return self.durationLessThan
@@ -22230,6 +22242,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -22325,6 +22338,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -22438,6 +22452,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -22543,6 +22558,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -22766,6 +22782,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -22871,6 +22888,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -22994,6 +23012,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -23101,6 +23120,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -56697,6 +56717,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -56792,6 +56813,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -57183,6 +57205,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -57278,6 +57301,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -57437,6 +57461,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -57542,6 +57567,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -57711,6 +57737,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -57819,6 +57846,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -58021,6 +58049,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -58129,6 +58158,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -58255,6 +58285,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -58363,6 +58394,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -58489,6 +58521,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -58597,6 +58630,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -58723,6 +58757,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -58831,6 +58866,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -58957,6 +58993,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -59065,6 +59102,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
@@ -59191,6 +59229,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             redirectFromEntryId=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
+            lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
             durationLessThan=NotImplemented,
             durationGreaterThan=NotImplemented,
             durationLessThanOrEqual=NotImplemented,
@@ -59299,6 +59338,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             redirectFromEntryId,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
+            lastPlayedAtLessThanOrEqualOrNull,
             durationLessThan,
             durationGreaterThan,
             durationLessThanOrEqual,
