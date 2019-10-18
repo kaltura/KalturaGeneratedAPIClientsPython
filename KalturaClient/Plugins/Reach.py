@@ -469,7 +469,10 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             outputObjectId=NotImplemented,
             partnerData=NotImplemented,
             creationMode=NotImplemented,
-            taskJobData=NotImplemented):
+            taskJobData=NotImplemented,
+            expectedFinishTime=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -578,6 +581,18 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         # @var KalturaVendorTaskData
         self.taskJobData = taskJobData
 
+        # @var int
+        # @readonly
+        self.expectedFinishTime = expectedFinishTime
+
+        # @var KalturaVendorServiceType
+        # @readonly
+        self.serviceType = serviceType
+
+        # @var KalturaVendorServiceFeature
+        # @readonly
+        self.serviceFeature = serviceFeature
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -605,6 +620,9 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         'partnerData': getXmlNodeText, 
         'creationMode': (KalturaEnumsFactory.createInt, "KalturaEntryVendorTaskCreationMode"), 
         'taskJobData': (KalturaObjectFactory.create, 'KalturaVendorTaskData'), 
+        'expectedFinishTime': getXmlNodeInt, 
+        'serviceType': (KalturaEnumsFactory.createInt, "KalturaVendorServiceType"), 
+        'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
     }
 
     def fromXml(self, node):
@@ -734,6 +752,15 @@ class KalturaEntryVendorTask(KalturaObjectBase):
 
     def setTaskJobData(self, newTaskJobData):
         self.taskJobData = newTaskJobData
+
+    def getExpectedFinishTime(self):
+        return self.expectedFinishTime
+
+    def getServiceType(self):
+        return self.serviceType
+
+    def getServiceFeature(self):
+        return self.serviceFeature
 
 
 # @package Kaltura
@@ -2305,7 +2332,9 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
             catalogItemIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             contextEqual=NotImplemented,
-            freeText=NotImplemented):
+            freeText=NotImplemented,
+            expectedFinishTimeGreaterThanOrEqual=NotImplemented,
+            expectedFinishTimeLessThanOrEqual=NotImplemented):
         KalturaEntryVendorTaskBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2334,9 +2363,17 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
         # @var string
         self.freeText = freeText
 
+        # @var int
+        self.expectedFinishTimeGreaterThanOrEqual = expectedFinishTimeGreaterThanOrEqual
+
+        # @var int
+        self.expectedFinishTimeLessThanOrEqual = expectedFinishTimeLessThanOrEqual
+
 
     PROPERTY_LOADERS = {
         'freeText': getXmlNodeText, 
+        'expectedFinishTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'expectedFinishTimeLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -2347,6 +2384,8 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
         kparams = KalturaEntryVendorTaskBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaEntryVendorTaskFilter")
         kparams.addStringIfDefined("freeText", self.freeText)
+        kparams.addIntIfDefined("expectedFinishTimeGreaterThanOrEqual", self.expectedFinishTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("expectedFinishTimeLessThanOrEqual", self.expectedFinishTimeLessThanOrEqual)
         return kparams
 
     def getFreeText(self):
@@ -2354,6 +2393,18 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
 
     def setFreeText(self, newFreeText):
         self.freeText = newFreeText
+
+    def getExpectedFinishTimeGreaterThanOrEqual(self):
+        return self.expectedFinishTimeGreaterThanOrEqual
+
+    def setExpectedFinishTimeGreaterThanOrEqual(self, newExpectedFinishTimeGreaterThanOrEqual):
+        self.expectedFinishTimeGreaterThanOrEqual = newExpectedFinishTimeGreaterThanOrEqual
+
+    def getExpectedFinishTimeLessThanOrEqual(self):
+        return self.expectedFinishTimeLessThanOrEqual
+
+    def setExpectedFinishTimeLessThanOrEqual(self, newExpectedFinishTimeLessThanOrEqual):
+        self.expectedFinishTimeLessThanOrEqual = newExpectedFinishTimeLessThanOrEqual
 
 
 # @package Kaltura
