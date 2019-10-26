@@ -229,6 +229,7 @@ class KalturaESearchEntryAggregateByFieldName(object):
 class KalturaESearchEntryFieldName(object):
     ACCESS_CONTROL_ID = "access_control_id"
     ADMIN_TAGS = "admin_tags"
+    CAPTIONS_CONTENT = "captions_content"
     CONVERSION_PROFILE_ID = "conversion_profile_id"
     CREATED_AT = "created_at"
     CREATOR_ID = "creator_kuser_id"
