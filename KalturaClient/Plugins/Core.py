@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.9.0'
+API_VERSION = '15.10.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1500,8 +1500,10 @@ class KalturaAccessControlProfileOrderBy(object):
 class KalturaAdminUserOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     ID_ASC = "+id"
+    UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
     ID_DESC = "-id"
+    UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
         self.value = value
@@ -1818,6 +1820,22 @@ class KalturaBaseSyndicationFeedOrderBy(object):
     NAME_DESC = "-name"
     PLAYLIST_ID_DESC = "-playlistId"
     TYPE_DESC = "-type"
+    UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseUserOrderBy(object):
+    CREATED_AT_ASC = "+createdAt"
+    ID_ASC = "+id"
+    UPDATED_AT_ASC = "+updatedAt"
+    CREATED_AT_DESC = "-createdAt"
+    ID_DESC = "-id"
     UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
@@ -5542,8 +5560,10 @@ class KalturaUserLoginDataOrderBy(object):
 class KalturaUserOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     ID_ASC = "+id"
+    UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
     ID_DESC = "-id"
+    UPDATED_AT_DESC = "-updatedAt"
 
     def __init__(self, value):
         self.value = value
@@ -35033,13 +35053,11 @@ class KalturaCategoryUserFilter(KalturaCategoryUserBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUserBaseFilter(KalturaRelatedFilter):
+class KalturaBaseUserBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             partnerIdEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
             screenNameLike=NotImplemented,
             screenNameStartsWith=NotImplemented,
             emailLike=NotImplemented,
@@ -35050,21 +35068,14 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
             statusIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
-            firstNameStartsWith=NotImplemented,
-            lastNameStartsWith=NotImplemented,
-            isAdminEqual=NotImplemented):
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
-
-        # @var KalturaUserType
-        self.typeEqual = typeEqual
-
-        # @var string
-        self.typeIn = typeIn
 
         # @var string
         self.screenNameLike = screenNameLike
@@ -35096,20 +35107,15 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
         # @var int
         self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
 
-        # @var string
-        self.firstNameStartsWith = firstNameStartsWith
+        # @var int
+        self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
 
-        # @var string
-        self.lastNameStartsWith = lastNameStartsWith
-
-        # @var KalturaNullableBoolean
-        self.isAdminEqual = isAdminEqual
+        # @var int
+        self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
 
     PROPERTY_LOADERS = {
         'partnerIdEqual': getXmlNodeInt, 
-        'typeEqual': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
-        'typeIn': getXmlNodeText, 
         'screenNameLike': getXmlNodeText, 
         'screenNameStartsWith': getXmlNodeText, 
         'emailLike': getXmlNodeText, 
@@ -35120,21 +35126,18 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
         'statusIn': getXmlNodeText, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
-        'firstNameStartsWith': getXmlNodeText, 
-        'lastNameStartsWith': getXmlNodeText, 
-        'isAdminEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
+        'updatedAtLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
         KalturaRelatedFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUserBaseFilter.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaBaseUserBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaRelatedFilter.toParams(self)
-        kparams.put("objectType", "KalturaUserBaseFilter")
+        kparams.put("objectType", "KalturaBaseUserBaseFilter")
         kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
-        kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
-        kparams.addStringIfDefined("typeIn", self.typeIn)
         kparams.addStringIfDefined("screenNameLike", self.screenNameLike)
         kparams.addStringIfDefined("screenNameStartsWith", self.screenNameStartsWith)
         kparams.addStringIfDefined("emailLike", self.emailLike)
@@ -35145,9 +35148,8 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("statusIn", self.statusIn)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
-        kparams.addStringIfDefined("firstNameStartsWith", self.firstNameStartsWith)
-        kparams.addStringIfDefined("lastNameStartsWith", self.lastNameStartsWith)
-        kparams.addIntEnumIfDefined("isAdminEqual", self.isAdminEqual)
+        kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
+        kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
         return kparams
 
     def getPartnerIdEqual(self):
@@ -35155,18 +35157,6 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
 
     def setPartnerIdEqual(self, newPartnerIdEqual):
         self.partnerIdEqual = newPartnerIdEqual
-
-    def getTypeEqual(self):
-        return self.typeEqual
-
-    def setTypeEqual(self, newTypeEqual):
-        self.typeEqual = newTypeEqual
-
-    def getTypeIn(self):
-        return self.typeIn
-
-    def setTypeIn(self, newTypeIn):
-        self.typeIn = newTypeIn
 
     def getScreenNameLike(self):
         return self.screenNameLike
@@ -35228,6 +35218,166 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
     def setCreatedAtLessThanOrEqual(self, newCreatedAtLessThanOrEqual):
         self.createdAtLessThanOrEqual = newCreatedAtLessThanOrEqual
 
+    def getUpdatedAtGreaterThanOrEqual(self):
+        return self.updatedAtGreaterThanOrEqual
+
+    def setUpdatedAtGreaterThanOrEqual(self, newUpdatedAtGreaterThanOrEqual):
+        self.updatedAtGreaterThanOrEqual = newUpdatedAtGreaterThanOrEqual
+
+    def getUpdatedAtLessThanOrEqual(self):
+        return self.updatedAtLessThanOrEqual
+
+    def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
+        self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBaseUserFilter(KalturaBaseUserBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            screenNameLike=NotImplemented,
+            screenNameStartsWith=NotImplemented,
+            emailLike=NotImplemented,
+            emailStartsWith=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented):
+        KalturaBaseUserBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            screenNameLike,
+            screenNameStartsWith,
+            emailLike,
+            emailStartsWith,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaBaseUserBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBaseUserFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseUserBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaBaseUserFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUserBaseFilter(KalturaBaseUserFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            screenNameLike=NotImplemented,
+            screenNameStartsWith=NotImplemented,
+            emailLike=NotImplemented,
+            emailStartsWith=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            isAdminEqual=NotImplemented,
+            firstNameStartsWith=NotImplemented,
+            lastNameStartsWith=NotImplemented):
+        KalturaBaseUserFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            screenNameLike,
+            screenNameStartsWith,
+            emailLike,
+            emailStartsWith,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual)
+
+        # @var KalturaUserType
+        self.typeEqual = typeEqual
+
+        # @var string
+        self.typeIn = typeIn
+
+        # @var KalturaNullableBoolean
+        self.isAdminEqual = isAdminEqual
+
+        # @var string
+        self.firstNameStartsWith = firstNameStartsWith
+
+        # @var string
+        self.lastNameStartsWith = lastNameStartsWith
+
+
+    PROPERTY_LOADERS = {
+        'typeEqual': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
+        'typeIn': getXmlNodeText, 
+        'isAdminEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'firstNameStartsWith': getXmlNodeText, 
+        'lastNameStartsWith': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseUserFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUserBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseUserFilter.toParams(self)
+        kparams.put("objectType", "KalturaUserBaseFilter")
+        kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
+        kparams.addStringIfDefined("typeIn", self.typeIn)
+        kparams.addIntEnumIfDefined("isAdminEqual", self.isAdminEqual)
+        kparams.addStringIfDefined("firstNameStartsWith", self.firstNameStartsWith)
+        kparams.addStringIfDefined("lastNameStartsWith", self.lastNameStartsWith)
+        return kparams
+
+    def getTypeEqual(self):
+        return self.typeEqual
+
+    def setTypeEqual(self, newTypeEqual):
+        self.typeEqual = newTypeEqual
+
+    def getTypeIn(self):
+        return self.typeIn
+
+    def setTypeIn(self, newTypeIn):
+        self.typeIn = newTypeIn
+
+    def getIsAdminEqual(self):
+        return self.isAdminEqual
+
+    def setIsAdminEqual(self, newIsAdminEqual):
+        self.isAdminEqual = newIsAdminEqual
+
     def getFirstNameStartsWith(self):
         return self.firstNameStartsWith
 
@@ -35240,12 +35390,6 @@ class KalturaUserBaseFilter(KalturaRelatedFilter):
     def setLastNameStartsWith(self, newLastNameStartsWith):
         self.lastNameStartsWith = newLastNameStartsWith
 
-    def getIsAdminEqual(self):
-        return self.isAdminEqual
-
-    def setIsAdminEqual(self, newIsAdminEqual):
-        self.isAdminEqual = newIsAdminEqual
-
 
 # @package Kaltura
 # @subpackage Client
@@ -35254,8 +35398,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             orderBy=NotImplemented,
             advancedSearch=NotImplemented,
             partnerIdEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
             screenNameLike=NotImplemented,
             screenNameStartsWith=NotImplemented,
             emailLike=NotImplemented,
@@ -35266,9 +35408,13 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             statusIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            isAdminEqual=NotImplemented,
             firstNameStartsWith=NotImplemented,
             lastNameStartsWith=NotImplemented,
-            isAdminEqual=NotImplemented,
             idOrScreenNameStartsWith=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
@@ -35283,8 +35429,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             orderBy,
             advancedSearch,
             partnerIdEqual,
-            typeEqual,
-            typeIn,
             screenNameLike,
             screenNameStartsWith,
             emailLike,
@@ -35295,9 +35439,13 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             statusIn,
             createdAtGreaterThanOrEqual,
             createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            typeEqual,
+            typeIn,
+            isAdminEqual,
             firstNameStartsWith,
-            lastNameStartsWith,
-            isAdminEqual)
+            lastNameStartsWith)
 
         # @var string
         self.idOrScreenNameStartsWith = idOrScreenNameStartsWith
@@ -52833,82 +52981,6 @@ class KalturaYahooSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAdminUserBaseFilter(KalturaUserFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            screenNameLike=NotImplemented,
-            screenNameStartsWith=NotImplemented,
-            emailLike=NotImplemented,
-            emailStartsWith=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            firstNameStartsWith=NotImplemented,
-            lastNameStartsWith=NotImplemented,
-            isAdminEqual=NotImplemented,
-            idOrScreenNameStartsWith=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            loginEnabledEqual=NotImplemented,
-            roleIdEqual=NotImplemented,
-            roleIdsEqual=NotImplemented,
-            roleIdsIn=NotImplemented,
-            firstNameOrLastNameStartsWith=NotImplemented,
-            permissionNamesMultiLikeOr=NotImplemented,
-            permissionNamesMultiLikeAnd=NotImplemented):
-        KalturaUserFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            partnerIdEqual,
-            typeEqual,
-            typeIn,
-            screenNameLike,
-            screenNameStartsWith,
-            emailLike,
-            emailStartsWith,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            statusEqual,
-            statusIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            firstNameStartsWith,
-            lastNameStartsWith,
-            isAdminEqual,
-            idOrScreenNameStartsWith,
-            idEqual,
-            idIn,
-            loginEnabledEqual,
-            roleIdEqual,
-            roleIdsEqual,
-            roleIdsIn,
-            firstNameOrLastNameStartsWith,
-            permissionNamesMultiLikeOr,
-            permissionNamesMultiLikeAnd)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaUserFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAdminUserBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaUserFilter.toParams(self)
-        kparams.put("objectType", "KalturaAdminUserBaseFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaAmazonS3StorageProfileFilter(KalturaAmazonS3StorageProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -54838,82 +54910,6 @@ class KalturaYahooSyndicationFeedFilter(KalturaYahooSyndicationFeedBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            screenNameLike=NotImplemented,
-            screenNameStartsWith=NotImplemented,
-            emailLike=NotImplemented,
-            emailStartsWith=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            firstNameStartsWith=NotImplemented,
-            lastNameStartsWith=NotImplemented,
-            isAdminEqual=NotImplemented,
-            idOrScreenNameStartsWith=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            loginEnabledEqual=NotImplemented,
-            roleIdEqual=NotImplemented,
-            roleIdsEqual=NotImplemented,
-            roleIdsIn=NotImplemented,
-            firstNameOrLastNameStartsWith=NotImplemented,
-            permissionNamesMultiLikeOr=NotImplemented,
-            permissionNamesMultiLikeAnd=NotImplemented):
-        KalturaAdminUserBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            partnerIdEqual,
-            typeEqual,
-            typeIn,
-            screenNameLike,
-            screenNameStartsWith,
-            emailLike,
-            emailStartsWith,
-            tagsMultiLikeOr,
-            tagsMultiLikeAnd,
-            statusEqual,
-            statusIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            firstNameStartsWith,
-            lastNameStartsWith,
-            isAdminEqual,
-            idOrScreenNameStartsWith,
-            idEqual,
-            idIn,
-            loginEnabledEqual,
-            roleIdEqual,
-            roleIdsEqual,
-            roleIdsIn,
-            firstNameOrLastNameStartsWith,
-            permissionNamesMultiLikeOr,
-            permissionNamesMultiLikeAnd)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaAdminUserBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAdminUserFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaAdminUserBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaAdminUserFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -56148,6 +56144,86 @@ class KalturaThumbParamsFilter(KalturaThumbParamsBaseFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaAdminUserBaseFilter(KalturaUserFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            screenNameLike=NotImplemented,
+            screenNameStartsWith=NotImplemented,
+            emailLike=NotImplemented,
+            emailStartsWith=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            isAdminEqual=NotImplemented,
+            firstNameStartsWith=NotImplemented,
+            lastNameStartsWith=NotImplemented,
+            idOrScreenNameStartsWith=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            loginEnabledEqual=NotImplemented,
+            roleIdEqual=NotImplemented,
+            roleIdsEqual=NotImplemented,
+            roleIdsIn=NotImplemented,
+            firstNameOrLastNameStartsWith=NotImplemented,
+            permissionNamesMultiLikeOr=NotImplemented,
+            permissionNamesMultiLikeAnd=NotImplemented):
+        KalturaUserFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            screenNameLike,
+            screenNameStartsWith,
+            emailLike,
+            emailStartsWith,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            typeEqual,
+            typeIn,
+            isAdminEqual,
+            firstNameStartsWith,
+            lastNameStartsWith,
+            idOrScreenNameStartsWith,
+            idEqual,
+            idIn,
+            loginEnabledEqual,
+            roleIdEqual,
+            roleIdsEqual,
+            roleIdsIn,
+            firstNameOrLastNameStartsWith,
+            permissionNamesMultiLikeOr,
+            permissionNamesMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUserFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAdminUserBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUserFilter.toParams(self)
+        kparams.put("objectType", "KalturaAdminUserBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfileGenericRtmpFilter(KalturaDeliveryProfileGenericRtmpBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -56918,6 +56994,86 @@ class KalturaThumbParamsOutputBaseFilter(KalturaThumbParamsFilter):
 
     def setThumbAssetVersionEqual(self, newThumbAssetVersionEqual):
         self.thumbAssetVersionEqual = newThumbAssetVersionEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            screenNameLike=NotImplemented,
+            screenNameStartsWith=NotImplemented,
+            emailLike=NotImplemented,
+            emailStartsWith=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            typeEqual=NotImplemented,
+            typeIn=NotImplemented,
+            isAdminEqual=NotImplemented,
+            firstNameStartsWith=NotImplemented,
+            lastNameStartsWith=NotImplemented,
+            idOrScreenNameStartsWith=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            loginEnabledEqual=NotImplemented,
+            roleIdEqual=NotImplemented,
+            roleIdsEqual=NotImplemented,
+            roleIdsIn=NotImplemented,
+            firstNameOrLastNameStartsWith=NotImplemented,
+            permissionNamesMultiLikeOr=NotImplemented,
+            permissionNamesMultiLikeAnd=NotImplemented):
+        KalturaAdminUserBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            partnerIdEqual,
+            screenNameLike,
+            screenNameStartsWith,
+            emailLike,
+            emailStartsWith,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            statusEqual,
+            statusIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            typeEqual,
+            typeIn,
+            isAdminEqual,
+            firstNameStartsWith,
+            lastNameStartsWith,
+            idOrScreenNameStartsWith,
+            idEqual,
+            idIn,
+            loginEnabledEqual,
+            roleIdEqual,
+            roleIdsEqual,
+            roleIdsIn,
+            firstNameOrLastNameStartsWith,
+            permissionNamesMultiLikeOr,
+            permissionNamesMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAdminUserBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAdminUserFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAdminUserBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaAdminUserFilter")
+        return kparams
 
 
 # @package Kaltura
@@ -64874,6 +65030,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryMatchAttribute': KalturaBaseEntryMatchAttribute,
             'KalturaBaseEntryOrderBy': KalturaBaseEntryOrderBy,
             'KalturaBaseSyndicationFeedOrderBy': KalturaBaseSyndicationFeedOrderBy,
+            'KalturaBaseUserOrderBy': KalturaBaseUserOrderBy,
             'KalturaBatchJobObjectType': KalturaBatchJobObjectType,
             'KalturaBatchJobOrderBy': KalturaBatchJobOrderBy,
             'KalturaBatchJobType': KalturaBatchJobType,
@@ -65299,6 +65456,8 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
             'KalturaCategoryUserBaseFilter': KalturaCategoryUserBaseFilter,
             'KalturaCategoryUserFilter': KalturaCategoryUserFilter,
+            'KalturaBaseUserBaseFilter': KalturaBaseUserBaseFilter,
+            'KalturaBaseUserFilter': KalturaBaseUserFilter,
             'KalturaUserBaseFilter': KalturaUserBaseFilter,
             'KalturaUserFilter': KalturaUserFilter,
             'KalturaEntryContext': KalturaEntryContext,
@@ -65560,7 +65719,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserRoleFilter': KalturaUserRoleFilter,
             'KalturaWebcamTokenResource': KalturaWebcamTokenResource,
             'KalturaYahooSyndicationFeedBaseFilter': KalturaYahooSyndicationFeedBaseFilter,
-            'KalturaAdminUserBaseFilter': KalturaAdminUserBaseFilter,
             'KalturaAmazonS3StorageProfileFilter': KalturaAmazonS3StorageProfileFilter,
             'KalturaApiActionPermissionItemBaseFilter': KalturaApiActionPermissionItemBaseFilter,
             'KalturaApiParameterPermissionItemBaseFilter': KalturaApiParameterPermissionItemBaseFilter,
@@ -65592,7 +65750,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaTubeMogulSyndicationFeedFilter': KalturaTubeMogulSyndicationFeedFilter,
             'KalturaUploadedFileTokenResource': KalturaUploadedFileTokenResource,
             'KalturaYahooSyndicationFeedFilter': KalturaYahooSyndicationFeedFilter,
-            'KalturaAdminUserFilter': KalturaAdminUserFilter,
             'KalturaApiActionPermissionItemFilter': KalturaApiActionPermissionItemFilter,
             'KalturaApiParameterPermissionItemFilter': KalturaApiParameterPermissionItemFilter,
             'KalturaAssetParamsOutputFilter': KalturaAssetParamsOutputFilter,
@@ -65607,6 +65764,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlaylistFilter': KalturaPlaylistFilter,
             'KalturaThumbAssetFilter': KalturaThumbAssetFilter,
             'KalturaThumbParamsFilter': KalturaThumbParamsFilter,
+            'KalturaAdminUserBaseFilter': KalturaAdminUserBaseFilter,
             'KalturaDeliveryProfileGenericRtmpFilter': KalturaDeliveryProfileGenericRtmpFilter,
             'KalturaEdgeServerNodeFilter': KalturaEdgeServerNodeFilter,
             'KalturaFlavorParamsOutputBaseFilter': KalturaFlavorParamsOutputBaseFilter,
@@ -65617,6 +65775,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMediaServerNodeFilter': KalturaMediaServerNodeFilter,
             'KalturaMixEntryBaseFilter': KalturaMixEntryBaseFilter,
             'KalturaThumbParamsOutputBaseFilter': KalturaThumbParamsOutputBaseFilter,
+            'KalturaAdminUserFilter': KalturaAdminUserFilter,
             'KalturaFlavorParamsOutputFilter': KalturaFlavorParamsOutputFilter,
             'KalturaLiveAssetFilter': KalturaLiveAssetFilter,
             'KalturaLiveParamsFilter': KalturaLiveParamsFilter,
