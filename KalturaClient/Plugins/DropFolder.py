@@ -216,6 +216,7 @@ class KalturaDropFolderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDropFolderType(object):
+    AP_FEED = "ApFeedDropFolder.AP_FEED"
     FEED = "FeedDropFolder.FEED"
     WEBEX = "WebexDropFolder.WEBEX"
     LOCAL = "1"
