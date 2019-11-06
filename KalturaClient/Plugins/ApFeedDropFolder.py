@@ -31,6 +31,7 @@ from __future__ import absolute_import
 
 from .Core import *
 from .DropFolder import *
+from .FeedDropFolder import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
