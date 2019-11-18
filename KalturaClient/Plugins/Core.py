@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.10.0'
+API_VERSION = '15.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5097,6 +5097,7 @@ class KalturaReportInterval(object):
     HOURS = "hours"
     MINUTES = "minutes"
     MONTHS = "months"
+    TEN_MINUTES = "ten_minutes"
     TEN_SECONDS = "ten_seconds"
 
     def __init__(self, value):
@@ -5203,6 +5204,52 @@ class KalturaReportType(object):
     PLAYER_RELATED_INTERACTIONS_VPAAS = "20019"
     PLAYBACK_RATE_VPAAS = "20020"
     PARTNER_USAGE_VPAAS = "20021"
+    QOE_OVERVIEW = "30001"
+    QOE_EXPERIENCE = "30002"
+    QOE_EXPERIENCE_PLATFORMS = "30003"
+    QOE_EXPERIENCE_COUNTRY = "30004"
+    QOE_EXPERIENCE_REGION = "30005"
+    QOE_EXPERIENCE_CITY = "30006"
+    QOE_EXPERIENCE_BROWSERS_FAMILIES = "30007"
+    QOE_EXPERIENCE_BROWSERS = "30008"
+    QOE_EXPERIENCE_OPERATING_SYSTEM_FAMILIES = "30009"
+    QOE_EXPERIENCE_OPERATING_SYSTEM = "30010"
+    QOE_EXPERIENCE_PLAYER_VERSION = "30011"
+    QOE_EXPERIENCE_ENTRY = "30012"
+    QOE_EXPERIENCE_ISP = "30013"
+    QOE_ENGAGEMENT = "30014"
+    QOE_ENGAGEMENT_PLATFORMS = "30015"
+    QOE_ENGAGEMENT_COUNTRY = "30016"
+    QOE_ENGAGEMENT_REGION = "30017"
+    QOE_ENGAGEMENT_CITY = "30018"
+    QOE_ENGAGEMENT_BROWSERS_FAMILIES = "30019"
+    QOE_ENGAGEMENT_BROWSERS = "30020"
+    QOE_ENGAGEMENT_OPERATING_SYSTEM_FAMILIES = "30021"
+    QOE_ENGAGEMENT_OPERATING_SYSTEM = "30022"
+    QOE_ENGAGEMENT_PLAYER_VERSION = "30023"
+    QOE_ENGAGEMENT_ENTRY = "30024"
+    QOE_ENGAGEMENT_ISP = "30025"
+    QOE_STREAM_QUALITY = "30026"
+    QOE_STREAM_QUALITY_PLATFORMS = "30027"
+    QOE_STREAM_QUALITY_COUNTRY = "30028"
+    QOE_STREAM_QUALITY_REGION = "30029"
+    QOE_STREAM_QUALITY_CITY = "30030"
+    QOE_STREAM_QUALITY_BROWSERS_FAMILIES = "30031"
+    QOE_STREAM_QUALITY_BROWSERS = "30032"
+    QOE_STREAM_QUALITY_OPERATING_SYSTEM_FAMILIES = "30033"
+    QOE_STREAM_QUALITY_OPERATING_SYSTEM = "30034"
+    QOE_STREAM_QUALITY_PLAYER_VERSION = "30035"
+    QOE_STREAM_QUALITY_ENTRY = "30036"
+    QOE_STREAM_QUALITY_ISP = "30037"
+    QOE_ERROR_TRACKING = "30038"
+    QOE_ERROR_TRACKING_CODES = "30039"
+    QOE_ERROR_TRACKING_PLATFORMS = "30040"
+    QOE_ERROR_TRACKING_BROWSERS_FAMILIES = "30041"
+    QOE_ERROR_TRACKING_BROWSERS = "30042"
+    QOE_ERROR_TRACKING_OPERATING_SYSTEM_FAMILIES = "30043"
+    QOE_ERROR_TRACKING_OPERATING_SYSTEM = "30044"
+    QOE_ERROR_TRACKING_PLAYER_VERSION = "30045"
+    QOE_ERROR_TRACKING_ENTRY = "30046"
 
     def __init__(self, value):
         self.value = value
@@ -17490,7 +17537,13 @@ class KalturaMediaInfo(KalturaObjectBase):
             isFastStart=NotImplemented,
             contentStreams=NotImplemented,
             complexityValue=NotImplemented,
-            maxGOP=NotImplemented):
+            maxGOP=NotImplemented,
+            matrixCoefficients=NotImplemented,
+            colorTransfer=NotImplemented,
+            colorPrimaries=NotImplemented,
+            pixelFormat=NotImplemented,
+            chromaSubsampling=NotImplemented,
+            bitsDepth=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the media info
@@ -17626,6 +17679,24 @@ class KalturaMediaInfo(KalturaObjectBase):
         # @var float
         self.maxGOP = maxGOP
 
+        # @var string
+        self.matrixCoefficients = matrixCoefficients
+
+        # @var string
+        self.colorTransfer = colorTransfer
+
+        # @var string
+        self.colorPrimaries = colorPrimaries
+
+        # @var string
+        self.pixelFormat = pixelFormat
+
+        # @var string
+        self.chromaSubsampling = chromaSubsampling
+
+        # @var int
+        self.bitsDepth = bitsDepth
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -17663,6 +17734,12 @@ class KalturaMediaInfo(KalturaObjectBase):
         'contentStreams': getXmlNodeText, 
         'complexityValue': getXmlNodeInt, 
         'maxGOP': getXmlNodeFloat, 
+        'matrixCoefficients': getXmlNodeText, 
+        'colorTransfer': getXmlNodeText, 
+        'colorPrimaries': getXmlNodeText, 
+        'pixelFormat': getXmlNodeText, 
+        'chromaSubsampling': getXmlNodeText, 
+        'bitsDepth': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -17706,6 +17783,12 @@ class KalturaMediaInfo(KalturaObjectBase):
         kparams.addStringIfDefined("contentStreams", self.contentStreams)
         kparams.addIntIfDefined("complexityValue", self.complexityValue)
         kparams.addFloatIfDefined("maxGOP", self.maxGOP)
+        kparams.addStringIfDefined("matrixCoefficients", self.matrixCoefficients)
+        kparams.addStringIfDefined("colorTransfer", self.colorTransfer)
+        kparams.addStringIfDefined("colorPrimaries", self.colorPrimaries)
+        kparams.addStringIfDefined("pixelFormat", self.pixelFormat)
+        kparams.addStringIfDefined("chromaSubsampling", self.chromaSubsampling)
+        kparams.addIntIfDefined("bitsDepth", self.bitsDepth)
         return kparams
 
     def getId(self):
@@ -17914,6 +17997,42 @@ class KalturaMediaInfo(KalturaObjectBase):
 
     def setMaxGOP(self, newMaxGOP):
         self.maxGOP = newMaxGOP
+
+    def getMatrixCoefficients(self):
+        return self.matrixCoefficients
+
+    def setMatrixCoefficients(self, newMatrixCoefficients):
+        self.matrixCoefficients = newMatrixCoefficients
+
+    def getColorTransfer(self):
+        return self.colorTransfer
+
+    def setColorTransfer(self, newColorTransfer):
+        self.colorTransfer = newColorTransfer
+
+    def getColorPrimaries(self):
+        return self.colorPrimaries
+
+    def setColorPrimaries(self, newColorPrimaries):
+        self.colorPrimaries = newColorPrimaries
+
+    def getPixelFormat(self):
+        return self.pixelFormat
+
+    def setPixelFormat(self, newPixelFormat):
+        self.pixelFormat = newPixelFormat
+
+    def getChromaSubsampling(self):
+        return self.chromaSubsampling
+
+    def setChromaSubsampling(self, newChromaSubsampling):
+        self.chromaSubsampling = newChromaSubsampling
+
+    def getBitsDepth(self):
+        return self.bitsDepth
+
+    def setBitsDepth(self, newBitsDepth):
+        self.bitsDepth = newBitsDepth
 
 
 # @package Kaltura
@@ -20669,6 +20788,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -20858,6 +20979,12 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         # @var int
         self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
+        # @var float
+        self.rankLessThanOrEqual = rankLessThanOrEqual
+
+        # @var float
+        self.rankGreaterThanOrEqual = rankGreaterThanOrEqual
+
         # @var int
         self.totalRankLessThanOrEqual = totalRankLessThanOrEqual
 
@@ -21022,6 +21149,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         'createdAtLessThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
         'updatedAtLessThanOrEqual': getXmlNodeInt, 
+        'rankLessThanOrEqual': getXmlNodeFloat, 
+        'rankGreaterThanOrEqual': getXmlNodeFloat, 
         'totalRankLessThanOrEqual': getXmlNodeInt, 
         'totalRankGreaterThanOrEqual': getXmlNodeInt, 
         'groupIdEqual': getXmlNodeInt, 
@@ -21111,6 +21240,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("updatedAtLessThanOrEqual", self.updatedAtLessThanOrEqual)
+        kparams.addFloatIfDefined("rankLessThanOrEqual", self.rankLessThanOrEqual)
+        kparams.addFloatIfDefined("rankGreaterThanOrEqual", self.rankGreaterThanOrEqual)
         kparams.addIntIfDefined("totalRankLessThanOrEqual", self.totalRankLessThanOrEqual)
         kparams.addIntIfDefined("totalRankGreaterThanOrEqual", self.totalRankGreaterThanOrEqual)
         kparams.addIntIfDefined("groupIdEqual", self.groupIdEqual)
@@ -21392,6 +21523,18 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+    def getRankLessThanOrEqual(self):
+        return self.rankLessThanOrEqual
+
+    def setRankLessThanOrEqual(self, newRankLessThanOrEqual):
+        self.rankLessThanOrEqual = newRankLessThanOrEqual
+
+    def getRankGreaterThanOrEqual(self):
+        return self.rankGreaterThanOrEqual
+
+    def setRankGreaterThanOrEqual(self, newRankGreaterThanOrEqual):
+        self.rankGreaterThanOrEqual = newRankGreaterThanOrEqual
 
     def getTotalRankLessThanOrEqual(self):
         return self.totalRankLessThanOrEqual
@@ -21680,6 +21823,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -21768,6 +21913,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -21926,6 +22073,8 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -22022,6 +22171,8 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -22216,6 +22367,8 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -22312,6 +22465,8 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -22426,6 +22581,8 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -22532,6 +22689,8 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -22756,6 +22915,8 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -22862,6 +23023,8 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -22986,6 +23149,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -23094,6 +23259,8 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -24719,7 +24886,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             entryOperator=NotImplemented,
             entryCreatedAtGreaterThanOrEqual=NotImplemented,
             entryCreatedAtLessThanOrEqual=NotImplemented,
-            entryIdIn=NotImplemented):
+            entryIdIn=NotImplemented,
+            playbackTypeIn=NotImplemented,
+            playbackContextIdsIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -24816,6 +24985,13 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.entryIdIn = entryIdIn
 
+        # @var string
+        self.playbackTypeIn = playbackTypeIn
+
+        # filter by playback context ids
+        # @var string
+        self.playbackContextIdsIn = playbackContextIdsIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -24841,6 +25017,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'entryCreatedAtGreaterThanOrEqual': getXmlNodeInt, 
         'entryCreatedAtLessThanOrEqual': getXmlNodeInt, 
         'entryIdIn': getXmlNodeText, 
+        'playbackTypeIn': getXmlNodeText, 
+        'playbackContextIdsIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -24873,6 +25051,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addIntIfDefined("entryCreatedAtGreaterThanOrEqual", self.entryCreatedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("entryCreatedAtLessThanOrEqual", self.entryCreatedAtLessThanOrEqual)
         kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
+        kparams.addStringIfDefined("playbackTypeIn", self.playbackTypeIn)
+        kparams.addStringIfDefined("playbackContextIdsIn", self.playbackContextIdsIn)
         return kparams
 
     def getKeywords(self):
@@ -25012,6 +25192,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setEntryIdIn(self, newEntryIdIn):
         self.entryIdIn = newEntryIdIn
+
+    def getPlaybackTypeIn(self):
+        return self.playbackTypeIn
+
+    def setPlaybackTypeIn(self, newPlaybackTypeIn):
+        self.playbackTypeIn = newPlaybackTypeIn
+
+    def getPlaybackContextIdsIn(self):
+        return self.playbackContextIdsIn
+
+    def setPlaybackContextIdsIn(self, newPlaybackContextIdsIn):
+        self.playbackContextIdsIn = newPlaybackContextIdsIn
 
 
 # @package Kaltura
@@ -45349,6 +45541,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryCreatedAtGreaterThanOrEqual=NotImplemented,
             entryCreatedAtLessThanOrEqual=NotImplemented,
             entryIdIn=NotImplemented,
+            playbackTypeIn=NotImplemented,
+            playbackContextIdsIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -45380,7 +45574,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryOperator,
             entryCreatedAtGreaterThanOrEqual,
             entryCreatedAtLessThanOrEqual,
-            entryIdIn)
+            entryIdIn,
+            playbackTypeIn,
+            playbackContextIdsIn)
 
         # @var string
         self.application = application
@@ -53210,6 +53406,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -53298,6 +53496,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -54316,6 +54516,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -54404,6 +54606,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -55087,6 +55291,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -55175,6 +55381,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -55887,6 +56095,8 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -55975,6 +56185,8 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -56747,6 +56959,8 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -56843,6 +57057,8 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -57315,6 +57531,8 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -57411,6 +57629,8 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -57571,6 +57791,8 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -57677,6 +57899,8 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -57847,6 +58071,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -57956,6 +58182,8 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -58159,6 +58387,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -58268,6 +58498,8 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -58395,6 +58627,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -58504,6 +58738,8 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -58631,6 +58867,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -58740,6 +58978,8 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -58867,6 +59107,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -58976,6 +59218,8 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -59103,6 +59347,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -59212,6 +59458,8 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
@@ -59339,6 +59587,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            rankLessThanOrEqual=NotImplemented,
+            rankGreaterThanOrEqual=NotImplemented,
             totalRankLessThanOrEqual=NotImplemented,
             totalRankGreaterThanOrEqual=NotImplemented,
             groupIdEqual=NotImplemented,
@@ -59448,6 +59698,8 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            rankLessThanOrEqual,
+            rankGreaterThanOrEqual,
             totalRankLessThanOrEqual,
             totalRankGreaterThanOrEqual,
             groupIdEqual,
