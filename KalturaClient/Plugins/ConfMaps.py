@@ -63,8 +63,9 @@ class KalturaConfMaps(KalturaObjectBase):
     def __init__(self,
             name=NotImplemented,
             content=NotImplemented,
+            rawData=NotImplemented,
             isEditable=NotImplemented,
-            lastUpdate=NotImplemented,
+            createdAt=NotImplemented,
             relatedHost=NotImplemented,
             version=NotImplemented,
             sourceLocation=NotImplemented,
@@ -81,6 +82,9 @@ class KalturaConfMaps(KalturaObjectBase):
         # @var string
         self.content = content
 
+        # @var string
+        self.rawData = rawData
+
         # IsEditable - true / false
         # @var bool
         # @readonly
@@ -89,7 +93,7 @@ class KalturaConfMaps(KalturaObjectBase):
         # Time of the last update
         # @var int
         # @readonly
-        self.lastUpdate = lastUpdate
+        self.createdAt = createdAt
 
         # Regex that represent the host/s that this map affect
         # @var string
@@ -115,8 +119,9 @@ class KalturaConfMaps(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'name': getXmlNodeText, 
         'content': getXmlNodeText, 
+        'rawData': getXmlNodeText, 
         'isEditable': getXmlNodeBool, 
-        'lastUpdate': getXmlNodeInt, 
+        'createdAt': getXmlNodeInt, 
         'relatedHost': getXmlNodeText, 
         'version': getXmlNodeInt, 
         'sourceLocation': (KalturaEnumsFactory.createString, "KalturaConfMapsSourceLocation"), 
@@ -133,6 +138,7 @@ class KalturaConfMaps(KalturaObjectBase):
         kparams.put("objectType", "KalturaConfMaps")
         kparams.addStringIfDefined("name", self.name)
         kparams.addStringIfDefined("content", self.content)
+        kparams.addStringIfDefined("rawData", self.rawData)
         kparams.addStringIfDefined("relatedHost", self.relatedHost)
         kparams.addStringEnumIfDefined("sourceLocation", self.sourceLocation)
         kparams.addStringIfDefined("remarks", self.remarks)
@@ -151,11 +157,17 @@ class KalturaConfMaps(KalturaObjectBase):
     def setContent(self, newContent):
         self.content = newContent
 
+    def getRawData(self):
+        return self.rawData
+
+    def setRawData(self, newRawData):
+        self.rawData = newRawData
+
     def getIsEditable(self):
         return self.isEditable
 
-    def getLastUpdate(self):
-        return self.lastUpdate
+    def getCreatedAt(self):
+        return self.createdAt
 
     def getRelatedHost(self):
         return self.relatedHost

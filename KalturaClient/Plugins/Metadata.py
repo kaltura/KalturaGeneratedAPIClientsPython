@@ -97,6 +97,7 @@ class KalturaMetadataObjectType(object):
     USER = "3"
     PARTNER = "4"
     DYNAMIC_OBJECT = "5"
+    USER_ENTRY = "6"
 
     def __init__(self, value):
         self.value = value
