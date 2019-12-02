@@ -27171,7 +27171,9 @@ class KalturaStorageProfile(KalturaObjectBase):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
-            shouldExportThumbs=NotImplemented):
+            shouldExportThumbs=NotImplemented,
+            mappedPackagerUrl=NotImplemented,
+            regularPackagerUrl=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -27280,6 +27282,12 @@ class KalturaStorageProfile(KalturaObjectBase):
         # @var bool
         self.shouldExportThumbs = shouldExportThumbs
 
+        # @var string
+        self.mappedPackagerUrl = mappedPackagerUrl
+
+        # @var string
+        self.regularPackagerUrl = regularPackagerUrl
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -27314,6 +27322,8 @@ class KalturaStorageProfile(KalturaObjectBase):
         'publicKey': getXmlNodeText, 
         'passPhrase': getXmlNodeText, 
         'shouldExportThumbs': getXmlNodeBool, 
+        'mappedPackagerUrl': getXmlNodeText, 
+        'regularPackagerUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -27351,6 +27361,8 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addStringIfDefined("publicKey", self.publicKey)
         kparams.addStringIfDefined("passPhrase", self.passPhrase)
         kparams.addBoolIfDefined("shouldExportThumbs", self.shouldExportThumbs)
+        kparams.addStringIfDefined("mappedPackagerUrl", self.mappedPackagerUrl)
+        kparams.addStringIfDefined("regularPackagerUrl", self.regularPackagerUrl)
         return kparams
 
     def getId(self):
@@ -27532,6 +27544,18 @@ class KalturaStorageProfile(KalturaObjectBase):
 
     def setShouldExportThumbs(self, newShouldExportThumbs):
         self.shouldExportThumbs = newShouldExportThumbs
+
+    def getMappedPackagerUrl(self):
+        return self.mappedPackagerUrl
+
+    def setMappedPackagerUrl(self, newMappedPackagerUrl):
+        self.mappedPackagerUrl = newMappedPackagerUrl
+
+    def getRegularPackagerUrl(self):
+        return self.regularPackagerUrl
+
+    def setRegularPackagerUrl(self, newRegularPackagerUrl):
+        self.regularPackagerUrl = newRegularPackagerUrl
 
 
 # @package Kaltura
@@ -29707,6 +29731,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
             shouldExportThumbs=NotImplemented,
+            mappedPackagerUrl=NotImplemented,
+            regularPackagerUrl=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
@@ -29745,7 +29771,9 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             privateKey,
             publicKey,
             passPhrase,
-            shouldExportThumbs)
+            shouldExportThumbs,
+            mappedPackagerUrl,
+            regularPackagerUrl)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
