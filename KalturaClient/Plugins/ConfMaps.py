@@ -64,6 +64,7 @@ class KalturaConfMaps(KalturaObjectBase):
             name=NotImplemented,
             content=NotImplemented,
             rawData=NotImplemented,
+            userId=NotImplemented,
             isEditable=NotImplemented,
             createdAt=NotImplemented,
             relatedHost=NotImplemented,
@@ -84,6 +85,9 @@ class KalturaConfMaps(KalturaObjectBase):
 
         # @var string
         self.rawData = rawData
+
+        # @var string
+        self.userId = userId
 
         # IsEditable - true / false
         # @var bool
@@ -120,6 +124,7 @@ class KalturaConfMaps(KalturaObjectBase):
         'name': getXmlNodeText, 
         'content': getXmlNodeText, 
         'rawData': getXmlNodeText, 
+        'userId': getXmlNodeText, 
         'isEditable': getXmlNodeBool, 
         'createdAt': getXmlNodeInt, 
         'relatedHost': getXmlNodeText, 
@@ -139,6 +144,7 @@ class KalturaConfMaps(KalturaObjectBase):
         kparams.addStringIfDefined("name", self.name)
         kparams.addStringIfDefined("content", self.content)
         kparams.addStringIfDefined("rawData", self.rawData)
+        kparams.addStringIfDefined("userId", self.userId)
         kparams.addStringIfDefined("relatedHost", self.relatedHost)
         kparams.addStringEnumIfDefined("sourceLocation", self.sourceLocation)
         kparams.addStringIfDefined("remarks", self.remarks)
@@ -162,6 +168,12 @@ class KalturaConfMaps(KalturaObjectBase):
 
     def setRawData(self, newRawData):
         self.rawData = newRawData
+
+    def getUserId(self):
+        return self.userId
+
+    def setUserId(self, newUserId):
+        self.userId = newUserId
 
     def getIsEditable(self):
         return self.isEditable

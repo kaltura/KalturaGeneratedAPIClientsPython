@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.12.0'
+API_VERSION = '15.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2165,6 +2165,7 @@ class KalturaConditionType(object):
     ANONYMOUS_IP = "15"
     ASSET_TYPE = "16"
     BOOLEAN = "17"
+    HTTP_HEADER = "18"
 
     def __init__(self, value):
         self.value = value
@@ -5169,6 +5170,8 @@ class KalturaReportType(object):
     PLAYBACK_RATE = "46"
     TOP_USER_CONTENT = "47"
     USER_HIGHLIGHTS = "48"
+    USER_INTERACTIVE_VIDEO = "49"
+    INTERACTIVE_VIDEO_TOP_NODES = "50"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -5251,6 +5254,8 @@ class KalturaReportType(object):
     QOE_ERROR_TRACKING_OPERATING_SYSTEM = "30044"
     QOE_ERROR_TRACKING_PLAYER_VERSION = "30045"
     QOE_ERROR_TRACKING_ENTRY = "30046"
+    QOE_VOD_SESSION_FLOW = "30047"
+    QOE_LIVE_SESSION_FLOW = "30048"
 
     def __init__(self, value):
         self.value = value
@@ -24889,7 +24894,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             entryCreatedAtLessThanOrEqual=NotImplemented,
             entryIdIn=NotImplemented,
             playbackTypeIn=NotImplemented,
-            playbackContextIdsIn=NotImplemented):
+            playbackContextIdsIn=NotImplemented,
+            rootEntryIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -24993,6 +24999,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.playbackContextIdsIn = playbackContextIdsIn
 
+        # filter by root entry ids
+        # @var string
+        self.rootEntryIdIn = rootEntryIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25020,6 +25030,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'entryIdIn': getXmlNodeText, 
         'playbackTypeIn': getXmlNodeText, 
         'playbackContextIdsIn': getXmlNodeText, 
+        'rootEntryIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25054,6 +25065,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         kparams.addStringIfDefined("playbackTypeIn", self.playbackTypeIn)
         kparams.addStringIfDefined("playbackContextIdsIn", self.playbackContextIdsIn)
+        kparams.addStringIfDefined("rootEntryIdIn", self.rootEntryIdIn)
         return kparams
 
     def getKeywords(self):
@@ -25205,6 +25217,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setPlaybackContextIdsIn(self, newPlaybackContextIdsIn):
         self.playbackContextIdsIn = newPlaybackContextIdsIn
+
+    def getRootEntryIdIn(self):
+        return self.rootEntryIdIn
+
+    def setRootEntryIdIn(self, newRootEntryIdIn):
+        self.rootEntryIdIn = newRootEntryIdIn
 
 
 # @package Kaltura
@@ -45572,6 +45590,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryIdIn=NotImplemented,
             playbackTypeIn=NotImplemented,
             playbackContextIdsIn=NotImplemented,
+            rootEntryIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -45605,7 +45624,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryCreatedAtLessThanOrEqual,
             entryIdIn,
             playbackTypeIn,
-            playbackContextIdsIn)
+            playbackContextIdsIn,
+            rootEntryIdIn)
 
         # @var string
         self.application = application
@@ -51674,6 +51694,49 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
         kparams = KalturaGroupUserBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaGroupUserFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaHttpHeaderCondition(KalturaRegexCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            values=NotImplemented,
+            matchType=NotImplemented,
+            headerName=NotImplemented):
+        KalturaRegexCondition.__init__(self,
+            type,
+            description,
+            not_,
+            values,
+            matchType)
+
+        # header name
+        # @var string
+        self.headerName = headerName
+
+
+    PROPERTY_LOADERS = {
+        'headerName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaRegexCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaHttpHeaderCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRegexCondition.toParams(self)
+        kparams.put("objectType", "KalturaHttpHeaderCondition")
+        kparams.addStringIfDefined("headerName", self.headerName)
+        return kparams
+
+    def getHeaderName(self):
+        return self.headerName
+
+    def setHeaderName(self, newHeaderName):
+        self.headerName = newHeaderName
 
 
 # @package Kaltura
@@ -65966,6 +66029,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGenericSyndicationFeedBaseFilter': KalturaGenericSyndicationFeedBaseFilter,
             'KalturaGoogleVideoSyndicationFeedBaseFilter': KalturaGoogleVideoSyndicationFeedBaseFilter,
             'KalturaGroupUserFilter': KalturaGroupUserFilter,
+            'KalturaHttpHeaderCondition': KalturaHttpHeaderCondition,
             'KalturaITunesSyndicationFeedBaseFilter': KalturaITunesSyndicationFeedBaseFilter,
             'KalturaIpAddressContextField': KalturaIpAddressContextField,
             'KalturaLiveChannelCompareAttributeCondition': KalturaLiveChannelCompareAttributeCondition,

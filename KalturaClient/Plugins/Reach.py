@@ -2623,6 +2623,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             entryIdIn=NotImplemented,
             playbackTypeIn=NotImplemented,
             playbackContextIdsIn=NotImplemented,
+            rootEntryIdIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2655,7 +2656,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             entryCreatedAtLessThanOrEqual,
             entryIdIn,
             playbackTypeIn,
-            playbackContextIdsIn)
+            playbackContextIdsIn,
+            rootEntryIdIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
