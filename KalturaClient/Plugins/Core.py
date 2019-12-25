@@ -14729,6 +14729,40 @@ class KalturaEntryServerNode(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaExportToCsvOptions(KalturaObjectBase):
+    def __init__(self,
+            format=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The format of the outputted date string. There are also several predefined date constants that may be used instead, so for example DATE_RSS contains the format string 'D, d M Y H:i:s'.
+        # 	 https://www.php.net/manual/en/function.date.php
+        # @var string
+        self.format = format
+
+
+    PROPERTY_LOADERS = {
+        'format': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaExportToCsvOptions.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaExportToCsvOptions")
+        kparams.addStringIfDefined("format", self.format)
+        return kparams
+
+    def getFormat(self):
+        return self.format
+
+    def setFormat(self, newFormat):
+        self.format = newFormat
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaObjectIdentifier(KalturaObjectBase):
     """Configuration for extended item in the Kaltura MRSS feeds"""
 
@@ -65615,6 +65649,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,
             'KalturaStringValue': KalturaStringValue,
             'KalturaEntryServerNode': KalturaEntryServerNode,
+            'KalturaExportToCsvOptions': KalturaExportToCsvOptions,
             'KalturaObjectIdentifier': KalturaObjectIdentifier,
             'KalturaExtendingItemMrssParameter': KalturaExtendingItemMrssParameter,
             'KalturaPlayableEntry': KalturaPlayableEntry,

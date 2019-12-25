@@ -266,6 +266,7 @@ class KalturaESearchEntryFieldName(object):
     TEMPLATE_ENTRY_ID = "template_entry_id"
     UPDATED_AT = "updated_at"
     USER_NAMES = "user_names"
+    VOTES = "votes"
 
     def __init__(self, value):
         self.value = value
@@ -2598,7 +2599,8 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
             userName=NotImplemented,
             userMail=NotImplemented,
             outputPath=NotImplemented,
-            searchParams=NotImplemented):
+            searchParams=NotImplemented,
+            options=NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
@@ -2608,9 +2610,14 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
         # @var KalturaESearchEntryParams
         self.searchParams = searchParams
 
+        # options
+        # @var array of KalturaExportToCsvOptions
+        self.options = options
+
 
     PROPERTY_LOADERS = {
         'searchParams': (KalturaObjectFactory.create, 'KalturaESearchEntryParams'), 
+        'options': (KalturaObjectFactory.createArray, 'KalturaExportToCsvOptions'), 
     }
 
     def fromXml(self, node):
@@ -2621,6 +2628,7 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
         kparams = KalturaExportCsvJobData.toParams(self)
         kparams.put("objectType", "KalturaMediaEsearchExportToCsvJobData")
         kparams.addObjectIfDefined("searchParams", self.searchParams)
+        kparams.addArrayIfDefined("options", self.options)
         return kparams
 
     def getSearchParams(self):
@@ -2628,6 +2636,12 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
 
     def setSearchParams(self, newSearchParams):
         self.searchParams = newSearchParams
+
+    def getOptions(self):
+        return self.options
+
+    def setOptions(self, newOptions):
+        self.options = newOptions
 
 
 # @package Kaltura
