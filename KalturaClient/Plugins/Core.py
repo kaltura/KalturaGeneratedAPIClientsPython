@@ -5172,6 +5172,7 @@ class KalturaReportType(object):
     USER_HIGHLIGHTS = "48"
     USER_INTERACTIVE_VIDEO = "49"
     INTERACTIVE_VIDEO_TOP_NODES = "50"
+    LATEST_PLAYED_ENTRIES = "51"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -64190,6 +64191,14 @@ class KalturaSystemService(KalturaServiceBase):
 
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
+
+    def getHealthCheck(self):
+        kparams = KalturaParams()
+        self.client.queueServiceActionCall("system", "getHealthCheck", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def getTime(self):
         kparams = KalturaParams()
