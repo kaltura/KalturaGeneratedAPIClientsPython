@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2019  Kaltura Inc.
+# Copyright (C) 2006-2020  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.14.0'
+API_VERSION = '15.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1962,6 +1962,7 @@ class KalturaBatchJobType(object):
     COPY_CUE_POINTS = "48"
     EXPORT_CSV = "49"
     REPORT_EXPORT = "50"
+    LIVE_ENTRY_ARCHIVE = "51"
 
     def __init__(self, value):
         self.value = value
@@ -18821,7 +18822,9 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
             shouldCopyEntitlement=NotImplemented,
             shouldCopyScheduling=NotImplemented,
             shouldCopyThumbnail=NotImplemented,
-            shouldMakeHidden=NotImplemented):
+            shouldMakeHidden=NotImplemented,
+            shouldAutoArchive=NotImplemented,
+            nonDeletedCuePointsTags=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -18836,12 +18839,20 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.shouldMakeHidden = shouldMakeHidden
 
+        # @var KalturaNullableBoolean
+        self.shouldAutoArchive = shouldAutoArchive
+
+        # @var string
+        self.nonDeletedCuePointsTags = nonDeletedCuePointsTags
+
 
     PROPERTY_LOADERS = {
         'shouldCopyEntitlement': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldCopyScheduling': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldCopyThumbnail': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldMakeHidden': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'shouldAutoArchive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'nonDeletedCuePointsTags': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -18855,6 +18866,8 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         kparams.addIntEnumIfDefined("shouldCopyScheduling", self.shouldCopyScheduling)
         kparams.addIntEnumIfDefined("shouldCopyThumbnail", self.shouldCopyThumbnail)
         kparams.addIntEnumIfDefined("shouldMakeHidden", self.shouldMakeHidden)
+        kparams.addIntEnumIfDefined("shouldAutoArchive", self.shouldAutoArchive)
+        kparams.addStringIfDefined("nonDeletedCuePointsTags", self.nonDeletedCuePointsTags)
         return kparams
 
     def getShouldCopyEntitlement(self):
@@ -18880,6 +18893,18 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
 
     def setShouldMakeHidden(self, newShouldMakeHidden):
         self.shouldMakeHidden = newShouldMakeHidden
+
+    def getShouldAutoArchive(self):
+        return self.shouldAutoArchive
+
+    def setShouldAutoArchive(self, newShouldAutoArchive):
+        self.shouldAutoArchive = newShouldAutoArchive
+
+    def getNonDeletedCuePointsTags(self):
+        return self.nonDeletedCuePointsTags
+
+    def setNonDeletedCuePointsTags(self, newNonDeletedCuePointsTags):
+        self.nonDeletedCuePointsTags = newNonDeletedCuePointsTags
 
 
 # @package Kaltura
@@ -37595,6 +37620,38 @@ class KalturaLiveChannelSegmentListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveEntryArchiveJobData(KalturaJobData):
+    def __init__(self,
+            liveEntryId=NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # @var string
+        self.liveEntryId = liveEntryId
+
+
+    PROPERTY_LOADERS = {
+        'liveEntryId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveEntryArchiveJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaLiveEntryArchiveJobData")
+        kparams.addStringIfDefined("liveEntryId", self.liveEntryId)
+        return kparams
+
+    def getLiveEntryId(self):
+        return self.liveEntryId
+
+    def setLiveEntryId(self, newLiveEntryId):
+        self.liveEntryId = newLiveEntryId
 
 
 # @package Kaltura
@@ -62199,6 +62256,17 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
+    def archive(self, liveEntryId):
+        """Archive a live entry which was recorded"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("liveEntryId", liveEntryId)
+        self.client.queueServiceActionCall("livestream", "archive", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeBool(resultNode)
+
     def authenticate(self, entryId, token, hostname = NotImplemented, mediaServerIndex = NotImplemented, applicationName = NotImplemented):
         """Authenticate live-stream entry against stream token and partner limitations"""
 
@@ -65876,6 +65944,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLimitFlavorsRestriction': KalturaLimitFlavorsRestriction,
             'KalturaLiveChannelListResponse': KalturaLiveChannelListResponse,
             'KalturaLiveChannelSegmentListResponse': KalturaLiveChannelSegmentListResponse,
+            'KalturaLiveEntryArchiveJobData': KalturaLiveEntryArchiveJobData,
             'KalturaLiveEntryServerNode': KalturaLiveEntryServerNode,
             'KalturaLiveReportExportJobData': KalturaLiveReportExportJobData,
             'KalturaLiveStatsListResponse': KalturaLiveStatsListResponse,
