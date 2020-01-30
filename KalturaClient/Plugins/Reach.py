@@ -1594,8 +1594,7 @@ class KalturaReachProfileListResponse(KalturaListResponse):
 class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
     def __init__(self,
             credit=NotImplemented,
-            fromDate=NotImplemented,
-            toDate=NotImplemented):
+            fromDate=NotImplemented):
         KalturaBaseVendorCredit.__init__(self)
 
         # @var int
@@ -1605,14 +1604,10 @@ class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
         # @var int
         self.fromDate = fromDate
 
-        # @var int
-        self.toDate = toDate
-
 
     PROPERTY_LOADERS = {
         'credit': getXmlNodeInt, 
         'fromDate': getXmlNodeInt, 
-        'toDate': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1623,7 +1618,6 @@ class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
         kparams = KalturaBaseVendorCredit.toParams(self)
         kparams.put("objectType", "KalturaUnlimitedVendorCredit")
         kparams.addIntIfDefined("fromDate", self.fromDate)
-        kparams.addIntIfDefined("toDate", self.toDate)
         return kparams
 
     def getCredit(self):
@@ -1634,12 +1628,6 @@ class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
 
     def setFromDate(self, newFromDate):
         self.fromDate = newFromDate
-
-    def getToDate(self):
-        return self.toDate
-
-    def setToDate(self, newToDate):
-        self.toDate = newToDate
 
 
 # @package Kaltura
@@ -2611,7 +2599,9 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             regionIn=NotImplemented,
             citiesIn=NotImplemented,
             operatingSystemFamilyIn=NotImplemented,
+            operatingSystemIn=NotImplemented,
             browserFamilyIn=NotImplemented,
+            browserIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
@@ -2624,6 +2614,9 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             playbackTypeIn=NotImplemented,
             playbackContextIdsIn=NotImplemented,
             rootEntryIdIn=NotImplemented,
+            errorCodeIn=NotImplemented,
+            playerVersionIn=NotImplemented,
+            ispIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2645,7 +2638,9 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             regionIn,
             citiesIn,
             operatingSystemFamilyIn,
+            operatingSystemIn,
             browserFamilyIn,
+            browserIn,
             timeZoneOffset,
             interval,
             mediaTypeIn,
@@ -2657,7 +2652,10 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             entryIdIn,
             playbackTypeIn,
             playbackContextIdsIn,
-            rootEntryIdIn)
+            rootEntryIdIn,
+            errorCodeIn,
+            playerVersionIn,
+            ispIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType

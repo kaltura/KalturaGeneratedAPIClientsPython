@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.15.0'
+API_VERSION = '15.16.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -630,6 +630,19 @@ class KalturaLiveReportExportType(object):
 class KalturaLiveStatsEventType(object):
     LIVE = 1
     DVR = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamBroadcastStatus(object):
+    OFFLINE = 1
+    PREVIEW = 2
+    LIVE = 3
 
     def __init__(self, value):
         self.value = value
@@ -5258,6 +5271,22 @@ class KalturaReportType(object):
     QOE_ERROR_TRACKING_ENTRY = "30046"
     QOE_VOD_SESSION_FLOW = "30047"
     QOE_LIVE_SESSION_FLOW = "30048"
+    QOE_EXPERIENCE_CUSTOM_VAR1 = "30049"
+    QOE_EXPERIENCE_CUSTOM_VAR2 = "30050"
+    QOE_EXPERIENCE_CUSTOM_VAR3 = "30051"
+    QOE_ENGAGEMENT_CUSTOM_VAR1 = "30052"
+    QOE_ENGAGEMENT_CUSTOM_VAR2 = "30053"
+    QOE_ENGAGEMENT_CUSTOM_VAR3 = "30054"
+    QOE_STREAM_QUALITY_CUSTOM_VAR1 = "30055"
+    QOE_STREAM_QUALITY_CUSTOM_VAR2 = "30056"
+    QOE_STREAM_QUALITY_CUSTOM_VAR3 = "30057"
+    QOE_ERROR_TRACKING_CUSTOM_VAR1 = "30058"
+    QOE_ERROR_TRACKING_CUSTOM_VAR2 = "30059"
+    QOE_ERROR_TRACKING_CUSTOM_VAR3 = "30060"
+    QOE_EXPERIENCE_APPLICATION_VERSION = "30061"
+    QOE_ENGAGEMENT_APPLICATION_VERSION = "30062"
+    QOE_STREAM_QUALITY_APPLICATION_VERSION = "30063"
+    QOE_ERROR_TRACKING_APPLICATION_VERSION = "30064"
 
     def __init__(self, value):
         self.value = value
@@ -17584,6 +17613,7 @@ class KalturaMediaInfo(KalturaObjectBase):
             colorTransfer=NotImplemented,
             colorPrimaries=NotImplemented,
             pixelFormat=NotImplemented,
+            colorSpace=NotImplemented,
             chromaSubsampling=NotImplemented,
             bitsDepth=NotImplemented):
         KalturaObjectBase.__init__(self)
@@ -17734,6 +17764,9 @@ class KalturaMediaInfo(KalturaObjectBase):
         self.pixelFormat = pixelFormat
 
         # @var string
+        self.colorSpace = colorSpace
+
+        # @var string
         self.chromaSubsampling = chromaSubsampling
 
         # @var int
@@ -17780,6 +17813,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         'colorTransfer': getXmlNodeText, 
         'colorPrimaries': getXmlNodeText, 
         'pixelFormat': getXmlNodeText, 
+        'colorSpace': getXmlNodeText, 
         'chromaSubsampling': getXmlNodeText, 
         'bitsDepth': getXmlNodeInt, 
     }
@@ -17829,6 +17863,7 @@ class KalturaMediaInfo(KalturaObjectBase):
         kparams.addStringIfDefined("colorTransfer", self.colorTransfer)
         kparams.addStringIfDefined("colorPrimaries", self.colorPrimaries)
         kparams.addStringIfDefined("pixelFormat", self.pixelFormat)
+        kparams.addStringIfDefined("colorSpace", self.colorSpace)
         kparams.addStringIfDefined("chromaSubsampling", self.chromaSubsampling)
         kparams.addIntIfDefined("bitsDepth", self.bitsDepth)
         return kparams
@@ -18063,6 +18098,12 @@ class KalturaMediaInfo(KalturaObjectBase):
 
     def setPixelFormat(self, newPixelFormat):
         self.pixelFormat = newPixelFormat
+
+    def getColorSpace(self):
+        return self.colorSpace
+
+    def setColorSpace(self, newColorSpace):
+        self.colorSpace = newColorSpace
 
     def getChromaSubsampling(self):
         return self.chromaSubsampling
@@ -20298,6 +20339,88 @@ class KalturaLiveStreamBitrate(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveStreamDetails(KalturaObjectBase):
+    def __init__(self,
+            primaryStreamStatus=NotImplemented,
+            secondaryStreamStatus=NotImplemented,
+            viewMode=NotImplemented,
+            wasBroadcast=NotImplemented,
+            broadcastStatus=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The status of the primary stream
+        # @var KalturaEntryServerNodeStatus
+        self.primaryStreamStatus = primaryStreamStatus
+
+        # The status of the secondary stream
+        # @var KalturaEntryServerNodeStatus
+        self.secondaryStreamStatus = secondaryStreamStatus
+
+        # @var KalturaViewMode
+        self.viewMode = viewMode
+
+        # @var bool
+        self.wasBroadcast = wasBroadcast
+
+        # @var KalturaLiveStreamBroadcastStatus
+        self.broadcastStatus = broadcastStatus
+
+
+    PROPERTY_LOADERS = {
+        'primaryStreamStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'secondaryStreamStatus': (KalturaEnumsFactory.createInt, "KalturaEntryServerNodeStatus"), 
+        'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
+        'wasBroadcast': getXmlNodeBool, 
+        'broadcastStatus': (KalturaEnumsFactory.createInt, "KalturaLiveStreamBroadcastStatus"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamDetails.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamDetails")
+        kparams.addIntEnumIfDefined("primaryStreamStatus", self.primaryStreamStatus)
+        kparams.addIntEnumIfDefined("secondaryStreamStatus", self.secondaryStreamStatus)
+        kparams.addIntEnumIfDefined("viewMode", self.viewMode)
+        kparams.addBoolIfDefined("wasBroadcast", self.wasBroadcast)
+        kparams.addIntEnumIfDefined("broadcastStatus", self.broadcastStatus)
+        return kparams
+
+    def getPrimaryStreamStatus(self):
+        return self.primaryStreamStatus
+
+    def setPrimaryStreamStatus(self, newPrimaryStreamStatus):
+        self.primaryStreamStatus = newPrimaryStreamStatus
+
+    def getSecondaryStreamStatus(self):
+        return self.secondaryStreamStatus
+
+    def setSecondaryStreamStatus(self, newSecondaryStreamStatus):
+        self.secondaryStreamStatus = newSecondaryStreamStatus
+
+    def getViewMode(self):
+        return self.viewMode
+
+    def setViewMode(self, newViewMode):
+        self.viewMode = newViewMode
+
+    def getWasBroadcast(self):
+        return self.wasBroadcast
+
+    def setWasBroadcast(self, newWasBroadcast):
+        self.wasBroadcast = newWasBroadcast
+
+    def getBroadcastStatus(self):
+        return self.broadcastStatus
+
+    def setBroadcastStatus(self, newBroadcastStatus):
+        self.broadcastStatus = newBroadcastStatus
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLiveStreamEntry(KalturaLiveEntry):
     def __init__(self,
             id=NotImplemented,
@@ -20389,6 +20512,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             bitrates=NotImplemented,
             primaryBroadcastingUrl=NotImplemented,
             secondaryBroadcastingUrl=NotImplemented,
+            primarySecuredBroadcastingUrl=NotImplemented,
+            secondarySecuredBroadcastingUrl=NotImplemented,
             primaryRtspBroadcastingUrl=NotImplemented,
             secondaryRtspBroadcastingUrl=NotImplemented,
             streamName=NotImplemented,
@@ -20508,6 +20633,12 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         self.secondaryBroadcastingUrl = secondaryBroadcastingUrl
 
         # @var string
+        self.primarySecuredBroadcastingUrl = primarySecuredBroadcastingUrl
+
+        # @var string
+        self.secondarySecuredBroadcastingUrl = secondarySecuredBroadcastingUrl
+
+        # @var string
         self.primaryRtspBroadcastingUrl = primaryRtspBroadcastingUrl
 
         # @var string
@@ -20561,6 +20692,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'bitrates': (KalturaObjectFactory.createArray, 'KalturaLiveStreamBitrate'), 
         'primaryBroadcastingUrl': getXmlNodeText, 
         'secondaryBroadcastingUrl': getXmlNodeText, 
+        'primarySecuredBroadcastingUrl': getXmlNodeText, 
+        'secondarySecuredBroadcastingUrl': getXmlNodeText, 
         'primaryRtspBroadcastingUrl': getXmlNodeText, 
         'secondaryRtspBroadcastingUrl': getXmlNodeText, 
         'streamName': getXmlNodeText, 
@@ -20585,6 +20718,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         kparams.addArrayIfDefined("bitrates", self.bitrates)
         kparams.addStringIfDefined("primaryBroadcastingUrl", self.primaryBroadcastingUrl)
         kparams.addStringIfDefined("secondaryBroadcastingUrl", self.secondaryBroadcastingUrl)
+        kparams.addStringIfDefined("primarySecuredBroadcastingUrl", self.primarySecuredBroadcastingUrl)
+        kparams.addStringIfDefined("secondarySecuredBroadcastingUrl", self.secondarySecuredBroadcastingUrl)
         kparams.addStringIfDefined("primaryRtspBroadcastingUrl", self.primaryRtspBroadcastingUrl)
         kparams.addStringIfDefined("secondaryRtspBroadcastingUrl", self.secondaryRtspBroadcastingUrl)
         kparams.addStringIfDefined("streamName", self.streamName)
@@ -20619,6 +20754,18 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def setSecondaryBroadcastingUrl(self, newSecondaryBroadcastingUrl):
         self.secondaryBroadcastingUrl = newSecondaryBroadcastingUrl
+
+    def getPrimarySecuredBroadcastingUrl(self):
+        return self.primarySecuredBroadcastingUrl
+
+    def setPrimarySecuredBroadcastingUrl(self, newPrimarySecuredBroadcastingUrl):
+        self.primarySecuredBroadcastingUrl = newPrimarySecuredBroadcastingUrl
+
+    def getSecondarySecuredBroadcastingUrl(self):
+        return self.secondarySecuredBroadcastingUrl
+
+    def setSecondarySecuredBroadcastingUrl(self, newSecondarySecuredBroadcastingUrl):
+        self.secondarySecuredBroadcastingUrl = newSecondarySecuredBroadcastingUrl
 
     def getPrimaryRtspBroadcastingUrl(self):
         return self.primaryRtspBroadcastingUrl
@@ -24943,7 +25090,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             regionIn=NotImplemented,
             citiesIn=NotImplemented,
             operatingSystemFamilyIn=NotImplemented,
+            operatingSystemIn=NotImplemented,
             browserFamilyIn=NotImplemented,
+            browserIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
@@ -24955,7 +25104,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             entryIdIn=NotImplemented,
             playbackTypeIn=NotImplemented,
             playbackContextIdsIn=NotImplemented,
-            rootEntryIdIn=NotImplemented):
+            rootEntryIdIn=NotImplemented,
+            errorCodeIn=NotImplemented,
+            playerVersionIn=NotImplemented,
+            ispIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25014,9 +25166,17 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.operatingSystemFamilyIn = operatingSystemFamilyIn
 
+        # Filter by operating system
+        # @var string
+        self.operatingSystemIn = operatingSystemIn
+
         # Filter by browser family
         # @var string
         self.browserFamilyIn = browserFamilyIn
+
+        # Filter by browser
+        # @var string
+        self.browserIn = browserIn
 
         # Time zone offset in minutes
         # @var int
@@ -25063,6 +25223,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.rootEntryIdIn = rootEntryIdIn
 
+        # filter by error code
+        # @var string
+        self.errorCodeIn = errorCodeIn
+
+        # filter by player version
+        # @var string
+        self.playerVersionIn = playerVersionIn
+
+        # filter by isp
+        # @var string
+        self.ispIn = ispIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25078,7 +25250,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'regionIn': getXmlNodeText, 
         'citiesIn': getXmlNodeText, 
         'operatingSystemFamilyIn': getXmlNodeText, 
+        'operatingSystemIn': getXmlNodeText, 
         'browserFamilyIn': getXmlNodeText, 
+        'browserIn': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'interval': (KalturaEnumsFactory.createString, "KalturaReportInterval"), 
         'mediaTypeIn': getXmlNodeText, 
@@ -25091,6 +25265,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'playbackTypeIn': getXmlNodeText, 
         'playbackContextIdsIn': getXmlNodeText, 
         'rootEntryIdIn': getXmlNodeText, 
+        'errorCodeIn': getXmlNodeText, 
+        'playerVersionIn': getXmlNodeText, 
+        'ispIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25113,7 +25290,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("regionIn", self.regionIn)
         kparams.addStringIfDefined("citiesIn", self.citiesIn)
         kparams.addStringIfDefined("operatingSystemFamilyIn", self.operatingSystemFamilyIn)
+        kparams.addStringIfDefined("operatingSystemIn", self.operatingSystemIn)
         kparams.addStringIfDefined("browserFamilyIn", self.browserFamilyIn)
+        kparams.addStringIfDefined("browserIn", self.browserIn)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addStringEnumIfDefined("interval", self.interval)
         kparams.addStringIfDefined("mediaTypeIn", self.mediaTypeIn)
@@ -25126,6 +25305,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("playbackTypeIn", self.playbackTypeIn)
         kparams.addStringIfDefined("playbackContextIdsIn", self.playbackContextIdsIn)
         kparams.addStringIfDefined("rootEntryIdIn", self.rootEntryIdIn)
+        kparams.addStringIfDefined("errorCodeIn", self.errorCodeIn)
+        kparams.addStringIfDefined("playerVersionIn", self.playerVersionIn)
+        kparams.addStringIfDefined("ispIn", self.ispIn)
         return kparams
 
     def getKeywords(self):
@@ -25206,11 +25388,23 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setOperatingSystemFamilyIn(self, newOperatingSystemFamilyIn):
         self.operatingSystemFamilyIn = newOperatingSystemFamilyIn
 
+    def getOperatingSystemIn(self):
+        return self.operatingSystemIn
+
+    def setOperatingSystemIn(self, newOperatingSystemIn):
+        self.operatingSystemIn = newOperatingSystemIn
+
     def getBrowserFamilyIn(self):
         return self.browserFamilyIn
 
     def setBrowserFamilyIn(self, newBrowserFamilyIn):
         self.browserFamilyIn = newBrowserFamilyIn
+
+    def getBrowserIn(self):
+        return self.browserIn
+
+    def setBrowserIn(self, newBrowserIn):
+        self.browserIn = newBrowserIn
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -25283,6 +25477,24 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setRootEntryIdIn(self, newRootEntryIdIn):
         self.rootEntryIdIn = newRootEntryIdIn
+
+    def getErrorCodeIn(self):
+        return self.errorCodeIn
+
+    def setErrorCodeIn(self, newErrorCodeIn):
+        self.errorCodeIn = newErrorCodeIn
+
+    def getPlayerVersionIn(self):
+        return self.playerVersionIn
+
+    def setPlayerVersionIn(self, newPlayerVersionIn):
+        self.playerVersionIn = newPlayerVersionIn
+
+    def getIspIn(self):
+        return self.ispIn
+
+    def setIspIn(self, newIspIn):
+        self.ispIn = newIspIn
 
 
 # @package Kaltura
@@ -36402,6 +36614,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
             entryIdEqual=NotImplemented,
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -36422,6 +36635,9 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
         # @var int
         self.serverNodeIdEqual = serverNodeIdEqual
+
+        # @var string
+        self.serverNodeIdIn = serverNodeIdIn
 
         # @var int
         self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
@@ -36452,6 +36668,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         'entryIdEqual': getXmlNodeText, 
         'entryIdIn': getXmlNodeText, 
         'serverNodeIdEqual': getXmlNodeInt, 
+        'serverNodeIdIn': getXmlNodeText, 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
@@ -36472,6 +36689,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("entryIdEqual", self.entryIdEqual)
         kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         kparams.addIntIfDefined("serverNodeIdEqual", self.serverNodeIdEqual)
+        kparams.addStringIfDefined("serverNodeIdIn", self.serverNodeIdIn)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
@@ -36499,6 +36717,12 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
     def setServerNodeIdEqual(self, newServerNodeIdEqual):
         self.serverNodeIdEqual = newServerNodeIdEqual
+
+    def getServerNodeIdIn(self):
+        return self.serverNodeIdIn
+
+    def setServerNodeIdIn(self, newServerNodeIdIn):
+        self.serverNodeIdIn = newServerNodeIdIn
 
     def getCreatedAtLessThanOrEqual(self):
         return self.createdAtLessThanOrEqual
@@ -45670,7 +45894,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             regionIn=NotImplemented,
             citiesIn=NotImplemented,
             operatingSystemFamilyIn=NotImplemented,
+            operatingSystemIn=NotImplemented,
             browserFamilyIn=NotImplemented,
+            browserIn=NotImplemented,
             timeZoneOffset=NotImplemented,
             interval=NotImplemented,
             mediaTypeIn=NotImplemented,
@@ -45683,6 +45909,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playbackTypeIn=NotImplemented,
             playbackContextIdsIn=NotImplemented,
             rootEntryIdIn=NotImplemented,
+            errorCodeIn=NotImplemented,
+            playerVersionIn=NotImplemented,
+            ispIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -45705,7 +45934,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             regionIn,
             citiesIn,
             operatingSystemFamilyIn,
+            operatingSystemIn,
             browserFamilyIn,
+            browserIn,
             timeZoneOffset,
             interval,
             mediaTypeIn,
@@ -45717,7 +45948,10 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             entryIdIn,
             playbackTypeIn,
             playbackContextIdsIn,
-            rootEntryIdIn)
+            rootEntryIdIn,
+            errorCodeIn,
+            playerVersionIn,
+            ispIn)
 
         # @var string
         self.application = application
@@ -45912,6 +46146,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             entryIdEqual=NotImplemented,
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -45926,6 +46161,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             entryIdEqual,
             entryIdIn,
             serverNodeIdEqual,
+            serverNodeIdIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
@@ -52094,6 +52330,7 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             entryIdEqual=NotImplemented,
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -52108,6 +52345,7 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             entryIdEqual,
             entryIdIn,
             serverNodeIdEqual,
+            serverNodeIdIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
@@ -54541,6 +54779,7 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             entryIdEqual=NotImplemented,
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
+            serverNodeIdIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -54555,6 +54794,7 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             entryIdEqual,
             entryIdIn,
             serverNodeIdEqual,
+            serverNodeIdIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
@@ -56022,6 +56262,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             bitrates=NotImplemented,
             primaryBroadcastingUrl=NotImplemented,
             secondaryBroadcastingUrl=NotImplemented,
+            primarySecuredBroadcastingUrl=NotImplemented,
+            secondarySecuredBroadcastingUrl=NotImplemented,
             primaryRtspBroadcastingUrl=NotImplemented,
             secondaryRtspBroadcastingUrl=NotImplemented,
             streamName=NotImplemented,
@@ -56124,6 +56366,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             bitrates,
             primaryBroadcastingUrl,
             secondaryBroadcastingUrl,
+            primarySecuredBroadcastingUrl,
+            secondarySecuredBroadcastingUrl,
             primaryRtspBroadcastingUrl,
             secondaryRtspBroadcastingUrl,
             streamName,
@@ -62329,6 +62573,17 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamEntry')
 
+    def getDetails(self, id):
+        """Delivering the status of a live stream (on-air/offline) if it is possible"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("livestream", "getDetails", "KalturaLiveStreamDetails", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamDetails')
+
     def isLive(self, id, protocol):
         """Delivering the status of a live stream (on-air/offline) if it is possible"""
 
@@ -65414,6 +65669,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLivePublishStatus': KalturaLivePublishStatus,
             'KalturaLiveReportExportType': KalturaLiveReportExportType,
             'KalturaLiveStatsEventType': KalturaLiveStatsEventType,
+            'KalturaLiveStreamBroadcastStatus': KalturaLiveStreamBroadcastStatus,
             'KalturaMailJobStatus': KalturaMailJobStatus,
             'KalturaMediaType': KalturaMediaType,
             'KalturaModerationFlagType': KalturaModerationFlagType,
@@ -65768,6 +66024,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStats': KalturaLiveStats,
             'KalturaLiveStatsEvent': KalturaLiveStatsEvent,
             'KalturaLiveStreamBitrate': KalturaLiveStreamBitrate,
+            'KalturaLiveStreamDetails': KalturaLiveStreamDetails,
             'KalturaLiveStreamEntry': KalturaLiveStreamEntry,
             'KalturaLiveStreamParams': KalturaLiveStreamParams,
             'KalturaBaseEntryBaseFilter': KalturaBaseEntryBaseFilter,
