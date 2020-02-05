@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.16.0'
+API_VERSION = '15.17.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -18865,7 +18865,8 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
             shouldCopyThumbnail=NotImplemented,
             shouldMakeHidden=NotImplemented,
             shouldAutoArchive=NotImplemented,
-            nonDeletedCuePointsTags=NotImplemented):
+            nonDeletedCuePointsTags=NotImplemented,
+            archiveVodSuffixTimezone=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -18886,6 +18887,9 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         # @var string
         self.nonDeletedCuePointsTags = nonDeletedCuePointsTags
 
+        # @var string
+        self.archiveVodSuffixTimezone = archiveVodSuffixTimezone
+
 
     PROPERTY_LOADERS = {
         'shouldCopyEntitlement': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
@@ -18894,6 +18898,7 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         'shouldMakeHidden': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'shouldAutoArchive': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'nonDeletedCuePointsTags': getXmlNodeText, 
+        'archiveVodSuffixTimezone': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -18909,6 +18914,7 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
         kparams.addIntEnumIfDefined("shouldMakeHidden", self.shouldMakeHidden)
         kparams.addIntEnumIfDefined("shouldAutoArchive", self.shouldAutoArchive)
         kparams.addStringIfDefined("nonDeletedCuePointsTags", self.nonDeletedCuePointsTags)
+        kparams.addStringIfDefined("archiveVodSuffixTimezone", self.archiveVodSuffixTimezone)
         return kparams
 
     def getShouldCopyEntitlement(self):
@@ -18946,6 +18952,12 @@ class KalturaLiveEntryRecordingOptions(KalturaObjectBase):
 
     def setNonDeletedCuePointsTags(self, newNonDeletedCuePointsTags):
         self.nonDeletedCuePointsTags = newNonDeletedCuePointsTags
+
+    def getArchiveVodSuffixTimezone(self):
+        return self.archiveVodSuffixTimezone
+
+    def setArchiveVodSuffixTimezone(self, newArchiveVodSuffixTimezone):
+        self.archiveVodSuffixTimezone = newArchiveVodSuffixTimezone
 
 
 # @package Kaltura
@@ -36622,7 +36634,8 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
             serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented):
+            serverTypeIn=NotImplemented,
+            serverTypeNotIn=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -36663,6 +36676,9 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         # @var string
         self.serverTypeIn = serverTypeIn
 
+        # @var string
+        self.serverTypeNotIn = serverTypeNotIn
+
 
     PROPERTY_LOADERS = {
         'entryIdEqual': getXmlNodeText, 
@@ -36677,6 +36693,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         'statusIn': getXmlNodeText, 
         'serverTypeEqual': (KalturaEnumsFactory.createString, "KalturaEntryServerNodeType"), 
         'serverTypeIn': getXmlNodeText, 
+        'serverTypeNotIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -36698,6 +36715,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("statusIn", self.statusIn)
         kparams.addStringEnumIfDefined("serverTypeEqual", self.serverTypeEqual)
         kparams.addStringIfDefined("serverTypeIn", self.serverTypeIn)
+        kparams.addStringIfDefined("serverTypeNotIn", self.serverTypeNotIn)
         return kparams
 
     def getEntryIdEqual(self):
@@ -36771,6 +36789,12 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
     def setServerTypeIn(self, newServerTypeIn):
         self.serverTypeIn = newServerTypeIn
+
+    def getServerTypeNotIn(self):
+        return self.serverTypeNotIn
+
+    def setServerTypeNotIn(self, newServerTypeNotIn):
+        self.serverTypeNotIn = newServerTypeNotIn
 
 
 # @package Kaltura
@@ -46154,7 +46178,8 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
             serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented):
+            serverTypeIn=NotImplemented,
+            serverTypeNotIn=NotImplemented):
         KalturaEntryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -46169,7 +46194,8 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             statusEqual,
             statusIn,
             serverTypeEqual,
-            serverTypeIn)
+            serverTypeIn,
+            serverTypeNotIn)
 
 
     PROPERTY_LOADERS = {
@@ -52338,7 +52364,8 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
             serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented):
+            serverTypeIn=NotImplemented,
+            serverTypeNotIn=NotImplemented):
         KalturaEntryServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -52353,7 +52380,8 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             statusEqual,
             statusIn,
             serverTypeEqual,
-            serverTypeIn)
+            serverTypeIn,
+            serverTypeNotIn)
 
 
     PROPERTY_LOADERS = {
@@ -54787,7 +54815,8 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             statusEqual=NotImplemented,
             statusIn=NotImplemented,
             serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented):
+            serverTypeIn=NotImplemented,
+            serverTypeNotIn=NotImplemented):
         KalturaLiveEntryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -54802,7 +54831,8 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             statusEqual,
             statusIn,
             serverTypeEqual,
-            serverTypeIn)
+            serverTypeIn,
+            serverTypeNotIn)
 
 
     PROPERTY_LOADERS = {
