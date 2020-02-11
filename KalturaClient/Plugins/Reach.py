@@ -2617,6 +2617,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             errorCodeIn=NotImplemented,
             playerVersionIn=NotImplemented,
             ispIn=NotImplemented,
+            applicationVersionIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2655,7 +2656,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             rootEntryIdIn,
             errorCodeIn,
             playerVersionIn,
-            ispIn)
+            ispIn,
+            applicationVersionIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType

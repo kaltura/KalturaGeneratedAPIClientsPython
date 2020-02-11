@@ -25119,7 +25119,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             rootEntryIdIn=NotImplemented,
             errorCodeIn=NotImplemented,
             playerVersionIn=NotImplemented,
-            ispIn=NotImplemented):
+            ispIn=NotImplemented,
+            applicationVersionIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25247,6 +25248,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.ispIn = ispIn
 
+        # filter by application version
+        # @var string
+        self.applicationVersionIn = applicationVersionIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25280,6 +25285,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'errorCodeIn': getXmlNodeText, 
         'playerVersionIn': getXmlNodeText, 
         'ispIn': getXmlNodeText, 
+        'applicationVersionIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25320,6 +25326,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("errorCodeIn", self.errorCodeIn)
         kparams.addStringIfDefined("playerVersionIn", self.playerVersionIn)
         kparams.addStringIfDefined("ispIn", self.ispIn)
+        kparams.addStringIfDefined("applicationVersionIn", self.applicationVersionIn)
         return kparams
 
     def getKeywords(self):
@@ -25507,6 +25514,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setIspIn(self, newIspIn):
         self.ispIn = newIspIn
+
+    def getApplicationVersionIn(self):
+        return self.applicationVersionIn
+
+    def setApplicationVersionIn(self, newApplicationVersionIn):
+        self.applicationVersionIn = newApplicationVersionIn
 
 
 # @package Kaltura
@@ -45936,6 +45949,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             errorCodeIn=NotImplemented,
             playerVersionIn=NotImplemented,
             ispIn=NotImplemented,
+            applicationVersionIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -45975,7 +45989,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             rootEntryIdIn,
             errorCodeIn,
             playerVersionIn,
-            ispIn)
+            ispIn,
+            applicationVersionIn)
 
         # @var string
         self.application = application

@@ -2334,6 +2334,38 @@ class KalturaESearchUserResponse(KalturaESearchResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
+    def __init__(self,
+            hasCaption=NotImplemented):
+        KalturaSearchItem.__init__(self)
+
+        # @var KalturaNullableBoolean
+        self.hasCaption = hasCaption
+
+
+    PROPERTY_LOADERS = {
+        'hasCaption': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+    }
+
+    def fromXml(self, node):
+        KalturaSearchItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryCaptionAdvancedFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaSearchItem.toParams(self)
+        kparams.put("objectType", "KalturaEntryCaptionAdvancedFilter")
+        kparams.addIntEnumIfDefined("hasCaption", self.hasCaption)
+        return kparams
+
+    def getHasCaption(self):
+        return self.hasCaption
+
+    def setHasCaption(self, newHasCaption):
+        self.hasCaption = newHasCaption
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBeaconAbstractScheduledResourceItem(KalturaBeaconScheduledResourceBaseItem):
     def __init__(self,
             searchTerm=NotImplemented,
@@ -3482,6 +3514,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchUserOperator': KalturaESearchUserOperator,
             'KalturaESearchUserParams': KalturaESearchUserParams,
             'KalturaESearchUserResponse': KalturaESearchUserResponse,
+            'KalturaEntryCaptionAdvancedFilter': KalturaEntryCaptionAdvancedFilter,
             'KalturaBeaconAbstractScheduledResourceItem': KalturaBeaconAbstractScheduledResourceItem,
             'KalturaESearchAbstractCategoryItem': KalturaESearchAbstractCategoryItem,
             'KalturaESearchAbstractEntryItem': KalturaESearchAbstractEntryItem,
