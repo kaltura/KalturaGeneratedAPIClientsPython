@@ -37887,15 +37887,20 @@ class KalturaLiveChannelSegmentListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaLiveEntryArchiveJobData(KalturaJobData):
     def __init__(self,
-            liveEntryId=NotImplemented):
+            liveEntryId=NotImplemented,
+            vodEntryId=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
         self.liveEntryId = liveEntryId
 
+        # @var string
+        self.vodEntryId = vodEntryId
+
 
     PROPERTY_LOADERS = {
         'liveEntryId': getXmlNodeText, 
+        'vodEntryId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -37906,6 +37911,7 @@ class KalturaLiveEntryArchiveJobData(KalturaJobData):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaLiveEntryArchiveJobData")
         kparams.addStringIfDefined("liveEntryId", self.liveEntryId)
+        kparams.addStringIfDefined("vodEntryId", self.vodEntryId)
         return kparams
 
     def getLiveEntryId(self):
@@ -37913,6 +37919,12 @@ class KalturaLiveEntryArchiveJobData(KalturaJobData):
 
     def setLiveEntryId(self, newLiveEntryId):
         self.liveEntryId = newLiveEntryId
+
+    def getVodEntryId(self):
+        return self.vodEntryId
+
+    def setVodEntryId(self, newVodEntryId):
+        self.vodEntryId = newVodEntryId
 
 
 # @package Kaltura
@@ -62545,11 +62557,12 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
 
-    def archive(self, liveEntryId):
+    def archive(self, liveEntryId, vodEntryId):
         """Archive a live entry which was recorded"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("liveEntryId", liveEntryId)
+        kparams.addStringIfDefined("vodEntryId", vodEntryId)
         self.client.queueServiceActionCall("livestream", "archive", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
