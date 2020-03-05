@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.18.0'
+API_VERSION = '15.19.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -36640,6 +36640,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
             serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -36664,6 +36665,9 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
         # @var string
         self.serverNodeIdIn = serverNodeIdIn
+
+        # @var string
+        self.serverNodeIdNotIn = serverNodeIdNotIn
 
         # @var int
         self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
@@ -36698,6 +36702,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         'entryIdIn': getXmlNodeText, 
         'serverNodeIdEqual': getXmlNodeInt, 
         'serverNodeIdIn': getXmlNodeText, 
+        'serverNodeIdNotIn': getXmlNodeText, 
         'createdAtLessThanOrEqual': getXmlNodeInt, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'updatedAtGreaterThanOrEqual': getXmlNodeInt, 
@@ -36720,6 +36725,7 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("entryIdIn", self.entryIdIn)
         kparams.addIntIfDefined("serverNodeIdEqual", self.serverNodeIdEqual)
         kparams.addStringIfDefined("serverNodeIdIn", self.serverNodeIdIn)
+        kparams.addStringIfDefined("serverNodeIdNotIn", self.serverNodeIdNotIn)
         kparams.addIntIfDefined("createdAtLessThanOrEqual", self.createdAtLessThanOrEqual)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("updatedAtGreaterThanOrEqual", self.updatedAtGreaterThanOrEqual)
@@ -36754,6 +36760,12 @@ class KalturaEntryServerNodeBaseFilter(KalturaFilter):
 
     def setServerNodeIdIn(self, newServerNodeIdIn):
         self.serverNodeIdIn = newServerNodeIdIn
+
+    def getServerNodeIdNotIn(self):
+        return self.serverNodeIdNotIn
+
+    def setServerNodeIdNotIn(self, newServerNodeIdNotIn):
+        self.serverNodeIdNotIn = newServerNodeIdNotIn
 
     def getCreatedAtLessThanOrEqual(self):
         return self.createdAtLessThanOrEqual
@@ -46198,6 +46210,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
             serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -46214,6 +46227,7 @@ class KalturaEntryServerNodeFilter(KalturaEntryServerNodeBaseFilter):
             entryIdIn,
             serverNodeIdEqual,
             serverNodeIdIn,
+            serverNodeIdNotIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
@@ -52384,6 +52398,7 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
             serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -52400,6 +52415,7 @@ class KalturaLiveEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
             entryIdIn,
             serverNodeIdEqual,
             serverNodeIdIn,
+            serverNodeIdNotIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
@@ -54835,6 +54851,7 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             entryIdIn=NotImplemented,
             serverNodeIdEqual=NotImplemented,
             serverNodeIdIn=NotImplemented,
+            serverNodeIdNotIn=NotImplemented,
             createdAtLessThanOrEqual=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
@@ -54851,6 +54868,7 @@ class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
             entryIdIn,
             serverNodeIdEqual,
             serverNodeIdIn,
+            serverNodeIdNotIn,
             createdAtLessThanOrEqual,
             createdAtGreaterThanOrEqual,
             updatedAtGreaterThanOrEqual,
