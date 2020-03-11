@@ -1976,6 +1976,7 @@ class KalturaBatchJobType(object):
     EXPORT_CSV = "49"
     REPORT_EXPORT = "50"
     LIVE_ENTRY_ARCHIVE = "51"
+    STORAGE_UPDATE = "52"
 
     def __init__(self, value):
         self.value = value
@@ -4523,6 +4524,7 @@ class KalturaMailType(object):
     MAIL_TYPE_VIDEO_SERVICE_NOTICE_ACCOUNT_DELETED = "84"
     MAIL_TYPE_VIDEO_SERVICE_NOTICE_UPGRADE_OFFER = "85"
     MAIL_TYPE_ACCOUNT_REACTIVE_CONFIRM = "86"
+    MAIL_TYPE_EXTENDED_FREE_TRIAL_ENDS_WARNING = "87"
     MAIL_TYPE_SYSTEM_USER_RESET_PASSWORD = "110"
     MAIL_TYPE_SYSTEM_USER_RESET_PASSWORD_SUCCESS = "111"
     MAIL_TYPE_SYSTEM_USER_NEW_PASSWORD = "112"
@@ -9553,7 +9555,15 @@ class KalturaPartner(KalturaObjectBase):
             ovpEnvironmentUrl=NotImplemented,
             ottEnvironmentUrl=NotImplemented,
             eSearchLanguages=NotImplemented,
-            authenticationType=NotImplemented):
+            authenticationType=NotImplemented,
+            extendedFreeTrailExpiryReason=NotImplemented,
+            extendedFreeTrailExpiryDate=NotImplemented,
+            extendedFreeTrail=NotImplemented,
+            extendedFreeTrailEndsWarning=NotImplemented,
+            eightyPercentWarning=NotImplemented,
+            usageLimitWarning=NotImplemented,
+            lastFreeTrialNotificationDay=NotImplemented,
+            monitorUsage=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9765,6 +9775,39 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.authenticationType = authenticationType
 
+        # @var string
+        # @readonly
+        self.extendedFreeTrailExpiryReason = extendedFreeTrailExpiryReason
+
+        # Unix timestamp (In seconds)
+        # @var int
+        # @readonly
+        self.extendedFreeTrailExpiryDate = extendedFreeTrailExpiryDate
+
+        # @var int
+        # @readonly
+        self.extendedFreeTrail = extendedFreeTrail
+
+        # @var bool
+        # @readonly
+        self.extendedFreeTrailEndsWarning = extendedFreeTrailEndsWarning
+
+        # @var int
+        # @readonly
+        self.eightyPercentWarning = eightyPercentWarning
+
+        # @var int
+        # @readonly
+        self.usageLimitWarning = usageLimitWarning
+
+        # @var int
+        # @readonly
+        self.lastFreeTrialNotificationDay = lastFreeTrialNotificationDay
+
+        # @var int
+        # @readonly
+        self.monitorUsage = monitorUsage
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -9826,6 +9869,14 @@ class KalturaPartner(KalturaObjectBase):
         'ottEnvironmentUrl': getXmlNodeText, 
         'eSearchLanguages': (KalturaObjectFactory.createArray, 'KalturaESearchLanguageItem'), 
         'authenticationType': (KalturaEnumsFactory.createInt, "KalturaPartnerAuthenticationType"), 
+        'extendedFreeTrailExpiryReason': getXmlNodeText, 
+        'extendedFreeTrailExpiryDate': getXmlNodeInt, 
+        'extendedFreeTrail': getXmlNodeInt, 
+        'extendedFreeTrailEndsWarning': getXmlNodeBool, 
+        'eightyPercentWarning': getXmlNodeInt, 
+        'usageLimitWarning': getXmlNodeInt, 
+        'lastFreeTrialNotificationDay': getXmlNodeInt, 
+        'monitorUsage': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -10145,6 +10196,30 @@ class KalturaPartner(KalturaObjectBase):
 
     def getAuthenticationType(self):
         return self.authenticationType
+
+    def getExtendedFreeTrailExpiryReason(self):
+        return self.extendedFreeTrailExpiryReason
+
+    def getExtendedFreeTrailExpiryDate(self):
+        return self.extendedFreeTrailExpiryDate
+
+    def getExtendedFreeTrail(self):
+        return self.extendedFreeTrail
+
+    def getExtendedFreeTrailEndsWarning(self):
+        return self.extendedFreeTrailEndsWarning
+
+    def getEightyPercentWarning(self):
+        return self.eightyPercentWarning
+
+    def getUsageLimitWarning(self):
+        return self.usageLimitWarning
+
+    def getLastFreeTrialNotificationDay(self):
+        return self.lastFreeTrialNotificationDay
+
+    def getMonitorUsage(self):
+        return self.monitorUsage
 
 
 # @package Kaltura
@@ -39069,7 +39144,8 @@ class KalturaPartnerBaseFilter(KalturaFilter):
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
-            idGreaterThan=NotImplemented):
+            idGreaterThan=NotImplemented,
+            monitorUsageEqual=NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -39125,6 +39201,9 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         # @var int
         self.idGreaterThan = idGreaterThan
 
+        # @var int
+        self.monitorUsageEqual = monitorUsageEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -39144,6 +39223,7 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         'partnerNameDescriptionWebsiteAdminNameAdminEmailLike': getXmlNodeText, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
         'idGreaterThan': getXmlNodeInt, 
+        'monitorUsageEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -39170,6 +39250,7 @@ class KalturaPartnerBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("partnerNameDescriptionWebsiteAdminNameAdminEmailLike", self.partnerNameDescriptionWebsiteAdminNameAdminEmailLike)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
         kparams.addIntIfDefined("idGreaterThan", self.idGreaterThan)
+        kparams.addIntIfDefined("monitorUsageEqual", self.monitorUsageEqual)
         return kparams
 
     def getIdEqual(self):
@@ -39273,6 +39354,12 @@ class KalturaPartnerBaseFilter(KalturaFilter):
 
     def setIdGreaterThan(self, newIdGreaterThan):
         self.idGreaterThan = newIdGreaterThan
+
+    def getMonitorUsageEqual(self):
+        return self.monitorUsageEqual
+
+    def setMonitorUsageEqual(self, newMonitorUsageEqual):
+        self.monitorUsageEqual = newMonitorUsageEqual
 
 
 # @package Kaltura
@@ -47884,7 +47971,8 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerGroupTypeEqual=NotImplemented,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
-            idGreaterThan=NotImplemented):
+            idGreaterThan=NotImplemented,
+            monitorUsageEqual=NotImplemented):
         KalturaPartnerBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -47904,7 +47992,8 @@ class KalturaPartnerFilter(KalturaPartnerBaseFilter):
             partnerGroupTypeEqual,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike,
             createdAtGreaterThanOrEqual,
-            idGreaterThan)
+            idGreaterThan,
+            monitorUsageEqual)
 
 
     PROPERTY_LOADERS = {

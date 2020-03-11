@@ -458,6 +458,7 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
             idGreaterThan=NotImplemented,
+            monitorUsageEqual=NotImplemented,
             partnerParentIdEqual=NotImplemented,
             partnerParentIdIn=NotImplemented):
         KalturaPartnerFilter.__init__(self,
@@ -479,7 +480,8 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
             partnerGroupTypeEqual,
             partnerNameDescriptionWebsiteAdminNameAdminEmailLike,
             createdAtGreaterThanOrEqual,
-            idGreaterThan)
+            idGreaterThan,
+            monitorUsageEqual)
 
         # @var int
         self.partnerParentIdEqual = partnerParentIdEqual
