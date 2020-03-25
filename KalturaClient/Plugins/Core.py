@@ -5625,6 +5625,7 @@ class KalturaUserEntryStatus(object):
 class KalturaUserEntryType(object):
     QUIZ = "quiz.QUIZ"
     VIEW_HISTORY = "viewHistory.VIEW_HISTORY"
+    WATCH_LATER = "watchLater.WATCH_LATER"
 
     def __init__(self, value):
         self.value = value
