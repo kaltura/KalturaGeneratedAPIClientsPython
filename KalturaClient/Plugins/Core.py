@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '15.19.0'
+API_VERSION = '15.20.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5189,6 +5189,7 @@ class KalturaReportType(object):
     USER_INTERACTIVE_VIDEO = "49"
     INTERACTIVE_VIDEO_TOP_NODES = "50"
     LATEST_PLAYED_ENTRIES = "51"
+    CATEGORY_HIGHLIGHTS = "52"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -19123,7 +19124,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             explicitLive=NotImplemented,
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
-            lastBroadcastEndTime=NotImplemented):
+            lastBroadcastEndTime=NotImplemented,
+            broadcastTime=NotImplemented):
         KalturaMediaEntry.__init__(self,
             id,
             name,
@@ -19267,6 +19269,10 @@ class KalturaLiveEntry(KalturaMediaEntry):
         # @readonly
         self.lastBroadcastEndTime = lastBroadcastEndTime
 
+        # The time when the entry was first live with view_all
+        # @var int
+        self.broadcastTime = broadcastTime
+
 
     PROPERTY_LOADERS = {
         'offlineMessage': getXmlNodeText, 
@@ -19288,6 +19294,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
         'recordingStatus': (KalturaEnumsFactory.createInt, "KalturaRecordingStatus"), 
         'lastBroadcastEndTime': getXmlNodeInt, 
+        'broadcastTime': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -19312,6 +19319,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
         kparams.addIntEnumIfDefined("explicitLive", self.explicitLive)
         kparams.addIntEnumIfDefined("viewMode", self.viewMode)
         kparams.addIntEnumIfDefined("recordingStatus", self.recordingStatus)
+        kparams.addIntIfDefined("broadcastTime", self.broadcastTime)
         return kparams
 
     def getOfflineMessage(self):
@@ -19416,6 +19424,12 @@ class KalturaLiveEntry(KalturaMediaEntry):
     def getLastBroadcastEndTime(self):
         return self.lastBroadcastEndTime
 
+    def getBroadcastTime(self):
+        return self.broadcastTime
+
+    def setBroadcastTime(self, newBroadcastTime):
+        self.broadcastTime = newBroadcastTime
+
 
 # @package Kaltura
 # @subpackage Client
@@ -19505,6 +19519,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
             lastBroadcastEndTime=NotImplemented,
+            broadcastTime=NotImplemented,
             playlistId=NotImplemented,
             repeat=NotImplemented):
         KalturaLiveEntry.__init__(self,
@@ -19591,7 +19606,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             explicitLive,
             viewMode,
             recordingStatus,
-            lastBroadcastEndTime)
+            lastBroadcastEndTime,
+            broadcastTime)
 
         # Playlist id to be played
         # @var string
@@ -20595,6 +20611,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
             lastBroadcastEndTime=NotImplemented,
+            broadcastTime=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -20698,7 +20715,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             explicitLive,
             viewMode,
             recordingStatus,
-            lastBroadcastEndTime)
+            lastBroadcastEndTime,
+            broadcastTime)
 
         # The stream id as provided by the provider
         # @var string
@@ -25196,7 +25214,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             errorCodeIn=NotImplemented,
             playerVersionIn=NotImplemented,
             ispIn=NotImplemented,
-            applicationVersionIn=NotImplemented):
+            applicationVersionIn=NotImplemented,
+            nodeIdsIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25328,6 +25347,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.applicationVersionIn = applicationVersionIn
 
+        # filter by node id
+        # @var string
+        self.nodeIdsIn = nodeIdsIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25362,6 +25385,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'playerVersionIn': getXmlNodeText, 
         'ispIn': getXmlNodeText, 
         'applicationVersionIn': getXmlNodeText, 
+        'nodeIdsIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25403,6 +25427,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("playerVersionIn", self.playerVersionIn)
         kparams.addStringIfDefined("ispIn", self.ispIn)
         kparams.addStringIfDefined("applicationVersionIn", self.applicationVersionIn)
+        kparams.addStringIfDefined("nodeIdsIn", self.nodeIdsIn)
         return kparams
 
     def getKeywords(self):
@@ -25596,6 +25621,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setApplicationVersionIn(self, newApplicationVersionIn):
         self.applicationVersionIn = newApplicationVersionIn
+
+    def getNodeIdsIn(self):
+        return self.nodeIdsIn
+
+    def setNodeIdsIn(self, newNodeIdsIn):
+        self.nodeIdsIn = newNodeIdsIn
 
 
 # @package Kaltura
@@ -46062,6 +46093,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playerVersionIn=NotImplemented,
             ispIn=NotImplemented,
             applicationVersionIn=NotImplemented,
+            nodeIdsIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -46102,7 +46134,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             errorCodeIn,
             playerVersionIn,
             ispIn,
-            applicationVersionIn)
+            applicationVersionIn,
+            nodeIdsIn)
 
         # @var string
         self.application = application
@@ -56422,6 +56455,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             viewMode=NotImplemented,
             recordingStatus=NotImplemented,
             lastBroadcastEndTime=NotImplemented,
+            broadcastTime=NotImplemented,
             streamRemoteId=NotImplemented,
             streamRemoteBackupId=NotImplemented,
             bitrates=NotImplemented,
@@ -56526,6 +56560,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             viewMode,
             recordingStatus,
             lastBroadcastEndTime,
+            broadcastTime,
             streamRemoteId,
             streamRemoteBackupId,
             bitrates,

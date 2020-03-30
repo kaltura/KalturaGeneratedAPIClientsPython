@@ -683,7 +683,8 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
             outputMetadata=NotImplemented,
             inputUserId=NotImplemented,
             inputEntitledUsersEdit=NotImplemented,
-            inputEntitledUsersPublish=NotImplemented):
+            inputEntitledUsersPublish=NotImplemented,
+            resetMediaRepurposingProcess=NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -716,6 +717,10 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         # @var string
         self.inputEntitledUsersPublish = inputEntitledUsersPublish
 
+        # Should clear the media repurposing data and therefore reset the process
+        # @var bool
+        self.resetMediaRepurposingProcess = resetMediaRepurposingProcess
+
 
     PROPERTY_LOADERS = {
         'inputMetadataProfileId': getXmlNodeInt, 
@@ -725,6 +730,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         'inputUserId': getXmlNodeText, 
         'inputEntitledUsersEdit': getXmlNodeText, 
         'inputEntitledUsersPublish': getXmlNodeText, 
+        'resetMediaRepurposingProcess': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -741,6 +747,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         kparams.addStringIfDefined("inputUserId", self.inputUserId)
         kparams.addStringIfDefined("inputEntitledUsersEdit", self.inputEntitledUsersEdit)
         kparams.addStringIfDefined("inputEntitledUsersPublish", self.inputEntitledUsersPublish)
+        kparams.addBoolIfDefined("resetMediaRepurposingProcess", self.resetMediaRepurposingProcess)
         return kparams
 
     def getInputMetadataProfileId(self):
@@ -784,6 +791,12 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
 
     def setInputEntitledUsersPublish(self, newInputEntitledUsersPublish):
         self.inputEntitledUsersPublish = newInputEntitledUsersPublish
+
+    def getResetMediaRepurposingProcess(self):
+        return self.resetMediaRepurposingProcess
+
+    def setResetMediaRepurposingProcess(self, newResetMediaRepurposingProcess):
+        self.resetMediaRepurposingProcess = newResetMediaRepurposingProcess
 
 
 # @package Kaltura
