@@ -2841,7 +2841,9 @@ class KalturaEntryStatus(object):
 # @subpackage Client
 class KalturaEntryType(object):
     AUTOMATIC = "-1"
+    CONFERENCE_ENTRY_SERVER = "conference.CONFERENCE_ENTRY_SERVER"
     EXTERNAL_MEDIA = "externalMedia.externalMedia"
+    SIP_ENTRY_SERVER = "sip.SIP_ENTRY_SERVER"
     MEDIA_CLIP = "1"
     MIX = "2"
     PLAYLIST = "5"
@@ -5382,6 +5384,9 @@ class KalturaServerNodeOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaServerNodeType(object):
+    CONFERENCE_SERVER = "conference.CONFERENCE_SERVER"
+    LIVE_CLUSTER_MEDIA_SERVER = "liveCluster.LIVE_CLUSTER_MEDIA_SERVER"
+    SIP_SERVER = "sip.SIP_SERVER"
     WOWZA_MEDIA_SERVER = "wowza.WOWZA_MEDIA_SERVER"
     EDGE = "1"
 
@@ -5625,6 +5630,7 @@ class KalturaUserEntryStatus(object):
 # @subpackage Client
 class KalturaUserEntryType(object):
     QUIZ = "quiz.QUIZ"
+    REGISTRATION = "registration.REGISTRATION"
     VIEW_HISTORY = "viewHistory.VIEW_HISTORY"
     WATCH_LATER = "watchLater.WATCH_LATER"
 
@@ -62684,6 +62690,18 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamEntry')
 
+    def allocateConferenceRoom(self, entryId, env = ""):
+        """Allocates a conference room or returns ones that has already been allocated"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("env", env)
+        self.client.queueServiceActionCall("livestream", "allocateConferenceRoom", "KalturaRoomDetails", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaRoomDetails')
+
     def appendRecording(self, entryId, assetId, mediaServerIndex, resource, duration, isLastChunk = False):
         """Append recorded video to live entry"""
 
@@ -62762,6 +62780,18 @@ class KalturaLiveStreamService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def finishConf(self, entryId, serverNodeId = NotImplemented):
+        """When the conf is finished this API should be called."""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("serverNodeId", serverNodeId);
+        self.client.queueServiceActionCall("livestream", "finishConf", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeBool(resultNode)
+
     def get(self, entryId, version = -1):
         """Get live stream entry by ID."""
 
@@ -62819,6 +62849,17 @@ class KalturaLiveStreamService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveEntry')
+
+    def registerConf(self, entryId):
+        """Mark that the conference has actually started"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("livestream", "registerConf", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeBool(resultNode)
 
     def registerMediaServer(self, entryId, hostname, mediaServerIndex, applicationName = NotImplemented, liveEntryStatus = 1, shouldCreateRecordedEntry = True):
         """Register media server to live entry"""
