@@ -123,7 +123,9 @@ class KalturaFileSync(KalturaObjectBase):
             fileDiscSize=NotImplemented,
             isCurrentDc=NotImplemented,
             isDir=NotImplemented,
-            originalId=NotImplemented):
+            originalId=NotImplemented,
+            srcPath=NotImplemented,
+            srcEncKey=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -223,6 +225,12 @@ class KalturaFileSync(KalturaObjectBase):
         # @readonly
         self.originalId = originalId
 
+        # @var string
+        self.srcPath = srcPath
+
+        # @var string
+        self.srcEncKey = srcEncKey
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -250,6 +258,8 @@ class KalturaFileSync(KalturaObjectBase):
         'isCurrentDc': getXmlNodeBool, 
         'isDir': getXmlNodeBool, 
         'originalId': getXmlNodeInt, 
+        'srcPath': getXmlNodeText, 
+        'srcEncKey': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -262,6 +272,8 @@ class KalturaFileSync(KalturaObjectBase):
         kparams.addIntEnumIfDefined("status", self.status)
         kparams.addStringIfDefined("fileRoot", self.fileRoot)
         kparams.addStringIfDefined("filePath", self.filePath)
+        kparams.addStringIfDefined("srcPath", self.srcPath)
+        kparams.addStringIfDefined("srcEncKey", self.srcEncKey)
         return kparams
 
     def getId(self):
@@ -347,6 +359,18 @@ class KalturaFileSync(KalturaObjectBase):
 
     def getOriginalId(self):
         return self.originalId
+
+    def getSrcPath(self):
+        return self.srcPath
+
+    def setSrcPath(self, newSrcPath):
+        self.srcPath = newSrcPath
+
+    def getSrcEncKey(self):
+        return self.srcEncKey
+
+    def setSrcEncKey(self, newSrcEncKey):
+        self.srcEncKey = newSrcEncKey
 
 
 # @package Kaltura

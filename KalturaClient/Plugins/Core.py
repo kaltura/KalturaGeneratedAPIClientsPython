@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.0.0'
+API_VERSION = '16.2.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -867,6 +867,7 @@ class KalturaPlaylistType(object):
     STATIC_LIST = 3
     DYNAMIC = 10
     EXTERNAL = 101
+    PATH = 102
 
     def __init__(self, value):
         self.value = value
@@ -1977,6 +1978,7 @@ class KalturaBatchJobType(object):
     REPORT_EXPORT = "50"
     LIVE_ENTRY_ARCHIVE = "51"
     STORAGE_UPDATE = "52"
+    STORAGE_PERIODIC_EXPORT = "53"
 
     def __init__(self, value):
         self.value = value
@@ -1996,6 +1998,7 @@ class KalturaBulkUploadAction(object):
     ADD_OR_UPDATE = "6"
     ACTIVATE = "7"
     REJECT = "8"
+    UPDATE_STATUS = "9"
 
     def __init__(self, value):
         self.value = value
@@ -2015,6 +2018,7 @@ class KalturaBulkUploadObjectType(object):
     CATEGORY_USER = "4"
     CATEGORY_ENTRY = "5"
     USER_ENTRY = "6"
+    VENDOR_CATALOG_ITEM = "7"
 
     def __init__(self, value):
         self.value = value
@@ -5192,6 +5196,9 @@ class KalturaReportType(object):
     INTERACTIVE_VIDEO_TOP_NODES = "50"
     LATEST_PLAYED_ENTRIES = "51"
     CATEGORY_HIGHLIGHTS = "52"
+    SUB_CATEGORIES = "53"
+    INTERACTIVE_VIDEO_NODE_TOP_HOTSPOTS = "54"
+    INTERCATIVE_VIDEO_NODE_SWITCH_TOP_HOTSPOTS = "55"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -25221,7 +25228,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             playerVersionIn=NotImplemented,
             ispIn=NotImplemented,
             applicationVersionIn=NotImplemented,
-            nodeIdsIn=NotImplemented):
+            nodeIdsIn=NotImplemented,
+            categoriesAncestorIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25357,6 +25365,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.nodeIdsIn = nodeIdsIn
 
+        # filter by categories ancestor
+        # @var string
+        self.categoriesAncestorIdIn = categoriesAncestorIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25392,6 +25404,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'ispIn': getXmlNodeText, 
         'applicationVersionIn': getXmlNodeText, 
         'nodeIdsIn': getXmlNodeText, 
+        'categoriesAncestorIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25434,6 +25447,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("ispIn", self.ispIn)
         kparams.addStringIfDefined("applicationVersionIn", self.applicationVersionIn)
         kparams.addStringIfDefined("nodeIdsIn", self.nodeIdsIn)
+        kparams.addStringIfDefined("categoriesAncestorIdIn", self.categoriesAncestorIdIn)
         return kparams
 
     def getKeywords(self):
@@ -25633,6 +25647,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setNodeIdsIn(self, newNodeIdsIn):
         self.nodeIdsIn = newNodeIdsIn
+
+    def getCategoriesAncestorIdIn(self):
+        return self.categoriesAncestorIdIn
+
+    def setCategoriesAncestorIdIn(self, newCategoriesAncestorIdIn):
+        self.categoriesAncestorIdIn = newCategoriesAncestorIdIn
 
 
 # @package Kaltura
@@ -27600,8 +27620,10 @@ class KalturaStorageProfile(KalturaObjectBase):
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
             shouldExportThumbs=NotImplemented,
-            mappedPackagerUrl=NotImplemented,
-            regularPackagerUrl=NotImplemented):
+            packagerUrl=NotImplemented,
+            exportPeriodically=NotImplemented,
+            excludedFlavorParamsIds=NotImplemented,
+            shouldExportCaptions=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -27711,10 +27733,16 @@ class KalturaStorageProfile(KalturaObjectBase):
         self.shouldExportThumbs = shouldExportThumbs
 
         # @var string
-        self.mappedPackagerUrl = mappedPackagerUrl
+        self.packagerUrl = packagerUrl
+
+        # @var bool
+        self.exportPeriodically = exportPeriodically
 
         # @var string
-        self.regularPackagerUrl = regularPackagerUrl
+        self.excludedFlavorParamsIds = excludedFlavorParamsIds
+
+        # @var bool
+        self.shouldExportCaptions = shouldExportCaptions
 
 
     PROPERTY_LOADERS = {
@@ -27750,8 +27778,10 @@ class KalturaStorageProfile(KalturaObjectBase):
         'publicKey': getXmlNodeText, 
         'passPhrase': getXmlNodeText, 
         'shouldExportThumbs': getXmlNodeBool, 
-        'mappedPackagerUrl': getXmlNodeText, 
-        'regularPackagerUrl': getXmlNodeText, 
+        'packagerUrl': getXmlNodeText, 
+        'exportPeriodically': getXmlNodeBool, 
+        'excludedFlavorParamsIds': getXmlNodeText, 
+        'shouldExportCaptions': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -27789,8 +27819,10 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addStringIfDefined("publicKey", self.publicKey)
         kparams.addStringIfDefined("passPhrase", self.passPhrase)
         kparams.addBoolIfDefined("shouldExportThumbs", self.shouldExportThumbs)
-        kparams.addStringIfDefined("mappedPackagerUrl", self.mappedPackagerUrl)
-        kparams.addStringIfDefined("regularPackagerUrl", self.regularPackagerUrl)
+        kparams.addStringIfDefined("packagerUrl", self.packagerUrl)
+        kparams.addBoolIfDefined("exportPeriodically", self.exportPeriodically)
+        kparams.addStringIfDefined("excludedFlavorParamsIds", self.excludedFlavorParamsIds)
+        kparams.addBoolIfDefined("shouldExportCaptions", self.shouldExportCaptions)
         return kparams
 
     def getId(self):
@@ -27973,17 +28005,29 @@ class KalturaStorageProfile(KalturaObjectBase):
     def setShouldExportThumbs(self, newShouldExportThumbs):
         self.shouldExportThumbs = newShouldExportThumbs
 
-    def getMappedPackagerUrl(self):
-        return self.mappedPackagerUrl
+    def getPackagerUrl(self):
+        return self.packagerUrl
 
-    def setMappedPackagerUrl(self, newMappedPackagerUrl):
-        self.mappedPackagerUrl = newMappedPackagerUrl
+    def setPackagerUrl(self, newPackagerUrl):
+        self.packagerUrl = newPackagerUrl
 
-    def getRegularPackagerUrl(self):
-        return self.regularPackagerUrl
+    def getExportPeriodically(self):
+        return self.exportPeriodically
 
-    def setRegularPackagerUrl(self, newRegularPackagerUrl):
-        self.regularPackagerUrl = newRegularPackagerUrl
+    def setExportPeriodically(self, newExportPeriodically):
+        self.exportPeriodically = newExportPeriodically
+
+    def getExcludedFlavorParamsIds(self):
+        return self.excludedFlavorParamsIds
+
+    def setExcludedFlavorParamsIds(self, newExcludedFlavorParamsIds):
+        self.excludedFlavorParamsIds = newExcludedFlavorParamsIds
+
+    def getShouldExportCaptions(self):
+        return self.shouldExportCaptions
+
+    def setShouldExportCaptions(self, newShouldExportCaptions):
+        self.shouldExportCaptions = newShouldExportCaptions
 
 
 # @package Kaltura
@@ -30159,8 +30203,10 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
             shouldExportThumbs=NotImplemented,
-            mappedPackagerUrl=NotImplemented,
-            regularPackagerUrl=NotImplemented,
+            packagerUrl=NotImplemented,
+            exportPeriodically=NotImplemented,
+            excludedFlavorParamsIds=NotImplemented,
+            shouldExportCaptions=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
@@ -30200,8 +30246,10 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             publicKey,
             passPhrase,
             shouldExportThumbs,
-            mappedPackagerUrl,
-            regularPackagerUrl)
+            packagerUrl,
+            exportPeriodically,
+            excludedFlavorParamsIds,
+            shouldExportCaptions)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
@@ -32558,6 +32606,238 @@ class KalturaBulkUploadResultUserEntry(KalturaBulkUploadResult):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
+    def __init__(self,
+            id=NotImplemented,
+            bulkUploadJobId=NotImplemented,
+            lineIndex=NotImplemented,
+            partnerId=NotImplemented,
+            status=NotImplemented,
+            action=NotImplemented,
+            objectId=NotImplemented,
+            objectStatus=NotImplemented,
+            bulkUploadResultObjectType=NotImplemented,
+            rowData=NotImplemented,
+            partnerData=NotImplemented,
+            objectErrorDescription=NotImplemented,
+            pluginsData=NotImplemented,
+            errorDescription=NotImplemented,
+            errorCode=NotImplemented,
+            errorType=NotImplemented,
+            vendorCatalogItemId=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            serviceFeature=NotImplemented,
+            serviceType=NotImplemented,
+            turnAroundTime=NotImplemented,
+            sourceLanguage=NotImplemented,
+            targetLanguage=NotImplemented,
+            outputFormat=NotImplemented,
+            enableSpeakerId=NotImplemented,
+            fixedPriceAddons=NotImplemented,
+            pricing=NotImplemented,
+            flavorParamsId=NotImplemented,
+            clearAudioFlavorParamsId=NotImplemented):
+        KalturaBulkUploadResult.__init__(self,
+            id,
+            bulkUploadJobId,
+            lineIndex,
+            partnerId,
+            status,
+            action,
+            objectId,
+            objectStatus,
+            bulkUploadResultObjectType,
+            rowData,
+            partnerData,
+            objectErrorDescription,
+            pluginsData,
+            errorDescription,
+            errorCode,
+            errorType)
+
+        # @var int
+        self.vendorCatalogItemId = vendorCatalogItemId
+
+        # @var int
+        self.vendorPartnerId = vendorPartnerId
+
+        # @var string
+        self.name = name
+
+        # @var string
+        self.systemName = systemName
+
+        # @var KalturaVendorServiceFeature
+        self.serviceFeature = serviceFeature
+
+        # @var KalturaVendorServiceType
+        self.serviceType = serviceType
+
+        # @var KalturaVendorServiceTurnAroundTime
+        self.turnAroundTime = turnAroundTime
+
+        # @var KalturaCatalogItemLanguage
+        self.sourceLanguage = sourceLanguage
+
+        # @var KalturaCatalogItemLanguage
+        self.targetLanguage = targetLanguage
+
+        # @var KalturaVendorCatalogItemOutputFormat
+        self.outputFormat = outputFormat
+
+        # @var KalturaNullableBoolean
+        self.enableSpeakerId = enableSpeakerId
+
+        # @var int
+        self.fixedPriceAddons = fixedPriceAddons
+
+        # @var KalturaVendorCatalogItemPricing
+        self.pricing = pricing
+
+        # @var int
+        self.flavorParamsId = flavorParamsId
+
+        # @var int
+        self.clearAudioFlavorParamsId = clearAudioFlavorParamsId
+
+
+    PROPERTY_LOADERS = {
+        'vendorCatalogItemId': getXmlNodeInt, 
+        'vendorPartnerId': getXmlNodeInt, 
+        'name': getXmlNodeText, 
+        'systemName': getXmlNodeText, 
+        'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
+        'serviceType': (KalturaEnumsFactory.createInt, "KalturaVendorServiceType"), 
+        'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
+        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
+        'targetLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
+        'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemOutputFormat"), 
+        'enableSpeakerId': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'fixedPriceAddons': getXmlNodeInt, 
+        'pricing': (KalturaObjectFactory.create, 'KalturaVendorCatalogItemPricing'), 
+        'flavorParamsId': getXmlNodeInt, 
+        'clearAudioFlavorParamsId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaBulkUploadResult.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBulkUploadResultVendorCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBulkUploadResult.toParams(self)
+        kparams.put("objectType", "KalturaBulkUploadResultVendorCatalogItem")
+        kparams.addIntIfDefined("vendorCatalogItemId", self.vendorCatalogItemId)
+        kparams.addIntIfDefined("vendorPartnerId", self.vendorPartnerId)
+        kparams.addStringIfDefined("name", self.name)
+        kparams.addStringIfDefined("systemName", self.systemName)
+        kparams.addIntEnumIfDefined("serviceFeature", self.serviceFeature)
+        kparams.addIntEnumIfDefined("serviceType", self.serviceType)
+        kparams.addIntEnumIfDefined("turnAroundTime", self.turnAroundTime)
+        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
+        kparams.addStringEnumIfDefined("targetLanguage", self.targetLanguage)
+        kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
+        kparams.addIntEnumIfDefined("enableSpeakerId", self.enableSpeakerId)
+        kparams.addIntIfDefined("fixedPriceAddons", self.fixedPriceAddons)
+        kparams.addObjectIfDefined("pricing", self.pricing)
+        kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
+        kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
+        return kparams
+
+    def getVendorCatalogItemId(self):
+        return self.vendorCatalogItemId
+
+    def setVendorCatalogItemId(self, newVendorCatalogItemId):
+        self.vendorCatalogItemId = newVendorCatalogItemId
+
+    def getVendorPartnerId(self):
+        return self.vendorPartnerId
+
+    def setVendorPartnerId(self, newVendorPartnerId):
+        self.vendorPartnerId = newVendorPartnerId
+
+    def getName(self):
+        return self.name
+
+    def setName(self, newName):
+        self.name = newName
+
+    def getSystemName(self):
+        return self.systemName
+
+    def setSystemName(self, newSystemName):
+        self.systemName = newSystemName
+
+    def getServiceFeature(self):
+        return self.serviceFeature
+
+    def setServiceFeature(self, newServiceFeature):
+        self.serviceFeature = newServiceFeature
+
+    def getServiceType(self):
+        return self.serviceType
+
+    def setServiceType(self, newServiceType):
+        self.serviceType = newServiceType
+
+    def getTurnAroundTime(self):
+        return self.turnAroundTime
+
+    def setTurnAroundTime(self, newTurnAroundTime):
+        self.turnAroundTime = newTurnAroundTime
+
+    def getSourceLanguage(self):
+        return self.sourceLanguage
+
+    def setSourceLanguage(self, newSourceLanguage):
+        self.sourceLanguage = newSourceLanguage
+
+    def getTargetLanguage(self):
+        return self.targetLanguage
+
+    def setTargetLanguage(self, newTargetLanguage):
+        self.targetLanguage = newTargetLanguage
+
+    def getOutputFormat(self):
+        return self.outputFormat
+
+    def setOutputFormat(self, newOutputFormat):
+        self.outputFormat = newOutputFormat
+
+    def getEnableSpeakerId(self):
+        return self.enableSpeakerId
+
+    def setEnableSpeakerId(self, newEnableSpeakerId):
+        self.enableSpeakerId = newEnableSpeakerId
+
+    def getFixedPriceAddons(self):
+        return self.fixedPriceAddons
+
+    def setFixedPriceAddons(self, newFixedPriceAddons):
+        self.fixedPriceAddons = newFixedPriceAddons
+
+    def getPricing(self):
+        return self.pricing
+
+    def setPricing(self, newPricing):
+        self.pricing = newPricing
+
+    def getFlavorParamsId(self):
+        return self.flavorParamsId
+
+    def setFlavorParamsId(self, newFlavorParamsId):
+        self.flavorParamsId = newFlavorParamsId
+
+    def getClearAudioFlavorParamsId(self):
+        return self.clearAudioFlavorParamsId
+
+    def setClearAudioFlavorParamsId(self, newClearAudioFlavorParamsId):
+        self.clearAudioFlavorParamsId = newClearAudioFlavorParamsId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBulkUploadUserData(KalturaBulkUploadObjectData):
     """This class represents object-specific data passed to the 
      bulk upload job."""
@@ -32576,6 +32856,29 @@ class KalturaBulkUploadUserData(KalturaBulkUploadObjectData):
     def toParams(self):
         kparams = KalturaBulkUploadObjectData.toParams(self)
         kparams.put("objectType", "KalturaBulkUploadUserData")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBulkUploadVendorCatalogItemData(KalturaBulkUploadObjectData):
+    """This class represents object-specific data passed to the
+     bulk upload job."""
+
+    def __init__(self):
+        KalturaBulkUploadObjectData.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaBulkUploadObjectData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBulkUploadVendorCatalogItemData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBulkUploadObjectData.toParams(self)
+        kparams.put("objectType", "KalturaBulkUploadVendorCatalogItemData")
         return kparams
 
 
@@ -46100,6 +46403,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             ispIn=NotImplemented,
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
+            categoriesAncestorIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -46141,7 +46445,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playerVersionIn,
             ispIn,
             applicationVersionIn,
-            nodeIdsIn)
+            nodeIdsIn,
+            categoriesAncestorIdIn)
 
         # @var string
         self.application = application
@@ -56775,7 +57080,9 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
+            redirectFromEntryId=NotImplemented,
+            playListTypeEqual=NotImplemented,
+            playListTypeIn=NotImplemented):
         KalturaPlaylistBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -56867,8 +57174,16 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             categoryAncestorIdIn,
             redirectFromEntryId)
 
+        # @var KalturaPlaylistType
+        self.playListTypeEqual = playListTypeEqual
+
+        # @var string
+        self.playListTypeIn = playListTypeIn
+
 
     PROPERTY_LOADERS = {
+        'playListTypeEqual': (KalturaEnumsFactory.createInt, "KalturaPlaylistType"), 
+        'playListTypeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -56878,7 +57193,21 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
     def toParams(self):
         kparams = KalturaPlaylistBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaPlaylistFilter")
+        kparams.addIntEnumIfDefined("playListTypeEqual", self.playListTypeEqual)
+        kparams.addStringIfDefined("playListTypeIn", self.playListTypeIn)
         return kparams
+
+    def getPlayListTypeEqual(self):
+        return self.playListTypeEqual
+
+    def setPlayListTypeEqual(self, newPlayListTypeEqual):
+        self.playListTypeEqual = newPlayListTypeEqual
+
+    def getPlayListTypeIn(self):
+        return self.playListTypeIn
+
+    def setPlayListTypeIn(self, newPlayListTypeIn):
+        self.playListTypeIn = newPlayListTypeIn
 
 
 # @package Kaltura
@@ -66367,7 +66696,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBulkUploadResultEntry': KalturaBulkUploadResultEntry,
             'KalturaBulkUploadResultUser': KalturaBulkUploadResultUser,
             'KalturaBulkUploadResultUserEntry': KalturaBulkUploadResultUserEntry,
+            'KalturaBulkUploadResultVendorCatalogItem': KalturaBulkUploadResultVendorCatalogItem,
             'KalturaBulkUploadUserData': KalturaBulkUploadUserData,
+            'KalturaBulkUploadVendorCatalogItemData': KalturaBulkUploadVendorCatalogItemData,
             'KalturaCaptureThumbJobData': KalturaCaptureThumbJobData,
             'KalturaCategoryEntryAdvancedFilter': KalturaCategoryEntryAdvancedFilter,
             'KalturaCategoryEntryListResponse': KalturaCategoryEntryListResponse,

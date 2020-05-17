@@ -31,6 +31,7 @@ from __future__ import absolute_import
 
 from .Core import *
 from .EventNotification import *
+from .BulkUpload import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
@@ -160,6 +161,13 @@ class KalturaVendorServiceFeature(object):
 class KalturaVendorServiceTurnAroundTime(object):
     BEST_EFFORT = -1
     IMMEDIATE = 0
+    ONE_BUSINESS_DAY = 1
+    TWO_BUSINESS_DAYS = 2
+    THREE_BUSINESS_DAYS = 3
+    FOUR_BUSINESS_DAYS = 4
+    FIVE_BUSINESS_DAYS = 5
+    SIX_BUSINESS_DAYS = 6
+    SEVEN_BUSINESS_DAYS = 7
     THIRTY_MINUTES = 1800
     TWO_HOURS = 7200
     THREE_HOURS = 10800
@@ -167,9 +175,7 @@ class KalturaVendorServiceTurnAroundTime(object):
     EIGHT_HOURS = 28800
     TWELVE_HOURS = 43200
     TWENTY_FOUR_HOURS = 86400
-    ONE_BUSINESS_DAY = 129600
     FORTY_EIGHT_HOURS = 172800
-    TWO_BUSINESS_DAYS = 216000
     FOUR_DAYS = 345600
     FIVE_DAYS = 432000
     TEN_DAYS = 864000
@@ -474,7 +480,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             taskJobData=NotImplemented,
             expectedFinishTime=NotImplemented,
             serviceType=NotImplemented,
-            serviceFeature=NotImplemented):
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -595,6 +602,10 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         # @readonly
         self.serviceFeature = serviceFeature
 
+        # @var KalturaVendorServiceTurnAroundTime
+        # @readonly
+        self.turnAroundTime = turnAroundTime
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -625,6 +636,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         'expectedFinishTime': getXmlNodeInt, 
         'serviceType': (KalturaEnumsFactory.createInt, "KalturaVendorServiceType"), 
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
+        'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
     }
 
     def fromXml(self, node):
@@ -763,6 +775,9 @@ class KalturaEntryVendorTask(KalturaObjectBase):
 
     def getServiceFeature(self):
         return self.serviceFeature
+
+    def getTurnAroundTime(self):
+        return self.turnAroundTime
 
 
 # @package Kaltura
@@ -2621,6 +2636,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             ispIn=NotImplemented,
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
+            categoriesAncestorIdIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2661,7 +2677,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             playerVersionIn,
             ispIn,
             applicationVersionIn,
-            nodeIdsIn)
+            nodeIdsIn,
+            categoriesAncestorIdIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
@@ -3761,6 +3778,17 @@ class KalturaVendorCatalogItemService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
 
+    def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented, bulkUploadVendorCatalogItemData = NotImplemented):
+        kparams = KalturaParams()
+        kfiles = {"fileData": fileData}
+        kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
+        kparams.addObjectIfDefined("bulkUploadVendorCatalogItemData", bulkUploadVendorCatalogItemData)
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
+
     def delete(self, id):
         """Delete vedor catalog item object"""
 
@@ -3782,6 +3810,15 @@ class KalturaVendorCatalogItemService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
 
+    def getServeUrl(self, vendorPartnerId = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "getServeUrl", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaVendorCatalogItem objects"""
 
@@ -3793,6 +3830,12 @@ class KalturaVendorCatalogItemService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItemListResponse')
+
+    def serve(self, vendorPartnerId = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        self.client.queueServiceActionCall('reach_vendorcatalogitem', 'serve', None ,kparams)
+        return self.client.getServeUrl()
 
     def update(self, id, vendorCatalogItem):
         """Update an existing vedor catalog item object"""

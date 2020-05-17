@@ -95,8 +95,10 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
             shouldExportThumbs=NotImplemented,
-            mappedPackagerUrl=NotImplemented,
-            regularPackagerUrl=NotImplemented,
+            packagerUrl=NotImplemented,
+            exportPeriodically=NotImplemented,
+            excludedFlavorParamsIds=NotImplemented,
+            shouldExportCaptions=NotImplemented,
             serviceToken=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
@@ -131,8 +133,10 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             publicKey,
             passPhrase,
             shouldExportThumbs,
-            mappedPackagerUrl,
-            regularPackagerUrl)
+            packagerUrl,
+            exportPeriodically,
+            excludedFlavorParamsIds,
+            shouldExportCaptions)
 
         # @var string
         self.serviceToken = serviceToken

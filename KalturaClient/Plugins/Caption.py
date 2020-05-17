@@ -1125,6 +1125,18 @@ class KalturaCaptionAssetService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def export(self, assetId, storageProfileId):
+        """manually export an asset"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("assetId", assetId)
+        kparams.addIntIfDefined("storageProfileId", storageProfileId);
+        self.client.queueServiceActionCall("caption_captionasset", "export", "KalturaFlavorAsset", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaFlavorAsset')
+
     def get(self, captionAssetId):
         kparams = KalturaParams()
         kparams.addStringIfDefined("captionAssetId", captionAssetId)
