@@ -117,6 +117,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
             distributedThumbAssets=NotImplemented,
             distributedMetadata=NotImplemented,
             distributedCaptionAssets=NotImplemented,
+            distributedFileAssets=NotImplemented,
             distributedAttachmentAssets=NotImplemented,
             distributedCuePoints=NotImplemented,
             distributedThumbCuePoints=NotImplemented,
@@ -140,6 +141,10 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         # @var string
         self.distributedCaptionAssets = distributedCaptionAssets
 
+        # Key-value array where the keys are IDs of distributed fileassets in the source account and the values are the matching IDs in the target account
+        # @var string
+        self.distributedFileAssets = distributedFileAssets
+
         # Key-value array where the keys are IDs of distributed caption assets in the source account and the values are the matching IDs in the target account
         # @var string
         self.distributedAttachmentAssets = distributedAttachmentAssets
@@ -162,6 +167,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         'distributedThumbAssets': getXmlNodeText, 
         'distributedMetadata': getXmlNodeText, 
         'distributedCaptionAssets': getXmlNodeText, 
+        'distributedFileAssets': getXmlNodeText, 
         'distributedAttachmentAssets': getXmlNodeText, 
         'distributedCuePoints': getXmlNodeText, 
         'distributedThumbCuePoints': getXmlNodeText, 
@@ -179,6 +185,7 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         kparams.addStringIfDefined("distributedThumbAssets", self.distributedThumbAssets)
         kparams.addStringIfDefined("distributedMetadata", self.distributedMetadata)
         kparams.addStringIfDefined("distributedCaptionAssets", self.distributedCaptionAssets)
+        kparams.addStringIfDefined("distributedFileAssets", self.distributedFileAssets)
         kparams.addStringIfDefined("distributedAttachmentAssets", self.distributedAttachmentAssets)
         kparams.addStringIfDefined("distributedCuePoints", self.distributedCuePoints)
         kparams.addStringIfDefined("distributedThumbCuePoints", self.distributedThumbCuePoints)
@@ -208,6 +215,12 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
 
     def setDistributedCaptionAssets(self, newDistributedCaptionAssets):
         self.distributedCaptionAssets = newDistributedCaptionAssets
+
+    def getDistributedFileAssets(self):
+        return self.distributedFileAssets
+
+    def setDistributedFileAssets(self, newDistributedFileAssets):
+        self.distributedFileAssets = newDistributedFileAssets
 
     def getDistributedAttachmentAssets(self):
         return self.distributedAttachmentAssets

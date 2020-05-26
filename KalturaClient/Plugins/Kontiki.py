@@ -247,6 +247,8 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
             createLink=NotImplemented,
+            assetId=NotImplemented,
+            externalUrl=NotImplemented,
             flavorAssetId=NotImplemented,
             contentMoid=NotImplemented,
             serviceToken=NotImplemented):
@@ -263,7 +265,9 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             srcFileSyncId,
             destFileSyncStoredPath,
             force,
-            createLink)
+            createLink,
+            assetId,
+            externalUrl)
 
         # Holds the id of the exported asset
         # @var string

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.2.0'
+API_VERSION = '16.3.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1979,6 +1979,8 @@ class KalturaBatchJobType(object):
     LIVE_ENTRY_ARCHIVE = "51"
     STORAGE_UPDATE = "52"
     STORAGE_PERIODIC_EXPORT = "53"
+    STORAGE_PERIODIC_PURGE = "54"
+    STORAGE_PERIODIC_DELETE_LOCAL = "55"
 
     def __init__(self, value):
         self.value = value
@@ -49595,7 +49597,9 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
             srcFileSyncId=NotImplemented,
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
-            createLink=NotImplemented):
+            createLink=NotImplemented,
+            assetId=NotImplemented,
+            externalUrl=NotImplemented):
         KalturaStorageJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -49615,10 +49619,18 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
         # @var bool
         self.createLink = createLink
 
+        # @var string
+        self.assetId = assetId
+
+        # @var string
+        self.externalUrl = externalUrl
+
 
     PROPERTY_LOADERS = {
         'force': getXmlNodeBool, 
         'createLink': getXmlNodeBool, 
+        'assetId': getXmlNodeText, 
+        'externalUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -49630,6 +49642,8 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
         kparams.put("objectType", "KalturaStorageExportJobData")
         kparams.addBoolIfDefined("force", self.force)
         kparams.addBoolIfDefined("createLink", self.createLink)
+        kparams.addStringIfDefined("assetId", self.assetId)
+        kparams.addStringIfDefined("externalUrl", self.externalUrl)
         return kparams
 
     def getForce(self):
@@ -49643,6 +49657,18 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
 
     def setCreateLink(self, newCreateLink):
         self.createLink = newCreateLink
+
+    def getAssetId(self):
+        return self.assetId
+
+    def setAssetId(self, newAssetId):
+        self.assetId = newAssetId
+
+    def getExternalUrl(self):
+        return self.externalUrl
+
+    def setExternalUrl(self, newExternalUrl):
+        self.externalUrl = newExternalUrl
 
 
 # @package Kaltura
@@ -50544,12 +50570,15 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             destFileSyncStoredPath=NotImplemented,
             force=NotImplemented,
             createLink=NotImplemented,
+            assetId=NotImplemented,
+            externalUrl=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
             sseKmsKeyId=NotImplemented,
             signatureType=NotImplemented,
-            endPoint=NotImplemented):
+            endPoint=NotImplemented,
+            storageClass=NotImplemented):
         KalturaStorageExportJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -50563,7 +50592,9 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             srcFileSyncId,
             destFileSyncStoredPath,
             force,
-            createLink)
+            createLink,
+            assetId,
+            externalUrl)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
@@ -50583,6 +50614,9 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         # @var string
         self.endPoint = endPoint
 
+        # @var string
+        self.storageClass = storageClass
+
 
     PROPERTY_LOADERS = {
         'filesPermissionInS3': (KalturaEnumsFactory.createString, "KalturaAmazonS3StorageProfileFilesPermissionLevel"), 
@@ -50591,6 +50625,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         'sseKmsKeyId': getXmlNodeText, 
         'signatureType': getXmlNodeText, 
         'endPoint': getXmlNodeText, 
+        'storageClass': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -50606,6 +50641,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
         kparams.addStringIfDefined("sseKmsKeyId", self.sseKmsKeyId)
         kparams.addStringIfDefined("signatureType", self.signatureType)
         kparams.addStringIfDefined("endPoint", self.endPoint)
+        kparams.addStringIfDefined("storageClass", self.storageClass)
         return kparams
 
     def getFilesPermissionInS3(self):
@@ -50643,6 +50679,12 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
 
     def setEndPoint(self, newEndPoint):
         self.endPoint = newEndPoint
+
+    def getStorageClass(self):
+        return self.storageClass
+
+    def setStorageClass(self, newStorageClass):
+        self.storageClass = newStorageClass
 
 
 # @package Kaltura
