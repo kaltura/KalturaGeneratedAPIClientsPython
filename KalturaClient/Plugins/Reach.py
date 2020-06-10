@@ -1291,67 +1291,6 @@ class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaAlignmentVendorTaskData(KalturaVendorTaskData):
-    def __init__(self,
-            textTranscriptAssetId=NotImplemented,
-            jsonTranscriptAssetId=NotImplemented,
-            captionAssetId=NotImplemented):
-        KalturaVendorTaskData.__init__(self)
-
-        # The id of the text transcript object the vendor should use while runing the alignment task
-        # @var string
-        self.textTranscriptAssetId = textTranscriptAssetId
-
-        # Optional - The id of the json transcript object the vendor should update once alignment task processing is done
-        # @var string
-        # @insertonly
-        self.jsonTranscriptAssetId = jsonTranscriptAssetId
-
-        # Optional - The id of the caption asset object the vendor should update once alignment task processing is done
-        # @var string
-        # @insertonly
-        self.captionAssetId = captionAssetId
-
-
-    PROPERTY_LOADERS = {
-        'textTranscriptAssetId': getXmlNodeText, 
-        'jsonTranscriptAssetId': getXmlNodeText, 
-        'captionAssetId': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaVendorTaskData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaAlignmentVendorTaskData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaVendorTaskData.toParams(self)
-        kparams.put("objectType", "KalturaAlignmentVendorTaskData")
-        kparams.addStringIfDefined("textTranscriptAssetId", self.textTranscriptAssetId)
-        kparams.addStringIfDefined("jsonTranscriptAssetId", self.jsonTranscriptAssetId)
-        kparams.addStringIfDefined("captionAssetId", self.captionAssetId)
-        return kparams
-
-    def getTextTranscriptAssetId(self):
-        return self.textTranscriptAssetId
-
-    def setTextTranscriptAssetId(self, newTextTranscriptAssetId):
-        self.textTranscriptAssetId = newTextTranscriptAssetId
-
-    def getJsonTranscriptAssetId(self):
-        return self.jsonTranscriptAssetId
-
-    def setJsonTranscriptAssetId(self, newJsonTranscriptAssetId):
-        self.jsonTranscriptAssetId = newJsonTranscriptAssetId
-
-    def getCaptionAssetId(self):
-        return self.captionAssetId
-
-    def setCaptionAssetId(self, newCaptionAssetId):
-        self.captionAssetId = newCaptionAssetId
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCatalogItemAdvancedFilter(KalturaSearchItem):
     def __init__(self,
             serviceTypeEqual=NotImplemented,
@@ -2032,6 +1971,89 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
 
     def setAddOn(self, newAddOn):
         self.addOn = newAddOn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorTaskDataCaptionAsset(KalturaVendorTaskData):
+    def __init__(self,
+            captionAssetId=NotImplemented):
+        KalturaVendorTaskData.__init__(self)
+
+        # Optional - The id of the caption asset object
+        # @var string
+        # @insertonly
+        self.captionAssetId = captionAssetId
+
+
+    PROPERTY_LOADERS = {
+        'captionAssetId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorTaskDataCaptionAsset.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaVendorTaskDataCaptionAsset")
+        kparams.addStringIfDefined("captionAssetId", self.captionAssetId)
+        return kparams
+
+    def getCaptionAssetId(self):
+        return self.captionAssetId
+
+    def setCaptionAssetId(self, newCaptionAssetId):
+        self.captionAssetId = newCaptionAssetId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
+    def __init__(self,
+            captionAssetId=NotImplemented,
+            textTranscriptAssetId=NotImplemented,
+            jsonTranscriptAssetId=NotImplemented):
+        KalturaVendorTaskDataCaptionAsset.__init__(self,
+            captionAssetId)
+
+        # The id of the text transcript object the vendor should use while runing the alignment task
+        # @var string
+        self.textTranscriptAssetId = textTranscriptAssetId
+
+        # Optional - The id of the json transcript object the vendor should update once alignment task processing is done
+        # @var string
+        # @insertonly
+        self.jsonTranscriptAssetId = jsonTranscriptAssetId
+
+
+    PROPERTY_LOADERS = {
+        'textTranscriptAssetId': getXmlNodeText, 
+        'jsonTranscriptAssetId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskDataCaptionAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAlignmentVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskDataCaptionAsset.toParams(self)
+        kparams.put("objectType", "KalturaAlignmentVendorTaskData")
+        kparams.addStringIfDefined("textTranscriptAssetId", self.textTranscriptAssetId)
+        kparams.addStringIfDefined("jsonTranscriptAssetId", self.jsonTranscriptAssetId)
+        return kparams
+
+    def getTextTranscriptAssetId(self):
+        return self.textTranscriptAssetId
+
+    def setTextTranscriptAssetId(self, newTextTranscriptAssetId):
+        self.textTranscriptAssetId = newTextTranscriptAssetId
+
+    def getJsonTranscriptAssetId(self):
+        return self.jsonTranscriptAssetId
+
+    def setJsonTranscriptAssetId(self, newJsonTranscriptAssetId):
+        self.jsonTranscriptAssetId = newJsonTranscriptAssetId
 
 
 # @package Kaltura
@@ -2765,6 +2787,28 @@ class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
 
     def setToDate(self, newToDate):
         self.toDate = newToDate
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaTranslationVendorTaskData(KalturaVendorTaskDataCaptionAsset):
+    def __init__(self,
+            captionAssetId=NotImplemented):
+        KalturaVendorTaskDataCaptionAsset.__init__(self,
+            captionAssetId)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskDataCaptionAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTranslationVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskDataCaptionAsset.toParams(self)
+        kparams.put("objectType", "KalturaTranslationVendorTaskData")
+        return kparams
 
 
 # @package Kaltura
@@ -4180,7 +4224,6 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCatalogItemPricing': KalturaVendorCatalogItemPricing,
             'KalturaVendorCatalogItem': KalturaVendorCatalogItem,
             'KalturaAddEntryVendorTaskAction': KalturaAddEntryVendorTaskAction,
-            'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
             'KalturaCatalogItemAdvancedFilter': KalturaCatalogItemAdvancedFilter,
             'KalturaCategoryEntryCondition': KalturaCategoryEntryCondition,
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
@@ -4192,12 +4235,15 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCatalogItemListResponse': KalturaVendorCatalogItemListResponse,
             'KalturaVendorChapteringCatalogItem': KalturaVendorChapteringCatalogItem,
             'KalturaVendorCredit': KalturaVendorCredit,
+            'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
+            'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
             'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
             'KalturaEntryVendorTaskFilter': KalturaEntryVendorTaskFilter,
             'KalturaEntryVendorTaskCsvJobData': KalturaEntryVendorTaskCsvJobData,
             'KalturaReachProfileBaseFilter': KalturaReachProfileBaseFilter,
             'KalturaReachReportInputFilter': KalturaReachReportInputFilter,
             'KalturaTimeRangeVendorCredit': KalturaTimeRangeVendorCredit,
+            'KalturaTranslationVendorTaskData': KalturaTranslationVendorTaskData,
             'KalturaVendorCatalogItemBaseFilter': KalturaVendorCatalogItemBaseFilter,
             'KalturaVendorTranslationCatalogItem': KalturaVendorTranslationCatalogItem,
             'KalturaReachProfileFilter': KalturaReachProfileFilter,
