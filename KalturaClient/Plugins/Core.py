@@ -22201,6 +22201,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -22297,6 +22298,9 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
         # @var string
         self.excludedFreeTextGroups = excludedFreeTextGroups
 
+        # @var string
+        self.descriptionLike = descriptionLike
+
         # @var KalturaNullableBoolean
         self.isRoot = isRoot
 
@@ -22315,6 +22319,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
     PROPERTY_LOADERS = {
         'freeText': getXmlNodeText, 
         'excludedFreeTextGroups': getXmlNodeText, 
+        'descriptionLike': getXmlNodeText, 
         'isRoot': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'categoriesFullNameIn': getXmlNodeText, 
         'categoryAncestorIdIn': getXmlNodeText, 
@@ -22330,6 +22335,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
         kparams.put("objectType", "KalturaBaseEntryFilter")
         kparams.addStringIfDefined("freeText", self.freeText)
         kparams.addStringIfDefined("excludedFreeTextGroups", self.excludedFreeTextGroups)
+        kparams.addStringIfDefined("descriptionLike", self.descriptionLike)
         kparams.addIntEnumIfDefined("isRoot", self.isRoot)
         kparams.addStringIfDefined("categoriesFullNameIn", self.categoriesFullNameIn)
         kparams.addStringIfDefined("categoryAncestorIdIn", self.categoryAncestorIdIn)
@@ -22347,6 +22353,12 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
 
     def setExcludedFreeTextGroups(self, newExcludedFreeTextGroups):
         self.excludedFreeTextGroups = newExcludedFreeTextGroups
+
+    def getDescriptionLike(self):
+        return self.descriptionLike
+
+    def setDescriptionLike(self, newDescriptionLike):
+        self.descriptionLike = newDescriptionLike
 
     def getIsRoot(self):
         return self.isRoot
@@ -22463,6 +22475,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -22562,6 +22575,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -22759,6 +22773,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -22858,6 +22873,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -22975,6 +22991,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -23084,6 +23101,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -23311,6 +23329,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -23420,6 +23439,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -23547,6 +23567,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -23658,6 +23679,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -54453,6 +54475,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -54544,6 +54567,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -55571,6 +55595,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -55662,6 +55687,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -56348,6 +56374,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -56439,6 +56466,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -57160,6 +57188,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -57253,6 +57282,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -58050,6 +58080,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -58149,6 +58180,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -58624,6 +58656,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -58723,6 +58756,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -58886,6 +58920,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -58995,6 +59030,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -59168,6 +59204,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -59280,6 +59317,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -59486,6 +59524,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -59598,6 +59637,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -59728,6 +59768,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -59840,6 +59881,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -59970,6 +60012,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -60082,6 +60125,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -60212,6 +60256,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -60324,6 +60369,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -60454,6 +60500,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -60566,6 +60613,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
@@ -60696,6 +60744,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
+            descriptionLike=NotImplemented,
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
@@ -60808,6 +60857,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             tagsAdminTagsNameMultiLikeAnd,
             freeText,
             excludedFreeTextGroups,
+            descriptionLike,
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
