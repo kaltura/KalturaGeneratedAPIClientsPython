@@ -2659,6 +2659,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
+            hotspotIdIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2700,7 +2701,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             ispIn,
             applicationVersionIn,
             nodeIdsIn,
-            categoriesAncestorIdIn)
+            categoriesAncestorIdIn,
+            hotspotIdIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType

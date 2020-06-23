@@ -5201,6 +5201,8 @@ class KalturaReportType(object):
     SUB_CATEGORIES = "53"
     INTERACTIVE_VIDEO_NODE_TOP_HOTSPOTS = "54"
     INTERCATIVE_VIDEO_NODE_SWITCH_TOP_HOTSPOTS = "55"
+    INTERACTIVE_VIDEO_HOTSPOT_CLICKED_PERCENTILES = "56"
+    INTERACTIVE_VIDEO_NODE_SWITCH_HOTSPOT_CLICKED_PERCENTILES = "57"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -5215,6 +5217,8 @@ class KalturaReportType(object):
     PLAYBACK_TYPE_REALTIME = "10011"
     CONTENT_REALTIME = "10012"
     DISCOVERY_VIEW_REALTIME = "10013"
+    TOP_ENDED_BROADCAST_ENTRIES = "10014"
+    TOP_LIVE_NOW_ENTRIES = "10015"
     CONTENT_DROPOFF_VPAAS = "20001"
     TOP_SYNDICATION_VPAAS = "20002"
     USER_TOP_CONTENT_VPAAS = "20003"
@@ -25275,7 +25279,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             ispIn=NotImplemented,
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
-            categoriesAncestorIdIn=NotImplemented):
+            categoriesAncestorIdIn=NotImplemented,
+            hotspotIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25415,6 +25420,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.categoriesAncestorIdIn = categoriesAncestorIdIn
 
+        # filter by hotspot id
+        # @var string
+        self.hotspotIdIn = hotspotIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25451,6 +25460,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'applicationVersionIn': getXmlNodeText, 
         'nodeIdsIn': getXmlNodeText, 
         'categoriesAncestorIdIn': getXmlNodeText, 
+        'hotspotIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25494,6 +25504,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("applicationVersionIn", self.applicationVersionIn)
         kparams.addStringIfDefined("nodeIdsIn", self.nodeIdsIn)
         kparams.addStringIfDefined("categoriesAncestorIdIn", self.categoriesAncestorIdIn)
+        kparams.addStringIfDefined("hotspotIdIn", self.hotspotIdIn)
         return kparams
 
     def getKeywords(self):
@@ -25699,6 +25710,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCategoriesAncestorIdIn(self, newCategoriesAncestorIdIn):
         self.categoriesAncestorIdIn = newCategoriesAncestorIdIn
+
+    def getHotspotIdIn(self):
+        return self.hotspotIdIn
+
+    def setHotspotIdIn(self, newHotspotIdIn):
+        self.hotspotIdIn = newHotspotIdIn
 
 
 # @package Kaltura
@@ -46462,6 +46479,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
+            hotspotIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -46504,7 +46522,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             ispIn,
             applicationVersionIn,
             nodeIdsIn,
-            categoriesAncestorIdIn)
+            categoriesAncestorIdIn,
+            hotspotIdIn)
 
         # @var string
         self.application = application

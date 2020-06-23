@@ -108,6 +108,161 @@ class KalturaBaseInteractivity(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaInteractivityDataFieldsFilter(KalturaObjectBase):
+    def __init__(self,
+            fields=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # A string containing CSV list of fields to include
+        # @var string
+        self.fields = fields
+
+
+    PROPERTY_LOADERS = {
+        'fields': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInteractivityDataFieldsFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaInteractivityDataFieldsFilter")
+        kparams.addStringIfDefined("fields", self.fields)
+        return kparams
+
+    def getFields(self):
+        return self.fields
+
+    def setFields(self, newFields):
+        self.fields = newFields
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaInteractivityRootFilter(KalturaInteractivityDataFieldsFilter):
+    def __init__(self,
+            fields=NotImplemented):
+        KalturaInteractivityDataFieldsFilter.__init__(self,
+            fields)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaInteractivityDataFieldsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInteractivityRootFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaInteractivityDataFieldsFilter.toParams(self)
+        kparams.put("objectType", "KalturaInteractivityRootFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaInteractivityNodeFilter(KalturaInteractivityDataFieldsFilter):
+    def __init__(self,
+            fields=NotImplemented):
+        KalturaInteractivityDataFieldsFilter.__init__(self,
+            fields)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaInteractivityDataFieldsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInteractivityNodeFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaInteractivityDataFieldsFilter.toParams(self)
+        kparams.put("objectType", "KalturaInteractivityNodeFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaInteractivityInteractionFilter(KalturaInteractivityDataFieldsFilter):
+    def __init__(self,
+            fields=NotImplemented):
+        KalturaInteractivityDataFieldsFilter.__init__(self,
+            fields)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaInteractivityDataFieldsFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInteractivityInteractionFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaInteractivityDataFieldsFilter.toParams(self)
+        kparams.put("objectType", "KalturaInteractivityInteractionFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaInteractivityDataFilter(KalturaObjectBase):
+    def __init__(self,
+            rootFilter=NotImplemented,
+            nodeFilter=NotImplemented,
+            interactionFilter=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaInteractivityRootFilter
+        self.rootFilter = rootFilter
+
+        # @var KalturaInteractivityNodeFilter
+        self.nodeFilter = nodeFilter
+
+        # @var KalturaInteractivityInteractionFilter
+        self.interactionFilter = interactionFilter
+
+
+    PROPERTY_LOADERS = {
+        'rootFilter': (KalturaObjectFactory.create, 'KalturaInteractivityRootFilter'), 
+        'nodeFilter': (KalturaObjectFactory.create, 'KalturaInteractivityNodeFilter'), 
+        'interactionFilter': (KalturaObjectFactory.create, 'KalturaInteractivityInteractionFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaInteractivityDataFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaInteractivityDataFilter")
+        kparams.addObjectIfDefined("rootFilter", self.rootFilter)
+        kparams.addObjectIfDefined("nodeFilter", self.nodeFilter)
+        kparams.addObjectIfDefined("interactionFilter", self.interactionFilter)
+        return kparams
+
+    def getRootFilter(self):
+        return self.rootFilter
+
+    def setRootFilter(self, newRootFilter):
+        self.rootFilter = newRootFilter
+
+    def getNodeFilter(self):
+        return self.nodeFilter
+
+    def setNodeFilter(self, newNodeFilter):
+        self.nodeFilter = newNodeFilter
+
+    def getInteractionFilter(self):
+        return self.interactionFilter
+
+    def setInteractionFilter(self, newInteractionFilter):
+        self.interactionFilter = newInteractionFilter
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaInteractivity(KalturaBaseInteractivity):
     def __init__(self,
             data=NotImplemented,
@@ -192,11 +347,12 @@ class KalturaInteractivityService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def get(self, entryId):
+    def get(self, entryId, dataFilter = NotImplemented):
         """Retrieve a interactivity object by entry id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
+        kparams.addObjectIfDefined("dataFilter", dataFilter)
         self.client.queueServiceActionCall("interactivity_interactivity", "get", "KalturaInteractivity", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -295,6 +451,11 @@ class KalturaInteractivityClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaBaseInteractivity': KalturaBaseInteractivity,
+            'KalturaInteractivityDataFieldsFilter': KalturaInteractivityDataFieldsFilter,
+            'KalturaInteractivityRootFilter': KalturaInteractivityRootFilter,
+            'KalturaInteractivityNodeFilter': KalturaInteractivityNodeFilter,
+            'KalturaInteractivityInteractionFilter': KalturaInteractivityInteractionFilter,
+            'KalturaInteractivityDataFilter': KalturaInteractivityDataFilter,
             'KalturaInteractivity': KalturaInteractivity,
             'KalturaVolatileInteractivity': KalturaVolatileInteractivity,
         }
