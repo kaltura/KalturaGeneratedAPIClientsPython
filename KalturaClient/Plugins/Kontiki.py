@@ -99,6 +99,7 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             exportPeriodically=NotImplemented,
             excludedFlavorParamsIds=NotImplemented,
             shouldExportCaptions=NotImplemented,
+            excludedEntryTypes=NotImplemented,
             serviceToken=NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
@@ -136,7 +137,8 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             packagerUrl,
             exportPeriodically,
             excludedFlavorParamsIds,
-            shouldExportCaptions)
+            shouldExportCaptions,
+            excludedEntryTypes)
 
         # @var string
         self.serviceToken = serviceToken

@@ -27686,7 +27686,8 @@ class KalturaStorageProfile(KalturaObjectBase):
             packagerUrl=NotImplemented,
             exportPeriodically=NotImplemented,
             excludedFlavorParamsIds=NotImplemented,
-            shouldExportCaptions=NotImplemented):
+            shouldExportCaptions=NotImplemented,
+            excludedEntryTypes=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -27807,6 +27808,9 @@ class KalturaStorageProfile(KalturaObjectBase):
         # @var bool
         self.shouldExportCaptions = shouldExportCaptions
 
+        # @var string
+        self.excludedEntryTypes = excludedEntryTypes
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -27845,6 +27849,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         'exportPeriodically': getXmlNodeBool, 
         'excludedFlavorParamsIds': getXmlNodeText, 
         'shouldExportCaptions': getXmlNodeBool, 
+        'excludedEntryTypes': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -27886,6 +27891,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addBoolIfDefined("exportPeriodically", self.exportPeriodically)
         kparams.addStringIfDefined("excludedFlavorParamsIds", self.excludedFlavorParamsIds)
         kparams.addBoolIfDefined("shouldExportCaptions", self.shouldExportCaptions)
+        kparams.addStringIfDefined("excludedEntryTypes", self.excludedEntryTypes)
         return kparams
 
     def getId(self):
@@ -28091,6 +28097,12 @@ class KalturaStorageProfile(KalturaObjectBase):
 
     def setShouldExportCaptions(self, newShouldExportCaptions):
         self.shouldExportCaptions = newShouldExportCaptions
+
+    def getExcludedEntryTypes(self):
+        return self.excludedEntryTypes
+
+    def setExcludedEntryTypes(self, newExcludedEntryTypes):
+        self.excludedEntryTypes = newExcludedEntryTypes
 
 
 # @package Kaltura
@@ -30270,6 +30282,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             exportPeriodically=NotImplemented,
             excludedFlavorParamsIds=NotImplemented,
             shouldExportCaptions=NotImplemented,
+            excludedEntryTypes=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
@@ -30312,7 +30325,8 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             packagerUrl,
             exportPeriodically,
             excludedFlavorParamsIds,
-            shouldExportCaptions)
+            shouldExportCaptions,
+            excludedEntryTypes)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
