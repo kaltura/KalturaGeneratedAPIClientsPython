@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.5.0'
+API_VERSION = '16.6.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2769,6 +2769,24 @@ class KalturaEdgeServerNodeOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaEntryApplication(object):
+    KMC = "0"
+    KMS = "1"
+    KAF = "2"
+    PITCH = "3"
+    KMS_GO = "4"
+    WEBCAST_APP = "5"
+    PERSONAL_CAPTURE = "6"
+    KALTURA_MEETING = "7"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEntryIdentifierField(object):
     ID = "id"
     REFERENCE_ID = "referenceId"
@@ -5203,6 +5221,8 @@ class KalturaReportType(object):
     INTERCATIVE_VIDEO_NODE_SWITCH_TOP_HOTSPOTS = "55"
     INTERACTIVE_VIDEO_HOTSPOT_CLICKED_PERCENTILES = "56"
     INTERACTIVE_VIDEO_NODE_SWITCH_HOTSPOT_CLICKED_PERCENTILES = "57"
+    TOP_CUSTOM_VAR2 = "58"
+    TOP_CUSTOM_VAR3 = "59"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -7570,7 +7590,9 @@ class KalturaBaseEntry(KalturaObjectBase):
             entitledUsersView=NotImplemented,
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
-            displayInSearch=NotImplemented):
+            displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated 10 characters alphanumeric string
@@ -7771,6 +7793,16 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @var KalturaEntryDisplayInSearchType
         self.displayInSearch = displayInSearch
 
+        # Entry application
+        # @var KalturaEntryApplication
+        # @insertonly
+        self.application = application
+
+        # Entry application version
+        # @var string
+        # @insertonly
+        self.applicationVersion = applicationVersion
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -7818,6 +7850,8 @@ class KalturaBaseEntry(KalturaObjectBase):
         'capabilities': getXmlNodeText, 
         'templateEntryId': getXmlNodeText, 
         'displayInSearch': (KalturaEnumsFactory.createInt, "KalturaEntryDisplayInSearchType"), 
+        'application': (KalturaEnumsFactory.createString, "KalturaEntryApplication"), 
+        'applicationVersion': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -7853,6 +7887,8 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addStringIfDefined("entitledUsersView", self.entitledUsersView)
         kparams.addStringIfDefined("templateEntryId", self.templateEntryId)
         kparams.addIntEnumIfDefined("displayInSearch", self.displayInSearch)
+        kparams.addStringEnumIfDefined("application", self.application)
+        kparams.addStringIfDefined("applicationVersion", self.applicationVersion)
         return kparams
 
     def getId(self):
@@ -8067,6 +8103,18 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setDisplayInSearch(self, newDisplayInSearch):
         self.displayInSearch = newDisplayInSearch
+
+    def getApplication(self):
+        return self.application
+
+    def setApplication(self, newApplication):
+        self.application = newApplication
+
+    def getApplicationVersion(self):
+        return self.applicationVersion
+
+    def setApplicationVersion(self, newApplicationVersion):
+        self.applicationVersion = newApplicationVersion
 
 
 # @package Kaltura
@@ -13044,6 +13092,8 @@ class KalturaDataEntry(KalturaBaseEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             dataContent=NotImplemented,
             retrieveDataContentByGet=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -13091,7 +13141,9 @@ class KalturaDataEntry(KalturaBaseEntry):
             entitledUsersView,
             capabilities,
             templateEntryId,
-            displayInSearch)
+            displayInSearch,
+            application,
+            applicationVersion)
 
         # The data of the entry
         # @var string
@@ -15031,6 +15083,8 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -15084,7 +15138,9 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             entitledUsersView,
             capabilities,
             templateEntryId,
-            displayInSearch)
+            displayInSearch,
+            application,
+            applicationVersion)
 
         # Number of plays
         # @var int
@@ -15316,6 +15372,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -15327,6 +15385,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             mediaType=NotImplemented,
             conversionQuality=NotImplemented,
             sourceType=NotImplemented,
+            sourceVersion=NotImplemented,
             searchProviderType=NotImplemented,
             searchProviderId=NotImplemented,
             creditUserName=NotImplemented,
@@ -15382,6 +15441,8 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -15405,6 +15466,11 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         # @var KalturaSourceType
         # @insertonly
         self.sourceType = sourceType
+
+        # The source version of the entry
+        # @var string
+        # @insertonly
+        self.sourceVersion = sourceVersion
 
         # The search provider type used to import this entry
         # @var KalturaSearchProviderType
@@ -15453,6 +15519,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
         'conversionQuality': getXmlNodeText, 
         'sourceType': (KalturaEnumsFactory.createString, "KalturaSourceType"), 
+        'sourceVersion': getXmlNodeText, 
         'searchProviderType': (KalturaEnumsFactory.createInt, "KalturaSearchProviderType"), 
         'searchProviderId': getXmlNodeText, 
         'creditUserName': getXmlNodeText, 
@@ -15474,6 +15541,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         kparams.addIntEnumIfDefined("mediaType", self.mediaType)
         kparams.addStringIfDefined("conversionQuality", self.conversionQuality)
         kparams.addStringEnumIfDefined("sourceType", self.sourceType)
+        kparams.addStringIfDefined("sourceVersion", self.sourceVersion)
         kparams.addIntEnumIfDefined("searchProviderType", self.searchProviderType)
         kparams.addStringIfDefined("searchProviderId", self.searchProviderId)
         kparams.addStringIfDefined("creditUserName", self.creditUserName)
@@ -15498,6 +15566,12 @@ class KalturaMediaEntry(KalturaPlayableEntry):
 
     def setSourceType(self, newSourceType):
         self.sourceType = newSourceType
+
+    def getSourceVersion(self):
+        return self.sourceVersion
+
+    def setSourceVersion(self, newSourceVersion):
+        self.sourceVersion = newSourceVersion
 
     def getSearchProviderType(self):
         return self.searchProviderType
@@ -19105,6 +19179,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -19116,6 +19192,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             mediaType=NotImplemented,
             conversionQuality=NotImplemented,
             sourceType=NotImplemented,
+            sourceVersion=NotImplemented,
             searchProviderType=NotImplemented,
             searchProviderId=NotImplemented,
             creditUserName=NotImplemented,
@@ -19191,6 +19268,8 @@ class KalturaLiveEntry(KalturaMediaEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -19202,6 +19281,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             mediaType,
             conversionQuality,
             sourceType,
+            sourceVersion,
             searchProviderType,
             searchProviderId,
             creditUserName,
@@ -19499,6 +19579,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -19510,6 +19592,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             mediaType=NotImplemented,
             conversionQuality=NotImplemented,
             sourceType=NotImplemented,
+            sourceVersion=NotImplemented,
             searchProviderType=NotImplemented,
             searchProviderId=NotImplemented,
             creditUserName=NotImplemented,
@@ -19587,6 +19670,8 @@ class KalturaLiveChannel(KalturaLiveEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -19598,6 +19683,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             mediaType,
             conversionQuality,
             sourceType,
+            sourceVersion,
             searchProviderType,
             searchProviderId,
             creditUserName,
@@ -20591,6 +20677,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -20602,6 +20690,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             mediaType=NotImplemented,
             conversionQuality=NotImplemented,
             sourceType=NotImplemented,
+            sourceVersion=NotImplemented,
             searchProviderType=NotImplemented,
             searchProviderId=NotImplemented,
             creditUserName=NotImplemented,
@@ -20696,6 +20785,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -20707,6 +20798,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             mediaType,
             conversionQuality,
             sourceType,
+            sourceVersion,
             searchProviderType,
             searchProviderId,
             creditUserName,
@@ -23792,6 +23884,8 @@ class KalturaMixEntry(KalturaPlayableEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -23849,6 +23943,8 @@ class KalturaMixEntry(KalturaPlayableEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -24726,6 +24822,8 @@ class KalturaPlaylist(KalturaBaseEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             playlistContent=NotImplemented,
             filters=NotImplemented,
             totalResults=NotImplemented,
@@ -24779,7 +24877,9 @@ class KalturaPlaylist(KalturaBaseEntry):
             entitledUsersView,
             capabilities,
             templateEntryId,
-            displayInSearch)
+            displayInSearch,
+            application,
+            applicationVersion)
 
         # Content of the playlist - 
         # 	 XML if the playlistType is dynamic 
@@ -56870,6 +56970,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -56881,6 +56983,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             mediaType=NotImplemented,
             conversionQuality=NotImplemented,
             sourceType=NotImplemented,
+            sourceVersion=NotImplemented,
             searchProviderType=NotImplemented,
             searchProviderId=NotImplemented,
             creditUserName=NotImplemented,
@@ -56975,6 +57078,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             capabilities,
             templateEntryId,
             displayInSearch,
+            application,
+            applicationVersion,
             plays,
             views,
             lastPlayedAt,
@@ -56986,6 +57091,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             mediaType,
             conversionQuality,
             sourceType,
+            sourceVersion,
             searchProviderType,
             searchProviderId,
             creditUserName,
@@ -66557,6 +66663,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDurationType': KalturaDurationType,
             'KalturaESearchLanguage': KalturaESearchLanguage,
             'KalturaEdgeServerNodeOrderBy': KalturaEdgeServerNodeOrderBy,
+            'KalturaEntryApplication': KalturaEntryApplication,
             'KalturaEntryIdentifierField': KalturaEntryIdentifierField,
             'KalturaEntryReplacementStatus': KalturaEntryReplacementStatus,
             'KalturaEntryServerNodeOrderBy': KalturaEntryServerNodeOrderBy,

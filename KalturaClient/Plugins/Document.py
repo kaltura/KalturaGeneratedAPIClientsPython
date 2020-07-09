@@ -219,6 +219,8 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             capabilities=NotImplemented,
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
+            application=NotImplemented,
+            applicationVersion=NotImplemented,
             documentType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -266,7 +268,9 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             entitledUsersView,
             capabilities,
             templateEntryId,
-            displayInSearch)
+            displayInSearch,
+            application,
+            applicationVersion)
 
         # The type of the document
         # @var KalturaDocumentType

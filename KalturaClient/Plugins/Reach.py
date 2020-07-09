@@ -4083,6 +4083,18 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTaskListResponse')
 
+    def getServeUrl(self, filterType = NotImplemented, filterInput = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("filterType", filterType)
+        kparams.addIntIfDefined("filterInput", filterInput);
+        kparams.addIntIfDefined("status", status);
+        kparams.addStringIfDefined("dueDate", dueDate)
+        self.client.queueServiceActionCall("reach_entryvendortask", "getServeUrl", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def list(self, filter = NotImplemented, pager = NotImplemented):
         """List KalturaEntryVendorTask objects"""
 
@@ -4106,6 +4118,15 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def serve(self, vendorPartnerId = NotImplemented, partnerId = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        kparams.addIntIfDefined("partnerId", partnerId);
+        kparams.addIntIfDefined("status", status);
+        kparams.addStringIfDefined("dueDate", dueDate)
+        self.client.queueServiceActionCall('reach_entryvendortask', 'serve', None ,kparams)
+        return self.client.getServeUrl()
 
     def serveCsv(self, id):
         """Will serve a requested csv"""
