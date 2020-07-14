@@ -222,7 +222,6 @@ class KalturaCuePoint(KalturaObjectBase):
         self.startTime = startTime
 
         # @var string
-        # @readonly
         self.userId = userId
 
         # @var string
@@ -282,6 +281,7 @@ class KalturaCuePoint(KalturaObjectBase):
         kparams.addIntIfDefined("triggeredAt", self.triggeredAt)
         kparams.addStringIfDefined("tags", self.tags)
         kparams.addIntIfDefined("startTime", self.startTime)
+        kparams.addStringIfDefined("userId", self.userId)
         kparams.addStringIfDefined("partnerData", self.partnerData)
         kparams.addIntIfDefined("partnerSortValue", self.partnerSortValue)
         kparams.addIntEnumIfDefined("forceStop", self.forceStop)
@@ -336,6 +336,9 @@ class KalturaCuePoint(KalturaObjectBase):
 
     def getUserId(self):
         return self.userId
+
+    def setUserId(self, newUserId):
+        self.userId = newUserId
 
     def getPartnerData(self):
         return self.partnerData

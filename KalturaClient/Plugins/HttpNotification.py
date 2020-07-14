@@ -700,6 +700,7 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
             contentParameters=NotImplemented,
             url=NotImplemented,
             method=NotImplemented,
+            contentType=NotImplemented,
             data=NotImplemented,
             timeout=NotImplemented,
             connectTimeout=NotImplemented,
@@ -728,6 +729,10 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         # Request method.
         # @var KalturaHttpNotificationMethod
         self.method = method
+
+        # The type of the data to send.
+        # @var string
+        self.contentType = contentType
 
         # Data to send.
         # @var string
@@ -803,6 +808,7 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
     PROPERTY_LOADERS = {
         'url': getXmlNodeText, 
         'method': (KalturaEnumsFactory.createInt, "KalturaHttpNotificationMethod"), 
+        'contentType': getXmlNodeText, 
         'data': getXmlNodeText, 
         'timeout': getXmlNodeInt, 
         'connectTimeout': getXmlNodeInt, 
@@ -831,6 +837,7 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         kparams.put("objectType", "KalturaHttpNotificationDispatchJobData")
         kparams.addStringIfDefined("url", self.url)
         kparams.addIntEnumIfDefined("method", self.method)
+        kparams.addStringIfDefined("contentType", self.contentType)
         kparams.addStringIfDefined("data", self.data)
         kparams.addIntIfDefined("timeout", self.timeout)
         kparams.addIntIfDefined("connectTimeout", self.connectTimeout)
@@ -861,6 +868,12 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
 
     def setMethod(self, newMethod):
         self.method = newMethod
+
+    def getContentType(self):
+        return self.contentType
+
+    def setContentType(self, newContentType):
+        self.contentType = newContentType
 
     def getData(self):
         return self.data

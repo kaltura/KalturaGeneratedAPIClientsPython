@@ -450,10 +450,11 @@ class KalturaPexipService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def generateSipUrl(self, entryId, regenerate = False):
+    def generateSipUrl(self, entryId, regenerate = False, sourceType = 1):
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
         kparams.addBoolIfDefined("regenerate", regenerate);
+        kparams.addIntIfDefined("sourceType", sourceType);
         self.client.queueServiceActionCall("sip_pexip", "generateSipUrl", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -466,7 +467,6 @@ class KalturaPexipService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return getXmlNodeBool(resultNode)
 
     def listRooms(self, offset = 0, pageSize = 500, activeOnly = False):
         kparams = KalturaParams()
