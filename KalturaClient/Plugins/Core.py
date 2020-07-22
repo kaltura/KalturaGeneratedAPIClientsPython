@@ -29143,7 +29143,8 @@ class KalturaWidget(KalturaObjectBase):
             enforceEntitlement=NotImplemented,
             privacyContext=NotImplemented,
             addEmbedHtml5Support=NotImplemented,
-            roles=NotImplemented):
+            roles=NotImplemented,
+            privileges=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -29204,6 +29205,9 @@ class KalturaWidget(KalturaObjectBase):
         # @var string
         self.roles = roles
 
+        # @var string
+        self.privileges = privileges
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -29222,6 +29226,7 @@ class KalturaWidget(KalturaObjectBase):
         'privacyContext': getXmlNodeText, 
         'addEmbedHtml5Support': getXmlNodeBool, 
         'roles': getXmlNodeText, 
+        'privileges': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -29241,6 +29246,7 @@ class KalturaWidget(KalturaObjectBase):
         kparams.addStringIfDefined("privacyContext", self.privacyContext)
         kparams.addBoolIfDefined("addEmbedHtml5Support", self.addEmbedHtml5Support)
         kparams.addStringIfDefined("roles", self.roles)
+        kparams.addStringIfDefined("privileges", self.privileges)
         return kparams
 
     def getId(self):
@@ -29320,6 +29326,12 @@ class KalturaWidget(KalturaObjectBase):
 
     def setRoles(self, newRoles):
         self.roles = newRoles
+
+    def getPrivileges(self):
+        return self.privileges
+
+    def setPrivileges(self, newPrivileges):
+        self.privileges = newPrivileges
 
 
 # @package Kaltura
