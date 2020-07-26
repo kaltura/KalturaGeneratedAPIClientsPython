@@ -117,7 +117,7 @@ class KalturaClient(object):
         self.callsQueue = []
         self.requestHeaders = {}
         self.clientConfiguration = {
-            'clientTag': 'python-20-07-24',
+            'clientTag': 'python-20-07-25',
             'apiVersion': API_VERSION,
         }
         self.requestConfiguration = {}
