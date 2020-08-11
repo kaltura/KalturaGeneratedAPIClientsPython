@@ -46,6 +46,19 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaSipSourceType(object):
+    PICTURE_IN_PICTURE = 1
+    TALKING_HEADS = 2
+    SCREEN_SHARE = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSipServerNodeOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     HEARTBEAT_TIME_ASC = "+heartbeatTime"
@@ -499,6 +512,7 @@ class KalturaSipClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaSipSourceType': KalturaSipSourceType,
             'KalturaSipServerNodeOrderBy': KalturaSipServerNodeOrderBy,
         }
 

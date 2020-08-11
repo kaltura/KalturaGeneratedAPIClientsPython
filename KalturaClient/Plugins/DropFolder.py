@@ -3634,6 +3634,15 @@ class KalturaDropFolderService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaDropFolder')
 
+    def updateStatus(self, dropFolderId, status):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("dropFolderId", dropFolderId);
+        kparams.addIntIfDefined("status", status);
+        self.client.queueServiceActionCall("dropfolder_dropfolder", "updateStatus", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 
 # @package Kaltura
 # @subpackage Client

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.7.0'
+API_VERSION = '16.8.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1981,6 +1981,7 @@ class KalturaBatchJobType(object):
     STORAGE_PERIODIC_EXPORT = "53"
     STORAGE_PERIODIC_PURGE = "54"
     STORAGE_PERIODIC_DELETE_LOCAL = "55"
+    REACH_JOB_CLEANER = "56"
 
     def __init__(self, value):
         self.value = value
@@ -5325,6 +5326,18 @@ class KalturaReportType(object):
     QOE_ENGAGEMENT_APPLICATION_VERSION = "30062"
     QOE_STREAM_QUALITY_APPLICATION_VERSION = "30063"
     QOE_ERROR_TRACKING_APPLICATION_VERSION = "30064"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResetPassLinkType(object):
+    KMC = "1"
+    KMS = "2"
 
     def __init__(self, value):
         self.value = value
@@ -20738,7 +20751,8 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
             primaryServerNodeId=NotImplemented,
-            sipToken=NotImplemented):
+            sipToken=NotImplemented,
+            sipSourceType=NotImplemented):
         KalturaLiveEntry.__init__(self,
             id,
             name,
@@ -20902,6 +20916,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         # @readonly
         self.sipToken = sipToken
 
+        # @var KalturaSipSourceType
+        # @readonly
+        self.sipSourceType = sipSourceType
+
 
     PROPERTY_LOADERS = {
         'streamRemoteId': getXmlNodeText, 
@@ -20923,6 +20941,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'streamUsername': getXmlNodeText, 
         'primaryServerNodeId': getXmlNodeInt, 
         'sipToken': getXmlNodeText, 
+        'sipSourceType': (KalturaEnumsFactory.createInt, "KalturaSipSourceType"), 
     }
 
     def fromXml(self, node):
@@ -21046,6 +21065,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def getSipToken(self):
         return self.sipToken
+
+    def getSipSourceType(self):
+        return self.sipSourceType
 
 
 # @package Kaltura
@@ -57043,7 +57065,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
             primaryServerNodeId=NotImplemented,
-            sipToken=NotImplemented):
+            sipToken=NotImplemented,
+            sipSourceType=NotImplemented):
         KalturaLiveStreamEntry.__init__(self,
             id,
             name,
@@ -57151,7 +57174,8 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             streamPassword,
             streamUsername,
             primaryServerNodeId,
-            sipToken)
+            sipToken,
+            sipSourceType)
 
 
     PROPERTY_LOADERS = {
@@ -66299,11 +66323,12 @@ class KalturaUserService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
-    def resetPassword(self, email):
+    def resetPassword(self, email, linkType = NotImplemented):
         """Reset user's password and send the user an email to generate a new one."""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("email", email)
+        kparams.addStringIfDefined("linkType", linkType)
         self.client.queueServiceActionCall("user", "resetPassword", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -66752,6 +66777,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportInterval': KalturaReportInterval,
             'KalturaReportOrderBy': KalturaReportOrderBy,
             'KalturaReportType': KalturaReportType,
+            'KalturaResetPassLinkType': KalturaResetPassLinkType,
             'KalturaResponseProfileOrderBy': KalturaResponseProfileOrderBy,
             'KalturaRuleActionType': KalturaRuleActionType,
             'KalturaSchemaType': KalturaSchemaType,
