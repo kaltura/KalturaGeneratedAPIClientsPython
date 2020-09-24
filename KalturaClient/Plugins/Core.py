@@ -14378,7 +14378,9 @@ class KalturaUser(KalturaBaseUser):
             password=NotImplemented,
             firstName=NotImplemented,
             lastName=NotImplemented,
-            loginEnabled=NotImplemented):
+            loginEnabled=NotImplemented,
+            registrationInfo=NotImplemented,
+            attendanceInfo=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -14445,6 +14447,12 @@ class KalturaUser(KalturaBaseUser):
         # @insertonly
         self.loginEnabled = loginEnabled
 
+        # @var string
+        self.registrationInfo = registrationInfo
+
+        # @var string
+        self.attendanceInfo = attendanceInfo
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
@@ -14458,6 +14466,8 @@ class KalturaUser(KalturaBaseUser):
         'firstName': getXmlNodeText, 
         'lastName': getXmlNodeText, 
         'loginEnabled': getXmlNodeBool, 
+        'registrationInfo': getXmlNodeText, 
+        'attendanceInfo': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14477,6 +14487,8 @@ class KalturaUser(KalturaBaseUser):
         kparams.addStringIfDefined("firstName", self.firstName)
         kparams.addStringIfDefined("lastName", self.lastName)
         kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
+        kparams.addStringIfDefined("registrationInfo", self.registrationInfo)
+        kparams.addStringIfDefined("attendanceInfo", self.attendanceInfo)
         return kparams
 
     def getType(self):
@@ -14541,6 +14553,18 @@ class KalturaUser(KalturaBaseUser):
 
     def setLoginEnabled(self, newLoginEnabled):
         self.loginEnabled = newLoginEnabled
+
+    def getRegistrationInfo(self):
+        return self.registrationInfo
+
+    def setRegistrationInfo(self, newRegistrationInfo):
+        self.registrationInfo = newRegistrationInfo
+
+    def getAttendanceInfo(self):
+        return self.attendanceInfo
+
+    def setAttendanceInfo(self, newAttendanceInfo):
+        self.attendanceInfo = newAttendanceInfo
 
 
 # @package Kaltura
@@ -44157,7 +44181,9 @@ class KalturaAdminUser(KalturaUser):
             password=NotImplemented,
             firstName=NotImplemented,
             lastName=NotImplemented,
-            loginEnabled=NotImplemented):
+            loginEnabled=NotImplemented,
+            registrationInfo=NotImplemented,
+            attendanceInfo=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -44196,7 +44222,9 @@ class KalturaAdminUser(KalturaUser):
             password,
             firstName,
             lastName,
-            loginEnabled)
+            loginEnabled,
+            registrationInfo,
+            attendanceInfo)
 
 
     PROPERTY_LOADERS = {
