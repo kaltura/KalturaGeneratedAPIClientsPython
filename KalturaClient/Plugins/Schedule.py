@@ -1533,7 +1533,9 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             entryIds=NotImplemented,
             categoryIds=NotImplemented,
             blackoutConflicts=NotImplemented,
-            projectedAudience=NotImplemented):
+            projectedAudience=NotImplemented,
+            sourceEntryId=NotImplemented,
+            preStartTime=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1569,9 +1571,19 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
         # @var int
         self.projectedAudience = projectedAudience
 
+        # The entry ID of the source entry (for simulive)
+        # @var string
+        self.sourceEntryId = sourceEntryId
+
+        # The time relative time before the startTime considered as preStart time
+        # @var int
+        self.preStartTime = preStartTime
+
 
     PROPERTY_LOADERS = {
         'projectedAudience': getXmlNodeInt, 
+        'sourceEntryId': getXmlNodeText, 
+        'preStartTime': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1582,6 +1594,8 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
         kparams = KalturaEntryScheduleEvent.toParams(self)
         kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
         kparams.addIntIfDefined("projectedAudience", self.projectedAudience)
+        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
+        kparams.addIntIfDefined("preStartTime", self.preStartTime)
         return kparams
 
     def getProjectedAudience(self):
@@ -1589,6 +1603,18 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
 
     def setProjectedAudience(self, newProjectedAudience):
         self.projectedAudience = newProjectedAudience
+
+    def getSourceEntryId(self):
+        return self.sourceEntryId
+
+    def setSourceEntryId(self, newSourceEntryId):
+        self.sourceEntryId = newSourceEntryId
+
+    def getPreStartTime(self):
+        return self.preStartTime
+
+    def setPreStartTime(self, newPreStartTime):
+        self.preStartTime = newPreStartTime
 
 
 # @package Kaltura

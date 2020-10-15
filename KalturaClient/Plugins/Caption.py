@@ -122,6 +122,7 @@ class KalturaCaptionAsset(KalturaAsset):
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
             actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented,
             captionParamsId=NotImplemented,
             language=NotImplemented,
             languageCode=NotImplemented,
@@ -147,7 +148,8 @@ class KalturaCaptionAsset(KalturaAsset):
             description,
             partnerData,
             partnerDescription,
-            actualSourceAssetParamsIds)
+            actualSourceAssetParamsIds,
+            sizeInBytes)
 
         # The Caption Params used to create this Caption Asset
         # @var int

@@ -111,6 +111,7 @@ class KalturaAttachmentAsset(KalturaAsset):
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
             actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented,
             filename=NotImplemented,
             title=NotImplemented,
             format=NotImplemented,
@@ -129,7 +130,8 @@ class KalturaAttachmentAsset(KalturaAsset):
             description,
             partnerData,
             partnerDescription,
-            actualSourceAssetParamsIds)
+            actualSourceAssetParamsIds,
+            sizeInBytes)
 
         # The filename of the attachment asset content
         # @var string

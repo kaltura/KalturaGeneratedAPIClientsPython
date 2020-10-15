@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.8.0'
+API_VERSION = '16.9.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -3415,6 +3415,7 @@ class KalturaLanguage(object):
     FRP = "Franco-Prove"
     FRK = "Frankish"
     FR = "French"
+    FR_CA = "French (Canada)"
     FY = "Frisian"
     FRR = "Frisian Northern"
     FUR = "Friulian"
@@ -3448,8 +3449,8 @@ class KalturaLanguage(object):
     HNI = "Hani"
     HA = "Hausa"
     HAW = "Hawaiian"
-    HE = "Hebrew"
     IW = "Hebrew"
+    HE = "Hebrew"
     HEI = "Heiltsuk"
     HID = "Hidatsa"
     HIL = "Hiligaynon"
@@ -3463,8 +3464,8 @@ class KalturaLanguage(object):
     KPO = "Ikposo"
     ILO = "Iloko"
     SMN = "Inari Sami"
-    ID = "Indonesian"
     IN = "Indonesian"
+    ID = "Indonesian"
     IZH = "Ingrian"
     INH = "Ingush"
     IA = "Interlingua"
@@ -3744,6 +3745,7 @@ class KalturaLanguage(object):
     TGX = "Tagish"
     THT = "Tahltan"
     TDD = "Tai Na"
+    ZH_TW = "Taiwanese Mandarin"
     TG = "Tajik"
     TLY = "Talysh"
     TTQ = "Tamajaq Tawallammat"
@@ -3868,6 +3870,7 @@ class KalturaLanguageCode(object):
     FJ = "fj"
     FO = "fo"
     FR = "fr"
+    FR_CA = "fr_ca"
     FY = "fy"
     GA = "ga"
     GD = "gd"
@@ -3990,6 +3993,7 @@ class KalturaLanguageCode(object):
     YI = "yi"
     YO = "yo"
     ZH = "zh"
+    ZH_TW = "zh_tw"
     ZU = "zu"
     ZXX = "zxx"
 
@@ -5326,6 +5330,17 @@ class KalturaReportType(object):
     QOE_ENGAGEMENT_APPLICATION_VERSION = "30062"
     QOE_STREAM_QUALITY_APPLICATION_VERSION = "30063"
     QOE_ERROR_TRACKING_APPLICATION_VERSION = "30064"
+    HIGHLIGHTS_WEBCAST = "40001"
+    ENGAGEMENT_WEBCAST = "40002"
+    QUALITY_WEBCAST = "40003"
+    MAP_OVERLAY_COUNTRY_WEBCAST = "40004"
+    MAP_OVERLAY_REGION_WEBCAST = "40005"
+    MAP_OVERLAY_CITY_WEBCAST = "40006"
+    PLATFORMS_WEBCAST = "40007"
+    TOP_DOMAINS_WEBCAST = "40008"
+    TOP_USERS_WEBCAST = "40009"
+    ENGAGEMENT_BREAKDOWN_WEBCAST = "40010"
+    ENGAGMENT_TIMELINE_WEBCAST = "40011"
 
     def __init__(self, value):
         self.value = value
@@ -6999,7 +7014,8 @@ class KalturaAsset(KalturaObjectBase):
             description=NotImplemented,
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented):
+            actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The ID of the Flavor Asset
@@ -7064,6 +7080,11 @@ class KalturaAsset(KalturaObjectBase):
         # @var string
         self.actualSourceAssetParamsIds = actualSourceAssetParamsIds
 
+        # The size (in Bytes) of the asset
+        # @var int
+        # @readonly
+        self.sizeInBytes = sizeInBytes
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -7080,6 +7101,7 @@ class KalturaAsset(KalturaObjectBase):
         'partnerData': getXmlNodeText, 
         'partnerDescription': getXmlNodeText, 
         'actualSourceAssetParamsIds': getXmlNodeText, 
+        'sizeInBytes': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -7152,6 +7174,9 @@ class KalturaAsset(KalturaObjectBase):
 
     def setActualSourceAssetParamsIds(self, newActualSourceAssetParamsIds):
         self.actualSourceAssetParamsIds = newActualSourceAssetParamsIds
+
+    def getSizeInBytes(self):
+        return self.sizeInBytes
 
 
 # @package Kaltura
@@ -9625,6 +9650,7 @@ class KalturaPartner(KalturaObjectBase):
             embedCodeTypes=NotImplemented,
             templatePartnerId=NotImplemented,
             ignoreSeoLinks=NotImplemented,
+            blockDirectLogin=NotImplemented,
             host=NotImplemented,
             cdnHost=NotImplemented,
             isFirstLogin=NotImplemented,
@@ -9769,7 +9795,6 @@ class KalturaPartner(KalturaObjectBase):
         self.state = state
 
         # @var array of KalturaKeyValue
-        # @insertonly
         self.additionalParams = additionalParams
 
         # @var int
@@ -9807,6 +9832,10 @@ class KalturaPartner(KalturaObjectBase):
         # @var bool
         # @readonly
         self.ignoreSeoLinks = ignoreSeoLinks
+
+        # @var bool
+        # @readonly
+        self.blockDirectLogin = blockDirectLogin
 
         # @var string
         # @readonly
@@ -9938,6 +9967,7 @@ class KalturaPartner(KalturaObjectBase):
         'embedCodeTypes': (KalturaObjectFactory.createArray, 'KalturaPlayerEmbedCodeType'), 
         'templatePartnerId': getXmlNodeInt, 
         'ignoreSeoLinks': getXmlNodeBool, 
+        'blockDirectLogin': getXmlNodeBool, 
         'host': getXmlNodeText, 
         'cdnHost': getXmlNodeText, 
         'isFirstLogin': getXmlNodeBool, 
@@ -10230,6 +10260,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def getIgnoreSeoLinks(self):
         return self.ignoreSeoLinks
+
+    def getBlockDirectLogin(self):
+        return self.blockDirectLogin
 
     def getHost(self):
         return self.host
@@ -15907,6 +15940,7 @@ class KalturaFlavorAsset(KalturaAsset):
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
             actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented,
             flavorParamsId=NotImplemented,
             width=NotImplemented,
             height=NotImplemented,
@@ -15934,7 +15968,8 @@ class KalturaFlavorAsset(KalturaAsset):
             description,
             partnerData,
             partnerDescription,
-            actualSourceAssetParamsIds)
+            actualSourceAssetParamsIds,
+            sizeInBytes)
 
         # The Flavor Params used to create this Flavor Asset
         # @var int
@@ -18405,6 +18440,7 @@ class KalturaThumbAsset(KalturaAsset):
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
             actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented,
             thumbParamsId=NotImplemented,
             width=NotImplemented,
             height=NotImplemented,
@@ -18423,7 +18459,8 @@ class KalturaThumbAsset(KalturaAsset):
             description,
             partnerData,
             partnerDescription,
-            actualSourceAssetParamsIds)
+            actualSourceAssetParamsIds,
+            sizeInBytes)
 
         # The Flavor Params used to create this Flavor Asset
         # @var int
@@ -25314,6 +25351,50 @@ class KalturaReportBaseTotal(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaReportExportFile(KalturaObjectBase):
+    def __init__(self,
+            fileId=NotImplemented,
+            fileName=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.fileId = fileId
+
+        # @var string
+        self.fileName = fileName
+
+
+    PROPERTY_LOADERS = {
+        'fileId': getXmlNodeText, 
+        'fileName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReportExportFile.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaReportExportFile")
+        kparams.addStringIfDefined("fileId", self.fileId)
+        kparams.addStringIfDefined("fileName", self.fileName)
+        return kparams
+
+    def getFileId(self):
+        return self.fileId
+
+    def setFileId(self, newFileId):
+        self.fileId = newFileId
+
+    def getFileName(self):
+        return self.fileName
+
+    def setFileName(self, newFileName):
+        self.fileName = newFileName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReportInputBaseFilter(KalturaObjectBase):
     def __init__(self,
             fromDate=NotImplemented,
@@ -26018,7 +26099,8 @@ class KalturaReportExportParams(KalturaObjectBase):
     def __init__(self,
             recipientEmail=NotImplemented,
             timeZoneOffset=NotImplemented,
-            reportItems=NotImplemented):
+            reportItems=NotImplemented,
+            reportsItemsGroup=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -26031,11 +26113,15 @@ class KalturaReportExportParams(KalturaObjectBase):
         # @var array of KalturaReportExportItem
         self.reportItems = reportItems
 
+        # @var string
+        self.reportsItemsGroup = reportsItemsGroup
+
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
+        'reportsItemsGroup': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26048,6 +26134,7 @@ class KalturaReportExportParams(KalturaObjectBase):
         kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addArrayIfDefined("reportItems", self.reportItems)
+        kparams.addStringIfDefined("reportsItemsGroup", self.reportsItemsGroup)
         return kparams
 
     def getRecipientEmail(self):
@@ -26067,6 +26154,12 @@ class KalturaReportExportParams(KalturaObjectBase):
 
     def setReportItems(self, newReportItems):
         self.reportItems = newReportItems
+
+    def getReportsItemsGroup(self):
+        return self.reportsItemsGroup
+
+    def setReportsItemsGroup(self, newReportsItemsGroup):
+        self.reportsItemsGroup = newReportsItemsGroup
 
 
 # @package Kaltura
@@ -27808,6 +27901,7 @@ class KalturaStorageProfile(KalturaObjectBase):
             protocol=NotImplemented,
             storageUrl=NotImplemented,
             storageBaseDir=NotImplemented,
+            pathPrefix=NotImplemented,
             storageUsername=NotImplemented,
             storagePassword=NotImplemented,
             storageFtpPassiveMode=NotImplemented,
@@ -27872,6 +27966,9 @@ class KalturaStorageProfile(KalturaObjectBase):
 
         # @var string
         self.storageBaseDir = storageBaseDir
+
+        # @var string
+        self.pathPrefix = pathPrefix
 
         # @var string
         self.storageUsername = storageUsername
@@ -27970,6 +28067,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         'protocol': (KalturaEnumsFactory.createString, "KalturaStorageProfileProtocol"), 
         'storageUrl': getXmlNodeText, 
         'storageBaseDir': getXmlNodeText, 
+        'pathPrefix': getXmlNodeText, 
         'storageUsername': getXmlNodeText, 
         'storagePassword': getXmlNodeText, 
         'storageFtpPassiveMode': getXmlNodeBool, 
@@ -28012,6 +28110,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addStringEnumIfDefined("protocol", self.protocol)
         kparams.addStringIfDefined("storageUrl", self.storageUrl)
         kparams.addStringIfDefined("storageBaseDir", self.storageBaseDir)
+        kparams.addStringIfDefined("pathPrefix", self.pathPrefix)
         kparams.addStringIfDefined("storageUsername", self.storageUsername)
         kparams.addStringIfDefined("storagePassword", self.storagePassword)
         kparams.addBoolIfDefined("storageFtpPassiveMode", self.storageFtpPassiveMode)
@@ -28093,6 +28192,12 @@ class KalturaStorageProfile(KalturaObjectBase):
 
     def setStorageBaseDir(self, newStorageBaseDir):
         self.storageBaseDir = newStorageBaseDir
+
+    def getPathPrefix(self):
+        return self.pathPrefix
+
+    def setPathPrefix(self, newPathPrefix):
+        self.pathPrefix = newPathPrefix
 
     def getStorageUsername(self):
         return self.storageUsername
@@ -30415,6 +30520,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             protocol=NotImplemented,
             storageUrl=NotImplemented,
             storageBaseDir=NotImplemented,
+            pathPrefix=NotImplemented,
             storageUsername=NotImplemented,
             storagePassword=NotImplemented,
             storageFtpPassiveMode=NotImplemented,
@@ -30459,6 +30565,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             protocol,
             storageUrl,
             storageBaseDir,
+            pathPrefix,
             storageUsername,
             storagePassword,
             storageFtpPassiveMode,
@@ -40468,7 +40575,9 @@ class KalturaReportExportJobData(KalturaJobData):
     def __init__(self,
             recipientEmail=NotImplemented,
             reportItems=NotImplemented,
-            filePaths=NotImplemented):
+            filePaths=NotImplemented,
+            reportsGroup=NotImplemented,
+            files=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
@@ -40480,11 +40589,19 @@ class KalturaReportExportJobData(KalturaJobData):
         # @var string
         self.filePaths = filePaths
 
+        # @var string
+        self.reportsGroup = reportsGroup
+
+        # @var array of KalturaReportExportFile
+        self.files = files
+
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
         'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
         'filePaths': getXmlNodeText, 
+        'reportsGroup': getXmlNodeText, 
+        'files': (KalturaObjectFactory.createArray, 'KalturaReportExportFile'), 
     }
 
     def fromXml(self, node):
@@ -40497,6 +40614,8 @@ class KalturaReportExportJobData(KalturaJobData):
         kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
         kparams.addArrayIfDefined("reportItems", self.reportItems)
         kparams.addStringIfDefined("filePaths", self.filePaths)
+        kparams.addStringIfDefined("reportsGroup", self.reportsGroup)
+        kparams.addArrayIfDefined("files", self.files)
         return kparams
 
     def getRecipientEmail(self):
@@ -40516,6 +40635,18 @@ class KalturaReportExportJobData(KalturaJobData):
 
     def setFilePaths(self, newFilePaths):
         self.filePaths = newFilePaths
+
+    def getReportsGroup(self):
+        return self.reportsGroup
+
+    def setReportsGroup(self, newReportsGroup):
+        self.reportsGroup = newReportsGroup
+
+    def getFiles(self):
+        return self.files
+
+    def setFiles(self, newFiles):
+        self.files = newFiles
 
 
 # @package Kaltura
@@ -46054,6 +46185,7 @@ class KalturaConvertJobData(KalturaConvartableJobData):
             customData=NotImplemented,
             extraDestFileSyncs=NotImplemented,
             engineMessage=NotImplemented,
+            destFileSyncSharedPath=NotImplemented,
             userCpu=NotImplemented):
         KalturaConvartableJobData.__init__(self,
             srcFileSyncLocalPath,
@@ -46095,6 +46227,9 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         # @var string
         self.engineMessage = engineMessage
 
+        # @var string
+        self.destFileSyncSharedPath = destFileSyncSharedPath
+
         # @var int
         self.userCpu = userCpu
 
@@ -46109,6 +46244,7 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         'customData': getXmlNodeText, 
         'extraDestFileSyncs': (KalturaObjectFactory.createArray, 'KalturaDestFileSyncDescriptor'), 
         'engineMessage': getXmlNodeText, 
+        'destFileSyncSharedPath': getXmlNodeText, 
         'userCpu': getXmlNodeInt, 
     }
 
@@ -46128,6 +46264,7 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         kparams.addStringIfDefined("customData", self.customData)
         kparams.addArrayIfDefined("extraDestFileSyncs", self.extraDestFileSyncs)
         kparams.addStringIfDefined("engineMessage", self.engineMessage)
+        kparams.addStringIfDefined("destFileSyncSharedPath", self.destFileSyncSharedPath)
         kparams.addIntIfDefined("userCpu", self.userCpu)
         return kparams
 
@@ -46184,6 +46321,12 @@ class KalturaConvertJobData(KalturaConvartableJobData):
 
     def setEngineMessage(self, newEngineMessage):
         self.engineMessage = newEngineMessage
+
+    def getDestFileSyncSharedPath(self):
+        return self.destFileSyncSharedPath
+
+    def setDestFileSyncSharedPath(self, newDestFileSyncSharedPath):
+        self.destFileSyncSharedPath = newDestFileSyncSharedPath
 
     def getUserCpu(self):
         return self.userCpu
@@ -47879,6 +48022,7 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             partnerData=NotImplemented,
             partnerDescription=NotImplemented,
             actualSourceAssetParamsIds=NotImplemented,
+            sizeInBytes=NotImplemented,
             flavorParamsId=NotImplemented,
             width=NotImplemented,
             height=NotImplemented,
@@ -47909,6 +48053,7 @@ class KalturaLiveAsset(KalturaFlavorAsset):
             partnerData,
             partnerDescription,
             actualSourceAssetParamsIds,
+            sizeInBytes,
             flavorParamsId,
             width,
             height,
@@ -63501,7 +63646,7 @@ class KalturaLiveStreamService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamDetails')
 
-    def isLive(self, id, protocol):
+    def isLive(self, id, protocol = NotImplemented):
         """Delivering the status of a live stream (on-air/offline) if it is possible"""
 
         kparams = KalturaParams()
@@ -66991,6 +67136,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
             'KalturaReport': KalturaReport,
             'KalturaReportBaseTotal': KalturaReportBaseTotal,
+            'KalturaReportExportFile': KalturaReportExportFile,
             'KalturaReportInputBaseFilter': KalturaReportInputBaseFilter,
             'KalturaReportInputFilter': KalturaReportInputFilter,
             'KalturaReportResponseOptions': KalturaReportResponseOptions,
