@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.9.0'
+API_VERSION = '16.10.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5027,6 +5027,7 @@ class KalturaPlaybackProtocol(object):
     APPLE_HTTP = "applehttp"
     APPLE_HTTP_TO_MC = "applehttp_to_mc"
     AUTO = "auto"
+    DOWNLOAD = "download"
     AKAMAI_HD = "hdnetwork"
     AKAMAI_HDS = "hdnetworkmanifest"
     HDS = "hds"
@@ -34887,79 +34888,6 @@ class KalturaDeliveryProfileAkamaiHds(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfile):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            type=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            streamerType=NotImplemented,
-            url=NotImplemented,
-            hostName=NotImplemented,
-            status=NotImplemented,
-            recognizer=NotImplemented,
-            tokenizer=NotImplemented,
-            isDefault=NotImplemented,
-            parentId=NotImplemented,
-            mediaProtocols=NotImplemented,
-            priority=NotImplemented,
-            extraParams=NotImplemented,
-            supplementaryAssetsFilter=NotImplemented,
-            useIntelliseek=NotImplemented):
-        KalturaDeliveryProfile.__init__(self,
-            id,
-            partnerId,
-            name,
-            type,
-            systemName,
-            description,
-            createdAt,
-            updatedAt,
-            streamerType,
-            url,
-            hostName,
-            status,
-            recognizer,
-            tokenizer,
-            isDefault,
-            parentId,
-            mediaProtocols,
-            priority,
-            extraParams,
-            supplementaryAssetsFilter)
-
-        # Should we use intelliseek
-        # @var bool
-        self.useIntelliseek = useIntelliseek
-
-
-    PROPERTY_LOADERS = {
-        'useIntelliseek': getXmlNodeBool, 
-    }
-
-    def fromXml(self, node):
-        KalturaDeliveryProfile.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileAkamaiHttp.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDeliveryProfile.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileAkamaiHttp")
-        kparams.addBoolIfDefined("useIntelliseek", self.useIntelliseek)
-        return kparams
-
-    def getUseIntelliseek(self):
-        return self.useIntelliseek
-
-    def setUseIntelliseek(self, newUseIntelliseek):
-        self.useIntelliseek = newUseIntelliseek
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDeliveryProfileBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -35362,78 +35290,6 @@ class KalturaDeliveryProfileGenericHds(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfile):
-    def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            type=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            streamerType=NotImplemented,
-            url=NotImplemented,
-            hostName=NotImplemented,
-            status=NotImplemented,
-            recognizer=NotImplemented,
-            tokenizer=NotImplemented,
-            isDefault=NotImplemented,
-            parentId=NotImplemented,
-            mediaProtocols=NotImplemented,
-            priority=NotImplemented,
-            extraParams=NotImplemented,
-            supplementaryAssetsFilter=NotImplemented,
-            pattern=NotImplemented):
-        KalturaDeliveryProfile.__init__(self,
-            id,
-            partnerId,
-            name,
-            type,
-            systemName,
-            description,
-            createdAt,
-            updatedAt,
-            streamerType,
-            url,
-            hostName,
-            status,
-            recognizer,
-            tokenizer,
-            isDefault,
-            parentId,
-            mediaProtocols,
-            priority,
-            extraParams,
-            supplementaryAssetsFilter)
-
-        # @var string
-        self.pattern = pattern
-
-
-    PROPERTY_LOADERS = {
-        'pattern': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaDeliveryProfile.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileGenericHttp.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaDeliveryProfile.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileGenericHttp")
-        kparams.addStringIfDefined("pattern", self.pattern)
-        return kparams
-
-    def getPattern(self):
-        return self.pattern
-
-    def setPattern(self, newPattern):
-        self.pattern = newPattern
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
     def __init__(self,
             id=NotImplemented,
@@ -35502,6 +35358,78 @@ class KalturaDeliveryProfileGenericSilverLight(KalturaDeliveryProfile):
 
     def setPattern(self, newPattern):
         self.pattern = newPattern
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryProfileHttp(KalturaDeliveryProfile):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            maxSize=NotImplemented):
+        KalturaDeliveryProfile.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter)
+
+        # @var int
+        self.maxSize = maxSize
+
+
+    PROPERTY_LOADERS = {
+        'maxSize': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfile.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileHttp.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfile.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileHttp")
+        kparams.addIntIfDefined("maxSize", self.maxSize)
+        return kparams
+
+    def getMaxSize(self):
+        return self.maxSize
+
+    def setMaxSize(self, newMaxSize):
+        self.maxSize = newMaxSize
 
 
 # @package Kaltura
@@ -42711,6 +42639,42 @@ class KalturaUrlRecognizerAkamaiG2O(KalturaUrlRecognizer):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlRecognizerKaltura(KalturaUrlRecognizer):
+    def __init__(self,
+            hosts=NotImplemented,
+            uriPrefix=NotImplemented,
+            key=NotImplemented):
+        KalturaUrlRecognizer.__init__(self,
+            hosts,
+            uriPrefix)
+
+        # @var string
+        self.key = key
+
+
+    PROPERTY_LOADERS = {
+        'key': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaUrlRecognizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlRecognizerKaltura.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlRecognizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlRecognizerKaltura")
+        kparams.addStringIfDefined("key", self.key)
+        return kparams
+
+    def getKey(self):
+        return self.key
+
+    def setKey(self, newKey):
+        self.key = newKey
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlTokenizerAkamaiHttp(KalturaUrlTokenizer):
     def __init__(self,
             window=NotImplemented,
@@ -43137,6 +43101,32 @@ class KalturaUrlTokenizerCloudFront(KalturaUrlTokenizer):
 
     def setRootDir(self, newRootDir):
         self.rootDir = newRootDir
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUrlTokenizerKaltura(KalturaUrlTokenizer):
+    def __init__(self,
+            window=NotImplemented,
+            key=NotImplemented,
+            limitIpAddress=NotImplemented):
+        KalturaUrlTokenizer.__init__(self,
+            window,
+            key,
+            limitIpAddress)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaUrlTokenizer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlTokenizerKaltura.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaUrlTokenizer.toParams(self)
+        kparams.put("objectType", "KalturaUrlTokenizerKaltura")
+        return kparams
 
 
 # @package Kaltura
@@ -46380,6 +46370,81 @@ class KalturaCountryCondition(KalturaMatchCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileAkamaiHttp(KalturaDeliveryProfileHttp):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            maxSize=NotImplemented,
+            useIntelliseek=NotImplemented):
+        KalturaDeliveryProfileHttp.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter,
+            maxSize)
+
+        # Should we use intelliseek
+        # @var bool
+        self.useIntelliseek = useIntelliseek
+
+
+    PROPERTY_LOADERS = {
+        'useIntelliseek': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileHttp.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileAkamaiHttp.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileHttp.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileAkamaiHttp")
+        kparams.addBoolIfDefined("useIntelliseek", self.useIntelliseek)
+        return kparams
+
+    def getUseIntelliseek(self):
+        return self.useIntelliseek
+
+    def setUseIntelliseek(self, newUseIntelliseek):
+        self.useIntelliseek = newUseIntelliseek
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryProfileFilter(KalturaDeliveryProfileBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -46438,6 +46503,80 @@ class KalturaDeliveryProfileFilter(KalturaDeliveryProfileBaseFilter):
 
     def setIsLive(self, newIsLive):
         self.isLive = newIsLive
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaDeliveryProfileGenericHttp(KalturaDeliveryProfileHttp):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            maxSize=NotImplemented,
+            pattern=NotImplemented):
+        KalturaDeliveryProfileHttp.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter,
+            maxSize)
+
+        # @var string
+        self.pattern = pattern
+
+
+    PROPERTY_LOADERS = {
+        'pattern': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileHttp.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileGenericHttp.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileHttp.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileGenericHttp")
+        kparams.addStringIfDefined("pattern", self.pattern)
+        return kparams
+
+    def getPattern(self):
+        return self.pattern
+
+    def setPattern(self, newPattern):
+        self.pattern = newPattern
 
 
 # @package Kaltura
@@ -67243,13 +67382,12 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeleteJobData': KalturaDeleteJobData,
             'KalturaDeliveryProfileAkamaiAppleHttpManifest': KalturaDeliveryProfileAkamaiAppleHttpManifest,
             'KalturaDeliveryProfileAkamaiHds': KalturaDeliveryProfileAkamaiHds,
-            'KalturaDeliveryProfileAkamaiHttp': KalturaDeliveryProfileAkamaiHttp,
             'KalturaDeliveryProfileBaseFilter': KalturaDeliveryProfileBaseFilter,
             'KalturaDeliveryProfileCondition': KalturaDeliveryProfileCondition,
             'KalturaDeliveryProfileGenericAppleHttp': KalturaDeliveryProfileGenericAppleHttp,
             'KalturaDeliveryProfileGenericHds': KalturaDeliveryProfileGenericHds,
-            'KalturaDeliveryProfileGenericHttp': KalturaDeliveryProfileGenericHttp,
             'KalturaDeliveryProfileGenericSilverLight': KalturaDeliveryProfileGenericSilverLight,
+            'KalturaDeliveryProfileHttp': KalturaDeliveryProfileHttp,
             'KalturaDeliveryProfileListResponse': KalturaDeliveryProfileListResponse,
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileLivePackager': KalturaDeliveryProfileLivePackager,
@@ -67347,6 +67485,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUploadTokenBaseFilter': KalturaUploadTokenBaseFilter,
             'KalturaUploadTokenListResponse': KalturaUploadTokenListResponse,
             'KalturaUrlRecognizerAkamaiG2O': KalturaUrlRecognizerAkamaiG2O,
+            'KalturaUrlRecognizerKaltura': KalturaUrlRecognizerKaltura,
             'KalturaUrlTokenizerAkamaiHttp': KalturaUrlTokenizerAkamaiHttp,
             'KalturaUrlTokenizerAkamaiRtmp': KalturaUrlTokenizerAkamaiRtmp,
             'KalturaUrlTokenizerAkamaiRtsp': KalturaUrlTokenizerAkamaiRtsp,
@@ -67355,6 +67494,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUrlTokenizerChinaCache': KalturaUrlTokenizerChinaCache,
             'KalturaUrlTokenizerCht': KalturaUrlTokenizerCht,
             'KalturaUrlTokenizerCloudFront': KalturaUrlTokenizerCloudFront,
+            'KalturaUrlTokenizerKaltura': KalturaUrlTokenizerKaltura,
             'KalturaUrlTokenizerKs': KalturaUrlTokenizerKs,
             'KalturaUrlTokenizerL3': KalturaUrlTokenizerL3,
             'KalturaUrlTokenizerLevel3': KalturaUrlTokenizerLevel3,
@@ -67392,7 +67532,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaConvertCollectionJobData': KalturaConvertCollectionJobData,
             'KalturaConvertJobData': KalturaConvertJobData,
             'KalturaCountryCondition': KalturaCountryCondition,
+            'KalturaDeliveryProfileAkamaiHttp': KalturaDeliveryProfileAkamaiHttp,
             'KalturaDeliveryProfileFilter': KalturaDeliveryProfileFilter,
+            'KalturaDeliveryProfileGenericHttp': KalturaDeliveryProfileGenericHttp,
             'KalturaDeliveryProfileGenericRtmp': KalturaDeliveryProfileGenericRtmp,
             'KalturaDeliveryProfileLivePackagerHls': KalturaDeliveryProfileLivePackagerHls,
             'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,

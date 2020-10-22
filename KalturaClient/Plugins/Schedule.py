@@ -1535,7 +1535,8 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             blackoutConflicts=NotImplemented,
             projectedAudience=NotImplemented,
             sourceEntryId=NotImplemented,
-            preStartTime=NotImplemented):
+            preStartTime=NotImplemented,
+            postEndTime=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1579,11 +1580,16 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
         # @var int
         self.preStartTime = preStartTime
 
+        # The time relative time before the endTime considered as postEnd time
+        # @var int
+        self.postEndTime = postEndTime
+
 
     PROPERTY_LOADERS = {
         'projectedAudience': getXmlNodeInt, 
         'sourceEntryId': getXmlNodeText, 
         'preStartTime': getXmlNodeInt, 
+        'postEndTime': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1596,6 +1602,7 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
         kparams.addIntIfDefined("projectedAudience", self.projectedAudience)
         kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
         kparams.addIntIfDefined("preStartTime", self.preStartTime)
+        kparams.addIntIfDefined("postEndTime", self.postEndTime)
         return kparams
 
     def getProjectedAudience(self):
@@ -1615,6 +1622,12 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
 
     def setPreStartTime(self, newPreStartTime):
         self.preStartTime = newPreStartTime
+
+    def getPostEndTime(self):
+        return self.postEndTime
+
+    def setPostEndTime(self, newPostEndTime):
+        self.postEndTime = newPostEndTime
 
 
 # @package Kaltura
