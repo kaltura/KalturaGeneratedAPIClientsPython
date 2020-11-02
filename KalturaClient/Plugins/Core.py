@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.10.0'
+API_VERSION = '16.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -3653,6 +3653,7 @@ class KalturaLanguage(object):
     PL = "Polish"
     PNT = "Pontic"
     PT = "Portuguese"
+    PT_BR = "Portuguese (Brazil)"
     POT = "Potawatomi"
     PRG = "Prussian"
     FUC = "Pulaar"
@@ -3725,6 +3726,7 @@ class KalturaLanguage(object):
     SMA = "Southern Sami"
     TCE = "Southern Tutchone"
     ES = "Spanish"
+    ES_XL = "Spanish (Latin America)"
     SRN = "Sranan"
     STO = "Stoney"
     XSV = "Sudovian"
@@ -3813,8 +3815,8 @@ class KalturaLanguage(object):
     WYM = "Wymysorys"
     XH = "Xhosa"
     AME = "Yanesha"
-    YI = "Yiddish"
     JI = "Yiddish"
+    YI = "Yiddish"
     YO = "Yoruba"
     ZAI = "Zapotec Isthmus"
     DJE = "Zarma"
@@ -3863,6 +3865,7 @@ class KalturaLanguageCode(object):
     EN_US = "en_us"
     EO = "eo"
     ES = "es"
+    ES_XL = "es_xl"
     ET = "et"
     EU = "eu"
     FA = "fa"
@@ -3942,6 +3945,7 @@ class KalturaLanguageCode(object):
     PL = "pl"
     PS = "ps"
     PT = "pt"
+    PT_BR = "pt_br"
     QU = "qu"
     RM = "rm"
     RN = "rn"
