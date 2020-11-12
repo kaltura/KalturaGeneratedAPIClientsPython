@@ -445,11 +445,18 @@ class KalturaDictionary(KalturaObjectBase):
 # @package Kaltura
 # @subpackage Client
 class KalturaVendorTaskData(KalturaObjectBase):
-    def __init__(self):
+    def __init__(self,
+            entryDuration=NotImplemented):
         KalturaObjectBase.__init__(self)
+
+        # The duration of the entry for which the task was created for in milliseconds
+        # @var int
+        # @readonly
+        self.entryDuration = entryDuration
 
 
     PROPERTY_LOADERS = {
+        'entryDuration': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -460,6 +467,9 @@ class KalturaVendorTaskData(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaVendorTaskData")
         return kparams
+
+    def getEntryDuration(self):
+        return self.entryDuration
 
 
 # @package Kaltura
@@ -1990,8 +2000,10 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
 # @subpackage Client
 class KalturaVendorTaskDataCaptionAsset(KalturaVendorTaskData):
     def __init__(self,
+            entryDuration=NotImplemented,
             captionAssetId=NotImplemented):
-        KalturaVendorTaskData.__init__(self)
+        KalturaVendorTaskData.__init__(self,
+            entryDuration)
 
         # Optional - The id of the caption asset object
         # @var string
@@ -2024,10 +2036,12 @@ class KalturaVendorTaskDataCaptionAsset(KalturaVendorTaskData):
 # @subpackage Client
 class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def __init__(self,
+            entryDuration=NotImplemented,
             captionAssetId=NotImplemented,
             textTranscriptAssetId=NotImplemented,
             jsonTranscriptAssetId=NotImplemented):
         KalturaVendorTaskDataCaptionAsset.__init__(self,
+            entryDuration,
             captionAssetId)
 
         # The id of the text transcript object the vendor should use while runing the alignment task
@@ -2808,8 +2822,10 @@ class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
 # @subpackage Client
 class KalturaTranslationVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def __init__(self,
+            entryDuration=NotImplemented,
             captionAssetId=NotImplemented):
         KalturaVendorTaskDataCaptionAsset.__init__(self,
+            entryDuration,
             captionAssetId)
 
 
