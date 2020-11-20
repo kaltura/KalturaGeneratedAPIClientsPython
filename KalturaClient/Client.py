@@ -320,11 +320,14 @@ class KalturaClient(object):
 
     def parsePostResult(self, postResult):
         self.log("result (xml): %s" % postResult)
+
         try:
             resultXml = etree.fromstring(postResult)
-        except etree.ParseError as e:
-            raise KalturaClientException(
-                e, KalturaClientException.ERROR_INVALID_XML)
+
+        except Exception:
+            postResult = postResult.decode('utf-8', errors='ignore')
+            resultXml = etree.fromstring(postResult)
+            pass
 
         resultNode = resultXml.find('result')
         if resultNode is None:
