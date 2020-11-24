@@ -1154,7 +1154,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
-            pricing=NotImplemented):
+            pricing=NotImplemented,
+            allowResubmission=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -1195,6 +1196,9 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         # @var KalturaVendorCatalogItemPricing
         self.pricing = pricing
 
+        # @var bool
+        self.allowResubmission = allowResubmission
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -1208,6 +1212,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
         'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
         'pricing': (KalturaObjectFactory.create, 'KalturaVendorCatalogItemPricing'), 
+        'allowResubmission': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -1223,6 +1228,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         kparams.addIntEnumIfDefined("serviceType", self.serviceType)
         kparams.addIntEnumIfDefined("turnAroundTime", self.turnAroundTime)
         kparams.addObjectIfDefined("pricing", self.pricing)
+        kparams.addBoolIfDefined("allowResubmission", self.allowResubmission)
         return kparams
 
     def getId(self):
@@ -1275,6 +1281,12 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
 
     def setPricing(self, newPricing):
         self.pricing = newPricing
+
+    def getAllowResubmission(self):
+        return self.allowResubmission
+
+    def setAllowResubmission(self, newAllowResubmission):
+        self.allowResubmission = newAllowResubmission
 
 
 # @package Kaltura
@@ -1624,6 +1636,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            allowResubmission=NotImplemented,
             sourceLanguage=NotImplemented,
             outputFormat=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
@@ -1637,7 +1650,8 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             serviceType,
             serviceFeature,
             turnAroundTime,
-            pricing)
+            pricing,
+            allowResubmission)
 
         # @var KalturaCatalogItemLanguage
         self.sourceLanguage = sourceLanguage
@@ -1690,6 +1704,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            allowResubmission=NotImplemented,
             sourceLanguage=NotImplemented,
             flavorParamsId=NotImplemented,
             clearAudioFlavorParamsId=NotImplemented):
@@ -1704,7 +1719,8 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             serviceType,
             serviceFeature,
             turnAroundTime,
-            pricing)
+            pricing,
+            allowResubmission)
 
         # @var KalturaCatalogItemLanguage
         self.sourceLanguage = sourceLanguage
@@ -1768,6 +1784,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            allowResubmission=NotImplemented,
             sourceLanguage=NotImplemented,
             outputFormat=NotImplemented,
             enableSpeakerId=NotImplemented,
@@ -1783,7 +1800,8 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             serviceType,
             serviceFeature,
             turnAroundTime,
-            pricing)
+            pricing,
+            allowResubmission)
 
         # @var KalturaCatalogItemLanguage
         self.sourceLanguage = sourceLanguage
@@ -1889,6 +1907,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            allowResubmission=NotImplemented,
             sourceLanguage=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -1901,7 +1920,8 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             serviceType,
             serviceFeature,
             turnAroundTime,
-            pricing)
+            pricing,
+            allowResubmission)
 
         # @var KalturaCatalogItemLanguage
         self.sourceLanguage = sourceLanguage
@@ -3085,6 +3105,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            allowResubmission=NotImplemented,
             sourceLanguage=NotImplemented,
             outputFormat=NotImplemented,
             enableSpeakerId=NotImplemented,
@@ -3102,6 +3123,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
+            allowResubmission,
             sourceLanguage,
             outputFormat,
             enableSpeakerId,

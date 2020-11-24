@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.11.0'
+API_VERSION = '16.12.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -24781,13 +24781,46 @@ class KalturaPlaybackSource(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaTypedArray(KalturaObjectBase):
+    def __init__(self,
+            count=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var int
+        self.count = count
+
+
+    PROPERTY_LOADERS = {
+        'count': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTypedArray.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaTypedArray")
+        kparams.addIntIfDefined("count", self.count)
+        return kparams
+
+    def getCount(self):
+        return self.count
+
+    def setCount(self, newCount):
+        self.count = newCount
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPlaybackContext(KalturaObjectBase):
     def __init__(self,
             sources=NotImplemented,
             playbackCaptions=NotImplemented,
             flavorAssets=NotImplemented,
             actions=NotImplemented,
-            messages=NotImplemented):
+            messages=NotImplemented,
+            bumperData=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var array of KalturaPlaybackSource
@@ -24807,6 +24840,9 @@ class KalturaPlaybackContext(KalturaObjectBase):
         # @var array of KalturaAccessControlMessage
         self.messages = messages
 
+        # @var KalturaTypedArray
+        self.bumperData = bumperData
+
 
     PROPERTY_LOADERS = {
         'sources': (KalturaObjectFactory.createArray, 'KalturaPlaybackSource'), 
@@ -24814,6 +24850,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         'flavorAssets': (KalturaObjectFactory.createArray, 'KalturaFlavorAsset'), 
         'actions': (KalturaObjectFactory.createArray, 'KalturaRuleAction'), 
         'messages': (KalturaObjectFactory.createArray, 'KalturaAccessControlMessage'), 
+        'bumperData': (KalturaObjectFactory.create, 'KalturaTypedArray'), 
     }
 
     def fromXml(self, node):
@@ -24828,6 +24865,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("messages", self.messages)
+        kparams.addObjectIfDefined("bumperData", self.bumperData)
         return kparams
 
     def getSources(self):
@@ -24859,6 +24897,12 @@ class KalturaPlaybackContext(KalturaObjectBase):
 
     def setMessages(self, newMessages):
         self.messages = newMessages
+
+    def getBumperData(self):
+        return self.bumperData
+
+    def setBumperData(self, newBumperData):
+        self.bumperData = newBumperData
 
 
 # @package Kaltura
@@ -67272,6 +67316,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
             'KalturaPlaybackSource': KalturaPlaybackSource,
+            'KalturaTypedArray': KalturaTypedArray,
             'KalturaPlaybackContext': KalturaPlaybackContext,
             'KalturaPlaylist': KalturaPlaylist,
             'KalturaRemotePath': KalturaRemotePath,
