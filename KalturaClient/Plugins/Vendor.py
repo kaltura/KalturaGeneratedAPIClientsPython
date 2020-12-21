@@ -80,11 +80,12 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
             accountId=NotImplemented,
             enableRecordingUpload=NotImplemented,
             createUserIfNotExist=NotImplemented,
-            handleParticipantMode=NotImplemented,
+            handleParticipantsMode=NotImplemented,
             zoomUserMatchingMode=NotImplemented,
             zoomUserPostfix=NotImplemented,
             zoomWebinarCategory=NotImplemented,
-            enableWebinarUploads=NotImplemented):
+            enableWebinarUploads=NotImplemented,
+            conversionProfileId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -94,6 +95,7 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         self.zoomCategory = zoomCategory
 
         # @var string
+        # @readonly
         self.accountId = accountId
 
         # @var KalturaNullableBoolean
@@ -103,7 +105,7 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         self.createUserIfNotExist = createUserIfNotExist
 
         # @var KalturaHandleParticipantsMode
-        self.handleParticipantMode = handleParticipantMode
+        self.handleParticipantsMode = handleParticipantsMode
 
         # @var KalturaZoomUsersMatching
         self.zoomUserMatchingMode = zoomUserMatchingMode
@@ -117,6 +119,9 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.enableWebinarUploads = enableWebinarUploads
 
+        # @var int
+        self.conversionProfileId = conversionProfileId
+
 
     PROPERTY_LOADERS = {
         'defaultUserId': getXmlNodeText, 
@@ -124,11 +129,12 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         'accountId': getXmlNodeText, 
         'enableRecordingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'createUserIfNotExist': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'handleParticipantMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
+        'handleParticipantsMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
         'zoomUserMatchingMode': (KalturaEnumsFactory.createInt, "KalturaZoomUsersMatching"), 
         'zoomUserPostfix': getXmlNodeText, 
         'zoomWebinarCategory': getXmlNodeText, 
         'enableWebinarUploads': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'conversionProfileId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -140,14 +146,14 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         kparams.put("objectType", "KalturaZoomIntegrationSetting")
         kparams.addStringIfDefined("defaultUserId", self.defaultUserId)
         kparams.addStringIfDefined("zoomCategory", self.zoomCategory)
-        kparams.addStringIfDefined("accountId", self.accountId)
         kparams.addIntEnumIfDefined("enableRecordingUpload", self.enableRecordingUpload)
         kparams.addIntEnumIfDefined("createUserIfNotExist", self.createUserIfNotExist)
-        kparams.addIntEnumIfDefined("handleParticipantMode", self.handleParticipantMode)
+        kparams.addIntEnumIfDefined("handleParticipantsMode", self.handleParticipantsMode)
         kparams.addIntEnumIfDefined("zoomUserMatchingMode", self.zoomUserMatchingMode)
         kparams.addStringIfDefined("zoomUserPostfix", self.zoomUserPostfix)
         kparams.addStringIfDefined("zoomWebinarCategory", self.zoomWebinarCategory)
         kparams.addIntEnumIfDefined("enableWebinarUploads", self.enableWebinarUploads)
+        kparams.addIntIfDefined("conversionProfileId", self.conversionProfileId)
         return kparams
 
     def getDefaultUserId(self):
@@ -165,9 +171,6 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
     def getAccountId(self):
         return self.accountId
 
-    def setAccountId(self, newAccountId):
-        self.accountId = newAccountId
-
     def getEnableRecordingUpload(self):
         return self.enableRecordingUpload
 
@@ -180,11 +183,11 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
     def setCreateUserIfNotExist(self, newCreateUserIfNotExist):
         self.createUserIfNotExist = newCreateUserIfNotExist
 
-    def getHandleParticipantMode(self):
-        return self.handleParticipantMode
+    def getHandleParticipantsMode(self):
+        return self.handleParticipantsMode
 
-    def setHandleParticipantMode(self, newHandleParticipantMode):
-        self.handleParticipantMode = newHandleParticipantMode
+    def setHandleParticipantsMode(self, newHandleParticipantsMode):
+        self.handleParticipantsMode = newHandleParticipantsMode
 
     def getZoomUserMatchingMode(self):
         return self.zoomUserMatchingMode
@@ -209,6 +212,12 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
 
     def setEnableWebinarUploads(self, newEnableWebinarUploads):
         self.enableWebinarUploads = newEnableWebinarUploads
+
+    def getConversionProfileId(self):
+        return self.conversionProfileId
+
+    def setConversionProfileId(self, newConversionProfileId):
+        self.conversionProfileId = newConversionProfileId
 
 
 ########## services ##########
@@ -235,6 +244,17 @@ class KalturaZoomVendorService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def get(self, partnerId):
+        """Retrieve zoom integration setting object by partner id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("partnerId", partnerId);
+        self.client.queueServiceActionCall("vendor_zoomvendor", "get", "KalturaZoomIntegrationSetting", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaZoomIntegrationSetting')
 
     def oauthValidation(self):
         kparams = KalturaParams()
