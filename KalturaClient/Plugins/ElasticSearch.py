@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2020  Kaltura Inc.
+# Copyright (C) 2006-2021  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -2631,12 +2631,14 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
             userName=NotImplemented,
             userMail=NotImplemented,
             outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
             searchParams=NotImplemented,
             options=NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
-            outputPath)
+            outputPath,
+            sharedOutputPath)
 
         # Esearch parameters for the entry search
         # @var KalturaESearchEntryParams

@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2020  Kaltura Inc.
+# Copyright (C) 2006-2021  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.14.0'
+API_VERSION = '16.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25556,7 +25556,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             applicationVersionIn=NotImplemented,
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
-            hotspotIdIn=NotImplemented):
+            hotspotIdIn=NotImplemented,
+            crmIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25700,6 +25701,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.hotspotIdIn = hotspotIdIn
 
+        # filter by crm id
+        # @var string
+        self.crmIdIn = crmIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25737,6 +25742,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'nodeIdsIn': getXmlNodeText, 
         'categoriesAncestorIdIn': getXmlNodeText, 
         'hotspotIdIn': getXmlNodeText, 
+        'crmIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25781,6 +25787,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("nodeIdsIn", self.nodeIdsIn)
         kparams.addStringIfDefined("categoriesAncestorIdIn", self.categoriesAncestorIdIn)
         kparams.addStringIfDefined("hotspotIdIn", self.hotspotIdIn)
+        kparams.addStringIfDefined("crmIdIn", self.crmIdIn)
         return kparams
 
     def getKeywords(self):
@@ -25992,6 +25999,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setHotspotIdIn(self, newHotspotIdIn):
         self.hotspotIdIn = newHotspotIdIn
+
+    def getCrmIdIn(self):
+        return self.crmIdIn
+
+    def setCrmIdIn(self, newCrmIdIn):
+        self.crmIdIn = newCrmIdIn
 
 
 # @package Kaltura
@@ -37619,7 +37632,8 @@ class KalturaExportCsvJobData(KalturaJobData):
     def __init__(self,
             userName=NotImplemented,
             userMail=NotImplemented,
-            outputPath=NotImplemented):
+            outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented):
         KalturaJobData.__init__(self)
 
         # The users name
@@ -37634,11 +37648,15 @@ class KalturaExportCsvJobData(KalturaJobData):
         # @var string
         self.outputPath = outputPath
 
+        # @var string
+        self.sharedOutputPath = sharedOutputPath
+
 
     PROPERTY_LOADERS = {
         'userName': getXmlNodeText, 
         'userMail': getXmlNodeText, 
         'outputPath': getXmlNodeText, 
+        'sharedOutputPath': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -37651,6 +37669,7 @@ class KalturaExportCsvJobData(KalturaJobData):
         kparams.addStringIfDefined("userName", self.userName)
         kparams.addStringIfDefined("userMail", self.userMail)
         kparams.addStringIfDefined("outputPath", self.outputPath)
+        kparams.addStringIfDefined("sharedOutputPath", self.sharedOutputPath)
         return kparams
 
     def getUserName(self):
@@ -37670,6 +37689,12 @@ class KalturaExportCsvJobData(KalturaJobData):
 
     def setOutputPath(self, newOutputPath):
         self.outputPath = newOutputPath
+
+    def getSharedOutputPath(self):
+        return self.sharedOutputPath
+
+    def setSharedOutputPath(self, newSharedOutputPath):
+        self.sharedOutputPath = newSharedOutputPath
 
 
 # @package Kaltura
@@ -46986,6 +47011,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
             hotspotIdIn=NotImplemented,
+            crmIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47029,7 +47055,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             applicationVersionIn,
             nodeIdsIn,
             categoriesAncestorIdIn,
-            hotspotIdIn)
+            hotspotIdIn,
+            crmIdIn)
 
         # @var string
         self.application = application
@@ -50954,13 +50981,15 @@ class KalturaUsersCsvJobData(KalturaExportCsvJobData):
             userName=NotImplemented,
             userMail=NotImplemented,
             outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
             filter=NotImplemented,
             metadataProfileId=NotImplemented,
             additionalFields=NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
-            outputPath)
+            outputPath,
+            sharedOutputPath)
 
         # The filter should return the list of users that need to be specified in the csv.
         # @var KalturaUserFilter

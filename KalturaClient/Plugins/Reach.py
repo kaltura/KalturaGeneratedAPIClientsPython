@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platfroms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2020  Kaltura Inc.
+# Copyright (C) 2006-2021  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -824,6 +824,8 @@ class KalturaReachProfile(KalturaObjectBase):
             enableAudioTags=NotImplemented,
             enableProfanityRemoval=NotImplemented,
             maxCharactersPerCaptionLine=NotImplemented,
+            labelAdditionForMachineServiceType=NotImplemented,
+            labelAdditionForHumanServiceType=NotImplemented,
             contentDeletionPolicy=NotImplemented,
             rules=NotImplemented,
             credit=NotImplemented,
@@ -890,6 +892,12 @@ class KalturaReachProfile(KalturaObjectBase):
         # @var int
         self.maxCharactersPerCaptionLine = maxCharactersPerCaptionLine
 
+        # @var string
+        self.labelAdditionForMachineServiceType = labelAdditionForMachineServiceType
+
+        # @var string
+        self.labelAdditionForHumanServiceType = labelAdditionForHumanServiceType
+
         # @var KalturaReachProfileContentDeletionPolicy
         self.contentDeletionPolicy = contentDeletionPolicy
 
@@ -933,6 +941,8 @@ class KalturaReachProfile(KalturaObjectBase):
         'enableAudioTags': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'enableProfanityRemoval': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'maxCharactersPerCaptionLine': getXmlNodeInt, 
+        'labelAdditionForMachineServiceType': getXmlNodeText, 
+        'labelAdditionForHumanServiceType': getXmlNodeText, 
         'contentDeletionPolicy': (KalturaEnumsFactory.createInt, "KalturaReachProfileContentDeletionPolicy"), 
         'rules': (KalturaObjectFactory.createArray, 'KalturaRule'), 
         'credit': (KalturaObjectFactory.create, 'KalturaBaseVendorCredit'), 
@@ -961,6 +971,8 @@ class KalturaReachProfile(KalturaObjectBase):
         kparams.addIntEnumIfDefined("enableAudioTags", self.enableAudioTags)
         kparams.addIntEnumIfDefined("enableProfanityRemoval", self.enableProfanityRemoval)
         kparams.addIntIfDefined("maxCharactersPerCaptionLine", self.maxCharactersPerCaptionLine)
+        kparams.addStringIfDefined("labelAdditionForMachineServiceType", self.labelAdditionForMachineServiceType)
+        kparams.addStringIfDefined("labelAdditionForHumanServiceType", self.labelAdditionForHumanServiceType)
         kparams.addIntEnumIfDefined("contentDeletionPolicy", self.contentDeletionPolicy)
         kparams.addArrayIfDefined("rules", self.rules)
         kparams.addObjectIfDefined("credit", self.credit)
@@ -1055,6 +1067,18 @@ class KalturaReachProfile(KalturaObjectBase):
 
     def setMaxCharactersPerCaptionLine(self, newMaxCharactersPerCaptionLine):
         self.maxCharactersPerCaptionLine = newMaxCharactersPerCaptionLine
+
+    def getLabelAdditionForMachineServiceType(self):
+        return self.labelAdditionForMachineServiceType
+
+    def setLabelAdditionForMachineServiceType(self, newLabelAdditionForMachineServiceType):
+        self.labelAdditionForMachineServiceType = newLabelAdditionForMachineServiceType
+
+    def getLabelAdditionForHumanServiceType(self):
+        return self.labelAdditionForHumanServiceType
+
+    def setLabelAdditionForHumanServiceType(self, newLabelAdditionForHumanServiceType):
+        self.labelAdditionForHumanServiceType = newLabelAdditionForHumanServiceType
 
     def getContentDeletionPolicy(self):
         return self.contentDeletionPolicy
@@ -2488,11 +2512,13 @@ class KalturaEntryVendorTaskCsvJobData(KalturaExportCsvJobData):
             userName=NotImplemented,
             userMail=NotImplemented,
             outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
             filter=NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
-            outputPath)
+            outputPath,
+            sharedOutputPath)
 
         # The filter should return the list of users that need to be specified in the csv.
         # @var KalturaEntryVendorTaskFilter
@@ -2707,6 +2733,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
             hotspotIdIn=NotImplemented,
+            crmIdIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2749,7 +2776,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             applicationVersionIn,
             nodeIdsIn,
             categoriesAncestorIdIn,
-            hotspotIdIn)
+            hotspotIdIn,
+            crmIdIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
