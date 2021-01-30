@@ -2449,6 +2449,7 @@ class KalturaDropFolderImportJobData(KalturaSshImportJobData):
             destFileLocalPath=NotImplemented,
             flavorAssetId=NotImplemented,
             fileSize=NotImplemented,
+            destFileSharedPath=NotImplemented,
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
@@ -2458,6 +2459,7 @@ class KalturaDropFolderImportJobData(KalturaSshImportJobData):
             destFileLocalPath,
             flavorAssetId,
             fileSize,
+            destFileSharedPath,
             privateKey,
             publicKey,
             passPhrase)

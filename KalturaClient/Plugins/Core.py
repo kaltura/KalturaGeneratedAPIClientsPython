@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.15.0'
+API_VERSION = '16.16.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25557,7 +25557,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             nodeIdsIn=NotImplemented,
             categoriesAncestorIdIn=NotImplemented,
             hotspotIdIn=NotImplemented,
-            crmIdIn=NotImplemented):
+            crmIdIn=NotImplemented,
+            playlistIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25705,6 +25706,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.crmIdIn = crmIdIn
 
+        # filter by playlist id
+        # @var string
+        self.playlistIdIn = playlistIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25743,6 +25748,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'categoriesAncestorIdIn': getXmlNodeText, 
         'hotspotIdIn': getXmlNodeText, 
         'crmIdIn': getXmlNodeText, 
+        'playlistIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25788,6 +25794,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("categoriesAncestorIdIn", self.categoriesAncestorIdIn)
         kparams.addStringIfDefined("hotspotIdIn", self.hotspotIdIn)
         kparams.addStringIfDefined("crmIdIn", self.crmIdIn)
+        kparams.addStringIfDefined("playlistIdIn", self.playlistIdIn)
         return kparams
 
     def getKeywords(self):
@@ -26005,6 +26012,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCrmIdIn(self, newCrmIdIn):
         self.crmIdIn = newCrmIdIn
+
+    def getPlaylistIdIn(self):
+        return self.playlistIdIn
+
+    def setPlaylistIdIn(self, newPlaylistIdIn):
+        self.playlistIdIn = newPlaylistIdIn
 
 
 # @package Kaltura
@@ -38323,7 +38336,8 @@ class KalturaImportJobData(KalturaJobData):
             srcFileUrl=NotImplemented,
             destFileLocalPath=NotImplemented,
             flavorAssetId=NotImplemented,
-            fileSize=NotImplemented):
+            fileSize=NotImplemented,
+            destFileSharedPath=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
@@ -38338,12 +38352,16 @@ class KalturaImportJobData(KalturaJobData):
         # @var int
         self.fileSize = fileSize
 
+        # @var string
+        self.destFileSharedPath = destFileSharedPath
+
 
     PROPERTY_LOADERS = {
         'srcFileUrl': getXmlNodeText, 
         'destFileLocalPath': getXmlNodeText, 
         'flavorAssetId': getXmlNodeText, 
         'fileSize': getXmlNodeInt, 
+        'destFileSharedPath': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -38357,6 +38375,7 @@ class KalturaImportJobData(KalturaJobData):
         kparams.addStringIfDefined("destFileLocalPath", self.destFileLocalPath)
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
         kparams.addIntIfDefined("fileSize", self.fileSize)
+        kparams.addStringIfDefined("destFileSharedPath", self.destFileSharedPath)
         return kparams
 
     def getSrcFileUrl(self):
@@ -38382,6 +38401,12 @@ class KalturaImportJobData(KalturaJobData):
 
     def setFileSize(self, newFileSize):
         self.fileSize = newFileSize
+
+    def getDestFileSharedPath(self):
+        return self.destFileSharedPath
+
+    def setDestFileSharedPath(self, newDestFileSharedPath):
+        self.destFileSharedPath = newDestFileSharedPath
 
 
 # @package Kaltura
@@ -47012,6 +47037,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             categoriesAncestorIdIn=NotImplemented,
             hotspotIdIn=NotImplemented,
             crmIdIn=NotImplemented,
+            playlistIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47056,7 +47082,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             nodeIdsIn,
             categoriesAncestorIdIn,
             hotspotIdIn,
-            crmIdIn)
+            crmIdIn,
+            playlistIdIn)
 
         # @var string
         self.application = application
@@ -50093,6 +50120,7 @@ class KalturaSshImportJobData(KalturaImportJobData):
             destFileLocalPath=NotImplemented,
             flavorAssetId=NotImplemented,
             fileSize=NotImplemented,
+            destFileSharedPath=NotImplemented,
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented):
@@ -50100,7 +50128,8 @@ class KalturaSshImportJobData(KalturaImportJobData):
             srcFileUrl,
             destFileLocalPath,
             flavorAssetId,
-            fileSize)
+            fileSize,
+            destFileSharedPath)
 
         # @var string
         self.privateKey = privateKey
