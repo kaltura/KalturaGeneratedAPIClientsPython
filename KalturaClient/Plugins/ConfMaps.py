@@ -71,7 +71,8 @@ class KalturaConfMaps(KalturaObjectBase):
             version=NotImplemented,
             sourceLocation=NotImplemented,
             remarks=NotImplemented,
-            status=NotImplemented):
+            status=NotImplemented,
+            changeDescription=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Name of the map
@@ -119,6 +120,9 @@ class KalturaConfMaps(KalturaObjectBase):
         # @var KalturaConfMapsStatus
         self.status = status
 
+        # @var string
+        self.changeDescription = changeDescription
+
 
     PROPERTY_LOADERS = {
         'name': getXmlNodeText, 
@@ -132,6 +136,7 @@ class KalturaConfMaps(KalturaObjectBase):
         'sourceLocation': (KalturaEnumsFactory.createString, "KalturaConfMapsSourceLocation"), 
         'remarks': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaConfMapsStatus"), 
+        'changeDescription': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -149,6 +154,7 @@ class KalturaConfMaps(KalturaObjectBase):
         kparams.addStringEnumIfDefined("sourceLocation", self.sourceLocation)
         kparams.addStringIfDefined("remarks", self.remarks)
         kparams.addIntEnumIfDefined("status", self.status)
+        kparams.addStringIfDefined("changeDescription", self.changeDescription)
         return kparams
 
     def getName(self):
@@ -207,6 +213,12 @@ class KalturaConfMaps(KalturaObjectBase):
 
     def setStatus(self, newStatus):
         self.status = newStatus
+
+    def getChangeDescription(self):
+        return self.changeDescription
+
+    def setChangeDescription(self, newChangeDescription):
+        self.changeDescription = newChangeDescription
 
 
 # @package Kaltura

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.16.0'
+API_VERSION = '16.18.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -11103,7 +11103,8 @@ class KalturaCategory(KalturaObjectBase):
             moderation=NotImplemented,
             pendingEntriesCount=NotImplemented,
             isAggregationCategory=NotImplemented,
-            aggregationCategories=NotImplemented):
+            aggregationCategories=NotImplemented,
+            adminTags=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the Category
@@ -11261,6 +11262,9 @@ class KalturaCategory(KalturaObjectBase):
         # @var string
         self.aggregationCategories = aggregationCategories
 
+        # @var string
+        self.adminTags = adminTags
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -11298,6 +11302,7 @@ class KalturaCategory(KalturaObjectBase):
         'pendingEntriesCount': getXmlNodeInt, 
         'isAggregationCategory': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'aggregationCategories': getXmlNodeText, 
+        'adminTags': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -11325,6 +11330,7 @@ class KalturaCategory(KalturaObjectBase):
         kparams.addIntEnumIfDefined("moderation", self.moderation)
         kparams.addIntEnumIfDefined("isAggregationCategory", self.isAggregationCategory)
         kparams.addStringIfDefined("aggregationCategories", self.aggregationCategories)
+        kparams.addStringIfDefined("adminTags", self.adminTags)
         return kparams
 
     def getId(self):
@@ -11485,6 +11491,12 @@ class KalturaCategory(KalturaObjectBase):
 
     def setAggregationCategories(self, newAggregationCategories):
         self.aggregationCategories = newAggregationCategories
+
+    def getAdminTags(self):
+        return self.adminTags
+
+    def setAdminTags(self, newAdminTags):
+        self.adminTags = newAdminTags
 
 
 # @package Kaltura
@@ -14418,7 +14430,10 @@ class KalturaUser(KalturaBaseUser):
             lastName=NotImplemented,
             loginEnabled=NotImplemented,
             registrationInfo=NotImplemented,
-            attendanceInfo=NotImplemented):
+            attendanceInfo=NotImplemented,
+            title=NotImplemented,
+            company=NotImplemented,
+            ksPrivileges=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -14491,6 +14506,15 @@ class KalturaUser(KalturaBaseUser):
         # @var string
         self.attendanceInfo = attendanceInfo
 
+        # @var string
+        self.title = title
+
+        # @var string
+        self.company = company
+
+        # @var string
+        self.ksPrivileges = ksPrivileges
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
@@ -14506,6 +14530,9 @@ class KalturaUser(KalturaBaseUser):
         'loginEnabled': getXmlNodeBool, 
         'registrationInfo': getXmlNodeText, 
         'attendanceInfo': getXmlNodeText, 
+        'title': getXmlNodeText, 
+        'company': getXmlNodeText, 
+        'ksPrivileges': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14527,6 +14554,9 @@ class KalturaUser(KalturaBaseUser):
         kparams.addBoolIfDefined("loginEnabled", self.loginEnabled)
         kparams.addStringIfDefined("registrationInfo", self.registrationInfo)
         kparams.addStringIfDefined("attendanceInfo", self.attendanceInfo)
+        kparams.addStringIfDefined("title", self.title)
+        kparams.addStringIfDefined("company", self.company)
+        kparams.addStringIfDefined("ksPrivileges", self.ksPrivileges)
         return kparams
 
     def getType(self):
@@ -14603,6 +14633,24 @@ class KalturaUser(KalturaBaseUser):
 
     def setAttendanceInfo(self, newAttendanceInfo):
         self.attendanceInfo = newAttendanceInfo
+
+    def getTitle(self):
+        return self.title
+
+    def setTitle(self, newTitle):
+        self.title = newTitle
+
+    def getCompany(self):
+        return self.company
+
+    def setCompany(self, newCompany):
+        self.company = newCompany
+
+    def getKsPrivileges(self):
+        return self.ksPrivileges
+
+    def setKsPrivileges(self, newKsPrivileges):
+        self.ksPrivileges = newKsPrivileges
 
 
 # @package Kaltura
@@ -25558,7 +25606,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             categoriesAncestorIdIn=NotImplemented,
             hotspotIdIn=NotImplemented,
             crmIdIn=NotImplemented,
-            playlistIdIn=NotImplemented):
+            playlistIdIn=NotImplemented,
+            domainIn=NotImplemented,
+            canonicalUrlIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -25710,6 +25760,14 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.playlistIdIn = playlistIdIn
 
+        # filter by domain
+        # @var string
+        self.domainIn = domainIn
+
+        # filter by canonical url
+        # @var string
+        self.canonicalUrlIn = canonicalUrlIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -25749,6 +25807,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'hotspotIdIn': getXmlNodeText, 
         'crmIdIn': getXmlNodeText, 
         'playlistIdIn': getXmlNodeText, 
+        'domainIn': getXmlNodeText, 
+        'canonicalUrlIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -25795,6 +25855,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("hotspotIdIn", self.hotspotIdIn)
         kparams.addStringIfDefined("crmIdIn", self.crmIdIn)
         kparams.addStringIfDefined("playlistIdIn", self.playlistIdIn)
+        kparams.addStringIfDefined("domainIn", self.domainIn)
+        kparams.addStringIfDefined("canonicalUrlIn", self.canonicalUrlIn)
         return kparams
 
     def getKeywords(self):
@@ -26018,6 +26080,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setPlaylistIdIn(self, newPlaylistIdIn):
         self.playlistIdIn = newPlaylistIdIn
+
+    def getDomainIn(self):
+        return self.domainIn
+
+    def setDomainIn(self, newDomainIn):
+        self.domainIn = newDomainIn
+
+    def getCanonicalUrlIn(self):
+        return self.canonicalUrlIn
+
+    def setCanonicalUrlIn(self, newCanonicalUrlIn):
+        self.canonicalUrlIn = newCanonicalUrlIn
 
 
 # @package Kaltura
@@ -38737,7 +38811,8 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
             serverType=NotImplemented,
             streams=NotImplemented,
             recordingInfo=NotImplemented,
-            isPlayableUser=NotImplemented):
+            isPlayableUser=NotImplemented,
+            viewMode=NotImplemented):
         KalturaEntryServerNode.__init__(self,
             id,
             entryId,
@@ -38758,11 +38833,15 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         # @var bool
         self.isPlayableUser = isPlayableUser
 
+        # @var KalturaViewMode
+        self.viewMode = viewMode
+
 
     PROPERTY_LOADERS = {
         'streams': (KalturaObjectFactory.createArray, 'KalturaLiveStreamParams'), 
         'recordingInfo': (KalturaObjectFactory.createArray, 'KalturaLiveEntryServerNodeRecordingInfo'), 
         'isPlayableUser': getXmlNodeBool, 
+        'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
     }
 
     def fromXml(self, node):
@@ -38775,6 +38854,7 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         kparams.addArrayIfDefined("streams", self.streams)
         kparams.addArrayIfDefined("recordingInfo", self.recordingInfo)
         kparams.addBoolIfDefined("isPlayableUser", self.isPlayableUser)
+        kparams.addIntEnumIfDefined("viewMode", self.viewMode)
         return kparams
 
     def getStreams(self):
@@ -38794,6 +38874,12 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
 
     def setIsPlayableUser(self, newIsPlayableUser):
         self.isPlayableUser = newIsPlayableUser
+
+    def getViewMode(self):
+        return self.viewMode
+
+    def setViewMode(self, newViewMode):
+        self.viewMode = newViewMode
 
 
 # @package Kaltura
@@ -44402,7 +44488,10 @@ class KalturaAdminUser(KalturaUser):
             lastName=NotImplemented,
             loginEnabled=NotImplemented,
             registrationInfo=NotImplemented,
-            attendanceInfo=NotImplemented):
+            attendanceInfo=NotImplemented,
+            title=NotImplemented,
+            company=NotImplemented,
+            ksPrivileges=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -44443,7 +44532,10 @@ class KalturaAdminUser(KalturaUser):
             lastName,
             loginEnabled,
             registrationInfo,
-            attendanceInfo)
+            attendanceInfo,
+            title,
+            company,
+            ksPrivileges)
 
 
     PROPERTY_LOADERS = {
@@ -47038,6 +47130,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             hotspotIdIn=NotImplemented,
             crmIdIn=NotImplemented,
             playlistIdIn=NotImplemented,
+            domainIn=NotImplemented,
+            canonicalUrlIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47083,7 +47177,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             categoriesAncestorIdIn,
             hotspotIdIn,
             crmIdIn,
-            playlistIdIn)
+            playlistIdIn,
+            domainIn,
+            canonicalUrlIn)
 
         # @var string
         self.application = application
@@ -63408,7 +63504,7 @@ class KalturaGroupUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaGroupUserListResponse')
 
-    def sync(self, userId, groupIds, removeFromExistingGroups = True, createNewGroups = True):
+    def sync(self, userId, groupIds = NotImplemented, removeFromExistingGroups = True, createNewGroups = True):
         """sync by userId and groupIds"""
 
         kparams = KalturaParams()
