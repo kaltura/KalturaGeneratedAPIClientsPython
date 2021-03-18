@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.18.0'
+API_VERSION = '16.19.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -15358,6 +15358,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
 # @subpackage Client
 class KalturaStreamContainer(KalturaObjectBase):
     def __init__(self,
+            id=NotImplemented,
             type=NotImplemented,
             trackIndex=NotImplemented,
             language=NotImplemented,
@@ -15365,6 +15366,9 @@ class KalturaStreamContainer(KalturaObjectBase):
             label=NotImplemented,
             channelLayout=NotImplemented):
         KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.id = id
 
         # @var string
         self.type = type
@@ -15386,6 +15390,7 @@ class KalturaStreamContainer(KalturaObjectBase):
 
 
     PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
         'type': getXmlNodeText, 
         'trackIndex': getXmlNodeInt, 
         'language': getXmlNodeText, 
@@ -15401,6 +15406,7 @@ class KalturaStreamContainer(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaStreamContainer")
+        kparams.addStringIfDefined("id", self.id)
         kparams.addStringIfDefined("type", self.type)
         kparams.addIntIfDefined("trackIndex", self.trackIndex)
         kparams.addStringIfDefined("language", self.language)
@@ -15408,6 +15414,12 @@ class KalturaStreamContainer(KalturaObjectBase):
         kparams.addStringIfDefined("label", self.label)
         kparams.addStringIfDefined("channelLayout", self.channelLayout)
         return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
 
     def getType(self):
         return self.type
@@ -51109,7 +51121,8 @@ class KalturaUsersCsvJobData(KalturaExportCsvJobData):
             sharedOutputPath=NotImplemented,
             filter=NotImplemented,
             metadataProfileId=NotImplemented,
-            additionalFields=NotImplemented):
+            additionalFields=NotImplemented,
+            mappedFields=NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
@@ -51128,11 +51141,16 @@ class KalturaUsersCsvJobData(KalturaExportCsvJobData):
         # @var array of KalturaCsvAdditionalFieldInfo
         self.additionalFields = additionalFields
 
+        # Array of header names and their mapped user fields
+        # @var array of KalturaKeyValue
+        self.mappedFields = mappedFields
+
 
     PROPERTY_LOADERS = {
         'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
         'metadataProfileId': getXmlNodeInt, 
         'additionalFields': (KalturaObjectFactory.createArray, 'KalturaCsvAdditionalFieldInfo'), 
+        'mappedFields': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -51145,6 +51163,7 @@ class KalturaUsersCsvJobData(KalturaExportCsvJobData):
         kparams.addObjectIfDefined("filter", self.filter)
         kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
         kparams.addArrayIfDefined("additionalFields", self.additionalFields)
+        kparams.addArrayIfDefined("mappedFields", self.mappedFields)
         return kparams
 
     def getFilter(self):
@@ -51164,6 +51183,12 @@ class KalturaUsersCsvJobData(KalturaExportCsvJobData):
 
     def setAdditionalFields(self, newAdditionalFields):
         self.additionalFields = newAdditionalFields
+
+    def getMappedFields(self):
+        return self.mappedFields
+
+    def setMappedFields(self, newMappedFields):
+        self.mappedFields = newMappedFields
 
 
 # @package Kaltura
@@ -66712,13 +66737,14 @@ class KalturaUserService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
-    def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented):
+    def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented, mappedFields = NotImplemented):
         """Creates a batch job that sends an email with a link to download a CSV containing a list of users"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("filter", filter)
         kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
         kparams.addArrayIfDefined("additionalFields", additionalFields)
+        kparams.addArrayIfDefined("mappedFields", mappedFields)
         self.client.queueServiceActionCall("user", "exportToCsv", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
