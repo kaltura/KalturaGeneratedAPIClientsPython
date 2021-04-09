@@ -401,84 +401,6 @@ class KalturaSsoFilter(KalturaSsoBaseFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSsoService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, sso):
-        """Adds a new sso configuration."""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("sso", sso)
-        self.client.queueServiceActionCall("sso_sso", "add", "KalturaSso", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaSso')
-
-    def delete(self, ssoId):
-        """Delete sso by ID"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("ssoId", ssoId);
-        self.client.queueServiceActionCall("sso_sso", "delete", "KalturaSso", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaSso')
-
-    def get(self, ssoId):
-        """Retrieves sso object"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("ssoId", ssoId);
-        self.client.queueServiceActionCall("sso_sso", "get", "KalturaSso", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaSso')
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """Lists sso objects that are associated with an account."""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("sso_sso", "list", "KalturaSsoListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaSsoListResponse')
-
-    def login(self, userId, applicationType, partnerId = NotImplemented):
-        """Login with SSO, getting redirect url according to application type and partner Id
-        	 or according to application type and domain"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("userId", userId)
-        kparams.addStringIfDefined("applicationType", applicationType)
-        kparams.addIntIfDefined("partnerId", partnerId);
-        self.client.queueServiceActionCall("sso_sso", "login", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
-    def update(self, ssoId, sso):
-        """Update sso by ID"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("ssoId", ssoId);
-        kparams.addObjectIfDefined("sso", sso)
-        self.client.queueServiceActionCall("sso_sso", "update", "KalturaSso", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaSso')
-
 ########## main ##########
 class KalturaSsoClientPlugin(KalturaClientPlugin):
     # KalturaSsoClientPlugin
@@ -494,7 +416,6 @@ class KalturaSsoClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'sso': KalturaSsoService,
         }
 
     def getEnums(self):

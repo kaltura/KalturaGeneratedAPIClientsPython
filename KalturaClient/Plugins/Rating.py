@@ -219,52 +219,6 @@ class KalturaRatingCountFilter(KalturaRatingCountBaseFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaRatingService(KalturaServiceBase):
-    """Allows user to manipulate their entry rating"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def checkRating(self, entryId):
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("rating_rating", "checkRating", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
-
-    def getRatingCounts(self, filter):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("rating_rating", "getRatingCounts", "KalturaRatingCountListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaRatingCountListResponse')
-
-    def rate(self, entryId, rank):
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addIntIfDefined("rank", rank);
-        self.client.queueServiceActionCall("rating_rating", "rate", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeInt(resultNode)
-
-    def removeRating(self, entryId):
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        self.client.queueServiceActionCall("rating_rating", "removeRating", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeBool(resultNode)
-
 ########## main ##########
 class KalturaRatingClientPlugin(KalturaClientPlugin):
     # KalturaRatingClientPlugin
@@ -280,7 +234,6 @@ class KalturaRatingClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'rating': KalturaRatingService,
         }
 
     def getEnums(self):

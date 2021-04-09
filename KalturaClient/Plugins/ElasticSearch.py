@@ -608,26 +608,6 @@ class KalturaESearchAggregationResponseItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchBaseFilter(KalturaObjectBase):
-    def __init__(self):
-        KalturaObjectBase.__init__(self)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchBaseFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaESearchBaseFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchCategoryBaseItem(KalturaESearchBaseItem):
     def __init__(self):
         KalturaESearchBaseItem.__init__(self)
@@ -3475,7 +3455,6 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchAggregation': KalturaESearchAggregation,
             'KalturaESearchAggregationBucket': KalturaESearchAggregationBucket,
             'KalturaESearchAggregationResponseItem': KalturaESearchAggregationResponseItem,
-            'KalturaESearchBaseFilter': KalturaESearchBaseFilter,
             'KalturaESearchCategoryBaseItem': KalturaESearchCategoryBaseItem,
             'KalturaESearchHighlight': KalturaESearchHighlight,
             'KalturaESearchItemData': KalturaESearchItemData,

@@ -1089,27 +1089,6 @@ class KalturaWidevineFlavorParamsOutputFilter(KalturaWidevineFlavorParamsOutputB
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaWidevineDrmService(KalturaServiceBase):
-    """WidevineDrmService serves as a license proxy to a Widevine license server"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def getLicense(self, flavorAssetId, referrer = NotImplemented):
-        """Get license for encrypted content playback"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("flavorAssetId", flavorAssetId)
-        kparams.addStringIfDefined("referrer", referrer)
-        self.client.queueServiceActionCall("widevine_widevinedrm", "getLicense", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
-
 ########## main ##########
 class KalturaWidevineClientPlugin(KalturaClientPlugin):
     # KalturaWidevineClientPlugin
@@ -1125,7 +1104,6 @@ class KalturaWidevineClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'widevineDrm': KalturaWidevineDrmService,
         }
 
     def getEnums(self):

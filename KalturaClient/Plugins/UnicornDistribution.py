@@ -525,23 +525,6 @@ class KalturaUnicornDistributionProfileFilter(KalturaUnicornDistributionProfileB
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaUnicornService(KalturaServiceBase):
-    """Unicorn Service"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def notify(self, id):
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("id", id);
-        self.client.queueServiceActionCall("unicorndistribution_unicorn", "notify", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
 ########## main ##########
 class KalturaUnicornDistributionClientPlugin(KalturaClientPlugin):
     # KalturaUnicornDistributionClientPlugin
@@ -557,7 +540,6 @@ class KalturaUnicornDistributionClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'unicorn': KalturaUnicornService,
         }
 
     def getEnums(self):

@@ -148,77 +148,6 @@ class KalturaDrmProviderType(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
-class KalturaDrmLicenseAccessDetails(KalturaObjectBase):
-    def __init__(self,
-            policy=NotImplemented,
-            duration=NotImplemented,
-            absolute_duration=NotImplemented,
-            licenseParams=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # Drm policy name
-        # @var string
-        self.policy = policy
-
-        # movie duration in seconds
-        # @var int
-        self.duration = duration
-
-        # playback window in seconds
-        # @var int
-        self.absolute_duration = absolute_duration
-
-        # @var array of KalturaKeyValue
-        self.licenseParams = licenseParams
-
-
-    PROPERTY_LOADERS = {
-        'policy': getXmlNodeText, 
-        'duration': getXmlNodeInt, 
-        'absolute_duration': getXmlNodeInt, 
-        'licenseParams': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDrmLicenseAccessDetails.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaDrmLicenseAccessDetails")
-        kparams.addStringIfDefined("policy", self.policy)
-        kparams.addIntIfDefined("duration", self.duration)
-        kparams.addIntIfDefined("absolute_duration", self.absolute_duration)
-        kparams.addArrayIfDefined("licenseParams", self.licenseParams)
-        return kparams
-
-    def getPolicy(self):
-        return self.policy
-
-    def setPolicy(self, newPolicy):
-        self.policy = newPolicy
-
-    def getDuration(self):
-        return self.duration
-
-    def setDuration(self, newDuration):
-        self.duration = newDuration
-
-    def getAbsolute_duration(self):
-        return self.absolute_duration
-
-    def setAbsolute_duration(self, newAbsolute_duration):
-        self.absolute_duration = newAbsolute_duration
-
-    def getLicenseParams(self):
-        return self.licenseParams
-
-    def setLicenseParams(self, newLicenseParams):
-        self.licenseParams = newLicenseParams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaDrmPolicy(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -1002,169 +931,6 @@ class KalturaDrmProfileFilter(KalturaDrmProfileBaseFilter):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDrmPolicyService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, drmPolicy):
-        """Allows you to add a new DrmPolicy object"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("drmPolicy", drmPolicy)
-        self.client.queueServiceActionCall("drm_drmpolicy", "add", "KalturaDrmPolicy", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmPolicy')
-
-    def delete(self, drmPolicyId):
-        """Mark the KalturaDrmPolicy object as deleted"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmPolicyId", drmPolicyId);
-        self.client.queueServiceActionCall("drm_drmpolicy", "delete", "KalturaDrmPolicy", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmPolicy')
-
-    def get(self, drmPolicyId):
-        """Retrieve a KalturaDrmPolicy object by ID"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmPolicyId", drmPolicyId);
-        self.client.queueServiceActionCall("drm_drmpolicy", "get", "KalturaDrmPolicy", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmPolicy')
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """List KalturaDrmPolicy objects"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("drm_drmpolicy", "list", "KalturaDrmPolicyListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmPolicyListResponse')
-
-    def update(self, drmPolicyId, drmPolicy):
-        """Update an existing KalturaDrmPolicy object"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmPolicyId", drmPolicyId);
-        kparams.addObjectIfDefined("drmPolicy", drmPolicy)
-        self.client.queueServiceActionCall("drm_drmpolicy", "update", "KalturaDrmPolicy", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmPolicy')
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDrmProfileService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, drmProfile):
-        """Allows you to add a new DrmProfile object"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("drmProfile", drmProfile)
-        self.client.queueServiceActionCall("drm_drmprofile", "add", "KalturaDrmProfile", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfile')
-
-    def delete(self, drmProfileId):
-        """Mark the KalturaDrmProfile object as deleted"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmProfileId", drmProfileId);
-        self.client.queueServiceActionCall("drm_drmprofile", "delete", "KalturaDrmProfile", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfile')
-
-    def get(self, drmProfileId):
-        """Retrieve a KalturaDrmProfile object by ID"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmProfileId", drmProfileId);
-        self.client.queueServiceActionCall("drm_drmprofile", "get", "KalturaDrmProfile", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfile')
-
-    def getByProvider(self, provider):
-        """Retrieve a KalturaDrmProfile object by provider, if no specific profile defined return default profile"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("provider", provider)
-        self.client.queueServiceActionCall("drm_drmprofile", "getByProvider", "KalturaDrmProfile", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfile')
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        """List KalturaDrmProfile objects"""
-
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("drm_drmprofile", "list", "KalturaDrmProfileListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfileListResponse')
-
-    def update(self, drmProfileId, drmProfile):
-        """Update an existing KalturaDrmProfile object"""
-
-        kparams = KalturaParams()
-        kparams.addIntIfDefined("drmProfileId", drmProfileId);
-        kparams.addObjectIfDefined("drmProfile", drmProfile)
-        self.client.queueServiceActionCall("drm_drmprofile", "update", "KalturaDrmProfile", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmProfile')
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaDrmLicenseAccessService(KalturaServiceBase):
-    """Retrieve information and invoke actions on Flavor Asset"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def getAccess(self, entryId, flavorIds, referrer):
-        """getAccessAction
-             input: flavor ids, drmProvider
-             Get Access Action"""
-
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("entryId", entryId)
-        kparams.addStringIfDefined("flavorIds", flavorIds)
-        kparams.addStringIfDefined("referrer", referrer)
-        self.client.queueServiceActionCall("drm_drmlicenseaccess", "getAccess", "KalturaDrmLicenseAccessDetails", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaDrmLicenseAccessDetails')
-
 ########## main ##########
 class KalturaDrmClientPlugin(KalturaClientPlugin):
     # KalturaDrmClientPlugin
@@ -1180,9 +946,6 @@ class KalturaDrmClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'drmPolicy': KalturaDrmPolicyService,
-            'drmProfile': KalturaDrmProfileService,
-            'drmLicenseAccess': KalturaDrmLicenseAccessService,
         }
 
     def getEnums(self):
@@ -1199,7 +962,6 @@ class KalturaDrmClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
-            'KalturaDrmLicenseAccessDetails': KalturaDrmLicenseAccessDetails,
             'KalturaDrmPolicy': KalturaDrmPolicy,
             'KalturaDrmProfile': KalturaDrmProfile,
             'KalturaAccessControlDrmPolicyAction': KalturaAccessControlDrmPolicyAction,

@@ -230,38 +230,6 @@ class KalturaBeacon(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBeaconSearchParams(KalturaObjectBase):
-    def __init__(self,
-            objectId=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var string
-        self.objectId = objectId
-
-
-    PROPERTY_LOADERS = {
-        'objectId': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBeaconSearchParams.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBeaconSearchParams")
-        kparams.addStringIfDefined("objectId", self.objectId)
-        return kparams
-
-    def getObjectId(self):
-        return self.objectId
-
-    def setObjectId(self, newObjectId):
-        self.objectId = newObjectId
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaBeaconSearchScheduledResourceOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
             sortOrder=NotImplemented,
@@ -292,38 +260,6 @@ class KalturaBeaconSearchScheduledResourceOrderByItem(KalturaESearchOrderByItem)
 
     def setSortField(self, newSortField):
         self.sortField = newSortField
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBeaconSearchScheduledResourceOrderBy(KalturaObjectBase):
-    def __init__(self,
-            orderItems=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var array of KalturaBeaconSearchScheduledResourceOrderByItem
-        self.orderItems = orderItems
-
-
-    PROPERTY_LOADERS = {
-        'orderItems': (KalturaObjectFactory.createArray, 'KalturaBeaconSearchScheduledResourceOrderByItem'), 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBeaconSearchScheduledResourceOrderBy.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaBeaconSearchScheduledResourceOrderBy")
-        kparams.addArrayIfDefined("orderItems", self.orderItems)
-        return kparams
-
-    def getOrderItems(self):
-        return self.orderItems
-
-    def setOrderItems(self, newOrderItems):
-        self.orderItems = newOrderItems
 
 
 # @package Kaltura
@@ -547,52 +483,6 @@ class KalturaBeaconScheduledResourceOperator(KalturaBeaconScheduledResourceBaseI
 
 # @package Kaltura
 # @subpackage Client
-class KalturaBeaconScheduledResourceSearchParams(KalturaBeaconSearchParams):
-    def __init__(self,
-            objectId=NotImplemented,
-            searchOperator=NotImplemented,
-            orderBy=NotImplemented):
-        KalturaBeaconSearchParams.__init__(self,
-            objectId)
-
-        # @var KalturaBeaconScheduledResourceOperator
-        self.searchOperator = searchOperator
-
-        # @var KalturaBeaconSearchScheduledResourceOrderBy
-        self.orderBy = orderBy
-
-
-    PROPERTY_LOADERS = {
-        'searchOperator': (KalturaObjectFactory.create, 'KalturaBeaconScheduledResourceOperator'), 
-        'orderBy': (KalturaObjectFactory.create, 'KalturaBeaconSearchScheduledResourceOrderBy'), 
-    }
-
-    def fromXml(self, node):
-        KalturaBeaconSearchParams.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaBeaconScheduledResourceSearchParams.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaBeaconSearchParams.toParams(self)
-        kparams.put("objectType", "KalturaBeaconScheduledResourceSearchParams")
-        kparams.addObjectIfDefined("searchOperator", self.searchOperator)
-        kparams.addObjectIfDefined("orderBy", self.orderBy)
-        return kparams
-
-    def getSearchOperator(self):
-        return self.searchOperator
-
-    def setSearchOperator(self, newSearchOperator):
-        self.searchOperator = newSearchOperator
-
-    def getOrderBy(self):
-        return self.orderBy
-
-    def setOrderBy(self, newOrderBy):
-        self.orderBy = newOrderBy
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaBeaconFilter(KalturaBeaconBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -678,55 +568,6 @@ class KalturaBeaconScheduledResourceItem(KalturaBeaconAbstractScheduledResourceI
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaBeaconService(KalturaServiceBase):
-    """Sending beacons on objects"""
-
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def add(self, beacon, shouldLog = 0):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("beacon", beacon)
-        kparams.addIntIfDefined("shouldLog", shouldLog);
-        self.client.queueServiceActionCall("beacon_beacon", "add", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return getXmlNodeBool(resultNode)
-
-    def enhanceSearch(self, filter = NotImplemented, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("beacon_beacon", "enhanceSearch", "KalturaBeaconListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaBeaconListResponse')
-
-    def list(self, filter = NotImplemented, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("beacon_beacon", "list", "KalturaBeaconListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaBeaconListResponse')
-
-    def searchScheduledResource(self, searchParams, pager = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("searchParams", searchParams)
-        kparams.addObjectIfDefined("pager", pager)
-        self.client.queueServiceActionCall("beacon_beacon", "searchScheduledResource", "KalturaBeaconListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaBeaconListResponse')
-
 ########## main ##########
 class KalturaBeaconClientPlugin(KalturaClientPlugin):
     # KalturaBeaconClientPlugin
@@ -742,7 +583,6 @@ class KalturaBeaconClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'beacon': KalturaBeaconService,
         }
 
     def getEnums(self):
@@ -757,14 +597,11 @@ class KalturaBeaconClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaBeacon': KalturaBeacon,
-            'KalturaBeaconSearchParams': KalturaBeaconSearchParams,
             'KalturaBeaconSearchScheduledResourceOrderByItem': KalturaBeaconSearchScheduledResourceOrderByItem,
-            'KalturaBeaconSearchScheduledResourceOrderBy': KalturaBeaconSearchScheduledResourceOrderBy,
             'KalturaBeaconBaseFilter': KalturaBeaconBaseFilter,
             'KalturaBeaconEnhanceFilter': KalturaBeaconEnhanceFilter,
             'KalturaBeaconListResponse': KalturaBeaconListResponse,
             'KalturaBeaconScheduledResourceOperator': KalturaBeaconScheduledResourceOperator,
-            'KalturaBeaconScheduledResourceSearchParams': KalturaBeaconScheduledResourceSearchParams,
             'KalturaBeaconFilter': KalturaBeaconFilter,
             'KalturaBeaconScheduledResourceItem': KalturaBeaconScheduledResourceItem,
         }

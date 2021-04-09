@@ -95,50 +95,6 @@ class KalturaESearchHistory(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaESearchHistoryFilter(KalturaESearchBaseFilter):
-    def __init__(self,
-            searchTermStartsWith=NotImplemented,
-            searchedObjectIn=NotImplemented):
-        KalturaESearchBaseFilter.__init__(self)
-
-        # @var string
-        self.searchTermStartsWith = searchTermStartsWith
-
-        # @var string
-        self.searchedObjectIn = searchedObjectIn
-
-
-    PROPERTY_LOADERS = {
-        'searchTermStartsWith': getXmlNodeText, 
-        'searchedObjectIn': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaESearchBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaESearchHistoryFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaESearchBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaESearchHistoryFilter")
-        kparams.addStringIfDefined("searchTermStartsWith", self.searchTermStartsWith)
-        kparams.addStringIfDefined("searchedObjectIn", self.searchedObjectIn)
-        return kparams
-
-    def getSearchTermStartsWith(self):
-        return self.searchTermStartsWith
-
-    def setSearchTermStartsWith(self, newSearchTermStartsWith):
-        self.searchTermStartsWith = newSearchTermStartsWith
-
-    def getSearchedObjectIn(self):
-        return self.searchedObjectIn
-
-    def setSearchedObjectIn(self, newSearchedObjectIn):
-        self.searchedObjectIn = newSearchedObjectIn
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaESearchHistoryListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -169,30 +125,6 @@ class KalturaESearchHistoryListResponse(KalturaListResponse):
 
 
 ########## services ##########
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSearchHistoryService(KalturaServiceBase):
-    def __init__(self, client = None):
-        KalturaServiceBase.__init__(self, client)
-
-    def delete(self, searchTerm):
-        kparams = KalturaParams()
-        kparams.addStringIfDefined("searchTerm", searchTerm)
-        self.client.queueServiceActionCall("searchhistory_searchhistory", "delete", "None", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-
-    def list(self, filter = NotImplemented):
-        kparams = KalturaParams()
-        kparams.addObjectIfDefined("filter", filter)
-        self.client.queueServiceActionCall("searchhistory_searchhistory", "list", "KalturaESearchHistoryListResponse", kparams)
-        if self.client.isMultiRequest():
-            return self.client.getMultiRequestResult()
-        resultNode = self.client.doQueue()
-        return KalturaObjectFactory.create(resultNode, 'KalturaESearchHistoryListResponse')
-
 ########## main ##########
 class KalturaSearchHistoryClientPlugin(KalturaClientPlugin):
     # KalturaSearchHistoryClientPlugin
@@ -208,7 +140,6 @@ class KalturaSearchHistoryClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
-            'searchHistory': KalturaSearchHistoryService,
         }
 
     def getEnums(self):
@@ -218,7 +149,6 @@ class KalturaSearchHistoryClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaESearchHistory': KalturaESearchHistory,
-            'KalturaESearchHistoryFilter': KalturaESearchHistoryFilter,
             'KalturaESearchHistoryListResponse': KalturaESearchHistoryListResponse,
         }
 
