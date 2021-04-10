@@ -1296,6 +1296,50 @@ class KalturaAuditTrailFilter(KalturaAuditTrailBaseFilter):
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAuditTrailService(KalturaServiceBase):
+    """The Audit Trail service allows you to keep track of changes made to various Kaltura objects. 
+     This service is disabled by default."""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, auditTrail):
+        """Allows you to add an audit trail object and audit trail content associated with Kaltura object"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("auditTrail", auditTrail)
+        self.client.queueServiceActionCall("audit_audittrail", "add", "KalturaAuditTrail", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaAuditTrail')
+
+    def get(self, id):
+        """Retrieve an audit trail object by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("audit_audittrail", "get", "KalturaAuditTrail", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaAuditTrail')
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List audit trail objects by filter and pager"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("audit_audittrail", "list", "KalturaAuditTrailListResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaAuditTrailListResponse')
+
 ########## main ##########
 class KalturaAuditClientPlugin(KalturaClientPlugin):
     # KalturaAuditClientPlugin
@@ -1311,6 +1355,7 @@ class KalturaAuditClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'auditTrail': KalturaAuditTrailService,
         }
 
     def getEnums(self):

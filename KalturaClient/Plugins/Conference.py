@@ -76,6 +76,86 @@ class KalturaConferenceServerNodeOrderBy(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaRoomDetails(KalturaObjectBase):
+    def __init__(self,
+            serverUrl=NotImplemented,
+            entryId=NotImplemented,
+            token=NotImplemented,
+            expiry=NotImplemented,
+            serverName=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.serverUrl = serverUrl
+
+        # @var string
+        self.entryId = entryId
+
+        # @var string
+        self.token = token
+
+        # @var int
+        self.expiry = expiry
+
+        # @var string
+        self.serverName = serverName
+
+
+    PROPERTY_LOADERS = {
+        'serverUrl': getXmlNodeText, 
+        'entryId': getXmlNodeText, 
+        'token': getXmlNodeText, 
+        'expiry': getXmlNodeInt, 
+        'serverName': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRoomDetails.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaRoomDetails")
+        kparams.addStringIfDefined("serverUrl", self.serverUrl)
+        kparams.addStringIfDefined("entryId", self.entryId)
+        kparams.addStringIfDefined("token", self.token)
+        kparams.addIntIfDefined("expiry", self.expiry)
+        kparams.addStringIfDefined("serverName", self.serverName)
+        return kparams
+
+    def getServerUrl(self):
+        return self.serverUrl
+
+    def setServerUrl(self, newServerUrl):
+        self.serverUrl = newServerUrl
+
+    def getEntryId(self):
+        return self.entryId
+
+    def setEntryId(self, newEntryId):
+        self.entryId = newEntryId
+
+    def getToken(self):
+        return self.token
+
+    def setToken(self, newToken):
+        self.token = newToken
+
+    def getExpiry(self):
+        return self.expiry
+
+    def setExpiry(self, newExpiry):
+        self.expiry = newExpiry
+
+    def getServerName(self):
+        return self.serverName
+
+    def setServerName(self, newServerName):
+        self.serverName = newServerName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaConferenceEntryServerNode(KalturaEntryServerNode):
     def __init__(self,
             id=NotImplemented,
@@ -484,6 +564,7 @@ class KalturaConferenceClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaRoomDetails': KalturaRoomDetails,
             'KalturaConferenceEntryServerNode': KalturaConferenceEntryServerNode,
             'KalturaConferenceServerNode': KalturaConferenceServerNode,
             'KalturaConferenceEntryServerNodeBaseFilter': KalturaConferenceEntryServerNodeBaseFilter,

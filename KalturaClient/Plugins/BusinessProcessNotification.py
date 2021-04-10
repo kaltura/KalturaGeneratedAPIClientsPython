@@ -150,6 +150,86 @@ class KalturaBusinessProcessStartNotificationTemplateOrderBy(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaBusinessProcessCase(KalturaObjectBase):
+    def __init__(self,
+            id=NotImplemented,
+            businessProcessId=NotImplemented,
+            businessProcessStartNotificationTemplateId=NotImplemented,
+            suspended=NotImplemented,
+            activityId=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.id = id
+
+        # @var string
+        self.businessProcessId = businessProcessId
+
+        # @var int
+        self.businessProcessStartNotificationTemplateId = businessProcessStartNotificationTemplateId
+
+        # @var bool
+        self.suspended = suspended
+
+        # @var string
+        self.activityId = activityId
+
+
+    PROPERTY_LOADERS = {
+        'id': getXmlNodeText, 
+        'businessProcessId': getXmlNodeText, 
+        'businessProcessStartNotificationTemplateId': getXmlNodeInt, 
+        'suspended': getXmlNodeBool, 
+        'activityId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaBusinessProcessCase.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaBusinessProcessCase")
+        kparams.addStringIfDefined("id", self.id)
+        kparams.addStringIfDefined("businessProcessId", self.businessProcessId)
+        kparams.addIntIfDefined("businessProcessStartNotificationTemplateId", self.businessProcessStartNotificationTemplateId)
+        kparams.addBoolIfDefined("suspended", self.suspended)
+        kparams.addStringIfDefined("activityId", self.activityId)
+        return kparams
+
+    def getId(self):
+        return self.id
+
+    def setId(self, newId):
+        self.id = newId
+
+    def getBusinessProcessId(self):
+        return self.businessProcessId
+
+    def setBusinessProcessId(self, newBusinessProcessId):
+        self.businessProcessId = newBusinessProcessId
+
+    def getBusinessProcessStartNotificationTemplateId(self):
+        return self.businessProcessStartNotificationTemplateId
+
+    def setBusinessProcessStartNotificationTemplateId(self, newBusinessProcessStartNotificationTemplateId):
+        self.businessProcessStartNotificationTemplateId = newBusinessProcessStartNotificationTemplateId
+
+    def getSuspended(self):
+        return self.suspended
+
+    def setSuspended(self, newSuspended):
+        self.suspended = newSuspended
+
+    def getActivityId(self):
+        return self.activityId
+
+    def setActivityId(self, newActivityId):
+        self.activityId = newActivityId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBusinessProcessServer(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -1385,6 +1465,49 @@ class KalturaBusinessProcessStartNotificationTemplateFilter(KalturaBusinessProce
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaBusinessProcessCaseService(KalturaServiceBase):
+    """Business-process case service lets you get information about processes"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def abort(self, objectType, objectId, businessProcessStartNotificationTemplateId):
+        """Abort business-process case"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("objectType", objectType)
+        kparams.addStringIfDefined("objectId", objectId)
+        kparams.addIntIfDefined("businessProcessStartNotificationTemplateId", businessProcessStartNotificationTemplateId);
+        self.client.queueServiceActionCall("businessprocessnotification_businessprocesscase", "abort", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def list(self, objectType, objectId):
+        """list business-process cases"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("objectType", objectType)
+        kparams.addStringIfDefined("objectId", objectId)
+        self.client.queueServiceActionCall("businessprocessnotification_businessprocesscase", "list", "KalturaBusinessProcessCase", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.createArray(resultNode, 'KalturaBusinessProcessCase')
+
+    def serveDiagram(self, objectType, objectId, businessProcessStartNotificationTemplateId):
+        """Server business-process case diagram"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("objectType", objectType)
+        kparams.addStringIfDefined("objectId", objectId)
+        kparams.addIntIfDefined("businessProcessStartNotificationTemplateId", businessProcessStartNotificationTemplateId);
+        self.client.queueServiceActionCall('businessprocessnotification_businessprocesscase', 'serveDiagram', None ,kparams)
+        return self.client.getServeUrl()
+
 ########## main ##########
 class KalturaBusinessProcessNotificationClientPlugin(KalturaClientPlugin):
     # KalturaBusinessProcessNotificationClientPlugin
@@ -1400,6 +1523,7 @@ class KalturaBusinessProcessNotificationClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'businessProcessCase': KalturaBusinessProcessCaseService,
         }
 
     def getEnums(self):
@@ -1415,6 +1539,7 @@ class KalturaBusinessProcessNotificationClientPlugin(KalturaClientPlugin):
 
     def getTypes(self):
         return {
+            'KalturaBusinessProcessCase': KalturaBusinessProcessCase,
             'KalturaBusinessProcessServer': KalturaBusinessProcessServer,
             'KalturaBusinessProcessNotificationTemplate': KalturaBusinessProcessNotificationTemplate,
             'KalturaBusinessProcessServerBaseFilter': KalturaBusinessProcessServerBaseFilter,

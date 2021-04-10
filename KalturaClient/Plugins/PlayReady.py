@@ -249,6 +249,52 @@ class KalturaPlayReadyAnalogVideoOPIdHolder(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPlayReadyContentKey(KalturaObjectBase):
+    def __init__(self,
+            keyId=NotImplemented,
+            contentKey=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # Guid - key id of the specific content
+        # @var string
+        self.keyId = keyId
+
+        # License content key 64 bit encoded
+        # @var string
+        self.contentKey = contentKey
+
+
+    PROPERTY_LOADERS = {
+        'keyId': getXmlNodeText, 
+        'contentKey': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlayReadyContentKey.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlayReadyContentKey")
+        kparams.addStringIfDefined("keyId", self.keyId)
+        kparams.addStringIfDefined("contentKey", self.contentKey)
+        return kparams
+
+    def getKeyId(self):
+        return self.keyId
+
+    def setKeyId(self, newKeyId):
+        self.keyId = newKeyId
+
+    def getContentKey(self):
+        return self.contentKey
+
+    def setContentKey(self, newContentKey):
+        self.contentKey = newContentKey
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPlayReadyCopyEnablerHolder(KalturaObjectBase):
     def __init__(self,
             type=NotImplemented):
@@ -439,6 +485,78 @@ class KalturaPlayReadyPolicy(KalturaDrmPolicy):
 
     def setRights(self, newRights):
         self.rights = newRights
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlayReadyLicenseDetails(KalturaObjectBase):
+    def __init__(self,
+            policy=NotImplemented,
+            beginDate=NotImplemented,
+            expirationDate=NotImplemented,
+            removalDate=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # PlayReady policy object
+        # @var KalturaPlayReadyPolicy
+        self.policy = policy
+
+        # License begin date
+        # @var int
+        self.beginDate = beginDate
+
+        # License expiration date
+        # @var int
+        self.expirationDate = expirationDate
+
+        # License removal date
+        # @var int
+        self.removalDate = removalDate
+
+
+    PROPERTY_LOADERS = {
+        'policy': (KalturaObjectFactory.create, 'KalturaPlayReadyPolicy'), 
+        'beginDate': getXmlNodeInt, 
+        'expirationDate': getXmlNodeInt, 
+        'removalDate': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPlayReadyLicenseDetails.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPlayReadyLicenseDetails")
+        kparams.addObjectIfDefined("policy", self.policy)
+        kparams.addIntIfDefined("beginDate", self.beginDate)
+        kparams.addIntIfDefined("expirationDate", self.expirationDate)
+        kparams.addIntIfDefined("removalDate", self.removalDate)
+        return kparams
+
+    def getPolicy(self):
+        return self.policy
+
+    def setPolicy(self, newPolicy):
+        self.policy = newPolicy
+
+    def getBeginDate(self):
+        return self.beginDate
+
+    def setBeginDate(self, newBeginDate):
+        self.beginDate = newBeginDate
+
+    def getExpirationDate(self):
+        return self.expirationDate
+
+    def setExpirationDate(self, newExpirationDate):
+        self.expirationDate = newExpirationDate
+
+    def getRemovalDate(self):
+        return self.removalDate
+
+    def setRemovalDate(self, newRemovalDate):
+        self.removalDate = newRemovalDate
 
 
 # @package Kaltura
@@ -873,6 +991,61 @@ class KalturaPlayReadyProfileFilter(KalturaPlayReadyProfileBaseFilter):
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPlayReadyDrmService(KalturaServiceBase):
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def generateKey(self):
+        """Generate key id and content key for PlayReady encryption"""
+
+        kparams = KalturaParams()
+        self.client.queueServiceActionCall("playready_playreadydrm", "generateKey", "KalturaPlayReadyContentKey", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaPlayReadyContentKey')
+
+    def getContentKeys(self, keyIds):
+        """Get content keys for input key ids"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("keyIds", keyIds)
+        self.client.queueServiceActionCall("playready_playreadydrm", "getContentKeys", "KalturaPlayReadyContentKey", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.createArray(resultNode, 'KalturaPlayReadyContentKey')
+
+    def getEntryContentKey(self, entryId, createIfMissing = False):
+        """Get content key and key id for the given entry"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addBoolIfDefined("createIfMissing", createIfMissing);
+        self.client.queueServiceActionCall("playready_playreadydrm", "getEntryContentKey", "KalturaPlayReadyContentKey", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaPlayReadyContentKey')
+
+    def getLicenseDetails(self, keyId, deviceId, deviceType, entryId = NotImplemented, referrer = NotImplemented):
+        """Get Play Ready policy and dates for license creation"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("keyId", keyId)
+        kparams.addStringIfDefined("deviceId", deviceId)
+        kparams.addIntIfDefined("deviceType", deviceType);
+        kparams.addStringIfDefined("entryId", entryId)
+        kparams.addStringIfDefined("referrer", referrer)
+        self.client.queueServiceActionCall("playready_playreadydrm", "getLicenseDetails", "KalturaPlayReadyLicenseDetails", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaPlayReadyLicenseDetails')
+
 ########## main ##########
 class KalturaPlayReadyClientPlugin(KalturaClientPlugin):
     # KalturaPlayReadyClientPlugin
@@ -888,6 +1061,7 @@ class KalturaPlayReadyClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'playReadyDrm': KalturaPlayReadyDrmService,
         }
 
     def getEnums(self):
@@ -909,10 +1083,12 @@ class KalturaPlayReadyClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaPlayReadyAnalogVideoOPIdHolder': KalturaPlayReadyAnalogVideoOPIdHolder,
+            'KalturaPlayReadyContentKey': KalturaPlayReadyContentKey,
             'KalturaPlayReadyCopyEnablerHolder': KalturaPlayReadyCopyEnablerHolder,
             'KalturaPlayReadyDigitalAudioOPIdHolder': KalturaPlayReadyDigitalAudioOPIdHolder,
             'KalturaPlayReadyRight': KalturaPlayReadyRight,
             'KalturaPlayReadyPolicy': KalturaPlayReadyPolicy,
+            'KalturaPlayReadyLicenseDetails': KalturaPlayReadyLicenseDetails,
             'KalturaPlayReadyPlayEnablerHolder': KalturaPlayReadyPlayEnablerHolder,
             'KalturaPlayReadyCopyRight': KalturaPlayReadyCopyRight,
             'KalturaPlayReadyPlayRight': KalturaPlayReadyPlayRight,

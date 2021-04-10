@@ -3889,6 +3889,395 @@ class KalturaVendorTranslationCatalogItemFilter(KalturaVendorTranslationCatalogI
 
 
 ########## services ##########
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorCatalogItemService(KalturaServiceBase):
+    """Vendor Catalog Item Service"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, vendorCatalogItem):
+        """Allows you to add an service catalog item"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("vendorCatalogItem", vendorCatalogItem)
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "add", "KalturaVendorCatalogItem", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
+
+    def addFromBulkUpload(self, fileData, bulkUploadData = NotImplemented, bulkUploadVendorCatalogItemData = NotImplemented):
+        kparams = KalturaParams()
+        kfiles = {"fileData": fileData}
+        kparams.addObjectIfDefined("bulkUploadData", bulkUploadData)
+        kparams.addObjectIfDefined("bulkUploadVendorCatalogItemData", bulkUploadVendorCatalogItemData)
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "addFromBulkUpload", "KalturaBulkUpload", kparams, kfiles)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
+
+    def delete(self, id):
+        """Delete vedor catalog item object"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "delete", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def get(self, id):
+        """Retrieve specific catalog item by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "get", "KalturaVendorCatalogItem", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
+
+    def getServeUrl(self, vendorPartnerId = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "getServeUrl", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List KalturaVendorCatalogItem objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "list", "KalturaVendorCatalogItemListResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItemListResponse')
+
+    def serve(self, vendorPartnerId = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        self.client.queueServiceActionCall('reach_vendorcatalogitem', 'serve', None ,kparams)
+        return self.client.getServeUrl()
+
+    def update(self, id, vendorCatalogItem):
+        """Update an existing vedor catalog item object"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("vendorCatalogItem", vendorCatalogItem)
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "update", "KalturaVendorCatalogItem", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
+
+    def updateStatus(self, id, status):
+        """Update vendor catalog item status by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addIntIfDefined("status", status);
+        self.client.queueServiceActionCall("reach_vendorcatalogitem", "updateStatus", "KalturaVendorCatalogItem", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReachProfileService(KalturaServiceBase):
+    """Reach Profile Service"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, reachProfile):
+        """Allows you to add a partner specific reach profile"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("reachProfile", reachProfile)
+        self.client.queueServiceActionCall("reach_reachprofile", "add", "KalturaReachProfile", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfile')
+
+    def delete(self, id):
+        """Delete vednor profile by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_reachprofile", "delete", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
+    def get(self, id):
+        """Retrieve specific reach profile by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_reachprofile", "get", "KalturaReachProfile", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfile')
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List KalturaReachProfile objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("reach_reachprofile", "list", "KalturaReachProfileListResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfileListResponse')
+
+    def syncCredit(self, reachProfileId):
+        """sync vednor profile credit"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("reachProfileId", reachProfileId);
+        self.client.queueServiceActionCall("reach_reachprofile", "syncCredit", "KalturaReachProfile", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfile')
+
+    def update(self, id, reachProfile):
+        """Update an existing reach profile object"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("reachProfile", reachProfile)
+        self.client.queueServiceActionCall("reach_reachprofile", "update", "KalturaReachProfile", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfile')
+
+    def updateStatus(self, id, status):
+        """Update reach profile status by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addIntIfDefined("status", status);
+        self.client.queueServiceActionCall("reach_reachprofile", "updateStatus", "KalturaReachProfile", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaReachProfile')
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryVendorTaskService(KalturaServiceBase):
+    """Entry Vendor Task Service"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def abort(self, id, abortReason = NotImplemented):
+        """Cancel entry task. will only occur for task in PENDING or PENDING_MODERATION status"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addStringIfDefined("abortReason", abortReason)
+        self.client.queueServiceActionCall("reach_entryvendortask", "abort", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def add(self, entryVendorTask):
+        """Allows you to add a entry vendor task"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("entryVendorTask", entryVendorTask)
+        self.client.queueServiceActionCall("reach_entryvendortask", "add", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def approve(self, id):
+        """Approve entry vendor task for execution."""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_entryvendortask", "approve", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def exportToCsv(self, filter):
+        """add batch job that sends an email with a link to download an updated CSV that contains list of users"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        self.client.queueServiceActionCall("reach_entryvendortask", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def extendAccessKey(self, id):
+        """Extend access key in case the existing one has expired."""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_entryvendortask", "extendAccessKey", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def get(self, id):
+        """Retrieve specific entry vendor task by id"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_entryvendortask", "get", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def getJobs(self, filter = NotImplemented, pager = NotImplemented):
+        """get KalturaEntryVendorTask objects for specific vendor partner"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("reach_entryvendortask", "getJobs", "KalturaEntryVendorTaskListResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTaskListResponse')
+
+    def getServeUrl(self, filterType = NotImplemented, filterInput = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("filterType", filterType)
+        kparams.addIntIfDefined("filterInput", filterInput);
+        kparams.addIntIfDefined("status", status);
+        kparams.addStringIfDefined("dueDate", dueDate)
+        self.client.queueServiceActionCall("reach_entryvendortask", "getServeUrl", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def list(self, filter = NotImplemented, pager = NotImplemented):
+        """List KalturaEntryVendorTask objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("reach_entryvendortask", "list", "KalturaEntryVendorTaskListResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTaskListResponse')
+
+    def reject(self, id, rejectReason = NotImplemented):
+        """Reject entry vendor task for execution."""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addStringIfDefined("rejectReason", rejectReason)
+        self.client.queueServiceActionCall("reach_entryvendortask", "reject", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def serve(self, vendorPartnerId = NotImplemented, partnerId = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        kparams.addIntIfDefined("partnerId", partnerId);
+        kparams.addIntIfDefined("status", status);
+        kparams.addStringIfDefined("dueDate", dueDate)
+        self.client.queueServiceActionCall('reach_entryvendortask', 'serve', None ,kparams)
+        return self.client.getServeUrl()
+
+    def serveCsv(self, id):
+        """Will serve a requested csv"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("id", id)
+        self.client.queueServiceActionCall("reach_entryvendortask", "serveCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
+    def update(self, id, entryVendorTask):
+        """Update entry vendor task. Only the properties that were set will be updated."""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("entryVendorTask", entryVendorTask)
+        self.client.queueServiceActionCall("reach_entryvendortask", "update", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+    def updateJob(self, id, entryVendorTask):
+        """Update entry vendor task. Only the properties that were set will be updated."""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addObjectIfDefined("entryVendorTask", entryVendorTask)
+        self.client.queueServiceActionCall("reach_entryvendortask", "updateJob", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaPartnerCatalogItemService(KalturaServiceBase):
+    """Partner Catalog Item Service"""
+
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def add(self, id):
+        """Assign existing catalogItem to specific account"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_partnercatalogitem", "add", "KalturaVendorCatalogItem", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItem')
+
+    def delete(self, id):
+        """Remove existing catalogItem from specific account"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        self.client.queueServiceActionCall("reach_partnercatalogitem", "delete", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
 ########## main ##########
 class KalturaReachClientPlugin(KalturaClientPlugin):
     # KalturaReachClientPlugin
@@ -3904,6 +4293,10 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
     # @return array<KalturaServiceBase>
     def getServices(self):
         return {
+            'vendorCatalogItem': KalturaVendorCatalogItemService,
+            'reachProfile': KalturaReachProfileService,
+            'entryVendorTask': KalturaEntryVendorTaskService,
+            'PartnerCatalogItem': KalturaPartnerCatalogItemService,
         }
 
     def getEnums(self):
