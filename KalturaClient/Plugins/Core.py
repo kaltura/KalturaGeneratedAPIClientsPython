@@ -5,7 +5,7 @@
 #                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 #
 # This file is part of the Kaltura Collaborative Media Suite which allows users
-# to do with audio, video, and animation what Wiki platfroms allow them to do with
+# to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
 # Copyright (C) 2006-2021  Kaltura Inc.
@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '16.19.0'
+API_VERSION = '17.1.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5346,6 +5346,8 @@ class KalturaReportType(object):
     TOP_USERS_WEBCAST = "40009"
     ENGAGEMENT_BREAKDOWN_WEBCAST = "40010"
     ENGAGMENT_TIMELINE_WEBCAST = "40011"
+    ENGAGEMENT_TOOLS_WEBCAST = "40012"
+    REACTIONS_BREAKDOWN_WEBCAST = "40013"
 
     def __init__(self, value):
         self.value = value
@@ -7635,7 +7637,8 @@ class KalturaBaseEntry(KalturaObjectBase):
             templateEntryId=NotImplemented,
             displayInSearch=NotImplemented,
             application=NotImplemented,
-            applicationVersion=NotImplemented):
+            applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated 10 characters alphanumeric string
@@ -7846,6 +7849,10 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @insertonly
         self.applicationVersion = applicationVersion
 
+        # Block auto transcript on Entry
+        # @var bool
+        self.blockAutoTranscript = blockAutoTranscript
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -7895,6 +7902,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         'displayInSearch': (KalturaEnumsFactory.createInt, "KalturaEntryDisplayInSearchType"), 
         'application': (KalturaEnumsFactory.createString, "KalturaEntryApplication"), 
         'applicationVersion': getXmlNodeText, 
+        'blockAutoTranscript': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -7932,6 +7940,7 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams.addIntEnumIfDefined("displayInSearch", self.displayInSearch)
         kparams.addStringEnumIfDefined("application", self.application)
         kparams.addStringIfDefined("applicationVersion", self.applicationVersion)
+        kparams.addBoolIfDefined("blockAutoTranscript", self.blockAutoTranscript)
         return kparams
 
     def getId(self):
@@ -8158,6 +8167,12 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setApplicationVersion(self, newApplicationVersion):
         self.applicationVersion = newApplicationVersion
+
+    def getBlockAutoTranscript(self):
+        return self.blockAutoTranscript
+
+    def setBlockAutoTranscript(self, newBlockAutoTranscript):
+        self.blockAutoTranscript = newBlockAutoTranscript
 
 
 # @package Kaltura
@@ -13157,6 +13172,7 @@ class KalturaDataEntry(KalturaBaseEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             dataContent=NotImplemented,
             retrieveDataContentByGet=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -13206,7 +13222,8 @@ class KalturaDataEntry(KalturaBaseEntry):
             templateEntryId,
             displayInSearch,
             application,
-            applicationVersion)
+            applicationVersion,
+            blockAutoTranscript)
 
         # The data of the entry
         # @var string
@@ -15208,6 +15225,7 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -15263,7 +15281,8 @@ class KalturaPlayableEntry(KalturaBaseEntry):
             templateEntryId,
             displayInSearch,
             application,
-            applicationVersion)
+            applicationVersion,
+            blockAutoTranscript)
 
         # Number of plays
         # @var int
@@ -15509,6 +15528,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -15578,6 +15598,7 @@ class KalturaMediaEntry(KalturaPlayableEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -19320,6 +19341,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -19409,6 +19431,7 @@ class KalturaLiveEntry(KalturaMediaEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -19720,6 +19743,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -19811,6 +19835,7 @@ class KalturaLiveChannel(KalturaLiveEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -20818,6 +20843,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -20927,6 +20953,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -24034,6 +24061,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -24093,6 +24121,7 @@ class KalturaMixEntry(KalturaPlayableEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -24841,38 +24870,6 @@ class KalturaPlaybackSource(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTypedArray(KalturaObjectBase):
-    def __init__(self,
-            count=NotImplemented):
-        KalturaObjectBase.__init__(self)
-
-        # @var int
-        self.count = count
-
-
-    PROPERTY_LOADERS = {
-        'count': getXmlNodeInt, 
-    }
-
-    def fromXml(self, node):
-        KalturaObjectBase.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTypedArray.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaObjectBase.toParams(self)
-        kparams.put("objectType", "KalturaTypedArray")
-        kparams.addIntIfDefined("count", self.count)
-        return kparams
-
-    def getCount(self):
-        return self.count
-
-    def setCount(self, newCount):
-        self.count = newCount
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaPlaybackContext(KalturaObjectBase):
     def __init__(self,
             sources=NotImplemented,
@@ -24900,7 +24897,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         # @var array of KalturaAccessControlMessage
         self.messages = messages
 
-        # @var KalturaTypedArray
+        # @var array of KalturaObject
         self.bumperData = bumperData
 
 
@@ -24910,7 +24907,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         'flavorAssets': (KalturaObjectFactory.createArray, 'KalturaFlavorAsset'), 
         'actions': (KalturaObjectFactory.createArray, 'KalturaRuleAction'), 
         'messages': (KalturaObjectFactory.createArray, 'KalturaAccessControlMessage'), 
-        'bumperData': (KalturaObjectFactory.create, 'KalturaTypedArray'), 
+        'bumperData': (KalturaObjectFactory.createArray, 'KalturaObject'), 
     }
 
     def fromXml(self, node):
@@ -24925,7 +24922,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         kparams.addArrayIfDefined("flavorAssets", self.flavorAssets)
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("messages", self.messages)
-        kparams.addObjectIfDefined("bumperData", self.bumperData)
+        kparams.addArrayIfDefined("bumperData", self.bumperData)
         return kparams
 
     def getSources(self):
@@ -25016,6 +25013,7 @@ class KalturaPlaylist(KalturaBaseEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             playlistContent=NotImplemented,
             filters=NotImplemented,
             totalResults=NotImplemented,
@@ -25071,7 +25069,8 @@ class KalturaPlaylist(KalturaBaseEntry):
             templateEntryId,
             displayInSearch,
             application,
-            applicationVersion)
+            applicationVersion,
+            blockAutoTranscript)
 
         # Content of the playlist - 
         # 	 XML if the playlistType is dynamic 
@@ -48738,6 +48737,73 @@ class KalturaLiveParams(KalturaFlavorParams):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMappedObjectsCsvJobData(KalturaExportCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
+            metadataProfileId=NotImplemented,
+            additionalFields=NotImplemented,
+            mappedFields=NotImplemented):
+        KalturaExportCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath,
+            sharedOutputPath)
+
+        # The metadata profile we should look the xpath in
+        # @var int
+        self.metadataProfileId = metadataProfileId
+
+        # The xpath to look in the metadataProfileId  and the wanted csv field name
+        # @var array of KalturaCsvAdditionalFieldInfo
+        self.additionalFields = additionalFields
+
+        # Array of header names and their mapped user fields
+        # @var array of KalturaKeyValue
+        self.mappedFields = mappedFields
+
+
+    PROPERTY_LOADERS = {
+        'metadataProfileId': getXmlNodeInt, 
+        'additionalFields': (KalturaObjectFactory.createArray, 'KalturaCsvAdditionalFieldInfo'), 
+        'mappedFields': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+    }
+
+    def fromXml(self, node):
+        KalturaExportCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMappedObjectsCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaExportCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaMappedObjectsCsvJobData")
+        kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
+        kparams.addArrayIfDefined("additionalFields", self.additionalFields)
+        kparams.addArrayIfDefined("mappedFields", self.mappedFields)
+        return kparams
+
+    def getMetadataProfileId(self):
+        return self.metadataProfileId
+
+    def setMetadataProfileId(self, newMetadataProfileId):
+        self.metadataProfileId = newMetadataProfileId
+
+    def getAdditionalFields(self):
+        return self.additionalFields
+
+    def setAdditionalFields(self, newAdditionalFields):
+        self.additionalFields = newAdditionalFields
+
+    def getMappedFields(self):
+        return self.mappedFields
+
+    def setMappedFields(self, newMappedFields):
+        self.mappedFields = newMappedFields
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaFlavorParams(KalturaFlavorParams):
     def __init__(self,
             id=NotImplemented,
@@ -51113,86 +51179,6 @@ class KalturaUserRoleBaseFilter(KalturaRelatedFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaUsersCsvJobData(KalturaExportCsvJobData):
-    def __init__(self,
-            userName=NotImplemented,
-            userMail=NotImplemented,
-            outputPath=NotImplemented,
-            sharedOutputPath=NotImplemented,
-            filter=NotImplemented,
-            metadataProfileId=NotImplemented,
-            additionalFields=NotImplemented,
-            mappedFields=NotImplemented):
-        KalturaExportCsvJobData.__init__(self,
-            userName,
-            userMail,
-            outputPath,
-            sharedOutputPath)
-
-        # The filter should return the list of users that need to be specified in the csv.
-        # @var KalturaUserFilter
-        self.filter = filter
-
-        # The metadata profile we should look the xpath in
-        # @var int
-        self.metadataProfileId = metadataProfileId
-
-        # The xpath to look in the metadataProfileId  and the wanted csv field name
-        # @var array of KalturaCsvAdditionalFieldInfo
-        self.additionalFields = additionalFields
-
-        # Array of header names and their mapped user fields
-        # @var array of KalturaKeyValue
-        self.mappedFields = mappedFields
-
-
-    PROPERTY_LOADERS = {
-        'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
-        'metadataProfileId': getXmlNodeInt, 
-        'additionalFields': (KalturaObjectFactory.createArray, 'KalturaCsvAdditionalFieldInfo'), 
-        'mappedFields': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
-    }
-
-    def fromXml(self, node):
-        KalturaExportCsvJobData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaUsersCsvJobData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaExportCsvJobData.toParams(self)
-        kparams.put("objectType", "KalturaUsersCsvJobData")
-        kparams.addObjectIfDefined("filter", self.filter)
-        kparams.addIntIfDefined("metadataProfileId", self.metadataProfileId)
-        kparams.addArrayIfDefined("additionalFields", self.additionalFields)
-        kparams.addArrayIfDefined("mappedFields", self.mappedFields)
-        return kparams
-
-    def getFilter(self):
-        return self.filter
-
-    def setFilter(self, newFilter):
-        self.filter = newFilter
-
-    def getMetadataProfileId(self):
-        return self.metadataProfileId
-
-    def setMetadataProfileId(self, newMetadataProfileId):
-        self.metadataProfileId = newMetadataProfileId
-
-    def getAdditionalFields(self):
-        return self.additionalFields
-
-    def setAdditionalFields(self, newAdditionalFields):
-        self.additionalFields = newAdditionalFields
-
-    def getMappedFields(self):
-        return self.mappedFields
-
-    def setMappedFields(self, newMappedFields):
-        self.mappedFields = newMappedFields
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaWidgetFilter(KalturaWidgetBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -53009,6 +52995,53 @@ class KalturaDocumentEntryMatchAttributeCondition(KalturaSearchMatchAttributeCon
 
     def setAttribute(self, newAttribute):
         self.attribute = newAttribute
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntriesCsvJobData(KalturaMappedObjectsCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
+            metadataProfileId=NotImplemented,
+            additionalFields=NotImplemented,
+            mappedFields=NotImplemented,
+            filter=NotImplemented):
+        KalturaMappedObjectsCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath,
+            sharedOutputPath,
+            metadataProfileId,
+            additionalFields,
+            mappedFields)
+
+        # The filter should return the list of entries that need to be specified in the csv.
+        # @var KalturaBaseEntryFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaBaseEntryFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaMappedObjectsCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntriesCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMappedObjectsCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaEntriesCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
 
 
 # @package Kaltura
@@ -54846,6 +54879,53 @@ class KalturaUserRoleFilter(KalturaUserRoleBaseFilter):
         kparams = KalturaUserRoleBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaUserRoleFilter")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUsersCsvJobData(KalturaMappedObjectsCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
+            metadataProfileId=NotImplemented,
+            additionalFields=NotImplemented,
+            mappedFields=NotImplemented,
+            filter=NotImplemented):
+        KalturaMappedObjectsCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath,
+            sharedOutputPath,
+            metadataProfileId,
+            additionalFields,
+            mappedFields)
+
+        # The filter should return the list of users that need to be specified in the csv.
+        # @var KalturaUserFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaUserFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaMappedObjectsCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUsersCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMappedObjectsCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaUsersCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
 
 
 # @package Kaltura
@@ -57545,6 +57625,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             plays=NotImplemented,
             views=NotImplemented,
             lastPlayedAt=NotImplemented,
@@ -57654,6 +57735,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             displayInSearch,
             application,
             applicationVersion,
+            blockAutoTranscript,
             plays,
             views,
             lastPlayedAt,
@@ -62013,6 +62095,20 @@ class KalturaBaseEntryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaBaseEntry')
+
+    def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented, mappedFields = NotImplemented):
+        """add batch job that sends an email with a link to download an updated CSV that contains list of entries"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
+        kparams.addArrayIfDefined("additionalFields", additionalFields)
+        kparams.addArrayIfDefined("mappedFields", mappedFields)
+        self.client.queueServiceActionCall("baseentry", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def flag(self, moderationFlag):
         """Flag inappropriate entry for moderation."""
@@ -67496,7 +67592,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermission': KalturaPermission,
             'KalturaPermissionItem': KalturaPermissionItem,
             'KalturaPlaybackSource': KalturaPlaybackSource,
-            'KalturaTypedArray': KalturaTypedArray,
             'KalturaPlaybackContext': KalturaPlaybackContext,
             'KalturaPlaylist': KalturaPlaylist,
             'KalturaRemotePath': KalturaRemotePath,
@@ -67789,6 +67884,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveAsset': KalturaLiveAsset,
             'KalturaLiveChannelSegmentBaseFilter': KalturaLiveChannelSegmentBaseFilter,
             'KalturaLiveParams': KalturaLiveParams,
+            'KalturaMappedObjectsCsvJobData': KalturaMappedObjectsCsvJobData,
             'KalturaMediaFlavorParams': KalturaMediaFlavorParams,
             'KalturaMediaInfoFilter': KalturaMediaInfoFilter,
             'KalturaMediaServerNode': KalturaMediaServerNode,
@@ -67819,7 +67915,6 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserEntryBaseFilter': KalturaUserEntryBaseFilter,
             'KalturaUserLoginDataBaseFilter': KalturaUserLoginDataBaseFilter,
             'KalturaUserRoleBaseFilter': KalturaUserRoleBaseFilter,
-            'KalturaUsersCsvJobData': KalturaUsersCsvJobData,
             'KalturaWidgetFilter': KalturaWidgetFilter,
             'KalturaAccessControlFilter': KalturaAccessControlFilter,
             'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
@@ -67851,6 +67946,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,
+            'KalturaEntriesCsvJobData': KalturaEntriesCsvJobData,
             'KalturaEvalBooleanField': KalturaEvalBooleanField,
             'KalturaEvalStringField': KalturaEvalStringField,
             'KalturaExternalMediaEntryCompareAttributeCondition': KalturaExternalMediaEntryCompareAttributeCondition,
@@ -67894,6 +67990,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUserEntryFilter': KalturaUserEntryFilter,
             'KalturaUserLoginDataFilter': KalturaUserLoginDataFilter,
             'KalturaUserRoleFilter': KalturaUserRoleFilter,
+            'KalturaUsersCsvJobData': KalturaUsersCsvJobData,
             'KalturaWebcamTokenResource': KalturaWebcamTokenResource,
             'KalturaYahooSyndicationFeedBaseFilter': KalturaYahooSyndicationFeedBaseFilter,
             'KalturaAmazonS3StorageProfileFilter': KalturaAmazonS3StorageProfileFilter,

@@ -5,7 +5,7 @@
 #                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 #
 # This file is part of the Kaltura Collaborative Media Suite which allows users
-# to do with audio, video, and animation what Wiki platfroms allow them to do with
+# to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
 # Copyright (C) 2006-2021  Kaltura Inc.
@@ -221,6 +221,7 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             displayInSearch=NotImplemented,
             application=NotImplemented,
             applicationVersion=NotImplemented,
+            blockAutoTranscript=NotImplemented,
             documentType=NotImplemented,
             assetParamsIds=NotImplemented):
         KalturaBaseEntry.__init__(self,
@@ -270,7 +271,8 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             templateEntryId,
             displayInSearch,
             application,
-            applicationVersion)
+            applicationVersion,
+            blockAutoTranscript)
 
         # The type of the document
         # @var KalturaDocumentType

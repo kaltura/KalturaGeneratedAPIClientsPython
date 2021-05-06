@@ -5,7 +5,7 @@
 #                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 #
 # This file is part of the Kaltura Collaborative Media Suite which allows users
-# to do with audio, video, and animation what Wiki platfroms allow them to do with
+# to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
 # Copyright (C) 2006-2021  Kaltura Inc.
@@ -86,7 +86,11 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
             zoomUserPostfix=NotImplemented,
             zoomWebinarCategory=NotImplemented,
             enableWebinarUploads=NotImplemented,
-            conversionProfileId=NotImplemented):
+            conversionProfileId=NotImplemented,
+            jwtToken=NotImplemented,
+            deletionPolicy=NotImplemented,
+            enableZoomTranscription=NotImplemented,
+            zoomAccountDescription=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -123,6 +127,18 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         # @var int
         self.conversionProfileId = conversionProfileId
 
+        # @var string
+        self.jwtToken = jwtToken
+
+        # @var KalturaNullableBoolean
+        self.deletionPolicy = deletionPolicy
+
+        # @var KalturaNullableBoolean
+        self.enableZoomTranscription = enableZoomTranscription
+
+        # @var string
+        self.zoomAccountDescription = zoomAccountDescription
+
 
     PROPERTY_LOADERS = {
         'defaultUserId': getXmlNodeText, 
@@ -136,6 +152,10 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         'zoomWebinarCategory': getXmlNodeText, 
         'enableWebinarUploads': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'conversionProfileId': getXmlNodeInt, 
+        'jwtToken': getXmlNodeText, 
+        'deletionPolicy': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'enableZoomTranscription': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'zoomAccountDescription': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -155,6 +175,10 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         kparams.addStringIfDefined("zoomWebinarCategory", self.zoomWebinarCategory)
         kparams.addIntEnumIfDefined("enableWebinarUploads", self.enableWebinarUploads)
         kparams.addIntIfDefined("conversionProfileId", self.conversionProfileId)
+        kparams.addStringIfDefined("jwtToken", self.jwtToken)
+        kparams.addIntEnumIfDefined("deletionPolicy", self.deletionPolicy)
+        kparams.addIntEnumIfDefined("enableZoomTranscription", self.enableZoomTranscription)
+        kparams.addStringIfDefined("zoomAccountDescription", self.zoomAccountDescription)
         return kparams
 
     def getDefaultUserId(self):
@@ -220,6 +244,61 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
     def setConversionProfileId(self, newConversionProfileId):
         self.conversionProfileId = newConversionProfileId
 
+    def getJwtToken(self):
+        return self.jwtToken
+
+    def setJwtToken(self, newJwtToken):
+        self.jwtToken = newJwtToken
+
+    def getDeletionPolicy(self):
+        return self.deletionPolicy
+
+    def setDeletionPolicy(self, newDeletionPolicy):
+        self.deletionPolicy = newDeletionPolicy
+
+    def getEnableZoomTranscription(self):
+        return self.enableZoomTranscription
+
+    def setEnableZoomTranscription(self, newEnableZoomTranscription):
+        self.enableZoomTranscription = newEnableZoomTranscription
+
+    def getZoomAccountDescription(self):
+        return self.zoomAccountDescription
+
+    def setZoomAccountDescription(self, newZoomAccountDescription):
+        self.zoomAccountDescription = newZoomAccountDescription
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaZoomIntegrationSettingResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount=NotImplemented,
+            objects=NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var array of KalturaZoomIntegrationSetting
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaZoomIntegrationSetting'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaZoomIntegrationSettingResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaZoomIntegrationSettingResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
 
 ########## services ##########
 
@@ -257,6 +336,25 @@ class KalturaZoomVendorService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaZoomIntegrationSetting')
 
+    def list(self, pager = NotImplemented):
+        """List KalturaZoomIntegrationSetting objects"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("pager", pager)
+        self.client.queueServiceActionCall("vendor_zoomvendor", "list", "KalturaZoomIntegrationSettingResponse", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaZoomIntegrationSettingResponse')
+
+    def localRegistrationPage(self, jwt):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("jwt", jwt)
+        self.client.queueServiceActionCall("vendor_zoomvendor", "localRegistrationPage", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+
     def oauthValidation(self):
         kparams = KalturaParams()
         self.client.queueServiceActionCall("vendor_zoomvendor", "oauthValidation", "None", kparams)
@@ -264,6 +362,16 @@ class KalturaZoomVendorService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
+
+    def preOauthValidation(self):
+        """load html page the that will ask the user for its KMC URL, derive the region of the user from it,
+        	 and redirect to the registration page in the correct region, while forwarding the necessary code for registration"""
+
+        kparams = KalturaParams()
+        self.client.queueServiceActionCall("vendor_zoomvendor", "preOauthValidation", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
 
     def recordingComplete(self):
         kparams = KalturaParams()
@@ -309,6 +417,7 @@ class KalturaVendorClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaZoomIntegrationSetting': KalturaZoomIntegrationSetting,
+            'KalturaZoomIntegrationSettingResponse': KalturaZoomIntegrationSettingResponse,
         }
 
     # @return string

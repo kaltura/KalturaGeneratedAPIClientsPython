@@ -5,7 +5,7 @@
 #                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 #
 # This file is part of the Kaltura Collaborative Media Suite which allows users
-# to do with audio, video, and animation what Wiki platfroms allow them to do with
+# to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
 # Copyright (C) 2006-2021  Kaltura Inc.
@@ -90,6 +90,18 @@ class KalturaCaptionParamsOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaCaptionSource(object):
+    UNKNOWN = "0"
+    ZOOM = "1"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCaptionType(object):
     SRT = "1"
     DFXP = "2"
@@ -129,6 +141,7 @@ class KalturaCaptionAsset(KalturaAsset):
             isDefault=NotImplemented,
             label=NotImplemented,
             format=NotImplemented,
+            source=NotImplemented,
             status=NotImplemented,
             parentId=NotImplemented,
             accuracy=NotImplemented,
@@ -178,6 +191,11 @@ class KalturaCaptionAsset(KalturaAsset):
         # @insertonly
         self.format = format
 
+        # The source of the asset
+        # @var KalturaCaptionSource
+        # @insertonly
+        self.source = source
+
         # The status of the asset
         # @var KalturaCaptionAssetStatus
         # @readonly
@@ -208,6 +226,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'isDefault': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'label': getXmlNodeText, 
         'format': (KalturaEnumsFactory.createString, "KalturaCaptionType"), 
+        'source': (KalturaEnumsFactory.createString, "KalturaCaptionSource"), 
         'status': (KalturaEnumsFactory.createInt, "KalturaCaptionAssetStatus"), 
         'parentId': getXmlNodeText, 
         'accuracy': getXmlNodeInt, 
@@ -227,6 +246,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addIntEnumIfDefined("isDefault", self.isDefault)
         kparams.addStringIfDefined("label", self.label)
         kparams.addStringEnumIfDefined("format", self.format)
+        kparams.addStringEnumIfDefined("source", self.source)
         kparams.addStringIfDefined("parentId", self.parentId)
         kparams.addIntIfDefined("accuracy", self.accuracy)
         kparams.addBoolIfDefined("displayOnPlayer", self.displayOnPlayer)
@@ -265,6 +285,12 @@ class KalturaCaptionAsset(KalturaAsset):
 
     def setFormat(self, newFormat):
         self.format = newFormat
+
+    def getSource(self):
+        return self.source
+
+    def setSource(self, newSource):
+        self.source = newSource
 
     def getStatus(self):
         return self.status
@@ -1334,6 +1360,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
             'KalturaCaptionAssetStatus': KalturaCaptionAssetStatus,
             'KalturaCaptionAssetOrderBy': KalturaCaptionAssetOrderBy,
             'KalturaCaptionParamsOrderBy': KalturaCaptionParamsOrderBy,
+            'KalturaCaptionSource': KalturaCaptionSource,
             'KalturaCaptionType': KalturaCaptionType,
         }
 

@@ -5,7 +5,7 @@
 #                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 #
 # This file is part of the Kaltura Collaborative Media Suite which allows users
-# to do with audio, video, and animation what Wiki platfroms allow them to do with
+# to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
 # Copyright (C) 2006-2021  Kaltura Inc.
@@ -103,6 +103,7 @@ class KalturaScheduleEventType(object):
     LIVE_STREAM = 2
     BLACKOUT = 3
     MEETING = 4
+    LIVE_REDIRECT = 5
 
     def __init__(self, value):
         self.value = value
@@ -1503,7 +1504,7 @@ class KalturaScheduleResourceListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
+class KalturaBaseLiveScheduleEvent(KalturaEntryScheduleEvent):
     def __init__(self,
             id=NotImplemented,
             partnerId=NotImplemented,
@@ -1533,11 +1534,7 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             templateEntryId=NotImplemented,
             entryIds=NotImplemented,
             categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented,
-            projectedAudience=NotImplemented,
-            sourceEntryId=NotImplemented,
-            preStartTime=NotImplemented,
-            postEndTime=NotImplemented):
+            blackoutConflicts=NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1569,66 +1566,18 @@ class KalturaLiveStreamScheduleEvent(KalturaEntryScheduleEvent):
             categoryIds,
             blackoutConflicts)
 
-        # Defines the expected audience.
-        # @var int
-        self.projectedAudience = projectedAudience
-
-        # The entry ID of the source entry (for simulive)
-        # @var string
-        self.sourceEntryId = sourceEntryId
-
-        # The time relative time before the startTime considered as preStart time
-        # @var int
-        self.preStartTime = preStartTime
-
-        # The time relative time before the endTime considered as postEnd time
-        # @var int
-        self.postEndTime = postEndTime
-
 
     PROPERTY_LOADERS = {
-        'projectedAudience': getXmlNodeInt, 
-        'sourceEntryId': getXmlNodeText, 
-        'preStartTime': getXmlNodeInt, 
-        'postEndTime': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
         KalturaEntryScheduleEvent.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaLiveStreamScheduleEvent.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaBaseLiveScheduleEvent.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaEntryScheduleEvent.toParams(self)
-        kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
-        kparams.addIntIfDefined("projectedAudience", self.projectedAudience)
-        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
-        kparams.addIntIfDefined("preStartTime", self.preStartTime)
-        kparams.addIntIfDefined("postEndTime", self.postEndTime)
+        kparams.put("objectType", "KalturaBaseLiveScheduleEvent")
         return kparams
-
-    def getProjectedAudience(self):
-        return self.projectedAudience
-
-    def setProjectedAudience(self, newProjectedAudience):
-        self.projectedAudience = newProjectedAudience
-
-    def getSourceEntryId(self):
-        return self.sourceEntryId
-
-    def setSourceEntryId(self, newSourceEntryId):
-        self.sourceEntryId = newSourceEntryId
-
-    def getPreStartTime(self):
-        return self.preStartTime
-
-    def setPreStartTime(self, newPreStartTime):
-        self.preStartTime = newPreStartTime
-
-    def getPostEndTime(self):
-        return self.postEndTime
-
-    def setPostEndTime(self, newPostEndTime):
-        self.postEndTime = newPostEndTime
 
 
 # @package Kaltura
@@ -2518,6 +2467,227 @@ class KalturaScheduleResourceBaseFilter(KalturaRelatedFilter):
 
     def setUpdatedAtLessThanOrEqual(self, newUpdatedAtLessThanOrEqual):
         self.updatedAtLessThanOrEqual = newUpdatedAtLessThanOrEqual
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveRedirectScheduleEvent(KalturaBaseLiveScheduleEvent):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            parentId=NotImplemented,
+            summary=NotImplemented,
+            description=NotImplemented,
+            status=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            classificationType=NotImplemented,
+            geoLatitude=NotImplemented,
+            geoLongitude=NotImplemented,
+            location=NotImplemented,
+            organizer=NotImplemented,
+            ownerId=NotImplemented,
+            priority=NotImplemented,
+            sequence=NotImplemented,
+            recurrenceType=NotImplemented,
+            duration=NotImplemented,
+            contact=NotImplemented,
+            comment=NotImplemented,
+            tags=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            recurrence=NotImplemented,
+            templateEntryId=NotImplemented,
+            entryIds=NotImplemented,
+            categoryIds=NotImplemented,
+            blackoutConflicts=NotImplemented,
+            redirectEntryId=NotImplemented):
+        KalturaBaseLiveScheduleEvent.__init__(self,
+            id,
+            partnerId,
+            parentId,
+            summary,
+            description,
+            status,
+            startDate,
+            endDate,
+            referenceId,
+            classificationType,
+            geoLatitude,
+            geoLongitude,
+            location,
+            organizer,
+            ownerId,
+            priority,
+            sequence,
+            recurrenceType,
+            duration,
+            contact,
+            comment,
+            tags,
+            createdAt,
+            updatedAt,
+            recurrence,
+            templateEntryId,
+            entryIds,
+            categoryIds,
+            blackoutConflicts)
+
+        # The vod entry to redirect
+        # @var string
+        self.redirectEntryId = redirectEntryId
+
+
+    PROPERTY_LOADERS = {
+        'redirectEntryId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseLiveScheduleEvent.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveRedirectScheduleEvent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseLiveScheduleEvent.toParams(self)
+        kparams.put("objectType", "KalturaLiveRedirectScheduleEvent")
+        kparams.addStringIfDefined("redirectEntryId", self.redirectEntryId)
+        return kparams
+
+    def getRedirectEntryId(self):
+        return self.redirectEntryId
+
+    def setRedirectEntryId(self, newRedirectEntryId):
+        self.redirectEntryId = newRedirectEntryId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            parentId=NotImplemented,
+            summary=NotImplemented,
+            description=NotImplemented,
+            status=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            referenceId=NotImplemented,
+            classificationType=NotImplemented,
+            geoLatitude=NotImplemented,
+            geoLongitude=NotImplemented,
+            location=NotImplemented,
+            organizer=NotImplemented,
+            ownerId=NotImplemented,
+            priority=NotImplemented,
+            sequence=NotImplemented,
+            recurrenceType=NotImplemented,
+            duration=NotImplemented,
+            contact=NotImplemented,
+            comment=NotImplemented,
+            tags=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            recurrence=NotImplemented,
+            templateEntryId=NotImplemented,
+            entryIds=NotImplemented,
+            categoryIds=NotImplemented,
+            blackoutConflicts=NotImplemented,
+            sourceEntryId=NotImplemented,
+            projectedAudience=NotImplemented,
+            preStartTime=NotImplemented,
+            postEndTime=NotImplemented):
+        KalturaBaseLiveScheduleEvent.__init__(self,
+            id,
+            partnerId,
+            parentId,
+            summary,
+            description,
+            status,
+            startDate,
+            endDate,
+            referenceId,
+            classificationType,
+            geoLatitude,
+            geoLongitude,
+            location,
+            organizer,
+            ownerId,
+            priority,
+            sequence,
+            recurrenceType,
+            duration,
+            contact,
+            comment,
+            tags,
+            createdAt,
+            updatedAt,
+            recurrence,
+            templateEntryId,
+            entryIds,
+            categoryIds,
+            blackoutConflicts)
+
+        # The entry ID of the source entry (for simulive)
+        # @var string
+        self.sourceEntryId = sourceEntryId
+
+        # Defines the expected audience.
+        # @var int
+        self.projectedAudience = projectedAudience
+
+        # The time relative time before the startTime considered as preStart time
+        # @var int
+        self.preStartTime = preStartTime
+
+        # The time relative time before the endTime considered as postEnd time
+        # @var int
+        self.postEndTime = postEndTime
+
+
+    PROPERTY_LOADERS = {
+        'sourceEntryId': getXmlNodeText, 
+        'projectedAudience': getXmlNodeInt, 
+        'preStartTime': getXmlNodeInt, 
+        'postEndTime': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaBaseLiveScheduleEvent.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveStreamScheduleEvent.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaBaseLiveScheduleEvent.toParams(self)
+        kparams.put("objectType", "KalturaLiveStreamScheduleEvent")
+        kparams.addStringIfDefined("sourceEntryId", self.sourceEntryId)
+        kparams.addIntIfDefined("projectedAudience", self.projectedAudience)
+        kparams.addIntIfDefined("preStartTime", self.preStartTime)
+        kparams.addIntIfDefined("postEndTime", self.postEndTime)
+        return kparams
+
+    def getSourceEntryId(self):
+        return self.sourceEntryId
+
+    def setSourceEntryId(self, newSourceEntryId):
+        self.sourceEntryId = newSourceEntryId
+
+    def getProjectedAudience(self):
+        return self.projectedAudience
+
+    def setProjectedAudience(self, newProjectedAudience):
+        self.projectedAudience = newProjectedAudience
+
+    def getPreStartTime(self):
+        return self.preStartTime
+
+    def setPreStartTime(self, newPreStartTime):
+        self.preStartTime = newPreStartTime
+
+    def getPostEndTime(self):
+        return self.postEndTime
+
+    def setPostEndTime(self, newPostEndTime):
+        self.postEndTime = newPostEndTime
 
 
 # @package Kaltura
@@ -3564,6 +3734,134 @@ class KalturaLocationScheduleResourceFilter(KalturaLocationScheduleResourceBaseF
     def toParams(self):
         kparams = KalturaLocationScheduleResourceBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaLocationScheduleResourceFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveRedirectScheduleEventFilter(KalturaEntryScheduleEventFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            parentIdEqual=NotImplemented,
+            parentIdIn=NotImplemented,
+            parentIdNotIn=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            startDateGreaterThanOrEqual=NotImplemented,
+            startDateLessThanOrEqual=NotImplemented,
+            endDateGreaterThanOrEqual=NotImplemented,
+            endDateLessThanOrEqual=NotImplemented,
+            referenceIdEqual=NotImplemented,
+            referenceIdIn=NotImplemented,
+            ownerIdEqual=NotImplemented,
+            ownerIdIn=NotImplemented,
+            priorityEqual=NotImplemented,
+            priorityIn=NotImplemented,
+            priorityGreaterThanOrEqual=NotImplemented,
+            priorityLessThanOrEqual=NotImplemented,
+            recurrenceTypeEqual=NotImplemented,
+            recurrenceTypeIn=NotImplemented,
+            tagsLike=NotImplemented,
+            tagsMultiLikeOr=NotImplemented,
+            tagsMultiLikeAnd=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            resourceIdsLike=NotImplemented,
+            resourceIdsMultiLikeOr=NotImplemented,
+            resourceIdsMultiLikeAnd=NotImplemented,
+            parentResourceIdsLike=NotImplemented,
+            parentResourceIdsMultiLikeOr=NotImplemented,
+            parentResourceIdsMultiLikeAnd=NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
+            resourceSystemNamesMultiLikeOr=NotImplemented,
+            templateEntryCategoriesIdsLike=NotImplemented,
+            resourceSystemNamesMultiLikeAnd=NotImplemented,
+            resourceSystemNamesLike=NotImplemented,
+            resourceIdEqual=NotImplemented,
+            templateEntryIdEqual=NotImplemented,
+            entryIdsLike=NotImplemented,
+            entryIdsMultiLikeOr=NotImplemented,
+            entryIdsMultiLikeAnd=NotImplemented,
+            categoryIdsLike=NotImplemented,
+            categoryIdsMultiLikeOr=NotImplemented,
+            categoryIdsMultiLikeAnd=NotImplemented,
+            parentCategoryIdsLike=NotImplemented,
+            parentCategoryIdsMultiLikeOr=NotImplemented,
+            parentCategoryIdsMultiLikeAnd=NotImplemented):
+        KalturaEntryScheduleEventFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            parentIdEqual,
+            parentIdIn,
+            parentIdNotIn,
+            statusEqual,
+            statusIn,
+            startDateGreaterThanOrEqual,
+            startDateLessThanOrEqual,
+            endDateGreaterThanOrEqual,
+            endDateLessThanOrEqual,
+            referenceIdEqual,
+            referenceIdIn,
+            ownerIdEqual,
+            ownerIdIn,
+            priorityEqual,
+            priorityIn,
+            priorityGreaterThanOrEqual,
+            priorityLessThanOrEqual,
+            recurrenceTypeEqual,
+            recurrenceTypeIn,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            resourceIdsLike,
+            resourceIdsMultiLikeOr,
+            resourceIdsMultiLikeAnd,
+            parentResourceIdsLike,
+            parentResourceIdsMultiLikeOr,
+            parentResourceIdsMultiLikeAnd,
+            templateEntryCategoriesIdsMultiLikeAnd,
+            templateEntryCategoriesIdsMultiLikeOr,
+            resourceSystemNamesMultiLikeOr,
+            templateEntryCategoriesIdsLike,
+            resourceSystemNamesMultiLikeAnd,
+            resourceSystemNamesLike,
+            resourceIdEqual,
+            templateEntryIdEqual,
+            entryIdsLike,
+            entryIdsMultiLikeOr,
+            entryIdsMultiLikeAnd,
+            categoryIdsLike,
+            categoryIdsMultiLikeOr,
+            categoryIdsMultiLikeAnd,
+            parentCategoryIdsLike,
+            parentCategoryIdsMultiLikeOr,
+            parentCategoryIdsMultiLikeAnd)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaEntryScheduleEventFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveRedirectScheduleEventFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaEntryScheduleEventFilter.toParams(self)
+        kparams.put("objectType", "KalturaLiveRedirectScheduleEventFilter")
         return kparams
 
 
@@ -4769,12 +5067,14 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaScheduleEventListResponse': KalturaScheduleEventListResponse,
             'KalturaScheduleEventResourceListResponse': KalturaScheduleEventResourceListResponse,
             'KalturaScheduleResourceListResponse': KalturaScheduleResourceListResponse,
-            'KalturaLiveStreamScheduleEvent': KalturaLiveStreamScheduleEvent,
+            'KalturaBaseLiveScheduleEvent': KalturaBaseLiveScheduleEvent,
             'KalturaMeetingScheduleEvent': KalturaMeetingScheduleEvent,
             'KalturaRecordScheduleEvent': KalturaRecordScheduleEvent,
             'KalturaScheduleEventBaseFilter': KalturaScheduleEventBaseFilter,
             'KalturaScheduleEventResourceBaseFilter': KalturaScheduleEventResourceBaseFilter,
             'KalturaScheduleResourceBaseFilter': KalturaScheduleResourceBaseFilter,
+            'KalturaLiveRedirectScheduleEvent': KalturaLiveRedirectScheduleEvent,
+            'KalturaLiveStreamScheduleEvent': KalturaLiveStreamScheduleEvent,
             'KalturaScheduleEventFilter': KalturaScheduleEventFilter,
             'KalturaScheduleEventResourceFilter': KalturaScheduleEventResourceFilter,
             'KalturaScheduleResourceFilter': KalturaScheduleResourceFilter,
@@ -4786,6 +5086,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaEntryScheduleEventFilter': KalturaEntryScheduleEventFilter,
             'KalturaLiveEntryScheduleResourceFilter': KalturaLiveEntryScheduleResourceFilter,
             'KalturaLocationScheduleResourceFilter': KalturaLocationScheduleResourceFilter,
+            'KalturaLiveRedirectScheduleEventFilter': KalturaLiveRedirectScheduleEventFilter,
             'KalturaLiveStreamScheduleEventBaseFilter': KalturaLiveStreamScheduleEventBaseFilter,
             'KalturaMeetingScheduleEventBaseFilter': KalturaMeetingScheduleEventBaseFilter,
             'KalturaRecordScheduleEventBaseFilter': KalturaRecordScheduleEventBaseFilter,
