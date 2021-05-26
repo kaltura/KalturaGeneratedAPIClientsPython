@@ -684,6 +684,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
             inputUserId=NotImplemented,
             inputEntitledUsersEdit=NotImplemented,
             inputEntitledUsersPublish=NotImplemented,
+            inputEntitledUsersView=NotImplemented,
             resetMediaRepurposingProcess=NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
@@ -717,6 +718,10 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         # @var string
         self.inputEntitledUsersPublish = inputEntitledUsersPublish
 
+        # The input entitled users view to set on the entry
+        # @var string
+        self.inputEntitledUsersView = inputEntitledUsersView
+
         # Should clear the media repurposing data and therefore reset the process
         # @var bool
         self.resetMediaRepurposingProcess = resetMediaRepurposingProcess
@@ -730,6 +735,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         'inputUserId': getXmlNodeText, 
         'inputEntitledUsersEdit': getXmlNodeText, 
         'inputEntitledUsersPublish': getXmlNodeText, 
+        'inputEntitledUsersView': getXmlNodeText, 
         'resetMediaRepurposingProcess': getXmlNodeBool, 
     }
 
@@ -747,6 +753,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         kparams.addStringIfDefined("inputUserId", self.inputUserId)
         kparams.addStringIfDefined("inputEntitledUsersEdit", self.inputEntitledUsersEdit)
         kparams.addStringIfDefined("inputEntitledUsersPublish", self.inputEntitledUsersPublish)
+        kparams.addStringIfDefined("inputEntitledUsersView", self.inputEntitledUsersView)
         kparams.addBoolIfDefined("resetMediaRepurposingProcess", self.resetMediaRepurposingProcess)
         return kparams
 
@@ -791,6 +798,12 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
 
     def setInputEntitledUsersPublish(self, newInputEntitledUsersPublish):
         self.inputEntitledUsersPublish = newInputEntitledUsersPublish
+
+    def getInputEntitledUsersView(self):
+        return self.inputEntitledUsersView
+
+    def setInputEntitledUsersView(self, newInputEntitledUsersView):
+        self.inputEntitledUsersView = newInputEntitledUsersView
 
     def getResetMediaRepurposingProcess(self):
         return self.resetMediaRepurposingProcess

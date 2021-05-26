@@ -90,7 +90,10 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
             jwtToken=NotImplemented,
             deletionPolicy=NotImplemented,
             enableZoomTranscription=NotImplemented,
-            zoomAccountDescription=NotImplemented):
+            zoomAccountDescription=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            enableMeetingUpload=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -139,6 +142,15 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         # @var string
         self.zoomAccountDescription = zoomAccountDescription
 
+        # @var string
+        self.createdAt = createdAt
+
+        # @var string
+        self.updatedAt = updatedAt
+
+        # @var KalturaNullableBoolean
+        self.enableMeetingUpload = enableMeetingUpload
+
 
     PROPERTY_LOADERS = {
         'defaultUserId': getXmlNodeText, 
@@ -156,6 +168,9 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         'deletionPolicy': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'enableZoomTranscription': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'zoomAccountDescription': getXmlNodeText, 
+        'createdAt': getXmlNodeText, 
+        'updatedAt': getXmlNodeText, 
+        'enableMeetingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -179,6 +194,9 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
         kparams.addIntEnumIfDefined("deletionPolicy", self.deletionPolicy)
         kparams.addIntEnumIfDefined("enableZoomTranscription", self.enableZoomTranscription)
         kparams.addStringIfDefined("zoomAccountDescription", self.zoomAccountDescription)
+        kparams.addStringIfDefined("createdAt", self.createdAt)
+        kparams.addStringIfDefined("updatedAt", self.updatedAt)
+        kparams.addIntEnumIfDefined("enableMeetingUpload", self.enableMeetingUpload)
         return kparams
 
     def getDefaultUserId(self):
@@ -268,6 +286,24 @@ class KalturaZoomIntegrationSetting(KalturaObjectBase):
     def setZoomAccountDescription(self, newZoomAccountDescription):
         self.zoomAccountDescription = newZoomAccountDescription
 
+    def getCreatedAt(self):
+        return self.createdAt
+
+    def setCreatedAt(self, newCreatedAt):
+        self.createdAt = newCreatedAt
+
+    def getUpdatedAt(self):
+        return self.updatedAt
+
+    def setUpdatedAt(self, newUpdatedAt):
+        self.updatedAt = newUpdatedAt
+
+    def getEnableMeetingUpload(self):
+        return self.enableMeetingUpload
+
+    def setEnableMeetingUpload(self, newEnableMeetingUpload):
+        self.enableMeetingUpload = newEnableMeetingUpload
+
 
 # @package Kaltura
 # @subpackage Client
@@ -356,22 +392,22 @@ class KalturaZoomVendorService(KalturaServiceBase):
         resultNode = self.client.doQueue()
 
     def oauthValidation(self):
+        """load html page the that will ask the user for its KMC URL, derive the region of the user from it,
+        	 and redirect to the registration page in the correct region, while forwarding the necessary code for registration"""
+
         kparams = KalturaParams()
         self.client.queueServiceActionCall("vendor_zoomvendor", "oauthValidation", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
-        return getXmlNodeText(resultNode)
 
     def preOauthValidation(self):
-        """load html page the that will ask the user for its KMC URL, derive the region of the user from it,
-        	 and redirect to the registration page in the correct region, while forwarding the necessary code for registration"""
-
         kparams = KalturaParams()
         self.client.queueServiceActionCall("vendor_zoomvendor", "preOauthValidation", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def recordingComplete(self):
         kparams = KalturaParams()
