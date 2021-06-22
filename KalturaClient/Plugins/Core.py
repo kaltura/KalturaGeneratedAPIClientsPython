@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.2.0'
+API_VERSION = '17.3.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -64985,6 +64985,20 @@ class KalturaPartnerService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaPartner')
+
+    def registrationValidation(self, partner, cmsPassword = "", templatePartnerId = NotImplemented, silent = False):
+        """Create a new Partner object"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("partner", partner)
+        kparams.addStringIfDefined("cmsPassword", cmsPassword)
+        kparams.addIntIfDefined("templatePartnerId", templatePartnerId);
+        kparams.addBoolIfDefined("silent", silent);
+        self.client.queueServiceActionCall("partner", "registrationValidation", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeBool(resultNode)
 
     def update(self, partner, allowEmpty = False):
         """Update details and settings of an existing partner"""

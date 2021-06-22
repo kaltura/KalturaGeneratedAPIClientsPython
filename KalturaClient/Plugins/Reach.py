@@ -32,6 +32,7 @@ from __future__ import absolute_import
 from .Core import *
 from .EventNotification import *
 from .BulkUpload import *
+from .Caption import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
@@ -149,6 +150,7 @@ class KalturaVendorServiceFeature(object):
     ALIGNMENT = 3
     AUDIO_DESCRIPTION = 4
     CHAPTERING = 5
+    INTELLIGENT_TAGGING = 6
 
     def __init__(self, value):
         self.value = value
@@ -267,6 +269,7 @@ class KalturaCatalogItemLanguage(object):
 # @subpackage Client
 class KalturaEntryVendorTaskOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
+    EXPECTED_FINISH_TIME_ASC = "+expectedFinishTime"
     FINISH_TIME_ASC = "+finishTime"
     ID_ASC = "+id"
     PRICE_ASC = "+price"
@@ -274,6 +277,7 @@ class KalturaEntryVendorTaskOrderBy(object):
     STATUS_ASC = "+status"
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
+    EXPECTED_FINISH_TIME_DESC = "-expectedFinishTime"
     FINISH_TIME_DESC = "-finishTime"
     ID_DESC = "-id"
     PRICE_DESC = "-price"
@@ -296,6 +300,16 @@ class KalturaReachProfileOrderBy(object):
     CREATED_AT_DESC = "-createdAt"
     ID_DESC = "-id"
     UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReachVendorEngineType(object):
 
     def __init__(self, value):
         self.value = value
@@ -1179,6 +1193,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
+            engineType=NotImplemented,
+            sourceLanguage=NotImplemented,
             allowResubmission=NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -1220,6 +1236,13 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         # @var KalturaVendorCatalogItemPricing
         self.pricing = pricing
 
+        # Property showing the catalog item's engine type, in case a vendor can offer the same service via different engines.
+        # @var KalturaReachVendorEngineType
+        self.engineType = engineType
+
+        # @var KalturaCatalogItemLanguage
+        self.sourceLanguage = sourceLanguage
+
         # @var bool
         self.allowResubmission = allowResubmission
 
@@ -1236,6 +1259,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
         'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
         'pricing': (KalturaObjectFactory.create, 'KalturaVendorCatalogItemPricing'), 
+        'engineType': (KalturaEnumsFactory.createString, "KalturaReachVendorEngineType"), 
+        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
         'allowResubmission': getXmlNodeBool, 
     }
 
@@ -1252,6 +1277,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         kparams.addIntEnumIfDefined("serviceType", self.serviceType)
         kparams.addIntEnumIfDefined("turnAroundTime", self.turnAroundTime)
         kparams.addObjectIfDefined("pricing", self.pricing)
+        kparams.addStringEnumIfDefined("engineType", self.engineType)
+        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         kparams.addBoolIfDefined("allowResubmission", self.allowResubmission)
         return kparams
 
@@ -1305,6 +1332,18 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
 
     def setPricing(self, newPricing):
         self.pricing = newPricing
+
+    def getEngineType(self):
+        return self.engineType
+
+    def setEngineType(self, newEngineType):
+        self.engineType = newEngineType
+
+    def getSourceLanguage(self):
+        return self.sourceLanguage
+
+    def setSourceLanguage(self, newSourceLanguage):
+        self.sourceLanguage = newSourceLanguage
 
     def getAllowResubmission(self):
         return self.allowResubmission
@@ -1575,6 +1614,42 @@ class KalturaEntryVendorTaskListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration=NotImplemented,
+            assetId=NotImplemented):
+        KalturaVendorTaskData.__init__(self,
+            entryDuration)
+
+        # Optional - The id of the caption asset object
+        # @var string
+        # @insertonly
+        self.assetId = assetId
+
+
+    PROPERTY_LOADERS = {
+        'assetId': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaIntelligentTaggingVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaIntelligentTaggingVendorTaskData")
+        kparams.addStringIfDefined("assetId", self.assetId)
+        return kparams
+
+    def getAssetId(self):
+        return self.assetId
+
+    def setAssetId(self, newAssetId):
+        self.assetId = newAssetId
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReachProfileListResponse(KalturaListResponse):
     def __init__(self,
             totalCount=NotImplemented,
@@ -1660,8 +1735,9 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
-            allowResubmission=NotImplemented,
+            engineType=NotImplemented,
             sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
             outputFormat=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -1675,17 +1751,15 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
+            engineType,
+            sourceLanguage,
             allowResubmission)
-
-        # @var KalturaCatalogItemLanguage
-        self.sourceLanguage = sourceLanguage
 
         # @var KalturaVendorCatalogItemOutputFormat
         self.outputFormat = outputFormat
 
 
     PROPERTY_LOADERS = {
-        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
         'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemOutputFormat"), 
     }
 
@@ -1696,15 +1770,8 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorAlignmentCatalogItem")
-        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
         return kparams
-
-    def getSourceLanguage(self):
-        return self.sourceLanguage
-
-    def setSourceLanguage(self, newSourceLanguage):
-        self.sourceLanguage = newSourceLanguage
 
     def getOutputFormat(self):
         return self.outputFormat
@@ -1728,8 +1795,9 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
-            allowResubmission=NotImplemented,
+            engineType=NotImplemented,
             sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
             flavorParamsId=NotImplemented,
             clearAudioFlavorParamsId=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
@@ -1744,10 +1812,9 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
+            engineType,
+            sourceLanguage,
             allowResubmission)
-
-        # @var KalturaCatalogItemLanguage
-        self.sourceLanguage = sourceLanguage
 
         # @var int
         self.flavorParamsId = flavorParamsId
@@ -1757,7 +1824,6 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
 
 
     PROPERTY_LOADERS = {
-        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
         'flavorParamsId': getXmlNodeInt, 
         'clearAudioFlavorParamsId': getXmlNodeInt, 
     }
@@ -1769,16 +1835,9 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorAudioDescriptionCatalogItem")
-        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
         kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
         return kparams
-
-    def getSourceLanguage(self):
-        return self.sourceLanguage
-
-    def setSourceLanguage(self, newSourceLanguage):
-        self.sourceLanguage = newSourceLanguage
 
     def getFlavorParamsId(self):
         return self.flavorParamsId
@@ -1808,8 +1867,9 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
-            allowResubmission=NotImplemented,
+            engineType=NotImplemented,
             sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
             outputFormat=NotImplemented,
             enableSpeakerId=NotImplemented,
             fixedPriceAddons=NotImplemented):
@@ -1825,10 +1885,9 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
+            engineType,
+            sourceLanguage,
             allowResubmission)
-
-        # @var KalturaCatalogItemLanguage
-        self.sourceLanguage = sourceLanguage
 
         # @var KalturaVendorCatalogItemOutputFormat
         self.outputFormat = outputFormat
@@ -1841,7 +1900,6 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
 
 
     PROPERTY_LOADERS = {
-        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
         'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemOutputFormat"), 
         'enableSpeakerId': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'fixedPriceAddons': getXmlNodeInt, 
@@ -1854,17 +1912,10 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorCaptionsCatalogItem")
-        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
         kparams.addIntEnumIfDefined("enableSpeakerId", self.enableSpeakerId)
         kparams.addIntIfDefined("fixedPriceAddons", self.fixedPriceAddons)
         return kparams
-
-    def getSourceLanguage(self):
-        return self.sourceLanguage
-
-    def setSourceLanguage(self, newSourceLanguage):
-        self.sourceLanguage = newSourceLanguage
 
     def getOutputFormat(self):
         return self.outputFormat
@@ -1931,8 +1982,9 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
-            allowResubmission=NotImplemented,
-            sourceLanguage=NotImplemented):
+            engineType=NotImplemented,
+            sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
             vendorPartnerId,
@@ -1945,14 +1997,12 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
+            engineType,
+            sourceLanguage,
             allowResubmission)
-
-        # @var KalturaCatalogItemLanguage
-        self.sourceLanguage = sourceLanguage
 
 
     PROPERTY_LOADERS = {
-        'sourceLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
     }
 
     def fromXml(self, node):
@@ -1962,14 +2012,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorChapteringCatalogItem")
-        kparams.addStringEnumIfDefined("sourceLanguage", self.sourceLanguage)
         return kparams
-
-    def getSourceLanguage(self):
-        return self.sourceLanguage
-
-    def setSourceLanguage(self, newSourceLanguage):
-        self.sourceLanguage = newSourceLanguage
 
 
 # @package Kaltura
@@ -2038,6 +2081,54 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
 
     def setAddOn(self, newAddOn):
         self.addOn = newAddOn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented,
+            pricing=NotImplemented,
+            engineType=NotImplemented,
+            sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorIntelligentTaggingCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorIntelligentTaggingCatalogItem")
+        return kparams
 
 
 # @package Kaltura
@@ -2135,6 +2226,7 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
             advancedSearch=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
+            idNotIn=NotImplemented,
             vendorPartnerIdEqual=NotImplemented,
             vendorPartnerIdIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
@@ -2153,7 +2245,9 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
             catalogItemIdEqual=NotImplemented,
             catalogItemIdIn=NotImplemented,
             userIdEqual=NotImplemented,
-            contextEqual=NotImplemented):
+            contextEqual=NotImplemented,
+            expectedFinishTimeGreaterThanOrEqual=NotImplemented,
+            expectedFinishTimeLessThanOrEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2163,6 +2257,9 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
 
         # @var string
         self.idIn = idIn
+
+        # @var string
+        self.idNotIn = idNotIn
 
         # @var int
         self.vendorPartnerIdEqual = vendorPartnerIdEqual
@@ -2221,10 +2318,17 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
         # @var string
         self.contextEqual = contextEqual
 
+        # @var int
+        self.expectedFinishTimeGreaterThanOrEqual = expectedFinishTimeGreaterThanOrEqual
+
+        # @var int
+        self.expectedFinishTimeLessThanOrEqual = expectedFinishTimeLessThanOrEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
         'idIn': getXmlNodeText, 
+        'idNotIn': getXmlNodeText, 
         'vendorPartnerIdEqual': getXmlNodeInt, 
         'vendorPartnerIdIn': getXmlNodeText, 
         'createdAtGreaterThanOrEqual': getXmlNodeInt, 
@@ -2244,6 +2348,8 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
         'catalogItemIdIn': getXmlNodeText, 
         'userIdEqual': getXmlNodeText, 
         'contextEqual': getXmlNodeText, 
+        'expectedFinishTimeGreaterThanOrEqual': getXmlNodeInt, 
+        'expectedFinishTimeLessThanOrEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -2255,6 +2361,7 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
         kparams.put("objectType", "KalturaEntryVendorTaskBaseFilter")
         kparams.addIntIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addStringIfDefined("idNotIn", self.idNotIn)
         kparams.addIntIfDefined("vendorPartnerIdEqual", self.vendorPartnerIdEqual)
         kparams.addStringIfDefined("vendorPartnerIdIn", self.vendorPartnerIdIn)
         kparams.addIntIfDefined("createdAtGreaterThanOrEqual", self.createdAtGreaterThanOrEqual)
@@ -2274,6 +2381,8 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("catalogItemIdIn", self.catalogItemIdIn)
         kparams.addStringIfDefined("userIdEqual", self.userIdEqual)
         kparams.addStringIfDefined("contextEqual", self.contextEqual)
+        kparams.addIntIfDefined("expectedFinishTimeGreaterThanOrEqual", self.expectedFinishTimeGreaterThanOrEqual)
+        kparams.addIntIfDefined("expectedFinishTimeLessThanOrEqual", self.expectedFinishTimeLessThanOrEqual)
         return kparams
 
     def getIdEqual(self):
@@ -2287,6 +2396,12 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
 
     def setIdIn(self, newIdIn):
         self.idIn = newIdIn
+
+    def getIdNotIn(self):
+        return self.idNotIn
+
+    def setIdNotIn(self, newIdNotIn):
+        self.idNotIn = newIdNotIn
 
     def getVendorPartnerIdEqual(self):
         return self.vendorPartnerIdEqual
@@ -2402,6 +2517,18 @@ class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
     def setContextEqual(self, newContextEqual):
         self.contextEqual = newContextEqual
 
+    def getExpectedFinishTimeGreaterThanOrEqual(self):
+        return self.expectedFinishTimeGreaterThanOrEqual
+
+    def setExpectedFinishTimeGreaterThanOrEqual(self, newExpectedFinishTimeGreaterThanOrEqual):
+        self.expectedFinishTimeGreaterThanOrEqual = newExpectedFinishTimeGreaterThanOrEqual
+
+    def getExpectedFinishTimeLessThanOrEqual(self):
+        return self.expectedFinishTimeLessThanOrEqual
+
+    def setExpectedFinishTimeLessThanOrEqual(self, newExpectedFinishTimeLessThanOrEqual):
+        self.expectedFinishTimeLessThanOrEqual = newExpectedFinishTimeLessThanOrEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -2411,6 +2538,7 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
             advancedSearch=NotImplemented,
             idEqual=NotImplemented,
             idIn=NotImplemented,
+            idNotIn=NotImplemented,
             vendorPartnerIdEqual=NotImplemented,
             vendorPartnerIdIn=NotImplemented,
             createdAtGreaterThanOrEqual=NotImplemented,
@@ -2430,6 +2558,8 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
             catalogItemIdIn=NotImplemented,
             userIdEqual=NotImplemented,
             contextEqual=NotImplemented,
+            expectedFinishTimeGreaterThanOrEqual=NotImplemented,
+            expectedFinishTimeLessThanOrEqual=NotImplemented,
             freeText=NotImplemented,
             expectedFinishTimeGreaterThanOrEqual=NotImplemented,
             expectedFinishTimeLessThanOrEqual=NotImplemented):
@@ -2438,6 +2568,7 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
             advancedSearch,
             idEqual,
             idIn,
+            idNotIn,
             vendorPartnerIdEqual,
             vendorPartnerIdIn,
             createdAtGreaterThanOrEqual,
@@ -2456,7 +2587,9 @@ class KalturaEntryVendorTaskFilter(KalturaEntryVendorTaskBaseFilter):
             catalogItemIdEqual,
             catalogItemIdIn,
             userIdEqual,
-            contextEqual)
+            contextEqual,
+            expectedFinishTimeGreaterThanOrEqual,
+            expectedFinishTimeLessThanOrEqual)
 
         # @var string
         self.freeText = freeText
@@ -3139,8 +3272,9 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented,
             pricing=NotImplemented,
-            allowResubmission=NotImplemented,
+            engineType=NotImplemented,
             sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
             outputFormat=NotImplemented,
             enableSpeakerId=NotImplemented,
             fixedPriceAddons=NotImplemented,
@@ -3157,8 +3291,9 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature,
             turnAroundTime,
             pricing,
-            allowResubmission,
+            engineType,
             sourceLanguage,
+            allowResubmission,
             outputFormat,
             enableSpeakerId,
             fixedPriceAddons)
@@ -4315,6 +4450,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaCatalogItemLanguage': KalturaCatalogItemLanguage,
             'KalturaEntryVendorTaskOrderBy': KalturaEntryVendorTaskOrderBy,
             'KalturaReachProfileOrderBy': KalturaReachProfileOrderBy,
+            'KalturaReachVendorEngineType': KalturaReachVendorEngineType,
             'KalturaVendorCaptionsCatalogItemOrderBy': KalturaVendorCaptionsCatalogItemOrderBy,
             'KalturaVendorCatalogItemOrderBy': KalturaVendorCatalogItemOrderBy,
             'KalturaVendorCatalogItemPriceFunction': KalturaVendorCatalogItemPriceFunction,
@@ -4335,6 +4471,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaCatalogItemAdvancedFilter': KalturaCatalogItemAdvancedFilter,
             'KalturaCategoryEntryCondition': KalturaCategoryEntryCondition,
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
+            'KalturaIntelligentTaggingVendorTaskData': KalturaIntelligentTaggingVendorTaskData,
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
             'KalturaVendorAlignmentCatalogItem': KalturaVendorAlignmentCatalogItem,
@@ -4343,6 +4480,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCatalogItemListResponse': KalturaVendorCatalogItemListResponse,
             'KalturaVendorChapteringCatalogItem': KalturaVendorChapteringCatalogItem,
             'KalturaVendorCredit': KalturaVendorCredit,
+            'KalturaVendorIntelligentTaggingCatalogItem': KalturaVendorIntelligentTaggingCatalogItem,
             'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
             'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
             'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
