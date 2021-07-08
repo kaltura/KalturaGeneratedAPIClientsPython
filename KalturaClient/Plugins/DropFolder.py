@@ -365,6 +365,7 @@ class KalturaDropFolder(KalturaObjectBase):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -419,6 +420,9 @@ class KalturaDropFolder(KalturaObjectBase):
 
         # @var KalturaDropFolderFileDeletePolicy
         self.fileDeletePolicy = fileDeletePolicy
+
+        # @var string
+        self.fileDeleteRegex = fileDeleteRegex
 
         # @var int
         self.autoFileDeleteDays = autoFileDeleteDays
@@ -486,6 +490,7 @@ class KalturaDropFolder(KalturaObjectBase):
         'path': getXmlNodeText, 
         'fileSizeCheckInterval': getXmlNodeInt, 
         'fileDeletePolicy': (KalturaEnumsFactory.createInt, "KalturaDropFolderFileDeletePolicy"), 
+        'fileDeleteRegex': getXmlNodeText, 
         'autoFileDeleteDays': getXmlNodeInt, 
         'fileHandlerType': (KalturaEnumsFactory.createString, "KalturaDropFolderFileHandlerType"), 
         'fileNamePatterns': getXmlNodeText, 
@@ -522,6 +527,7 @@ class KalturaDropFolder(KalturaObjectBase):
         kparams.addStringIfDefined("path", self.path)
         kparams.addIntIfDefined("fileSizeCheckInterval", self.fileSizeCheckInterval)
         kparams.addIntEnumIfDefined("fileDeletePolicy", self.fileDeletePolicy)
+        kparams.addStringIfDefined("fileDeleteRegex", self.fileDeleteRegex)
         kparams.addIntIfDefined("autoFileDeleteDays", self.autoFileDeleteDays)
         kparams.addStringEnumIfDefined("fileHandlerType", self.fileHandlerType)
         kparams.addStringIfDefined("fileNamePatterns", self.fileNamePatterns)
@@ -601,6 +607,12 @@ class KalturaDropFolder(KalturaObjectBase):
 
     def setFileDeletePolicy(self, newFileDeletePolicy):
         self.fileDeletePolicy = newFileDeletePolicy
+
+    def getFileDeleteRegex(self):
+        return self.fileDeleteRegex
+
+    def setFileDeleteRegex(self, newFileDeleteRegex):
+        self.fileDeleteRegex = newFileDeleteRegex
 
     def getAutoFileDeleteDays(self):
         return self.autoFileDeleteDays
@@ -1924,6 +1936,7 @@ class KalturaRemoteDropFolder(KalturaDropFolder):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -1953,6 +1966,7 @@ class KalturaRemoteDropFolder(KalturaDropFolder):
             path,
             fileSizeCheckInterval,
             fileDeletePolicy,
+            fileDeleteRegex,
             autoFileDeleteDays,
             fileHandlerType,
             fileNamePatterns,
@@ -2172,6 +2186,7 @@ class KalturaFtpDropFolder(KalturaRemoteDropFolder):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -2205,6 +2220,7 @@ class KalturaFtpDropFolder(KalturaRemoteDropFolder):
             path,
             fileSizeCheckInterval,
             fileDeletePolicy,
+            fileDeleteRegex,
             autoFileDeleteDays,
             fileHandlerType,
             fileNamePatterns,
@@ -2296,6 +2312,7 @@ class KalturaSshDropFolder(KalturaRemoteDropFolder):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -2332,6 +2349,7 @@ class KalturaSshDropFolder(KalturaRemoteDropFolder):
             path,
             fileSizeCheckInterval,
             fileDeletePolicy,
+            fileDeleteRegex,
             autoFileDeleteDays,
             fileHandlerType,
             fileNamePatterns,
@@ -2588,6 +2606,7 @@ class KalturaScpDropFolder(KalturaSshDropFolder):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -2624,6 +2643,7 @@ class KalturaScpDropFolder(KalturaSshDropFolder):
             path,
             fileSizeCheckInterval,
             fileDeletePolicy,
+            fileDeleteRegex,
             autoFileDeleteDays,
             fileHandlerType,
             fileNamePatterns,
@@ -2678,6 +2698,7 @@ class KalturaSftpDropFolder(KalturaSshDropFolder):
             path=NotImplemented,
             fileSizeCheckInterval=NotImplemented,
             fileDeletePolicy=NotImplemented,
+            fileDeleteRegex=NotImplemented,
             autoFileDeleteDays=NotImplemented,
             fileHandlerType=NotImplemented,
             fileNamePatterns=NotImplemented,
@@ -2714,6 +2735,7 @@ class KalturaSftpDropFolder(KalturaSshDropFolder):
             path,
             fileSizeCheckInterval,
             fileDeletePolicy,
+            fileDeleteRegex,
             autoFileDeleteDays,
             fileHandlerType,
             fileNamePatterns,

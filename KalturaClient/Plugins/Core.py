@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.3.0'
+API_VERSION = '17.5.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5756,6 +5756,7 @@ class KalturaUserRoleOrderBy(object):
 # @subpackage Client
 class KalturaVideoCodec(object):
     NONE = ""
+    AV1 = "AV1"
     APCH = "apch"
     APCN = "apcn"
     APCO = "apco"
@@ -9691,7 +9692,13 @@ class KalturaPartner(KalturaObjectBase):
             eightyPercentWarning=NotImplemented,
             usageLimitWarning=NotImplemented,
             lastFreeTrialNotificationDay=NotImplemented,
-            monitorUsage=NotImplemented):
+            monitorUsage=NotImplemented,
+            passwordStructureValidations=NotImplemented,
+            passwordStructureValidationsDescription=NotImplemented,
+            passReplaceFreq=NotImplemented,
+            maxLoginAttempts=NotImplemented,
+            loginBlockPeriod=NotImplemented,
+            numPrevPassToKeep=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9939,6 +9946,24 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.monitorUsage = monitorUsage
 
+        # @var string
+        self.passwordStructureValidations = passwordStructureValidations
+
+        # @var string
+        self.passwordStructureValidationsDescription = passwordStructureValidationsDescription
+
+        # @var int
+        self.passReplaceFreq = passReplaceFreq
+
+        # @var int
+        self.maxLoginAttempts = maxLoginAttempts
+
+        # @var int
+        self.loginBlockPeriod = loginBlockPeriod
+
+        # @var int
+        self.numPrevPassToKeep = numPrevPassToKeep
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10009,6 +10034,12 @@ class KalturaPartner(KalturaObjectBase):
         'usageLimitWarning': getXmlNodeInt, 
         'lastFreeTrialNotificationDay': getXmlNodeInt, 
         'monitorUsage': getXmlNodeInt, 
+        'passwordStructureValidations': getXmlNodeText, 
+        'passwordStructureValidationsDescription': getXmlNodeText, 
+        'passReplaceFreq': getXmlNodeInt, 
+        'maxLoginAttempts': getXmlNodeInt, 
+        'loginBlockPeriod': getXmlNodeInt, 
+        'numPrevPassToKeep': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -10051,6 +10082,12 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addIntIfDefined("partnerParentId", self.partnerParentId)
         kparams.addStringIfDefined("referenceId", self.referenceId)
         kparams.addArrayIfDefined("eSearchLanguages", self.eSearchLanguages)
+        kparams.addStringIfDefined("passwordStructureValidations", self.passwordStructureValidations)
+        kparams.addStringIfDefined("passwordStructureValidationsDescription", self.passwordStructureValidationsDescription)
+        kparams.addIntIfDefined("passReplaceFreq", self.passReplaceFreq)
+        kparams.addIntIfDefined("maxLoginAttempts", self.maxLoginAttempts)
+        kparams.addIntIfDefined("loginBlockPeriod", self.loginBlockPeriod)
+        kparams.addIntIfDefined("numPrevPassToKeep", self.numPrevPassToKeep)
         return kparams
 
     def getId(self):
@@ -10355,6 +10392,42 @@ class KalturaPartner(KalturaObjectBase):
 
     def getMonitorUsage(self):
         return self.monitorUsage
+
+    def getPasswordStructureValidations(self):
+        return self.passwordStructureValidations
+
+    def setPasswordStructureValidations(self, newPasswordStructureValidations):
+        self.passwordStructureValidations = newPasswordStructureValidations
+
+    def getPasswordStructureValidationsDescription(self):
+        return self.passwordStructureValidationsDescription
+
+    def setPasswordStructureValidationsDescription(self, newPasswordStructureValidationsDescription):
+        self.passwordStructureValidationsDescription = newPasswordStructureValidationsDescription
+
+    def getPassReplaceFreq(self):
+        return self.passReplaceFreq
+
+    def setPassReplaceFreq(self, newPassReplaceFreq):
+        self.passReplaceFreq = newPassReplaceFreq
+
+    def getMaxLoginAttempts(self):
+        return self.maxLoginAttempts
+
+    def setMaxLoginAttempts(self, newMaxLoginAttempts):
+        self.maxLoginAttempts = newMaxLoginAttempts
+
+    def getLoginBlockPeriod(self):
+        return self.loginBlockPeriod
+
+    def setLoginBlockPeriod(self, newLoginBlockPeriod):
+        self.loginBlockPeriod = newLoginBlockPeriod
+
+    def getNumPrevPassToKeep(self):
+        return self.numPrevPassToKeep
+
+    def setNumPrevPassToKeep(self, newNumPrevPassToKeep):
+        self.numPrevPassToKeep = newNumPrevPassToKeep
 
 
 # @package Kaltura
