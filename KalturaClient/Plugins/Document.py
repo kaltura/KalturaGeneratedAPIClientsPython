@@ -1684,6 +1684,7 @@ class KalturaDocumentEntryBaseFilter(KalturaBaseEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             documentTypeEqual=NotImplemented,
             documentTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -1779,7 +1780,8 @@ class KalturaDocumentEntryBaseFilter(KalturaBaseEntryFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
         # @var KalturaDocumentType
         self.documentTypeEqual = documentTypeEqual
@@ -1934,6 +1936,7 @@ class KalturaDocumentEntryFilter(KalturaDocumentEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             documentTypeEqual=NotImplemented,
             documentTypeIn=NotImplemented,
             assetParamsIdsMatchOr=NotImplemented,
@@ -2030,6 +2033,7 @@ class KalturaDocumentEntryFilter(KalturaDocumentEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             documentTypeEqual,
             documentTypeIn,
             assetParamsIdsMatchOr,

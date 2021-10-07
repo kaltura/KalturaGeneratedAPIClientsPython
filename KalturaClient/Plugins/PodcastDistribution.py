@@ -155,6 +155,7 @@ class KalturaPodcastDistributionProfile(KalturaDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             xsl=NotImplemented,
             feedId=NotImplemented,
             metadataProfileId=NotImplemented):
@@ -183,7 +184,8 @@ class KalturaPodcastDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
-            distributeTrigger)
+            distributeTrigger,
+            supportImageEntry)
 
         # @var string
         self.xsl = xsl

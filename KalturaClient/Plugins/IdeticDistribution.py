@@ -183,6 +183,7 @@ class KalturaIdeticDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -216,6 +217,7 @@ class KalturaIdeticDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

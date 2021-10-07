@@ -84,6 +84,7 @@ class KalturaDrmProfileStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDrmLicenseScenario(object):
+    NONE = "0"
     PROTECTION = "playReady.PROTECTION"
     PURCHASE = "playReady.PURCHASE"
     RENTAL = "playReady.RENTAL"

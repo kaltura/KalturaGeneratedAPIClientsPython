@@ -158,6 +158,7 @@ class KalturaDoubleClickDistributionProfile(KalturaConfigurableDistributionProfi
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -194,6 +195,7 @@ class KalturaDoubleClickDistributionProfile(KalturaConfigurableDistributionProfi
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

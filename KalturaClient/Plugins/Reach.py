@@ -217,6 +217,7 @@ class KalturaVendorTaskProcessingRegion(object):
 class KalturaCatalogItemLanguage(object):
     AR = "Arabic"
     YUE = "Cantonese"
+    CA = "Catalan"
     ZH = "Chinese"
     DA = "Danish"
     NL = "Dutch"
@@ -4157,7 +4158,7 @@ class KalturaReachProfileService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaReachProfileListResponse')
 
     def syncCredit(self, reachProfileId):
-        """sync vednor profile credit"""
+        """sync vendor profile credit"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("reachProfileId", reachProfileId);

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.5.0'
+API_VERSION = '17.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1302,6 +1302,19 @@ class KalturaThumbCropType(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaTwoFactorAuthenticationMode(object):
+    ALL = 0
+    ADMIN_USERS_ONLY = 1
+    NON_ADMIN_USERS_ONLY = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUiConfCreationMode(object):
     WIZARD = 2
     ADVANCED = 3
@@ -2188,6 +2201,7 @@ class KalturaConditionType(object):
     ASSET_TYPE = "16"
     BOOLEAN = "17"
     HTTP_HEADER = "18"
+    ENTRY_SCHEDULED = "19"
 
     def __init__(self, value):
         self.value = value
@@ -5233,6 +5247,7 @@ class KalturaReportType(object):
     INTERACTIVE_VIDEO_NODE_SWITCH_HOTSPOT_CLICKED_PERCENTILES = "57"
     TOP_CUSTOM_VAR2 = "58"
     TOP_CUSTOM_VAR3 = "59"
+    SELF_SERVE_USAGE = "60"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -5271,6 +5286,7 @@ class KalturaReportType(object):
     PLAYBACK_RATE_VPAAS = "20020"
     PARTNER_USAGE_VPAAS = "20021"
     TOP_PLAYBACK_CONTEXT_VPAAS = "20022"
+    SELF_SERVE_USAGE_VPAAS = "20023"
     QOE_OVERVIEW = "30001"
     QOE_EXPERIENCE = "30002"
     QOE_EXPERIENCE_PLATFORMS = "30003"
@@ -5756,11 +5772,11 @@ class KalturaUserRoleOrderBy(object):
 # @subpackage Client
 class KalturaVideoCodec(object):
     NONE = ""
-    AV1 = "AV1"
     APCH = "apch"
     APCN = "apcn"
     APCO = "apco"
     APCS = "apcs"
+    AV1 = "av1"
     COPY = "copy"
     DNXHD = "dnxhd"
     DV = "dv"
@@ -9698,7 +9714,8 @@ class KalturaPartner(KalturaObjectBase):
             passReplaceFreq=NotImplemented,
             maxLoginAttempts=NotImplemented,
             loginBlockPeriod=NotImplemented,
-            numPrevPassToKeep=NotImplemented):
+            numPrevPassToKeep=NotImplemented,
+            twoFactorAuthenticationMode=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9964,6 +9981,10 @@ class KalturaPartner(KalturaObjectBase):
         # @var int
         self.numPrevPassToKeep = numPrevPassToKeep
 
+        # @var KalturaTwoFactorAuthenticationMode
+        # @readonly
+        self.twoFactorAuthenticationMode = twoFactorAuthenticationMode
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10040,6 +10061,7 @@ class KalturaPartner(KalturaObjectBase):
         'maxLoginAttempts': getXmlNodeInt, 
         'loginBlockPeriod': getXmlNodeInt, 
         'numPrevPassToKeep': getXmlNodeInt, 
+        'twoFactorAuthenticationMode': (KalturaEnumsFactory.createInt, "KalturaTwoFactorAuthenticationMode"), 
     }
 
     def fromXml(self, node):
@@ -10428,6 +10450,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def setNumPrevPassToKeep(self, newNumPrevPassToKeep):
         self.numPrevPassToKeep = newNumPrevPassToKeep
+
+    def getTwoFactorAuthenticationMode(self):
+        return self.twoFactorAuthenticationMode
 
 
 # @package Kaltura
@@ -14523,7 +14548,8 @@ class KalturaUser(KalturaBaseUser):
             attendanceInfo=NotImplemented,
             title=NotImplemented,
             company=NotImplemented,
-            ksPrivileges=NotImplemented):
+            ksPrivileges=NotImplemented,
+            encryptedSeed=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -14605,6 +14631,10 @@ class KalturaUser(KalturaBaseUser):
         # @var string
         self.ksPrivileges = ksPrivileges
 
+        # @var string
+        # @readonly
+        self.encryptedSeed = encryptedSeed
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
@@ -14623,6 +14653,7 @@ class KalturaUser(KalturaBaseUser):
         'title': getXmlNodeText, 
         'company': getXmlNodeText, 
         'ksPrivileges': getXmlNodeText, 
+        'encryptedSeed': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14741,6 +14772,9 @@ class KalturaUser(KalturaBaseUser):
 
     def setKsPrivileges(self, newKsPrivileges):
         self.ksPrivileges = newKsPrivileges
+
+    def getEncryptedSeed(self):
+        return self.encryptedSeed
 
 
 # @package Kaltura
@@ -22549,7 +22583,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
+            redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented):
         KalturaBaseEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -22659,6 +22694,9 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
         # @var string
         self.redirectFromEntryId = redirectFromEntryId
 
+        # @var int
+        self.conversionProfileIdEqual = conversionProfileIdEqual
+
 
     PROPERTY_LOADERS = {
         'freeText': getXmlNodeText, 
@@ -22668,6 +22706,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
         'categoriesFullNameIn': getXmlNodeText, 
         'categoryAncestorIdIn': getXmlNodeText, 
         'redirectFromEntryId': getXmlNodeText, 
+        'conversionProfileIdEqual': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -22684,6 +22723,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
         kparams.addStringIfDefined("categoriesFullNameIn", self.categoriesFullNameIn)
         kparams.addStringIfDefined("categoryAncestorIdIn", self.categoryAncestorIdIn)
         kparams.addStringIfDefined("redirectFromEntryId", self.redirectFromEntryId)
+        kparams.addIntIfDefined("conversionProfileIdEqual", self.conversionProfileIdEqual)
         return kparams
 
     def getFreeText(self):
@@ -22727,6 +22767,12 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
 
     def setRedirectFromEntryId(self, newRedirectFromEntryId):
         self.redirectFromEntryId = newRedirectFromEntryId
+
+    def getConversionProfileIdEqual(self):
+        return self.conversionProfileIdEqual
+
+    def setConversionProfileIdEqual(self, newConversionProfileIdEqual):
+        self.conversionProfileIdEqual = newConversionProfileIdEqual
 
 
 # @package Kaltura
@@ -22824,6 +22870,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -22923,7 +22970,8 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
         # @var int
         self.lastPlayedAtGreaterThanOrEqual = lastPlayedAtGreaterThanOrEqual
@@ -23122,6 +23170,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -23222,6 +23271,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -23340,6 +23390,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -23450,6 +23501,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -23678,6 +23730,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -23788,6 +23841,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -23916,6 +23970,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -24028,6 +24083,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -26333,7 +26389,8 @@ class KalturaReportExportParams(KalturaObjectBase):
             recipientEmail=NotImplemented,
             timeZoneOffset=NotImplemented,
             reportItems=NotImplemented,
-            reportsItemsGroup=NotImplemented):
+            reportsItemsGroup=NotImplemented,
+            baseUrl=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var string
@@ -26349,12 +26406,16 @@ class KalturaReportExportParams(KalturaObjectBase):
         # @var string
         self.reportsItemsGroup = reportsItemsGroup
 
+        # @var string
+        self.baseUrl = baseUrl
+
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
         'reportsItemsGroup': getXmlNodeText, 
+        'baseUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26368,6 +26429,7 @@ class KalturaReportExportParams(KalturaObjectBase):
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addArrayIfDefined("reportItems", self.reportItems)
         kparams.addStringIfDefined("reportsItemsGroup", self.reportsItemsGroup)
+        kparams.addStringIfDefined("baseUrl", self.baseUrl)
         return kparams
 
     def getRecipientEmail(self):
@@ -26393,6 +26455,12 @@ class KalturaReportExportParams(KalturaObjectBase):
 
     def setReportsItemsGroup(self, newReportsItemsGroup):
         self.reportsItemsGroup = newReportsItemsGroup
+
+    def getBaseUrl(self):
+        return self.baseUrl
+
+    def setBaseUrl(self, newBaseUrl):
+        self.baseUrl = newBaseUrl
 
 
 # @package Kaltura
@@ -35940,7 +36008,7 @@ class KalturaDeliveryProfileRtmp(KalturaDeliveryProfile):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileVodPackagerPlayServer(KalturaDeliveryProfile):
+class KalturaDeliveryProfileVod(KalturaDeliveryProfile):
     def __init__(self,
             id=NotImplemented,
             partnerId=NotImplemented,
@@ -35962,7 +36030,7 @@ class KalturaDeliveryProfileVodPackagerPlayServer(KalturaDeliveryProfile):
             priority=NotImplemented,
             extraParams=NotImplemented,
             supplementaryAssetsFilter=NotImplemented,
-            adStitchingEnabled=NotImplemented):
+            simuliveSupport=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
             partnerId,
@@ -35986,28 +36054,28 @@ class KalturaDeliveryProfileVodPackagerPlayServer(KalturaDeliveryProfile):
             supplementaryAssetsFilter)
 
         # @var bool
-        self.adStitchingEnabled = adStitchingEnabled
+        self.simuliveSupport = simuliveSupport
 
 
     PROPERTY_LOADERS = {
-        'adStitchingEnabled': getXmlNodeBool, 
+        'simuliveSupport': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
         KalturaDeliveryProfile.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerPlayServer.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVod.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaDeliveryProfile.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerPlayServer")
-        kparams.addBoolIfDefined("adStitchingEnabled", self.adStitchingEnabled)
+        kparams.put("objectType", "KalturaDeliveryProfileVod")
+        kparams.addBoolIfDefined("simuliveSupport", self.simuliveSupport)
         return kparams
 
-    def getAdStitchingEnabled(self):
-        return self.adStitchingEnabled
+    def getSimuliveSupport(self):
+        return self.simuliveSupport
 
-    def setAdStitchingEnabled(self, newAdStitchingEnabled):
-        self.adStitchingEnabled = newAdStitchingEnabled
+    def setSimuliveSupport(self, newSimuliveSupport):
+        self.simuliveSupport = newSimuliveSupport
 
 
 # @package Kaltura
@@ -37546,6 +37614,32 @@ class KalturaEntryLiveStats(KalturaLiveStats):
 
     def setPeakDvrAudience(self, newPeakDvrAudience):
         self.peakDvrAudience = newPeakDvrAudience
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaEntryScheduledCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEntryScheduledCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaEntryScheduledCondition")
+        return kparams
 
 
 # @package Kaltura
@@ -40773,7 +40867,8 @@ class KalturaReportExportJobData(KalturaJobData):
             reportItems=NotImplemented,
             filePaths=NotImplemented,
             reportsGroup=NotImplemented,
-            files=NotImplemented):
+            files=NotImplemented,
+            baseUrl=NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var string
@@ -40791,6 +40886,9 @@ class KalturaReportExportJobData(KalturaJobData):
         # @var array of KalturaReportExportFile
         self.files = files
 
+        # @var string
+        self.baseUrl = baseUrl
+
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
@@ -40798,6 +40896,7 @@ class KalturaReportExportJobData(KalturaJobData):
         'filePaths': getXmlNodeText, 
         'reportsGroup': getXmlNodeText, 
         'files': (KalturaObjectFactory.createArray, 'KalturaReportExportFile'), 
+        'baseUrl': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -40812,6 +40911,7 @@ class KalturaReportExportJobData(KalturaJobData):
         kparams.addStringIfDefined("filePaths", self.filePaths)
         kparams.addStringIfDefined("reportsGroup", self.reportsGroup)
         kparams.addArrayIfDefined("files", self.files)
+        kparams.addStringIfDefined("baseUrl", self.baseUrl)
         return kparams
 
     def getRecipientEmail(self):
@@ -40843,6 +40943,12 @@ class KalturaReportExportJobData(KalturaJobData):
 
     def setFiles(self, newFiles):
         self.files = newFiles
+
+    def getBaseUrl(self):
+        return self.baseUrl
+
+    def setBaseUrl(self, newBaseUrl):
+        self.baseUrl = newBaseUrl
 
 
 # @package Kaltura
@@ -44575,7 +44681,8 @@ class KalturaAdminUser(KalturaUser):
             attendanceInfo=NotImplemented,
             title=NotImplemented,
             company=NotImplemented,
-            ksPrivileges=NotImplemented):
+            ksPrivileges=NotImplemented,
+            encryptedSeed=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -44619,7 +44726,8 @@ class KalturaAdminUser(KalturaUser):
             attendanceInfo,
             title,
             company,
-            ksPrivileges)
+            ksPrivileges,
+            encryptedSeed)
 
 
     PROPERTY_LOADERS = {
@@ -47030,7 +47138,7 @@ class KalturaDeliveryProfileLivePackagerHls(KalturaDeliveryProfileLivePackager):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfileVodPackagerPlayServer):
+class KalturaDeliveryProfileVodPackagerPlayServer(KalturaDeliveryProfileVod):
     def __init__(self,
             id=NotImplemented,
             partnerId=NotImplemented,
@@ -47052,9 +47160,9 @@ class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfileVodPackagerPlay
             priority=NotImplemented,
             extraParams=NotImplemented,
             supplementaryAssetsFilter=NotImplemented,
-            adStitchingEnabled=NotImplemented,
-            allowFairplayOffline=NotImplemented):
-        KalturaDeliveryProfileVodPackagerPlayServer.__init__(self,
+            simuliveSupport=NotImplemented,
+            adStitchingEnabled=NotImplemented):
+        KalturaDeliveryProfileVod.__init__(self,
             id,
             partnerId,
             name,
@@ -47075,31 +47183,31 @@ class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfileVodPackagerPlay
             priority,
             extraParams,
             supplementaryAssetsFilter,
-            adStitchingEnabled)
+            simuliveSupport)
 
         # @var bool
-        self.allowFairplayOffline = allowFairplayOffline
+        self.adStitchingEnabled = adStitchingEnabled
 
 
     PROPERTY_LOADERS = {
-        'allowFairplayOffline': getXmlNodeBool, 
+        'adStitchingEnabled': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
-        KalturaDeliveryProfileVodPackagerPlayServer.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerHls.PROPERTY_LOADERS)
+        KalturaDeliveryProfileVod.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerPlayServer.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaDeliveryProfileVodPackagerPlayServer.toParams(self)
-        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerHls")
-        kparams.addBoolIfDefined("allowFairplayOffline", self.allowFairplayOffline)
+        kparams = KalturaDeliveryProfileVod.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerPlayServer")
+        kparams.addBoolIfDefined("adStitchingEnabled", self.adStitchingEnabled)
         return kparams
 
-    def getAllowFairplayOffline(self):
-        return self.allowFairplayOffline
+    def getAdStitchingEnabled(self):
+        return self.adStitchingEnabled
 
-    def setAllowFairplayOffline(self, newAllowFairplayOffline):
-        self.allowFairplayOffline = newAllowFairplayOffline
+    def setAdStitchingEnabled(self, newAdStitchingEnabled):
+        self.adStitchingEnabled = newAdStitchingEnabled
 
 
 # @package Kaltura
@@ -52910,6 +53018,82 @@ class KalturaDeliveryProfileRtmpBaseFilter(KalturaDeliveryProfileFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDeliveryProfileVodPackagerHls(KalturaDeliveryProfileVodPackagerPlayServer):
+    def __init__(self,
+            id=NotImplemented,
+            partnerId=NotImplemented,
+            name=NotImplemented,
+            type=NotImplemented,
+            systemName=NotImplemented,
+            description=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            streamerType=NotImplemented,
+            url=NotImplemented,
+            hostName=NotImplemented,
+            status=NotImplemented,
+            recognizer=NotImplemented,
+            tokenizer=NotImplemented,
+            isDefault=NotImplemented,
+            parentId=NotImplemented,
+            mediaProtocols=NotImplemented,
+            priority=NotImplemented,
+            extraParams=NotImplemented,
+            supplementaryAssetsFilter=NotImplemented,
+            simuliveSupport=NotImplemented,
+            adStitchingEnabled=NotImplemented,
+            allowFairplayOffline=NotImplemented):
+        KalturaDeliveryProfileVodPackagerPlayServer.__init__(self,
+            id,
+            partnerId,
+            name,
+            type,
+            systemName,
+            description,
+            createdAt,
+            updatedAt,
+            streamerType,
+            url,
+            hostName,
+            status,
+            recognizer,
+            tokenizer,
+            isDefault,
+            parentId,
+            mediaProtocols,
+            priority,
+            extraParams,
+            supplementaryAssetsFilter,
+            simuliveSupport,
+            adStitchingEnabled)
+
+        # @var bool
+        self.allowFairplayOffline = allowFairplayOffline
+
+
+    PROPERTY_LOADERS = {
+        'allowFairplayOffline': getXmlNodeBool, 
+    }
+
+    def fromXml(self, node):
+        KalturaDeliveryProfileVodPackagerPlayServer.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDeliveryProfileVodPackagerHls.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDeliveryProfileVodPackagerPlayServer.toParams(self)
+        kparams.put("objectType", "KalturaDeliveryProfileVodPackagerHls")
+        kparams.addBoolIfDefined("allowFairplayOffline", self.allowFairplayOffline)
+        return kparams
+
+    def getAllowFairplayOffline(self):
+        return self.allowFairplayOffline
+
+    def setAllowFairplayOffline(self, newAllowFairplayOffline):
+        self.allowFairplayOffline = newAllowFairplayOffline
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDeliveryServerNodeBaseFilter(KalturaServerNodeFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -55338,7 +55522,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
+            redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented):
         KalturaBaseEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -55430,7 +55615,8 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
 
     PROPERTY_LOADERS = {
@@ -56458,7 +56644,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
+            redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented):
         KalturaBaseEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -56550,7 +56737,8 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
 
     PROPERTY_LOADERS = {
@@ -57237,7 +57425,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             isRoot=NotImplemented,
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
-            redirectFromEntryId=NotImplemented):
+            redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented):
         KalturaDataEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -57329,7 +57518,8 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
 
     PROPERTY_LOADERS = {
@@ -58062,6 +58252,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             playListTypeEqual=NotImplemented,
             playListTypeIn=NotImplemented):
         KalturaPlaylistBaseFilter.__init__(self,
@@ -58155,7 +58346,8 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             isRoot,
             categoriesFullNameIn,
             categoryAncestorIdIn,
-            redirectFromEntryId)
+            redirectFromEntryId,
+            conversionProfileIdEqual)
 
         # @var KalturaPlaylistType
         self.playListTypeEqual = playListTypeEqual
@@ -58954,6 +59146,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -59054,6 +59247,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -59530,6 +59724,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -59630,6 +59825,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -59794,6 +59990,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -59904,6 +60101,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -60078,6 +60276,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -60191,6 +60390,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -60398,6 +60598,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -60511,6 +60712,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -60642,6 +60844,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -60755,6 +60958,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -60886,6 +61090,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -60999,6 +61204,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -61130,6 +61336,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -61243,6 +61450,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -61374,6 +61582,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -61487,6 +61696,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -61618,6 +61828,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             categoriesFullNameIn=NotImplemented,
             categoryAncestorIdIn=NotImplemented,
             redirectFromEntryId=NotImplemented,
+            conversionProfileIdEqual=NotImplemented,
             lastPlayedAtGreaterThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqual=NotImplemented,
             lastPlayedAtLessThanOrEqualOrNull=NotImplemented,
@@ -61731,6 +61942,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             categoriesFullNameIn,
             categoryAncestorIdIn,
             redirectFromEntryId,
+            conversionProfileIdEqual,
             lastPlayedAtGreaterThanOrEqual,
             lastPlayedAtLessThanOrEqual,
             lastPlayedAtLessThanOrEqualOrNull,
@@ -62309,6 +62521,14 @@ class KalturaBaseEntryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def servePlaybackKey(self, entryId):
+        """This action serves HLS encrypted key if access control is validated"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall('baseentry', 'servePlaybackKey', None ,kparams)
+        return self.client.getServeUrl()
+
     def update(self, entryId, baseEntry):
         """Update base entry. Only the properties that were set will be updated."""
 
@@ -62599,6 +62819,19 @@ class KalturaCategoryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaBulkUpload')
+
+    def clone(self, categoryId, fromPartnerId, parentCategoryId = NotImplemented):
+        """Clone Category"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("categoryId", categoryId);
+        kparams.addIntIfDefined("fromPartnerId", fromPartnerId);
+        kparams.addIntIfDefined("parentCategoryId", parentCategoryId);
+        self.client.queueServiceActionCall("category", "clone", "KalturaCategory", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaCategory')
 
     def delete(self, id, moveEntriesToParentCategory = 1):
         """Delete a Category"""
@@ -67343,6 +67576,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaSyndicationFeedType': KalturaSyndicationFeedType,
             'KalturaThumbAssetStatus': KalturaThumbAssetStatus,
             'KalturaThumbCropType': KalturaThumbCropType,
+            'KalturaTwoFactorAuthenticationMode': KalturaTwoFactorAuthenticationMode,
             'KalturaUiConfCreationMode': KalturaUiConfCreationMode,
             'KalturaUiConfObjType': KalturaUiConfObjType,
             'KalturaUpdateMethodType': KalturaUpdateMethodType,
@@ -67803,7 +68037,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileLiveAppleHttp': KalturaDeliveryProfileLiveAppleHttp,
             'KalturaDeliveryProfileLivePackager': KalturaDeliveryProfileLivePackager,
             'KalturaDeliveryProfileRtmp': KalturaDeliveryProfileRtmp,
-            'KalturaDeliveryProfileVodPackagerPlayServer': KalturaDeliveryProfileVodPackagerPlayServer,
+            'KalturaDeliveryProfileVod': KalturaDeliveryProfileVod,
             'KalturaDeliveryServerNode': KalturaDeliveryServerNode,
             'KalturaDirectoryRestriction': KalturaDirectoryRestriction,
             'KalturaDrmEntryContextPluginData': KalturaDrmEntryContextPluginData,
@@ -67819,6 +68053,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaEntryCuePointSearchFilter': KalturaEntryCuePointSearchFilter,
             'KalturaEntryIdentifier': KalturaEntryIdentifier,
             'KalturaEntryLiveStats': KalturaEntryLiveStats,
+            'KalturaEntryScheduledCondition': KalturaEntryScheduledCondition,
             'KalturaEntryServerNodeBaseFilter': KalturaEntryServerNodeBaseFilter,
             'KalturaEntryServerNodeListResponse': KalturaEntryServerNodeListResponse,
             'KalturaBooleanField': KalturaBooleanField,
@@ -67948,7 +68183,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericHttp': KalturaDeliveryProfileGenericHttp,
             'KalturaDeliveryProfileGenericRtmp': KalturaDeliveryProfileGenericRtmp,
             'KalturaDeliveryProfileLivePackagerHls': KalturaDeliveryProfileLivePackagerHls,
-            'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
+            'KalturaDeliveryProfileVodPackagerPlayServer': KalturaDeliveryProfileVodPackagerPlayServer,
             'KalturaEdgeServerNode': KalturaEdgeServerNode,
             'KalturaEndUserReportInputFilter': KalturaEndUserReportInputFilter,
             'KalturaEntryIndexAdvancedFilter': KalturaEntryIndexAdvancedFilter,
@@ -68030,6 +68265,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDeliveryProfileGenericSilverLightBaseFilter': KalturaDeliveryProfileGenericSilverLightBaseFilter,
             'KalturaDeliveryProfileLiveAppleHttpBaseFilter': KalturaDeliveryProfileLiveAppleHttpBaseFilter,
             'KalturaDeliveryProfileRtmpBaseFilter': KalturaDeliveryProfileRtmpBaseFilter,
+            'KalturaDeliveryProfileVodPackagerHls': KalturaDeliveryProfileVodPackagerHls,
             'KalturaDeliveryServerNodeBaseFilter': KalturaDeliveryServerNodeBaseFilter,
             'KalturaDocumentEntryCompareAttributeCondition': KalturaDocumentEntryCompareAttributeCondition,
             'KalturaDocumentEntryMatchAttributeCondition': KalturaDocumentEntryMatchAttributeCondition,

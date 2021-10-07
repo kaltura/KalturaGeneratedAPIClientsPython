@@ -198,6 +198,7 @@ class KalturaFreewheelGenericDistributionProfile(KalturaConfigurableDistribution
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -238,6 +239,7 @@ class KalturaFreewheelGenericDistributionProfile(KalturaConfigurableDistribution
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

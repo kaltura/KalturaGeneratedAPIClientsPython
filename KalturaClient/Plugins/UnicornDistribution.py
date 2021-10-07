@@ -224,6 +224,7 @@ class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -262,6 +263,7 @@ class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

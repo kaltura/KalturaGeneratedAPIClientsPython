@@ -677,7 +677,8 @@ class KalturaDistributionProfile(KalturaObjectBase):
             recommendedStorageProfileForDownload=NotImplemented,
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented):
+            distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated unique id
@@ -777,6 +778,10 @@ class KalturaDistributionProfile(KalturaObjectBase):
         # @var KalturaDistributeTrigger
         self.distributeTrigger = distributeTrigger
 
+        # @var bool
+        # @readonly
+        self.supportImageEntry = supportImageEntry
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -804,6 +809,7 @@ class KalturaDistributionProfile(KalturaObjectBase):
         'recommendedDcForDownload': getXmlNodeInt, 
         'recommendedDcForExecute': getXmlNodeInt, 
         'distributeTrigger': (KalturaEnumsFactory.createInt, "KalturaDistributeTrigger"), 
+        'supportImageEntry': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -973,6 +979,9 @@ class KalturaDistributionProfile(KalturaObjectBase):
 
     def setDistributeTrigger(self, newDistributeTrigger):
         self.distributeTrigger = newDistributeTrigger
+
+    def getSupportImageEntry(self):
+        return self.supportImageEntry
 
 
 # @package Kaltura
@@ -2126,6 +2135,7 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented):
@@ -2154,7 +2164,8 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
-            distributeTrigger)
+            distributeTrigger,
+            supportImageEntry)
 
         # @var array of KalturaDistributionFieldConfig
         self.fieldConfigArray = fieldConfigArray
@@ -3055,6 +3066,7 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             genericProviderId=NotImplemented,
             submitAction=NotImplemented,
             updateAction=NotImplemented,
@@ -3087,7 +3099,8 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
-            distributeTrigger)
+            distributeTrigger,
+            supportImageEntry)
 
         # @var int
         # @insertonly
@@ -3416,6 +3429,7 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             xsl=NotImplemented,
             feedId=NotImplemented):
         KalturaDistributionProfile.__init__(self,
@@ -3443,7 +3457,8 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
             recommendedStorageProfileForDownload,
             recommendedDcForDownload,
             recommendedDcForExecute,
-            distributeTrigger)
+            distributeTrigger,
+            supportImageEntry)
 
         # @var string
         self.xsl = xsl

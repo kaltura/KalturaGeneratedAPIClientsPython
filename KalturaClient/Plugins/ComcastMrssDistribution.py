@@ -139,6 +139,7 @@ class KalturaComcastMrssDistributionProfile(KalturaConfigurableDistributionProfi
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -180,6 +181,7 @@ class KalturaComcastMrssDistributionProfile(KalturaConfigurableDistributionProfi
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

@@ -312,6 +312,7 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -353,6 +354,7 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)

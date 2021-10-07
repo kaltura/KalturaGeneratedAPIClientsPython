@@ -276,6 +276,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             recommendedDcForDownload=NotImplemented,
             recommendedDcForExecute=NotImplemented,
             distributeTrigger=NotImplemented,
+            supportImageEntry=NotImplemented,
             fieldConfigArray=NotImplemented,
             itemXpathsToExtend=NotImplemented,
             useCategoryEntries=NotImplemented,
@@ -328,6 +329,7 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             recommendedDcForDownload,
             recommendedDcForExecute,
             distributeTrigger,
+            supportImageEntry,
             fieldConfigArray,
             itemXpathsToExtend,
             useCategoryEntries)
