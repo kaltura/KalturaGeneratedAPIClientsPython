@@ -1,7 +1,3 @@
--e .
-pycrypto
-pytest
-pytest-cov
 setuptools
 requests
 requests-toolbelt
