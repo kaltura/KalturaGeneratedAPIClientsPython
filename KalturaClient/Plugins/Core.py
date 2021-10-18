@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.11.0'
+API_VERSION = '17.12.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -806,6 +806,7 @@ class KalturaPartnerStatus(object):
     ACTIVE = 1
     BLOCKED = 2
     FULL_BLOCK = 3
+    READ_ONLY = 4
 
     def __init__(self, value):
         self.value = value

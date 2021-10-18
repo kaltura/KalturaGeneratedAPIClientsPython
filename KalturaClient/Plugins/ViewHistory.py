@@ -60,7 +60,8 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
             extendedStatus=NotImplemented,
             playbackContext=NotImplemented,
             lastTimeReached=NotImplemented,
-            lastUpdateTime=NotImplemented):
+            lastUpdateTime=NotImplemented,
+            playlistLastEntryId=NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -83,11 +84,16 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
         # @var int
         self.lastUpdateTime = lastUpdateTime
 
+        # Property to save last entry ID played in a playlist.
+        # @var string
+        self.playlistLastEntryId = playlistLastEntryId
+
 
     PROPERTY_LOADERS = {
         'playbackContext': getXmlNodeText, 
         'lastTimeReached': getXmlNodeInt, 
         'lastUpdateTime': getXmlNodeInt, 
+        'playlistLastEntryId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -100,6 +106,7 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
         kparams.addStringIfDefined("playbackContext", self.playbackContext)
         kparams.addIntIfDefined("lastTimeReached", self.lastTimeReached)
         kparams.addIntIfDefined("lastUpdateTime", self.lastUpdateTime)
+        kparams.addStringIfDefined("playlistLastEntryId", self.playlistLastEntryId)
         return kparams
 
     def getPlaybackContext(self):
@@ -119,6 +126,12 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
 
     def setLastUpdateTime(self, newLastUpdateTime):
         self.lastUpdateTime = newLastUpdateTime
+
+    def getPlaylistLastEntryId(self):
+        return self.playlistLastEntryId
+
+    def setPlaylistLastEntryId(self, newPlaylistLastEntryId):
+        self.playlistLastEntryId = newPlaylistLastEntryId
 
 
 # @package Kaltura
