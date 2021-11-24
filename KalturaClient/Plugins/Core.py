@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.12.0'
+API_VERSION = '17.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2203,6 +2203,8 @@ class KalturaConditionType(object):
     BOOLEAN = "17"
     HTTP_HEADER = "18"
     ENTRY_SCHEDULED = "19"
+    ACTION_NAME = "20"
+    URL_AUTH_PARAMS = "21"
 
     def __init__(self, value):
         self.value = value
@@ -5167,6 +5169,7 @@ class KalturaReportInterval(object):
     MONTHS = "months"
     TEN_MINUTES = "ten_minutes"
     TEN_SECONDS = "ten_seconds"
+    YEARS = "years"
 
     def __init__(self, value):
         self.value = value
@@ -9640,6 +9643,38 @@ class KalturaESearchLanguageItem(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaRegexItem(KalturaObjectBase):
+    def __init__(self,
+            regex=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.regex = regex
+
+
+    PROPERTY_LOADERS = {
+        'regex': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRegexItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaRegexItem")
+        kparams.addStringIfDefined("regex", self.regex)
+        return kparams
+
+    def getRegex(self):
+        return self.regex
+
+    def setRegex(self, newRegex):
+        self.regex = newRegex
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPartner(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
@@ -9716,7 +9751,8 @@ class KalturaPartner(KalturaObjectBase):
             maxLoginAttempts=NotImplemented,
             loginBlockPeriod=NotImplemented,
             numPrevPassToKeep=NotImplemented,
-            twoFactorAuthenticationMode=NotImplemented):
+            twoFactorAuthenticationMode=NotImplemented,
+            isSelfServe=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -9964,7 +10000,7 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.monitorUsage = monitorUsage
 
-        # @var string
+        # @var array of KalturaRegexItem
         self.passwordStructureValidations = passwordStructureValidations
 
         # @var string
@@ -9985,6 +10021,9 @@ class KalturaPartner(KalturaObjectBase):
         # @var KalturaTwoFactorAuthenticationMode
         # @readonly
         self.twoFactorAuthenticationMode = twoFactorAuthenticationMode
+
+        # @var bool
+        self.isSelfServe = isSelfServe
 
 
     PROPERTY_LOADERS = {
@@ -10056,13 +10095,14 @@ class KalturaPartner(KalturaObjectBase):
         'usageLimitWarning': getXmlNodeInt, 
         'lastFreeTrialNotificationDay': getXmlNodeInt, 
         'monitorUsage': getXmlNodeInt, 
-        'passwordStructureValidations': getXmlNodeText, 
+        'passwordStructureValidations': (KalturaObjectFactory.createArray, 'KalturaRegexItem'), 
         'passwordStructureValidationsDescription': getXmlNodeText, 
         'passReplaceFreq': getXmlNodeInt, 
         'maxLoginAttempts': getXmlNodeInt, 
         'loginBlockPeriod': getXmlNodeInt, 
         'numPrevPassToKeep': getXmlNodeInt, 
         'twoFactorAuthenticationMode': (KalturaEnumsFactory.createInt, "KalturaTwoFactorAuthenticationMode"), 
+        'isSelfServe': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -10105,12 +10145,13 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addIntIfDefined("partnerParentId", self.partnerParentId)
         kparams.addStringIfDefined("referenceId", self.referenceId)
         kparams.addArrayIfDefined("eSearchLanguages", self.eSearchLanguages)
-        kparams.addStringIfDefined("passwordStructureValidations", self.passwordStructureValidations)
+        kparams.addArrayIfDefined("passwordStructureValidations", self.passwordStructureValidations)
         kparams.addStringIfDefined("passwordStructureValidationsDescription", self.passwordStructureValidationsDescription)
         kparams.addIntIfDefined("passReplaceFreq", self.passReplaceFreq)
         kparams.addIntIfDefined("maxLoginAttempts", self.maxLoginAttempts)
         kparams.addIntIfDefined("loginBlockPeriod", self.loginBlockPeriod)
         kparams.addIntIfDefined("numPrevPassToKeep", self.numPrevPassToKeep)
+        kparams.addBoolIfDefined("isSelfServe", self.isSelfServe)
         return kparams
 
     def getId(self):
@@ -10454,6 +10495,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def getTwoFactorAuthenticationMode(self):
         return self.twoFactorAuthenticationMode
+
+    def getIsSelfServe(self):
+        return self.isSelfServe
+
+    def setIsSelfServe(self, newIsSelfServe):
+        self.isSelfServe = newIsSelfServe
 
 
 # @package Kaltura
@@ -42938,6 +42985,32 @@ class KalturaUploadTokenListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaUrlAuthenticationParamsCondition(KalturaCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUrlAuthenticationParamsCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaUrlAuthenticationParamsCondition")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUrlRecognizerAkamaiG2O(KalturaUrlRecognizer):
     def __init__(self,
             hosts=NotImplemented,
@@ -51480,6 +51553,36 @@ class KalturaAccessControlProfileFilter(KalturaAccessControlProfileBaseFilter):
     def toParams(self):
         kparams = KalturaAccessControlProfileBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaAccessControlProfileFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaActionNameCondition(KalturaRegexCondition):
+    def __init__(self,
+            type=NotImplemented,
+            description=NotImplemented,
+            not_=NotImplemented,
+            values=NotImplemented,
+            matchType=NotImplemented):
+        KalturaRegexCondition.__init__(self,
+            type,
+            description,
+            not_,
+            values,
+            matchType)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaRegexCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaActionNameCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaRegexCondition.toParams(self)
+        kparams.put("objectType", "KalturaActionNameCondition")
         return kparams
 
 
@@ -65646,19 +65749,22 @@ class KalturaReportService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.createArray(resultNode, 'KalturaReportBaseTotal')
 
-    def getCsv(self, id, params = NotImplemented):
+    def getCsv(self, id, params = NotImplemented, excludedFields = NotImplemented):
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addArrayIfDefined("params", params)
+        kparams.addStringIfDefined("excludedFields", excludedFields)
         self.client.queueServiceActionCall('report', 'getCsv', None ,kparams)
         return self.client.getServeUrl()
 
-    def getCsvFromStringParams(self, id, params = NotImplemented):
-        """Returns report CSV file executed by string params with the following convention: param1=value1;param2=value2"""
+    def getCsvFromStringParams(self, id, params = NotImplemented, excludedFields = NotImplemented):
+        """Returns report CSV file executed by string params with the following convention: param1=value1;param2=value2
+        	 excludedFields can be supplied comma separated"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
         kparams.addStringIfDefined("params", params)
+        kparams.addStringIfDefined("excludedFields", excludedFields)
         self.client.queueServiceActionCall('report', 'getCsvFromStringParams', None ,kparams)
         return self.client.getServeUrl()
 
@@ -67806,6 +67912,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPlayerDeliveryType': KalturaPlayerDeliveryType,
             'KalturaPlayerEmbedCodeType': KalturaPlayerEmbedCodeType,
             'KalturaESearchLanguageItem': KalturaESearchLanguageItem,
+            'KalturaRegexItem': KalturaRegexItem,
             'KalturaPartner': KalturaPartner,
             'KalturaValue': KalturaValue,
             'KalturaBooleanValue': KalturaBooleanValue,
@@ -68131,6 +68238,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaUiConfListResponse': KalturaUiConfListResponse,
             'KalturaUploadTokenBaseFilter': KalturaUploadTokenBaseFilter,
             'KalturaUploadTokenListResponse': KalturaUploadTokenListResponse,
+            'KalturaUrlAuthenticationParamsCondition': KalturaUrlAuthenticationParamsCondition,
             'KalturaUrlRecognizerAkamaiG2O': KalturaUrlRecognizerAkamaiG2O,
             'KalturaUrlRecognizerKaltura': KalturaUrlRecognizerKaltura,
             'KalturaUrlTokenizerAkamaiHttp': KalturaUrlTokenizerAkamaiHttp,
@@ -68241,6 +68349,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaWidgetFilter': KalturaWidgetFilter,
             'KalturaAccessControlFilter': KalturaAccessControlFilter,
             'KalturaAccessControlProfileFilter': KalturaAccessControlProfileFilter,
+            'KalturaActionNameCondition': KalturaActionNameCondition,
             'KalturaAmazonS3StorageExportJobData': KalturaAmazonS3StorageExportJobData,
             'KalturaAmazonS3StorageProfileBaseFilter': KalturaAmazonS3StorageProfileBaseFilter,
             'KalturaAnonymousIPContextField': KalturaAnonymousIPContextField,

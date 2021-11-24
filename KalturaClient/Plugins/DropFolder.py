@@ -119,6 +119,7 @@ class KalturaDropFolderErrorCode(object):
     ERROR_GET_DB_FILE_LIST = "4"
     DROP_FOLDER_APP_ERROR = "5"
     CONTENT_MATCH_POLICY_UNDEFINED = "6"
+    MISSING_CONFIG = "7"
 
     def __init__(self, value):
         self.value = value
