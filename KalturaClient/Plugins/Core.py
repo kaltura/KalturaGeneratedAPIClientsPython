@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.14.0'
+API_VERSION = '17.16.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -14552,6 +14552,52 @@ class KalturaDrmPlaybackPluginData(KalturaPluginData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDynamicEmailContents(KalturaObjectBase):
+    def __init__(self,
+            emailSubject=NotImplemented,
+            emailBody=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The subject of the customized email
+        # @var string
+        self.emailSubject = emailSubject
+
+        # The body of the customized email
+        # @var string
+        self.emailBody = emailBody
+
+
+    PROPERTY_LOADERS = {
+        'emailSubject': getXmlNodeText, 
+        'emailBody': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDynamicEmailContents.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaDynamicEmailContents")
+        kparams.addStringIfDefined("emailSubject", self.emailSubject)
+        kparams.addStringIfDefined("emailBody", self.emailBody)
+        return kparams
+
+    def getEmailSubject(self):
+        return self.emailSubject
+
+    def setEmailSubject(self, newEmailSubject):
+        self.emailSubject = newEmailSubject
+
+    def getEmailBody(self):
+        return self.emailBody
+
+    def setEmailBody(self, newEmailBody):
+        self.emailBody = newEmailBody
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaUser(KalturaBaseUser):
     def __init__(self,
             id=NotImplemented,
@@ -28271,6 +28317,7 @@ class KalturaStorageProfile(KalturaObjectBase):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
+            port=NotImplemented,
             shouldExportThumbs=NotImplemented,
             packagerUrl=NotImplemented,
             exportPeriodically=NotImplemented,
@@ -28385,6 +28432,9 @@ class KalturaStorageProfile(KalturaObjectBase):
         # @var string
         self.passPhrase = passPhrase
 
+        # @var int
+        self.port = port
+
         # @var bool
         self.shouldExportThumbs = shouldExportThumbs
 
@@ -28437,6 +28487,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         'privateKey': getXmlNodeText, 
         'publicKey': getXmlNodeText, 
         'passPhrase': getXmlNodeText, 
+        'port': getXmlNodeInt, 
         'shouldExportThumbs': getXmlNodeBool, 
         'packagerUrl': getXmlNodeText, 
         'exportPeriodically': getXmlNodeBool, 
@@ -28480,6 +28531,7 @@ class KalturaStorageProfile(KalturaObjectBase):
         kparams.addStringIfDefined("privateKey", self.privateKey)
         kparams.addStringIfDefined("publicKey", self.publicKey)
         kparams.addStringIfDefined("passPhrase", self.passPhrase)
+        kparams.addIntIfDefined("port", self.port)
         kparams.addBoolIfDefined("shouldExportThumbs", self.shouldExportThumbs)
         kparams.addStringIfDefined("packagerUrl", self.packagerUrl)
         kparams.addBoolIfDefined("exportPeriodically", self.exportPeriodically)
@@ -28667,6 +28719,12 @@ class KalturaStorageProfile(KalturaObjectBase):
 
     def setPassPhrase(self, newPassPhrase):
         self.passPhrase = newPassPhrase
+
+    def getPort(self):
+        return self.port
+
+    def setPort(self, newPort):
+        self.port = newPort
 
     def getShouldExportThumbs(self):
         return self.shouldExportThumbs
@@ -30890,6 +30948,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
+            port=NotImplemented,
             shouldExportThumbs=NotImplemented,
             packagerUrl=NotImplemented,
             exportPeriodically=NotImplemented,
@@ -30935,6 +30994,7 @@ class KalturaAmazonS3StorageProfile(KalturaStorageProfile):
             privateKey,
             publicKey,
             passPhrase,
+            port,
             shouldExportThumbs,
             packagerUrl,
             exportPeriodically,
@@ -39454,6 +39514,7 @@ class KalturaMailJobData(KalturaJobData):
             fromEmail=NotImplemented,
             bodyParams=NotImplemented,
             subjectParams=NotImplemented,
+            dynamicEmailContents=NotImplemented,
             templatePath=NotImplemented,
             language=NotImplemented,
             campaignId=NotImplemented,
@@ -39493,6 +39554,9 @@ class KalturaMailJobData(KalturaJobData):
         # @var string
         self.subjectParams = subjectParams
 
+        # @var KalturaDynamicEmailContents
+        self.dynamicEmailContents = dynamicEmailContents
+
         # @var string
         self.templatePath = templatePath
 
@@ -39523,6 +39587,7 @@ class KalturaMailJobData(KalturaJobData):
         'fromEmail': getXmlNodeText, 
         'bodyParams': getXmlNodeText, 
         'subjectParams': getXmlNodeText, 
+        'dynamicEmailContents': (KalturaObjectFactory.create, 'KalturaDynamicEmailContents'), 
         'templatePath': getXmlNodeText, 
         'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
         'campaignId': getXmlNodeInt, 
@@ -39548,6 +39613,7 @@ class KalturaMailJobData(KalturaJobData):
         kparams.addStringIfDefined("fromEmail", self.fromEmail)
         kparams.addStringIfDefined("bodyParams", self.bodyParams)
         kparams.addStringIfDefined("subjectParams", self.subjectParams)
+        kparams.addObjectIfDefined("dynamicEmailContents", self.dynamicEmailContents)
         kparams.addStringIfDefined("templatePath", self.templatePath)
         kparams.addStringEnumIfDefined("language", self.language)
         kparams.addIntIfDefined("campaignId", self.campaignId)
@@ -39615,6 +39681,12 @@ class KalturaMailJobData(KalturaJobData):
 
     def setSubjectParams(self, newSubjectParams):
         self.subjectParams = newSubjectParams
+
+    def getDynamicEmailContents(self):
+        return self.dynamicEmailContents
+
+    def setDynamicEmailContents(self, newDynamicEmailContents):
+        self.dynamicEmailContents = newDynamicEmailContents
 
     def getTemplatePath(self):
         return self.templatePath
@@ -50667,7 +50739,8 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
             force=NotImplemented,
             createLink=NotImplemented,
             assetId=NotImplemented,
-            externalUrl=NotImplemented):
+            externalUrl=NotImplemented,
+            port=NotImplemented):
         KalturaStorageJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -50693,12 +50766,16 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
         # @var string
         self.externalUrl = externalUrl
 
+        # @var int
+        self.port = port
+
 
     PROPERTY_LOADERS = {
         'force': getXmlNodeBool, 
         'createLink': getXmlNodeBool, 
         'assetId': getXmlNodeText, 
         'externalUrl': getXmlNodeText, 
+        'port': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -50712,6 +50789,7 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
         kparams.addBoolIfDefined("createLink", self.createLink)
         kparams.addStringIfDefined("assetId", self.assetId)
         kparams.addStringIfDefined("externalUrl", self.externalUrl)
+        kparams.addIntIfDefined("port", self.port)
         return kparams
 
     def getForce(self):
@@ -50737,6 +50815,12 @@ class KalturaStorageExportJobData(KalturaStorageJobData):
 
     def setExternalUrl(self, newExternalUrl):
         self.externalUrl = newExternalUrl
+
+    def getPort(self):
+        return self.port
+
+    def setPort(self, newPort):
+        self.port = newPort
 
 
 # @package Kaltura
@@ -51605,6 +51689,7 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             createLink=NotImplemented,
             assetId=NotImplemented,
             externalUrl=NotImplemented,
+            port=NotImplemented,
             filesPermissionInS3=NotImplemented,
             s3Region=NotImplemented,
             sseType=NotImplemented,
@@ -51627,7 +51712,8 @@ class KalturaAmazonS3StorageExportJobData(KalturaStorageExportJobData):
             force,
             createLink,
             assetId,
-            externalUrl)
+            externalUrl,
+            port)
 
         # @var KalturaAmazonS3StorageProfileFilesPermissionLevel
         self.filesPermissionInS3 = filesPermissionInS3
@@ -67956,6 +68042,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaPluginData': KalturaPluginData,
             'KalturaDrmPlaybackPluginData': KalturaDrmPlaybackPluginData,
+            'KalturaDynamicEmailContents': KalturaDynamicEmailContents,
             'KalturaUser': KalturaUser,
             'KalturaEffect': KalturaEffect,
             'KalturaEmailIngestionProfile': KalturaEmailIngestionProfile,

@@ -560,7 +560,7 @@ class KalturaVendorIntegrationService(KalturaServiceBase):
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
-        kparams.addObjectIfDefined("status", status)
+        kparams.addIntIfDefined("status", status);
         self.client.queueServiceActionCall("vendor_vendorintegration", "updateStatus", "KalturaIntegrationSetting", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

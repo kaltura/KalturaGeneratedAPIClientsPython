@@ -95,6 +95,7 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             passPhrase=NotImplemented,
+            port=NotImplemented,
             shouldExportThumbs=NotImplemented,
             packagerUrl=NotImplemented,
             exportPeriodically=NotImplemented,
@@ -135,6 +136,7 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             privateKey,
             publicKey,
             passPhrase,
+            port,
             shouldExportThumbs,
             packagerUrl,
             exportPeriodically,
@@ -253,6 +255,7 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             createLink=NotImplemented,
             assetId=NotImplemented,
             externalUrl=NotImplemented,
+            port=NotImplemented,
             flavorAssetId=NotImplemented,
             contentMoid=NotImplemented,
             serviceToken=NotImplemented):
@@ -271,7 +274,8 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             force,
             createLink,
             assetId,
-            externalUrl)
+            externalUrl,
+            port)
 
         # Holds the id of the exported asset
         # @var string
