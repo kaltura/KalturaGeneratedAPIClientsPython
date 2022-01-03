@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.16.0'
+API_VERSION = '17.17.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25842,7 +25842,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             crmIdIn=NotImplemented,
             playlistIdIn=NotImplemented,
             domainIn=NotImplemented,
-            canonicalUrlIn=NotImplemented):
+            canonicalUrlIn=NotImplemented,
+            virtualEventIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26002,6 +26003,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.canonicalUrlIn = canonicalUrlIn
 
+        # filter by virtual event id
+        # @var string
+        self.virtualEventIdIn = virtualEventIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26043,6 +26048,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'playlistIdIn': getXmlNodeText, 
         'domainIn': getXmlNodeText, 
         'canonicalUrlIn': getXmlNodeText, 
+        'virtualEventIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26091,6 +26097,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("playlistIdIn", self.playlistIdIn)
         kparams.addStringIfDefined("domainIn", self.domainIn)
         kparams.addStringIfDefined("canonicalUrlIn", self.canonicalUrlIn)
+        kparams.addStringIfDefined("virtualEventIdIn", self.virtualEventIdIn)
         return kparams
 
     def getKeywords(self):
@@ -26326,6 +26333,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setCanonicalUrlIn(self, newCanonicalUrlIn):
         self.canonicalUrlIn = newCanonicalUrlIn
+
+    def getVirtualEventIdIn(self):
+        return self.virtualEventIdIn
+
+    def setVirtualEventIdIn(self, newVirtualEventIdIn):
+        self.virtualEventIdIn = newVirtualEventIdIn
 
 
 # @package Kaltura
@@ -46704,7 +46717,8 @@ class KalturaConvertJobData(KalturaConvartableJobData):
             extraDestFileSyncs=NotImplemented,
             engineMessage=NotImplemented,
             destFileSyncSharedPath=NotImplemented,
-            userCpu=NotImplemented):
+            userCpu=NotImplemented,
+            estimatedEffort=NotImplemented):
         KalturaConvartableJobData.__init__(self,
             srcFileSyncLocalPath,
             actualSrcFileSyncLocalPath,
@@ -46751,6 +46765,9 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         # @var int
         self.userCpu = userCpu
 
+        # @var int
+        self.estimatedEffort = estimatedEffort
+
 
     PROPERTY_LOADERS = {
         'destFileSyncLocalPath': getXmlNodeText, 
@@ -46764,6 +46781,7 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         'engineMessage': getXmlNodeText, 
         'destFileSyncSharedPath': getXmlNodeText, 
         'userCpu': getXmlNodeInt, 
+        'estimatedEffort': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -46784,6 +46802,7 @@ class KalturaConvertJobData(KalturaConvartableJobData):
         kparams.addStringIfDefined("engineMessage", self.engineMessage)
         kparams.addStringIfDefined("destFileSyncSharedPath", self.destFileSyncSharedPath)
         kparams.addIntIfDefined("userCpu", self.userCpu)
+        kparams.addIntIfDefined("estimatedEffort", self.estimatedEffort)
         return kparams
 
     def getDestFileSyncLocalPath(self):
@@ -46851,6 +46870,12 @@ class KalturaConvertJobData(KalturaConvartableJobData):
 
     def setUserCpu(self, newUserCpu):
         self.userCpu = newUserCpu
+
+    def getEstimatedEffort(self):
+        return self.estimatedEffort
+
+    def setEstimatedEffort(self, newEstimatedEffort):
+        self.estimatedEffort = newEstimatedEffort
 
 
 # @package Kaltura
@@ -47470,6 +47495,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playlistIdIn=NotImplemented,
             domainIn=NotImplemented,
             canonicalUrlIn=NotImplemented,
+            virtualEventIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47517,7 +47543,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             crmIdIn,
             playlistIdIn,
             domainIn,
-            canonicalUrlIn)
+            canonicalUrlIn,
+            virtualEventIdIn)
 
         # @var string
         self.application = application
