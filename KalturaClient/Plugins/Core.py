@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.17.0'
+API_VERSION = '17.18.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -35992,7 +35992,8 @@ class KalturaDeliveryProfileLivePackager(KalturaDeliveryProfile):
             priority=NotImplemented,
             extraParams=NotImplemented,
             supplementaryAssetsFilter=NotImplemented,
-            livePackagerSigningDomain=NotImplemented):
+            livePackagerSigningDomain=NotImplemented,
+            shouldRedirect=NotImplemented):
         KalturaDeliveryProfile.__init__(self,
             id,
             partnerId,
@@ -36019,9 +36020,13 @@ class KalturaDeliveryProfileLivePackager(KalturaDeliveryProfile):
         # @var string
         self.livePackagerSigningDomain = livePackagerSigningDomain
 
+        # @var bool
+        self.shouldRedirect = shouldRedirect
+
 
     PROPERTY_LOADERS = {
         'livePackagerSigningDomain': getXmlNodeText, 
+        'shouldRedirect': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -36032,6 +36037,7 @@ class KalturaDeliveryProfileLivePackager(KalturaDeliveryProfile):
         kparams = KalturaDeliveryProfile.toParams(self)
         kparams.put("objectType", "KalturaDeliveryProfileLivePackager")
         kparams.addStringIfDefined("livePackagerSigningDomain", self.livePackagerSigningDomain)
+        kparams.addBoolIfDefined("shouldRedirect", self.shouldRedirect)
         return kparams
 
     def getLivePackagerSigningDomain(self):
@@ -36039,6 +36045,12 @@ class KalturaDeliveryProfileLivePackager(KalturaDeliveryProfile):
 
     def setLivePackagerSigningDomain(self, newLivePackagerSigningDomain):
         self.livePackagerSigningDomain = newLivePackagerSigningDomain
+
+    def getShouldRedirect(self):
+        return self.shouldRedirect
+
+    def setShouldRedirect(self, newShouldRedirect):
+        self.shouldRedirect = newShouldRedirect
 
 
 # @package Kaltura
@@ -47246,6 +47258,7 @@ class KalturaDeliveryProfileLivePackagerHls(KalturaDeliveryProfileLivePackager):
             extraParams=NotImplemented,
             supplementaryAssetsFilter=NotImplemented,
             livePackagerSigningDomain=NotImplemented,
+            shouldRedirect=NotImplemented,
             disableExtraAttributes=NotImplemented,
             forceProxy=NotImplemented):
         KalturaDeliveryProfileLivePackager.__init__(self,
@@ -47269,7 +47282,8 @@ class KalturaDeliveryProfileLivePackagerHls(KalturaDeliveryProfileLivePackager):
             priority,
             extraParams,
             supplementaryAssetsFilter,
-            livePackagerSigningDomain)
+            livePackagerSigningDomain,
+            shouldRedirect)
 
         # @var bool
         self.disableExtraAttributes = disableExtraAttributes
@@ -67488,6 +67502,17 @@ class KalturaUserService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
+
+    def loginDataResetPassword(self, loginDataId, newPassword):
+        """Resets user login password"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("loginDataId", loginDataId)
+        kparams.addStringIfDefined("newPassword", newPassword)
+        self.client.queueServiceActionCall("user", "loginDataResetPassword", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
 
     def notifyBan(self, userId):
         """Notifies that a user is banned from an account."""
