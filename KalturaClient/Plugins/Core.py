@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '17.19.0'
+API_VERSION = '18.0.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5373,6 +5373,7 @@ class KalturaReportType(object):
     VE_REGISTERED_INDUSTRY = "50002"
     VE_REGISTERED_ROLES = "50003"
     VE_REGISTERED_COUNTRIES = "50004"
+    VE_REGISTERED_WORLD_REGIONS = "50005"
 
     def __init__(self, value):
         self.value = value
@@ -25848,7 +25849,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             playlistIdIn=NotImplemented,
             domainIn=NotImplemented,
             canonicalUrlIn=NotImplemented,
-            virtualEventIdIn=NotImplemented):
+            virtualEventIdIn=NotImplemented,
+            originIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26012,6 +26014,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.virtualEventIdIn = virtualEventIdIn
 
+        # filter by origin
+        # @var string
+        self.originIn = originIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26054,6 +26060,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'domainIn': getXmlNodeText, 
         'canonicalUrlIn': getXmlNodeText, 
         'virtualEventIdIn': getXmlNodeText, 
+        'originIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26103,6 +26110,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("domainIn", self.domainIn)
         kparams.addStringIfDefined("canonicalUrlIn", self.canonicalUrlIn)
         kparams.addStringIfDefined("virtualEventIdIn", self.virtualEventIdIn)
+        kparams.addStringIfDefined("originIn", self.originIn)
         return kparams
 
     def getKeywords(self):
@@ -26344,6 +26352,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setVirtualEventIdIn(self, newVirtualEventIdIn):
         self.virtualEventIdIn = newVirtualEventIdIn
+
+    def getOriginIn(self):
+        return self.originIn
+
+    def setOriginIn(self, newOriginIn):
+        self.originIn = newOriginIn
 
 
 # @package Kaltura
@@ -47515,6 +47529,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             domainIn=NotImplemented,
             canonicalUrlIn=NotImplemented,
             virtualEventIdIn=NotImplemented,
+            originIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47563,7 +47578,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playlistIdIn,
             domainIn,
             canonicalUrlIn,
-            virtualEventIdIn)
+            virtualEventIdIn,
+            originIn)
 
         # @var string
         self.application = application

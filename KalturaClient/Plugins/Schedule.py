@@ -2779,7 +2779,8 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
             preStartTime=NotImplemented,
             postEndTime=NotImplemented,
             preStartEntryId=NotImplemented,
-            postEndEntryId=NotImplemented):
+            postEndEntryId=NotImplemented,
+            isContentInterruptible=NotImplemented):
         KalturaBaseLiveScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -2837,6 +2838,10 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         # @var string
         self.postEndEntryId = postEndEntryId
 
+        # Detect whether "real" live can interrupt to the "main" content
+        # @var bool
+        self.isContentInterruptible = isContentInterruptible
+
 
     PROPERTY_LOADERS = {
         'sourceEntryId': getXmlNodeText, 
@@ -2845,6 +2850,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         'postEndTime': getXmlNodeInt, 
         'preStartEntryId': getXmlNodeText, 
         'postEndEntryId': getXmlNodeText, 
+        'isContentInterruptible': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -2860,6 +2866,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         kparams.addIntIfDefined("postEndTime", self.postEndTime)
         kparams.addStringIfDefined("preStartEntryId", self.preStartEntryId)
         kparams.addStringIfDefined("postEndEntryId", self.postEndEntryId)
+        kparams.addBoolIfDefined("isContentInterruptible", self.isContentInterruptible)
         return kparams
 
     def getSourceEntryId(self):
@@ -2897,6 +2904,12 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
 
     def setPostEndEntryId(self, newPostEndEntryId):
         self.postEndEntryId = newPostEndEntryId
+
+    def getIsContentInterruptible(self):
+        return self.isContentInterruptible
+
+    def setIsContentInterruptible(self, newIsContentInterruptible):
+        self.isContentInterruptible = newIsContentInterruptible
 
 
 # @package Kaltura
