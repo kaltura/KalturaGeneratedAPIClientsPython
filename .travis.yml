@@ -1,7 +1,10 @@
+os: linux
+dist: focal
 language: python
 python:
   - "2.7"
   - "3.6"
+  - "3.10"
 # command to install dependencies
 install: "pip install tox tox-travis"
 # command to run tests
