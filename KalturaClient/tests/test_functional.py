@@ -275,8 +275,14 @@ class MultiRequestTests(KalturaBaseTest):
         # used as the ks for next calls
         client.setKs(ks)
 
+        mixEntry = KalturaMixEntry()
+        mixEntry.setName(".Net Mix %s" % (testString,))
+        mixEntry.setEditorType(KalturaEditorType.SIMPLE)
 
         # Request 2
+        mixEntry = client.mixing.add(mixEntry)
+
+        # Request 3
         ulFile = getTestFile('DemoVideo.flv')
         uploadTokenId = client.media.upload(ulFile)
 
@@ -284,12 +290,12 @@ class MultiRequestTests(KalturaBaseTest):
         mediaEntry.setName("Media Entry For Mix %s" % (testString,))
         mediaEntry.setMediaType(KalturaMediaType.VIDEO)
 
-        # Request 3
+        # Request 4
         mediaEntry = client.media.addFromUploadedFile(
             mediaEntry, uploadTokenId)
 
-        # Request 4
-        client.media.get(mediaEntry.id)
+        # Request 5
+        client.mixing.appendMediaEntry(mixEntry.id, mediaEntry.id)
 
         response = client.doMultiRequest()
 
@@ -299,9 +305,10 @@ class MultiRequestTests(KalturaBaseTest):
 
         # when accessing the response object we will use an index and not the
         # response number (response number - 1)
-        assert(isinstance(response[2], KalturaMediaEntry))
+        assert(isinstance(response[1], KalturaMixEntry))
+        mixEntry = response[1]
 
-        print("The new entry id is: {}".format(mediaEntry.id))
+        print("The new mix entry id is: {}".format(mixEntry.id))
 
 
 def test_suite():
