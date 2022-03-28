@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.1.0'
+API_VERSION = '18.2.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -9758,7 +9758,9 @@ class KalturaPartner(KalturaObjectBase):
             loginBlockPeriod=NotImplemented,
             numPrevPassToKeep=NotImplemented,
             twoFactorAuthenticationMode=NotImplemented,
-            isSelfServe=NotImplemented):
+            isSelfServe=NotImplemented,
+            allowedDomains=NotImplemented,
+            excludedAdminRoleName=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -10031,6 +10033,14 @@ class KalturaPartner(KalturaObjectBase):
         # @var bool
         self.isSelfServe = isSelfServe
 
+        # @var string
+        # @readonly
+        self.allowedDomains = allowedDomains
+
+        # @var string
+        # @readonly
+        self.excludedAdminRoleName = excludedAdminRoleName
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10109,6 +10119,8 @@ class KalturaPartner(KalturaObjectBase):
         'numPrevPassToKeep': getXmlNodeInt, 
         'twoFactorAuthenticationMode': (KalturaEnumsFactory.createInt, "KalturaTwoFactorAuthenticationMode"), 
         'isSelfServe': getXmlNodeBool, 
+        'allowedDomains': getXmlNodeText, 
+        'excludedAdminRoleName': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10507,6 +10519,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def setIsSelfServe(self, newIsSelfServe):
         self.isSelfServe = newIsSelfServe
+
+    def getAllowedDomains(self):
+        return self.allowedDomains
+
+    def getExcludedAdminRoleName(self):
+        return self.excludedAdminRoleName
 
 
 # @package Kaltura
@@ -14649,7 +14667,8 @@ class KalturaUser(KalturaBaseUser):
             title=NotImplemented,
             company=NotImplemented,
             ksPrivileges=NotImplemented,
-            encryptedSeed=NotImplemented):
+            encryptedSeed=NotImplemented,
+            isSsoExcluded=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -14735,6 +14754,9 @@ class KalturaUser(KalturaBaseUser):
         # @readonly
         self.encryptedSeed = encryptedSeed
 
+        # @var bool
+        self.isSsoExcluded = isSsoExcluded
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
@@ -14754,6 +14776,7 @@ class KalturaUser(KalturaBaseUser):
         'company': getXmlNodeText, 
         'ksPrivileges': getXmlNodeText, 
         'encryptedSeed': getXmlNodeText, 
+        'isSsoExcluded': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -14778,6 +14801,7 @@ class KalturaUser(KalturaBaseUser):
         kparams.addStringIfDefined("title", self.title)
         kparams.addStringIfDefined("company", self.company)
         kparams.addStringIfDefined("ksPrivileges", self.ksPrivileges)
+        kparams.addBoolIfDefined("isSsoExcluded", self.isSsoExcluded)
         return kparams
 
     def getType(self):
@@ -14875,6 +14899,12 @@ class KalturaUser(KalturaBaseUser):
 
     def getEncryptedSeed(self):
         return self.encryptedSeed
+
+    def getIsSsoExcluded(self):
+        return self.isSsoExcluded
+
+    def setIsSsoExcluded(self, newIsSsoExcluded):
+        self.isSsoExcluded = newIsSsoExcluded
 
 
 # @package Kaltura
@@ -21101,6 +21131,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             secondarySecuredBroadcastingUrl=NotImplemented,
             primaryRtspBroadcastingUrl=NotImplemented,
             secondaryRtspBroadcastingUrl=NotImplemented,
+            primarySrtBroadcastingUrl=NotImplemented,
+            primarySrtStreamId=NotImplemented,
+            secondarySrtBroadcastingUrl=NotImplemented,
+            secondarySrtStreamId=NotImplemented,
             streamName=NotImplemented,
             streamUrl=NotImplemented,
             hlsStreamUrl=NotImplemented,
@@ -21109,6 +21143,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
+            srtPass=NotImplemented,
             primaryServerNodeId=NotImplemented,
             sipToken=NotImplemented,
             sipSourceType=NotImplemented):
@@ -21236,6 +21271,18 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         self.secondaryRtspBroadcastingUrl = secondaryRtspBroadcastingUrl
 
         # @var string
+        self.primarySrtBroadcastingUrl = primarySrtBroadcastingUrl
+
+        # @var string
+        self.primarySrtStreamId = primarySrtStreamId
+
+        # @var string
+        self.secondarySrtBroadcastingUrl = secondarySrtBroadcastingUrl
+
+        # @var string
+        self.secondarySrtStreamId = secondarySrtStreamId
+
+        # @var string
         self.streamName = streamName
 
         # The stream url
@@ -21267,6 +21314,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         # @readonly
         self.streamUsername = streamUsername
 
+        # @var string
+        self.srtPass = srtPass
+
         # The Streams primary server node id
         # @var int
         # @readonly
@@ -21291,6 +21341,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'secondarySecuredBroadcastingUrl': getXmlNodeText, 
         'primaryRtspBroadcastingUrl': getXmlNodeText, 
         'secondaryRtspBroadcastingUrl': getXmlNodeText, 
+        'primarySrtBroadcastingUrl': getXmlNodeText, 
+        'primarySrtStreamId': getXmlNodeText, 
+        'secondarySrtBroadcastingUrl': getXmlNodeText, 
+        'secondarySrtStreamId': getXmlNodeText, 
         'streamName': getXmlNodeText, 
         'streamUrl': getXmlNodeText, 
         'hlsStreamUrl': getXmlNodeText, 
@@ -21299,6 +21353,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'encodingIP2': getXmlNodeText, 
         'streamPassword': getXmlNodeText, 
         'streamUsername': getXmlNodeText, 
+        'srtPass': getXmlNodeText, 
         'primaryServerNodeId': getXmlNodeInt, 
         'sipToken': getXmlNodeText, 
         'sipSourceType': (KalturaEnumsFactory.createInt, "KalturaSipSourceType"), 
@@ -21318,6 +21373,10 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         kparams.addStringIfDefined("secondarySecuredBroadcastingUrl", self.secondarySecuredBroadcastingUrl)
         kparams.addStringIfDefined("primaryRtspBroadcastingUrl", self.primaryRtspBroadcastingUrl)
         kparams.addStringIfDefined("secondaryRtspBroadcastingUrl", self.secondaryRtspBroadcastingUrl)
+        kparams.addStringIfDefined("primarySrtBroadcastingUrl", self.primarySrtBroadcastingUrl)
+        kparams.addStringIfDefined("primarySrtStreamId", self.primarySrtStreamId)
+        kparams.addStringIfDefined("secondarySrtBroadcastingUrl", self.secondarySrtBroadcastingUrl)
+        kparams.addStringIfDefined("secondarySrtStreamId", self.secondarySrtStreamId)
         kparams.addStringIfDefined("streamName", self.streamName)
         kparams.addStringIfDefined("streamUrl", self.streamUrl)
         kparams.addStringIfDefined("hlsStreamUrl", self.hlsStreamUrl)
@@ -21325,6 +21384,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         kparams.addStringIfDefined("encodingIP1", self.encodingIP1)
         kparams.addStringIfDefined("encodingIP2", self.encodingIP2)
         kparams.addStringIfDefined("streamPassword", self.streamPassword)
+        kparams.addStringIfDefined("srtPass", self.srtPass)
         return kparams
 
     def getStreamRemoteId(self):
@@ -21375,6 +21435,30 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
     def setSecondaryRtspBroadcastingUrl(self, newSecondaryRtspBroadcastingUrl):
         self.secondaryRtspBroadcastingUrl = newSecondaryRtspBroadcastingUrl
 
+    def getPrimarySrtBroadcastingUrl(self):
+        return self.primarySrtBroadcastingUrl
+
+    def setPrimarySrtBroadcastingUrl(self, newPrimarySrtBroadcastingUrl):
+        self.primarySrtBroadcastingUrl = newPrimarySrtBroadcastingUrl
+
+    def getPrimarySrtStreamId(self):
+        return self.primarySrtStreamId
+
+    def setPrimarySrtStreamId(self, newPrimarySrtStreamId):
+        self.primarySrtStreamId = newPrimarySrtStreamId
+
+    def getSecondarySrtBroadcastingUrl(self):
+        return self.secondarySrtBroadcastingUrl
+
+    def setSecondarySrtBroadcastingUrl(self, newSecondarySrtBroadcastingUrl):
+        self.secondarySrtBroadcastingUrl = newSecondarySrtBroadcastingUrl
+
+    def getSecondarySrtStreamId(self):
+        return self.secondarySrtStreamId
+
+    def setSecondarySrtStreamId(self, newSecondarySrtStreamId):
+        self.secondarySrtStreamId = newSecondarySrtStreamId
+
     def getStreamName(self):
         return self.streamName
 
@@ -21419,6 +21503,12 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def getStreamUsername(self):
         return self.streamUsername
+
+    def getSrtPass(self):
+        return self.srtPass
+
+    def setSrtPass(self, newSrtPass):
+        self.srtPass = newSrtPass
 
     def getPrimaryServerNodeId(self):
         return self.primaryServerNodeId
@@ -44872,7 +44962,8 @@ class KalturaAdminUser(KalturaUser):
             title=NotImplemented,
             company=NotImplemented,
             ksPrivileges=NotImplemented,
-            encryptedSeed=NotImplemented):
+            encryptedSeed=NotImplemented,
+            isSsoExcluded=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -44917,7 +45008,8 @@ class KalturaAdminUser(KalturaUser):
             title,
             company,
             ksPrivileges,
-            encryptedSeed)
+            encryptedSeed,
+            isSsoExcluded)
 
 
     PROPERTY_LOADERS = {
@@ -58191,6 +58283,10 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             secondarySecuredBroadcastingUrl=NotImplemented,
             primaryRtspBroadcastingUrl=NotImplemented,
             secondaryRtspBroadcastingUrl=NotImplemented,
+            primarySrtBroadcastingUrl=NotImplemented,
+            primarySrtStreamId=NotImplemented,
+            secondarySrtBroadcastingUrl=NotImplemented,
+            secondarySrtStreamId=NotImplemented,
             streamName=NotImplemented,
             streamUrl=NotImplemented,
             hlsStreamUrl=NotImplemented,
@@ -58199,6 +58295,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP2=NotImplemented,
             streamPassword=NotImplemented,
             streamUsername=NotImplemented,
+            srtPass=NotImplemented,
             primaryServerNodeId=NotImplemented,
             sipToken=NotImplemented,
             sipSourceType=NotImplemented):
@@ -58301,6 +58398,10 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             secondarySecuredBroadcastingUrl,
             primaryRtspBroadcastingUrl,
             secondaryRtspBroadcastingUrl,
+            primarySrtBroadcastingUrl,
+            primarySrtStreamId,
+            secondarySrtBroadcastingUrl,
+            secondarySrtStreamId,
             streamName,
             streamUrl,
             hlsStreamUrl,
@@ -58309,6 +58410,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             encodingIP2,
             streamPassword,
             streamUsername,
+            srtPass,
             primaryServerNodeId,
             sipToken,
             sipSourceType)
