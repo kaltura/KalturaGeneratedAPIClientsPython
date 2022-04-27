@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.2.0'
+API_VERSION = '18.3.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5252,6 +5252,7 @@ class KalturaReportType(object):
     TOP_CUSTOM_VAR2 = "58"
     TOP_CUSTOM_VAR3 = "59"
     SELF_SERVE_USAGE = "60"
+    FLAVOR_PARAMS_TRANSCODING_USAGE = "61"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -63234,7 +63235,7 @@ class KalturaCategoryService(KalturaServiceBase):
         return KalturaObjectFactory.create(resultNode, 'KalturaCategoryListResponse')
 
     def move(self, categoryIds, targetCategoryParentId):
-        """Move categories that belong to the same parent category to a target categroy - enabled only for ks with disable entitlement"""
+        """Move categories that belong to the same parent category to a target category - enabled only for ks with disable entitlement"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("categoryIds", categoryIds)
@@ -66496,7 +66497,7 @@ class KalturaStatsService(KalturaServiceBase):
 
     def collect(self, event):
         """Will write to the event log a single line representing the event
-        	 client version - will help interprete the line structure. different client versions might have slightly different data/data formats in the line
+        	 client version - will help interpret the line structure. Different client versions might have slightly different data/data formats in the line
         event_id - number is the row number in yuval's excel
         datetime - same format as MySql's datetime - can change and should reflect the time zone
         session id - can be some big random number or guid
@@ -66528,7 +66529,7 @@ class KalturaStatsService(KalturaServiceBase):
 
     def kmcCollect(self, kmcEvent):
         """Will collect the kmcEvent sent form the KMC client
-        	 // this will actually be an empty function because all events will be sent using GET and will anyway be logged in the apache log"""
+        	 // this will actually be an empty function because all events will be sent using GET and will anyway be logged in the Apache log"""
 
         kparams = KalturaParams()
         kparams.addObjectIfDefined("kmcEvent", kmcEvent)
@@ -66924,7 +66925,7 @@ class KalturaThumbAssetService(KalturaServiceBase):
         return self.client.getServeUrl()
 
     def serveByEntryId(self, entryId, thumbParamId = NotImplemented):
-        """Serves thumbnail by entry id and thumnail params id"""
+        """Serves thumbnail by entry id and thumbnail params id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
