@@ -60,6 +60,7 @@ class KalturaGroupProcessStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchGroupFieldName(object):
+    COMPANY = "company"
     CREATED_AT = "created_at"
     EMAIL = "email"
     FIRST_NAME = "first_name"
@@ -69,6 +70,7 @@ class KalturaESearchGroupFieldName(object):
     ROLE_IDS = "role_ids"
     SCREEN_NAME = "screen_name"
     TAGS = "tags"
+    TITLE = "title"
     UPDATED_AT = "updated_at"
     USER_ID = "user_id"
 
