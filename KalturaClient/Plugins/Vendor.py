@@ -243,7 +243,10 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             jwtToken=NotImplemented,
             enableZoomTranscription=NotImplemented,
             zoomAccountDescription=NotImplemented,
-            enableMeetingUpload=NotImplemented):
+            enableMeetingUpload=NotImplemented,
+            optOutGroupNames=NotImplemented,
+            optInGroupNames=NotImplemented,
+            groupParticipationType=NotImplemented):
         KalturaIntegrationSetting.__init__(self,
             id,
             status,
@@ -287,6 +290,15 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         # @var KalturaNullableBoolean
         self.enableMeetingUpload = enableMeetingUpload
 
+        # @var string
+        self.optOutGroupNames = optOutGroupNames
+
+        # @var string
+        self.optInGroupNames = optInGroupNames
+
+        # @var KalturaZoomGroupParticipationType
+        self.groupParticipationType = groupParticipationType
+
 
     PROPERTY_LOADERS = {
         'zoomCategory': getXmlNodeText, 
@@ -299,6 +311,9 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         'enableZoomTranscription': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'zoomAccountDescription': getXmlNodeText, 
         'enableMeetingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'optOutGroupNames': getXmlNodeText, 
+        'optInGroupNames': getXmlNodeText, 
+        'groupParticipationType': (KalturaEnumsFactory.createInt, "KalturaZoomGroupParticipationType"), 
     }
 
     def fromXml(self, node):
@@ -318,6 +333,9 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         kparams.addIntEnumIfDefined("enableZoomTranscription", self.enableZoomTranscription)
         kparams.addStringIfDefined("zoomAccountDescription", self.zoomAccountDescription)
         kparams.addIntEnumIfDefined("enableMeetingUpload", self.enableMeetingUpload)
+        kparams.addStringIfDefined("optOutGroupNames", self.optOutGroupNames)
+        kparams.addStringIfDefined("optInGroupNames", self.optInGroupNames)
+        kparams.addIntEnumIfDefined("groupParticipationType", self.groupParticipationType)
         return kparams
 
     def getZoomCategory(self):
@@ -379,6 +397,24 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
 
     def setEnableMeetingUpload(self, newEnableMeetingUpload):
         self.enableMeetingUpload = newEnableMeetingUpload
+
+    def getOptOutGroupNames(self):
+        return self.optOutGroupNames
+
+    def setOptOutGroupNames(self, newOptOutGroupNames):
+        self.optOutGroupNames = newOptOutGroupNames
+
+    def getOptInGroupNames(self):
+        return self.optInGroupNames
+
+    def setOptInGroupNames(self, newOptInGroupNames):
+        self.optInGroupNames = newOptInGroupNames
+
+    def getGroupParticipationType(self):
+        return self.groupParticipationType
+
+    def setGroupParticipationType(self, newGroupParticipationType):
+        self.groupParticipationType = newGroupParticipationType
 
 
 # @package Kaltura
