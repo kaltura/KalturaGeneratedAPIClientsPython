@@ -61,6 +61,7 @@ class KalturaGroupProcessStatus(object):
 # @subpackage Client
 class KalturaESearchGroupFieldName(object):
     COMPANY = "company"
+    COUNTRY = "country"
     CREATED_AT = "created_at"
     EMAIL = "email"
     FIRST_NAME = "first_name"

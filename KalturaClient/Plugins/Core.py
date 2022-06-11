@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.6.0'
+API_VERSION = '18.7.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -15304,8 +15304,9 @@ class KalturaExportToCsvOptions(KalturaObjectBase):
             format=NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # The format of the outputted date string. There are also several predefined date constants that may be used instead, so for example DATE_RSS contains the format string 'D, d M Y H:i:s'.
-        # 	 https://www.php.net/manual/en/function.date.php
+        # Setting this property will cause additional columns to be added to the final report. The columns will be related to the specific object type passed (currently only MEDIA_CLIP is supported).
+        # 	 Please note that this property will NOT change the result filter in any way (i.e passing MEDIA_CLIP here will not force the report to return only media items).
+        # 	 /
         # @var string
         self.format = format
 
