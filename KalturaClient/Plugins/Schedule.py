@@ -366,6 +366,62 @@ class KalturaLinkedScheduleEvent(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveFeature(KalturaObjectBase):
+    def __init__(self,
+            systemName=NotImplemented,
+            preStartTime=NotImplemented,
+            postEndTime=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var string
+        self.systemName = systemName
+
+        # @var int
+        self.preStartTime = preStartTime
+
+        # @var int
+        self.postEndTime = postEndTime
+
+
+    PROPERTY_LOADERS = {
+        'systemName': getXmlNodeText, 
+        'preStartTime': getXmlNodeInt, 
+        'postEndTime': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveFeature.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaLiveFeature")
+        kparams.addStringIfDefined("systemName", self.systemName)
+        kparams.addIntIfDefined("preStartTime", self.preStartTime)
+        kparams.addIntIfDefined("postEndTime", self.postEndTime)
+        return kparams
+
+    def getSystemName(self):
+        return self.systemName
+
+    def setSystemName(self, newSystemName):
+        self.systemName = newSystemName
+
+    def getPreStartTime(self):
+        return self.preStartTime
+
+    def setPreStartTime(self, newPreStartTime):
+        self.preStartTime = newPreStartTime
+
+    def getPostEndTime(self):
+        return self.postEndTime
+
+    def setPostEndTime(self, newPostEndTime):
+        self.postEndTime = newPostEndTime
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduleEventRecurrence(KalturaObjectBase):
     def __init__(self,
             name=NotImplemented,
@@ -1396,6 +1452,80 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
 
     def getBlackoutConflicts(self):
         return self.blackoutConflicts
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaLiveCaptionFeature(KalturaLiveFeature):
+    def __init__(self,
+            systemName=NotImplemented,
+            preStartTime=NotImplemented,
+            postEndTime=NotImplemented,
+            mediaUrl=NotImplemented,
+            mediaKey=NotImplemented,
+            captionUrl=NotImplemented,
+            captionToken=NotImplemented):
+        KalturaLiveFeature.__init__(self,
+            systemName,
+            preStartTime,
+            postEndTime)
+
+        # @var string
+        self.mediaUrl = mediaUrl
+
+        # @var string
+        self.mediaKey = mediaKey
+
+        # @var string
+        self.captionUrl = captionUrl
+
+        # @var string
+        self.captionToken = captionToken
+
+
+    PROPERTY_LOADERS = {
+        'mediaUrl': getXmlNodeText, 
+        'mediaKey': getXmlNodeText, 
+        'captionUrl': getXmlNodeText, 
+        'captionToken': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLiveFeature.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveCaptionFeature.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLiveFeature.toParams(self)
+        kparams.put("objectType", "KalturaLiveCaptionFeature")
+        kparams.addStringIfDefined("mediaUrl", self.mediaUrl)
+        kparams.addStringIfDefined("mediaKey", self.mediaKey)
+        kparams.addStringIfDefined("captionUrl", self.captionUrl)
+        kparams.addStringIfDefined("captionToken", self.captionToken)
+        return kparams
+
+    def getMediaUrl(self):
+        return self.mediaUrl
+
+    def setMediaUrl(self, newMediaUrl):
+        self.mediaUrl = newMediaUrl
+
+    def getMediaKey(self):
+        return self.mediaKey
+
+    def setMediaKey(self, newMediaKey):
+        self.mediaKey = newMediaKey
+
+    def getCaptionUrl(self):
+        return self.captionUrl
+
+    def setCaptionUrl(self, newCaptionUrl):
+        self.captionUrl = newCaptionUrl
+
+    def getCaptionToken(self):
+        return self.captionToken
+
+    def setCaptionToken(self, newCaptionToken):
+        self.captionToken = newCaptionToken
 
 
 # @package Kaltura
@@ -2780,7 +2910,8 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
             postEndTime=NotImplemented,
             preStartEntryId=NotImplemented,
             postEndEntryId=NotImplemented,
-            isContentInterruptible=NotImplemented):
+            isContentInterruptible=NotImplemented,
+            liveFeatures=NotImplemented):
         KalturaBaseLiveScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -2842,6 +2973,10 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         # @var bool
         self.isContentInterruptible = isContentInterruptible
 
+        # list of live features that apply to the event
+        # @var array of KalturaLiveFeature
+        self.liveFeatures = liveFeatures
+
 
     PROPERTY_LOADERS = {
         'sourceEntryId': getXmlNodeText, 
@@ -2851,6 +2986,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         'preStartEntryId': getXmlNodeText, 
         'postEndEntryId': getXmlNodeText, 
         'isContentInterruptible': getXmlNodeBool, 
+        'liveFeatures': (KalturaObjectFactory.createArray, 'KalturaLiveFeature'), 
     }
 
     def fromXml(self, node):
@@ -2867,6 +3003,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         kparams.addStringIfDefined("preStartEntryId", self.preStartEntryId)
         kparams.addStringIfDefined("postEndEntryId", self.postEndEntryId)
         kparams.addBoolIfDefined("isContentInterruptible", self.isContentInterruptible)
+        kparams.addArrayIfDefined("liveFeatures", self.liveFeatures)
         return kparams
 
     def getSourceEntryId(self):
@@ -2910,6 +3047,12 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
 
     def setIsContentInterruptible(self, newIsContentInterruptible):
         self.isContentInterruptible = newIsContentInterruptible
+
+    def getLiveFeatures(self):
+        return self.liveFeatures
+
+    def setLiveFeatures(self, newLiveFeatures):
+        self.liveFeatures = newLiveFeatures
 
 
 # @package Kaltura
@@ -5534,6 +5677,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaLinkedScheduleEvent': KalturaLinkedScheduleEvent,
+            'KalturaLiveFeature': KalturaLiveFeature,
             'KalturaScheduleEventRecurrence': KalturaScheduleEventRecurrence,
             'KalturaScheduleEvent': KalturaScheduleEvent,
             'KalturaScheduleEventResource': KalturaScheduleEventResource,
@@ -5541,6 +5685,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaBlackoutScheduleEvent': KalturaBlackoutScheduleEvent,
             'KalturaCameraScheduleResource': KalturaCameraScheduleResource,
             'KalturaEntryScheduleEvent': KalturaEntryScheduleEvent,
+            'KalturaLiveCaptionFeature': KalturaLiveCaptionFeature,
             'KalturaLiveEntryScheduleResource': KalturaLiveEntryScheduleResource,
             'KalturaLocationScheduleResource': KalturaLocationScheduleResource,
             'KalturaScheduleEventListResponse': KalturaScheduleEventListResponse,

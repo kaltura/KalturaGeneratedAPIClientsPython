@@ -520,7 +520,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             expectedFinishTime=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
-            turnAroundTime=NotImplemented):
+            turnAroundTime=NotImplemented,
+            externalTaskId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -645,6 +646,10 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         # @readonly
         self.turnAroundTime = turnAroundTime
 
+        # The vendor's task internal Id
+        # @var string
+        self.externalTaskId = externalTaskId
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -676,6 +681,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         'serviceType': (KalturaEnumsFactory.createInt, "KalturaVendorServiceType"), 
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
         'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
+        'externalTaskId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -696,6 +702,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         kparams.addStringIfDefined("outputObjectId", self.outputObjectId)
         kparams.addStringIfDefined("partnerData", self.partnerData)
         kparams.addObjectIfDefined("taskJobData", self.taskJobData)
+        kparams.addStringIfDefined("externalTaskId", self.externalTaskId)
         return kparams
 
     def getId(self):
@@ -817,6 +824,12 @@ class KalturaEntryVendorTask(KalturaObjectBase):
 
     def getTurnAroundTime(self):
         return self.turnAroundTime
+
+    def getExternalTaskId(self):
+        return self.externalTaskId
+
+    def setExternalTaskId(self, newExternalTaskId):
+        self.externalTaskId = newExternalTaskId
 
 
 # @package Kaltura
