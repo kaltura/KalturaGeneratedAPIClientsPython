@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.8.0'
+API_VERSION = '18.9.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -29481,22 +29481,22 @@ class KalturaUploadToken(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
-        # Upload url - to explicitly determine to which domain to adress the uploadToken->upload call
+        # Upload url - to explicitly determine to which domain to address the uploadToken->upload call
         # @var string
         # @readonly
         self.uploadUrl = uploadUrl
 
-        # autoFinalize - Should the upload be finalized once the file size on disk matches the file size reproted when adding the upload token.
+        # autoFinalize - Should the upload be finalized once the file size on disk matches the file size reported when adding the upload token.
         # @var KalturaNullableBoolean
         # @insertonly
         self.autoFinalize = autoFinalize
 
-        # The value for the object_type field.
+        # The type of the object this token is attached to.
         # @var string
         # @readonly
         self.attachedObjectType = attachedObjectType
 
-        # The value for the object_id field.
+        # The id of the object this token is attached to.
         # @var string
         # @readonly
         self.attachedObjectId = attachedObjectId
@@ -52403,52 +52403,6 @@ class KalturaBatchJobFilterExt(KalturaBatchJobFilter):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
-    def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            categoryIdEqual=NotImplemented,
-            categoryIdIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            categoryFullIdsStartsWith=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            creatorUserIdEqual=NotImplemented,
-            creatorUserIdIn=NotImplemented):
-        KalturaCategoryEntryBaseFilter.__init__(self,
-            orderBy,
-            advancedSearch,
-            categoryIdEqual,
-            categoryIdIn,
-            entryIdEqual,
-            entryIdIn,
-            createdAtGreaterThanOrEqual,
-            createdAtLessThanOrEqual,
-            categoryFullIdsStartsWith,
-            statusEqual,
-            statusIn,
-            creatorUserIdEqual,
-            creatorUserIdIn)
-
-
-    PROPERTY_LOADERS = {
-    }
-
-    def fromXml(self, node):
-        KalturaCategoryEntryBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaCategoryEntryFilter.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaCategoryEntryBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaCategoryEntryFilter")
-        return kparams
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaCategoryFilter(KalturaCategoryBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -52646,6 +52600,101 @@ class KalturaCategoryFilter(KalturaCategoryBaseFilter):
 
     def setIdOrInheritedParentIdIn(self, newIdOrInheritedParentIdIn):
         self.idOrInheritedParentIdIn = newIdOrInheritedParentIdIn
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoriesCsvJobData(KalturaMappedObjectsCsvJobData):
+    def __init__(self,
+            userName=NotImplemented,
+            userMail=NotImplemented,
+            outputPath=NotImplemented,
+            sharedOutputPath=NotImplemented,
+            metadataProfileId=NotImplemented,
+            additionalFields=NotImplemented,
+            mappedFields=NotImplemented,
+            options=NotImplemented,
+            filter=NotImplemented):
+        KalturaMappedObjectsCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath,
+            sharedOutputPath,
+            metadataProfileId,
+            additionalFields,
+            mappedFields,
+            options)
+
+        # The filter should return the list of categories that need to be specified in the csv.
+        # @var KalturaCategoryFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaCategoryFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaMappedObjectsCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoriesCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMappedObjectsCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaCategoriesCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCategoryEntryFilter(KalturaCategoryEntryBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            categoryIdEqual=NotImplemented,
+            categoryIdIn=NotImplemented,
+            entryIdEqual=NotImplemented,
+            entryIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            categoryFullIdsStartsWith=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            creatorUserIdEqual=NotImplemented,
+            creatorUserIdIn=NotImplemented):
+        KalturaCategoryEntryBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            categoryIdEqual,
+            categoryIdIn,
+            entryIdEqual,
+            entryIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            categoryFullIdsStartsWith,
+            statusEqual,
+            statusIn,
+            creatorUserIdEqual,
+            creatorUserIdIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaCategoryEntryBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaCategoryEntryFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCategoryEntryBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaCategoryEntryFilter")
+        return kparams
 
 
 # @package Kaltura
@@ -63311,6 +63360,21 @@ class KalturaCategoryService(KalturaServiceBase):
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
 
+    def exportToCsv(self, filter = NotImplemented, metadataProfileId = NotImplemented, additionalFields = NotImplemented, mappedFields = NotImplemented, options = NotImplemented):
+        """Creates a batch job that sends an email with a link to download a CSV containing a list of categories"""
+
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        kparams.addIntIfDefined("metadataProfileId", metadataProfileId);
+        kparams.addArrayIfDefined("additionalFields", additionalFields)
+        kparams.addArrayIfDefined("mappedFields", mappedFields)
+        kparams.addObjectIfDefined("options", options)
+        self.client.queueServiceActionCall("category", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
+
     def get(self, id):
         """Get Category by id"""
 
@@ -68735,8 +68799,9 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaBaseEntryCompareAttributeCondition': KalturaBaseEntryCompareAttributeCondition,
             'KalturaBaseEntryMatchAttributeCondition': KalturaBaseEntryMatchAttributeCondition,
             'KalturaBatchJobFilterExt': KalturaBatchJobFilterExt,
-            'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
             'KalturaCategoryFilter': KalturaCategoryFilter,
+            'KalturaCategoriesCsvJobData': KalturaCategoriesCsvJobData,
+            'KalturaCategoryEntryFilter': KalturaCategoryEntryFilter,
             'KalturaConstantXsltSyndicationFeed': KalturaConstantXsltSyndicationFeed,
             'KalturaConversionProfileFilter': KalturaConversionProfileFilter,
             'KalturaConversionProfileAssetParamsFilter': KalturaConversionProfileAssetParamsFilter,
