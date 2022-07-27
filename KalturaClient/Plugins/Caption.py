@@ -1217,6 +1217,14 @@ class KalturaCaptionAssetService(KalturaServiceBase):
         self.client.queueServiceActionCall('caption_captionasset', 'serve', None ,kparams)
         return self.client.getServeUrl()
 
+    def serveAsJson(self, captionAssetId):
+        """Serves caption file as Json by its ID"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("captionAssetId", captionAssetId)
+        self.client.queueServiceActionCall('caption_captionasset', 'serveAsJson', None ,kparams)
+        return self.client.getServeUrl()
+
     def serveByEntryId(self, entryId, captionParamId = NotImplemented):
         """Serves caption by entry id and thumnail params id"""
 

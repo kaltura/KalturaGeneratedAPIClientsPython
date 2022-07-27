@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.9.0'
+API_VERSION = '18.10.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5266,6 +5266,7 @@ class KalturaReportType(object):
     TOP_CUSTOM_VAR3 = "59"
     SELF_SERVE_USAGE = "60"
     FLAVOR_PARAMS_TRANSCODING_USAGE = "61"
+    PLAYER_HIGHLIGHTS = "62"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -25980,7 +25981,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             domainIn=NotImplemented,
             canonicalUrlIn=NotImplemented,
             virtualEventIdIn=NotImplemented,
-            originIn=NotImplemented):
+            originIn=NotImplemented,
+            uiConfIdIn=NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26148,6 +26150,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var string
         self.originIn = originIn
 
+        # filter by ui conf id
+        # @var string
+        self.uiConfIdIn = uiConfIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26191,6 +26197,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'canonicalUrlIn': getXmlNodeText, 
         'virtualEventIdIn': getXmlNodeText, 
         'originIn': getXmlNodeText, 
+        'uiConfIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26241,6 +26248,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("canonicalUrlIn", self.canonicalUrlIn)
         kparams.addStringIfDefined("virtualEventIdIn", self.virtualEventIdIn)
         kparams.addStringIfDefined("originIn", self.originIn)
+        kparams.addStringIfDefined("uiConfIdIn", self.uiConfIdIn)
         return kparams
 
     def getKeywords(self):
@@ -26488,6 +26496,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setOriginIn(self, newOriginIn):
         self.originIn = newOriginIn
+
+    def getUiConfIdIn(self):
+        return self.uiConfIdIn
+
+    def setUiConfIdIn(self, newUiConfIdIn):
+        self.uiConfIdIn = newUiConfIdIn
 
 
 # @package Kaltura
@@ -47718,6 +47732,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             canonicalUrlIn=NotImplemented,
             virtualEventIdIn=NotImplemented,
             originIn=NotImplemented,
+            uiConfIdIn=NotImplemented,
             application=NotImplemented,
             userIds=NotImplemented,
             playbackContext=NotImplemented,
@@ -47767,7 +47782,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             domainIn,
             canonicalUrlIn,
             virtualEventIdIn,
-            originIn)
+            originIn,
+            uiConfIdIn)
 
         # @var string
         self.application = application

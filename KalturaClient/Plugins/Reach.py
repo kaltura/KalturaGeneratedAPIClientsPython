@@ -2947,6 +2947,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             canonicalUrlIn=NotImplemented,
             virtualEventIdIn=NotImplemented,
             originIn=NotImplemented,
+            uiConfIdIn=NotImplemented,
             serviceType=NotImplemented,
             serviceFeature=NotImplemented,
             turnAroundTime=NotImplemented):
@@ -2995,7 +2996,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             domainIn,
             canonicalUrlIn,
             virtualEventIdIn,
-            originIn)
+            originIn,
+            uiConfIdIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
