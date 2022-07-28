@@ -70,6 +70,7 @@ class KalturaEntryVendorTaskStatus(object):
     ERROR = 6
     ABORTED = 7
     PENDING_ENTRY_READY = 8
+    SCHEDULED = 9
 
     def __init__(self, value):
         self.value = value
@@ -152,6 +153,7 @@ class KalturaVendorServiceFeature(object):
     CHAPTERING = 5
     INTELLIGENT_TAGGING = 6
     DUBBING = 7
+    LIVE_CAPTION = 8
 
     def __init__(self, value):
         self.value = value
@@ -1692,6 +1694,67 @@ class KalturaReachProfileListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaScheduledVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration=NotImplemented,
+            startDate=NotImplemented,
+            endDate=NotImplemented,
+            scheduledEventId=NotImplemented):
+        KalturaVendorTaskData.__init__(self,
+            entryDuration)
+
+        # @var int
+        # @insertonly
+        self.startDate = startDate
+
+        # @var int
+        # @insertonly
+        self.endDate = endDate
+
+        # @var int
+        # @insertonly
+        self.scheduledEventId = scheduledEventId
+
+
+    PROPERTY_LOADERS = {
+        'startDate': getXmlNodeInt, 
+        'endDate': getXmlNodeInt, 
+        'scheduledEventId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaScheduledVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaScheduledVendorTaskData")
+        kparams.addIntIfDefined("startDate", self.startDate)
+        kparams.addIntIfDefined("endDate", self.endDate)
+        kparams.addIntIfDefined("scheduledEventId", self.scheduledEventId)
+        return kparams
+
+    def getStartDate(self):
+        return self.startDate
+
+    def setStartDate(self, newStartDate):
+        self.startDate = newStartDate
+
+    def getEndDate(self):
+        return self.endDate
+
+    def setEndDate(self, newEndDate):
+        self.endDate = newEndDate
+
+    def getScheduledEventId(self):
+        return self.scheduledEventId
+
+    def setScheduledEventId(self, newScheduledEventId):
+        self.scheduledEventId = newScheduledEventId
 
 
 # @package Kaltura
@@ -3340,6 +3403,96 @@ class KalturaVendorCatalogItemBaseFilter(KalturaRelatedFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorLiveCaptionCatalogItem(KalturaVendorCaptionsCatalogItem):
+    def __init__(self,
+            id=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented,
+            pricing=NotImplemented,
+            engineType=NotImplemented,
+            sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
+            outputFormat=NotImplemented,
+            enableSpeakerId=NotImplemented,
+            fixedPriceAddons=NotImplemented,
+            minimalRefundTime=NotImplemented,
+            minimalOrderTime=NotImplemented,
+            durationLimit=NotImplemented):
+        KalturaVendorCaptionsCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            outputFormat,
+            enableSpeakerId,
+            fixedPriceAddons)
+
+        # @var int
+        self.minimalRefundTime = minimalRefundTime
+
+        # @var int
+        self.minimalOrderTime = minimalOrderTime
+
+        # @var int
+        self.durationLimit = durationLimit
+
+
+    PROPERTY_LOADERS = {
+        'minimalRefundTime': getXmlNodeInt, 
+        'minimalOrderTime': getXmlNodeInt, 
+        'durationLimit': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCaptionsCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorLiveCaptionCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCaptionsCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorLiveCaptionCatalogItem")
+        kparams.addIntIfDefined("minimalRefundTime", self.minimalRefundTime)
+        kparams.addIntIfDefined("minimalOrderTime", self.minimalOrderTime)
+        kparams.addIntIfDefined("durationLimit", self.durationLimit)
+        return kparams
+
+    def getMinimalRefundTime(self):
+        return self.minimalRefundTime
+
+    def setMinimalRefundTime(self, newMinimalRefundTime):
+        self.minimalRefundTime = newMinimalRefundTime
+
+    def getMinimalOrderTime(self):
+        return self.minimalOrderTime
+
+    def setMinimalOrderTime(self, newMinimalOrderTime):
+        self.minimalOrderTime = newMinimalOrderTime
+
+    def getDurationLimit(self):
+        return self.durationLimit
+
+    def setDurationLimit(self, newDurationLimit):
+        self.durationLimit = newDurationLimit
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
     def __init__(self,
             id=NotImplemented,
@@ -4090,6 +4243,74 @@ class KalturaVendorDubbingCatalogItemFilter(KalturaVendorDubbingCatalogItemBaseF
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorLiveCaptionCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serviceTypeEqual=NotImplemented,
+            serviceTypeIn=NotImplemented,
+            serviceFeatureEqual=NotImplemented,
+            serviceFeatureIn=NotImplemented,
+            turnAroundTimeEqual=NotImplemented,
+            turnAroundTimeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            sourceLanguageEqual=NotImplemented,
+            sourceLanguageIn=NotImplemented,
+            outputFormatEqual=NotImplemented,
+            outputFormatIn=NotImplemented):
+        KalturaVendorCaptionsCatalogItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            sourceLanguageEqual,
+            sourceLanguageIn,
+            outputFormatEqual,
+            outputFormatIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCaptionsCatalogItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorLiveCaptionCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCaptionsCatalogItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorLiveCaptionCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorTranslationCatalogItemBaseFilter(KalturaVendorCaptionsCatalogItemFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -4702,6 +4923,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
             'KalturaIntelligentTaggingVendorTaskData': KalturaIntelligentTaggingVendorTaskData,
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
+            'KalturaScheduledVendorTaskData': KalturaScheduledVendorTaskData,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
             'KalturaVendorAlignmentCatalogItem': KalturaVendorAlignmentCatalogItem,
             'KalturaVendorAudioDescriptionCatalogItem': KalturaVendorAudioDescriptionCatalogItem,
@@ -4721,6 +4943,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaTimeRangeVendorCredit': KalturaTimeRangeVendorCredit,
             'KalturaTranslationVendorTaskData': KalturaTranslationVendorTaskData,
             'KalturaVendorCatalogItemBaseFilter': KalturaVendorCatalogItemBaseFilter,
+            'KalturaVendorLiveCaptionCatalogItem': KalturaVendorLiveCaptionCatalogItem,
             'KalturaVendorTranslationCatalogItem': KalturaVendorTranslationCatalogItem,
             'KalturaReachProfileFilter': KalturaReachProfileFilter,
             'KalturaReoccurringVendorCredit': KalturaReoccurringVendorCredit,
@@ -4732,6 +4955,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCaptionsCatalogItemFilter': KalturaVendorCaptionsCatalogItemFilter,
             'KalturaVendorChapteringCatalogItemFilter': KalturaVendorChapteringCatalogItemFilter,
             'KalturaVendorDubbingCatalogItemFilter': KalturaVendorDubbingCatalogItemFilter,
+            'KalturaVendorLiveCaptionCatalogItemFilter': KalturaVendorLiveCaptionCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemBaseFilter': KalturaVendorTranslationCatalogItemBaseFilter,
             'KalturaVendorTranslationCatalogItemFilter': KalturaVendorTranslationCatalogItemFilter,
         }

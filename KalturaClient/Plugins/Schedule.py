@@ -5486,6 +5486,19 @@ class KalturaScheduleEventService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaScheduleEvent')
 
+    def updateLiveFeature(self, scheduledEventId, featureName, liveFeature):
+        """Add feature to live event"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("scheduledEventId", scheduledEventId);
+        kparams.addStringIfDefined("featureName", featureName)
+        kparams.addObjectIfDefined("liveFeature", liveFeature)
+        self.client.queueServiceActionCall("schedule_scheduleevent", "updateLiveFeature", "KalturaLiveStreamScheduleEvent", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaLiveStreamScheduleEvent')
+
 
 # @package Kaltura
 # @subpackage Client
