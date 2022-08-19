@@ -5267,6 +5267,10 @@ class KalturaReportType(object):
     SELF_SERVE_USAGE = "60"
     FLAVOR_PARAMS_TRANSCODING_USAGE = "61"
     PLAYER_HIGHLIGHTS = "62"
+    PARTNER_USAGE_HIGHLIGHTS = "63"
+    CDN_BANDWIDTH_USAGE = "64"
+    REACH_CATALOG_USAGE = "65"
+    REACH_PROFILE_USAGE = "66"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -67826,10 +67830,11 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("loginDataId", loginDataId)
         kparams.addStringIfDefined("newPassword", newPassword)
-        self.client.queueServiceActionCall("user", "loginDataResetPassword", "None", kparams)
+        self.client.queueServiceActionCall("user", "loginDataResetPassword", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaUser')
 
     def notifyBan(self, userId):
         """Notifies that a user is banned from an account."""
