@@ -1582,6 +1582,68 @@ class KalturaLiveEntryScheduleResource(KalturaScheduleResource):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaLiveRestreamFeature(KalturaLiveFeature):
+    def __init__(self,
+            systemName=NotImplemented,
+            preStartTime=NotImplemented,
+            postEndTime=NotImplemented,
+            primaryUrl=NotImplemented,
+            secondaryUrl=NotImplemented,
+            streamKey=NotImplemented):
+        KalturaLiveFeature.__init__(self,
+            systemName,
+            preStartTime,
+            postEndTime)
+
+        # @var string
+        self.primaryUrl = primaryUrl
+
+        # @var string
+        self.secondaryUrl = secondaryUrl
+
+        # @var string
+        self.streamKey = streamKey
+
+
+    PROPERTY_LOADERS = {
+        'primaryUrl': getXmlNodeText, 
+        'secondaryUrl': getXmlNodeText, 
+        'streamKey': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLiveFeature.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaLiveRestreamFeature.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLiveFeature.toParams(self)
+        kparams.put("objectType", "KalturaLiveRestreamFeature")
+        kparams.addStringIfDefined("primaryUrl", self.primaryUrl)
+        kparams.addStringIfDefined("secondaryUrl", self.secondaryUrl)
+        kparams.addStringIfDefined("streamKey", self.streamKey)
+        return kparams
+
+    def getPrimaryUrl(self):
+        return self.primaryUrl
+
+    def setPrimaryUrl(self, newPrimaryUrl):
+        self.primaryUrl = newPrimaryUrl
+
+    def getSecondaryUrl(self):
+        return self.secondaryUrl
+
+    def setSecondaryUrl(self, newSecondaryUrl):
+        self.secondaryUrl = newSecondaryUrl
+
+    def getStreamKey(self):
+        return self.streamKey
+
+    def setStreamKey(self, newStreamKey):
+        self.streamKey = newStreamKey
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaLocationScheduleResource(KalturaScheduleResource):
     def __init__(self,
             id=NotImplemented,
@@ -5700,6 +5762,7 @@ class KalturaScheduleClientPlugin(KalturaClientPlugin):
             'KalturaEntryScheduleEvent': KalturaEntryScheduleEvent,
             'KalturaLiveCaptionFeature': KalturaLiveCaptionFeature,
             'KalturaLiveEntryScheduleResource': KalturaLiveEntryScheduleResource,
+            'KalturaLiveRestreamFeature': KalturaLiveRestreamFeature,
             'KalturaLocationScheduleResource': KalturaLocationScheduleResource,
             'KalturaScheduleEventListResponse': KalturaScheduleEventListResponse,
             'KalturaScheduleEventResourceListResponse': KalturaScheduleEventResourceListResponse,

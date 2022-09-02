@@ -1319,6 +1319,7 @@ class KalturaTwoFactorAuthenticationMode(object):
 class KalturaUiConfCreationMode(object):
     WIZARD = 2
     ADVANCED = 3
+    SYSTEM = 4
 
     def __init__(self, value):
         self.value = value
