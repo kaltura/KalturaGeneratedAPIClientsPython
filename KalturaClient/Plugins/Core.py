@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.13.0'
+API_VERSION = '18.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -37148,6 +37148,8 @@ class KalturaUserBaseFilter(KalturaBaseUserFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             typeEqual=NotImplemented,
             typeIn=NotImplemented,
             isAdminEqual=NotImplemented,
@@ -37170,6 +37172,12 @@ class KalturaUserBaseFilter(KalturaBaseUserFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual)
 
+        # @var string
+        self.idEqual = idEqual
+
+        # @var string
+        self.idIn = idIn
+
         # @var KalturaUserType
         self.typeEqual = typeEqual
 
@@ -37187,6 +37195,8 @@ class KalturaUserBaseFilter(KalturaBaseUserFilter):
 
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeText, 
+        'idIn': getXmlNodeText, 
         'typeEqual': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
         'typeIn': getXmlNodeText, 
         'isAdminEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
@@ -37201,12 +37211,26 @@ class KalturaUserBaseFilter(KalturaBaseUserFilter):
     def toParams(self):
         kparams = KalturaBaseUserFilter.toParams(self)
         kparams.put("objectType", "KalturaUserBaseFilter")
+        kparams.addStringIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
         kparams.addIntEnumIfDefined("typeEqual", self.typeEqual)
         kparams.addStringIfDefined("typeIn", self.typeIn)
         kparams.addIntEnumIfDefined("isAdminEqual", self.isAdminEqual)
         kparams.addStringIfDefined("firstNameStartsWith", self.firstNameStartsWith)
         kparams.addStringIfDefined("lastNameStartsWith", self.lastNameStartsWith)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
 
     def getTypeEqual(self):
         return self.typeEqual
@@ -37258,14 +37282,14 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             typeEqual=NotImplemented,
             typeIn=NotImplemented,
             isAdminEqual=NotImplemented,
             firstNameStartsWith=NotImplemented,
             lastNameStartsWith=NotImplemented,
             idOrScreenNameStartsWith=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
             loginEnabledEqual=NotImplemented,
             roleIdEqual=NotImplemented,
             roleIdsEqual=NotImplemented,
@@ -37289,6 +37313,8 @@ class KalturaUserFilter(KalturaUserBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            idEqual,
+            idIn,
             typeEqual,
             typeIn,
             isAdminEqual,
@@ -37297,12 +37323,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
 
         # @var string
         self.idOrScreenNameStartsWith = idOrScreenNameStartsWith
-
-        # @var string
-        self.idEqual = idEqual
-
-        # @var string
-        self.idIn = idIn
 
         # @var KalturaNullableBoolean
         self.loginEnabledEqual = loginEnabledEqual
@@ -37330,8 +37350,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
 
     PROPERTY_LOADERS = {
         'idOrScreenNameStartsWith': getXmlNodeText, 
-        'idEqual': getXmlNodeText, 
-        'idIn': getXmlNodeText, 
         'loginEnabledEqual': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'roleIdEqual': getXmlNodeText, 
         'roleIdsEqual': getXmlNodeText, 
@@ -37349,8 +37367,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
         kparams = KalturaUserBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaUserFilter")
         kparams.addStringIfDefined("idOrScreenNameStartsWith", self.idOrScreenNameStartsWith)
-        kparams.addStringIfDefined("idEqual", self.idEqual)
-        kparams.addStringIfDefined("idIn", self.idIn)
         kparams.addIntEnumIfDefined("loginEnabledEqual", self.loginEnabledEqual)
         kparams.addStringIfDefined("roleIdEqual", self.roleIdEqual)
         kparams.addStringIfDefined("roleIdsEqual", self.roleIdsEqual)
@@ -37365,18 +37381,6 @@ class KalturaUserFilter(KalturaUserBaseFilter):
 
     def setIdOrScreenNameStartsWith(self, newIdOrScreenNameStartsWith):
         self.idOrScreenNameStartsWith = newIdOrScreenNameStartsWith
-
-    def getIdEqual(self):
-        return self.idEqual
-
-    def setIdEqual(self, newIdEqual):
-        self.idEqual = newIdEqual
-
-    def getIdIn(self):
-        return self.idIn
-
-    def setIdIn(self, newIdIn):
-        self.idIn = newIdIn
 
     def getLoginEnabledEqual(self):
         return self.loginEnabledEqual
@@ -59052,14 +59056,14 @@ class KalturaAdminUserBaseFilter(KalturaUserFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             typeEqual=NotImplemented,
             typeIn=NotImplemented,
             isAdminEqual=NotImplemented,
             firstNameStartsWith=NotImplemented,
             lastNameStartsWith=NotImplemented,
             idOrScreenNameStartsWith=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
             loginEnabledEqual=NotImplemented,
             roleIdEqual=NotImplemented,
             roleIdsEqual=NotImplemented,
@@ -59083,14 +59087,14 @@ class KalturaAdminUserBaseFilter(KalturaUserFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            idEqual,
+            idIn,
             typeEqual,
             typeIn,
             isAdminEqual,
             firstNameStartsWith,
             lastNameStartsWith,
             idOrScreenNameStartsWith,
-            idEqual,
-            idIn,
             loginEnabledEqual,
             roleIdEqual,
             roleIdsEqual,
@@ -59916,14 +59920,14 @@ class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
             createdAtLessThanOrEqual=NotImplemented,
             updatedAtGreaterThanOrEqual=NotImplemented,
             updatedAtLessThanOrEqual=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
             typeEqual=NotImplemented,
             typeIn=NotImplemented,
             isAdminEqual=NotImplemented,
             firstNameStartsWith=NotImplemented,
             lastNameStartsWith=NotImplemented,
             idOrScreenNameStartsWith=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
             loginEnabledEqual=NotImplemented,
             roleIdEqual=NotImplemented,
             roleIdsEqual=NotImplemented,
@@ -59947,14 +59951,14 @@ class KalturaAdminUserFilter(KalturaAdminUserBaseFilter):
             createdAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual,
+            idEqual,
+            idIn,
             typeEqual,
             typeIn,
             isAdminEqual,
             firstNameStartsWith,
             lastNameStartsWith,
             idOrScreenNameStartsWith,
-            idEqual,
-            idIn,
             loginEnabledEqual,
             roleIdEqual,
             roleIdsEqual,
