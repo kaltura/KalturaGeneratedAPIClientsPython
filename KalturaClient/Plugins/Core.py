@@ -9784,7 +9784,8 @@ class KalturaPartner(KalturaObjectBase):
             twoFactorAuthenticationMode=NotImplemented,
             isSelfServe=NotImplemented,
             allowedDomains=NotImplemented,
-            excludedAdminRoleName=NotImplemented):
+            excludedAdminRoleName=NotImplemented,
+            eventPlatformAllowedTemplates=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -10065,6 +10066,9 @@ class KalturaPartner(KalturaObjectBase):
         # @readonly
         self.excludedAdminRoleName = excludedAdminRoleName
 
+        # @var string
+        self.eventPlatformAllowedTemplates = eventPlatformAllowedTemplates
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10145,6 +10149,7 @@ class KalturaPartner(KalturaObjectBase):
         'isSelfServe': getXmlNodeBool, 
         'allowedDomains': getXmlNodeText, 
         'excludedAdminRoleName': getXmlNodeText, 
+        'eventPlatformAllowedTemplates': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10194,6 +10199,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addIntIfDefined("loginBlockPeriod", self.loginBlockPeriod)
         kparams.addIntIfDefined("numPrevPassToKeep", self.numPrevPassToKeep)
         kparams.addBoolIfDefined("isSelfServe", self.isSelfServe)
+        kparams.addStringIfDefined("eventPlatformAllowedTemplates", self.eventPlatformAllowedTemplates)
         return kparams
 
     def getId(self):
@@ -10549,6 +10555,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def getExcludedAdminRoleName(self):
         return self.excludedAdminRoleName
+
+    def getEventPlatformAllowedTemplates(self):
+        return self.eventPlatformAllowedTemplates
+
+    def setEventPlatformAllowedTemplates(self, newEventPlatformAllowedTemplates):
+        self.eventPlatformAllowedTemplates = newEventPlatformAllowedTemplates
 
 
 # @package Kaltura
@@ -30951,7 +30963,8 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
             type=NotImplemented,
             pattern=NotImplemented,
             replacement=NotImplemented,
-            replacmenServerNodeId=NotImplemented):
+            replacmenServerNodeId=NotImplemented,
+            checkAliveTimeoutMs=NotImplemented):
         KalturaRuleAction.__init__(self,
             type)
 
@@ -30967,11 +30980,16 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
         # @var int
         self.replacmenServerNodeId = replacmenServerNodeId
 
+        # Set this value if you want to check if the server is accessible before redirecting traffic to it (this value is in milliseconds)
+        # @var int
+        self.checkAliveTimeoutMs = checkAliveTimeoutMs
+
 
     PROPERTY_LOADERS = {
         'pattern': getXmlNodeText, 
         'replacement': getXmlNodeText, 
         'replacmenServerNodeId': getXmlNodeInt, 
+        'checkAliveTimeoutMs': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -30984,6 +31002,7 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
         kparams.addStringIfDefined("pattern", self.pattern)
         kparams.addStringIfDefined("replacement", self.replacement)
         kparams.addIntIfDefined("replacmenServerNodeId", self.replacmenServerNodeId)
+        kparams.addIntIfDefined("checkAliveTimeoutMs", self.checkAliveTimeoutMs)
         return kparams
 
     def getPattern(self):
@@ -31003,6 +31022,12 @@ class KalturaAccessControlModifyRequestHostRegexAction(KalturaRuleAction):
 
     def setReplacmenServerNodeId(self, newReplacmenServerNodeId):
         self.replacmenServerNodeId = newReplacmenServerNodeId
+
+    def getCheckAliveTimeoutMs(self):
+        return self.checkAliveTimeoutMs
+
+    def setCheckAliveTimeoutMs(self, newCheckAliveTimeoutMs):
+        self.checkAliveTimeoutMs = newCheckAliveTimeoutMs
 
 
 # @package Kaltura
