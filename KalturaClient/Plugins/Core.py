@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.14.0'
+API_VERSION = '18.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -7618,6 +7618,54 @@ class KalturaAuthentication(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMultiLingualString(KalturaObjectBase):
+    """A Multi Lingual String"""
+
+    def __init__(self,
+            language=NotImplemented,
+            value=NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The language of the value
+        # @var string
+        self.language = language
+
+        # Value
+        # @var string
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'language': getXmlNodeText, 
+        'value': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMultiLingualString.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaMultiLingualString")
+        kparams.addStringIfDefined("language", self.language)
+        kparams.addStringIfDefined("value", self.value)
+        return kparams
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaOperationAttributes(KalturaObjectBase):
     """Base class to all operation attributes types"""
 
@@ -7644,11 +7692,14 @@ class KalturaBaseEntry(KalturaObjectBase):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -7701,9 +7752,17 @@ class KalturaBaseEntry(KalturaObjectBase):
         # @var string
         self.name = name
 
+        # Entry name (Min 1 chars)
+        # @var array of KalturaMultiLingualString
+        self.multiLingual_name = multiLingual_name
+
         # Entry description
         # @var string
         self.description = description
+
+        # Entry description
+        # @var array of KalturaMultiLingualString
+        self.multiLingual_description = multiLingual_description
 
         # @var int
         # @readonly
@@ -7721,6 +7780,10 @@ class KalturaBaseEntry(KalturaObjectBase):
         # Entry tags
         # @var string
         self.tags = tags
+
+        # Entry tags
+        # @var array of KalturaMultiLingualString
+        self.multiLingual_tags = multiLingual_tags
 
         # Entry admin tags can be updated only by administrators
         # @var string
@@ -7908,11 +7971,14 @@ class KalturaBaseEntry(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
         'name': getXmlNodeText, 
+        'multiLingual_name': (KalturaObjectFactory.createArray, 'KalturaMultiLingualString'), 
         'description': getXmlNodeText, 
+        'multiLingual_description': (KalturaObjectFactory.createArray, 'KalturaMultiLingualString'), 
         'partnerId': getXmlNodeInt, 
         'userId': getXmlNodeText, 
         'creatorId': getXmlNodeText, 
         'tags': getXmlNodeText, 
+        'multiLingual_tags': (KalturaObjectFactory.createArray, 'KalturaMultiLingualString'), 
         'adminTags': getXmlNodeText, 
         'categories': getXmlNodeText, 
         'categoriesIds': getXmlNodeText, 
@@ -7964,10 +8030,13 @@ class KalturaBaseEntry(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaBaseEntry")
         kparams.addStringIfDefined("name", self.name)
+        kparams.addArrayIfDefined("multiLingual_name", self.multiLingual_name)
         kparams.addStringIfDefined("description", self.description)
+        kparams.addArrayIfDefined("multiLingual_description", self.multiLingual_description)
         kparams.addStringIfDefined("userId", self.userId)
         kparams.addStringIfDefined("creatorId", self.creatorId)
         kparams.addStringIfDefined("tags", self.tags)
+        kparams.addArrayIfDefined("multiLingual_tags", self.multiLingual_tags)
         kparams.addStringIfDefined("adminTags", self.adminTags)
         kparams.addStringIfDefined("categories", self.categories)
         kparams.addStringIfDefined("categoriesIds", self.categoriesIds)
@@ -8003,11 +8072,23 @@ class KalturaBaseEntry(KalturaObjectBase):
     def setName(self, newName):
         self.name = newName
 
+    def getMultiLingual_name(self):
+        return self.multiLingual_name
+
+    def setMultiLingual_name(self, newMultiLingual_name):
+        self.multiLingual_name = newMultiLingual_name
+
     def getDescription(self):
         return self.description
 
     def setDescription(self, newDescription):
         self.description = newDescription
+
+    def getMultiLingual_description(self):
+        return self.multiLingual_description
+
+    def setMultiLingual_description(self, newMultiLingual_description):
+        self.multiLingual_description = newMultiLingual_description
 
     def getPartnerId(self):
         return self.partnerId
@@ -8029,6 +8110,12 @@ class KalturaBaseEntry(KalturaObjectBase):
 
     def setTags(self, newTags):
         self.tags = newTags
+
+    def getMultiLingual_tags(self):
+        return self.multiLingual_tags
+
+    def setMultiLingual_tags(self, newMultiLingual_tags):
+        self.multiLingual_tags = newMultiLingual_tags
 
     def getAdminTags(self):
         return self.adminTags
@@ -13333,11 +13420,14 @@ class KalturaDataEntry(KalturaBaseEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -13384,11 +13474,14 @@ class KalturaDataEntry(KalturaBaseEntry):
         KalturaBaseEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -15479,11 +15572,14 @@ class KalturaPlayableEntry(KalturaBaseEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -15536,11 +15632,14 @@ class KalturaPlayableEntry(KalturaBaseEntry):
         KalturaBaseEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -15782,11 +15881,14 @@ class KalturaMediaEntry(KalturaPlayableEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -15852,11 +15954,14 @@ class KalturaMediaEntry(KalturaPlayableEntry):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -19595,11 +19700,14 @@ class KalturaLiveEntry(KalturaMediaEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -19685,11 +19793,14 @@ class KalturaLiveEntry(KalturaMediaEntry):
         KalturaMediaEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -19997,11 +20108,14 @@ class KalturaLiveChannel(KalturaLiveEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -20089,11 +20203,14 @@ class KalturaLiveChannel(KalturaLiveEntry):
         KalturaLiveEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -21097,11 +21214,14 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -21212,11 +21332,14 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         KalturaLiveEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -24397,11 +24520,14 @@ class KalturaMixEntry(KalturaPlayableEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -24457,11 +24583,14 @@ class KalturaMixEntry(KalturaPlayableEntry):
         KalturaPlayableEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -25349,11 +25478,14 @@ class KalturaPlaylist(KalturaBaseEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -25406,11 +25538,14 @@ class KalturaPlaylist(KalturaBaseEntry):
         KalturaBaseEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -26986,6 +27121,7 @@ class KalturaRequestConfiguration(KalturaObjectBase):
     def __init__(self,
             partnerId=NotImplemented,
             ks=NotImplemented,
+            language=NotImplemented,
             responseProfile=NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -26997,6 +27133,10 @@ class KalturaRequestConfiguration(KalturaObjectBase):
         # @var string
         self.ks = ks
 
+        # language
+        # @var string
+        self.language = language
+
         # Response profile - this attribute will be automatically unset after every API call.
         # @var KalturaBaseResponseProfile
         self.responseProfile = responseProfile
@@ -27005,6 +27145,7 @@ class KalturaRequestConfiguration(KalturaObjectBase):
     PROPERTY_LOADERS = {
         'partnerId': getXmlNodeInt, 
         'ks': getXmlNodeText, 
+        'language': getXmlNodeText, 
         'responseProfile': (KalturaObjectFactory.create, 'KalturaBaseResponseProfile'), 
     }
 
@@ -27017,6 +27158,7 @@ class KalturaRequestConfiguration(KalturaObjectBase):
         kparams.put("objectType", "KalturaRequestConfiguration")
         kparams.addIntIfDefined("partnerId", self.partnerId)
         kparams.addStringIfDefined("ks", self.ks)
+        kparams.addStringIfDefined("language", self.language)
         kparams.addObjectIfDefined("responseProfile", self.responseProfile)
         return kparams
 
@@ -27031,6 +27173,12 @@ class KalturaRequestConfiguration(KalturaObjectBase):
 
     def setKs(self, newKs):
         self.ks = newKs
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
 
     def getResponseProfile(self):
         return self.responseProfile
@@ -58402,11 +58550,14 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
     def __init__(self,
             id=NotImplemented,
             name=NotImplemented,
+            multiLingual_name=NotImplemented,
             description=NotImplemented,
+            multiLingual_description=NotImplemented,
             partnerId=NotImplemented,
             userId=NotImplemented,
             creatorId=NotImplemented,
             tags=NotImplemented,
+            multiLingual_tags=NotImplemented,
             adminTags=NotImplemented,
             categories=NotImplemented,
             categoriesIds=NotImplemented,
@@ -58517,11 +58668,14 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
         KalturaLiveStreamEntry.__init__(self,
             id,
             name,
+            multiLingual_name,
             description,
+            multiLingual_description,
             partnerId,
             userId,
             creatorId,
             tags,
+            multiLingual_tags,
             adminTags,
             categories,
             categoriesIds,
@@ -68395,6 +68549,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaAssetServeOptions': KalturaAssetServeOptions,
             'KalturaAuthentication': KalturaAuthentication,
+            'KalturaMultiLingualString': KalturaMultiLingualString,
             'KalturaOperationAttributes': KalturaOperationAttributes,
             'KalturaBaseEntry': KalturaBaseEntry,
             'KalturaBaseEntryCloneOptionItem': KalturaBaseEntryCloneOptionItem,
