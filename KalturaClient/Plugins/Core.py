@@ -5707,6 +5707,8 @@ class KalturaUploadTokenOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaUserEntryExtendedStatus(object):
+    SYNC_STATUS_ERROR = "quiz.SYNC_STATUS_ERROR"
+    SYNC_STATUS_SUCCESS = "quiz.SYNC_STATUS_SUCCESS"
     PLAYBACK_COMPLETE = "viewHistory.PLAYBACK_COMPLETE"
     PLAYBACK_STARTED = "viewHistory.PLAYBACK_STARTED"
     VIEWED = "viewHistory.VIEWED"
