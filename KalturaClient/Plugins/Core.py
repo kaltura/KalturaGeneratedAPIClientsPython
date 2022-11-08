@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.16.0'
+API_VERSION = '18.17.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -9870,11 +9870,13 @@ class KalturaPartner(KalturaObjectBase):
             maxLoginAttempts=NotImplemented,
             loginBlockPeriod=NotImplemented,
             numPrevPassToKeep=NotImplemented,
+            allowDefaultPasswordRestrictions=NotImplemented,
             twoFactorAuthenticationMode=NotImplemented,
             isSelfServe=NotImplemented,
             allowedDomains=NotImplemented,
             excludedAdminRoleName=NotImplemented,
-            eventPlatformAllowedTemplates=NotImplemented):
+            eventPlatformAllowedTemplates=NotImplemented,
+            verticalClassificationId=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -10140,6 +10142,10 @@ class KalturaPartner(KalturaObjectBase):
         # @var int
         self.numPrevPassToKeep = numPrevPassToKeep
 
+        # @var bool
+        # @readonly
+        self.allowDefaultPasswordRestrictions = allowDefaultPasswordRestrictions
+
         # @var KalturaTwoFactorAuthenticationMode
         # @readonly
         self.twoFactorAuthenticationMode = twoFactorAuthenticationMode
@@ -10157,6 +10163,10 @@ class KalturaPartner(KalturaObjectBase):
 
         # @var string
         self.eventPlatformAllowedTemplates = eventPlatformAllowedTemplates
+
+        # @var int
+        # @readonly
+        self.verticalClassificationId = verticalClassificationId
 
 
     PROPERTY_LOADERS = {
@@ -10234,11 +10244,13 @@ class KalturaPartner(KalturaObjectBase):
         'maxLoginAttempts': getXmlNodeInt, 
         'loginBlockPeriod': getXmlNodeInt, 
         'numPrevPassToKeep': getXmlNodeInt, 
+        'allowDefaultPasswordRestrictions': getXmlNodeBool, 
         'twoFactorAuthenticationMode': (KalturaEnumsFactory.createInt, "KalturaTwoFactorAuthenticationMode"), 
         'isSelfServe': getXmlNodeBool, 
         'allowedDomains': getXmlNodeText, 
         'excludedAdminRoleName': getXmlNodeText, 
         'eventPlatformAllowedTemplates': getXmlNodeText, 
+        'verticalClassificationId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -10630,6 +10642,9 @@ class KalturaPartner(KalturaObjectBase):
     def setNumPrevPassToKeep(self, newNumPrevPassToKeep):
         self.numPrevPassToKeep = newNumPrevPassToKeep
 
+    def getAllowDefaultPasswordRestrictions(self):
+        return self.allowDefaultPasswordRestrictions
+
     def getTwoFactorAuthenticationMode(self):
         return self.twoFactorAuthenticationMode
 
@@ -10650,6 +10665,9 @@ class KalturaPartner(KalturaObjectBase):
 
     def setEventPlatformAllowedTemplates(self, newEventPlatformAllowedTemplates):
         self.eventPlatformAllowedTemplates = newEventPlatformAllowedTemplates
+
+    def getVerticalClassificationId(self):
+        return self.verticalClassificationId
 
 
 # @package Kaltura
@@ -39530,7 +39548,8 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
             streams=NotImplemented,
             recordingInfo=NotImplemented,
             isPlayableUser=NotImplemented,
-            viewMode=NotImplemented):
+            viewMode=NotImplemented,
+            featuresUpdatedAt=NotImplemented):
         KalturaEntryServerNode.__init__(self,
             id,
             entryId,
@@ -39554,12 +39573,16 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         # @var KalturaViewMode
         self.viewMode = viewMode
 
+        # @var int
+        self.featuresUpdatedAt = featuresUpdatedAt
+
 
     PROPERTY_LOADERS = {
         'streams': (KalturaObjectFactory.createArray, 'KalturaLiveStreamParams'), 
         'recordingInfo': (KalturaObjectFactory.createArray, 'KalturaLiveEntryServerNodeRecordingInfo'), 
         'isPlayableUser': getXmlNodeBool, 
         'viewMode': (KalturaEnumsFactory.createInt, "KalturaViewMode"), 
+        'featuresUpdatedAt': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -39573,6 +39596,7 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
         kparams.addArrayIfDefined("recordingInfo", self.recordingInfo)
         kparams.addBoolIfDefined("isPlayableUser", self.isPlayableUser)
         kparams.addIntEnumIfDefined("viewMode", self.viewMode)
+        kparams.addIntIfDefined("featuresUpdatedAt", self.featuresUpdatedAt)
         return kparams
 
     def getStreams(self):
@@ -39598,6 +39622,12 @@ class KalturaLiveEntryServerNode(KalturaEntryServerNode):
 
     def setViewMode(self, newViewMode):
         self.viewMode = newViewMode
+
+    def getFeaturesUpdatedAt(self):
+        return self.featuresUpdatedAt
+
+    def setFeaturesUpdatedAt(self, newFeaturesUpdatedAt):
+        self.featuresUpdatedAt = newFeaturesUpdatedAt
 
 
 # @package Kaltura
