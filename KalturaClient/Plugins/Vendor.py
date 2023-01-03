@@ -99,7 +99,8 @@ class KalturaIntegrationSetting(KalturaObjectBase):
             deletionPolicy=NotImplemented,
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
-            partnerId=NotImplemented):
+            partnerId=NotImplemented,
+            enableMeetingUpload=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -141,6 +142,9 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
+        # @var KalturaNullableBoolean
+        self.enableMeetingUpload = enableMeetingUpload
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -154,6 +158,7 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         'createdAt': getXmlNodeText, 
         'updatedAt': getXmlNodeText, 
         'partnerId': getXmlNodeInt, 
+        'enableMeetingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -168,6 +173,7 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         kparams.addIntIfDefined("conversionProfileId", self.conversionProfileId)
         kparams.addIntEnumIfDefined("handleParticipantsMode", self.handleParticipantsMode)
         kparams.addIntEnumIfDefined("deletionPolicy", self.deletionPolicy)
+        kparams.addIntEnumIfDefined("enableMeetingUpload", self.enableMeetingUpload)
         return kparams
 
     def getId(self):
@@ -218,6 +224,12 @@ class KalturaIntegrationSetting(KalturaObjectBase):
     def getPartnerId(self):
         return self.partnerId
 
+    def getEnableMeetingUpload(self):
+        return self.enableMeetingUpload
+
+    def setEnableMeetingUpload(self, newEnableMeetingUpload):
+        self.enableMeetingUpload = newEnableMeetingUpload
+
 
 # @package Kaltura
 # @subpackage Client
@@ -234,6 +246,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
             partnerId=NotImplemented,
+            enableMeetingUpload=NotImplemented,
             zoomCategory=NotImplemented,
             enableRecordingUpload=NotImplemented,
             zoomUserMatchingMode=NotImplemented,
@@ -243,7 +256,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             jwtToken=NotImplemented,
             enableZoomTranscription=NotImplemented,
             zoomAccountDescription=NotImplemented,
-            enableMeetingUpload=NotImplemented,
             optOutGroupNames=NotImplemented,
             optInGroupNames=NotImplemented,
             groupParticipationType=NotImplemented):
@@ -258,7 +270,8 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             deletionPolicy,
             createdAt,
             updatedAt,
-            partnerId)
+            partnerId,
+            enableMeetingUpload)
 
         # @var string
         self.zoomCategory = zoomCategory
@@ -287,9 +300,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         # @var string
         self.zoomAccountDescription = zoomAccountDescription
 
-        # @var KalturaNullableBoolean
-        self.enableMeetingUpload = enableMeetingUpload
-
         # @var string
         self.optOutGroupNames = optOutGroupNames
 
@@ -310,7 +320,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         'jwtToken': getXmlNodeText, 
         'enableZoomTranscription': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'zoomAccountDescription': getXmlNodeText, 
-        'enableMeetingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'optOutGroupNames': getXmlNodeText, 
         'optInGroupNames': getXmlNodeText, 
         'groupParticipationType': (KalturaEnumsFactory.createInt, "KalturaZoomGroupParticipationType"), 
@@ -332,7 +341,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         kparams.addStringIfDefined("jwtToken", self.jwtToken)
         kparams.addIntEnumIfDefined("enableZoomTranscription", self.enableZoomTranscription)
         kparams.addStringIfDefined("zoomAccountDescription", self.zoomAccountDescription)
-        kparams.addIntEnumIfDefined("enableMeetingUpload", self.enableMeetingUpload)
         kparams.addStringIfDefined("optOutGroupNames", self.optOutGroupNames)
         kparams.addStringIfDefined("optInGroupNames", self.optInGroupNames)
         kparams.addIntEnumIfDefined("groupParticipationType", self.groupParticipationType)
@@ -391,12 +399,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
 
     def setZoomAccountDescription(self, newZoomAccountDescription):
         self.zoomAccountDescription = newZoomAccountDescription
-
-    def getEnableMeetingUpload(self):
-        return self.enableMeetingUpload
-
-    def setEnableMeetingUpload(self, newEnableMeetingUpload):
-        self.enableMeetingUpload = newEnableMeetingUpload
 
     def getOptOutGroupNames(self):
         return self.optOutGroupNames

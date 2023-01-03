@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '18.17.0'
+API_VERSION = '18.20.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5272,6 +5272,7 @@ class KalturaReportType(object):
     CDN_BANDWIDTH_USAGE = "64"
     REACH_CATALOG_USAGE = "65"
     REACH_PROFILE_USAGE = "66"
+    SELF_SERVE_BANDWIDTH = "67"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -5406,6 +5407,7 @@ class KalturaReportType(object):
 class KalturaResetPassLinkType(object):
     KMC = "1"
     KMS = "2"
+    KME = "3"
 
     def __init__(self, value):
         self.value = value
@@ -14804,6 +14806,7 @@ class KalturaUser(KalturaBaseUser):
             dateOfBirth=NotImplemented,
             gender=NotImplemented,
             isAdmin=NotImplemented,
+            isGuest=NotImplemented,
             roleIds=NotImplemented,
             roleNames=NotImplemented,
             isAccountOwner=NotImplemented,
@@ -14817,7 +14820,8 @@ class KalturaUser(KalturaBaseUser):
             company=NotImplemented,
             ksPrivileges=NotImplemented,
             encryptedSeed=NotImplemented,
-            isSsoExcluded=NotImplemented):
+            isSsoExcluded=NotImplemented,
+            externalId=NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -14858,6 +14862,10 @@ class KalturaUser(KalturaBaseUser):
 
         # @var bool
         self.isAdmin = isAdmin
+
+        # @var bool
+        # @insertonly
+        self.isGuest = isGuest
 
         # @var string
         self.roleIds = roleIds
@@ -14906,12 +14914,18 @@ class KalturaUser(KalturaBaseUser):
         # @var bool
         self.isSsoExcluded = isSsoExcluded
 
+        # This field should be sent instead of the id field whenever you want to work with hashed user ids
+        # @var string
+        # @insertonly
+        self.externalId = externalId
+
 
     PROPERTY_LOADERS = {
         'type': (KalturaEnumsFactory.createInt, "KalturaUserType"), 
         'dateOfBirth': getXmlNodeInt, 
         'gender': (KalturaEnumsFactory.createInt, "KalturaGender"), 
         'isAdmin': getXmlNodeBool, 
+        'isGuest': getXmlNodeBool, 
         'roleIds': getXmlNodeText, 
         'roleNames': getXmlNodeText, 
         'isAccountOwner': getXmlNodeBool, 
@@ -14926,6 +14940,7 @@ class KalturaUser(KalturaBaseUser):
         'ksPrivileges': getXmlNodeText, 
         'encryptedSeed': getXmlNodeText, 
         'isSsoExcluded': getXmlNodeBool, 
+        'externalId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -14939,6 +14954,7 @@ class KalturaUser(KalturaBaseUser):
         kparams.addIntIfDefined("dateOfBirth", self.dateOfBirth)
         kparams.addIntEnumIfDefined("gender", self.gender)
         kparams.addBoolIfDefined("isAdmin", self.isAdmin)
+        kparams.addBoolIfDefined("isGuest", self.isGuest)
         kparams.addStringIfDefined("roleIds", self.roleIds)
         kparams.addBoolIfDefined("isAccountOwner", self.isAccountOwner)
         kparams.addStringIfDefined("password", self.password)
@@ -14951,6 +14967,7 @@ class KalturaUser(KalturaBaseUser):
         kparams.addStringIfDefined("company", self.company)
         kparams.addStringIfDefined("ksPrivileges", self.ksPrivileges)
         kparams.addBoolIfDefined("isSsoExcluded", self.isSsoExcluded)
+        kparams.addStringIfDefined("externalId", self.externalId)
         return kparams
 
     def getType(self):
@@ -14976,6 +14993,12 @@ class KalturaUser(KalturaBaseUser):
 
     def setIsAdmin(self, newIsAdmin):
         self.isAdmin = newIsAdmin
+
+    def getIsGuest(self):
+        return self.isGuest
+
+    def setIsGuest(self, newIsGuest):
+        self.isGuest = newIsGuest
 
     def getRoleIds(self):
         return self.roleIds
@@ -15054,6 +15077,12 @@ class KalturaUser(KalturaBaseUser):
 
     def setIsSsoExcluded(self, newIsSsoExcluded):
         self.isSsoExcluded = newIsSsoExcluded
+
+    def getExternalId(self):
+        return self.externalId
+
+    def setExternalId(self, newExternalId):
+        self.externalId = newExternalId
 
 
 # @package Kaltura
@@ -33502,7 +33531,8 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
             gender=NotImplemented,
             firstName=NotImplemented,
             lastName=NotImplemented,
-            group=NotImplemented):
+            group=NotImplemented,
+            externalId=NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -33563,6 +33593,9 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         # @var string
         self.group = group
 
+        # @var string
+        self.externalId = externalId
+
 
     PROPERTY_LOADERS = {
         'userId': getXmlNodeText, 
@@ -33579,6 +33612,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         'firstName': getXmlNodeText, 
         'lastName': getXmlNodeText, 
         'group': getXmlNodeText, 
+        'externalId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -33602,6 +33636,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         kparams.addStringIfDefined("firstName", self.firstName)
         kparams.addStringIfDefined("lastName", self.lastName)
         kparams.addStringIfDefined("group", self.group)
+        kparams.addStringIfDefined("externalId", self.externalId)
         return kparams
 
     def getUserId(self):
@@ -33687,6 +33722,12 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
 
     def setGroup(self, newGroup):
         self.group = newGroup
+
+    def getExternalId(self):
+        return self.externalId
+
+    def setExternalId(self, newExternalId):
+        self.externalId = newExternalId
 
 
 # @package Kaltura
@@ -45278,6 +45319,7 @@ class KalturaAdminUser(KalturaUser):
             dateOfBirth=NotImplemented,
             gender=NotImplemented,
             isAdmin=NotImplemented,
+            isGuest=NotImplemented,
             roleIds=NotImplemented,
             roleNames=NotImplemented,
             isAccountOwner=NotImplemented,
@@ -45291,7 +45333,8 @@ class KalturaAdminUser(KalturaUser):
             company=NotImplemented,
             ksPrivileges=NotImplemented,
             encryptedSeed=NotImplemented,
-            isSsoExcluded=NotImplemented):
+            isSsoExcluded=NotImplemented,
+            externalId=NotImplemented):
         KalturaUser.__init__(self,
             id,
             partnerId,
@@ -45324,6 +45367,7 @@ class KalturaAdminUser(KalturaUser):
             dateOfBirth,
             gender,
             isAdmin,
+            isGuest,
             roleIds,
             roleNames,
             isAccountOwner,
@@ -45337,7 +45381,8 @@ class KalturaAdminUser(KalturaUser):
             company,
             ksPrivileges,
             encryptedSeed,
-            isSsoExcluded)
+            isSsoExcluded,
+            externalId)
 
 
     PROPERTY_LOADERS = {

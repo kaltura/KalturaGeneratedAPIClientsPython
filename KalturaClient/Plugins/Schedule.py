@@ -1464,7 +1464,8 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
             mediaUrl=NotImplemented,
             mediaKey=NotImplemented,
             captionUrl=NotImplemented,
-            captionToken=NotImplemented):
+            captionToken=NotImplemented,
+            inputDelay=NotImplemented):
         KalturaLiveFeature.__init__(self,
             systemName,
             preStartTime,
@@ -1482,12 +1483,16 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
         # @var string
         self.captionToken = captionToken
 
+        # @var int
+        self.inputDelay = inputDelay
+
 
     PROPERTY_LOADERS = {
         'mediaUrl': getXmlNodeText, 
         'mediaKey': getXmlNodeText, 
         'captionUrl': getXmlNodeText, 
         'captionToken': getXmlNodeText, 
+        'inputDelay': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1501,6 +1506,7 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
         kparams.addStringIfDefined("mediaKey", self.mediaKey)
         kparams.addStringIfDefined("captionUrl", self.captionUrl)
         kparams.addStringIfDefined("captionToken", self.captionToken)
+        kparams.addIntIfDefined("inputDelay", self.inputDelay)
         return kparams
 
     def getMediaUrl(self):
@@ -1526,6 +1532,12 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
 
     def setCaptionToken(self, newCaptionToken):
         self.captionToken = newCaptionToken
+
+    def getInputDelay(self):
+        return self.inputDelay
+
+    def setInputDelay(self, newInputDelay):
+        self.inputDelay = newInputDelay
 
 
 # @package Kaltura
