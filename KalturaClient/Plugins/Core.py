@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '19.0.0'
+API_VERSION = '19.1.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25783,7 +25783,8 @@ class KalturaUrlResource(KalturaContentResource):
 
     def __init__(self,
             url=NotImplemented,
-            forceAsyncDownload=NotImplemented):
+            forceAsyncDownload=NotImplemented,
+            urlHeaders=NotImplemented):
         KalturaContentResource.__init__(self)
 
         # Remote URL, FTP, HTTP or HTTPS
@@ -25794,10 +25795,14 @@ class KalturaUrlResource(KalturaContentResource):
         # @var bool
         self.forceAsyncDownload = forceAsyncDownload
 
+        # @var array of KalturaString
+        self.urlHeaders = urlHeaders
+
 
     PROPERTY_LOADERS = {
         'url': getXmlNodeText, 
         'forceAsyncDownload': getXmlNodeBool, 
+        'urlHeaders': (KalturaObjectFactory.createArray, 'KalturaString'), 
     }
 
     def fromXml(self, node):
@@ -25809,6 +25814,7 @@ class KalturaUrlResource(KalturaContentResource):
         kparams.put("objectType", "KalturaUrlResource")
         kparams.addStringIfDefined("url", self.url)
         kparams.addBoolIfDefined("forceAsyncDownload", self.forceAsyncDownload)
+        kparams.addArrayIfDefined("urlHeaders", self.urlHeaders)
         return kparams
 
     def getUrl(self):
@@ -25823,6 +25829,12 @@ class KalturaUrlResource(KalturaContentResource):
     def setForceAsyncDownload(self, newForceAsyncDownload):
         self.forceAsyncDownload = newForceAsyncDownload
 
+    def getUrlHeaders(self):
+        return self.urlHeaders
+
+    def setUrlHeaders(self, newUrlHeaders):
+        self.urlHeaders = newUrlHeaders
+
 
 # @package Kaltura
 # @subpackage Client
@@ -25832,10 +25844,12 @@ class KalturaRemoteStorageResource(KalturaUrlResource):
     def __init__(self,
             url=NotImplemented,
             forceAsyncDownload=NotImplemented,
+            urlHeaders=NotImplemented,
             storageProfileId=NotImplemented):
         KalturaUrlResource.__init__(self,
             url,
-            forceAsyncDownload)
+            forceAsyncDownload,
+            urlHeaders)
 
         # ID of storage profile to be associated with the created file sync, used for file serving URL composing.
         # @var int
@@ -55514,12 +55528,14 @@ class KalturaSshUrlResource(KalturaUrlResource):
     def __init__(self,
             url=NotImplemented,
             forceAsyncDownload=NotImplemented,
+            urlHeaders=NotImplemented,
             privateKey=NotImplemented,
             publicKey=NotImplemented,
             keyPassphrase=NotImplemented):
         KalturaUrlResource.__init__(self,
             url,
-            forceAsyncDownload)
+            forceAsyncDownload,
+            urlHeaders)
 
         # SSH private key
         # @var string

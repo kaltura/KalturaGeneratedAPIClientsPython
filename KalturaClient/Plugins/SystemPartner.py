@@ -460,7 +460,8 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
             idGreaterThan=NotImplemented,
             monitorUsageEqual=NotImplemented,
             partnerParentIdEqual=NotImplemented,
-            partnerParentIdIn=NotImplemented):
+            partnerParentIdIn=NotImplemented,
+            adminEmailEqual=NotImplemented):
         KalturaPartnerFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -489,10 +490,14 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
         # @var string
         self.partnerParentIdIn = partnerParentIdIn
 
+        # @var string
+        self.adminEmailEqual = adminEmailEqual
+
 
     PROPERTY_LOADERS = {
         'partnerParentIdEqual': getXmlNodeInt, 
         'partnerParentIdIn': getXmlNodeText, 
+        'adminEmailEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -504,6 +509,7 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
         kparams.put("objectType", "KalturaSystemPartnerFilter")
         kparams.addIntIfDefined("partnerParentIdEqual", self.partnerParentIdEqual)
         kparams.addStringIfDefined("partnerParentIdIn", self.partnerParentIdIn)
+        kparams.addStringIfDefined("adminEmailEqual", self.adminEmailEqual)
         return kparams
 
     def getPartnerParentIdEqual(self):
@@ -517,6 +523,12 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
 
     def setPartnerParentIdIn(self, newPartnerParentIdIn):
         self.partnerParentIdIn = newPartnerParentIdIn
+
+    def getAdminEmailEqual(self):
+        return self.adminEmailEqual
+
+    def setAdminEmailEqual(self, newAdminEmailEqual):
+        self.adminEmailEqual = newAdminEmailEqual
 
 
 ########## services ##########
