@@ -8,7 +8,7 @@
 # to do with audio, video, and animation what Wiki platforms allow them to do with
 # text.
 #
-# Copyright (C) 2006-2022  Kaltura Inc.
+# Copyright (C) 2006-2023  Kaltura Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -100,7 +100,8 @@ class KalturaIntegrationSetting(KalturaObjectBase):
             createdAt=NotImplemented,
             updatedAt=NotImplemented,
             partnerId=NotImplemented,
-            enableMeetingUpload=NotImplemented):
+            enableMeetingUpload=NotImplemented,
+            enableMeetingChat=NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -145,6 +146,9 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.enableMeetingUpload = enableMeetingUpload
 
+        # @var KalturaNullableBoolean
+        self.enableMeetingChat = enableMeetingChat
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -159,6 +163,7 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         'updatedAt': getXmlNodeText, 
         'partnerId': getXmlNodeInt, 
         'enableMeetingUpload': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'enableMeetingChat': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -174,6 +179,7 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         kparams.addIntEnumIfDefined("handleParticipantsMode", self.handleParticipantsMode)
         kparams.addIntEnumIfDefined("deletionPolicy", self.deletionPolicy)
         kparams.addIntEnumIfDefined("enableMeetingUpload", self.enableMeetingUpload)
+        kparams.addIntEnumIfDefined("enableMeetingChat", self.enableMeetingChat)
         return kparams
 
     def getId(self):
@@ -230,6 +236,12 @@ class KalturaIntegrationSetting(KalturaObjectBase):
     def setEnableMeetingUpload(self, newEnableMeetingUpload):
         self.enableMeetingUpload = newEnableMeetingUpload
 
+    def getEnableMeetingChat(self):
+        return self.enableMeetingChat
+
+    def setEnableMeetingChat(self, newEnableMeetingChat):
+        self.enableMeetingChat = newEnableMeetingChat
+
 
 # @package Kaltura
 # @subpackage Client
@@ -247,6 +259,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             updatedAt=NotImplemented,
             partnerId=NotImplemented,
             enableMeetingUpload=NotImplemented,
+            enableMeetingChat=NotImplemented,
             zoomCategory=NotImplemented,
             enableRecordingUpload=NotImplemented,
             zoomUserMatchingMode=NotImplemented,
@@ -271,7 +284,8 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             createdAt,
             updatedAt,
             partnerId,
-            enableMeetingUpload)
+            enableMeetingUpload,
+            enableMeetingChat)
 
         # @var string
         self.zoomCategory = zoomCategory
