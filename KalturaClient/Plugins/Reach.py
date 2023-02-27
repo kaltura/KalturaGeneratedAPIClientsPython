@@ -123,6 +123,7 @@ class KalturaReachProfileType(object):
 class KalturaVendorCatalogItemOutputFormat(object):
     SRT = 1
     DFXP = 2
+    VTT = 3
 
     def __init__(self, value):
         self.value = value
@@ -154,6 +155,7 @@ class KalturaVendorServiceFeature(object):
     INTELLIGENT_TAGGING = 6
     DUBBING = 7
     LIVE_CAPTION = 8
+    EXTENDED_AUDIO_DESCRIPTION = 9
 
     def __init__(self, value):
         self.value = value
@@ -222,6 +224,7 @@ class KalturaCatalogItemLanguage(object):
     YUE = "Cantonese"
     CA = "Catalan"
     ZH = "Chinese"
+    CS = "Czech"
     DA = "Danish"
     NL = "Dutch"
     EN = "English"
@@ -2247,6 +2250,90 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id=NotImplemented,
+            vendorPartnerId=NotImplemented,
+            name=NotImplemented,
+            systemName=NotImplemented,
+            createdAt=NotImplemented,
+            updatedAt=NotImplemented,
+            status=NotImplemented,
+            serviceType=NotImplemented,
+            serviceFeature=NotImplemented,
+            turnAroundTime=NotImplemented,
+            pricing=NotImplemented,
+            engineType=NotImplemented,
+            sourceLanguage=NotImplemented,
+            allowResubmission=NotImplemented,
+            flavorParamsId=NotImplemented,
+            clearAudioFlavorParamsId=NotImplemented,
+            outputFormat=NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission)
+
+        # @var int
+        self.flavorParamsId = flavorParamsId
+
+        # @var int
+        self.clearAudioFlavorParamsId = clearAudioFlavorParamsId
+
+        # @var KalturaVendorCatalogItemOutputFormat
+        self.outputFormat = outputFormat
+
+
+    PROPERTY_LOADERS = {
+        'flavorParamsId': getXmlNodeInt, 
+        'clearAudioFlavorParamsId': getXmlNodeInt, 
+        'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemOutputFormat"), 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorExtendedAudioDescriptionCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorExtendedAudioDescriptionCatalogItem")
+        kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
+        kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
+        kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
+        return kparams
+
+    def getFlavorParamsId(self):
+        return self.flavorParamsId
+
+    def setFlavorParamsId(self, newFlavorParamsId):
+        self.flavorParamsId = newFlavorParamsId
+
+    def getClearAudioFlavorParamsId(self):
+        return self.clearAudioFlavorParamsId
+
+    def setClearAudioFlavorParamsId(self, newClearAudioFlavorParamsId):
+        self.clearAudioFlavorParamsId = newClearAudioFlavorParamsId
+
+    def getOutputFormat(self):
+        return self.outputFormat
+
+    def setOutputFormat(self, newOutputFormat):
+        self.outputFormat = newOutputFormat
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id=NotImplemented,
@@ -4243,6 +4330,74 @@ class KalturaVendorDubbingCatalogItemFilter(KalturaVendorDubbingCatalogItemBaseF
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorExtendedAudioDescriptionCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy=NotImplemented,
+            advancedSearch=NotImplemented,
+            idEqual=NotImplemented,
+            idIn=NotImplemented,
+            idNotIn=NotImplemented,
+            vendorPartnerIdEqual=NotImplemented,
+            vendorPartnerIdIn=NotImplemented,
+            createdAtGreaterThanOrEqual=NotImplemented,
+            createdAtLessThanOrEqual=NotImplemented,
+            updatedAtGreaterThanOrEqual=NotImplemented,
+            updatedAtLessThanOrEqual=NotImplemented,
+            statusEqual=NotImplemented,
+            statusIn=NotImplemented,
+            serviceTypeEqual=NotImplemented,
+            serviceTypeIn=NotImplemented,
+            serviceFeatureEqual=NotImplemented,
+            serviceFeatureIn=NotImplemented,
+            turnAroundTimeEqual=NotImplemented,
+            turnAroundTimeIn=NotImplemented,
+            partnerIdEqual=NotImplemented,
+            sourceLanguageEqual=NotImplemented,
+            sourceLanguageIn=NotImplemented,
+            outputFormatEqual=NotImplemented,
+            outputFormatIn=NotImplemented):
+        KalturaVendorCaptionsCatalogItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            sourceLanguageEqual,
+            sourceLanguageIn,
+            outputFormatEqual,
+            outputFormatIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCaptionsCatalogItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorExtendedAudioDescriptionCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCaptionsCatalogItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorExtendedAudioDescriptionCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorLiveCaptionCatalogItemFilter(KalturaVendorCaptionsCatalogItemBaseFilter):
     def __init__(self,
             orderBy=NotImplemented,
@@ -4932,6 +5087,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorChapteringCatalogItem': KalturaVendorChapteringCatalogItem,
             'KalturaVendorCredit': KalturaVendorCredit,
             'KalturaVendorDubbingCatalogItem': KalturaVendorDubbingCatalogItem,
+            'KalturaVendorExtendedAudioDescriptionCatalogItem': KalturaVendorExtendedAudioDescriptionCatalogItem,
             'KalturaVendorIntelligentTaggingCatalogItem': KalturaVendorIntelligentTaggingCatalogItem,
             'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
             'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
@@ -4955,6 +5111,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorCaptionsCatalogItemFilter': KalturaVendorCaptionsCatalogItemFilter,
             'KalturaVendorChapteringCatalogItemFilter': KalturaVendorChapteringCatalogItemFilter,
             'KalturaVendorDubbingCatalogItemFilter': KalturaVendorDubbingCatalogItemFilter,
+            'KalturaVendorExtendedAudioDescriptionCatalogItemFilter': KalturaVendorExtendedAudioDescriptionCatalogItemFilter,
             'KalturaVendorLiveCaptionCatalogItemFilter': KalturaVendorLiveCaptionCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemBaseFilter': KalturaVendorTranslationCatalogItemBaseFilter,
             'KalturaVendorTranslationCatalogItemFilter': KalturaVendorTranslationCatalogItemFilter,
