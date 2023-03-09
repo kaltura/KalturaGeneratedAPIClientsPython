@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '19.3.0'
+API_VERSION = '19.4.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -370,6 +370,7 @@ class KalturaEmailIngestionProfileStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEntryDisplayInSearchType(object):
+    RECYCLED = -2
     SYSTEM = -1
     NONE = 0
     PARTNER_ONLY = 1
@@ -2810,6 +2811,7 @@ class KalturaEntryApplication(object):
     WEBCAST_APP = "5"
     PERSONAL_CAPTURE = "6"
     KALTURA_MEETING = "7"
+    EP = "8"
 
     def __init__(self, value):
         self.value = value
@@ -21965,7 +21967,8 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
             tagsAdminTagsNameMultiLikeOr=NotImplemented,
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
-            tagsAdminTagsNameMultiLikeAnd=NotImplemented):
+            tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -22243,6 +22246,9 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         # @var string
         self.tagsAdminTagsNameMultiLikeAnd = tagsAdminTagsNameMultiLikeAnd
 
+        # @var KalturaEntryDisplayInSearchType
+        self.displayInSearchEqual = displayInSearchEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeText, 
@@ -22327,6 +22333,7 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         'tagsNameMultiLikeAnd': getXmlNodeText, 
         'tagsAdminTagsMultiLikeAnd': getXmlNodeText, 
         'tagsAdminTagsNameMultiLikeAnd': getXmlNodeText, 
+        'displayInSearchEqual': (KalturaEnumsFactory.createInt, "KalturaEntryDisplayInSearchType"), 
     }
 
     def fromXml(self, node):
@@ -22418,6 +22425,7 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
         kparams.addStringIfDefined("tagsNameMultiLikeAnd", self.tagsNameMultiLikeAnd)
         kparams.addStringIfDefined("tagsAdminTagsMultiLikeAnd", self.tagsAdminTagsMultiLikeAnd)
         kparams.addStringIfDefined("tagsAdminTagsNameMultiLikeAnd", self.tagsAdminTagsNameMultiLikeAnd)
+        kparams.addIntEnumIfDefined("displayInSearchEqual", self.displayInSearchEqual)
         return kparams
 
     def getIdEqual(self):
@@ -22912,6 +22920,12 @@ class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
     def setTagsAdminTagsNameMultiLikeAnd(self, newTagsAdminTagsNameMultiLikeAnd):
         self.tagsAdminTagsNameMultiLikeAnd = newTagsAdminTagsNameMultiLikeAnd
 
+    def getDisplayInSearchEqual(self):
+        return self.displayInSearchEqual
+
+    def setDisplayInSearchEqual(self, newDisplayInSearchEqual):
+        self.displayInSearchEqual = newDisplayInSearchEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -23001,6 +23015,7 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -23093,7 +23108,8 @@ class KalturaBaseEntryFilter(KalturaBaseEntryBaseFilter):
             tagsAdminTagsNameMultiLikeOr,
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
-            tagsAdminTagsNameMultiLikeAnd)
+            tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual)
 
         # @var string
         self.freeText = freeText
@@ -23287,6 +23303,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -23388,6 +23405,7 @@ class KalturaPlayableEntryBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -23587,6 +23605,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -23688,6 +23707,7 @@ class KalturaPlayableEntryFilter(KalturaPlayableEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -23807,6 +23827,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -23918,6 +23939,7 @@ class KalturaMediaEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -24147,6 +24169,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -24258,6 +24281,7 @@ class KalturaMediaEntryFilter(KalturaMediaEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -24387,6 +24411,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -24500,6 +24525,7 @@ class KalturaMediaEntryFilterForPlaylist(KalturaMediaEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -56316,6 +56342,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -56409,6 +56436,7 @@ class KalturaDataEntryBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -57438,6 +57466,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -57531,6 +57560,7 @@ class KalturaPlaylistBaseFilter(KalturaBaseEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -58219,6 +58249,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -58312,6 +58343,7 @@ class KalturaDataEntryFilter(KalturaDataEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -59061,6 +59093,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -59156,6 +59189,7 @@ class KalturaPlaylistFilter(KalturaPlaylistBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -59955,6 +59989,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -60056,6 +60091,7 @@ class KalturaMixEntryBaseFilter(KalturaPlayableEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -60533,6 +60569,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -60634,6 +60671,7 @@ class KalturaMixEntryFilter(KalturaMixEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -60799,6 +60837,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -60910,6 +60949,7 @@ class KalturaLiveEntryBaseFilter(KalturaMediaEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -61085,6 +61125,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -61199,6 +61240,7 @@ class KalturaLiveEntryFilter(KalturaLiveEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -61407,6 +61449,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -61521,6 +61564,7 @@ class KalturaLiveChannelBaseFilter(KalturaLiveEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -61653,6 +61697,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -61767,6 +61812,7 @@ class KalturaLiveStreamEntryBaseFilter(KalturaLiveEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -61899,6 +61945,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -62013,6 +62060,7 @@ class KalturaLiveChannelFilter(KalturaLiveChannelBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -62145,6 +62193,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -62259,6 +62308,7 @@ class KalturaLiveStreamEntryFilter(KalturaLiveStreamEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -62391,6 +62441,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -62505,6 +62556,7 @@ class KalturaLiveStreamAdminEntryBaseFilter(KalturaLiveStreamEntryFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -62637,6 +62689,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             tagsNameMultiLikeAnd=NotImplemented,
             tagsAdminTagsMultiLikeAnd=NotImplemented,
             tagsAdminTagsNameMultiLikeAnd=NotImplemented,
+            displayInSearchEqual=NotImplemented,
             freeText=NotImplemented,
             excludedFreeTextGroups=NotImplemented,
             descriptionLike=NotImplemented,
@@ -62751,6 +62804,7 @@ class KalturaLiveStreamAdminEntryFilter(KalturaLiveStreamAdminEntryBaseFilter):
             tagsNameMultiLikeAnd,
             tagsAdminTagsMultiLikeAnd,
             tagsAdminTagsNameMultiLikeAnd,
+            displayInSearchEqual,
             freeText,
             excludedFreeTextGroups,
             descriptionLike,
@@ -63328,6 +63382,17 @@ class KalturaBaseEntryService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaModerationFlagListResponse')
 
+    def recycle(self, entryId):
+        """Move the entry to the recycle bin"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("baseentry", "recycle", "KalturaBaseEntry", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBaseEntry')
+
     def reject(self, entryId):
         """Reject the entry and mark the pending flags (if any) as moderated (this will make the entry non-playable)."""
 
@@ -63337,6 +63402,17 @@ class KalturaBaseEntryService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def restoreRecycled(self, entryId):
+        """Restore the entry from the recycle bin"""
+
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("entryId", entryId)
+        self.client.queueServiceActionCall("baseentry", "restoreRecycled", "KalturaBaseEntry", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaBaseEntry')
 
     def servePlaybackKey(self, entryId):
         """This action serves HLS encrypted key if access control is validated"""

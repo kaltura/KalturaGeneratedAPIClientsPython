@@ -235,6 +235,7 @@ class KalturaESearchEntryFieldName(object):
     CREATOR_ID = "creator_kuser_id"
     CREDIT = "credit"
     DESCRIPTION = "description"
+    DISPLAY_IN_SEARCH = "display_in_search"
     END_DATE = "end_date"
     ENTITLED_USER_EDIT = "entitled_kusers_edit"
     ENTITLED_USER_PUBLISH = "entitled_kusers_publish"

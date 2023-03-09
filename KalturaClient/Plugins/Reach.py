@@ -210,6 +210,7 @@ class KalturaVendorServiceType(object):
 class KalturaVendorTaskProcessingRegion(object):
     US = 1
     EU = 2
+    CA = 3
 
     def __init__(self, value):
         self.value = value
