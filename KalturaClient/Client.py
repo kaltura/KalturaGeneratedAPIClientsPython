@@ -357,7 +357,7 @@ class KalturaClient(object):
     def parsePostResult(self, postResult):
         self.log("result (xml): %s" % postResult)
         try:
-            parser = etree.XMLParser(encoding='ISO-8859-1', ns_clean=True, recover=True)
+            parser = etree.XMLParser(encoding='UTF-8', ns_clean=True, recover=True)
             resultXml = etree.fromstring(postResult, parser=parser)
         except etree.ParseError as e:
             raise KalturaClientException(
