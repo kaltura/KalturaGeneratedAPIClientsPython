@@ -97,25 +97,25 @@ class KalturaAttachmentType(object):
 # @subpackage Client
 class KalturaAttachmentAsset(KalturaAsset):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            sizeInBytes=NotImplemented,
-            filename=NotImplemented,
-            title=NotImplemented,
-            format=NotImplemented,
-            status=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            version = NotImplemented,
+            size = NotImplemented,
+            tags = NotImplemented,
+            fileExt = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            description = NotImplemented,
+            partnerData = NotImplemented,
+            partnerDescription = NotImplemented,
+            actualSourceAssetParamsIds = NotImplemented,
+            sizeInBytes = NotImplemented,
+            filename = NotImplemented,
+            title = NotImplemented,
+            format = NotImplemented,
+            status = NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -134,11 +134,11 @@ class KalturaAttachmentAsset(KalturaAsset):
             sizeInBytes)
 
         # The filename of the attachment asset content
-        # @var string
+        # @var str
         self.filename = filename
 
         # Attachment asset title
-        # @var string
+        # @var str
         self.title = title
 
         # The attachment format
@@ -196,12 +196,12 @@ class KalturaAttachmentAsset(KalturaAsset):
 # @subpackage Client
 class KalturaAttachmentAssetListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaAttachmentAsset
+        # @var List[KalturaAttachmentAsset]
         # @readonly
         self.objects = objects
 
@@ -227,8 +227,8 @@ class KalturaAttachmentAssetListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaAttachmentServeOptions(KalturaAssetServeOptions):
     def __init__(self,
-            download=NotImplemented,
-            referrer=NotImplemented):
+            download = NotImplemented,
+            referrer = NotImplemented):
         KalturaAssetServeOptions.__init__(self,
             download,
             referrer)
@@ -251,31 +251,31 @@ class KalturaAttachmentServeOptions(KalturaAssetServeOptions):
 # @subpackage Client
 class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -301,16 +301,16 @@ class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
         # @var KalturaAttachmentType
         self.formatEqual = formatEqual
 
-        # @var string
+        # @var str
         self.formatIn = formatIn
 
         # @var KalturaAttachmentAssetStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.statusNotIn = statusNotIn
 
 
@@ -371,31 +371,31 @@ class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
 # @subpackage Client
 class KalturaAttachmentAssetFilter(KalturaAttachmentAssetBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaAttachmentAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

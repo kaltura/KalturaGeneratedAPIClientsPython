@@ -78,26 +78,26 @@ class KalturaConferenceServerNodeOrderBy(object):
 # @subpackage Client
 class KalturaRoomDetails(KalturaObjectBase):
     def __init__(self,
-            serverUrl=NotImplemented,
-            entryId=NotImplemented,
-            token=NotImplemented,
-            expiry=NotImplemented,
-            serverName=NotImplemented):
+            serverUrl = NotImplemented,
+            entryId = NotImplemented,
+            token = NotImplemented,
+            expiry = NotImplemented,
+            serverName = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.serverUrl = serverUrl
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
-        # @var string
+        # @var str
         self.token = token
 
         # @var int
         self.expiry = expiry
 
-        # @var string
+        # @var str
         self.serverName = serverName
 
 
@@ -158,16 +158,16 @@ class KalturaRoomDetails(KalturaObjectBase):
 # @subpackage Client
 class KalturaConferenceEntryServerNode(KalturaEntryServerNode):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            serverNodeId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            status=NotImplemented,
-            serverType=NotImplemented,
-            confRoomStatus=NotImplemented,
-            registered=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            serverNodeId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serverType = NotImplemented,
+            confRoomStatus = NotImplemented,
+            registered = NotImplemented):
         KalturaEntryServerNode.__init__(self,
             id,
             entryId,
@@ -212,22 +212,22 @@ class KalturaConferenceEntryServerNode(KalturaEntryServerNode):
 # @subpackage Client
 class KalturaConferenceServerNode(KalturaServerNode):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            heartbeatTime=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            hostName=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            tags=NotImplemented,
-            dc=NotImplemented,
-            parentId=NotImplemented,
-            environment=NotImplemented,
-            serviceBaseUrl=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            heartbeatTime = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            hostName = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            tags = NotImplemented,
+            dc = NotImplemented,
+            parentId = NotImplemented,
+            environment = NotImplemented,
+            serviceBaseUrl = NotImplemented):
         KalturaServerNode.__init__(self,
             id,
             partnerId,
@@ -245,7 +245,7 @@ class KalturaConferenceServerNode(KalturaServerNode):
             parentId,
             environment)
 
-        # @var string
+        # @var str
         self.serviceBaseUrl = serviceBaseUrl
 
 
@@ -274,22 +274,22 @@ class KalturaConferenceServerNode(KalturaServerNode):
 # @subpackage Client
 class KalturaConferenceEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            serverNodeIdEqual=NotImplemented,
-            serverNodeIdIn=NotImplemented,
-            serverNodeIdNotIn=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented,
-            serverTypeNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            serverNodeIdEqual = NotImplemented,
+            serverNodeIdIn = NotImplemented,
+            serverNodeIdNotIn = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serverTypeEqual = NotImplemented,
+            serverTypeIn = NotImplemented,
+            serverTypeNotIn = NotImplemented):
         KalturaEntryServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -326,37 +326,37 @@ class KalturaConferenceEntryServerNodeBaseFilter(KalturaEntryServerNodeFilter):
 # @subpackage Client
 class KalturaConferenceServerNodeBaseFilter(KalturaServerNodeFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            heartbeatTimeGreaterThanOrEqual=NotImplemented,
-            heartbeatTimeLessThanOrEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            hostNameLike=NotImplemented,
-            hostNameMultiLikeOr=NotImplemented,
-            hostNameMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            parentIdLike=NotImplemented,
-            parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented,
-            environmentEqual=NotImplemented,
-            environmentIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            heartbeatTimeGreaterThanOrEqual = NotImplemented,
+            heartbeatTimeLessThanOrEqual = NotImplemented,
+            nameEqual = NotImplemented,
+            nameIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            hostNameLike = NotImplemented,
+            hostNameMultiLikeOr = NotImplemented,
+            hostNameMultiLikeAnd = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            parentIdLike = NotImplemented,
+            parentIdMultiLikeOr = NotImplemented,
+            parentIdMultiLikeAnd = NotImplemented,
+            environmentEqual = NotImplemented,
+            environmentIn = NotImplemented):
         KalturaServerNodeFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -408,22 +408,22 @@ class KalturaConferenceServerNodeBaseFilter(KalturaServerNodeFilter):
 # @subpackage Client
 class KalturaConferenceEntryServerNodeFilter(KalturaConferenceEntryServerNodeBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            serverNodeIdEqual=NotImplemented,
-            serverNodeIdIn=NotImplemented,
-            serverNodeIdNotIn=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            serverTypeEqual=NotImplemented,
-            serverTypeIn=NotImplemented,
-            serverTypeNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            serverNodeIdEqual = NotImplemented,
+            serverNodeIdIn = NotImplemented,
+            serverNodeIdNotIn = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serverTypeEqual = NotImplemented,
+            serverTypeIn = NotImplemented,
+            serverTypeNotIn = NotImplemented):
         KalturaConferenceEntryServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -460,37 +460,37 @@ class KalturaConferenceEntryServerNodeFilter(KalturaConferenceEntryServerNodeBas
 # @subpackage Client
 class KalturaConferenceServerNodeFilter(KalturaConferenceServerNodeBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            heartbeatTimeGreaterThanOrEqual=NotImplemented,
-            heartbeatTimeLessThanOrEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            nameIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            hostNameLike=NotImplemented,
-            hostNameMultiLikeOr=NotImplemented,
-            hostNameMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            parentIdLike=NotImplemented,
-            parentIdMultiLikeOr=NotImplemented,
-            parentIdMultiLikeAnd=NotImplemented,
-            environmentEqual=NotImplemented,
-            environmentIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            heartbeatTimeGreaterThanOrEqual = NotImplemented,
+            heartbeatTimeLessThanOrEqual = NotImplemented,
+            nameEqual = NotImplemented,
+            nameIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            hostNameLike = NotImplemented,
+            hostNameMultiLikeOr = NotImplemented,
+            hostNameMultiLikeAnd = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            parentIdLike = NotImplemented,
+            parentIdMultiLikeOr = NotImplemented,
+            parentIdMultiLikeAnd = NotImplemented,
+            environmentEqual = NotImplemented,
+            environmentIn = NotImplemented):
         KalturaConferenceServerNodeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

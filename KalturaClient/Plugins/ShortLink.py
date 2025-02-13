@@ -78,19 +78,19 @@ class KalturaShortLinkOrderBy(object):
 # @subpackage Client
 class KalturaShortLink(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            expiresAt=NotImplemented,
-            partnerId=NotImplemented,
-            userId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            fullUrl=NotImplemented,
-            status=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            expiresAt = NotImplemented,
+            partnerId = NotImplemented,
+            userId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            fullUrl = NotImplemented,
+            status = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         # @readonly
         self.id = id
 
@@ -109,16 +109,16 @@ class KalturaShortLink(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.userId = userId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.fullUrl = fullUrl
 
         # @var KalturaShortLinkStatus
@@ -206,32 +206,32 @@ class KalturaShortLink(KalturaObjectBase):
 # @subpackage Client
 class KalturaShortLinkBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            expiresAtGreaterThanOrEqual=NotImplemented,
-            expiresAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            expiresAtGreaterThanOrEqual = NotImplemented,
+            expiresAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -255,25 +255,25 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
         # @var KalturaShortLinkStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
 
@@ -422,12 +422,12 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaShortLinkListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaShortLink
+        # @var List[KalturaShortLink]
         # @readonly
         self.objects = objects
 
@@ -453,24 +453,24 @@ class KalturaShortLinkListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaShortLinkFilter(KalturaShortLinkBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            expiresAtGreaterThanOrEqual=NotImplemented,
-            expiresAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            expiresAtGreaterThanOrEqual = NotImplemented,
+            expiresAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaShortLinkBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

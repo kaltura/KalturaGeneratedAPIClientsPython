@@ -51,8 +51,8 @@ from ..Base import (
 # @subpackage Client
 class KalturaDropFolderICalBulkUploadFileHandlerConfig(KalturaDropFolderFileHandlerConfig):
     def __init__(self,
-            handlerType=NotImplemented,
-            eventsType=NotImplemented):
+            handlerType = NotImplemented,
+            eventsType = NotImplemented):
         KalturaDropFolderFileHandlerConfig.__init__(self,
             handlerType)
 

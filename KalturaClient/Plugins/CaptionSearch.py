@@ -50,11 +50,11 @@ from ..Base import (
 # @subpackage Client
 class KalturaCaptionAssetItem(KalturaObjectBase):
     def __init__(self,
-            asset=NotImplemented,
-            entry=NotImplemented,
-            startTime=NotImplemented,
-            endTime=NotImplemented,
-            content=NotImplemented):
+            asset = NotImplemented,
+            entry = NotImplemented,
+            startTime = NotImplemented,
+            endTime = NotImplemented,
+            content = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The Caption Asset object
@@ -71,7 +71,7 @@ class KalturaCaptionAssetItem(KalturaObjectBase):
         # @var int
         self.endTime = endTime
 
-        # @var string
+        # @var str
         self.content = content
 
 
@@ -132,12 +132,12 @@ class KalturaCaptionAssetItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaCaptionAssetItemListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaCaptionAssetItem
+        # @var List[KalturaCaptionAssetItem]
         # @readonly
         self.objects = objects
 
@@ -163,18 +163,18 @@ class KalturaCaptionAssetItemListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaEntryCaptionAssetSearchItem(KalturaSearchItem):
     def __init__(self,
-            contentLike=NotImplemented,
-            contentMultiLikeOr=NotImplemented,
-            contentMultiLikeAnd=NotImplemented):
+            contentLike = NotImplemented,
+            contentMultiLikeOr = NotImplemented,
+            contentMultiLikeAnd = NotImplemented):
         KalturaSearchItem.__init__(self)
 
-        # @var string
+        # @var str
         self.contentLike = contentLike
 
-        # @var string
+        # @var str
         self.contentMultiLikeOr = contentMultiLikeOr
 
-        # @var string
+        # @var str
         self.contentMultiLikeAnd = contentMultiLikeAnd
 
 
@@ -219,47 +219,47 @@ class KalturaEntryCaptionAssetSearchItem(KalturaSearchItem):
 # @subpackage Client
 class KalturaCaptionAssetItemFilter(KalturaCaptionAssetFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            captionParamsIdEqual=NotImplemented,
-            captionParamsIdIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            contentLike=NotImplemented,
-            contentMultiLikeOr=NotImplemented,
-            contentMultiLikeAnd=NotImplemented,
-            partnerDescriptionLike=NotImplemented,
-            partnerDescriptionMultiLikeOr=NotImplemented,
-            partnerDescriptionMultiLikeAnd=NotImplemented,
-            languageEqual=NotImplemented,
-            languageIn=NotImplemented,
-            labelEqual=NotImplemented,
-            labelIn=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            endTimeGreaterThanOrEqual=NotImplemented,
-            endTimeLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            captionParamsIdEqual = NotImplemented,
+            captionParamsIdIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            contentLike = NotImplemented,
+            contentMultiLikeOr = NotImplemented,
+            contentMultiLikeAnd = NotImplemented,
+            partnerDescriptionLike = NotImplemented,
+            partnerDescriptionMultiLikeOr = NotImplemented,
+            partnerDescriptionMultiLikeAnd = NotImplemented,
+            languageEqual = NotImplemented,
+            languageIn = NotImplemented,
+            labelEqual = NotImplemented,
+            labelIn = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            endTimeGreaterThanOrEqual = NotImplemented,
+            endTimeLessThanOrEqual = NotImplemented):
         KalturaCaptionAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -289,34 +289,34 @@ class KalturaCaptionAssetItemFilter(KalturaCaptionAssetFilter):
             statusIn,
             statusNotIn)
 
-        # @var string
+        # @var str
         self.contentLike = contentLike
 
-        # @var string
+        # @var str
         self.contentMultiLikeOr = contentMultiLikeOr
 
-        # @var string
+        # @var str
         self.contentMultiLikeAnd = contentMultiLikeAnd
 
-        # @var string
+        # @var str
         self.partnerDescriptionLike = partnerDescriptionLike
 
-        # @var string
+        # @var str
         self.partnerDescriptionMultiLikeOr = partnerDescriptionMultiLikeOr
 
-        # @var string
+        # @var str
         self.partnerDescriptionMultiLikeAnd = partnerDescriptionMultiLikeAnd
 
         # @var KalturaLanguage
         self.languageEqual = languageEqual
 
-        # @var string
+        # @var str
         self.languageIn = languageIn
 
-        # @var string
+        # @var str
         self.labelEqual = labelEqual
 
-        # @var string
+        # @var str
         self.labelIn = labelIn
 
         # @var int

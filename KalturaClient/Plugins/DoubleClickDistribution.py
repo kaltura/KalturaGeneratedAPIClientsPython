@@ -95,15 +95,15 @@ class KalturaDoubleClickDistributionJobProviderData(KalturaDistributionJobProvid
 # @subpackage Client
 class KalturaDoubleClickDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -133,42 +133,42 @@ class KalturaDoubleClickDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaDoubleClickDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            channelTitle=NotImplemented,
-            channelLink=NotImplemented,
-            channelDescription=NotImplemented,
-            feedUrl=NotImplemented,
-            cuePointsProvider=NotImplemented,
-            itemsPerPage=NotImplemented,
-            ignoreSchedulingInFeed=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            channelTitle = NotImplemented,
+            channelLink = NotImplemented,
+            channelDescription = NotImplemented,
+            feedUrl = NotImplemented,
+            cuePointsProvider = NotImplemented,
+            itemsPerPage = NotImplemented,
+            ignoreSchedulingInFeed = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -200,23 +200,23 @@ class KalturaDoubleClickDistributionProfile(KalturaConfigurableDistributionProfi
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.channelTitle = channelTitle
 
-        # @var string
+        # @var str
         self.channelLink = channelLink
 
-        # @var string
+        # @var str
         self.channelDescription = channelDescription
 
-        # @var string
+        # @var str
         # @readonly
         self.feedUrl = feedUrl
 
-        # @var string
+        # @var str
         self.cuePointsProvider = cuePointsProvider
 
-        # @var string
+        # @var str
         self.itemsPerPage = itemsPerPage
 
         # @var bool
@@ -292,10 +292,10 @@ class KalturaDoubleClickDistributionProfile(KalturaConfigurableDistributionProfi
 # @subpackage Client
 class KalturaDoubleClickDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -320,10 +320,10 @@ class KalturaDoubleClickDistributionProviderBaseFilter(KalturaDistributionProvid
 # @subpackage Client
 class KalturaDoubleClickDistributionProviderFilter(KalturaDoubleClickDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDoubleClickDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -348,16 +348,16 @@ class KalturaDoubleClickDistributionProviderFilter(KalturaDoubleClickDistributio
 # @subpackage Client
 class KalturaDoubleClickDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -388,16 +388,16 @@ class KalturaDoubleClickDistributionProfileBaseFilter(KalturaConfigurableDistrib
 # @subpackage Client
 class KalturaDoubleClickDistributionProfileFilter(KalturaDoubleClickDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDoubleClickDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

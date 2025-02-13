@@ -322,8 +322,8 @@ class KalturaScheduleResourceOrderBy(object):
 # @subpackage Client
 class KalturaLinkedScheduleEvent(KalturaObjectBase):
     def __init__(self,
-            offset=NotImplemented,
-            eventId=NotImplemented):
+            offset = NotImplemented,
+            eventId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The time between the end of the event which it's id is in $eventId and the start of the event holding this object
@@ -368,12 +368,12 @@ class KalturaLinkedScheduleEvent(KalturaObjectBase):
 # @subpackage Client
 class KalturaLiveFeature(KalturaObjectBase):
     def __init__(self,
-            systemName=NotImplemented,
-            preStartTime=NotImplemented,
-            postEndTime=NotImplemented):
+            systemName = NotImplemented,
+            preStartTime = NotImplemented,
+            postEndTime = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
         # @var int
@@ -424,25 +424,25 @@ class KalturaLiveFeature(KalturaObjectBase):
 # @subpackage Client
 class KalturaScheduleEventRecurrence(KalturaObjectBase):
     def __init__(self,
-            name=NotImplemented,
-            frequency=NotImplemented,
-            until=NotImplemented,
-            timeZone=NotImplemented,
-            count=NotImplemented,
-            interval=NotImplemented,
-            bySecond=NotImplemented,
-            byMinute=NotImplemented,
-            byHour=NotImplemented,
-            byDay=NotImplemented,
-            byMonthDay=NotImplemented,
-            byYearDay=NotImplemented,
-            byWeekNumber=NotImplemented,
-            byMonth=NotImplemented,
-            byOffset=NotImplemented,
-            weekStartDay=NotImplemented):
+            name = NotImplemented,
+            frequency = NotImplemented,
+            until = NotImplemented,
+            timeZone = NotImplemented,
+            count = NotImplemented,
+            interval = NotImplemented,
+            bySecond = NotImplemented,
+            byMinute = NotImplemented,
+            byHour = NotImplemented,
+            byDay = NotImplemented,
+            byMonthDay = NotImplemented,
+            byYearDay = NotImplemented,
+            byWeekNumber = NotImplemented,
+            byMonth = NotImplemented,
+            byOffset = NotImplemented,
+            weekStartDay = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.name = name
 
         # @var KalturaScheduleEventRecurrenceFrequency
@@ -452,7 +452,7 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         self.until = until
 
         # TimeZone String
-        # @var string
+        # @var str
         self.timeZone = timeZone
 
         # @var int
@@ -462,15 +462,15 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         self.interval = interval
 
         # Comma separated numbers between 0 to 59
-        # @var string
+        # @var str
         self.bySecond = bySecond
 
         # Comma separated numbers between 0 to 59
-        # @var string
+        # @var str
         self.byMinute = byMinute
 
         # Comma separated numbers between 0 to 23
-        # @var string
+        # @var str
         self.byHour = byHour
 
         # Comma separated of KalturaScheduleEventRecurrenceDay
@@ -479,17 +479,17 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         # 	 For example, within a MONTHLY rule, +1MO (or simply 1MO) represents the first Monday within the month, whereas -1MO represents the last Monday of the month.
         # 	 If an integer modifier is not present, it means all days of this type within the specified frequency.
         # 	 For example, within a MONTHLY rule, MO represents all Mondays within the month.
-        # @var string
+        # @var str
         self.byDay = byDay
 
         # Comma separated of numbers between -31 to 31, excluding 0.
         # 	 For example, -10 represents the tenth to the last day of the month.
-        # @var string
+        # @var str
         self.byMonthDay = byMonthDay
 
         # Comma separated of numbers between -366 to 366, excluding 0.
         # 	 For example, -1 represents the last day of the year (December 31st) and -306 represents the 306th to the last day of the year (March 1st).
-        # @var string
+        # @var str
         self.byYearDay = byYearDay
 
         # Comma separated of numbers between -53 to 53, excluding 0.
@@ -498,11 +498,11 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         # 	 Week number one of the calendar year is the first week which contains at least four (4) days in that calendar year.
         # 	 This rule part is only valid for YEARLY frequency.
         # 	 For example, 3 represents the third week of the year.
-        # @var string
+        # @var str
         self.byWeekNumber = byWeekNumber
 
         # Comma separated numbers between 1 to 12
-        # @var string
+        # @var str
         self.byMonth = byMonth
 
         # Comma separated of numbers between -366 to 366, excluding 0.
@@ -511,7 +511,7 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
         # 	 For example "the last work day of the month" could be represented as: frequency=MONTHLY;byDay=MO,TU,WE,TH,FR;byOffset=-1
         # 	 Each byOffset value can include a positive (+n) or negative (-n) integer.
         # 	 If present, this indicates the nth occurrence of the specific occurrence within the set of events specified by the rule.
-        # @var string
+        # @var str
         self.byOffset = byOffset
 
         # @var KalturaScheduleEventRecurrenceDay
@@ -663,33 +663,33 @@ class KalturaScheduleEventRecurrence(KalturaObjectBase):
 # @subpackage Client
 class KalturaScheduleEvent(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto-generated unique identifier
@@ -706,10 +706,10 @@ class KalturaScheduleEvent(KalturaObjectBase):
         self.parentId = parentId
 
         # Defines a short summary or subject for the event
-        # @var string
+        # @var str
         self.summary = summary
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaScheduleEventStatus
@@ -722,7 +722,7 @@ class KalturaScheduleEvent(KalturaObjectBase):
         # @var int
         self.endDate = endDate
 
-        # @var string
+        # @var str
         self.referenceId = referenceId
 
         # Contains the Id of the event that influences the timing of this event and the offset of time.
@@ -730,7 +730,7 @@ class KalturaScheduleEvent(KalturaObjectBase):
         self.linkedTo = linkedTo
 
         # An array of Schedule Event Ids that their start time depends on the end of the current.
-        # @var string
+        # @var str
         self.linkedBy = linkedBy
 
         # @var KalturaScheduleEventClassificationType
@@ -745,13 +745,13 @@ class KalturaScheduleEvent(KalturaObjectBase):
         self.geoLongitude = geoLongitude
 
         # Defines the intended venue for the activity
-        # @var string
+        # @var str
         self.location = location
 
-        # @var string
+        # @var str
         self.organizer = organizer
 
-        # @var string
+        # @var str
         self.ownerId = ownerId
 
         # The value for the priority field.
@@ -770,14 +770,14 @@ class KalturaScheduleEvent(KalturaObjectBase):
         self.duration = duration
 
         # Used to represent contact information or alternately a reference to contact information.
-        # @var string
+        # @var str
         self.contact = contact
 
         # Specifies non-processing information intended to provide a comment to the calendar user.
-        # @var string
+        # @var str
         self.comment = comment
 
-        # @var string
+        # @var str
         self.tags = tags
 
         # Creation date as Unix timestamp (In seconds)
@@ -1003,11 +1003,11 @@ class KalturaScheduleEvent(KalturaObjectBase):
 # @subpackage Client
 class KalturaScheduleEventResource(KalturaObjectBase):
     def __init__(self,
-            eventId=NotImplemented,
-            resourceId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            eventId = NotImplemented,
+            resourceId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -1078,16 +1078,16 @@ class KalturaScheduleEventResource(KalturaObjectBase):
 # @subpackage Client
 class KalturaScheduleResource(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            parentId=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            id = NotImplemented,
+            parentId = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto-generated unique identifier
@@ -1103,21 +1103,21 @@ class KalturaScheduleResource(KalturaObjectBase):
         self.partnerId = partnerId
 
         # Defines a short name
-        # @var string
+        # @var str
         self.name = name
 
         # Defines a unique system-name
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaScheduleResourceStatus
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         self.tags = tags
 
         # Creation date as Unix timestamp (In seconds)
@@ -1208,33 +1208,33 @@ class KalturaScheduleResource(KalturaObjectBase):
 # @subpackage Client
 class KalturaBlackoutScheduleEvent(KalturaScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented):
         KalturaScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1282,17 +1282,17 @@ class KalturaBlackoutScheduleEvent(KalturaScheduleEvent):
 # @subpackage Client
 class KalturaCameraScheduleResource(KalturaScheduleResource):
     def __init__(self,
-            id=NotImplemented,
-            parentId=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            streamUrl=NotImplemented):
+            id = NotImplemented,
+            parentId = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            streamUrl = NotImplemented):
         KalturaScheduleResource.__init__(self,
             id,
             parentId,
@@ -1306,7 +1306,7 @@ class KalturaCameraScheduleResource(KalturaScheduleResource):
             updatedAt)
 
         # URL of the stream
-        # @var string
+        # @var str
         self.streamUrl = streamUrl
 
 
@@ -1335,37 +1335,37 @@ class KalturaCameraScheduleResource(KalturaScheduleResource):
 # @subpackage Client
 class KalturaEntryScheduleEvent(KalturaScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented):
         KalturaScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1396,19 +1396,19 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
             recurrence)
 
         # Entry to be used as template during content ingestion
-        # @var string
+        # @var str
         self.templateEntryId = templateEntryId
 
         # Entries that associated with this event
-        # @var string
+        # @var str
         self.entryIds = entryIds
 
         # Categories that associated with this event
-        # @var string
+        # @var str
         self.categoryIds = categoryIds
 
         # Blackout schedule events the conflict with this event
-        # @var array of KalturaScheduleEvent
+        # @var List[KalturaScheduleEvent]
         # @readonly
         self.blackoutConflicts = blackoutConflicts
 
@@ -1458,33 +1458,41 @@ class KalturaEntryScheduleEvent(KalturaScheduleEvent):
 # @subpackage Client
 class KalturaLiveCaptionFeature(KalturaLiveFeature):
     def __init__(self,
-            systemName=NotImplemented,
-            preStartTime=NotImplemented,
-            postEndTime=NotImplemented,
-            mediaUrl=NotImplemented,
-            mediaKey=NotImplemented,
-            captionUrl=NotImplemented,
-            captionToken=NotImplemented,
-            inputDelay=NotImplemented):
+            systemName = NotImplemented,
+            preStartTime = NotImplemented,
+            postEndTime = NotImplemented,
+            mediaUrl = NotImplemented,
+            mediaKey = NotImplemented,
+            captionUrl = NotImplemented,
+            captionToken = NotImplemented,
+            inputDelay = NotImplemented,
+            captionFormat = NotImplemented,
+            language = NotImplemented):
         KalturaLiveFeature.__init__(self,
             systemName,
             preStartTime,
             postEndTime)
 
-        # @var string
+        # @var str
         self.mediaUrl = mediaUrl
 
-        # @var string
+        # @var str
         self.mediaKey = mediaKey
 
-        # @var string
+        # @var str
         self.captionUrl = captionUrl
 
-        # @var string
+        # @var str
         self.captionToken = captionToken
 
         # @var int
         self.inputDelay = inputDelay
+
+        # @var str
+        self.captionFormat = captionFormat
+
+        # @var str
+        self.language = language
 
 
     PROPERTY_LOADERS = {
@@ -1493,6 +1501,8 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
         'captionUrl': getXmlNodeText, 
         'captionToken': getXmlNodeText, 
         'inputDelay': getXmlNodeInt, 
+        'captionFormat': getXmlNodeText, 
+        'language': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -1507,6 +1517,8 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
         kparams.addStringIfDefined("captionUrl", self.captionUrl)
         kparams.addStringIfDefined("captionToken", self.captionToken)
         kparams.addIntIfDefined("inputDelay", self.inputDelay)
+        kparams.addStringIfDefined("captionFormat", self.captionFormat)
+        kparams.addStringIfDefined("language", self.language)
         return kparams
 
     def getMediaUrl(self):
@@ -1539,22 +1551,34 @@ class KalturaLiveCaptionFeature(KalturaLiveFeature):
     def setInputDelay(self, newInputDelay):
         self.inputDelay = newInputDelay
 
+    def getCaptionFormat(self):
+        return self.captionFormat
+
+    def setCaptionFormat(self, newCaptionFormat):
+        self.captionFormat = newCaptionFormat
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaLiveEntryScheduleResource(KalturaScheduleResource):
     def __init__(self,
-            id=NotImplemented,
-            parentId=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            entryId=NotImplemented):
+            id = NotImplemented,
+            parentId = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            entryId = NotImplemented):
         KalturaScheduleResource.__init__(self,
             id,
             parentId,
@@ -1567,7 +1591,7 @@ class KalturaLiveEntryScheduleResource(KalturaScheduleResource):
             createdAt,
             updatedAt)
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
 
@@ -1596,30 +1620,35 @@ class KalturaLiveEntryScheduleResource(KalturaScheduleResource):
 # @subpackage Client
 class KalturaLiveRestreamFeature(KalturaLiveFeature):
     def __init__(self,
-            systemName=NotImplemented,
-            preStartTime=NotImplemented,
-            postEndTime=NotImplemented,
-            primaryUrl=NotImplemented,
-            secondaryUrl=NotImplemented,
-            streamKey=NotImplemented):
+            systemName = NotImplemented,
+            preStartTime = NotImplemented,
+            postEndTime = NotImplemented,
+            primaryUrl = NotImplemented,
+            secondaryUrl = NotImplemented,
+            playbackUrl = NotImplemented,
+            streamKey = NotImplemented):
         KalturaLiveFeature.__init__(self,
             systemName,
             preStartTime,
             postEndTime)
 
-        # @var string
+        # @var str
         self.primaryUrl = primaryUrl
 
-        # @var string
+        # @var str
         self.secondaryUrl = secondaryUrl
 
-        # @var string
+        # @var str
+        self.playbackUrl = playbackUrl
+
+        # @var str
         self.streamKey = streamKey
 
 
     PROPERTY_LOADERS = {
         'primaryUrl': getXmlNodeText, 
         'secondaryUrl': getXmlNodeText, 
+        'playbackUrl': getXmlNodeText, 
         'streamKey': getXmlNodeText, 
     }
 
@@ -1632,6 +1661,7 @@ class KalturaLiveRestreamFeature(KalturaLiveFeature):
         kparams.put("objectType", "KalturaLiveRestreamFeature")
         kparams.addStringIfDefined("primaryUrl", self.primaryUrl)
         kparams.addStringIfDefined("secondaryUrl", self.secondaryUrl)
+        kparams.addStringIfDefined("playbackUrl", self.playbackUrl)
         kparams.addStringIfDefined("streamKey", self.streamKey)
         return kparams
 
@@ -1647,6 +1677,12 @@ class KalturaLiveRestreamFeature(KalturaLiveFeature):
     def setSecondaryUrl(self, newSecondaryUrl):
         self.secondaryUrl = newSecondaryUrl
 
+    def getPlaybackUrl(self):
+        return self.playbackUrl
+
+    def setPlaybackUrl(self, newPlaybackUrl):
+        self.playbackUrl = newPlaybackUrl
+
     def getStreamKey(self):
         return self.streamKey
 
@@ -1658,16 +1694,16 @@ class KalturaLiveRestreamFeature(KalturaLiveFeature):
 # @subpackage Client
 class KalturaLocationScheduleResource(KalturaScheduleResource):
     def __init__(self,
-            id=NotImplemented,
-            parentId=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            id = NotImplemented,
+            parentId = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaScheduleResource.__init__(self,
             id,
             parentId,
@@ -1698,12 +1734,12 @@ class KalturaLocationScheduleResource(KalturaScheduleResource):
 # @subpackage Client
 class KalturaScheduleEventListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaScheduleEvent
+        # @var List[KalturaScheduleEvent]
         # @readonly
         self.objects = objects
 
@@ -1729,12 +1765,12 @@ class KalturaScheduleEventListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaScheduleEventResourceListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaScheduleEventResource
+        # @var List[KalturaScheduleEventResource]
         # @readonly
         self.objects = objects
 
@@ -1760,12 +1796,12 @@ class KalturaScheduleEventResourceListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaScheduleResourceListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaScheduleResource
+        # @var List[KalturaScheduleResource]
         # @readonly
         self.objects = objects
 
@@ -1791,37 +1827,37 @@ class KalturaScheduleResourceListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaBaseLiveScheduleEvent(KalturaEntryScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1873,38 +1909,38 @@ class KalturaBaseLiveScheduleEvent(KalturaEntryScheduleEvent):
 # @subpackage Client
 class KalturaMeetingScheduleEvent(KalturaEntryScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented,
-            preStartTime=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented,
+            preStartTime = NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -1968,37 +2004,37 @@ class KalturaMeetingScheduleEvent(KalturaEntryScheduleEvent):
 # @subpackage Client
 class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -2050,37 +2086,37 @@ class KalturaRecordScheduleEvent(KalturaEntryScheduleEvent):
 # @subpackage Client
 class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2088,25 +2124,25 @@ class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.idNotIn = idNotIn
 
         # @var int
         self.parentIdEqual = parentIdEqual
 
-        # @var string
+        # @var str
         self.parentIdIn = parentIdIn
 
-        # @var string
+        # @var str
         self.parentIdNotIn = parentIdNotIn
 
         # @var KalturaScheduleEventStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -2121,22 +2157,22 @@ class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
         # @var int
         self.endDateLessThanOrEqual = endDateLessThanOrEqual
 
-        # @var string
+        # @var str
         self.referenceIdEqual = referenceIdEqual
 
-        # @var string
+        # @var str
         self.referenceIdIn = referenceIdIn
 
-        # @var string
+        # @var str
         self.ownerIdEqual = ownerIdEqual
 
-        # @var string
+        # @var str
         self.ownerIdIn = ownerIdIn
 
         # @var int
         self.priorityEqual = priorityEqual
 
-        # @var string
+        # @var str
         self.priorityIn = priorityIn
 
         # @var int
@@ -2148,16 +2184,16 @@ class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
         # @var KalturaScheduleEventRecurrenceType
         self.recurrenceTypeEqual = recurrenceTypeEqual
 
-        # @var string
+        # @var str
         self.recurrenceTypeIn = recurrenceTypeIn
 
-        # @var string
+        # @var str
         self.tagsLike = tagsLike
 
-        # @var string
+        # @var str
         self.tagsMultiLikeOr = tagsMultiLikeOr
 
-        # @var string
+        # @var str
         self.tagsMultiLikeAnd = tagsMultiLikeAnd
 
         # @var int
@@ -2422,16 +2458,16 @@ class KalturaScheduleEventBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaScheduleEventResourceBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            eventIdEqual=NotImplemented,
-            eventIdIn=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            resourceIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            eventIdEqual = NotImplemented,
+            eventIdIn = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            resourceIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2439,13 +2475,13 @@ class KalturaScheduleEventResourceBaseFilter(KalturaRelatedFilter):
         # @var int
         self.eventIdEqual = eventIdEqual
 
-        # @var string
+        # @var str
         self.eventIdIn = eventIdIn
 
         # @var int
         self.resourceIdEqual = resourceIdEqual
 
-        # @var string
+        # @var str
         self.resourceIdIn = resourceIdIn
 
         # @var int
@@ -2542,25 +2578,25 @@ class KalturaScheduleEventResourceBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaScheduleResourceBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2568,40 +2604,40 @@ class KalturaScheduleResourceBaseFilter(KalturaRelatedFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.idNotIn = idNotIn
 
         # @var int
         self.parentIdEqual = parentIdEqual
 
-        # @var string
+        # @var str
         self.parentIdIn = parentIdIn
 
-        # @var string
+        # @var str
         self.nameEqual = nameEqual
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
         # @var KalturaScheduleResourceStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.tagsLike = tagsLike
 
-        # @var string
+        # @var str
         self.tagsMultiLikeOr = tagsMultiLikeOr
 
-        # @var string
+        # @var str
         self.tagsMultiLikeAnd = tagsMultiLikeAnd
 
         # @var int
@@ -2770,37 +2806,37 @@ class KalturaScheduleResourceBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaVodScheduleEvent(KalturaEntryScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented):
         KalturaEntryScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -2852,38 +2888,38 @@ class KalturaVodScheduleEvent(KalturaEntryScheduleEvent):
 # @subpackage Client
 class KalturaLiveRedirectScheduleEvent(KalturaBaseLiveScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented,
-            redirectEntryId=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented,
+            redirectEntryId = NotImplemented):
         KalturaBaseLiveScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -2918,7 +2954,7 @@ class KalturaLiveRedirectScheduleEvent(KalturaBaseLiveScheduleEvent):
             blackoutConflicts)
 
         # The vod entry to redirect
-        # @var string
+        # @var str
         self.redirectEntryId = redirectEntryId
 
 
@@ -2947,45 +2983,45 @@ class KalturaLiveRedirectScheduleEvent(KalturaBaseLiveScheduleEvent):
 # @subpackage Client
 class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            templateEntryId=NotImplemented,
-            entryIds=NotImplemented,
-            categoryIds=NotImplemented,
-            blackoutConflicts=NotImplemented,
-            sourceEntryId=NotImplemented,
-            projectedAudience=NotImplemented,
-            preStartTime=NotImplemented,
-            postEndTime=NotImplemented,
-            preStartEntryId=NotImplemented,
-            postEndEntryId=NotImplemented,
-            isContentInterruptible=NotImplemented,
-            liveFeatures=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            templateEntryId = NotImplemented,
+            entryIds = NotImplemented,
+            categoryIds = NotImplemented,
+            blackoutConflicts = NotImplemented,
+            sourceEntryId = NotImplemented,
+            projectedAudience = NotImplemented,
+            preStartTime = NotImplemented,
+            postEndTime = NotImplemented,
+            preStartEntryId = NotImplemented,
+            postEndEntryId = NotImplemented,
+            isContentInterruptible = NotImplemented,
+            liveFeatures = NotImplemented):
         KalturaBaseLiveScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -3020,7 +3056,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
             blackoutConflicts)
 
         # The entry ID of the source entry (for simulive)
-        # @var string
+        # @var str
         self.sourceEntryId = sourceEntryId
 
         # Defines the expected audience.
@@ -3036,11 +3072,11 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         self.postEndTime = postEndTime
 
         # The entry id of the pre start entry
-        # @var string
+        # @var str
         self.preStartEntryId = preStartEntryId
 
         # The entry id of the post end entry
-        # @var string
+        # @var str
         self.postEndEntryId = postEndEntryId
 
         # Detect whether "real" live can interrupt to the "main" content
@@ -3048,7 +3084,7 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
         self.isContentInterruptible = isContentInterruptible
 
         # list of live features that apply to the event
-        # @var array of KalturaLiveFeature
+        # @var List[KalturaLiveFeature]
         self.liveFeatures = liveFeatures
 
 
@@ -3133,50 +3169,50 @@ class KalturaLiveStreamScheduleEvent(KalturaBaseLiveScheduleEvent):
 # @subpackage Client
 class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented):
         KalturaScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3210,43 +3246,43 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual)
 
-        # @var string
+        # @var str
         self.resourceIdsLike = resourceIdsLike
 
-        # @var string
+        # @var str
         self.resourceIdsMultiLikeOr = resourceIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.resourceIdsMultiLikeAnd = resourceIdsMultiLikeAnd
 
-        # @var string
+        # @var str
         self.parentResourceIdsLike = parentResourceIdsLike
 
-        # @var string
+        # @var str
         self.parentResourceIdsMultiLikeOr = parentResourceIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.parentResourceIdsMultiLikeAnd = parentResourceIdsMultiLikeAnd
 
-        # @var string
+        # @var str
         self.templateEntryCategoriesIdsMultiLikeAnd = templateEntryCategoriesIdsMultiLikeAnd
 
-        # @var string
+        # @var str
         self.templateEntryCategoriesIdsMultiLikeOr = templateEntryCategoriesIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.resourceSystemNamesMultiLikeOr = resourceSystemNamesMultiLikeOr
 
-        # @var string
+        # @var str
         self.templateEntryCategoriesIdsLike = templateEntryCategoriesIdsLike
 
-        # @var string
+        # @var str
         self.resourceSystemNamesMultiLikeAnd = resourceSystemNamesMultiLikeAnd
 
-        # @var string
+        # @var str
         self.resourceSystemNamesLike = resourceSystemNamesLike
 
-        # @var string
+        # @var str
         self.resourceIdEqual = resourceIdEqual
 
 
@@ -3371,17 +3407,17 @@ class KalturaScheduleEventFilter(KalturaScheduleEventBaseFilter):
 # @subpackage Client
 class KalturaScheduleEventResourceFilter(KalturaScheduleEventResourceBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            eventIdEqual=NotImplemented,
-            eventIdIn=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            resourceIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            eventIdOrItsParentIdEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            eventIdEqual = NotImplemented,
+            eventIdIn = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            resourceIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            eventIdOrItsParentIdEqual = NotImplemented):
         KalturaScheduleEventResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3424,25 +3460,25 @@ class KalturaScheduleEventResourceFilter(KalturaScheduleEventResourceBaseFilter)
 # @subpackage Client
 class KalturaScheduleResourceFilter(KalturaScheduleResourceBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaScheduleResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3482,25 +3518,25 @@ class KalturaScheduleResourceFilter(KalturaScheduleResourceBaseFilter):
 # @subpackage Client
 class KalturaCameraScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaScheduleResourceFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3540,57 +3576,57 @@ class KalturaCameraScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
 # @subpackage Client
 class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented):
         KalturaScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3637,25 +3673,25 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
             resourceSystemNamesLike,
             resourceIdEqual)
 
-        # @var string
+        # @var str
         self.templateEntryIdEqual = templateEntryIdEqual
 
-        # @var string
+        # @var str
         self.entryIdsLike = entryIdsLike
 
-        # @var string
+        # @var str
         self.entryIdsMultiLikeOr = entryIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.entryIdsMultiLikeAnd = entryIdsMultiLikeAnd
 
-        # @var string
+        # @var str
         self.categoryIdsLike = categoryIdsLike
 
-        # @var string
+        # @var str
         self.categoryIdsMultiLikeOr = categoryIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.categoryIdsMultiLikeAnd = categoryIdsMultiLikeAnd
 
 
@@ -3732,25 +3768,25 @@ class KalturaEntryScheduleEventBaseFilter(KalturaScheduleEventFilter):
 # @subpackage Client
 class KalturaLiveEntryScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaScheduleResourceFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3790,25 +3826,25 @@ class KalturaLiveEntryScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
 # @subpackage Client
 class KalturaLocationScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaScheduleResourceFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3848,25 +3884,25 @@ class KalturaLocationScheduleResourceBaseFilter(KalturaScheduleResourceFilter):
 # @subpackage Client
 class KalturaCameraScheduleResourceFilter(KalturaCameraScheduleResourceBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaCameraScheduleResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3906,60 +3942,60 @@ class KalturaCameraScheduleResourceFilter(KalturaCameraScheduleResourceBaseFilte
 # @subpackage Client
 class KalturaEntryScheduleEventFilter(KalturaEntryScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4013,13 +4049,13 @@ class KalturaEntryScheduleEventFilter(KalturaEntryScheduleEventBaseFilter):
             categoryIdsMultiLikeOr,
             categoryIdsMultiLikeAnd)
 
-        # @var string
+        # @var str
         self.parentCategoryIdsLike = parentCategoryIdsLike
 
-        # @var string
+        # @var str
         self.parentCategoryIdsMultiLikeOr = parentCategoryIdsMultiLikeOr
 
-        # @var string
+        # @var str
         self.parentCategoryIdsMultiLikeAnd = parentCategoryIdsMultiLikeAnd
 
 
@@ -4064,25 +4100,25 @@ class KalturaEntryScheduleEventFilter(KalturaEntryScheduleEventBaseFilter):
 # @subpackage Client
 class KalturaLiveEntryScheduleResourceFilter(KalturaLiveEntryScheduleResourceBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaLiveEntryScheduleResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4122,25 +4158,25 @@ class KalturaLiveEntryScheduleResourceFilter(KalturaLiveEntryScheduleResourceBas
 # @subpackage Client
 class KalturaLocationScheduleResourceFilter(KalturaLocationScheduleResourceBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaLocationScheduleResourceBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4180,60 +4216,60 @@ class KalturaLocationScheduleResourceFilter(KalturaLocationScheduleResourceBaseF
 # @subpackage Client
 class KalturaLiveRedirectScheduleEventFilter(KalturaEntryScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4308,60 +4344,60 @@ class KalturaLiveRedirectScheduleEventFilter(KalturaEntryScheduleEventFilter):
 # @subpackage Client
 class KalturaLiveStreamScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4436,60 +4472,60 @@ class KalturaLiveStreamScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
 # @subpackage Client
 class KalturaMeetingScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4564,60 +4600,60 @@ class KalturaMeetingScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
 # @subpackage Client
 class KalturaRecordScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4692,60 +4728,60 @@ class KalturaRecordScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
 # @subpackage Client
 class KalturaVodScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaEntryScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4820,60 +4856,60 @@ class KalturaVodScheduleEventBaseFilter(KalturaEntryScheduleEventFilter):
 # @subpackage Client
 class KalturaBlackoutScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaRecordScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4948,60 +4984,61 @@ class KalturaBlackoutScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
 # @subpackage Client
 class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented,
+            sourceEntryIdEqual = NotImplemented):
         KalturaLiveStreamScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -5058,8 +5095,12 @@ class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFil
             parentCategoryIdsMultiLikeOr,
             parentCategoryIdsMultiLikeAnd)
 
+        # @var str
+        self.sourceEntryIdEqual = sourceEntryIdEqual
+
 
     PROPERTY_LOADERS = {
+        'sourceEntryIdEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -5069,67 +5110,74 @@ class KalturaLiveStreamScheduleEventFilter(KalturaLiveStreamScheduleEventBaseFil
     def toParams(self):
         kparams = KalturaLiveStreamScheduleEventBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaLiveStreamScheduleEventFilter")
+        kparams.addStringIfDefined("sourceEntryIdEqual", self.sourceEntryIdEqual)
         return kparams
+
+    def getSourceEntryIdEqual(self):
+        return self.sourceEntryIdEqual
+
+    def setSourceEntryIdEqual(self, newSourceEntryIdEqual):
+        self.sourceEntryIdEqual = newSourceEntryIdEqual
 
 
 # @package Kaltura
 # @subpackage Client
 class KalturaMeetingScheduleEventFilter(KalturaMeetingScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaMeetingScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -5204,60 +5252,60 @@ class KalturaMeetingScheduleEventFilter(KalturaMeetingScheduleEventBaseFilter):
 # @subpackage Client
 class KalturaRecordScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaRecordScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -5332,60 +5380,60 @@ class KalturaRecordScheduleEventFilter(KalturaRecordScheduleEventBaseFilter):
 # @subpackage Client
 class KalturaVodScheduleEventFilter(KalturaVodScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented,
-            templateEntryIdEqual=NotImplemented,
-            entryIdsLike=NotImplemented,
-            entryIdsMultiLikeOr=NotImplemented,
-            entryIdsMultiLikeAnd=NotImplemented,
-            categoryIdsLike=NotImplemented,
-            categoryIdsMultiLikeOr=NotImplemented,
-            categoryIdsMultiLikeAnd=NotImplemented,
-            parentCategoryIdsLike=NotImplemented,
-            parentCategoryIdsMultiLikeOr=NotImplemented,
-            parentCategoryIdsMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented,
+            templateEntryIdEqual = NotImplemented,
+            entryIdsLike = NotImplemented,
+            entryIdsMultiLikeOr = NotImplemented,
+            entryIdsMultiLikeAnd = NotImplemented,
+            categoryIdsLike = NotImplemented,
+            categoryIdsMultiLikeOr = NotImplemented,
+            categoryIdsMultiLikeAnd = NotImplemented,
+            parentCategoryIdsLike = NotImplemented,
+            parentCategoryIdsMultiLikeOr = NotImplemented,
+            parentCategoryIdsMultiLikeAnd = NotImplemented):
         KalturaVodScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

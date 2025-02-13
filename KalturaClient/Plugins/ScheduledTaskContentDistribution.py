@@ -51,15 +51,15 @@ from ..Base import (
 # @subpackage Client
 class KalturaDistributeObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            distributionProfileId=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            distributionProfileId = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
 
         # Distribution profile id
-        # @var string
+        # @var str
         self.distributionProfileId = distributionProfileId
 
 

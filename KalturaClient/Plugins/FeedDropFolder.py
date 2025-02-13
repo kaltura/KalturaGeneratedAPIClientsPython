@@ -50,42 +50,42 @@ from ..Base import (
 # @subpackage Client
 class KalturaFeedItemInfo(KalturaObjectBase):
     def __init__(self,
-            itemXPath=NotImplemented,
-            itemPublishDateXPath=NotImplemented,
-            itemUniqueIdentifierXPath=NotImplemented,
-            itemContentFileSizeXPath=NotImplemented,
-            itemContentUrlXPath=NotImplemented,
-            itemContentBitrateXPath=NotImplemented,
-            itemHashXPath=NotImplemented,
-            itemContentXpath=NotImplemented,
-            contentBitrateAttributeName=NotImplemented):
+            itemXPath = NotImplemented,
+            itemPublishDateXPath = NotImplemented,
+            itemUniqueIdentifierXPath = NotImplemented,
+            itemContentFileSizeXPath = NotImplemented,
+            itemContentUrlXPath = NotImplemented,
+            itemContentBitrateXPath = NotImplemented,
+            itemHashXPath = NotImplemented,
+            itemContentXpath = NotImplemented,
+            contentBitrateAttributeName = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.itemXPath = itemXPath
 
-        # @var string
+        # @var str
         self.itemPublishDateXPath = itemPublishDateXPath
 
-        # @var string
+        # @var str
         self.itemUniqueIdentifierXPath = itemUniqueIdentifierXPath
 
-        # @var string
+        # @var str
         self.itemContentFileSizeXPath = itemContentFileSizeXPath
 
-        # @var string
+        # @var str
         self.itemContentUrlXPath = itemContentUrlXPath
 
-        # @var string
+        # @var str
         self.itemContentBitrateXPath = itemContentBitrateXPath
 
-        # @var string
+        # @var str
         self.itemHashXPath = itemHashXPath
 
-        # @var string
+        # @var str
         self.itemContentXpath = itemContentXpath
 
-        # @var string
+        # @var str
         self.contentBitrateAttributeName = contentBitrateAttributeName
 
 
@@ -178,37 +178,37 @@ class KalturaFeedItemInfo(KalturaObjectBase):
 # @subpackage Client
 class KalturaFeedDropFolder(KalturaDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            itemHandlingLimit=NotImplemented,
-            feedItemInfo=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            itemHandlingLimit = NotImplemented,
+            feedItemInfo = NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
             partnerId,
@@ -280,32 +280,32 @@ class KalturaFeedDropFolder(KalturaDropFolder):
 # @subpackage Client
 class KalturaFeedDropFolderFile(KalturaDropFolderFile):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            dropFolderId=NotImplemented,
-            fileName=NotImplemented,
-            fileSize=NotImplemented,
-            fileSizeLastSetAt=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            parsedSlug=NotImplemented,
-            parsedFlavor=NotImplemented,
-            parsedUserId=NotImplemented,
-            leadDropFolderFileId=NotImplemented,
-            deletedDropFolderFileId=NotImplemented,
-            entryId=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            lastModificationTime=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            uploadStartDetectedAt=NotImplemented,
-            uploadEndDetectedAt=NotImplemented,
-            importStartedAt=NotImplemented,
-            importEndedAt=NotImplemented,
-            batchJobId=NotImplemented,
-            hash=NotImplemented,
-            feedXmlPath=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            dropFolderId = NotImplemented,
+            fileName = NotImplemented,
+            fileSize = NotImplemented,
+            fileSizeLastSetAt = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            parsedSlug = NotImplemented,
+            parsedFlavor = NotImplemented,
+            parsedUserId = NotImplemented,
+            leadDropFolderFileId = NotImplemented,
+            deletedDropFolderFileId = NotImplemented,
+            entryId = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            lastModificationTime = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            uploadStartDetectedAt = NotImplemented,
+            uploadEndDetectedAt = NotImplemented,
+            importStartedAt = NotImplemented,
+            importEndedAt = NotImplemented,
+            batchJobId = NotImplemented,
+            hash = NotImplemented,
+            feedXmlPath = NotImplemented):
         KalturaDropFolderFile.__init__(self,
             id,
             partnerId,
@@ -333,11 +333,11 @@ class KalturaFeedDropFolderFile(KalturaDropFolderFile):
             batchJobId)
 
         # MD5 or Sha1 encrypted string
-        # @var string
+        # @var str
         self.hash = hash
 
         # Path of the original Feed content XML
-        # @var string
+        # @var str
         self.feedXmlPath = feedXmlPath
 
 

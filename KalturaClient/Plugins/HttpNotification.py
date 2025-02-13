@@ -129,6 +129,19 @@ class KalturaHttpNotificationTemplateOrderBy(object):
     def getValue(self):
         return self.value
 
+# @package Kaltura
+# @subpackage Client
+class KalturaSecureHashingAlgo(object):
+    SHA_1 = 1
+    SHA_256 = 2
+    SHA_512 = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -136,13 +149,13 @@ class KalturaHttpNotification(KalturaObjectBase):
     """Wrapper for sent notifications"""
 
     def __init__(self,
-            object=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventNotificationJobId=NotImplemented,
-            templateId=NotImplemented,
-            templateName=NotImplemented,
-            templateSystemName=NotImplemented,
-            eventType=NotImplemented):
+            object = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventNotificationJobId = NotImplemented,
+            templateId = NotImplemented,
+            templateName = NotImplemented,
+            templateSystemName = NotImplemented,
+            eventType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Object that triggered the notification
@@ -162,11 +175,11 @@ class KalturaHttpNotification(KalturaObjectBase):
         self.templateId = templateId
 
         # Name of the template that triggered the notification
-        # @var string
+        # @var str
         self.templateName = templateName
 
         # System name of the template that triggered the notification
-        # @var string
+        # @var str
         self.templateSystemName = templateSystemName
 
         # Ecent type that triggered the notification
@@ -289,7 +302,7 @@ class KalturaHttpNotificationDataFields(KalturaHttpNotificationData):
 # @subpackage Client
 class KalturaHttpNotificationDataText(KalturaHttpNotificationData):
     def __init__(self,
-            content=NotImplemented):
+            content = NotImplemented):
         KalturaHttpNotificationData.__init__(self)
 
         # @var KalturaStringValue
@@ -323,15 +336,15 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
     """Evaluates PHP statement, depends on the execution context"""
 
     def __init__(self,
-            apiObjectType=NotImplemented,
-            format=NotImplemented,
-            ignoreNull=NotImplemented,
-            code=NotImplemented,
-            dataStringReplacements=NotImplemented):
+            apiObjectType = NotImplemented,
+            format = NotImplemented,
+            ignoreNull = NotImplemented,
+            code = NotImplemented,
+            dataStringReplacements = NotImplemented):
         KalturaHttpNotificationData.__init__(self)
 
         # Kaltura API object type
-        # @var string
+        # @var str
         self.apiObjectType = apiObjectType
 
         # Data format
@@ -343,11 +356,11 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         self.ignoreNull = ignoreNull
 
         # PHP code
-        # @var string
+        # @var str
         self.code = code
 
         # An array of pattern-replacement pairs used for data string regex replacements
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.dataStringReplacements = dataStringReplacements
 
 
@@ -408,40 +421,42 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
 # @subpackage Client
 class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            url=NotImplemented,
-            method=NotImplemented,
-            data=NotImplemented,
-            timeout=NotImplemented,
-            connectTimeout=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            authenticationMethod=NotImplemented,
-            sslVersion=NotImplemented,
-            sslCertificate=NotImplemented,
-            sslCertificateType=NotImplemented,
-            sslCertificatePassword=NotImplemented,
-            sslEngine=NotImplemented,
-            sslEngineDefault=NotImplemented,
-            sslKeyType=NotImplemented,
-            sslKey=NotImplemented,
-            sslKeyPassword=NotImplemented,
-            customHeaders=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            url = NotImplemented,
+            method = NotImplemented,
+            data = NotImplemented,
+            timeout = NotImplemented,
+            connectTimeout = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            authenticationMethod = NotImplemented,
+            sslVersion = NotImplemented,
+            sslCertificate = NotImplemented,
+            sslCertificateType = NotImplemented,
+            sslCertificatePassword = NotImplemented,
+            sslEngine = NotImplemented,
+            sslEngineDefault = NotImplemented,
+            sslKeyType = NotImplemented,
+            sslKey = NotImplemented,
+            sslKeyPassword = NotImplemented,
+            customHeaders = NotImplemented,
+            secureHashingAlgo = NotImplemented):
         KalturaEventNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -458,10 +473,11 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
             eventObjectType,
             eventConditions,
             contentParameters,
-            userParameters)
+            userParameters,
+            eventDelayedCondition)
 
         # Remote server URL
-        # @var string
+        # @var str
         self.url = url
 
         # Request method.
@@ -482,11 +498,11 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         self.connectTimeout = connectTimeout
 
         # A username to use for the connection.
-        # @var string
+        # @var str
         self.username = username
 
         # A password to use for the connection.
-        # @var string
+        # @var str
         self.password = password
 
         # The HTTP authentication method to use.
@@ -499,7 +515,7 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         self.sslVersion = sslVersion
 
         # SSL certificate to verify the peer with.
-        # @var string
+        # @var str
         self.sslCertificate = sslCertificate
 
         # The format of the certificate.
@@ -507,15 +523,15 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         self.sslCertificateType = sslCertificateType
 
         # The password required to use the certificate.
-        # @var string
+        # @var str
         self.sslCertificatePassword = sslCertificatePassword
 
         # The identifier for the crypto engine of the private SSL key specified in ssl key.
-        # @var string
+        # @var str
         self.sslEngine = sslEngine
 
         # The identifier for the crypto engine used for asymmetric crypto operations.
-        # @var string
+        # @var str
         self.sslEngineDefault = sslEngineDefault
 
         # The key type of the private SSL key specified in ssl key - PEM / DER / ENG.
@@ -523,16 +539,20 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         self.sslKeyType = sslKeyType
 
         # Private SSL key.
-        # @var string
+        # @var str
         self.sslKey = sslKey
 
         # The secret password needed to use the private SSL key specified in ssl key.
-        # @var string
+        # @var str
         self.sslKeyPassword = sslKeyPassword
 
         # Adds a e-mail custom header
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.customHeaders = customHeaders
+
+        # The type of SHA to use.
+        # @var KalturaSecureHashingAlgo
+        self.secureHashingAlgo = secureHashingAlgo
 
 
     PROPERTY_LOADERS = {
@@ -554,6 +574,7 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         'sslKey': getXmlNodeText, 
         'sslKeyPassword': getXmlNodeText, 
         'customHeaders': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+        'secureHashingAlgo': (KalturaEnumsFactory.createInt, "KalturaSecureHashingAlgo"), 
     }
 
     def fromXml(self, node):
@@ -581,6 +602,7 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
         kparams.addStringIfDefined("sslKey", self.sslKey)
         kparams.addStringIfDefined("sslKeyPassword", self.sslKeyPassword)
         kparams.addArrayIfDefined("customHeaders", self.customHeaders)
+        kparams.addIntEnumIfDefined("secureHashingAlgo", self.secureHashingAlgo)
         return kparams
 
     def getUrl(self):
@@ -691,39 +713,45 @@ class KalturaHttpNotificationTemplate(KalturaEventNotificationTemplate):
     def setCustomHeaders(self, newCustomHeaders):
         self.customHeaders = newCustomHeaders
 
+    def getSecureHashingAlgo(self):
+        return self.secureHashingAlgo
+
+    def setSecureHashingAlgo(self, newSecureHashingAlgo):
+        self.secureHashingAlgo = newSecureHashingAlgo
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJobData):
     def __init__(self,
-            templateId=NotImplemented,
-            contentParameters=NotImplemented,
-            url=NotImplemented,
-            method=NotImplemented,
-            contentType=NotImplemented,
-            data=NotImplemented,
-            timeout=NotImplemented,
-            connectTimeout=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            authenticationMethod=NotImplemented,
-            sslVersion=NotImplemented,
-            sslCertificate=NotImplemented,
-            sslCertificateType=NotImplemented,
-            sslCertificatePassword=NotImplemented,
-            sslEngine=NotImplemented,
-            sslEngineDefault=NotImplemented,
-            sslKeyType=NotImplemented,
-            sslKey=NotImplemented,
-            sslKeyPassword=NotImplemented,
-            customHeaders=NotImplemented,
-            signSecret=NotImplemented):
+            templateId = NotImplemented,
+            contentParameters = NotImplemented,
+            url = NotImplemented,
+            method = NotImplemented,
+            contentType = NotImplemented,
+            data = NotImplemented,
+            timeout = NotImplemented,
+            connectTimeout = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            authenticationMethod = NotImplemented,
+            sslVersion = NotImplemented,
+            sslCertificate = NotImplemented,
+            sslCertificateType = NotImplemented,
+            sslCertificatePassword = NotImplemented,
+            sslEngine = NotImplemented,
+            sslEngineDefault = NotImplemented,
+            sslKeyType = NotImplemented,
+            sslKey = NotImplemented,
+            sslKeyPassword = NotImplemented,
+            customHeaders = NotImplemented,
+            signSecret = NotImplemented):
         KalturaEventNotificationDispatchJobData.__init__(self,
             templateId,
             contentParameters)
 
         # Remote server URL
-        # @var string
+        # @var str
         self.url = url
 
         # Request method.
@@ -731,11 +759,11 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         self.method = method
 
         # The type of the data to send.
-        # @var string
+        # @var str
         self.contentType = contentType
 
         # Data to send.
-        # @var string
+        # @var str
         self.data = data
 
         # The maximum number of seconds to allow cURL functions to execute.
@@ -748,11 +776,11 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         self.connectTimeout = connectTimeout
 
         # A username to use for the connection.
-        # @var string
+        # @var str
         self.username = username
 
         # A password to use for the connection.
-        # @var string
+        # @var str
         self.password = password
 
         # The HTTP authentication method to use.
@@ -765,7 +793,7 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         self.sslVersion = sslVersion
 
         # SSL certificate to verify the peer with.
-        # @var string
+        # @var str
         self.sslCertificate = sslCertificate
 
         # The format of the certificate.
@@ -773,15 +801,15 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         self.sslCertificateType = sslCertificateType
 
         # The password required to use the certificate.
-        # @var string
+        # @var str
         self.sslCertificatePassword = sslCertificatePassword
 
         # The identifier for the crypto engine of the private SSL key specified in ssl key.
-        # @var string
+        # @var str
         self.sslEngine = sslEngine
 
         # The identifier for the crypto engine used for asymmetric crypto operations.
-        # @var string
+        # @var str
         self.sslEngineDefault = sslEngineDefault
 
         # The key type of the private SSL key specified in ssl key - PEM / DER / ENG.
@@ -789,19 +817,19 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
         self.sslKeyType = sslKeyType
 
         # Private SSL key.
-        # @var string
+        # @var str
         self.sslKey = sslKey
 
         # The secret password needed to use the private SSL key specified in ssl key.
-        # @var string
+        # @var str
         self.sslKeyPassword = sslKeyPassword
 
         # Adds a e-mail custom header
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.customHeaders = customHeaders
 
         # The secret to sign the notification with
-        # @var string
+        # @var str
         self.signSecret = signSecret
 
 
@@ -982,22 +1010,22 @@ class KalturaHttpNotificationDispatchJobData(KalturaEventNotificationDispatchJob
 # @subpackage Client
 class KalturaHttpNotificationTemplateBaseFilter(KalturaEventNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEventNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1034,22 +1062,22 @@ class KalturaHttpNotificationTemplateBaseFilter(KalturaEventNotificationTemplate
 # @subpackage Client
 class KalturaHttpNotificationTemplateFilter(KalturaHttpNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaHttpNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1108,6 +1136,7 @@ class KalturaHttpNotificationClientPlugin(KalturaClientPlugin):
             'KalturaHttpNotificationCertificateType': KalturaHttpNotificationCertificateType,
             'KalturaHttpNotificationSslKeyType': KalturaHttpNotificationSslKeyType,
             'KalturaHttpNotificationTemplateOrderBy': KalturaHttpNotificationTemplateOrderBy,
+            'KalturaSecureHashingAlgo': KalturaSecureHashingAlgo,
         }
 
     def getTypes(self):

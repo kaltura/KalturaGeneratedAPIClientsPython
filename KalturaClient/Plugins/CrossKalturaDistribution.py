@@ -74,15 +74,15 @@ class KalturaCrossKalturaDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaCrossKalturaDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -112,53 +112,43 @@ class KalturaCrossKalturaDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            distributedFlavorAssets=NotImplemented,
-            distributedThumbAssets=NotImplemented,
-            distributedMetadata=NotImplemented,
-            distributedCaptionAssets=NotImplemented,
-            distributedFileAssets=NotImplemented,
-            distributedAttachmentAssets=NotImplemented,
-            distributedCuePoints=NotImplemented,
-            distributedThumbCuePoints=NotImplemented,
-            distributedTimedThumbAssets=NotImplemented):
+            fieldValues = NotImplemented,
+            distributedFlavorAssets = NotImplemented,
+            distributedThumbAssets = NotImplemented,
+            distributedMetadata = NotImplemented,
+            distributedCaptionAssets = NotImplemented,
+            distributedCuePoints = NotImplemented,
+            distributedThumbCuePoints = NotImplemented,
+            distributedTimedThumbAssets = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
         # Key-value array where the keys are IDs of distributed flavor assets in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedFlavorAssets = distributedFlavorAssets
 
         # Key-value array where the keys are IDs of distributed thumb assets in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedThumbAssets = distributedThumbAssets
 
         # Key-value array where the keys are IDs of distributed metadata objects in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedMetadata = distributedMetadata
 
         # Key-value array where the keys are IDs of distributed caption assets in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedCaptionAssets = distributedCaptionAssets
 
-        # Key-value array where the keys are IDs of distributed fileassets in the source account and the values are the matching IDs in the target account
-        # @var string
-        self.distributedFileAssets = distributedFileAssets
-
-        # Key-value array where the keys are IDs of distributed caption assets in the source account and the values are the matching IDs in the target account
-        # @var string
-        self.distributedAttachmentAssets = distributedAttachmentAssets
-
         # Key-value array where the keys are IDs of distributed cue points in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedCuePoints = distributedCuePoints
 
         # Key-value array where the keys are IDs of distributed thumb cue points in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedThumbCuePoints = distributedThumbCuePoints
 
         # Key-value array where the keys are IDs of distributed timed thumb assets in the source account and the values are the matching IDs in the target account
-        # @var string
+        # @var str
         self.distributedTimedThumbAssets = distributedTimedThumbAssets
 
 
@@ -167,8 +157,6 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         'distributedThumbAssets': getXmlNodeText, 
         'distributedMetadata': getXmlNodeText, 
         'distributedCaptionAssets': getXmlNodeText, 
-        'distributedFileAssets': getXmlNodeText, 
-        'distributedAttachmentAssets': getXmlNodeText, 
         'distributedCuePoints': getXmlNodeText, 
         'distributedThumbCuePoints': getXmlNodeText, 
         'distributedTimedThumbAssets': getXmlNodeText, 
@@ -185,8 +173,6 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
         kparams.addStringIfDefined("distributedThumbAssets", self.distributedThumbAssets)
         kparams.addStringIfDefined("distributedMetadata", self.distributedMetadata)
         kparams.addStringIfDefined("distributedCaptionAssets", self.distributedCaptionAssets)
-        kparams.addStringIfDefined("distributedFileAssets", self.distributedFileAssets)
-        kparams.addStringIfDefined("distributedAttachmentAssets", self.distributedAttachmentAssets)
         kparams.addStringIfDefined("distributedCuePoints", self.distributedCuePoints)
         kparams.addStringIfDefined("distributedThumbCuePoints", self.distributedThumbCuePoints)
         kparams.addStringIfDefined("distributedTimedThumbAssets", self.distributedTimedThumbAssets)
@@ -216,18 +202,6 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
     def setDistributedCaptionAssets(self, newDistributedCaptionAssets):
         self.distributedCaptionAssets = newDistributedCaptionAssets
 
-    def getDistributedFileAssets(self):
-        return self.distributedFileAssets
-
-    def setDistributedFileAssets(self, newDistributedFileAssets):
-        self.distributedFileAssets = newDistributedFileAssets
-
-    def getDistributedAttachmentAssets(self):
-        return self.distributedAttachmentAssets
-
-    def setDistributedAttachmentAssets(self, newDistributedAttachmentAssets):
-        self.distributedAttachmentAssets = newDistributedAttachmentAssets
-
     def getDistributedCuePoints(self):
         return self.distributedCuePoints
 
@@ -251,58 +225,53 @@ class KalturaCrossKalturaDistributionJobProviderData(KalturaConfigurableDistribu
 # @subpackage Client
 class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            targetServiceUrl=NotImplemented,
-            targetAccountId=NotImplemented,
-            targetLoginId=NotImplemented,
-            targetLoginPassword=NotImplemented,
-            metadataXslt=NotImplemented,
-            metadataXpathsTriggerUpdate=NotImplemented,
-            distributeCaptions=NotImplemented,
-            designatedCategories=NotImplemented,
-            distributeCategories=NotImplemented,
-            collaboratorsCustomMetadataProfileId=NotImplemented,
-            collaboratorsFromCustomMetadataProfile=NotImplemented,
-            distributeCuePoints=NotImplemented,
-            distributeRemoteFlavorAssetContent=NotImplemented,
-            distributeRemoteThumbAssetContent=NotImplemented,
-            distributeRemoteCaptionAssetContent=NotImplemented,
-            mapAccessControlProfileIds=NotImplemented,
-            mapConversionProfileIds=NotImplemented,
-            mapMetadataProfileIds=NotImplemented,
-            mapStorageProfileIds=NotImplemented,
-            mapFlavorParamsIds=NotImplemented,
-            mapThumbParamsIds=NotImplemented,
-            mapCaptionParamsIds=NotImplemented,
-            mapAttachmentParamsIds=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            targetServiceUrl = NotImplemented,
+            targetAccountId = NotImplemented,
+            targetLoginId = NotImplemented,
+            targetLoginPassword = NotImplemented,
+            metadataXslt = NotImplemented,
+            metadataXpathsTriggerUpdate = NotImplemented,
+            distributeCaptions = NotImplemented,
+            distributeCuePoints = NotImplemented,
+            distributeRemoteFlavorAssetContent = NotImplemented,
+            distributeRemoteThumbAssetContent = NotImplemented,
+            distributeRemoteCaptionAssetContent = NotImplemented,
+            mapAccessControlProfileIds = NotImplemented,
+            mapConversionProfileIds = NotImplemented,
+            mapMetadataProfileIds = NotImplemented,
+            mapStorageProfileIds = NotImplemented,
+            mapFlavorParamsIds = NotImplemented,
+            mapThumbParamsIds = NotImplemented,
+            mapCaptionParamsIds = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -334,38 +303,26 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.targetServiceUrl = targetServiceUrl
 
         # @var int
         self.targetAccountId = targetAccountId
 
-        # @var string
+        # @var str
         self.targetLoginId = targetLoginId
 
-        # @var string
+        # @var str
         self.targetLoginPassword = targetLoginPassword
 
-        # @var string
+        # @var str
         self.metadataXslt = metadataXslt
 
-        # @var array of KalturaStringValue
+        # @var List[KalturaStringValue]
         self.metadataXpathsTriggerUpdate = metadataXpathsTriggerUpdate
 
         # @var bool
         self.distributeCaptions = distributeCaptions
-
-        # @var string
-        self.designatedCategories = designatedCategories
-
-        # @var bool
-        self.distributeCategories = distributeCategories
-
-        # @var string
-        self.collaboratorsCustomMetadataProfileId = collaboratorsCustomMetadataProfileId
-
-        # @var bool
-        self.collaboratorsFromCustomMetadataProfile = collaboratorsFromCustomMetadataProfile
 
         # @var bool
         self.distributeCuePoints = distributeCuePoints
@@ -379,29 +336,26 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         # @var bool
         self.distributeRemoteCaptionAssetContent = distributeRemoteCaptionAssetContent
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapAccessControlProfileIds = mapAccessControlProfileIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapConversionProfileIds = mapConversionProfileIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapMetadataProfileIds = mapMetadataProfileIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapStorageProfileIds = mapStorageProfileIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapFlavorParamsIds = mapFlavorParamsIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapThumbParamsIds = mapThumbParamsIds
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.mapCaptionParamsIds = mapCaptionParamsIds
-
-        # @var array of KalturaKeyValue
-        self.mapAttachmentParamsIds = mapAttachmentParamsIds
 
 
     PROPERTY_LOADERS = {
@@ -412,10 +366,6 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         'metadataXslt': getXmlNodeText, 
         'metadataXpathsTriggerUpdate': (KalturaObjectFactory.createArray, 'KalturaStringValue'), 
         'distributeCaptions': getXmlNodeBool, 
-        'designatedCategories': getXmlNodeText, 
-        'distributeCategories': getXmlNodeBool, 
-        'collaboratorsCustomMetadataProfileId': getXmlNodeText, 
-        'collaboratorsFromCustomMetadataProfile': getXmlNodeBool, 
         'distributeCuePoints': getXmlNodeBool, 
         'distributeRemoteFlavorAssetContent': getXmlNodeBool, 
         'distributeRemoteThumbAssetContent': getXmlNodeBool, 
@@ -427,7 +377,6 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         'mapFlavorParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'mapThumbParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
         'mapCaptionParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
-        'mapAttachmentParamsIds': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
     }
 
     def fromXml(self, node):
@@ -444,10 +393,6 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         kparams.addStringIfDefined("metadataXslt", self.metadataXslt)
         kparams.addArrayIfDefined("metadataXpathsTriggerUpdate", self.metadataXpathsTriggerUpdate)
         kparams.addBoolIfDefined("distributeCaptions", self.distributeCaptions)
-        kparams.addStringIfDefined("designatedCategories", self.designatedCategories)
-        kparams.addBoolIfDefined("distributeCategories", self.distributeCategories)
-        kparams.addStringIfDefined("collaboratorsCustomMetadataProfileId", self.collaboratorsCustomMetadataProfileId)
-        kparams.addBoolIfDefined("collaboratorsFromCustomMetadataProfile", self.collaboratorsFromCustomMetadataProfile)
         kparams.addBoolIfDefined("distributeCuePoints", self.distributeCuePoints)
         kparams.addBoolIfDefined("distributeRemoteFlavorAssetContent", self.distributeRemoteFlavorAssetContent)
         kparams.addBoolIfDefined("distributeRemoteThumbAssetContent", self.distributeRemoteThumbAssetContent)
@@ -459,7 +404,6 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
         kparams.addArrayIfDefined("mapFlavorParamsIds", self.mapFlavorParamsIds)
         kparams.addArrayIfDefined("mapThumbParamsIds", self.mapThumbParamsIds)
         kparams.addArrayIfDefined("mapCaptionParamsIds", self.mapCaptionParamsIds)
-        kparams.addArrayIfDefined("mapAttachmentParamsIds", self.mapAttachmentParamsIds)
         return kparams
 
     def getTargetServiceUrl(self):
@@ -503,30 +447,6 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
 
     def setDistributeCaptions(self, newDistributeCaptions):
         self.distributeCaptions = newDistributeCaptions
-
-    def getDesignatedCategories(self):
-        return self.designatedCategories
-
-    def setDesignatedCategories(self, newDesignatedCategories):
-        self.designatedCategories = newDesignatedCategories
-
-    def getDistributeCategories(self):
-        return self.distributeCategories
-
-    def setDistributeCategories(self, newDistributeCategories):
-        self.distributeCategories = newDistributeCategories
-
-    def getCollaboratorsCustomMetadataProfileId(self):
-        return self.collaboratorsCustomMetadataProfileId
-
-    def setCollaboratorsCustomMetadataProfileId(self, newCollaboratorsCustomMetadataProfileId):
-        self.collaboratorsCustomMetadataProfileId = newCollaboratorsCustomMetadataProfileId
-
-    def getCollaboratorsFromCustomMetadataProfile(self):
-        return self.collaboratorsFromCustomMetadataProfile
-
-    def setCollaboratorsFromCustomMetadataProfile(self, newCollaboratorsFromCustomMetadataProfile):
-        self.collaboratorsFromCustomMetadataProfile = newCollaboratorsFromCustomMetadataProfile
 
     def getDistributeCuePoints(self):
         return self.distributeCuePoints
@@ -594,21 +514,15 @@ class KalturaCrossKalturaDistributionProfile(KalturaConfigurableDistributionProf
     def setMapCaptionParamsIds(self, newMapCaptionParamsIds):
         self.mapCaptionParamsIds = newMapCaptionParamsIds
 
-    def getMapAttachmentParamsIds(self):
-        return self.mapAttachmentParamsIds
-
-    def setMapAttachmentParamsIds(self, newMapAttachmentParamsIds):
-        self.mapAttachmentParamsIds = newMapAttachmentParamsIds
-
 
 # @package Kaltura
 # @subpackage Client
 class KalturaCrossKalturaDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -633,10 +547,10 @@ class KalturaCrossKalturaDistributionProviderBaseFilter(KalturaDistributionProvi
 # @subpackage Client
 class KalturaCrossKalturaDistributionProviderFilter(KalturaCrossKalturaDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaCrossKalturaDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -661,16 +575,16 @@ class KalturaCrossKalturaDistributionProviderFilter(KalturaCrossKalturaDistribut
 # @subpackage Client
 class KalturaCrossKalturaDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -701,16 +615,16 @@ class KalturaCrossKalturaDistributionProfileBaseFilter(KalturaConfigurableDistri
 # @subpackage Client
 class KalturaCrossKalturaDistributionProfileFilter(KalturaCrossKalturaDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaCrossKalturaDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

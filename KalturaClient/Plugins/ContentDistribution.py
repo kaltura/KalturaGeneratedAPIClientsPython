@@ -276,8 +276,10 @@ class KalturaDistributionProviderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDistributionProviderType(object):
+    ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
     AVN = "avnDistribution.AVN"
     COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
+    CORTEX_API = "cortexApiDistribution.CORTEX_API"
     CROSS_KALTURA = "crossKalturaDistribution.CROSS_KALTURA"
     DAILYMOTION = "dailymotionDistribution.DAILYMOTION"
     DOUBLECLICK = "doubleClickDistribution.DOUBLECLICK"
@@ -290,9 +292,18 @@ class KalturaDistributionProviderType(object):
     IDETIC = "ideticDistribution.IDETIC"
     METRO_PCS = "metroPcsDistribution.METRO_PCS"
     MSN = "msnDistribution.MSN"
+    NDN = "ndnDistribution.NDN"
     PODCAST = "podcastDistribution.PODCAST"
+    PUSH_TO_NEWS = "pushToNewsDistribution.PUSH_TO_NEWS"
     QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
+    SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
+    TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
+    TVCOM = "tvComDistribution.TVCOM"
+    TVINCI = "tvinciDistribution.TVINCI"
     UNICORN = "unicornDistribution.UNICORN"
+    UVERSE_CLICK_TO_ORDER = "uverseClickToOrderDistribution.UVERSE_CLICK_TO_ORDER"
+    UVERSE = "uverseDistribution.UVERSE"
+    VERIZON_VCAST = "verizonVcastDistribution.VERIZON_VCAST"
     YAHOO = "yahooDistribution.YAHOO"
     YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"
@@ -408,16 +419,16 @@ class KalturaAssetDistributionCondition(KalturaObjectBase):
 # @subpackage Client
 class KalturaAssetDistributionRule(KalturaObjectBase):
     def __init__(self,
-            validationError=NotImplemented,
-            assetDistributionConditions=NotImplemented):
+            validationError = NotImplemented,
+            assetDistributionConditions = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The validation error description that will be set on the "data" property on KalturaDistributionValidationErrorMissingAsset if rule was not fulfilled
-        # @var string
+        # @var str
         self.validationError = validationError
 
         # An array of asset distribution conditions
-        # @var array of KalturaAssetDistributionCondition
+        # @var List[KalturaAssetDistributionCondition]
         self.assetDistributionConditions = assetDistributionConditions
 
 
@@ -454,36 +465,36 @@ class KalturaAssetDistributionRule(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionFieldConfig(KalturaObjectBase):
     def __init__(self,
-            fieldName=NotImplemented,
-            userFriendlyFieldName=NotImplemented,
-            entryMrssXslt=NotImplemented,
-            isRequired=NotImplemented,
-            type=NotImplemented,
-            updateOnChange=NotImplemented,
-            updateParams=NotImplemented,
-            isDefault=NotImplemented,
-            triggerDeleteOnError=NotImplemented):
+            fieldName = NotImplemented,
+            userFriendlyFieldName = NotImplemented,
+            entryMrssXslt = NotImplemented,
+            isRequired = NotImplemented,
+            type = NotImplemented,
+            updateOnChange = NotImplemented,
+            updateParams = NotImplemented,
+            isDefault = NotImplemented,
+            triggerDeleteOnError = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # A value taken from a connector field enum which associates the current configuration to that connector field
         #      Field enum class should be returned by the provider's getFieldEnumClass function.
-        # @var string
+        # @var str
         self.fieldName = fieldName
 
         # A string that will be shown to the user as the field name in error messages related to the current field
-        # @var string
+        # @var str
         self.userFriendlyFieldName = userFriendlyFieldName
 
         # An XSLT string that extracts the right value from the Kaltura entry MRSS XML.
         #      The value of the current connector field will be the one that is returned from transforming the Kaltura entry MRSS XML using this XSLT string.
-        # @var string
+        # @var str
         self.entryMrssXslt = entryMrssXslt
 
         # Is the field required to have a value for submission ?
         # @var KalturaDistributionFieldRequiredStatus
         self.isRequired = isRequired
 
-        # @var string
+        # @var str
         self.type = type
 
         # Trigger distribution update when this field changes or not ?
@@ -491,7 +502,7 @@ class KalturaDistributionFieldConfig(KalturaObjectBase):
         self.updateOnChange = updateOnChange
 
         # Entry column or metadata xpath that should trigger an update
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.updateParams = updateParams
 
         # Is this field config is the default for the distribution provider?
@@ -609,8 +620,8 @@ class KalturaDistributionJobProviderData(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionThumbDimensions(KalturaObjectBase):
     def __init__(self,
-            width=NotImplemented,
-            height=NotImplemented):
+            width = NotImplemented,
+            height = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -653,32 +664,32 @@ class KalturaDistributionThumbDimensions(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionProfile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated unique id
@@ -704,7 +715,7 @@ class KalturaDistributionProfile(KalturaObjectBase):
         # @insertonly
         self.providerType = providerType
 
-        # @var string
+        # @var str
         self.name = name
 
         # @var KalturaDistributionProfileStatus
@@ -723,35 +734,35 @@ class KalturaDistributionProfile(KalturaObjectBase):
         self.reportEnabled = reportEnabled
 
         # Comma separated flavor params ids that should be auto converted
-        # @var string
+        # @var str
         self.autoCreateFlavors = autoCreateFlavors
 
         # Comma separated thumbnail params ids that should be auto generated
-        # @var string
+        # @var str
         self.autoCreateThumb = autoCreateThumb
 
         # Comma separated flavor params ids that should be submitted if ready
-        # @var string
+        # @var str
         self.optionalFlavorParamsIds = optionalFlavorParamsIds
 
         # Comma separated flavor params ids that required to be ready before submission
-        # @var string
+        # @var str
         self.requiredFlavorParamsIds = requiredFlavorParamsIds
 
         # Thumbnail dimensions that should be submitted if ready
-        # @var array of KalturaDistributionThumbDimensions
+        # @var List[KalturaDistributionThumbDimensions]
         self.optionalThumbDimensions = optionalThumbDimensions
 
         # Thumbnail dimensions that required to be readt before submission
-        # @var array of KalturaDistributionThumbDimensions
+        # @var List[KalturaDistributionThumbDimensions]
         self.requiredThumbDimensions = requiredThumbDimensions
 
         # Asset Distribution Rules for assets that should be submitted if ready
-        # @var array of KalturaAssetDistributionRule
+        # @var List[KalturaAssetDistributionRule]
         self.optionalAssetDistributionRules = optionalAssetDistributionRules
 
         # Assets Asset Distribution Rules for assets that are required to be ready before submission
-        # @var array of KalturaAssetDistributionRule
+        # @var List[KalturaAssetDistributionRule]
         self.requiredAssetDistributionRules = requiredAssetDistributionRules
 
         # If entry distribution sunrise not specified that will be the default since entry creation time, in seconds
@@ -988,22 +999,22 @@ class KalturaDistributionProfile(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionProvider(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaDistributionProviderType
         # @readonly
         self.type = type
 
-        # @var string
+        # @var str
         self.name = name
 
         # @var bool
@@ -1021,10 +1032,10 @@ class KalturaDistributionProvider(KalturaObjectBase):
         # @var int
         self.intervalBeforeSunset = intervalBeforeSunset
 
-        # @var string
+        # @var str
         self.updateRequiredEntryFields = updateRequiredEntryFields
 
-        # @var string
+        # @var str
         self.updateRequiredMetadataXPaths = updateRequiredMetadataXPaths
 
 
@@ -1113,18 +1124,18 @@ class KalturaDistributionProvider(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionRemoteMediaFile(KalturaObjectBase):
     def __init__(self,
-            version=NotImplemented,
-            assetId=NotImplemented,
-            remoteId=NotImplemented):
+            version = NotImplemented,
+            assetId = NotImplemented,
+            remoteId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.version = version
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
-        # @var string
+        # @var str
         self.remoteId = remoteId
 
 
@@ -1169,9 +1180,9 @@ class KalturaDistributionRemoteMediaFile(KalturaObjectBase):
 # @subpackage Client
 class KalturaDistributionValidationError(KalturaObjectBase):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaDistributionAction
@@ -1180,7 +1191,7 @@ class KalturaDistributionValidationError(KalturaObjectBase):
         # @var KalturaDistributionErrorType
         self.errorType = errorType
 
-        # @var string
+        # @var str
         self.description = description
 
 
@@ -1225,34 +1236,34 @@ class KalturaDistributionValidationError(KalturaObjectBase):
 # @subpackage Client
 class KalturaEntryDistribution(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            submittedAt=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            distributionProfileId=NotImplemented,
-            status=NotImplemented,
-            sunStatus=NotImplemented,
-            dirtyStatus=NotImplemented,
-            thumbAssetIds=NotImplemented,
-            flavorAssetIds=NotImplemented,
-            assetIds=NotImplemented,
-            sunrise=NotImplemented,
-            sunset=NotImplemented,
-            remoteId=NotImplemented,
-            plays=NotImplemented,
-            views=NotImplemented,
-            validationErrors=NotImplemented,
-            errorType=NotImplemented,
-            errorNumber=NotImplemented,
-            errorDescription=NotImplemented,
-            hasSubmitResultsLog=NotImplemented,
-            hasSubmitSentDataLog=NotImplemented,
-            hasUpdateResultsLog=NotImplemented,
-            hasUpdateSentDataLog=NotImplemented,
-            hasDeleteResultsLog=NotImplemented,
-            hasDeleteSentDataLog=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            submittedAt = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            distributionProfileId = NotImplemented,
+            status = NotImplemented,
+            sunStatus = NotImplemented,
+            dirtyStatus = NotImplemented,
+            thumbAssetIds = NotImplemented,
+            flavorAssetIds = NotImplemented,
+            assetIds = NotImplemented,
+            sunrise = NotImplemented,
+            sunset = NotImplemented,
+            remoteId = NotImplemented,
+            plays = NotImplemented,
+            views = NotImplemented,
+            validationErrors = NotImplemented,
+            errorType = NotImplemented,
+            errorNumber = NotImplemented,
+            errorDescription = NotImplemented,
+            hasSubmitResultsLog = NotImplemented,
+            hasSubmitSentDataLog = NotImplemented,
+            hasUpdateResultsLog = NotImplemented,
+            hasUpdateSentDataLog = NotImplemented,
+            hasDeleteResultsLog = NotImplemented,
+            hasDeleteSentDataLog = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated unique id
@@ -1275,7 +1286,7 @@ class KalturaEntryDistribution(KalturaObjectBase):
         # @readonly
         self.submittedAt = submittedAt
 
-        # @var string
+        # @var str
         # @insertonly
         self.entryId = entryId
 
@@ -1300,15 +1311,15 @@ class KalturaEntryDistribution(KalturaObjectBase):
         self.dirtyStatus = dirtyStatus
 
         # Comma separated thumbnail asset ids
-        # @var string
+        # @var str
         self.thumbAssetIds = thumbAssetIds
 
         # Comma separated flavor asset ids
-        # @var string
+        # @var str
         self.flavorAssetIds = flavorAssetIds
 
         # Comma separated asset ids
-        # @var string
+        # @var str
         self.assetIds = assetIds
 
         # Entry distribution publish time as Unix timestamp (In seconds)
@@ -1320,7 +1331,7 @@ class KalturaEntryDistribution(KalturaObjectBase):
         self.sunset = sunset
 
         # The id as returned from the distributed destination
-        # @var string
+        # @var str
         # @readonly
         self.remoteId = remoteId
 
@@ -1334,7 +1345,7 @@ class KalturaEntryDistribution(KalturaObjectBase):
         # @readonly
         self.views = views
 
-        # @var array of KalturaDistributionValidationError
+        # @var List[KalturaDistributionValidationError]
         self.validationErrors = validationErrors
 
         # @var KalturaBatchJobErrorTypes
@@ -1345,7 +1356,7 @@ class KalturaEntryDistribution(KalturaObjectBase):
         # @readonly
         self.errorNumber = errorNumber
 
-        # @var string
+        # @var str
         # @readonly
         self.errorDescription = errorDescription
 
@@ -1535,38 +1546,38 @@ class KalturaEntryDistribution(KalturaObjectBase):
 # @subpackage Client
 class KalturaGenericDistributionProfileAction(KalturaObjectBase):
     def __init__(self,
-            protocol=NotImplemented,
-            serverUrl=NotImplemented,
-            serverPath=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            ftpPassiveMode=NotImplemented,
-            httpFieldName=NotImplemented,
-            httpFileName=NotImplemented):
+            protocol = NotImplemented,
+            serverUrl = NotImplemented,
+            serverPath = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            ftpPassiveMode = NotImplemented,
+            httpFieldName = NotImplemented,
+            httpFileName = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaDistributionProtocol
         self.protocol = protocol
 
-        # @var string
+        # @var str
         self.serverUrl = serverUrl
 
-        # @var string
+        # @var str
         self.serverPath = serverPath
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
         # @var bool
         self.ftpPassiveMode = ftpPassiveMode
 
-        # @var string
+        # @var str
         self.httpFieldName = httpFieldName
 
-        # @var string
+        # @var str
         self.httpFileName = httpFileName
 
 
@@ -1651,23 +1662,23 @@ class KalturaGenericDistributionProfileAction(KalturaObjectBase):
 # @subpackage Client
 class KalturaGenericDistributionProviderAction(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            genericDistributionProviderId=NotImplemented,
-            action=NotImplemented,
-            status=NotImplemented,
-            resultsParser=NotImplemented,
-            protocol=NotImplemented,
-            serverAddress=NotImplemented,
-            remotePath=NotImplemented,
-            remoteUsername=NotImplemented,
-            remotePassword=NotImplemented,
-            editableFields=NotImplemented,
-            mandatoryFields=NotImplemented,
-            mrssTransformer=NotImplemented,
-            mrssValidator=NotImplemented,
-            resultsTransformer=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            genericDistributionProviderId = NotImplemented,
+            action = NotImplemented,
+            status = NotImplemented,
+            resultsParser = NotImplemented,
+            protocol = NotImplemented,
+            serverAddress = NotImplemented,
+            remotePath = NotImplemented,
+            remoteUsername = NotImplemented,
+            remotePassword = NotImplemented,
+            editableFields = NotImplemented,
+            mandatoryFields = NotImplemented,
+            mrssTransformer = NotImplemented,
+            mrssValidator = NotImplemented,
+            resultsTransformer = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated
@@ -1703,33 +1714,33 @@ class KalturaGenericDistributionProviderAction(KalturaObjectBase):
         # @var KalturaDistributionProtocol
         self.protocol = protocol
 
-        # @var string
+        # @var str
         self.serverAddress = serverAddress
 
-        # @var string
+        # @var str
         self.remotePath = remotePath
 
-        # @var string
+        # @var str
         self.remoteUsername = remoteUsername
 
-        # @var string
+        # @var str
         self.remotePassword = remotePassword
 
-        # @var string
+        # @var str
         self.editableFields = editableFields
 
-        # @var string
+        # @var str
         self.mandatoryFields = mandatoryFields
 
-        # @var string
+        # @var str
         # @readonly
         self.mrssTransformer = mrssTransformer
 
-        # @var string
+        # @var str
         # @readonly
         self.mrssValidator = mrssValidator
 
-        # @var string
+        # @var str
         # @readonly
         self.resultsTransformer = resultsTransformer
 
@@ -1859,27 +1870,27 @@ class KalturaGenericDistributionProviderAction(KalturaObjectBase):
 # @subpackage Client
 class KalturaGenericDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            isDefault=NotImplemented,
-            status=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            editableFields=NotImplemented,
-            mandatoryFields=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented,
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            isDefault = NotImplemented,
+            status = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            editableFields = NotImplemented,
+            mandatoryFields = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -1917,22 +1928,22 @@ class KalturaGenericDistributionProvider(KalturaDistributionProvider):
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         self.optionalFlavorParamsIds = optionalFlavorParamsIds
 
-        # @var string
+        # @var str
         self.requiredFlavorParamsIds = requiredFlavorParamsIds
 
-        # @var array of KalturaDistributionThumbDimensions
+        # @var List[KalturaDistributionThumbDimensions]
         self.optionalThumbDimensions = optionalThumbDimensions
 
-        # @var array of KalturaDistributionThumbDimensions
+        # @var List[KalturaDistributionThumbDimensions]
         self.requiredThumbDimensions = requiredThumbDimensions
 
-        # @var string
+        # @var str
         self.editableFields = editableFields
 
-        # @var string
+        # @var str
         self.mandatoryFields = mandatoryFields
 
 
@@ -2031,17 +2042,17 @@ class KalturaAssetDistributionPropertyCondition(KalturaAssetDistributionConditio
     """Defines the condition to match a property and value on core asset object (or one if its inherited objects)"""
 
     def __init__(self,
-            propertyName=NotImplemented,
-            propertyValue=NotImplemented):
+            propertyName = NotImplemented,
+            propertyValue = NotImplemented):
         KalturaAssetDistributionCondition.__init__(self)
 
         # The property name to look for, this will match to a getter on the asset object.
         # 	 Should be camelCase naming convention (defining "myPropertyName" will look for getMyPropertyName())
-        # @var string
+        # @var str
         self.propertyName = propertyName
 
         # The value to compare
-        # @var string
+        # @var str
         self.propertyValue = propertyValue
 
 
@@ -2078,10 +2089,10 @@ class KalturaAssetDistributionPropertyCondition(KalturaAssetDistributionConditio
 # @subpackage Client
 class KalturaConfigurableDistributionJobProviderData(KalturaDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented):
+            fieldValues = NotImplemented):
         KalturaDistributionJobProviderData.__init__(self)
 
-        # @var string
+        # @var str
         self.fieldValues = fieldValues
 
 
@@ -2110,35 +2121,35 @@ class KalturaConfigurableDistributionJobProviderData(KalturaDistributionJobProvi
 # @subpackage Client
 class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented):
         KalturaDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -2167,10 +2178,10 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
             distributeTrigger,
             supportImageEntry)
 
-        # @var array of KalturaDistributionFieldConfig
+        # @var List[KalturaDistributionFieldConfig]
         self.fieldConfigArray = fieldConfigArray
 
-        # @var array of KalturaExtendingItemMrssParameter
+        # @var List[KalturaExtendingItemMrssParameter]
         self.itemXpathsToExtend = itemXpathsToExtend
 
         # When checking custom XSLT conditions using the fieldConfigArray - address only categories associated with the entry via the categoryEntry object
@@ -2219,13 +2230,13 @@ class KalturaConfigurableDistributionProfile(KalturaDistributionProfile):
 # @subpackage Client
 class KalturaContentDistributionSearchItem(KalturaSearchItem):
     def __init__(self,
-            noDistributionProfiles=NotImplemented,
-            distributionProfileId=NotImplemented,
-            distributionSunStatus=NotImplemented,
-            entryDistributionFlag=NotImplemented,
-            entryDistributionStatus=NotImplemented,
-            hasEntryDistributionValidationErrors=NotImplemented,
-            entryDistributionValidationErrors=NotImplemented):
+            noDistributionProfiles = NotImplemented,
+            distributionProfileId = NotImplemented,
+            distributionSunStatus = NotImplemented,
+            entryDistributionFlag = NotImplemented,
+            entryDistributionStatus = NotImplemented,
+            hasEntryDistributionValidationErrors = NotImplemented,
+            entryDistributionValidationErrors = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var bool
@@ -2247,7 +2258,7 @@ class KalturaContentDistributionSearchItem(KalturaSearchItem):
         self.hasEntryDistributionValidationErrors = hasEntryDistributionValidationErrors
 
         # Comma seperated validation error types
-        # @var string
+        # @var str
         self.entryDistributionValidationErrors = entryDistributionValidationErrors
 
 
@@ -2324,16 +2335,16 @@ class KalturaContentDistributionSearchItem(KalturaSearchItem):
 # @subpackage Client
 class KalturaDistributionJobData(KalturaJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
@@ -2349,7 +2360,7 @@ class KalturaDistributionJobData(KalturaJobData):
         self.entryDistribution = entryDistribution
 
         # Id of the media in the remote system
-        # @var string
+        # @var str
         self.remoteId = remoteId
 
         # @var KalturaDistributionProviderType
@@ -2360,16 +2371,16 @@ class KalturaDistributionJobData(KalturaJobData):
         self.providerData = providerData
 
         # The results as returned from the remote destination
-        # @var string
+        # @var str
         self.results = results
 
         # The data as sent to the remote destination
-        # @var string
+        # @var str
         self.sentData = sentData
 
         # Stores array of media files that submitted to the destination site
         # 	 Could be used later for media update
-        # @var array of KalturaDistributionRemoteMediaFile
+        # @var List[KalturaDistributionRemoteMediaFile]
         self.mediaFiles = mediaFiles
 
 
@@ -2470,16 +2481,16 @@ class KalturaDistributionJobData(KalturaJobData):
 # @subpackage Client
 class KalturaDistributionProfileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2487,7 +2498,7 @@ class KalturaDistributionProfileBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -2505,7 +2516,7 @@ class KalturaDistributionProfileBaseFilter(KalturaFilter):
         # @var KalturaDistributionProfileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
 
@@ -2590,12 +2601,12 @@ class KalturaDistributionProfileBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDistributionProfileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDistributionProfile
+        # @var List[KalturaDistributionProfile]
         # @readonly
         self.objects = objects
 
@@ -2621,10 +2632,10 @@ class KalturaDistributionProfileListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaDistributionProviderBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -2632,7 +2643,7 @@ class KalturaDistributionProviderBaseFilter(KalturaFilter):
         # @var KalturaDistributionProviderType
         self.typeEqual = typeEqual
 
-        # @var string
+        # @var str
         self.typeIn = typeIn
 
 
@@ -2669,12 +2680,12 @@ class KalturaDistributionProviderBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDistributionProviderListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDistributionProvider
+        # @var List[KalturaDistributionProvider]
         # @readonly
         self.objects = objects
 
@@ -2700,16 +2711,16 @@ class KalturaDistributionProviderListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaDistributionValidationErrorConditionNotMet(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            conditionName=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            conditionName = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
             description)
 
-        # @var string
+        # @var str
         self.conditionName = conditionName
 
 
@@ -2738,18 +2749,18 @@ class KalturaDistributionValidationErrorConditionNotMet(KalturaDistributionValid
 # @subpackage Client
 class KalturaDistributionValidationErrorInvalidData(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            fieldName=NotImplemented,
-            validationErrorType=NotImplemented,
-            validationErrorParam=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            fieldName = NotImplemented,
+            validationErrorType = NotImplemented,
+            validationErrorParam = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
             description)
 
-        # @var string
+        # @var str
         self.fieldName = fieldName
 
         # @var KalturaDistributionValidationErrorType
@@ -2757,7 +2768,7 @@ class KalturaDistributionValidationErrorInvalidData(KalturaDistributionValidatio
 
         # Parameter of the validation error
         # 	 For example, minimum value for KalturaDistributionValidationErrorType::STRING_TOO_SHORT validation error
-        # @var string
+        # @var str
         self.validationErrorParam = validationErrorParam
 
 
@@ -2802,16 +2813,16 @@ class KalturaDistributionValidationErrorInvalidData(KalturaDistributionValidatio
 # @subpackage Client
 class KalturaDistributionValidationErrorMissingAsset(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            data=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            data = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
             description)
 
-        # @var string
+        # @var str
         self.data = data
 
 
@@ -2840,16 +2851,16 @@ class KalturaDistributionValidationErrorMissingAsset(KalturaDistributionValidati
 # @subpackage Client
 class KalturaDistributionValidationErrorMissingFlavor(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            flavorParamsId=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            flavorParamsId = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
             description)
 
-        # @var string
+        # @var str
         self.flavorParamsId = flavorParamsId
 
 
@@ -2878,16 +2889,16 @@ class KalturaDistributionValidationErrorMissingFlavor(KalturaDistributionValidat
 # @subpackage Client
 class KalturaDistributionValidationErrorMissingMetadata(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            fieldName=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            fieldName = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
             description)
 
-        # @var string
+        # @var str
         self.fieldName = fieldName
 
 
@@ -2916,10 +2927,10 @@ class KalturaDistributionValidationErrorMissingMetadata(KalturaDistributionValid
 # @subpackage Client
 class KalturaDistributionValidationErrorMissingThumbnail(KalturaDistributionValidationError):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            dimensions=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            dimensions = NotImplemented):
         KalturaDistributionValidationError.__init__(self,
             action,
             errorType,
@@ -2954,12 +2965,12 @@ class KalturaDistributionValidationErrorMissingThumbnail(KalturaDistributionVali
 # @subpackage Client
 class KalturaEntryDistributionListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaEntryDistribution
+        # @var List[KalturaEntryDistribution]
         # @readonly
         self.objects = objects
 
@@ -2985,15 +2996,15 @@ class KalturaEntryDistributionListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaGenericDistributionJobProviderData(KalturaDistributionJobProviderData):
     def __init__(self,
-            xml=NotImplemented,
-            resultParseData=NotImplemented,
-            resultParserType=NotImplemented):
+            xml = NotImplemented,
+            resultParseData = NotImplemented,
+            resultParserType = NotImplemented):
         KalturaDistributionJobProviderData.__init__(self)
 
-        # @var string
+        # @var str
         self.xml = xml
 
-        # @var string
+        # @var str
         self.resultParseData = resultParseData
 
         # @var KalturaGenericDistributionProviderParser
@@ -3041,39 +3052,39 @@ class KalturaGenericDistributionJobProviderData(KalturaDistributionJobProviderDa
 # @subpackage Client
 class KalturaGenericDistributionProfile(KalturaDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            genericProviderId=NotImplemented,
-            submitAction=NotImplemented,
-            updateAction=NotImplemented,
-            deleteAction=NotImplemented,
-            fetchReportAction=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            genericProviderId = NotImplemented,
+            submitAction = NotImplemented,
+            updateAction = NotImplemented,
+            deleteAction = NotImplemented,
+            fetchReportAction = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -3118,10 +3129,10 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
         # @var KalturaGenericDistributionProfileAction
         self.fetchReportAction = fetchReportAction
 
-        # @var string
+        # @var str
         self.updateRequiredEntryFields = updateRequiredEntryFields
 
-        # @var string
+        # @var str
         self.updateRequiredMetadataXPaths = updateRequiredMetadataXPaths
 
 
@@ -3198,18 +3209,18 @@ class KalturaGenericDistributionProfile(KalturaDistributionProfile):
 # @subpackage Client
 class KalturaGenericDistributionProviderActionBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            genericDistributionProviderIdEqual=NotImplemented,
-            genericDistributionProviderIdIn=NotImplemented,
-            actionEqual=NotImplemented,
-            actionIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            genericDistributionProviderIdEqual = NotImplemented,
+            genericDistributionProviderIdIn = NotImplemented,
+            actionEqual = NotImplemented,
+            actionIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -3217,7 +3228,7 @@ class KalturaGenericDistributionProviderActionBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -3235,13 +3246,13 @@ class KalturaGenericDistributionProviderActionBaseFilter(KalturaFilter):
         # @var int
         self.genericDistributionProviderIdEqual = genericDistributionProviderIdEqual
 
-        # @var string
+        # @var str
         self.genericDistributionProviderIdIn = genericDistributionProviderIdIn
 
         # @var KalturaDistributionAction
         self.actionEqual = actionEqual
 
-        # @var string
+        # @var str
         self.actionIn = actionIn
 
 
@@ -3342,12 +3353,12 @@ class KalturaGenericDistributionProviderActionBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaGenericDistributionProviderActionListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaGenericDistributionProviderAction
+        # @var List[KalturaGenericDistributionProviderAction]
         # @readonly
         self.objects = objects
 
@@ -3373,12 +3384,12 @@ class KalturaGenericDistributionProviderActionListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaGenericDistributionProviderListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaGenericDistributionProvider
+        # @var List[KalturaGenericDistributionProvider]
         # @readonly
         self.objects = objects
 
@@ -3404,34 +3415,34 @@ class KalturaGenericDistributionProviderListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            xsl=NotImplemented,
-            feedId=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            xsl = NotImplemented,
+            feedId = NotImplemented):
         KalturaDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -3460,10 +3471,10 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
             distributeTrigger,
             supportImageEntry)
 
-        # @var string
+        # @var str
         self.xsl = xsl
 
-        # @var string
+        # @var str
         # @readonly
         self.feedId = feedId
 
@@ -3497,15 +3508,15 @@ class KalturaSyndicationDistributionProfile(KalturaDistributionProfile):
 # @subpackage Client
 class KalturaSyndicationDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -3535,17 +3546,17 @@ class KalturaSyndicationDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaDistributionDeleteJobData(KalturaDistributionJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented,
-            keepDistributionItem=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented,
+            keepDistributionItem = NotImplemented):
         KalturaDistributionJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -3588,18 +3599,18 @@ class KalturaDistributionDeleteJobData(KalturaDistributionJobData):
 # @subpackage Client
 class KalturaDistributionFetchReportJobData(KalturaDistributionJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented,
-            plays=NotImplemented,
-            views=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented,
+            plays = NotImplemented,
+            views = NotImplemented):
         KalturaDistributionJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -3652,16 +3663,16 @@ class KalturaDistributionFetchReportJobData(KalturaDistributionJobData):
 # @subpackage Client
 class KalturaDistributionProfileFilter(KalturaDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3692,10 +3703,10 @@ class KalturaDistributionProfileFilter(KalturaDistributionProfileBaseFilter):
 # @subpackage Client
 class KalturaDistributionProviderFilter(KalturaDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3720,16 +3731,16 @@ class KalturaDistributionProviderFilter(KalturaDistributionProviderBaseFilter):
 # @subpackage Client
 class KalturaDistributionSubmitJobData(KalturaDistributionJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented):
         KalturaDistributionJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -3760,16 +3771,16 @@ class KalturaDistributionSubmitJobData(KalturaDistributionJobData):
 # @subpackage Client
 class KalturaDistributionUpdateJobData(KalturaDistributionJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented):
         KalturaDistributionJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -3800,13 +3811,13 @@ class KalturaDistributionUpdateJobData(KalturaDistributionJobData):
 # @subpackage Client
 class KalturaDistributionValidationErrorInvalidMetadata(KalturaDistributionValidationErrorInvalidData):
     def __init__(self,
-            action=NotImplemented,
-            errorType=NotImplemented,
-            description=NotImplemented,
-            fieldName=NotImplemented,
-            validationErrorType=NotImplemented,
-            validationErrorParam=NotImplemented,
-            metadataProfileId=NotImplemented):
+            action = NotImplemented,
+            errorType = NotImplemented,
+            description = NotImplemented,
+            fieldName = NotImplemented,
+            validationErrorType = NotImplemented,
+            validationErrorParam = NotImplemented,
+            metadataProfileId = NotImplemented):
         KalturaDistributionValidationErrorInvalidData.__init__(self,
             action,
             errorType,
@@ -3844,28 +3855,28 @@ class KalturaDistributionValidationErrorInvalidMetadata(KalturaDistributionValid
 # @subpackage Client
 class KalturaEntryDistributionBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            submittedAtGreaterThanOrEqual=NotImplemented,
-            submittedAtLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            distributionProfileIdEqual=NotImplemented,
-            distributionProfileIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            dirtyStatusEqual=NotImplemented,
-            dirtyStatusIn=NotImplemented,
-            sunriseGreaterThanOrEqual=NotImplemented,
-            sunriseLessThanOrEqual=NotImplemented,
-            sunsetGreaterThanOrEqual=NotImplemented,
-            sunsetLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            submittedAtGreaterThanOrEqual = NotImplemented,
+            submittedAtLessThanOrEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            distributionProfileIdEqual = NotImplemented,
+            distributionProfileIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            dirtyStatusEqual = NotImplemented,
+            dirtyStatusIn = NotImplemented,
+            sunriseGreaterThanOrEqual = NotImplemented,
+            sunriseLessThanOrEqual = NotImplemented,
+            sunsetGreaterThanOrEqual = NotImplemented,
+            sunsetLessThanOrEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -3873,7 +3884,7 @@ class KalturaEntryDistributionBaseFilter(KalturaRelatedFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -3894,28 +3905,28 @@ class KalturaEntryDistributionBaseFilter(KalturaRelatedFilter):
         # @var int
         self.submittedAtLessThanOrEqual = submittedAtLessThanOrEqual
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
-        # @var string
+        # @var str
         self.entryIdIn = entryIdIn
 
         # @var int
         self.distributionProfileIdEqual = distributionProfileIdEqual
 
-        # @var string
+        # @var str
         self.distributionProfileIdIn = distributionProfileIdIn
 
         # @var KalturaEntryDistributionStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaEntryDistributionFlag
         self.dirtyStatusEqual = dirtyStatusEqual
 
-        # @var string
+        # @var str
         self.dirtyStatusIn = dirtyStatusIn
 
         # @var int
@@ -4108,18 +4119,18 @@ class KalturaEntryDistributionBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaGenericDistributionProviderActionFilter(KalturaGenericDistributionProviderActionBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            genericDistributionProviderIdEqual=NotImplemented,
-            genericDistributionProviderIdIn=NotImplemented,
-            actionEqual=NotImplemented,
-            actionIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            genericDistributionProviderIdEqual = NotImplemented,
+            genericDistributionProviderIdIn = NotImplemented,
+            actionEqual = NotImplemented,
+            actionIn = NotImplemented):
         KalturaGenericDistributionProviderActionBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4152,16 +4163,16 @@ class KalturaGenericDistributionProviderActionFilter(KalturaGenericDistributionP
 # @subpackage Client
 class KalturaConfigurableDistributionProfileBaseFilter(KalturaDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4192,16 +4203,16 @@ class KalturaConfigurableDistributionProfileBaseFilter(KalturaDistributionProfil
 # @subpackage Client
 class KalturaDistributionDisableJobData(KalturaDistributionUpdateJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented):
         KalturaDistributionUpdateJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -4232,16 +4243,16 @@ class KalturaDistributionDisableJobData(KalturaDistributionUpdateJobData):
 # @subpackage Client
 class KalturaDistributionEnableJobData(KalturaDistributionUpdateJobData):
     def __init__(self,
-            distributionProfileId=NotImplemented,
-            distributionProfile=NotImplemented,
-            entryDistributionId=NotImplemented,
-            entryDistribution=NotImplemented,
-            remoteId=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            results=NotImplemented,
-            sentData=NotImplemented,
-            mediaFiles=NotImplemented):
+            distributionProfileId = NotImplemented,
+            distributionProfile = NotImplemented,
+            entryDistributionId = NotImplemented,
+            entryDistribution = NotImplemented,
+            remoteId = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            results = NotImplemented,
+            sentData = NotImplemented,
+            mediaFiles = NotImplemented):
         KalturaDistributionUpdateJobData.__init__(self,
             distributionProfileId,
             distributionProfile,
@@ -4272,28 +4283,28 @@ class KalturaDistributionEnableJobData(KalturaDistributionUpdateJobData):
 # @subpackage Client
 class KalturaEntryDistributionFilter(KalturaEntryDistributionBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            submittedAtGreaterThanOrEqual=NotImplemented,
-            submittedAtLessThanOrEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            distributionProfileIdEqual=NotImplemented,
-            distributionProfileIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            dirtyStatusEqual=NotImplemented,
-            dirtyStatusIn=NotImplemented,
-            sunriseGreaterThanOrEqual=NotImplemented,
-            sunriseLessThanOrEqual=NotImplemented,
-            sunsetGreaterThanOrEqual=NotImplemented,
-            sunsetLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            submittedAtGreaterThanOrEqual = NotImplemented,
+            submittedAtLessThanOrEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            distributionProfileIdEqual = NotImplemented,
+            distributionProfileIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            dirtyStatusEqual = NotImplemented,
+            dirtyStatusIn = NotImplemented,
+            sunriseGreaterThanOrEqual = NotImplemented,
+            sunriseLessThanOrEqual = NotImplemented,
+            sunsetGreaterThanOrEqual = NotImplemented,
+            sunsetLessThanOrEqual = NotImplemented):
         KalturaEntryDistributionBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4336,16 +4347,16 @@ class KalturaEntryDistributionFilter(KalturaEntryDistributionBaseFilter):
 # @subpackage Client
 class KalturaGenericDistributionProfileBaseFilter(KalturaDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4376,22 +4387,22 @@ class KalturaGenericDistributionProfileBaseFilter(KalturaDistributionProfileFilt
 # @subpackage Client
 class KalturaGenericDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            isDefaultEqual=NotImplemented,
-            isDefaultIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            isDefaultEqual = NotImplemented,
+            isDefaultIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4401,7 +4412,7 @@ class KalturaGenericDistributionProviderBaseFilter(KalturaDistributionProviderFi
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -4419,19 +4430,19 @@ class KalturaGenericDistributionProviderBaseFilter(KalturaDistributionProviderFi
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
         # @var KalturaNullableBoolean
         self.isDefaultEqual = isDefaultEqual
 
-        # @var string
+        # @var str
         self.isDefaultIn = isDefaultIn
 
         # @var KalturaGenericDistributionProviderStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
 
@@ -4548,16 +4559,16 @@ class KalturaGenericDistributionProviderBaseFilter(KalturaDistributionProviderFi
 # @subpackage Client
 class KalturaSyndicationDistributionProfileBaseFilter(KalturaDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4588,10 +4599,10 @@ class KalturaSyndicationDistributionProfileBaseFilter(KalturaDistributionProfile
 # @subpackage Client
 class KalturaSyndicationDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4616,16 +4627,16 @@ class KalturaSyndicationDistributionProviderBaseFilter(KalturaDistributionProvid
 # @subpackage Client
 class KalturaConfigurableDistributionProfileFilter(KalturaConfigurableDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4656,16 +4667,16 @@ class KalturaConfigurableDistributionProfileFilter(KalturaConfigurableDistributi
 # @subpackage Client
 class KalturaGenericDistributionProfileFilter(KalturaGenericDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaGenericDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4696,22 +4707,22 @@ class KalturaGenericDistributionProfileFilter(KalturaGenericDistributionProfileB
 # @subpackage Client
 class KalturaGenericDistributionProviderFilter(KalturaGenericDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            isDefaultEqual=NotImplemented,
-            isDefaultIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            isDefaultEqual = NotImplemented,
+            isDefaultIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaGenericDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -4748,16 +4759,16 @@ class KalturaGenericDistributionProviderFilter(KalturaGenericDistributionProvide
 # @subpackage Client
 class KalturaSyndicationDistributionProfileFilter(KalturaSyndicationDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaSyndicationDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

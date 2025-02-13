@@ -45,21 +45,32 @@ from ..Base import (
 )
 
 ########## enums ##########
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchHistoryAggregateFieldName(object):
+    SEARCH_TERM = "search_term"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchHistory(KalturaObjectBase):
     def __init__(self,
-            searchTerm=NotImplemented,
-            searchedObject=NotImplemented,
-            timestamp=NotImplemented):
+            searchTerm = NotImplemented,
+            searchedObject = NotImplemented,
+            timestamp = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         # @readonly
         self.searchTerm = searchTerm
 
-        # @var string
+        # @var str
         # @readonly
         self.searchedObject = searchedObject
 
@@ -95,22 +106,66 @@ class KalturaESearchHistory(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchHistoryAggregationItem(KalturaESearchAggregationItem):
+    def __init__(self,
+            size = NotImplemented,
+            fieldName = NotImplemented):
+        KalturaESearchAggregationItem.__init__(self,
+            size)
+
+        # @var KalturaESearchHistoryAggregateFieldName
+        self.fieldName = fieldName
+
+
+    PROPERTY_LOADERS = {
+        'fieldName': (KalturaEnumsFactory.createString, "KalturaESearchHistoryAggregateFieldName"), 
+    }
+
+    def fromXml(self, node):
+        KalturaESearchAggregationItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchHistoryAggregationItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaESearchAggregationItem.toParams(self)
+        kparams.put("objectType", "KalturaESearchHistoryAggregationItem")
+        kparams.addStringEnumIfDefined("fieldName", self.fieldName)
+        return kparams
+
+    def getFieldName(self):
+        return self.fieldName
+
+    def setFieldName(self, newFieldName):
+        self.fieldName = newFieldName
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchHistoryFilter(KalturaESearchBaseFilter):
     def __init__(self,
-            searchTermStartsWith=NotImplemented,
-            searchedObjectIn=NotImplemented):
+            searchTermStartsWith = NotImplemented,
+            searchedObjectIn = NotImplemented,
+            timestampRange = NotImplemented,
+            aggregation = NotImplemented):
         KalturaESearchBaseFilter.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTermStartsWith = searchTermStartsWith
 
-        # @var string
+        # @var str
         self.searchedObjectIn = searchedObjectIn
+
+        # @var KalturaESearchRange
+        self.timestampRange = timestampRange
+
+        # @var KalturaESearchHistoryAggregationItem
+        self.aggregation = aggregation
 
 
     PROPERTY_LOADERS = {
         'searchTermStartsWith': getXmlNodeText, 
         'searchedObjectIn': getXmlNodeText, 
+        'timestampRange': (KalturaObjectFactory.create, 'KalturaESearchRange'), 
+        'aggregation': (KalturaObjectFactory.create, 'KalturaESearchHistoryAggregationItem'), 
     }
 
     def fromXml(self, node):
@@ -122,6 +177,8 @@ class KalturaESearchHistoryFilter(KalturaESearchBaseFilter):
         kparams.put("objectType", "KalturaESearchHistoryFilter")
         kparams.addStringIfDefined("searchTermStartsWith", self.searchTermStartsWith)
         kparams.addStringIfDefined("searchedObjectIn", self.searchedObjectIn)
+        kparams.addObjectIfDefined("timestampRange", self.timestampRange)
+        kparams.addObjectIfDefined("aggregation", self.aggregation)
         return kparams
 
     def getSearchTermStartsWith(self):
@@ -136,23 +193,41 @@ class KalturaESearchHistoryFilter(KalturaESearchBaseFilter):
     def setSearchedObjectIn(self, newSearchedObjectIn):
         self.searchedObjectIn = newSearchedObjectIn
 
+    def getTimestampRange(self):
+        return self.timestampRange
+
+    def setTimestampRange(self, newTimestampRange):
+        self.timestampRange = newTimestampRange
+
+    def getAggregation(self):
+        return self.aggregation
+
+    def setAggregation(self, newAggregation):
+        self.aggregation = newAggregation
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchHistoryListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented,
+            aggregations = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaESearchHistory
+        # @var List[KalturaESearchHistory]
         # @readonly
         self.objects = objects
+
+        # @var List[KalturaESearchAggregationResponseItem]
+        # @readonly
+        self.aggregations = aggregations
 
 
     PROPERTY_LOADERS = {
         'objects': (KalturaObjectFactory.createArray, 'KalturaESearchHistory'), 
+        'aggregations': (KalturaObjectFactory.createArray, 'KalturaESearchAggregationResponseItem'), 
     }
 
     def fromXml(self, node):
@@ -166,6 +241,49 @@ class KalturaESearchHistoryListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+    def getAggregations(self):
+        return self.aggregations
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSearchHistoryCsvJobData(KalturaExportCsvJobData):
+    def __init__(self,
+            userName = NotImplemented,
+            userMail = NotImplemented,
+            outputPath = NotImplemented,
+            sharedOutputPath = NotImplemented,
+            filter = NotImplemented):
+        KalturaExportCsvJobData.__init__(self,
+            userName,
+            userMail,
+            outputPath,
+            sharedOutputPath)
+
+        # @var KalturaESearchHistoryFilter
+        self.filter = filter
+
+
+    PROPERTY_LOADERS = {
+        'filter': (KalturaObjectFactory.create, 'KalturaESearchHistoryFilter'), 
+    }
+
+    def fromXml(self, node):
+        KalturaExportCsvJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSearchHistoryCsvJobData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaExportCsvJobData.toParams(self)
+        kparams.put("objectType", "KalturaSearchHistoryCsvJobData")
+        kparams.addObjectIfDefined("filter", self.filter)
+        return kparams
+
+    def getFilter(self):
+        return self.filter
+
+    def setFilter(self, newFilter):
+        self.filter = newFilter
 
 
 ########## services ##########
@@ -183,6 +301,15 @@ class KalturaSearchHistoryService(KalturaServiceBase):
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+
+    def exportToCsv(self, filter):
+        kparams = KalturaParams()
+        kparams.addObjectIfDefined("filter", filter)
+        self.client.queueServiceActionCall("searchhistory_searchhistory", "exportToCsv", "None", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return getXmlNodeText(resultNode)
 
     def list(self, filter = NotImplemented):
         kparams = KalturaParams()
@@ -213,13 +340,16 @@ class KalturaSearchHistoryClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaESearchHistoryAggregateFieldName': KalturaESearchHistoryAggregateFieldName,
         }
 
     def getTypes(self):
         return {
             'KalturaESearchHistory': KalturaESearchHistory,
+            'KalturaESearchHistoryAggregationItem': KalturaESearchHistoryAggregationItem,
             'KalturaESearchHistoryFilter': KalturaESearchHistoryFilter,
             'KalturaESearchHistoryListResponse': KalturaESearchHistoryListResponse,
+            'KalturaSearchHistoryCsvJobData': KalturaSearchHistoryCsvJobData,
         }
 
     # @return string

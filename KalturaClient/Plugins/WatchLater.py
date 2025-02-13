@@ -49,15 +49,14 @@ from ..Base import (
 # @subpackage Client
 class KalturaWatchLaterUserEntry(KalturaUserEntry):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            userId=NotImplemented,
-            partnerId=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            type=NotImplemented,
-            extendedStatus=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            userId = NotImplemented,
+            partnerId = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            type = NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -66,8 +65,7 @@ class KalturaWatchLaterUserEntry(KalturaUserEntry):
             status,
             createdAt,
             updatedAt,
-            type,
-            extendedStatus)
+            type)
 
 
     PROPERTY_LOADERS = {
@@ -87,26 +85,26 @@ class KalturaWatchLaterUserEntry(KalturaUserEntry):
 # @subpackage Client
 class KalturaWatchLaterUserEntryAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            extendedStatusEqual=NotImplemented,
-            extendedStatusIn=NotImplemented):
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            extendedStatusEqual = NotImplemented,
+            extendedStatusIn = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
         # @var int
@@ -118,7 +116,7 @@ class KalturaWatchLaterUserEntryAdvancedFilter(KalturaSearchItem):
         # @var KalturaUserEntryExtendedStatus
         self.extendedStatusEqual = extendedStatusEqual
 
-        # @var string
+        # @var str
         self.extendedStatusIn = extendedStatusIn
 
 
@@ -203,31 +201,28 @@ class KalturaWatchLaterUserEntryAdvancedFilter(KalturaSearchItem):
 # @subpackage Client
 class KalturaWatchLaterUserEntryFilter(KalturaUserEntryFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            entryIdNotIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            userIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            extendedStatusEqual=NotImplemented,
-            extendedStatusIn=NotImplemented,
-            extendedStatusNotIn=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented,
-            privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented,
-            partnerId=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            entryIdNotIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            userIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            typeEqual = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            isAnonymous = NotImplemented,
+            privacyContextEqual = NotImplemented,
+            privacyContextIn = NotImplemented,
+            partnerId = NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -246,9 +241,6 @@ class KalturaWatchLaterUserEntryFilter(KalturaUserEntryFilter):
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             typeEqual,
-            extendedStatusEqual,
-            extendedStatusIn,
-            extendedStatusNotIn,
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,

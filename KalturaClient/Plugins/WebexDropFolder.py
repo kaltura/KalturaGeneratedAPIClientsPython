@@ -94,45 +94,45 @@ class KalturaWebexDropFolderOrderBy(object):
 # @subpackage Client
 class KalturaWebexDropFolder(KalturaDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            webexUserId=NotImplemented,
-            webexPassword=NotImplemented,
-            webexSiteId=NotImplemented,
-            webexPartnerId=NotImplemented,
-            webexServiceUrl=NotImplemented,
-            webexHostIdMetadataFieldName=NotImplemented,
-            deleteFromRecycleBin=NotImplemented,
-            webexServiceType=NotImplemented,
-            webexSiteName=NotImplemented,
-            deleteFromTimestamp=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            webexUserId = NotImplemented,
+            webexPassword = NotImplemented,
+            webexSiteId = NotImplemented,
+            webexPartnerId = NotImplemented,
+            webexServiceUrl = NotImplemented,
+            webexHostIdMetadataFieldName = NotImplemented,
+            deleteFromRecycleBin = NotImplemented,
+            webexServiceType = NotImplemented,
+            webexSiteName = NotImplemented,
+            deleteFromTimestamp = NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
             partnerId,
@@ -164,31 +164,31 @@ class KalturaWebexDropFolder(KalturaDropFolder):
             enforceEntitlement,
             shouldValidateKS)
 
-        # @var string
+        # @var str
         self.webexUserId = webexUserId
 
-        # @var string
+        # @var str
         self.webexPassword = webexPassword
 
         # @var int
         self.webexSiteId = webexSiteId
 
-        # @var string
+        # @var str
         self.webexPartnerId = webexPartnerId
 
-        # @var string
+        # @var str
         self.webexServiceUrl = webexServiceUrl
 
-        # @var string
+        # @var str
         self.webexHostIdMetadataFieldName = webexHostIdMetadataFieldName
 
         # @var bool
         self.deleteFromRecycleBin = deleteFromRecycleBin
 
-        # @var string
+        # @var str
         self.webexServiceType = webexServiceType
 
-        # @var string
+        # @var str
         self.webexSiteName = webexSiteName
 
         # @var int
@@ -292,35 +292,35 @@ class KalturaWebexDropFolder(KalturaDropFolder):
 # @subpackage Client
 class KalturaWebexDropFolderFile(KalturaDropFolderFile):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            dropFolderId=NotImplemented,
-            fileName=NotImplemented,
-            fileSize=NotImplemented,
-            fileSizeLastSetAt=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            parsedSlug=NotImplemented,
-            parsedFlavor=NotImplemented,
-            parsedUserId=NotImplemented,
-            leadDropFolderFileId=NotImplemented,
-            deletedDropFolderFileId=NotImplemented,
-            entryId=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            lastModificationTime=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            uploadStartDetectedAt=NotImplemented,
-            uploadEndDetectedAt=NotImplemented,
-            importStartedAt=NotImplemented,
-            importEndedAt=NotImplemented,
-            batchJobId=NotImplemented,
-            recordingId=NotImplemented,
-            webexHostId=NotImplemented,
-            description=NotImplemented,
-            confId=NotImplemented,
-            contentUrl=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            dropFolderId = NotImplemented,
+            fileName = NotImplemented,
+            fileSize = NotImplemented,
+            fileSizeLastSetAt = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            parsedSlug = NotImplemented,
+            parsedFlavor = NotImplemented,
+            parsedUserId = NotImplemented,
+            leadDropFolderFileId = NotImplemented,
+            deletedDropFolderFileId = NotImplemented,
+            entryId = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            lastModificationTime = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            uploadStartDetectedAt = NotImplemented,
+            uploadEndDetectedAt = NotImplemented,
+            importStartedAt = NotImplemented,
+            importEndedAt = NotImplemented,
+            batchJobId = NotImplemented,
+            recordingId = NotImplemented,
+            webexHostId = NotImplemented,
+            description = NotImplemented,
+            confId = NotImplemented,
+            contentUrl = NotImplemented):
         KalturaDropFolderFile.__init__(self,
             id,
             partnerId,
@@ -350,16 +350,16 @@ class KalturaWebexDropFolderFile(KalturaDropFolderFile):
         # @var int
         self.recordingId = recordingId
 
-        # @var string
+        # @var str
         self.webexHostId = webexHostId
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         self.confId = confId
 
-        # @var string
+        # @var str
         self.contentUrl = contentUrl
 
 
@@ -420,14 +420,14 @@ class KalturaWebexDropFolderFile(KalturaDropFolderFile):
 # @subpackage Client
 class KalturaWebexDropFolderContentProcessorJobData(KalturaDropFolderContentProcessorJobData):
     def __init__(self,
-            dropFolderId=NotImplemented,
-            dropFolderFileIds=NotImplemented,
-            parsedSlug=NotImplemented,
-            contentMatchPolicy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            parsedUserId=NotImplemented,
-            description=NotImplemented,
-            webexHostId=NotImplemented):
+            dropFolderId = NotImplemented,
+            dropFolderFileIds = NotImplemented,
+            parsedSlug = NotImplemented,
+            contentMatchPolicy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            parsedUserId = NotImplemented,
+            description = NotImplemented,
+            webexHostId = NotImplemented):
         KalturaDropFolderContentProcessorJobData.__init__(self,
             dropFolderId,
             dropFolderFileIds,
@@ -436,10 +436,10 @@ class KalturaWebexDropFolderContentProcessorJobData(KalturaDropFolderContentProc
             conversionProfileId,
             parsedUserId)
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         self.webexHostId = webexHostId
 
 
@@ -476,38 +476,38 @@ class KalturaWebexDropFolderContentProcessorJobData(KalturaDropFolderContentProc
 # @subpackage Client
 class KalturaWebexDropFolderBaseFilter(KalturaDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -560,35 +560,35 @@ class KalturaWebexDropFolderBaseFilter(KalturaDropFolderFilter):
 # @subpackage Client
 class KalturaWebexDropFolderFileBaseFilter(KalturaDropFolderFileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            dropFolderIdEqual=NotImplemented,
-            dropFolderIdIn=NotImplemented,
-            fileNameEqual=NotImplemented,
-            fileNameIn=NotImplemented,
-            fileNameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            parsedSlugEqual=NotImplemented,
-            parsedSlugIn=NotImplemented,
-            parsedSlugLike=NotImplemented,
-            parsedFlavorEqual=NotImplemented,
-            parsedFlavorIn=NotImplemented,
-            parsedFlavorLike=NotImplemented,
-            leadDropFolderFileIdEqual=NotImplemented,
-            deletedDropFolderFileIdEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            dropFolderIdEqual = NotImplemented,
+            dropFolderIdIn = NotImplemented,
+            fileNameEqual = NotImplemented,
+            fileNameIn = NotImplemented,
+            fileNameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            parsedSlugEqual = NotImplemented,
+            parsedSlugIn = NotImplemented,
+            parsedSlugLike = NotImplemented,
+            parsedFlavorEqual = NotImplemented,
+            parsedFlavorIn = NotImplemented,
+            parsedFlavorLike = NotImplemented,
+            leadDropFolderFileIdEqual = NotImplemented,
+            deletedDropFolderFileIdEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaDropFolderFileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -638,35 +638,35 @@ class KalturaWebexDropFolderFileBaseFilter(KalturaDropFolderFileFilter):
 # @subpackage Client
 class KalturaWebexDropFolderFileFilter(KalturaWebexDropFolderFileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            dropFolderIdEqual=NotImplemented,
-            dropFolderIdIn=NotImplemented,
-            fileNameEqual=NotImplemented,
-            fileNameIn=NotImplemented,
-            fileNameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            parsedSlugEqual=NotImplemented,
-            parsedSlugIn=NotImplemented,
-            parsedSlugLike=NotImplemented,
-            parsedFlavorEqual=NotImplemented,
-            parsedFlavorIn=NotImplemented,
-            parsedFlavorLike=NotImplemented,
-            leadDropFolderFileIdEqual=NotImplemented,
-            deletedDropFolderFileIdEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            dropFolderIdEqual = NotImplemented,
+            dropFolderIdIn = NotImplemented,
+            fileNameEqual = NotImplemented,
+            fileNameIn = NotImplemented,
+            fileNameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            parsedSlugEqual = NotImplemented,
+            parsedSlugIn = NotImplemented,
+            parsedSlugLike = NotImplemented,
+            parsedFlavorEqual = NotImplemented,
+            parsedFlavorIn = NotImplemented,
+            parsedFlavorLike = NotImplemented,
+            leadDropFolderFileIdEqual = NotImplemented,
+            deletedDropFolderFileIdEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaWebexDropFolderFileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -716,38 +716,38 @@ class KalturaWebexDropFolderFileFilter(KalturaWebexDropFolderFileBaseFilter):
 # @subpackage Client
 class KalturaWebexDropFolderFilter(KalturaWebexDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaWebexDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

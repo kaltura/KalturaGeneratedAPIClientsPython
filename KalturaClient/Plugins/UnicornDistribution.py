@@ -74,15 +74,15 @@ class KalturaUnicornDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaUnicornDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -112,21 +112,21 @@ class KalturaUnicornDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaUnicornDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            catalogGuid=NotImplemented,
-            title=NotImplemented,
-            mediaChanged=NotImplemented,
-            flavorAssetVersion=NotImplemented,
-            notificationBaseUrl=NotImplemented):
+            fieldValues = NotImplemented,
+            catalogGuid = NotImplemented,
+            title = NotImplemented,
+            mediaChanged = NotImplemented,
+            flavorAssetVersion = NotImplemented,
+            notificationBaseUrl = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
         # The Catalog GUID the video is in or will be ingested into.
-        # @var string
+        # @var str
         self.catalogGuid = catalogGuid
 
         # The Title assigned to the video. The Foreign Key will be used if no title is provided.
-        # @var string
+        # @var str
         self.title = title
 
         # Indicates that the media content changed and therefore the job should wait for HTTP callback notification to be closed.
@@ -134,11 +134,11 @@ class KalturaUnicornDistributionJobProviderData(KalturaConfigurableDistributionJ
         self.mediaChanged = mediaChanged
 
         # Flavor asset version.
-        # @var string
+        # @var str
         self.flavorAssetVersion = flavorAssetVersion
 
         # The schema and host name to the Kaltura server, e.g. http://www.kaltura.com
-        # @var string
+        # @var str
         self.notificationBaseUrl = notificationBaseUrl
 
 
@@ -199,44 +199,44 @@ class KalturaUnicornDistributionJobProviderData(KalturaConfigurableDistributionJ
 # @subpackage Client
 class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            domainName=NotImplemented,
-            channelGuid=NotImplemented,
-            apiHostUrl=NotImplemented,
-            domainGuid=NotImplemented,
-            adFreeApplicationGuid=NotImplemented,
-            remoteAssetParamsId=NotImplemented,
-            storageProfileId=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            domainName = NotImplemented,
+            channelGuid = NotImplemented,
+            apiHostUrl = NotImplemented,
+            domainGuid = NotImplemented,
+            adFreeApplicationGuid = NotImplemented,
+            remoteAssetParamsId = NotImplemented,
+            storageProfileId = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -269,31 +269,31 @@ class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
             useCategoryEntries)
 
         # The email address associated with the Upload User, used to authorize the incoming request.
-        # @var string
+        # @var str
         self.username = username
 
         # The password used in association with the email to determine if the Upload User is authorized the incoming request.
-        # @var string
+        # @var str
         self.password = password
 
         # The name of the Domain that the Upload User should have access to, Used for authentication.
-        # @var string
+        # @var str
         self.domainName = domainName
 
         # The Channel GUID assigned to this Publication Rule. Must be a valid Channel in the Domain that was used in authentication.
-        # @var string
+        # @var str
         self.channelGuid = channelGuid
 
         # The API host URL that the Upload User should have access to, Used for HTTP content submission.
-        # @var string
+        # @var str
         self.apiHostUrl = apiHostUrl
 
         # The GUID of the Customer Domain in the Unicorn system obtained by contacting your Unicorn representative.
-        # @var string
+        # @var str
         self.domainGuid = domainGuid
 
         # The GUID for the application in which to record metrics and enforce business rules obtained through your Unicorn representative.
-        # @var string
+        # @var str
         self.adFreeApplicationGuid = adFreeApplicationGuid
 
         # The flavor-params that will be used for the remote asset.
@@ -301,7 +301,7 @@ class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
         self.remoteAssetParamsId = remoteAssetParamsId
 
         # The remote storage that should be used for the remote asset.
-        # @var string
+        # @var str
         self.storageProfileId = storageProfileId
 
 
@@ -394,10 +394,10 @@ class KalturaUnicornDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaUnicornDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -422,10 +422,10 @@ class KalturaUnicornDistributionProviderBaseFilter(KalturaDistributionProviderFi
 # @subpackage Client
 class KalturaUnicornDistributionProviderFilter(KalturaUnicornDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaUnicornDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -450,16 +450,16 @@ class KalturaUnicornDistributionProviderFilter(KalturaUnicornDistributionProvide
 # @subpackage Client
 class KalturaUnicornDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -490,16 +490,16 @@ class KalturaUnicornDistributionProfileBaseFilter(KalturaConfigurableDistributio
 # @subpackage Client
 class KalturaUnicornDistributionProfileFilter(KalturaUnicornDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaUnicornDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

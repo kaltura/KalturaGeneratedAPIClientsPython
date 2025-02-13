@@ -62,29 +62,29 @@ class KalturaSsoStatus(object):
 # @subpackage Client
 class KalturaSso(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            applicationType=NotImplemented,
-            partnerId=NotImplemented,
-            domain=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            redirectUrl=NotImplemented,
-            data=NotImplemented):
+            id = NotImplemented,
+            applicationType = NotImplemented,
+            partnerId = NotImplemented,
+            domain = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            redirectUrl = NotImplemented,
+            data = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
         # @readonly
         self.id = id
 
-        # @var string
+        # @var str
         self.applicationType = applicationType
 
         # @var int
         # @insertonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.domain = domain
 
         # @var KalturaSsoStatus
@@ -101,10 +101,10 @@ class KalturaSso(KalturaObjectBase):
         self.updatedAt = updatedAt
 
         # Redirect URL for a specific application type and (partner id or domain)
-        # @var string
+        # @var str
         self.redirectUrl = redirectUrl
 
-        # @var string
+        # @var str
         self.data = data
 
 
@@ -185,12 +185,12 @@ class KalturaSso(KalturaObjectBase):
 # @subpackage Client
 class KalturaSsoListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaSso
+        # @var List[KalturaSso]
         # @readonly
         self.objects = objects
 
@@ -216,18 +216,18 @@ class KalturaSsoListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaSsoBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            applicationTypeEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            domainEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            redirectUrlEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            applicationTypeEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            domainEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            redirectUrlEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -235,22 +235,22 @@ class KalturaSsoBaseFilter(KalturaRelatedFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.applicationTypeEqual = applicationTypeEqual
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.domainEqual = domainEqual
 
         # @var KalturaSsoStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -259,7 +259,7 @@ class KalturaSsoBaseFilter(KalturaRelatedFilter):
         # @var int
         self.createdAtLessThanOrEqual = createdAtLessThanOrEqual
 
-        # @var string
+        # @var str
         self.redirectUrlEqual = redirectUrlEqual
 
 
@@ -360,18 +360,18 @@ class KalturaSsoBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaSsoFilter(KalturaSsoBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            applicationTypeEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            domainEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            redirectUrlEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            applicationTypeEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            domainEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            redirectUrlEqual = NotImplemented):
         KalturaSsoBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

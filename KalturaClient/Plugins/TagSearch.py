@@ -49,20 +49,20 @@ from ..Base import (
 # @subpackage Client
 class KalturaTag(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            tag=NotImplemented,
-            taggedObjectType=NotImplemented,
-            partnerId=NotImplemented,
-            instanceCount=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented):
+            id = NotImplemented,
+            tag = NotImplemented,
+            taggedObjectType = NotImplemented,
+            partnerId = NotImplemented,
+            instanceCount = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
         # @readonly
         self.id = id
 
-        # @var string
+        # @var str
         # @readonly
         self.tag = tag
 
@@ -132,18 +132,18 @@ class KalturaTag(KalturaObjectBase):
 # @subpackage Client
 class KalturaIndexTagsByPrivacyContextJobData(KalturaJobData):
     def __init__(self,
-            changedCategoryId=NotImplemented,
-            deletedPrivacyContexts=NotImplemented,
-            addedPrivacyContexts=NotImplemented):
+            changedCategoryId = NotImplemented,
+            deletedPrivacyContexts = NotImplemented,
+            addedPrivacyContexts = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
         self.changedCategoryId = changedCategoryId
 
-        # @var string
+        # @var str
         self.deletedPrivacyContexts = deletedPrivacyContexts
 
-        # @var string
+        # @var str
         self.addedPrivacyContexts = addedPrivacyContexts
 
 
@@ -188,13 +188,14 @@ class KalturaIndexTagsByPrivacyContextJobData(KalturaJobData):
 # @subpackage Client
 class KalturaTagFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            objectTypeEqual=NotImplemented,
-            tagEqual=NotImplemented,
-            tagStartsWith=NotImplemented,
-            instanceCountEqual=NotImplemented,
-            instanceCountIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            objectTypeEqual = NotImplemented,
+            objectTypeIn = NotImplemented,
+            tagEqual = NotImplemented,
+            tagStartsWith = NotImplemented,
+            instanceCountEqual = NotImplemented,
+            instanceCountIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -202,10 +203,13 @@ class KalturaTagFilter(KalturaFilter):
         # @var KalturaTaggedObjectType
         self.objectTypeEqual = objectTypeEqual
 
-        # @var string
+        # @var str
+        self.objectTypeIn = objectTypeIn
+
+        # @var str
         self.tagEqual = tagEqual
 
-        # @var string
+        # @var str
         self.tagStartsWith = tagStartsWith
 
         # @var int
@@ -217,6 +221,7 @@ class KalturaTagFilter(KalturaFilter):
 
     PROPERTY_LOADERS = {
         'objectTypeEqual': (KalturaEnumsFactory.createString, "KalturaTaggedObjectType"), 
+        'objectTypeIn': getXmlNodeText, 
         'tagEqual': getXmlNodeText, 
         'tagStartsWith': getXmlNodeText, 
         'instanceCountEqual': getXmlNodeInt, 
@@ -231,6 +236,7 @@ class KalturaTagFilter(KalturaFilter):
         kparams = KalturaFilter.toParams(self)
         kparams.put("objectType", "KalturaTagFilter")
         kparams.addStringEnumIfDefined("objectTypeEqual", self.objectTypeEqual)
+        kparams.addStringIfDefined("objectTypeIn", self.objectTypeIn)
         kparams.addStringIfDefined("tagEqual", self.tagEqual)
         kparams.addStringIfDefined("tagStartsWith", self.tagStartsWith)
         kparams.addIntIfDefined("instanceCountEqual", self.instanceCountEqual)
@@ -242,6 +248,12 @@ class KalturaTagFilter(KalturaFilter):
 
     def setObjectTypeEqual(self, newObjectTypeEqual):
         self.objectTypeEqual = newObjectTypeEqual
+
+    def getObjectTypeIn(self):
+        return self.objectTypeIn
+
+    def setObjectTypeIn(self, newObjectTypeIn):
+        self.objectTypeIn = newObjectTypeIn
 
     def getTagEqual(self):
         return self.tagEqual
@@ -272,12 +284,12 @@ class KalturaTagFilter(KalturaFilter):
 # @subpackage Client
 class KalturaTagListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaTag
+        # @var List[KalturaTag]
         # @readonly
         self.objects = objects
 

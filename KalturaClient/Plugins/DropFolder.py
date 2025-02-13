@@ -160,6 +160,7 @@ class KalturaDropFolderFileErrorCode(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDropFolderFileHandlerType(object):
+    TR_RDS = "TrRdsSyncDropFolder.TR_RDS"
     XML = "dropFolderXmlBulkUpload.XML"
     ICAL = "scheduleDropFolder.ICAL"
     CONTENT = "1"
@@ -217,8 +218,15 @@ class KalturaDropFolderOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaDropFolderType(object):
+    AP_FEED = "ApFeedDropFolder.AP_FEED"
     FEED = "FeedDropFolder.FEED"
+    MS_TEAMS = "MicrosoftTeamsDropFolder.MS_TEAMS"
+    S3DROPFOLDER = "S3DropFolder.S3DROPFOLDER"
+    TR_RDS_COMPANY = "TrRdsSyncDropFolder.TR_RDS_COMPANY"
+    TR_RDS_TMCTERM = "TrRdsSyncDropFolder.TR_RDS_TMCTERM"
+    WEBEX_API = "WebexAPIDropFolder.WEBEX_API"
     WEBEX = "WebexDropFolder.WEBEX"
+    ZOOM = "ZoomDropFolder.ZOOM"
     LOCAL = "1"
     FTP = "2"
     SCP = "3"
@@ -326,7 +334,7 @@ class KalturaSshDropFolderOrderBy(object):
 # @subpackage Client
 class KalturaDropFolderFileHandlerConfig(KalturaObjectBase):
     def __init__(self,
-            handlerType=NotImplemented):
+            handlerType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaDropFolderFileHandlerType
@@ -355,35 +363,35 @@ class KalturaDropFolderFileHandlerConfig(KalturaObjectBase):
 # @subpackage Client
 class KalturaDropFolder(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -394,10 +402,10 @@ class KalturaDropFolder(KalturaObjectBase):
         # @insertonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaDropFolderType
@@ -412,7 +420,7 @@ class KalturaDropFolder(KalturaObjectBase):
         # @var int
         self.dc = dc
 
-        # @var string
+        # @var str
         self.path = path
 
         # The amount of time, in seconds, that should pass so that a file with no change in size will be treated as "finished uploading to folder"
@@ -422,7 +430,7 @@ class KalturaDropFolder(KalturaObjectBase):
         # @var KalturaDropFolderFileDeletePolicy
         self.fileDeletePolicy = fileDeletePolicy
 
-        # @var string
+        # @var str
         self.fileDeleteRegex = fileDeleteRegex
 
         # @var int
@@ -431,22 +439,22 @@ class KalturaDropFolder(KalturaObjectBase):
         # @var KalturaDropFolderFileHandlerType
         self.fileHandlerType = fileHandlerType
 
-        # @var string
+        # @var str
         self.fileNamePatterns = fileNamePatterns
 
         # @var KalturaDropFolderFileHandlerConfig
         self.fileHandlerConfig = fileHandlerConfig
 
-        # @var string
+        # @var str
         self.tags = tags
 
         # @var KalturaDropFolderErrorCode
         self.errorCode = errorCode
 
-        # @var string
+        # @var str
         self.errorDescription = errorDescription
 
-        # @var string
+        # @var str
         self.ignoreFileNamePatterns = ignoreFileNamePatterns
 
         # @var int
@@ -469,7 +477,7 @@ class KalturaDropFolder(KalturaObjectBase):
         # @var int
         self.metadataProfileId = metadataProfileId
 
-        # @var string
+        # @var str
         self.categoriesMetadataFieldName = categoriesMetadataFieldName
 
         # @var bool
@@ -716,30 +724,30 @@ class KalturaDropFolder(KalturaObjectBase):
 # @subpackage Client
 class KalturaDropFolderFile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            dropFolderId=NotImplemented,
-            fileName=NotImplemented,
-            fileSize=NotImplemented,
-            fileSizeLastSetAt=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            parsedSlug=NotImplemented,
-            parsedFlavor=NotImplemented,
-            parsedUserId=NotImplemented,
-            leadDropFolderFileId=NotImplemented,
-            deletedDropFolderFileId=NotImplemented,
-            entryId=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            lastModificationTime=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            uploadStartDetectedAt=NotImplemented,
-            uploadEndDetectedAt=NotImplemented,
-            importStartedAt=NotImplemented,
-            importEndedAt=NotImplemented,
-            batchJobId=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            dropFolderId = NotImplemented,
+            fileName = NotImplemented,
+            fileSize = NotImplemented,
+            fileSizeLastSetAt = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            parsedSlug = NotImplemented,
+            parsedFlavor = NotImplemented,
+            parsedUserId = NotImplemented,
+            leadDropFolderFileId = NotImplemented,
+            deletedDropFolderFileId = NotImplemented,
+            entryId = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            lastModificationTime = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            uploadStartDetectedAt = NotImplemented,
+            uploadEndDetectedAt = NotImplemented,
+            importStartedAt = NotImplemented,
+            importEndedAt = NotImplemented,
+            batchJobId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -754,7 +762,7 @@ class KalturaDropFolderFile(KalturaObjectBase):
         # @insertonly
         self.dropFolderId = dropFolderId
 
-        # @var string
+        # @var str
         # @insertonly
         self.fileName = fileName
 
@@ -773,13 +781,13 @@ class KalturaDropFolderFile(KalturaObjectBase):
         # @readonly
         self.type = type
 
-        # @var string
+        # @var str
         self.parsedSlug = parsedSlug
 
-        # @var string
+        # @var str
         self.parsedFlavor = parsedFlavor
 
-        # @var string
+        # @var str
         self.parsedUserId = parsedUserId
 
         # @var int
@@ -788,16 +796,16 @@ class KalturaDropFolderFile(KalturaObjectBase):
         # @var int
         self.deletedDropFolderFileId = deletedDropFolderFileId
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # @var KalturaDropFolderFileErrorCode
         self.errorCode = errorCode
 
-        # @var string
+        # @var str
         self.errorDescription = errorDescription
 
-        # @var string
+        # @var str
         self.lastModificationTime = lastModificationTime
 
         # @var int
@@ -1002,37 +1010,37 @@ class KalturaDropFolderFile(KalturaObjectBase):
 # @subpackage Client
 class KalturaDropFolderBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -1040,76 +1048,76 @@ class KalturaDropFolderBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.nameLike = nameLike
 
         # @var KalturaDropFolderType
         self.typeEqual = typeEqual
 
-        # @var string
+        # @var str
         self.typeIn = typeIn
 
         # @var KalturaDropFolderStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
         self.conversionProfileIdEqual = conversionProfileIdEqual
 
-        # @var string
+        # @var str
         self.conversionProfileIdIn = conversionProfileIdIn
 
         # @var int
         self.dcEqual = dcEqual
 
-        # @var string
+        # @var str
         self.dcIn = dcIn
 
-        # @var string
+        # @var str
         self.pathEqual = pathEqual
 
-        # @var string
+        # @var str
         self.pathLike = pathLike
 
         # @var KalturaDropFolderFileHandlerType
         self.fileHandlerTypeEqual = fileHandlerTypeEqual
 
-        # @var string
+        # @var str
         self.fileHandlerTypeIn = fileHandlerTypeIn
 
-        # @var string
+        # @var str
         self.fileNamePatternsLike = fileNamePatternsLike
 
-        # @var string
+        # @var str
         self.fileNamePatternsMultiLikeOr = fileNamePatternsMultiLikeOr
 
-        # @var string
+        # @var str
         self.fileNamePatternsMultiLikeAnd = fileNamePatternsMultiLikeAnd
 
-        # @var string
+        # @var str
         self.tagsLike = tagsLike
 
-        # @var string
+        # @var str
         self.tagsMultiLikeOr = tagsMultiLikeOr
 
-        # @var string
+        # @var str
         self.tagsMultiLikeAnd = tagsMultiLikeAnd
 
         # @var KalturaDropFolderErrorCode
         self.errorCodeEqual = errorCodeEqual
 
-        # @var string
+        # @var str
         self.errorCodeIn = errorCodeIn
 
         # @var int
@@ -1374,9 +1382,9 @@ class KalturaDropFolderBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDropFolderContentFileHandlerConfig(KalturaDropFolderFileHandlerConfig):
     def __init__(self,
-            handlerType=NotImplemented,
-            contentMatchPolicy=NotImplemented,
-            slugRegex=NotImplemented):
+            handlerType = NotImplemented,
+            contentMatchPolicy = NotImplemented,
+            slugRegex = NotImplemented):
         KalturaDropFolderFileHandlerConfig.__init__(self,
             handlerType)
 
@@ -1387,7 +1395,7 @@ class KalturaDropFolderContentFileHandlerConfig(KalturaDropFolderFileHandlerConf
         # 	 The following might be extracted from the file name and used if defined:
         # 	 - (?P<referenceId>\w+) - will be used as the drop folder file's parsed slug.
         # 	 - (?P<flavorName>\w+)  - will be used as the drop folder file's parsed flavor.
-        # @var string
+        # @var str
         self.slugRegex = slugRegex
 
 
@@ -1424,21 +1432,21 @@ class KalturaDropFolderContentFileHandlerConfig(KalturaDropFolderFileHandlerConf
 # @subpackage Client
 class KalturaDropFolderContentProcessorJobData(KalturaJobData):
     def __init__(self,
-            dropFolderId=NotImplemented,
-            dropFolderFileIds=NotImplemented,
-            parsedSlug=NotImplemented,
-            contentMatchPolicy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            parsedUserId=NotImplemented):
+            dropFolderId = NotImplemented,
+            dropFolderFileIds = NotImplemented,
+            parsedSlug = NotImplemented,
+            contentMatchPolicy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            parsedUserId = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
         self.dropFolderId = dropFolderId
 
-        # @var string
+        # @var str
         self.dropFolderFileIds = dropFolderFileIds
 
-        # @var string
+        # @var str
         self.parsedSlug = parsedSlug
 
         # @var KalturaDropFolderContentFileHandlerMatchPolicy
@@ -1447,7 +1455,7 @@ class KalturaDropFolderContentProcessorJobData(KalturaJobData):
         # @var int
         self.conversionProfileId = conversionProfileId
 
-        # @var string
+        # @var str
         self.parsedUserId = parsedUserId
 
 
@@ -1516,35 +1524,35 @@ class KalturaDropFolderContentProcessorJobData(KalturaJobData):
 # @subpackage Client
 class KalturaDropFolderFileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            dropFolderIdEqual=NotImplemented,
-            dropFolderIdIn=NotImplemented,
-            fileNameEqual=NotImplemented,
-            fileNameIn=NotImplemented,
-            fileNameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            parsedSlugEqual=NotImplemented,
-            parsedSlugIn=NotImplemented,
-            parsedSlugLike=NotImplemented,
-            parsedFlavorEqual=NotImplemented,
-            parsedFlavorIn=NotImplemented,
-            parsedFlavorLike=NotImplemented,
-            leadDropFolderFileIdEqual=NotImplemented,
-            deletedDropFolderFileIdEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            dropFolderIdEqual = NotImplemented,
+            dropFolderIdIn = NotImplemented,
+            fileNameEqual = NotImplemented,
+            fileNameIn = NotImplemented,
+            fileNameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            parsedSlugEqual = NotImplemented,
+            parsedSlugIn = NotImplemented,
+            parsedSlugLike = NotImplemented,
+            parsedFlavorEqual = NotImplemented,
+            parsedFlavorIn = NotImplemented,
+            parsedFlavorLike = NotImplemented,
+            leadDropFolderFileIdEqual = NotImplemented,
+            deletedDropFolderFileIdEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -1552,55 +1560,55 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
         # @var int
         self.dropFolderIdEqual = dropFolderIdEqual
 
-        # @var string
+        # @var str
         self.dropFolderIdIn = dropFolderIdIn
 
-        # @var string
+        # @var str
         self.fileNameEqual = fileNameEqual
 
-        # @var string
+        # @var str
         self.fileNameIn = fileNameIn
 
-        # @var string
+        # @var str
         self.fileNameLike = fileNameLike
 
         # @var KalturaDropFolderFileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.statusNotIn = statusNotIn
 
-        # @var string
+        # @var str
         self.parsedSlugEqual = parsedSlugEqual
 
-        # @var string
+        # @var str
         self.parsedSlugIn = parsedSlugIn
 
-        # @var string
+        # @var str
         self.parsedSlugLike = parsedSlugLike
 
-        # @var string
+        # @var str
         self.parsedFlavorEqual = parsedFlavorEqual
 
-        # @var string
+        # @var str
         self.parsedFlavorIn = parsedFlavorIn
 
-        # @var string
+        # @var str
         self.parsedFlavorLike = parsedFlavorLike
 
         # @var int
@@ -1609,13 +1617,13 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
         # @var int
         self.deletedDropFolderFileIdEqual = deletedDropFolderFileIdEqual
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
         # @var KalturaDropFolderFileErrorCode
         self.errorCodeEqual = errorCodeEqual
 
-        # @var string
+        # @var str
         self.errorCodeIn = errorCodeIn
 
         # @var int
@@ -1864,12 +1872,12 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDropFolderFileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDropFolderFile
+        # @var List[KalturaDropFolderFile]
         # @readonly
         self.objects = objects
 
@@ -1895,12 +1903,12 @@ class KalturaDropFolderFileListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaDropFolderListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDropFolder
+        # @var List[KalturaDropFolder]
         # @readonly
         self.objects = objects
 
@@ -1926,35 +1934,35 @@ class KalturaDropFolderListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaRemoteDropFolder(KalturaDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
             partnerId,
@@ -2004,35 +2012,35 @@ class KalturaRemoteDropFolder(KalturaDropFolder):
 # @subpackage Client
 class KalturaDropFolderFileFilter(KalturaDropFolderFileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            dropFolderIdEqual=NotImplemented,
-            dropFolderIdIn=NotImplemented,
-            fileNameEqual=NotImplemented,
-            fileNameIn=NotImplemented,
-            fileNameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            parsedSlugEqual=NotImplemented,
-            parsedSlugIn=NotImplemented,
-            parsedSlugLike=NotImplemented,
-            parsedFlavorEqual=NotImplemented,
-            parsedFlavorIn=NotImplemented,
-            parsedFlavorLike=NotImplemented,
-            leadDropFolderFileIdEqual=NotImplemented,
-            deletedDropFolderFileIdEqual=NotImplemented,
-            entryIdEqual=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            dropFolderIdEqual = NotImplemented,
+            dropFolderIdIn = NotImplemented,
+            fileNameEqual = NotImplemented,
+            fileNameIn = NotImplemented,
+            fileNameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            parsedSlugEqual = NotImplemented,
+            parsedSlugIn = NotImplemented,
+            parsedSlugLike = NotImplemented,
+            parsedFlavorEqual = NotImplemented,
+            parsedFlavorIn = NotImplemented,
+            parsedFlavorLike = NotImplemented,
+            leadDropFolderFileIdEqual = NotImplemented,
+            deletedDropFolderFileIdEqual = NotImplemented,
+            entryIdEqual = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaDropFolderFileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2082,38 +2090,38 @@ class KalturaDropFolderFileFilter(KalturaDropFolderFileBaseFilter):
 # @subpackage Client
 class KalturaDropFolderFilter(KalturaDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2176,39 +2184,39 @@ class KalturaDropFolderFilter(KalturaDropFolderBaseFilter):
 # @subpackage Client
 class KalturaFtpDropFolder(KalturaRemoteDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented):
         KalturaRemoteDropFolder.__init__(self,
             id,
             partnerId,
@@ -2240,16 +2248,16 @@ class KalturaFtpDropFolder(KalturaRemoteDropFolder):
             enforceEntitlement,
             shouldValidateKS)
 
-        # @var string
+        # @var str
         self.host = host
 
         # @var int
         self.port = port
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
 
@@ -2302,42 +2310,42 @@ class KalturaFtpDropFolder(KalturaRemoteDropFolder):
 # @subpackage Client
 class KalturaSshDropFolder(KalturaRemoteDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            privateKey=NotImplemented,
-            publicKey=NotImplemented,
-            passPhrase=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            privateKey = NotImplemented,
+            publicKey = NotImplemented,
+            passPhrase = NotImplemented):
         KalturaRemoteDropFolder.__init__(self,
             id,
             partnerId,
@@ -2369,25 +2377,25 @@ class KalturaSshDropFolder(KalturaRemoteDropFolder):
             enforceEntitlement,
             shouldValidateKS)
 
-        # @var string
+        # @var str
         self.host = host
 
         # @var int
         self.port = port
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
-        # @var string
+        # @var str
         self.privateKey = privateKey
 
-        # @var string
+        # @var str
         self.publicKey = publicKey
 
-        # @var string
+        # @var str
         self.passPhrase = passPhrase
 
 
@@ -2464,21 +2472,25 @@ class KalturaSshDropFolder(KalturaRemoteDropFolder):
 # @subpackage Client
 class KalturaDropFolderImportJobData(KalturaSshImportJobData):
     def __init__(self,
-            srcFileUrl=NotImplemented,
-            destFileLocalPath=NotImplemented,
-            flavorAssetId=NotImplemented,
-            fileSize=NotImplemented,
-            destFileSharedPath=NotImplemented,
-            privateKey=NotImplemented,
-            publicKey=NotImplemented,
-            passPhrase=NotImplemented,
-            dropFolderFileId=NotImplemented):
+            srcFileUrl = NotImplemented,
+            destFileLocalPath = NotImplemented,
+            flavorAssetId = NotImplemented,
+            fileSize = NotImplemented,
+            destFileSharedPath = NotImplemented,
+            urlHeaders = NotImplemented,
+            shouldRedirect = NotImplemented,
+            privateKey = NotImplemented,
+            publicKey = NotImplemented,
+            passPhrase = NotImplemented,
+            dropFolderFileId = NotImplemented):
         KalturaSshImportJobData.__init__(self,
             srcFileUrl,
             destFileLocalPath,
             flavorAssetId,
             fileSize,
             destFileSharedPath,
+            urlHeaders,
+            shouldRedirect,
             privateKey,
             publicKey,
             passPhrase)
@@ -2512,38 +2524,38 @@ class KalturaDropFolderImportJobData(KalturaSshImportJobData):
 # @subpackage Client
 class KalturaRemoteDropFolderBaseFilter(KalturaDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2596,42 +2608,42 @@ class KalturaRemoteDropFolderBaseFilter(KalturaDropFolderFilter):
 # @subpackage Client
 class KalturaScpDropFolder(KalturaSshDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            privateKey=NotImplemented,
-            publicKey=NotImplemented,
-            passPhrase=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            privateKey = NotImplemented,
+            publicKey = NotImplemented,
+            passPhrase = NotImplemented):
         KalturaSshDropFolder.__init__(self,
             id,
             partnerId,
@@ -2688,42 +2700,42 @@ class KalturaScpDropFolder(KalturaSshDropFolder):
 # @subpackage Client
 class KalturaSftpDropFolder(KalturaSshDropFolder):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            conversionProfileId=NotImplemented,
-            dc=NotImplemented,
-            path=NotImplemented,
-            fileSizeCheckInterval=NotImplemented,
-            fileDeletePolicy=NotImplemented,
-            fileDeleteRegex=NotImplemented,
-            autoFileDeleteDays=NotImplemented,
-            fileHandlerType=NotImplemented,
-            fileNamePatterns=NotImplemented,
-            fileHandlerConfig=NotImplemented,
-            tags=NotImplemented,
-            errorCode=NotImplemented,
-            errorDescription=NotImplemented,
-            ignoreFileNamePatterns=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastAccessedAt=NotImplemented,
-            incremental=NotImplemented,
-            lastFileTimestamp=NotImplemented,
-            metadataProfileId=NotImplemented,
-            categoriesMetadataFieldName=NotImplemented,
-            enforceEntitlement=NotImplemented,
-            shouldValidateKS=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            privateKey=NotImplemented,
-            publicKey=NotImplemented,
-            passPhrase=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            conversionProfileId = NotImplemented,
+            dc = NotImplemented,
+            path = NotImplemented,
+            fileSizeCheckInterval = NotImplemented,
+            fileDeletePolicy = NotImplemented,
+            fileDeleteRegex = NotImplemented,
+            autoFileDeleteDays = NotImplemented,
+            fileHandlerType = NotImplemented,
+            fileNamePatterns = NotImplemented,
+            fileHandlerConfig = NotImplemented,
+            tags = NotImplemented,
+            errorCode = NotImplemented,
+            errorDescription = NotImplemented,
+            ignoreFileNamePatterns = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastAccessedAt = NotImplemented,
+            incremental = NotImplemented,
+            lastFileTimestamp = NotImplemented,
+            metadataProfileId = NotImplemented,
+            categoriesMetadataFieldName = NotImplemented,
+            enforceEntitlement = NotImplemented,
+            shouldValidateKS = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            privateKey = NotImplemented,
+            publicKey = NotImplemented,
+            passPhrase = NotImplemented):
         KalturaSshDropFolder.__init__(self,
             id,
             partnerId,
@@ -2782,7 +2794,7 @@ class KalturaDropFolderFileResource(KalturaGenericDataCenterContentResource):
     """Used to ingest media that dropped through drop folder"""
 
     def __init__(self,
-            dropFolderFileId=NotImplemented):
+            dropFolderFileId = NotImplemented):
         KalturaGenericDataCenterContentResource.__init__(self)
 
         # Id of the drop folder file object
@@ -2815,38 +2827,38 @@ class KalturaDropFolderFileResource(KalturaGenericDataCenterContentResource):
 # @subpackage Client
 class KalturaRemoteDropFolderFilter(KalturaRemoteDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaRemoteDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2899,38 +2911,38 @@ class KalturaRemoteDropFolderFilter(KalturaRemoteDropFolderBaseFilter):
 # @subpackage Client
 class KalturaFtpDropFolderBaseFilter(KalturaRemoteDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaRemoteDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -2983,38 +2995,38 @@ class KalturaFtpDropFolderBaseFilter(KalturaRemoteDropFolderFilter):
 # @subpackage Client
 class KalturaSshDropFolderBaseFilter(KalturaRemoteDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaRemoteDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3067,38 +3079,38 @@ class KalturaSshDropFolderBaseFilter(KalturaRemoteDropFolderFilter):
 # @subpackage Client
 class KalturaFtpDropFolderFilter(KalturaFtpDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaFtpDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3151,38 +3163,38 @@ class KalturaFtpDropFolderFilter(KalturaFtpDropFolderBaseFilter):
 # @subpackage Client
 class KalturaSshDropFolderFilter(KalturaSshDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaSshDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3235,38 +3247,38 @@ class KalturaSshDropFolderFilter(KalturaSshDropFolderBaseFilter):
 # @subpackage Client
 class KalturaScpDropFolderBaseFilter(KalturaSshDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaSshDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3319,38 +3331,38 @@ class KalturaScpDropFolderBaseFilter(KalturaSshDropFolderFilter):
 # @subpackage Client
 class KalturaSftpDropFolderBaseFilter(KalturaSshDropFolderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaSshDropFolderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3403,38 +3415,38 @@ class KalturaSftpDropFolderBaseFilter(KalturaSshDropFolderFilter):
 # @subpackage Client
 class KalturaScpDropFolderFilter(KalturaScpDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaScpDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -3487,38 +3499,38 @@ class KalturaScpDropFolderFilter(KalturaScpDropFolderBaseFilter):
 # @subpackage Client
 class KalturaSftpDropFolderFilter(KalturaSftpDropFolderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            conversionProfileIdEqual=NotImplemented,
-            conversionProfileIdIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            pathEqual=NotImplemented,
-            pathLike=NotImplemented,
-            fileHandlerTypeEqual=NotImplemented,
-            fileHandlerTypeIn=NotImplemented,
-            fileNamePatternsLike=NotImplemented,
-            fileNamePatternsMultiLikeOr=NotImplemented,
-            fileNamePatternsMultiLikeAnd=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            errorCodeEqual=NotImplemented,
-            errorCodeIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            conversionProfileIdEqual = NotImplemented,
+            conversionProfileIdIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            pathEqual = NotImplemented,
+            pathLike = NotImplemented,
+            fileHandlerTypeEqual = NotImplemented,
+            fileHandlerTypeIn = NotImplemented,
+            fileNamePatternsLike = NotImplemented,
+            fileNamePatternsMultiLikeOr = NotImplemented,
+            fileNamePatternsMultiLikeAnd = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            errorCodeEqual = NotImplemented,
+            errorCodeIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaSftpDropFolderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

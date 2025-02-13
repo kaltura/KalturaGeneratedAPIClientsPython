@@ -50,20 +50,20 @@ from ..Base import (
 # @subpackage Client
 class KalturaBaseInteractivity(KalturaObjectBase):
     def __init__(self,
-            data=NotImplemented,
-            version=NotImplemented,
-            entryId=NotImplemented,
-            updatedAt=NotImplemented):
+            data = NotImplemented,
+            version = NotImplemented,
+            entryId = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.data = data
 
         # @var int
         # @readonly
         self.version = version
 
-        # @var string
+        # @var str
         # @readonly
         self.entryId = entryId
 
@@ -110,11 +110,11 @@ class KalturaBaseInteractivity(KalturaObjectBase):
 # @subpackage Client
 class KalturaInteractivityDataFieldsFilter(KalturaObjectBase):
     def __init__(self,
-            fields=NotImplemented):
+            fields = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # A string containing CSV list of fields to include
-        # @var string
+        # @var str
         self.fields = fields
 
 
@@ -143,7 +143,7 @@ class KalturaInteractivityDataFieldsFilter(KalturaObjectBase):
 # @subpackage Client
 class KalturaInteractivityRootFilter(KalturaInteractivityDataFieldsFilter):
     def __init__(self,
-            fields=NotImplemented):
+            fields = NotImplemented):
         KalturaInteractivityDataFieldsFilter.__init__(self,
             fields)
 
@@ -165,7 +165,7 @@ class KalturaInteractivityRootFilter(KalturaInteractivityDataFieldsFilter):
 # @subpackage Client
 class KalturaInteractivityNodeFilter(KalturaInteractivityDataFieldsFilter):
     def __init__(self,
-            fields=NotImplemented):
+            fields = NotImplemented):
         KalturaInteractivityDataFieldsFilter.__init__(self,
             fields)
 
@@ -187,7 +187,7 @@ class KalturaInteractivityNodeFilter(KalturaInteractivityDataFieldsFilter):
 # @subpackage Client
 class KalturaInteractivityInteractionFilter(KalturaInteractivityDataFieldsFilter):
     def __init__(self,
-            fields=NotImplemented):
+            fields = NotImplemented):
         KalturaInteractivityDataFieldsFilter.__init__(self,
             fields)
 
@@ -209,9 +209,9 @@ class KalturaInteractivityInteractionFilter(KalturaInteractivityDataFieldsFilter
 # @subpackage Client
 class KalturaInteractivityDataFilter(KalturaObjectBase):
     def __init__(self,
-            rootFilter=NotImplemented,
-            nodeFilter=NotImplemented,
-            interactionFilter=NotImplemented):
+            rootFilter = NotImplemented,
+            nodeFilter = NotImplemented,
+            interactionFilter = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaInteractivityRootFilter
@@ -265,10 +265,10 @@ class KalturaInteractivityDataFilter(KalturaObjectBase):
 # @subpackage Client
 class KalturaInteractivity(KalturaBaseInteractivity):
     def __init__(self,
-            data=NotImplemented,
-            version=NotImplemented,
-            entryId=NotImplemented,
-            updatedAt=NotImplemented):
+            data = NotImplemented,
+            version = NotImplemented,
+            entryId = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaBaseInteractivity.__init__(self,
             data,
             version,
@@ -293,10 +293,10 @@ class KalturaInteractivity(KalturaBaseInteractivity):
 # @subpackage Client
 class KalturaVolatileInteractivity(KalturaBaseInteractivity):
     def __init__(self,
-            data=NotImplemented,
-            version=NotImplemented,
-            entryId=NotImplemented,
-            updatedAt=NotImplemented):
+            data = NotImplemented,
+            version = NotImplemented,
+            entryId = NotImplemented,
+            updatedAt = NotImplemented):
         KalturaBaseInteractivity.__init__(self,
             data,
             version,

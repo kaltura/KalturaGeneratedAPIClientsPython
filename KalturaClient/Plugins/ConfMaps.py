@@ -61,33 +61,33 @@ class KalturaConfMapsStatus(object):
 # @subpackage Client
 class KalturaConfMaps(KalturaObjectBase):
     def __init__(self,
-            name=NotImplemented,
-            content=NotImplemented,
-            rawData=NotImplemented,
-            userId=NotImplemented,
-            isEditable=NotImplemented,
-            createdAt=NotImplemented,
-            relatedHost=NotImplemented,
-            version=NotImplemented,
-            sourceLocation=NotImplemented,
-            remarks=NotImplemented,
-            status=NotImplemented,
-            changeDescription=NotImplemented):
+            name = NotImplemented,
+            content = NotImplemented,
+            rawData = NotImplemented,
+            userId = NotImplemented,
+            isEditable = NotImplemented,
+            createdAt = NotImplemented,
+            relatedHost = NotImplemented,
+            version = NotImplemented,
+            sourceLocation = NotImplemented,
+            remarks = NotImplemented,
+            status = NotImplemented,
+            changeDescription = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Name of the map
-        # @var string
+        # @var str
         # @insertonly
         self.name = name
 
         # Ini file content
-        # @var string
+        # @var str
         self.content = content
 
-        # @var string
+        # @var str
         self.rawData = rawData
 
-        # @var string
+        # @var str
         self.userId = userId
 
         # IsEditable - true / false
@@ -101,7 +101,7 @@ class KalturaConfMaps(KalturaObjectBase):
         self.createdAt = createdAt
 
         # Regex that represent the host/s that this map affect
-        # @var string
+        # @var str
         self.relatedHost = relatedHost
 
         # @var int
@@ -112,7 +112,7 @@ class KalturaConfMaps(KalturaObjectBase):
         # @insertonly
         self.sourceLocation = sourceLocation
 
-        # @var string
+        # @var str
         # @insertonly
         self.remarks = remarks
 
@@ -120,7 +120,7 @@ class KalturaConfMaps(KalturaObjectBase):
         # @var KalturaConfMapsStatus
         self.status = status
 
-        # @var string
+        # @var str
         self.changeDescription = changeDescription
 
 
@@ -225,12 +225,12 @@ class KalturaConfMaps(KalturaObjectBase):
 # @subpackage Client
 class KalturaConfMapsListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaConfMaps
+        # @var List[KalturaConfMaps]
         # @readonly
         self.objects = objects
 
@@ -256,19 +256,19 @@ class KalturaConfMapsListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaConfMapsBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            nameEqual=NotImplemented,
-            relatedHostEqual=NotImplemented,
-            versionEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            nameEqual = NotImplemented,
+            relatedHostEqual = NotImplemented,
+            versionEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.nameEqual = nameEqual
 
-        # @var string
+        # @var str
         self.relatedHostEqual = relatedHostEqual
 
         # @var int
@@ -316,11 +316,11 @@ class KalturaConfMapsBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaConfMapsFilter(KalturaConfMapsBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            nameEqual=NotImplemented,
-            relatedHostEqual=NotImplemented,
-            versionEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            nameEqual = NotImplemented,
+            relatedHostEqual = NotImplemented,
+            versionEqual = NotImplemented):
         KalturaConfMapsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

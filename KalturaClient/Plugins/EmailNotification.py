@@ -105,8 +105,8 @@ class KalturaEmailNotificationTemplateOrderBy(object):
 # @subpackage Client
 class KalturaEmailNotificationRecipient(KalturaObjectBase):
     def __init__(self,
-            email=NotImplemented,
-            name=NotImplemented):
+            email = NotImplemented,
+            name = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Recipient e-mail address
@@ -153,7 +153,7 @@ class KalturaEmailNotificationRecipientJobData(KalturaObjectBase):
     """Abstract class representing the final output recipients going into the batch mechanism"""
 
     def __init__(self,
-            providerType=NotImplemented):
+            providerType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Provider type of the job data.
@@ -205,34 +205,34 @@ class KalturaEmailNotificationRecipientProvider(KalturaObjectBase):
 # @subpackage Client
 class KalturaCategoryUserProviderFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updateMethodEqual=NotImplemented,
-            updateMethodIn=NotImplemented,
-            permissionNamesMatchAnd=NotImplemented,
-            permissionNamesMatchOr=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            updateMethodEqual = NotImplemented,
+            updateMethodIn = NotImplemented,
+            permissionNamesMatchAnd = NotImplemented,
+            permissionNamesMatchOr = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
         # @var KalturaCategoryUserStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -250,13 +250,13 @@ class KalturaCategoryUserProviderFilter(KalturaFilter):
         # @var KalturaUpdateMethodType
         self.updateMethodEqual = updateMethodEqual
 
-        # @var string
+        # @var str
         self.updateMethodIn = updateMethodIn
 
-        # @var string
+        # @var str
         self.permissionNamesMatchAnd = permissionNamesMatchAnd
 
-        # @var string
+        # @var str
         self.permissionNamesMatchOr = permissionNamesMatchOr
 
 
@@ -375,8 +375,8 @@ class KalturaEmailNotificationCategoryRecipientJobData(KalturaEmailNotificationR
     """Job Data representing the provider of recipients for a single categoryId"""
 
     def __init__(self,
-            providerType=NotImplemented,
-            categoryUserFilter=NotImplemented):
+            providerType = NotImplemented,
+            categoryUserFilter = NotImplemented):
         KalturaEmailNotificationRecipientJobData.__init__(self,
             providerType)
 
@@ -411,9 +411,9 @@ class KalturaEmailNotificationCategoryRecipientProvider(KalturaEmailNotification
     """API object which provides the recipients of category related notifications."""
 
     def __init__(self,
-            categoryId=NotImplemented,
-            categoryIds=NotImplemented,
-            categoryUserFilter=NotImplemented):
+            categoryId = NotImplemented,
+            categoryIds = NotImplemented,
+            categoryUserFilter = NotImplemented):
         KalturaEmailNotificationRecipientProvider.__init__(self)
 
         # The ID of the category whose subscribers should receive the email notification.
@@ -471,12 +471,12 @@ class KalturaEmailNotificationGroupRecipientJobData(KalturaEmailNotificationReci
     """JobData representing the dynamic user receipient array"""
 
     def __init__(self,
-            providerType=NotImplemented,
-            groupId=NotImplemented):
+            providerType = NotImplemented,
+            groupId = NotImplemented):
         KalturaEmailNotificationRecipientJobData.__init__(self,
             providerType)
 
-        # @var string
+        # @var str
         self.groupId = groupId
 
 
@@ -507,10 +507,10 @@ class KalturaEmailNotificationGroupRecipientProvider(KalturaEmailNotificationRec
     """API class for recipient provider which constructs a dynamic list of recipients according to a user filter"""
 
     def __init__(self,
-            groupId=NotImplemented):
+            groupId = NotImplemented):
         KalturaEmailNotificationRecipientProvider.__init__(self)
 
-        # @var string
+        # @var str
         self.groupId = groupId
 
 
@@ -539,9 +539,9 @@ class KalturaEmailNotificationGroupRecipientProvider(KalturaEmailNotificationRec
 # @subpackage Client
 class KalturaEmailNotificationParameter(KalturaEventNotificationParameter):
     def __init__(self,
-            key=NotImplemented,
-            description=NotImplemented,
-            value=NotImplemented):
+            key = NotImplemented,
+            description = NotImplemented,
+            value = NotImplemented):
         KalturaEventNotificationParameter.__init__(self,
             key,
             description,
@@ -567,13 +567,13 @@ class KalturaEmailNotificationStaticRecipientJobData(KalturaEmailNotificationRec
     """JobData representing the static receipient array"""
 
     def __init__(self,
-            providerType=NotImplemented,
-            emailRecipients=NotImplemented):
+            providerType = NotImplemented,
+            emailRecipients = NotImplemented):
         KalturaEmailNotificationRecipientJobData.__init__(self,
             providerType)
 
         # Email to emails and names
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.emailRecipients = emailRecipients
 
 
@@ -604,11 +604,11 @@ class KalturaEmailNotificationStaticRecipientProvider(KalturaEmailNotificationRe
     """API class for recipient provider containing a static list of email recipients."""
 
     def __init__(self,
-            emailRecipients=NotImplemented):
+            emailRecipients = NotImplemented):
         KalturaEmailNotificationRecipientProvider.__init__(self)
 
         # Email to emails and names
-        # @var array of KalturaEmailNotificationRecipient
+        # @var List[KalturaEmailNotificationRecipient]
         self.emailRecipients = emailRecipients
 
 
@@ -637,36 +637,37 @@ class KalturaEmailNotificationStaticRecipientProvider(KalturaEmailNotificationRe
 # @subpackage Client
 class KalturaEmailNotificationTemplate(KalturaEventNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            format=NotImplemented,
-            subject=NotImplemented,
-            body=NotImplemented,
-            fromEmail=NotImplemented,
-            fromName=NotImplemented,
-            to=NotImplemented,
-            cc=NotImplemented,
-            bcc=NotImplemented,
-            replyTo=NotImplemented,
-            priority=NotImplemented,
-            confirmReadingTo=NotImplemented,
-            hostname=NotImplemented,
-            messageID=NotImplemented,
-            customHeaders=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            format = NotImplemented,
+            subject = NotImplemented,
+            body = NotImplemented,
+            fromEmail = NotImplemented,
+            fromName = NotImplemented,
+            to = NotImplemented,
+            cc = NotImplemented,
+            bcc = NotImplemented,
+            replyTo = NotImplemented,
+            priority = NotImplemented,
+            confirmReadingTo = NotImplemented,
+            hostname = NotImplemented,
+            messageID = NotImplemented,
+            customHeaders = NotImplemented):
         KalturaEventNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -683,26 +684,27 @@ class KalturaEmailNotificationTemplate(KalturaEventNotificationTemplate):
             eventObjectType,
             eventConditions,
             contentParameters,
-            userParameters)
+            userParameters,
+            eventDelayedCondition)
 
         # Define the email body format
         # @var KalturaEmailNotificationFormat
         self.format = format
 
         # Define the email subject
-        # @var string
+        # @var str
         self.subject = subject
 
         # Define the email body content
-        # @var string
+        # @var str
         self.body = body
 
         # Define the email sender email
-        # @var string
+        # @var str
         self.fromEmail = fromEmail
 
         # Define the email sender name
-        # @var string
+        # @var str
         self.fromName = fromName
 
         # Email recipient emails and names
@@ -726,21 +728,21 @@ class KalturaEmailNotificationTemplate(KalturaEventNotificationTemplate):
         self.priority = priority
 
         # Email address that a reading confirmation will be sent
-        # @var string
+        # @var str
         self.confirmReadingTo = confirmReadingTo
 
         # Hostname to use in Message-Id and Received headers and as default HELLO string. 
         # 	 If empty, the value returned by SERVER_NAME is used or 'localhost.localdomain'.
-        # @var string
+        # @var str
         self.hostname = hostname
 
         # Sets the message ID to be used in the Message-Id header.
         # 	 If empty, a unique id will be generated.
-        # @var string
+        # @var str
         self.messageID = messageID
 
         # Adds a e-mail custom header
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.customHeaders = customHeaders
 
 
@@ -875,8 +877,8 @@ class KalturaEmailNotificationUserRecipientJobData(KalturaEmailNotificationRecip
     """JobData representing the dynamic user receipient array"""
 
     def __init__(self,
-            providerType=NotImplemented,
-            filter=NotImplemented):
+            providerType = NotImplemented,
+            filter = NotImplemented):
         KalturaEmailNotificationRecipientJobData.__init__(self,
             providerType)
 
@@ -911,7 +913,7 @@ class KalturaEmailNotificationUserRecipientProvider(KalturaEmailNotificationReci
     """API class for recipient provider which constructs a dynamic list of recipients according to a user filter"""
 
     def __init__(self,
-            filter=NotImplemented):
+            filter = NotImplemented):
         KalturaEmailNotificationRecipientProvider.__init__(self)
 
         # @var KalturaUserFilter
@@ -943,29 +945,29 @@ class KalturaEmailNotificationUserRecipientProvider(KalturaEmailNotificationReci
 # @subpackage Client
 class KalturaEmailNotificationDispatchJobData(KalturaEventNotificationDispatchJobData):
     def __init__(self,
-            templateId=NotImplemented,
-            contentParameters=NotImplemented,
-            fromEmail=NotImplemented,
-            fromName=NotImplemented,
-            to=NotImplemented,
-            cc=NotImplemented,
-            bcc=NotImplemented,
-            replyTo=NotImplemented,
-            priority=NotImplemented,
-            confirmReadingTo=NotImplemented,
-            hostname=NotImplemented,
-            messageID=NotImplemented,
-            customHeaders=NotImplemented):
+            templateId = NotImplemented,
+            contentParameters = NotImplemented,
+            fromEmail = NotImplemented,
+            fromName = NotImplemented,
+            to = NotImplemented,
+            cc = NotImplemented,
+            bcc = NotImplemented,
+            replyTo = NotImplemented,
+            priority = NotImplemented,
+            confirmReadingTo = NotImplemented,
+            hostname = NotImplemented,
+            messageID = NotImplemented,
+            customHeaders = NotImplemented):
         KalturaEventNotificationDispatchJobData.__init__(self,
             templateId,
             contentParameters)
 
         # Define the email sender email
-        # @var string
+        # @var str
         self.fromEmail = fromEmail
 
         # Define the email sender name
-        # @var string
+        # @var str
         self.fromName = fromName
 
         # Email recipient emails and names, key is mail address and value is the name
@@ -989,21 +991,21 @@ class KalturaEmailNotificationDispatchJobData(KalturaEventNotificationDispatchJo
         self.priority = priority
 
         # Email address that a reading confirmation will be sent to
-        # @var string
+        # @var str
         self.confirmReadingTo = confirmReadingTo
 
         # Hostname to use in Message-Id and Received headers and as default HELO string. 
         # 	 If empty, the value returned by SERVER_NAME is used or 'localhost.localdomain'.
-        # @var string
+        # @var str
         self.hostname = hostname
 
         # Sets the message ID to be used in the Message-Id header.
         # 	 If empty, a unique id will be generated.
-        # @var string
+        # @var str
         self.messageID = messageID
 
         # Adds a e-mail custom header
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.customHeaders = customHeaders
 
 
@@ -1112,22 +1114,22 @@ class KalturaEmailNotificationDispatchJobData(KalturaEventNotificationDispatchJo
 # @subpackage Client
 class KalturaEmailNotificationTemplateBaseFilter(KalturaEventNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEventNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1164,22 +1166,22 @@ class KalturaEmailNotificationTemplateBaseFilter(KalturaEventNotificationTemplat
 # @subpackage Client
 class KalturaEmailNotificationTemplateFilter(KalturaEmailNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEmailNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

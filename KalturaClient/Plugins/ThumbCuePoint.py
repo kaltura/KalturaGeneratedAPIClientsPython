@@ -90,29 +90,29 @@ class KalturaTimedThumbAssetOrderBy(object):
 # @subpackage Client
 class KalturaThumbCuePoint(KalturaCuePoint):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented,
-            assetId=NotImplemented,
-            description=NotImplemented,
-            title=NotImplemented,
-            subType=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented,
+            assetId = NotImplemented,
+            description = NotImplemented,
+            title = NotImplemented,
+            subType = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -134,13 +134,13 @@ class KalturaThumbCuePoint(KalturaCuePoint):
             isMomentary,
             copiedFrom)
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         self.title = title
 
         # The sub type of the ThumbCuePoint
@@ -197,26 +197,26 @@ class KalturaThumbCuePoint(KalturaCuePoint):
 # @subpackage Client
 class KalturaTimedThumbAsset(KalturaThumbAsset):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            sizeInBytes=NotImplemented,
-            thumbParamsId=NotImplemented,
-            width=NotImplemented,
-            height=NotImplemented,
-            status=NotImplemented,
-            cuePointId=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            version = NotImplemented,
+            size = NotImplemented,
+            tags = NotImplemented,
+            fileExt = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            description = NotImplemented,
+            partnerData = NotImplemented,
+            partnerDescription = NotImplemented,
+            actualSourceAssetParamsIds = NotImplemented,
+            sizeInBytes = NotImplemented,
+            thumbParamsId = NotImplemented,
+            width = NotImplemented,
+            height = NotImplemented,
+            status = NotImplemented,
+            cuePointId = NotImplemented):
         KalturaThumbAsset.__init__(self,
             id,
             entryId,
@@ -239,7 +239,7 @@ class KalturaTimedThumbAsset(KalturaThumbAsset):
             status)
 
         # Associated thumb cue point ID
-        # @var string
+        # @var str
         # @insertonly
         self.cuePointId = cuePointId
 
@@ -269,47 +269,47 @@ class KalturaTimedThumbAsset(KalturaThumbAsset):
 # @subpackage Client
 class KalturaThumbCuePointBaseFilter(KalturaCuePointFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            descriptionLike=NotImplemented,
-            descriptionMultiLikeOr=NotImplemented,
-            descriptionMultiLikeAnd=NotImplemented,
-            titleLike=NotImplemented,
-            titleMultiLikeOr=NotImplemented,
-            titleMultiLikeAnd=NotImplemented,
-            subTypeEqual=NotImplemented,
-            subTypeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            descriptionLike = NotImplemented,
+            descriptionMultiLikeOr = NotImplemented,
+            descriptionMultiLikeAnd = NotImplemented,
+            titleLike = NotImplemented,
+            titleMultiLikeOr = NotImplemented,
+            titleMultiLikeAnd = NotImplemented,
+            subTypeEqual = NotImplemented,
+            subTypeIn = NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -345,28 +345,28 @@ class KalturaThumbCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
-        # @var string
+        # @var str
         self.descriptionLike = descriptionLike
 
-        # @var string
+        # @var str
         self.descriptionMultiLikeOr = descriptionMultiLikeOr
 
-        # @var string
+        # @var str
         self.descriptionMultiLikeAnd = descriptionMultiLikeAnd
 
-        # @var string
+        # @var str
         self.titleLike = titleLike
 
-        # @var string
+        # @var str
         self.titleMultiLikeOr = titleMultiLikeOr
 
-        # @var string
+        # @var str
         self.titleMultiLikeAnd = titleMultiLikeAnd
 
         # @var KalturaThumbCuePointSubType
         self.subTypeEqual = subTypeEqual
 
-        # @var string
+        # @var str
         self.subTypeIn = subTypeIn
 
 
@@ -451,47 +451,47 @@ class KalturaThumbCuePointBaseFilter(KalturaCuePointFilter):
 # @subpackage Client
 class KalturaThumbCuePointFilter(KalturaThumbCuePointBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            descriptionLike=NotImplemented,
-            descriptionMultiLikeOr=NotImplemented,
-            descriptionMultiLikeAnd=NotImplemented,
-            titleLike=NotImplemented,
-            titleMultiLikeOr=NotImplemented,
-            titleMultiLikeAnd=NotImplemented,
-            subTypeEqual=NotImplemented,
-            subTypeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            descriptionLike = NotImplemented,
+            descriptionMultiLikeOr = NotImplemented,
+            descriptionMultiLikeAnd = NotImplemented,
+            titleLike = NotImplemented,
+            titleMultiLikeOr = NotImplemented,
+            titleMultiLikeAnd = NotImplemented,
+            subTypeEqual = NotImplemented,
+            subTypeIn = NotImplemented):
         KalturaThumbCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -553,31 +553,31 @@ class KalturaThumbCuePointFilter(KalturaThumbCuePointBaseFilter):
 # @subpackage Client
 class KalturaTimedThumbAssetBaseFilter(KalturaThumbAssetFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            thumbParamsIdEqual=NotImplemented,
-            thumbParamsIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            thumbParamsIdEqual = NotImplemented,
+            thumbParamsIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaThumbAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -623,31 +623,31 @@ class KalturaTimedThumbAssetBaseFilter(KalturaThumbAssetFilter):
 # @subpackage Client
 class KalturaTimedThumbAssetFilter(KalturaTimedThumbAssetBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            thumbParamsIdEqual=NotImplemented,
-            thumbParamsIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            thumbParamsIdEqual = NotImplemented,
+            thumbParamsIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaTimedThumbAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

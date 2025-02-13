@@ -49,6 +49,8 @@ from ..Base import (
 # @subpackage Client
 class KalturaIntegrationProviderType(object):
     CIELO24 = "cielo24.Cielo24"
+    DEXTER = "dexterIntegration.Dexter"
+    EXAMPLE = "exampleIntegration.Example"
     VOICEBASE = "voicebase.Voicebase"
 
     def __init__(self, value):
@@ -114,14 +116,14 @@ class KalturaIntegrationJobTriggerData(KalturaObjectBase):
 # @subpackage Client
 class KalturaIntegrationJobData(KalturaJobData):
     def __init__(self,
-            callbackNotificationUrl=NotImplemented,
-            providerType=NotImplemented,
-            providerData=NotImplemented,
-            triggerType=NotImplemented,
-            triggerData=NotImplemented):
+            callbackNotificationUrl = NotImplemented,
+            providerType = NotImplemented,
+            providerData = NotImplemented,
+            triggerType = NotImplemented,
+            triggerData = NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
+        # @var str
         # @readonly
         self.callbackNotificationUrl = callbackNotificationUrl
 

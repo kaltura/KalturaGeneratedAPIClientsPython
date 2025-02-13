@@ -229,6 +229,7 @@ class KalturaESearchEntryAggregateByFieldName(object):
 class KalturaESearchEntryFieldName(object):
     ACCESS_CONTROL_ID = "access_control_id"
     ADMIN_TAGS = "admin_tags"
+    BROADCAST_ENTRY_ID = "broadcast_entry_id"
     CAPTIONS_CONTENT = "captions_content"
     CONVERSION_PROFILE_ID = "conversion_profile_id"
     CREATED_AT = "created_at"
@@ -257,8 +258,10 @@ class KalturaESearchEntryFieldName(object):
     PUSH_PUBLISH = "push_publish"
     RANK = "rank"
     RECORDED_ENTRY_ID = "recorded_entry_id"
+    RECYCLED_AT = "recycled_at"
     REDIRECT_ENTRY_ID = "redirect_entry_id"
     REFERENCE_ID = "reference_id"
+    ROOM_TYPE = "room_type"
     ROOT_ID = "root_id"
     SITE_URL = "site_url"
     SOURCE_TYPE = "source_type"
@@ -287,6 +290,7 @@ class KalturaESearchEntryOrderByFieldName(object):
     PLAYS_LAST_30_DAYS = "plays_last_30_days"
     PLAYS_LAST_7_DAYS = "plays_last_7_days"
     RANK = "rank"
+    RECYCLED_AT = "recycled_at"
     START_DATE = "start_date"
     UPDATED_AT = "updated_at"
     VIEWS = "views"
@@ -326,12 +330,14 @@ class KalturaESearchSortOrder(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchUserFieldName(object):
+    CAPABILITIES = "capabilities"
     COMPANY = "company"
     COUNTRY = "country"
     CREATED_AT = "created_at"
     EMAIL = "email"
     EXTERNAL_ID = "external_id"
     FIRST_NAME = "first_name"
+    FULL_NAME = "full_name"
     GROUP_IDS = "group_ids"
     IS_ADMIN = "is_admin"
     IS_HASHED = "is_hashed"
@@ -356,6 +362,7 @@ class KalturaESearchUserFieldName(object):
 # @subpackage Client
 class KalturaESearchUserOrderByFieldName(object):
     CREATED_AT = "created_at"
+    FULL_NAME = "full_name"
     USER_ID = "puser_id"
     SCREEN_NAME = "screen_name"
     UPDATED_AT = "updated_at"
@@ -422,7 +429,7 @@ class KalturaBeaconScheduledResourceBaseItem(KalturaESearchBaseItem):
 # @subpackage Client
 class KalturaESearchOrderByItem(KalturaObjectBase):
     def __init__(self,
-            sortOrder=NotImplemented):
+            sortOrder = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaESearchSortOrder
@@ -454,7 +461,7 @@ class KalturaESearchOrderByItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchAggregationItem(KalturaObjectBase):
     def __init__(self,
-            size=NotImplemented):
+            size = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -486,10 +493,10 @@ class KalturaESearchAggregationItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchAggregation(KalturaObjectBase):
     def __init__(self,
-            aggregations=NotImplemented):
+            aggregations = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaESearchAggregationItem
+        # @var List[KalturaESearchAggregationItem]
         self.aggregations = aggregations
 
 
@@ -518,11 +525,11 @@ class KalturaESearchAggregation(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchAggregationBucket(KalturaObjectBase):
     def __init__(self,
-            value=NotImplemented,
-            count=NotImplemented):
+            value = NotImplemented,
+            count = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.value = value
 
         # @var int
@@ -562,18 +569,18 @@ class KalturaESearchAggregationBucket(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchAggregationResponseItem(KalturaObjectBase):
     def __init__(self,
-            name=NotImplemented,
-            fieldName=NotImplemented,
-            buckets=NotImplemented):
+            name = NotImplemented,
+            fieldName = NotImplemented,
+            buckets = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.fieldName = fieldName
 
-        # @var array of KalturaESearchAggregationBucket
+        # @var List[KalturaESearchAggregationBucket]
         self.buckets = buckets
 
 
@@ -658,14 +665,14 @@ class KalturaESearchCategoryBaseItem(KalturaESearchBaseItem):
 # @subpackage Client
 class KalturaESearchHighlight(KalturaObjectBase):
     def __init__(self,
-            fieldName=NotImplemented,
-            hits=NotImplemented):
+            fieldName = NotImplemented,
+            hits = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.fieldName = fieldName
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.hits = hits
 
 
@@ -702,10 +709,10 @@ class KalturaESearchHighlight(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchItemData(KalturaObjectBase):
     def __init__(self,
-            highlight=NotImplemented):
+            highlight = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaESearchHighlight
+        # @var List[KalturaESearchHighlight]
         self.highlight = highlight
 
 
@@ -734,18 +741,18 @@ class KalturaESearchItemData(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchItemDataResult(KalturaObjectBase):
     def __init__(self,
-            totalCount=NotImplemented,
-            items=NotImplemented,
-            itemsType=NotImplemented):
+            totalCount = NotImplemented,
+            items = NotImplemented,
+            itemsType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
         self.totalCount = totalCount
 
-        # @var array of KalturaESearchItemData
+        # @var List[KalturaESearchItemData]
         self.items = items
 
-        # @var string
+        # @var str
         self.itemsType = itemsType
 
 
@@ -790,14 +797,14 @@ class KalturaESearchItemDataResult(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchResult(KalturaObjectBase):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented):
+            highlight = NotImplemented,
+            itemsData = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaESearchHighlight
+        # @var List[KalturaESearchHighlight]
         self.highlight = highlight
 
-        # @var array of KalturaESearchItemDataResult
+        # @var List[KalturaESearchItemDataResult]
         self.itemsData = itemsData
 
 
@@ -834,9 +841,9 @@ class KalturaESearchResult(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchCategoryResult(KalturaESearchResult):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
+            highlight = NotImplemented,
+            itemsData = NotImplemented,
+            object = NotImplemented):
         KalturaESearchResult.__init__(self,
             highlight,
             itemsData)
@@ -930,9 +937,9 @@ class KalturaESearchEntryNestedBaseItem(KalturaESearchEntryBaseNestedObject):
 # @subpackage Client
 class KalturaESearchEntryResult(KalturaESearchResult):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
+            highlight = NotImplemented,
+            itemsData = NotImplemented,
+            object = NotImplemented):
         KalturaESearchResult.__init__(self,
             highlight,
             itemsData)
@@ -966,9 +973,9 @@ class KalturaESearchEntryResult(KalturaESearchResult):
 # @subpackage Client
 class KalturaESearchGroupResult(KalturaESearchResult):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
+            highlight = NotImplemented,
+            itemsData = NotImplemented,
+            object = NotImplemented):
         KalturaESearchResult.__init__(self,
             highlight,
             itemsData)
@@ -1002,10 +1009,10 @@ class KalturaESearchGroupResult(KalturaESearchResult):
 # @subpackage Client
 class KalturaESearchOrderBy(KalturaObjectBase):
     def __init__(self,
-            orderItems=NotImplemented):
+            orderItems = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaESearchOrderByItem
+        # @var List[KalturaESearchOrderByItem]
         self.orderItems = orderItems
 
 
@@ -1034,25 +1041,30 @@ class KalturaESearchOrderBy(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchParams(KalturaObjectBase):
     def __init__(self,
-            objectStatuses=NotImplemented,
-            objectId=NotImplemented,
-            orderBy=NotImplemented):
+            objectStatuses = NotImplemented,
+            objectId = NotImplemented,
+            orderBy = NotImplemented,
+            ignoreSynonym = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.objectStatuses = objectStatuses
 
-        # @var string
+        # @var str
         self.objectId = objectId
 
         # @var KalturaESearchOrderBy
         self.orderBy = orderBy
+
+        # @var bool
+        self.ignoreSynonym = ignoreSynonym
 
 
     PROPERTY_LOADERS = {
         'objectStatuses': getXmlNodeText, 
         'objectId': getXmlNodeText, 
         'orderBy': (KalturaObjectFactory.create, 'KalturaESearchOrderBy'), 
+        'ignoreSynonym': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -1065,6 +1077,7 @@ class KalturaESearchParams(KalturaObjectBase):
         kparams.addStringIfDefined("objectStatuses", self.objectStatuses)
         kparams.addStringIfDefined("objectId", self.objectId)
         kparams.addObjectIfDefined("orderBy", self.orderBy)
+        kparams.addBoolIfDefined("ignoreSynonym", self.ignoreSynonym)
         return kparams
 
     def getObjectStatuses(self):
@@ -1085,15 +1098,21 @@ class KalturaESearchParams(KalturaObjectBase):
     def setOrderBy(self, newOrderBy):
         self.orderBy = newOrderBy
 
+    def getIgnoreSynonym(self):
+        return self.ignoreSynonym
+
+    def setIgnoreSynonym(self, newIgnoreSynonym):
+        self.ignoreSynonym = newIgnoreSynonym
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchRange(KalturaObjectBase):
     def __init__(self,
-            greaterThanOrEqual=NotImplemented,
-            lessThanOrEqual=NotImplemented,
-            greaterThan=NotImplemented,
-            lessThan=NotImplemented):
+            greaterThanOrEqual = NotImplemented,
+            lessThanOrEqual = NotImplemented,
+            greaterThan = NotImplemented,
+            lessThan = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -1158,7 +1177,7 @@ class KalturaESearchRange(KalturaObjectBase):
 # @subpackage Client
 class KalturaESearchResponse(KalturaObjectBase):
     def __init__(self,
-            totalCount=NotImplemented):
+            totalCount = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -1207,9 +1226,9 @@ class KalturaESearchUserBaseItem(KalturaESearchBaseItem):
 # @subpackage Client
 class KalturaESearchUserResult(KalturaESearchResult):
     def __init__(self,
-            highlight=NotImplemented,
-            itemsData=NotImplemented,
-            object=NotImplemented):
+            highlight = NotImplemented,
+            itemsData = NotImplemented,
+            object = NotImplemented):
         KalturaESearchResult.__init__(self,
             highlight,
             itemsData)
@@ -1243,14 +1262,14 @@ class KalturaESearchUserResult(KalturaESearchResult):
 # @subpackage Client
 class KalturaESearchEntryOperator(KalturaESearchEntryBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaESearchEntryBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaESearchEntryBaseItem
+        # @var List[KalturaESearchEntryBaseItem]
         self.searchItems = searchItems
 
 
@@ -1287,17 +1306,17 @@ class KalturaESearchEntryOperator(KalturaESearchEntryBaseItem):
 # @subpackage Client
 class KalturaESearchCaptionItemData(KalturaESearchItemData):
     def __init__(self,
-            highlight=NotImplemented,
-            line=NotImplemented,
-            startsAt=NotImplemented,
-            endsAt=NotImplemented,
-            language=NotImplemented,
-            captionAssetId=NotImplemented,
-            label=NotImplemented):
+            highlight = NotImplemented,
+            line = NotImplemented,
+            startsAt = NotImplemented,
+            endsAt = NotImplemented,
+            language = NotImplemented,
+            captionAssetId = NotImplemented,
+            label = NotImplemented):
         KalturaESearchItemData.__init__(self,
             highlight)
 
-        # @var string
+        # @var str
         self.line = line
 
         # @var int
@@ -1306,13 +1325,13 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
         # @var int
         self.endsAt = endsAt
 
-        # @var string
+        # @var str
         self.language = language
 
-        # @var string
+        # @var str
         self.captionAssetId = captionAssetId
 
-        # @var string
+        # @var str
         self.label = label
 
 
@@ -1381,8 +1400,8 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
 # @subpackage Client
 class KalturaESearchCategoryAggregationItem(KalturaESearchAggregationItem):
     def __init__(self,
-            size=NotImplemented,
-            fieldName=NotImplemented):
+            size = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAggregationItem.__init__(self,
             size)
 
@@ -1415,8 +1434,8 @@ class KalturaESearchCategoryAggregationItem(KalturaESearchAggregationItem):
 # @subpackage Client
 class KalturaESearchCategoryOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            sortField=NotImplemented):
+            sortOrder = NotImplemented,
+            sortField = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
@@ -1449,14 +1468,14 @@ class KalturaESearchCategoryOrderByItem(KalturaESearchOrderByItem):
 # @subpackage Client
 class KalturaESearchCategoryOperator(KalturaESearchCategoryBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaESearchCategoryBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaESearchCategoryBaseItem
+        # @var List[KalturaESearchCategoryBaseItem]
         self.searchItems = searchItems
 
 
@@ -1493,14 +1512,16 @@ class KalturaESearchCategoryOperator(KalturaESearchCategoryBaseItem):
 # @subpackage Client
 class KalturaESearchCategoryParams(KalturaESearchParams):
     def __init__(self,
-            objectStatuses=NotImplemented,
-            objectId=NotImplemented,
-            orderBy=NotImplemented,
-            searchOperator=NotImplemented):
+            objectStatuses = NotImplemented,
+            objectId = NotImplemented,
+            orderBy = NotImplemented,
+            ignoreSynonym = NotImplemented,
+            searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
-            orderBy)
+            orderBy,
+            ignoreSynonym)
 
         # @var KalturaESearchCategoryOperator
         self.searchOperator = searchOperator
@@ -1531,12 +1552,12 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
 # @subpackage Client
 class KalturaESearchCategoryResponse(KalturaESearchResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaESearchResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaESearchCategoryResult
+        # @var List[KalturaESearchCategoryResult]
         # @readonly
         self.objects = objects
 
@@ -1562,60 +1583,60 @@ class KalturaESearchCategoryResponse(KalturaESearchResponse):
 # @subpackage Client
 class KalturaESearchCuePointItemData(KalturaESearchItemData):
     def __init__(self,
-            highlight=NotImplemented,
-            cuePointType=NotImplemented,
-            id=NotImplemented,
-            name=NotImplemented,
-            text=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            endTime=NotImplemented,
-            subType=NotImplemented,
-            question=NotImplemented,
-            answers=NotImplemented,
-            hint=NotImplemented,
-            explanation=NotImplemented,
-            assetId=NotImplemented):
+            highlight = NotImplemented,
+            cuePointType = NotImplemented,
+            id = NotImplemented,
+            name = NotImplemented,
+            text = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            endTime = NotImplemented,
+            subType = NotImplemented,
+            question = NotImplemented,
+            answers = NotImplemented,
+            hint = NotImplemented,
+            explanation = NotImplemented,
+            assetId = NotImplemented):
         KalturaESearchItemData.__init__(self,
             highlight)
 
-        # @var string
+        # @var str
         self.cuePointType = cuePointType
 
-        # @var string
+        # @var str
         self.id = id
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.text = text
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.tags = tags
 
-        # @var string
+        # @var str
         self.startTime = startTime
 
-        # @var string
+        # @var str
         self.endTime = endTime
 
-        # @var string
+        # @var str
         self.subType = subType
 
-        # @var string
+        # @var str
         self.question = question
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.answers = answers
 
-        # @var string
+        # @var str
         self.hint = hint
 
-        # @var string
+        # @var str
         self.explanation = explanation
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
 
@@ -1740,8 +1761,8 @@ class KalturaESearchCuePointItemData(KalturaESearchItemData):
 # @subpackage Client
 class KalturaESearchCuepointsAggregationItem(KalturaESearchAggregationItem):
     def __init__(self,
-            size=NotImplemented,
-            fieldName=NotImplemented):
+            size = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAggregationItem.__init__(self,
             size)
 
@@ -1774,8 +1795,8 @@ class KalturaESearchCuepointsAggregationItem(KalturaESearchAggregationItem):
 # @subpackage Client
 class KalturaESearchEntryAggregationItem(KalturaESearchAggregationItem):
     def __init__(self,
-            size=NotImplemented,
-            fieldName=NotImplemented):
+            size = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAggregationItem.__init__(self,
             size)
 
@@ -1808,8 +1829,8 @@ class KalturaESearchEntryAggregationItem(KalturaESearchAggregationItem):
 # @subpackage Client
 class KalturaESearchEntryOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            sortField=NotImplemented):
+            sortOrder = NotImplemented,
+            sortField = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
@@ -1842,15 +1863,17 @@ class KalturaESearchEntryOrderByItem(KalturaESearchOrderByItem):
 # @subpackage Client
 class KalturaESearchEntryParams(KalturaESearchParams):
     def __init__(self,
-            objectStatuses=NotImplemented,
-            objectId=NotImplemented,
-            orderBy=NotImplemented,
-            searchOperator=NotImplemented,
-            aggregations=NotImplemented):
+            objectStatuses = NotImplemented,
+            objectId = NotImplemented,
+            orderBy = NotImplemented,
+            ignoreSynonym = NotImplemented,
+            searchOperator = NotImplemented,
+            aggregations = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
-            orderBy)
+            orderBy,
+            ignoreSynonym)
 
         # @var KalturaESearchEntryOperator
         self.searchOperator = searchOperator
@@ -1892,17 +1915,17 @@ class KalturaESearchEntryParams(KalturaESearchParams):
 # @subpackage Client
 class KalturaESearchEntryResponse(KalturaESearchResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented,
-            aggregations=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented,
+            aggregations = NotImplemented):
         KalturaESearchResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaESearchEntryResult
+        # @var List[KalturaESearchEntryResult]
         # @readonly
         self.objects = objects
 
-        # @var array of KalturaESearchAggregationResponseItem
+        # @var List[KalturaESearchAggregationResponseItem]
         # @readonly
         self.aggregations = aggregations
 
@@ -1932,8 +1955,8 @@ class KalturaESearchEntryResponse(KalturaESearchResponse):
 # @subpackage Client
 class KalturaESearchGroupOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            sortField=NotImplemented):
+            sortOrder = NotImplemented,
+            sortField = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
@@ -1966,14 +1989,16 @@ class KalturaESearchGroupOrderByItem(KalturaESearchOrderByItem):
 # @subpackage Client
 class KalturaESearchGroupParams(KalturaESearchParams):
     def __init__(self,
-            objectStatuses=NotImplemented,
-            objectId=NotImplemented,
-            orderBy=NotImplemented,
-            searchOperator=NotImplemented):
+            objectStatuses = NotImplemented,
+            objectId = NotImplemented,
+            orderBy = NotImplemented,
+            ignoreSynonym = NotImplemented,
+            searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
-            orderBy)
+            orderBy,
+            ignoreSynonym)
 
         # @var KalturaESearchGroupOperator
         self.searchOperator = searchOperator
@@ -2004,12 +2029,12 @@ class KalturaESearchGroupParams(KalturaESearchParams):
 # @subpackage Client
 class KalturaESearchGroupResponse(KalturaESearchResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaESearchResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaESearchGroupResult
+        # @var List[KalturaESearchGroupResult]
         # @readonly
         self.objects = objects
 
@@ -2035,8 +2060,8 @@ class KalturaESearchGroupResponse(KalturaESearchResponse):
 # @subpackage Client
 class KalturaESearchMetadataAggregationItem(KalturaESearchAggregationItem):
     def __init__(self,
-            size=NotImplemented,
-            fieldName=NotImplemented):
+            size = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAggregationItem.__init__(self,
             size)
 
@@ -2069,16 +2094,16 @@ class KalturaESearchMetadataAggregationItem(KalturaESearchAggregationItem):
 # @subpackage Client
 class KalturaESearchMetadataItemData(KalturaESearchItemData):
     def __init__(self,
-            highlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented,
-            valueText=NotImplemented,
-            valueInt=NotImplemented):
+            highlight = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataFieldId = NotImplemented,
+            valueText = NotImplemented,
+            valueInt = NotImplemented):
         KalturaESearchItemData.__init__(self,
             highlight)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int
@@ -2087,7 +2112,7 @@ class KalturaESearchMetadataItemData(KalturaESearchItemData):
         # @var int
         self.metadataFieldId = metadataFieldId
 
-        # @var string
+        # @var str
         self.valueText = valueText
 
         # @var int
@@ -2151,13 +2176,13 @@ class KalturaESearchMetadataItemData(KalturaESearchItemData):
 # @subpackage Client
 class KalturaESearchMetadataOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented):
+            sortOrder = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int
@@ -2197,8 +2222,8 @@ class KalturaESearchMetadataOrderByItem(KalturaESearchOrderByItem):
 # @subpackage Client
 class KalturaESearchUserOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            sortField=NotImplemented):
+            sortOrder = NotImplemented,
+            sortField = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
@@ -2231,14 +2256,14 @@ class KalturaESearchUserOrderByItem(KalturaESearchOrderByItem):
 # @subpackage Client
 class KalturaESearchUserOperator(KalturaESearchUserBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaESearchUserBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaESearchUserBaseItem
+        # @var List[KalturaESearchUserBaseItem]
         self.searchItems = searchItems
 
 
@@ -2275,14 +2300,16 @@ class KalturaESearchUserOperator(KalturaESearchUserBaseItem):
 # @subpackage Client
 class KalturaESearchUserParams(KalturaESearchParams):
     def __init__(self,
-            objectStatuses=NotImplemented,
-            objectId=NotImplemented,
-            orderBy=NotImplemented,
-            searchOperator=NotImplemented):
+            objectStatuses = NotImplemented,
+            objectId = NotImplemented,
+            orderBy = NotImplemented,
+            ignoreSynonym = NotImplemented,
+            searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
-            orderBy)
+            orderBy,
+            ignoreSynonym)
 
         # @var KalturaESearchUserOperator
         self.searchOperator = searchOperator
@@ -2313,12 +2340,12 @@ class KalturaESearchUserParams(KalturaESearchParams):
 # @subpackage Client
 class KalturaESearchUserResponse(KalturaESearchResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaESearchResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaESearchUserResult
+        # @var List[KalturaESearchUserResult]
         # @readonly
         self.objects = objects
 
@@ -2344,7 +2371,7 @@ class KalturaESearchUserResponse(KalturaESearchResponse):
 # @subpackage Client
 class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            hasCaption=NotImplemented):
+            hasCaption = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -2376,12 +2403,12 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
 # @subpackage Client
 class KalturaBeaconAbstractScheduledResourceItem(KalturaBeaconScheduledResourceBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented):
         KalturaBeaconScheduledResourceBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -2432,13 +2459,13 @@ class KalturaBeaconAbstractScheduledResourceItem(KalturaBeaconScheduledResourceB
 # @subpackage Client
 class KalturaESearchAbstractCategoryItem(KalturaESearchCategoryBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchCategoryBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -2500,13 +2527,13 @@ class KalturaESearchAbstractCategoryItem(KalturaESearchCategoryBaseItem):
 # @subpackage Client
 class KalturaESearchAbstractEntryItem(KalturaESearchEntryBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchEntryBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -2568,13 +2595,13 @@ class KalturaESearchAbstractEntryItem(KalturaESearchEntryBaseItem):
 # @subpackage Client
 class KalturaESearchAbstractUserItem(KalturaESearchUserBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchUserBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -2636,12 +2663,12 @@ class KalturaESearchAbstractUserItem(KalturaESearchUserBaseItem):
 # @subpackage Client
 class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
     def __init__(self,
-            userName=NotImplemented,
-            userMail=NotImplemented,
-            outputPath=NotImplemented,
-            sharedOutputPath=NotImplemented,
-            searchParams=NotImplemented,
-            options=NotImplemented):
+            userName = NotImplemented,
+            userMail = NotImplemented,
+            outputPath = NotImplemented,
+            sharedOutputPath = NotImplemented,
+            searchParams = NotImplemented,
+            options = NotImplemented):
         KalturaExportCsvJobData.__init__(self,
             userName,
             userMail,
@@ -2653,7 +2680,7 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
         self.searchParams = searchParams
 
         # options
-        # @var array of KalturaExportToCsvOptions
+        # @var List[KalturaExportToCsvOptions]
         self.options = options
 
 
@@ -2690,12 +2717,12 @@ class KalturaMediaEsearchExportToCsvJobData(KalturaExportCsvJobData):
 # @subpackage Client
 class KalturaESearchCategoryEntryItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented,
-            categoryEntryStatus=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented,
+            categoryEntryStatus = NotImplemented):
         KalturaESearchAbstractEntryItem.__init__(self,
             searchTerm,
             itemType,
@@ -2742,11 +2769,11 @@ class KalturaESearchCategoryEntryItem(KalturaESearchAbstractEntryItem):
 # @subpackage Client
 class KalturaESearchCategoryItem(KalturaESearchAbstractCategoryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAbstractCategoryItem.__init__(self,
             searchTerm,
             itemType,
@@ -2782,20 +2809,20 @@ class KalturaESearchCategoryItem(KalturaESearchAbstractCategoryItem):
 # @subpackage Client
 class KalturaESearchCategoryMetadataItem(KalturaESearchAbstractCategoryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataFieldId = NotImplemented):
         KalturaESearchAbstractCategoryItem.__init__(self,
             searchTerm,
             itemType,
             range,
             addHighlight)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int
@@ -2846,13 +2873,13 @@ class KalturaESearchCategoryMetadataItem(KalturaESearchAbstractCategoryItem):
 # @subpackage Client
 class KalturaESearchCategoryUserItem(KalturaESearchAbstractCategoryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented,
-            permissionLevel=NotImplemented,
-            permissionName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented,
+            permissionLevel = NotImplemented,
+            permissionName = NotImplemented):
         KalturaESearchAbstractCategoryItem.__init__(self,
             searchTerm,
             itemType,
@@ -2865,7 +2892,7 @@ class KalturaESearchCategoryUserItem(KalturaESearchAbstractCategoryItem):
         # @var KalturaCategoryUserPermissionLevel
         self.permissionLevel = permissionLevel
 
-        # @var string
+        # @var str
         self.permissionName = permissionName
 
 
@@ -2910,11 +2937,11 @@ class KalturaESearchCategoryUserItem(KalturaESearchAbstractCategoryItem):
 # @subpackage Client
 class KalturaESearchEntryItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAbstractEntryItem.__init__(self,
             searchTerm,
             itemType,
@@ -2950,12 +2977,12 @@ class KalturaESearchEntryItem(KalturaESearchAbstractEntryItem):
 # @subpackage Client
 class KalturaESearchGroupUserItem(KalturaESearchAbstractUserItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented,
-            creationMode=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented,
+            creationMode = NotImplemented):
         KalturaESearchAbstractUserItem.__init__(self,
             searchTerm,
             itemType,
@@ -3002,10 +3029,10 @@ class KalturaESearchGroupUserItem(KalturaESearchAbstractUserItem):
 # @subpackage Client
 class KalturaESearchUnifiedItem(KalturaESearchAbstractEntryItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchAbstractEntryItem.__init__(self,
             searchTerm,
             itemType,
@@ -3030,11 +3057,11 @@ class KalturaESearchUnifiedItem(KalturaESearchAbstractEntryItem):
 # @subpackage Client
 class KalturaESearchUserItem(KalturaESearchAbstractUserItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAbstractUserItem.__init__(self,
             searchTerm,
             itemType,
@@ -3070,20 +3097,20 @@ class KalturaESearchUserItem(KalturaESearchAbstractUserItem):
 # @subpackage Client
 class KalturaESearchUserMetadataItem(KalturaESearchAbstractUserItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataFieldId = NotImplemented):
         KalturaESearchAbstractUserItem.__init__(self,
             searchTerm,
             itemType,
             range,
             addHighlight)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int
@@ -3134,13 +3161,13 @@ class KalturaESearchUserMetadataItem(KalturaESearchAbstractUserItem):
 # @subpackage Client
 class KalturaESearchEntryAbstractNestedItem(KalturaESearchEntryNestedBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchEntryNestedBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -3202,14 +3229,14 @@ class KalturaESearchEntryAbstractNestedItem(KalturaESearchEntryNestedBaseItem):
 # @subpackage Client
 class KalturaESearchNestedOperator(KalturaESearchEntryNestedBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaESearchEntryNestedBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaESearchEntryNestedBaseItem
+        # @var List[KalturaESearchEntryNestedBaseItem]
         self.searchItems = searchItems
 
 
@@ -3246,11 +3273,11 @@ class KalturaESearchNestedOperator(KalturaESearchEntryNestedBaseItem):
 # @subpackage Client
 class KalturaESearchCaptionItem(KalturaESearchEntryAbstractNestedItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchEntryAbstractNestedItem.__init__(self,
             searchTerm,
             itemType,
@@ -3286,11 +3313,11 @@ class KalturaESearchCaptionItem(KalturaESearchEntryAbstractNestedItem):
 # @subpackage Client
 class KalturaESearchCuePointItem(KalturaESearchEntryAbstractNestedItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchEntryAbstractNestedItem.__init__(self,
             searchTerm,
             itemType,
@@ -3326,20 +3353,20 @@ class KalturaESearchCuePointItem(KalturaESearchEntryAbstractNestedItem):
 # @subpackage Client
 class KalturaESearchEntryMetadataItem(KalturaESearchEntryAbstractNestedItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataFieldId = NotImplemented):
         KalturaESearchEntryAbstractNestedItem.__init__(self,
             searchTerm,
             itemType,
             range,
             addHighlight)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int

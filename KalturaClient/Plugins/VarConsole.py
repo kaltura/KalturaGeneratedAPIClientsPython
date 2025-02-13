@@ -49,28 +49,28 @@ from ..Base import (
 # @subpackage Client
 class KalturaVarPartnerUsageItem(KalturaObjectBase):
     def __init__(self,
-            partnerId=NotImplemented,
-            partnerName=NotImplemented,
-            partnerStatus=NotImplemented,
-            partnerPackage=NotImplemented,
-            partnerCreatedAt=NotImplemented,
-            views=NotImplemented,
-            plays=NotImplemented,
-            entriesCount=NotImplemented,
-            totalEntriesCount=NotImplemented,
-            videoEntriesCount=NotImplemented,
-            imageEntriesCount=NotImplemented,
-            audioEntriesCount=NotImplemented,
-            mixEntriesCount=NotImplemented,
-            bandwidth=NotImplemented,
-            totalStorage=NotImplemented,
-            storage=NotImplemented,
-            deletedStorage=NotImplemented,
-            peakStorage=NotImplemented,
-            avgStorage=NotImplemented,
-            combinedStorageBandwidth=NotImplemented,
-            transcodingUsage=NotImplemented,
-            dateId=NotImplemented):
+            partnerId = NotImplemented,
+            partnerName = NotImplemented,
+            partnerStatus = NotImplemented,
+            partnerPackage = NotImplemented,
+            partnerCreatedAt = NotImplemented,
+            views = NotImplemented,
+            plays = NotImplemented,
+            entriesCount = NotImplemented,
+            totalEntriesCount = NotImplemented,
+            videoEntriesCount = NotImplemented,
+            imageEntriesCount = NotImplemented,
+            audioEntriesCount = NotImplemented,
+            mixEntriesCount = NotImplemented,
+            bandwidth = NotImplemented,
+            totalStorage = NotImplemented,
+            storage = NotImplemented,
+            deletedStorage = NotImplemented,
+            peakStorage = NotImplemented,
+            avgStorage = NotImplemented,
+            combinedStorageBandwidth = NotImplemented,
+            transcodingUsage = NotImplemented,
+            dateId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Partner ID
@@ -78,7 +78,7 @@ class KalturaVarPartnerUsageItem(KalturaObjectBase):
         self.partnerId = partnerId
 
         # Partner name
-        # @var string
+        # @var str
         self.partnerName = partnerName
 
         # Partner status
@@ -158,7 +158,7 @@ class KalturaVarPartnerUsageItem(KalturaObjectBase):
         self.transcodingUsage = transcodingUsage
 
         # TGhe date at which the report was taken - Unix Timestamp
-        # @var string
+        # @var str
         self.dateId = dateId
 
 
@@ -355,16 +355,16 @@ class KalturaVarPartnerUsageItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaPartnerUsageListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            total=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            total = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
         # @var KalturaVarPartnerUsageItem
         self.total = total
 
-        # @var array of KalturaVarPartnerUsageItem
+        # @var List[KalturaVarPartnerUsageItem]
         self.objects = objects
 
 
@@ -401,28 +401,28 @@ class KalturaPartnerUsageListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaVarPartnerUsageTotalItem(KalturaVarPartnerUsageItem):
     def __init__(self,
-            partnerId=NotImplemented,
-            partnerName=NotImplemented,
-            partnerStatus=NotImplemented,
-            partnerPackage=NotImplemented,
-            partnerCreatedAt=NotImplemented,
-            views=NotImplemented,
-            plays=NotImplemented,
-            entriesCount=NotImplemented,
-            totalEntriesCount=NotImplemented,
-            videoEntriesCount=NotImplemented,
-            imageEntriesCount=NotImplemented,
-            audioEntriesCount=NotImplemented,
-            mixEntriesCount=NotImplemented,
-            bandwidth=NotImplemented,
-            totalStorage=NotImplemented,
-            storage=NotImplemented,
-            deletedStorage=NotImplemented,
-            peakStorage=NotImplemented,
-            avgStorage=NotImplemented,
-            combinedStorageBandwidth=NotImplemented,
-            transcodingUsage=NotImplemented,
-            dateId=NotImplemented):
+            partnerId = NotImplemented,
+            partnerName = NotImplemented,
+            partnerStatus = NotImplemented,
+            partnerPackage = NotImplemented,
+            partnerCreatedAt = NotImplemented,
+            views = NotImplemented,
+            plays = NotImplemented,
+            entriesCount = NotImplemented,
+            totalEntriesCount = NotImplemented,
+            videoEntriesCount = NotImplemented,
+            imageEntriesCount = NotImplemented,
+            audioEntriesCount = NotImplemented,
+            mixEntriesCount = NotImplemented,
+            bandwidth = NotImplemented,
+            totalStorage = NotImplemented,
+            storage = NotImplemented,
+            deletedStorage = NotImplemented,
+            peakStorage = NotImplemented,
+            avgStorage = NotImplemented,
+            combinedStorageBandwidth = NotImplemented,
+            transcodingUsage = NotImplemented,
+            dateId = NotImplemented):
         KalturaVarPartnerUsageItem.__init__(self,
             partnerId,
             partnerName,

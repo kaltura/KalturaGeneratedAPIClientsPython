@@ -63,46 +63,47 @@ class KalturaKontikiStorageProfileOrderBy(object):
 # @subpackage Client
 class KalturaKontikiStorageProfile(KalturaStorageProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            desciption=NotImplemented,
-            status=NotImplemented,
-            protocol=NotImplemented,
-            storageUrl=NotImplemented,
-            storageBaseDir=NotImplemented,
-            pathPrefix=NotImplemented,
-            storageUsername=NotImplemented,
-            storagePassword=NotImplemented,
-            storageFtpPassiveMode=NotImplemented,
-            minFileSize=NotImplemented,
-            maxFileSize=NotImplemented,
-            flavorParamsIds=NotImplemented,
-            maxConcurrentConnections=NotImplemented,
-            pathManagerClass=NotImplemented,
-            pathManagerParams=NotImplemented,
-            trigger=NotImplemented,
-            deliveryPriority=NotImplemented,
-            deliveryStatus=NotImplemented,
-            readyBehavior=NotImplemented,
-            allowAutoDelete=NotImplemented,
-            createFileLink=NotImplemented,
-            rules=NotImplemented,
-            deliveryProfileIds=NotImplemented,
-            privateKey=NotImplemented,
-            publicKey=NotImplemented,
-            passPhrase=NotImplemented,
-            port=NotImplemented,
-            shouldExportThumbs=NotImplemented,
-            packagerUrl=NotImplemented,
-            exportPeriodically=NotImplemented,
-            excludedFlavorParamsIds=NotImplemented,
-            shouldExportCaptions=NotImplemented,
-            excludedEntryTypes=NotImplemented,
-            serviceToken=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            desciption = NotImplemented,
+            status = NotImplemented,
+            protocol = NotImplemented,
+            storageUrl = NotImplemented,
+            storageBaseDir = NotImplemented,
+            pathPrefix = NotImplemented,
+            storageUsername = NotImplemented,
+            storagePassword = NotImplemented,
+            storageFtpPassiveMode = NotImplemented,
+            minFileSize = NotImplemented,
+            maxFileSize = NotImplemented,
+            flavorParamsIds = NotImplemented,
+            maxConcurrentConnections = NotImplemented,
+            pathManagerClass = NotImplemented,
+            pathManagerParams = NotImplemented,
+            trigger = NotImplemented,
+            deliveryPriority = NotImplemented,
+            deliveryStatus = NotImplemented,
+            readyBehavior = NotImplemented,
+            allowAutoDelete = NotImplemented,
+            createFileLink = NotImplemented,
+            rules = NotImplemented,
+            deliveryProfileIds = NotImplemented,
+            privateKey = NotImplemented,
+            publicKey = NotImplemented,
+            passPhrase = NotImplemented,
+            port = NotImplemented,
+            shouldExportThumbs = NotImplemented,
+            packagerUrl = NotImplemented,
+            exportPeriodically = NotImplemented,
+            excludedFlavorParamsIds = NotImplemented,
+            shouldExportCaptions = NotImplemented,
+            excludedEntryTypes = NotImplemented,
+            additionalInfo = NotImplemented,
+            serviceToken = NotImplemented):
         KalturaStorageProfile.__init__(self,
             id,
             createdAt,
@@ -142,9 +143,10 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
             exportPeriodically,
             excludedFlavorParamsIds,
             shouldExportCaptions,
-            excludedEntryTypes)
+            excludedEntryTypes,
+            additionalInfo)
 
-        # @var string
+        # @var str
         self.serviceToken = serviceToken
 
 
@@ -173,19 +175,19 @@ class KalturaKontikiStorageProfile(KalturaStorageProfile):
 # @subpackage Client
 class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
     def __init__(self,
-            serverUrl=NotImplemented,
-            serverUsername=NotImplemented,
-            serverPassword=NotImplemented,
-            serverPrivateKey=NotImplemented,
-            serverPublicKey=NotImplemented,
-            serverPassPhrase=NotImplemented,
-            ftpPassiveMode=NotImplemented,
-            srcFileSyncLocalPath=NotImplemented,
-            srcFileEncryptionKey=NotImplemented,
-            srcFileSyncId=NotImplemented,
-            destFileSyncStoredPath=NotImplemented,
-            contentMoid=NotImplemented,
-            serviceToken=NotImplemented):
+            serverUrl = NotImplemented,
+            serverUsername = NotImplemented,
+            serverPassword = NotImplemented,
+            serverPrivateKey = NotImplemented,
+            serverPublicKey = NotImplemented,
+            serverPassPhrase = NotImplemented,
+            ftpPassiveMode = NotImplemented,
+            srcFileSyncLocalPath = NotImplemented,
+            srcFileEncryptionKey = NotImplemented,
+            srcFileSyncId = NotImplemented,
+            destFileSyncStoredPath = NotImplemented,
+            contentMoid = NotImplemented,
+            serviceToken = NotImplemented):
         KalturaStorageDeleteJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -200,10 +202,10 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
             destFileSyncStoredPath)
 
         # Unique Kontiki MOID for the content uploaded to Kontiki
-        # @var string
+        # @var str
         self.contentMoid = contentMoid
 
-        # @var string
+        # @var str
         self.serviceToken = serviceToken
 
 
@@ -240,25 +242,25 @@ class KalturaKontikiStorageDeleteJobData(KalturaStorageDeleteJobData):
 # @subpackage Client
 class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
     def __init__(self,
-            serverUrl=NotImplemented,
-            serverUsername=NotImplemented,
-            serverPassword=NotImplemented,
-            serverPrivateKey=NotImplemented,
-            serverPublicKey=NotImplemented,
-            serverPassPhrase=NotImplemented,
-            ftpPassiveMode=NotImplemented,
-            srcFileSyncLocalPath=NotImplemented,
-            srcFileEncryptionKey=NotImplemented,
-            srcFileSyncId=NotImplemented,
-            destFileSyncStoredPath=NotImplemented,
-            force=NotImplemented,
-            createLink=NotImplemented,
-            assetId=NotImplemented,
-            externalUrl=NotImplemented,
-            port=NotImplemented,
-            flavorAssetId=NotImplemented,
-            contentMoid=NotImplemented,
-            serviceToken=NotImplemented):
+            serverUrl = NotImplemented,
+            serverUsername = NotImplemented,
+            serverPassword = NotImplemented,
+            serverPrivateKey = NotImplemented,
+            serverPublicKey = NotImplemented,
+            serverPassPhrase = NotImplemented,
+            ftpPassiveMode = NotImplemented,
+            srcFileSyncLocalPath = NotImplemented,
+            srcFileEncryptionKey = NotImplemented,
+            srcFileSyncId = NotImplemented,
+            destFileSyncStoredPath = NotImplemented,
+            force = NotImplemented,
+            createLink = NotImplemented,
+            assetId = NotImplemented,
+            externalUrl = NotImplemented,
+            port = NotImplemented,
+            flavorAssetId = NotImplemented,
+            contentMoid = NotImplemented,
+            serviceToken = NotImplemented):
         KalturaStorageExportJobData.__init__(self,
             serverUrl,
             serverUsername,
@@ -278,14 +280,14 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
             port)
 
         # Holds the id of the exported asset
-        # @var string
+        # @var str
         self.flavorAssetId = flavorAssetId
 
         # Unique Kontiki MOID for the content uploaded to Kontiki
-        # @var string
+        # @var str
         self.contentMoid = contentMoid
 
-        # @var string
+        # @var str
         self.serviceToken = serviceToken
 
 
@@ -330,22 +332,22 @@ class KalturaKontikiStorageExportJobData(KalturaStorageExportJobData):
 # @subpackage Client
 class KalturaKontikiStorageProfileBaseFilter(KalturaStorageProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            protocolEqual=NotImplemented,
-            protocolIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            protocolEqual = NotImplemented,
+            protocolIn = NotImplemented):
         KalturaStorageProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -382,22 +384,22 @@ class KalturaKontikiStorageProfileBaseFilter(KalturaStorageProfileFilter):
 # @subpackage Client
 class KalturaKontikiStorageProfileFilter(KalturaKontikiStorageProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            protocolEqual=NotImplemented,
-            protocolIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            protocolEqual = NotImplemented,
+            protocolIn = NotImplemented):
         KalturaKontikiStorageProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

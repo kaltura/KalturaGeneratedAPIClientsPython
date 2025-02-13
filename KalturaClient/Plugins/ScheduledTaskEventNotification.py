@@ -51,9 +51,9 @@ from ..Base import (
 # @subpackage Client
 class KalturaDispatchEventNotificationObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            eventNotificationTemplateId=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            eventNotificationTemplateId = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)

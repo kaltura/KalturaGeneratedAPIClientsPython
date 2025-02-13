@@ -60,12 +60,14 @@ class KalturaGroupProcessStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchGroupFieldName(object):
+    CAPABILITIES = "capabilities"
     COMPANY = "company"
     COUNTRY = "country"
     CREATED_AT = "created_at"
     EMAIL = "email"
     EXTERNAL_ID = "external_id"
     FIRST_NAME = "first_name"
+    FULL_NAME = "full_name"
     GROUP_IDS = "group_ids"
     IS_ADMIN = "is_admin"
     IS_HASHED = "is_hashed"
@@ -89,6 +91,7 @@ class KalturaESearchGroupFieldName(object):
 # @subpackage Client
 class KalturaESearchGroupOrderByFieldName(object):
     CREATED_AT = "created_at"
+    FULL_NAME = "full_name"
     MEMBERS_COUNT = "members_count"
     USER_ID = "puser_id"
     SCREEN_NAME = "screen_name"
@@ -125,35 +128,36 @@ class KalturaESearchGroupBaseItem(KalturaESearchBaseItem):
 # @subpackage Client
 class KalturaGroup(KalturaBaseUser):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            screenName=NotImplemented,
-            fullName=NotImplemented,
-            email=NotImplemented,
-            country=NotImplemented,
-            state=NotImplemented,
-            city=NotImplemented,
-            zip=NotImplemented,
-            thumbnailUrl=NotImplemented,
-            description=NotImplemented,
-            tags=NotImplemented,
-            adminTags=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerData=NotImplemented,
-            indexedPartnerDataInt=NotImplemented,
-            indexedPartnerDataString=NotImplemented,
-            storageSize=NotImplemented,
-            language=NotImplemented,
-            lastLoginTime=NotImplemented,
-            statusUpdatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            allowedPartnerIds=NotImplemented,
-            allowedPartnerPackages=NotImplemented,
-            userMode=NotImplemented,
-            membersCount=NotImplemented,
-            processStatus=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            screenName = NotImplemented,
+            fullName = NotImplemented,
+            email = NotImplemented,
+            country = NotImplemented,
+            state = NotImplemented,
+            city = NotImplemented,
+            zip = NotImplemented,
+            thumbnailUrl = NotImplemented,
+            description = NotImplemented,
+            tags = NotImplemented,
+            adminTags = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerData = NotImplemented,
+            indexedPartnerDataInt = NotImplemented,
+            indexedPartnerDataString = NotImplemented,
+            storageSize = NotImplemented,
+            language = NotImplemented,
+            lastLoginTime = NotImplemented,
+            statusUpdatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            allowedPartnerIds = NotImplemented,
+            allowedPartnerPackages = NotImplemented,
+            userMode = NotImplemented,
+            capabilities = NotImplemented,
+            membersCount = NotImplemented,
+            processStatus = NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -181,7 +185,8 @@ class KalturaGroup(KalturaBaseUser):
             deletedAt,
             allowedPartnerIds,
             allowedPartnerPackages,
-            userMode)
+            userMode,
+            capabilities)
 
         # @var int
         # @readonly
@@ -220,14 +225,14 @@ class KalturaGroup(KalturaBaseUser):
 # @subpackage Client
 class KalturaESearchGroupOperator(KalturaESearchGroupBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaESearchGroupBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaESearchGroupBaseItem
+        # @var List[KalturaESearchGroupBaseItem]
         self.searchItems = searchItems
 
 
@@ -264,12 +269,12 @@ class KalturaESearchGroupOperator(KalturaESearchGroupBaseItem):
 # @subpackage Client
 class KalturaGroupListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaGroup
+        # @var List[KalturaGroup]
         # @readonly
         self.objects = objects
 
@@ -295,13 +300,13 @@ class KalturaGroupListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaESearchAbstractGroupItem(KalturaESearchGroupBaseItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented):
         KalturaESearchGroupBaseItem.__init__(self)
 
-        # @var string
+        # @var str
         self.searchTerm = searchTerm
 
         # @var KalturaESearchItemType
@@ -363,11 +368,11 @@ class KalturaESearchAbstractGroupItem(KalturaESearchGroupBaseItem):
 # @subpackage Client
 class KalturaESearchGroupItem(KalturaESearchAbstractGroupItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            fieldName = NotImplemented):
         KalturaESearchAbstractGroupItem.__init__(self,
             searchTerm,
             itemType,
@@ -403,20 +408,20 @@ class KalturaESearchGroupItem(KalturaESearchAbstractGroupItem):
 # @subpackage Client
 class KalturaESearchGroupMetadataItem(KalturaESearchAbstractGroupItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            addHighlight=NotImplemented,
-            xpath=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataFieldId=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            addHighlight = NotImplemented,
+            xpath = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataFieldId = NotImplemented):
         KalturaESearchAbstractGroupItem.__init__(self,
             searchTerm,
             itemType,
             range,
             addHighlight)
 
-        # @var string
+        # @var str
         self.xpath = xpath
 
         # @var int
@@ -467,36 +472,36 @@ class KalturaESearchGroupMetadataItem(KalturaESearchAbstractGroupItem):
 # @subpackage Client
 class KalturaGroupFilter(KalturaUserFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            screenNameLike=NotImplemented,
-            screenNameStartsWith=NotImplemented,
-            emailLike=NotImplemented,
-            emailStartsWith=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            isAdminEqual=NotImplemented,
-            firstNameStartsWith=NotImplemented,
-            lastNameStartsWith=NotImplemented,
-            idOrScreenNameStartsWith=NotImplemented,
-            loginEnabledEqual=NotImplemented,
-            roleIdEqual=NotImplemented,
-            roleIdsEqual=NotImplemented,
-            roleIdsIn=NotImplemented,
-            firstNameOrLastNameStartsWith=NotImplemented,
-            permissionNamesMultiLikeOr=NotImplemented,
-            permissionNamesMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            screenNameLike = NotImplemented,
+            screenNameStartsWith = NotImplemented,
+            emailLike = NotImplemented,
+            emailStartsWith = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            isAdminEqual = NotImplemented,
+            firstNameStartsWith = NotImplemented,
+            lastNameStartsWith = NotImplemented,
+            idOrScreenNameStartsWith = NotImplemented,
+            loginEnabledEqual = NotImplemented,
+            roleIdEqual = NotImplemented,
+            roleIdsEqual = NotImplemented,
+            roleIdsIn = NotImplemented,
+            firstNameOrLastNameStartsWith = NotImplemented,
+            permissionNamesMultiLikeOr = NotImplemented,
+            permissionNamesMultiLikeAnd = NotImplemented):
         KalturaUserFilter.__init__(self,
             orderBy,
             advancedSearch,

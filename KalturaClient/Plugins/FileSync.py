@@ -99,34 +99,34 @@ class KalturaFileSyncOrderBy(object):
 # @subpackage Client
 class KalturaFileSync(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            fileObjectType=NotImplemented,
-            objectId=NotImplemented,
-            version=NotImplemented,
-            objectSubType=NotImplemented,
-            dc=NotImplemented,
-            original=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            readyAt=NotImplemented,
-            syncTime=NotImplemented,
-            status=NotImplemented,
-            fileType=NotImplemented,
-            linkedId=NotImplemented,
-            linkCount=NotImplemented,
-            fileRoot=NotImplemented,
-            filePath=NotImplemented,
-            fileSize=NotImplemented,
-            fileUrl=NotImplemented,
-            fileContent=NotImplemented,
-            fileDiscSize=NotImplemented,
-            isCurrentDc=NotImplemented,
-            isDir=NotImplemented,
-            originalId=NotImplemented,
-            srcPath=NotImplemented,
-            srcEncKey=NotImplemented,
-            storageClass=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            fileObjectType = NotImplemented,
+            objectId = NotImplemented,
+            version = NotImplemented,
+            objectSubType = NotImplemented,
+            dc = NotImplemented,
+            original = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            readyAt = NotImplemented,
+            syncTime = NotImplemented,
+            status = NotImplemented,
+            fileType = NotImplemented,
+            linkedId = NotImplemented,
+            linkCount = NotImplemented,
+            fileRoot = NotImplemented,
+            filePath = NotImplemented,
+            fileSize = NotImplemented,
+            fileUrl = NotImplemented,
+            fileContent = NotImplemented,
+            fileDiscSize = NotImplemented,
+            isCurrentDc = NotImplemented,
+            isDir = NotImplemented,
+            originalId = NotImplemented,
+            srcPath = NotImplemented,
+            srcEncKey = NotImplemented,
+            storageClass = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -141,11 +141,11 @@ class KalturaFileSync(KalturaObjectBase):
         # @readonly
         self.fileObjectType = fileObjectType
 
-        # @var string
+        # @var str
         # @readonly
         self.objectId = objectId
 
-        # @var string
+        # @var str
         # @readonly
         self.version = version
 
@@ -153,7 +153,7 @@ class KalturaFileSync(KalturaObjectBase):
         # @readonly
         self.objectSubType = objectSubType
 
-        # @var string
+        # @var str
         # @readonly
         self.dc = dc
 
@@ -192,21 +192,21 @@ class KalturaFileSync(KalturaObjectBase):
         # @readonly
         self.linkCount = linkCount
 
-        # @var string
+        # @var str
         self.fileRoot = fileRoot
 
-        # @var string
+        # @var str
         self.filePath = filePath
 
         # @var float
         # @readonly
         self.fileSize = fileSize
 
-        # @var string
+        # @var str
         # @readonly
         self.fileUrl = fileUrl
 
-        # @var string
+        # @var str
         # @readonly
         self.fileContent = fileContent
 
@@ -226,13 +226,13 @@ class KalturaFileSync(KalturaObjectBase):
         # @readonly
         self.originalId = originalId
 
-        # @var string
+        # @var str
         self.srcPath = srcPath
 
-        # @var string
+        # @var str
         self.srcEncKey = srcEncKey
 
-        # @var string
+        # @var str
         self.storageClass = storageClass
 
 
@@ -387,70 +387,39 @@ class KalturaFileSync(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaFileSyncListResponse(KalturaListResponse):
-    def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
-        KalturaListResponse.__init__(self,
-            totalCount)
-
-        # @var array of KalturaFileSync
-        # @readonly
-        self.objects = objects
-
-
-    PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaFileSync'), 
-    }
-
-    def fromXml(self, node):
-        KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaFileSyncListResponse.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaFileSyncListResponse")
-        return kparams
-
-    def getObjects(self):
-        return self.objects
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaFileSyncBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            fileObjectTypeEqual=NotImplemented,
-            fileObjectTypeIn=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionIn=NotImplemented,
-            objectSubTypeEqual=NotImplemented,
-            objectSubTypeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            originalEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            readyAtGreaterThanOrEqual=NotImplemented,
-            readyAtLessThanOrEqual=NotImplemented,
-            syncTimeGreaterThanOrEqual=NotImplemented,
-            syncTimeLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            fileTypeEqual=NotImplemented,
-            fileTypeIn=NotImplemented,
-            linkedIdEqual=NotImplemented,
-            linkCountGreaterThanOrEqual=NotImplemented,
-            linkCountLessThanOrEqual=NotImplemented,
-            fileSizeGreaterThanOrEqual=NotImplemented,
-            fileSizeLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            fileObjectTypeEqual = NotImplemented,
+            fileObjectTypeIn = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            versionEqual = NotImplemented,
+            versionIn = NotImplemented,
+            objectSubTypeEqual = NotImplemented,
+            objectSubTypeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            originalEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            readyAtGreaterThanOrEqual = NotImplemented,
+            readyAtLessThanOrEqual = NotImplemented,
+            syncTimeGreaterThanOrEqual = NotImplemented,
+            syncTimeLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            fileTypeEqual = NotImplemented,
+            fileTypeIn = NotImplemented,
+            linkedIdEqual = NotImplemented,
+            linkCountGreaterThanOrEqual = NotImplemented,
+            linkCountLessThanOrEqual = NotImplemented,
+            fileSizeGreaterThanOrEqual = NotImplemented,
+            fileSizeLessThanOrEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -461,31 +430,31 @@ class KalturaFileSyncBaseFilter(KalturaFilter):
         # @var KalturaFileSyncObjectType
         self.fileObjectTypeEqual = fileObjectTypeEqual
 
-        # @var string
+        # @var str
         self.fileObjectTypeIn = fileObjectTypeIn
 
-        # @var string
+        # @var str
         self.objectIdEqual = objectIdEqual
 
-        # @var string
+        # @var str
         self.objectIdIn = objectIdIn
 
-        # @var string
+        # @var str
         self.versionEqual = versionEqual
 
-        # @var string
+        # @var str
         self.versionIn = versionIn
 
         # @var int
         self.objectSubTypeEqual = objectSubTypeEqual
 
-        # @var string
+        # @var str
         self.objectSubTypeIn = objectSubTypeIn
 
-        # @var string
+        # @var str
         self.dcEqual = dcEqual
 
-        # @var string
+        # @var str
         self.dcIn = dcIn
 
         # @var int
@@ -518,13 +487,13 @@ class KalturaFileSyncBaseFilter(KalturaFilter):
         # @var KalturaFileSyncStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaFileSyncType
         self.fileTypeEqual = fileTypeEqual
 
-        # @var string
+        # @var str
         self.fileTypeIn = fileTypeIn
 
         # @var int
@@ -790,40 +759,71 @@ class KalturaFileSyncBaseFilter(KalturaFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaFileSyncListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount = NotImplemented,
+            objects = NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var List[KalturaFileSync]
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaFileSync'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaFileSyncListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaFileSyncListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaFileSyncFilter(KalturaFileSyncBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            fileObjectTypeEqual=NotImplemented,
-            fileObjectTypeIn=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionIn=NotImplemented,
-            objectSubTypeEqual=NotImplemented,
-            objectSubTypeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcIn=NotImplemented,
-            originalEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            readyAtGreaterThanOrEqual=NotImplemented,
-            readyAtLessThanOrEqual=NotImplemented,
-            syncTimeGreaterThanOrEqual=NotImplemented,
-            syncTimeLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            fileTypeEqual=NotImplemented,
-            fileTypeIn=NotImplemented,
-            linkedIdEqual=NotImplemented,
-            linkCountGreaterThanOrEqual=NotImplemented,
-            linkCountLessThanOrEqual=NotImplemented,
-            fileSizeGreaterThanOrEqual=NotImplemented,
-            fileSizeLessThanOrEqual=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            fileObjectTypeEqual = NotImplemented,
+            fileObjectTypeIn = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            versionEqual = NotImplemented,
+            versionIn = NotImplemented,
+            objectSubTypeEqual = NotImplemented,
+            objectSubTypeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcIn = NotImplemented,
+            originalEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            readyAtGreaterThanOrEqual = NotImplemented,
+            readyAtLessThanOrEqual = NotImplemented,
+            syncTimeGreaterThanOrEqual = NotImplemented,
+            syncTimeLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            fileTypeEqual = NotImplemented,
+            fileTypeIn = NotImplemented,
+            linkedIdEqual = NotImplemented,
+            linkCountGreaterThanOrEqual = NotImplemented,
+            linkCountLessThanOrEqual = NotImplemented,
+            fileSizeGreaterThanOrEqual = NotImplemented,
+            fileSizeLessThanOrEqual = NotImplemented,
+            currentDc = NotImplemented):
         KalturaFileSyncBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -910,8 +910,8 @@ class KalturaFileSyncClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaFileSync': KalturaFileSync,
-            'KalturaFileSyncListResponse': KalturaFileSyncListResponse,
             'KalturaFileSyncBaseFilter': KalturaFileSyncBaseFilter,
+            'KalturaFileSyncListResponse': KalturaFileSyncListResponse,
             'KalturaFileSyncFilter': KalturaFileSyncFilter,
         }
 

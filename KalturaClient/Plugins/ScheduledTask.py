@@ -102,6 +102,7 @@ class KalturaScheduledTaskProfileStatus(object):
 class KalturaObjectFilterEngineType(object):
     ENTRY = "1"
     ENTRY_VENDOR_TASK = "2"
+    RECYCLE_BIN_CLEANUP = "3"
 
     def __init__(self, value):
         self.value = value
@@ -123,6 +124,7 @@ class KalturaObjectTaskType(object):
     STORAGE_EXPORT = "6"
     MODIFY_ENTRY = "7"
     MAIL_NOTIFICATION = "8"
+    RECYCLE_BIN_CLEANUP = "9"
 
     def __init__(self, value):
         self.value = value
@@ -153,8 +155,8 @@ class KalturaScheduledTaskProfileOrderBy(object):
 # @subpackage Client
 class KalturaObjectTask(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var KalturaObjectTaskType
@@ -194,19 +196,19 @@ class KalturaObjectTask(KalturaObjectBase):
 # @subpackage Client
 class KalturaScheduledTaskProfile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            objectFilterEngineType=NotImplemented,
-            objectFilter=NotImplemented,
-            objectTasks=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            lastExecutionStartedAt=NotImplemented,
-            maxTotalCountAllowed=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            objectFilterEngineType = NotImplemented,
+            objectFilter = NotImplemented,
+            objectTasks = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            lastExecutionStartedAt = NotImplemented,
+            maxTotalCountAllowed = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -217,13 +219,13 @@ class KalturaScheduledTaskProfile(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaScheduledTaskProfileStatus
@@ -238,7 +240,7 @@ class KalturaScheduledTaskProfile(KalturaObjectBase):
         self.objectFilter = objectFilter
 
         # A list of tasks to execute on the founded objects
-        # @var array of KalturaObjectTask
+        # @var List[KalturaObjectTask]
         self.objectTasks = objectTasks
 
         # @var int
@@ -362,16 +364,16 @@ class KalturaScheduledTaskProfile(KalturaObjectBase):
 # @subpackage Client
 class KalturaConvertEntryFlavorsObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            flavorParamsIds=NotImplemented,
-            reconvert=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            flavorParamsIds = NotImplemented,
+            reconvert = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
 
         # Comma separated list of flavor param ids to convert
-        # @var string
+        # @var str
         self.flavorParamsIds = flavorParamsIds
 
         # Should reconvert when flavor already exists?
@@ -412,10 +414,10 @@ class KalturaConvertEntryFlavorsObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaDeleteEntryFlavorsObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            deleteType=NotImplemented,
-            flavorParamsIds=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            deleteType = NotImplemented,
+            flavorParamsIds = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -425,7 +427,7 @@ class KalturaDeleteEntryFlavorsObjectTask(KalturaObjectTask):
         self.deleteType = deleteType
 
         # Comma separated list of flavor param ids to delete or keep
-        # @var string
+        # @var str
         self.flavorParamsIds = flavorParamsIds
 
 
@@ -462,8 +464,8 @@ class KalturaDeleteEntryFlavorsObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaDeleteEntryObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -486,8 +488,8 @@ class KalturaDeleteEntryObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaDeleteLocalContentObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -510,41 +512,41 @@ class KalturaDeleteLocalContentObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaMailNotificationObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            mailTo=NotImplemented,
-            sender=NotImplemented,
-            subject=NotImplemented,
-            message=NotImplemented,
-            footer=NotImplemented,
-            link=NotImplemented,
-            sendToUsers=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            mailTo = NotImplemented,
+            sender = NotImplemented,
+            subject = NotImplemented,
+            message = NotImplemented,
+            footer = NotImplemented,
+            link = NotImplemented,
+            sendToUsers = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
 
         # The mail to send the notification to
-        # @var string
+        # @var str
         self.mailTo = mailTo
 
         # The sender in the mail
-        # @var string
+        # @var str
         self.sender = sender
 
         # The subject of the entry
-        # @var string
+        # @var str
         self.subject = subject
 
         # The message to send in the notification mail
-        # @var string
+        # @var str
         self.message = message
 
         # The footer of the message to send in the notification mail
-        # @var string
+        # @var str
         self.footer = footer
 
         # The basic link for the KMC site
-        # @var string
+        # @var str
         self.link = link
 
         # Send the mail to each user
@@ -625,10 +627,10 @@ class KalturaMailNotificationObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            addRemoveType=NotImplemented,
-            categoryIds=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            addRemoveType = NotImplemented,
+            categoryIds = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -638,7 +640,7 @@ class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
         self.addRemoveType = addRemoveType
 
         # The list of category ids to add or remove
-        # @var array of KalturaIntegerValue
+        # @var List[KalturaIntegerValue]
         self.categoryIds = categoryIds
 
 
@@ -675,17 +677,17 @@ class KalturaModifyCategoriesObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaModifyEntryObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            inputMetadataProfileId=NotImplemented,
-            inputMetadata=NotImplemented,
-            outputMetadataProfileId=NotImplemented,
-            outputMetadata=NotImplemented,
-            inputUserId=NotImplemented,
-            inputEntitledUsersEdit=NotImplemented,
-            inputEntitledUsersPublish=NotImplemented,
-            inputEntitledUsersView=NotImplemented,
-            resetMediaRepurposingProcess=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            inputMetadataProfileId = NotImplemented,
+            inputMetadata = NotImplemented,
+            outputMetadataProfileId = NotImplemented,
+            outputMetadata = NotImplemented,
+            inputUserId = NotImplemented,
+            inputEntitledUsersEdit = NotImplemented,
+            inputEntitledUsersPublish = NotImplemented,
+            inputEntitledUsersView = NotImplemented,
+            resetMediaRepurposingProcess = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -695,7 +697,7 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         self.inputMetadataProfileId = inputMetadataProfileId
 
         # array of {input metadata xpath location,entry field} objects
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.inputMetadata = inputMetadata
 
         # The output metadata profile id
@@ -703,23 +705,23 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
         self.outputMetadataProfileId = outputMetadataProfileId
 
         # array of {output metadata xpath location,entry field} objects
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.outputMetadata = outputMetadata
 
         # The input user id to set on the entry
-        # @var string
+        # @var str
         self.inputUserId = inputUserId
 
         # The input entitled users edit to set on the entry
-        # @var string
+        # @var str
         self.inputEntitledUsersEdit = inputEntitledUsersEdit
 
         # The input entitled users publish to set on the entry
-        # @var string
+        # @var str
         self.inputEntitledUsersPublish = inputEntitledUsersPublish
 
         # The input entitled users view to set on the entry
-        # @var string
+        # @var str
         self.inputEntitledUsersView = inputEntitledUsersView
 
         # Should clear the media repurposing data and therefore reset the process
@@ -814,13 +816,37 @@ class KalturaModifyEntryObjectTask(KalturaObjectTask):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaRecycleBinCleanupObjectTask(KalturaObjectTask):
+    def __init__(self,
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented):
+        KalturaObjectTask.__init__(self,
+            type,
+            stopProcessingOnError)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectTask.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaRecycleBinCleanupObjectTask.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectTask.toParams(self)
+        kparams.put("objectType", "KalturaRecycleBinCleanupObjectTask")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaScheduledTaskJobData(KalturaJobData):
     def __init__(self,
-            maxResults=NotImplemented,
-            totalCount=NotImplemented,
-            fileFormat=NotImplemented,
-            resultsFilePath=NotImplemented,
-            referenceTime=NotImplemented):
+            maxResults = NotImplemented,
+            totalCount = NotImplemented,
+            fileFormat = NotImplemented,
+            resultsFilePath = NotImplemented,
+            referenceTime = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
@@ -832,7 +858,7 @@ class KalturaScheduledTaskJobData(KalturaJobData):
         # @var KalturaDryRunFileType
         self.fileFormat = fileFormat
 
-        # @var string
+        # @var str
         self.resultsFilePath = resultsFilePath
 
         # @var int
@@ -896,23 +922,24 @@ class KalturaScheduledTaskJobData(KalturaJobData):
 # @subpackage Client
 class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            lastExecutionStartedAtGreaterThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqualOrNull=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            lastExecutionStartedAtGreaterThanOrEqual = NotImplemented,
+            lastExecutionStartedAtLessThanOrEqual = NotImplemented,
+            lastExecutionStartedAtLessThanOrEqualOrNull = NotImplemented,
+            objectFilterEngineTypeIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -920,25 +947,25 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
         # @var KalturaScheduledTaskProfileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -962,6 +989,9 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         # @var int
         self.lastExecutionStartedAtLessThanOrEqualOrNull = lastExecutionStartedAtLessThanOrEqualOrNull
 
+        # @var str
+        self.objectFilterEngineTypeIn = objectFilterEngineTypeIn
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
@@ -979,6 +1009,7 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         'lastExecutionStartedAtGreaterThanOrEqual': getXmlNodeInt, 
         'lastExecutionStartedAtLessThanOrEqual': getXmlNodeInt, 
         'lastExecutionStartedAtLessThanOrEqualOrNull': getXmlNodeInt, 
+        'objectFilterEngineTypeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -1003,6 +1034,7 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
         kparams.addIntIfDefined("lastExecutionStartedAtGreaterThanOrEqual", self.lastExecutionStartedAtGreaterThanOrEqual)
         kparams.addIntIfDefined("lastExecutionStartedAtLessThanOrEqual", self.lastExecutionStartedAtLessThanOrEqual)
         kparams.addIntIfDefined("lastExecutionStartedAtLessThanOrEqualOrNull", self.lastExecutionStartedAtLessThanOrEqualOrNull)
+        kparams.addStringIfDefined("objectFilterEngineTypeIn", self.objectFilterEngineTypeIn)
         return kparams
 
     def getIdEqual(self):
@@ -1095,17 +1127,23 @@ class KalturaScheduledTaskProfileBaseFilter(KalturaFilter):
     def setLastExecutionStartedAtLessThanOrEqualOrNull(self, newLastExecutionStartedAtLessThanOrEqualOrNull):
         self.lastExecutionStartedAtLessThanOrEqualOrNull = newLastExecutionStartedAtLessThanOrEqualOrNull
 
+    def getObjectFilterEngineTypeIn(self):
+        return self.objectFilterEngineTypeIn
+
+    def setObjectFilterEngineTypeIn(self, newObjectFilterEngineTypeIn):
+        self.objectFilterEngineTypeIn = newObjectFilterEngineTypeIn
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaScheduledTaskProfileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaScheduledTaskProfile
+        # @var List[KalturaScheduledTaskProfile]
         # @readonly
         self.objects = objects
 
@@ -1131,15 +1169,15 @@ class KalturaScheduledTaskProfileListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaStorageExportObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            storageId=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            storageId = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
 
         # Storage profile id
-        # @var string
+        # @var str
         self.storageId = storageId
 
 
@@ -1168,23 +1206,24 @@ class KalturaStorageExportObjectTask(KalturaObjectTask):
 # @subpackage Client
 class KalturaScheduledTaskProfileFilter(KalturaScheduledTaskProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            lastExecutionStartedAtGreaterThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqual=NotImplemented,
-            lastExecutionStartedAtLessThanOrEqualOrNull=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            lastExecutionStartedAtGreaterThanOrEqual = NotImplemented,
+            lastExecutionStartedAtLessThanOrEqual = NotImplemented,
+            lastExecutionStartedAtLessThanOrEqualOrNull = NotImplemented,
+            objectFilterEngineTypeIn = NotImplemented):
         KalturaScheduledTaskProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1202,7 +1241,8 @@ class KalturaScheduledTaskProfileFilter(KalturaScheduledTaskProfileBaseFilter):
             updatedAtLessThanOrEqual,
             lastExecutionStartedAtGreaterThanOrEqual,
             lastExecutionStartedAtLessThanOrEqual,
-            lastExecutionStartedAtLessThanOrEqualOrNull)
+            lastExecutionStartedAtLessThanOrEqualOrNull,
+            objectFilterEngineTypeIn)
 
 
     PROPERTY_LOADERS = {
@@ -1351,6 +1391,7 @@ class KalturaScheduledTaskClientPlugin(KalturaClientPlugin):
             'KalturaMailNotificationObjectTask': KalturaMailNotificationObjectTask,
             'KalturaModifyCategoriesObjectTask': KalturaModifyCategoriesObjectTask,
             'KalturaModifyEntryObjectTask': KalturaModifyEntryObjectTask,
+            'KalturaRecycleBinCleanupObjectTask': KalturaRecycleBinCleanupObjectTask,
             'KalturaScheduledTaskJobData': KalturaScheduledTaskJobData,
             'KalturaScheduledTaskProfileBaseFilter': KalturaScheduledTaskProfileBaseFilter,
             'KalturaScheduledTaskProfileListResponse': KalturaScheduledTaskProfileListResponse,

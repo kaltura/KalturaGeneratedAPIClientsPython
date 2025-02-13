@@ -80,29 +80,29 @@ class KalturaTranscriptProviderType(object):
 # @subpackage Client
 class KalturaTranscriptAsset(KalturaAttachmentAsset):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            sizeInBytes=NotImplemented,
-            filename=NotImplemented,
-            title=NotImplemented,
-            format=NotImplemented,
-            status=NotImplemented,
-            accuracy=NotImplemented,
-            humanVerified=NotImplemented,
-            language=NotImplemented,
-            providerType=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            version = NotImplemented,
+            size = NotImplemented,
+            tags = NotImplemented,
+            fileExt = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            description = NotImplemented,
+            partnerData = NotImplemented,
+            partnerDescription = NotImplemented,
+            actualSourceAssetParamsIds = NotImplemented,
+            sizeInBytes = NotImplemented,
+            filename = NotImplemented,
+            title = NotImplemented,
+            format = NotImplemented,
+            status = NotImplemented,
+            accuracy = NotImplemented,
+            humanVerified = NotImplemented,
+            language = NotImplemented,
+            providerType = NotImplemented):
         KalturaAttachmentAsset.__init__(self,
             id,
             entryId,
@@ -190,18 +190,18 @@ class KalturaTranscriptAsset(KalturaAttachmentAsset):
 # @subpackage Client
 class KalturaEntryTranscriptAssetSearchItem(KalturaSearchItem):
     def __init__(self,
-            contentLike=NotImplemented,
-            contentMultiLikeOr=NotImplemented,
-            contentMultiLikeAnd=NotImplemented):
+            contentLike = NotImplemented,
+            contentMultiLikeOr = NotImplemented,
+            contentMultiLikeAnd = NotImplemented):
         KalturaSearchItem.__init__(self)
 
-        # @var string
+        # @var str
         self.contentLike = contentLike
 
-        # @var string
+        # @var str
         self.contentMultiLikeOr = contentMultiLikeOr
 
-        # @var string
+        # @var str
         self.contentMultiLikeAnd = contentMultiLikeAnd
 
 
@@ -246,12 +246,12 @@ class KalturaEntryTranscriptAssetSearchItem(KalturaSearchItem):
 # @subpackage Client
 class KalturaTranscriptAssetListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaTranscriptAsset
+        # @var List[KalturaTranscriptAsset]
         # @readonly
         self.objects = objects
 
@@ -277,31 +277,31 @@ class KalturaTranscriptAssetListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaTranscriptAssetBaseFilter(KalturaAttachmentAssetFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaAttachmentAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -347,31 +347,31 @@ class KalturaTranscriptAssetBaseFilter(KalturaAttachmentAssetFilter):
 # @subpackage Client
 class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaTranscriptAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

@@ -50,6 +50,36 @@ class KalturaHandleParticipantsMode(object):
     ADD_AS_CO_PUBLISHERS = 0
     ADD_AS_CO_VIEWERS = 1
     IGNORE = 2
+    ADD_AS_CO_EDITORS = 3
+    ADD_AS_CO_EDITORS_CO_PUBLISHERS = 4
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRecordingFileType(object):
+    UNDEFINED = 0
+    VIDEO = 1
+    CHAT = 2
+    TRANSCRIPT = 3
+    AUDIO = 4
+    CC = 5
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaRecordingType(object):
+    MEETING = 0
+    WEBINAR = 1
 
     def __init__(self, value):
         self.value = value
@@ -87,21 +117,65 @@ class KalturaZoomUsersMatching(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaEndpointValidationResponse(KalturaObjectBase):
+    def __init__(self,
+            plainToken = NotImplemented,
+            encryptedToken = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var str
+        self.plainToken = plainToken
+
+        # @var str
+        self.encryptedToken = encryptedToken
+
+
+    PROPERTY_LOADERS = {
+        'plainToken': getXmlNodeText, 
+        'encryptedToken': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaEndpointValidationResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaEndpointValidationResponse")
+        kparams.addStringIfDefined("plainToken", self.plainToken)
+        kparams.addStringIfDefined("encryptedToken", self.encryptedToken)
+        return kparams
+
+    def getPlainToken(self):
+        return self.plainToken
+
+    def setPlainToken(self, newPlainToken):
+        self.plainToken = newPlainToken
+
+    def getEncryptedToken(self):
+        return self.encryptedToken
+
+    def setEncryptedToken(self, newEncryptedToken):
+        self.encryptedToken = newEncryptedToken
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaIntegrationSetting(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            status=NotImplemented,
-            defaultUserId=NotImplemented,
-            accountId=NotImplemented,
-            createUserIfNotExist=NotImplemented,
-            conversionProfileId=NotImplemented,
-            handleParticipantsMode=NotImplemented,
-            deletionPolicy=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            enableMeetingUpload=NotImplemented,
-            enableMeetingChat=NotImplemented):
+            id = NotImplemented,
+            status = NotImplemented,
+            defaultUserId = NotImplemented,
+            accountId = NotImplemented,
+            createUserIfNotExist = NotImplemented,
+            conversionProfileId = NotImplemented,
+            handleParticipantsMode = NotImplemented,
+            deletionPolicy = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            enableMeetingUpload = NotImplemented,
+            enableMeetingChat = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -112,10 +186,10 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         self.defaultUserId = defaultUserId
 
-        # @var string
+        # @var str
         # @readonly
         self.accountId = accountId
 
@@ -131,11 +205,11 @@ class KalturaIntegrationSetting(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.deletionPolicy = deletionPolicy
 
-        # @var string
+        # @var str
         # @readonly
         self.createdAt = createdAt
 
-        # @var string
+        # @var str
         # @readonly
         self.updatedAt = updatedAt
 
@@ -247,31 +321,32 @@ class KalturaIntegrationSetting(KalturaObjectBase):
 # @subpackage Client
 class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
     def __init__(self,
-            id=NotImplemented,
-            status=NotImplemented,
-            defaultUserId=NotImplemented,
-            accountId=NotImplemented,
-            createUserIfNotExist=NotImplemented,
-            conversionProfileId=NotImplemented,
-            handleParticipantsMode=NotImplemented,
-            deletionPolicy=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            enableMeetingUpload=NotImplemented,
-            enableMeetingChat=NotImplemented,
-            zoomCategory=NotImplemented,
-            enableRecordingUpload=NotImplemented,
-            zoomUserMatchingMode=NotImplemented,
-            zoomUserPostfix=NotImplemented,
-            zoomWebinarCategory=NotImplemented,
-            enableWebinarUploads=NotImplemented,
-            jwtToken=NotImplemented,
-            enableZoomTranscription=NotImplemented,
-            zoomAccountDescription=NotImplemented,
-            optOutGroupNames=NotImplemented,
-            optInGroupNames=NotImplemented,
-            groupParticipationType=NotImplemented):
+            id = NotImplemented,
+            status = NotImplemented,
+            defaultUserId = NotImplemented,
+            accountId = NotImplemented,
+            createUserIfNotExist = NotImplemented,
+            conversionProfileId = NotImplemented,
+            handleParticipantsMode = NotImplemented,
+            deletionPolicy = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            enableMeetingUpload = NotImplemented,
+            enableMeetingChat = NotImplemented,
+            zoomCategory = NotImplemented,
+            enableRecordingUpload = NotImplemented,
+            zoomUserMatchingMode = NotImplemented,
+            zoomUserPostfix = NotImplemented,
+            zoomWebinarCategory = NotImplemented,
+            enableWebinarUploads = NotImplemented,
+            enableZoomTranscription = NotImplemented,
+            zoomAccountDescription = NotImplemented,
+            optOutGroupNames = NotImplemented,
+            optInGroupNames = NotImplemented,
+            groupParticipationType = NotImplemented,
+            handleCohostsMode = NotImplemented,
+            handleAlternativeHostsMode = NotImplemented):
         KalturaIntegrationSetting.__init__(self,
             id,
             status,
@@ -287,7 +362,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             enableMeetingUpload,
             enableMeetingChat)
 
-        # @var string
+        # @var str
         self.zoomCategory = zoomCategory
 
         # @var KalturaNullableBoolean
@@ -296,32 +371,35 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         # @var KalturaZoomUsersMatching
         self.zoomUserMatchingMode = zoomUserMatchingMode
 
-        # @var string
+        # @var str
         self.zoomUserPostfix = zoomUserPostfix
 
-        # @var string
+        # @var str
         self.zoomWebinarCategory = zoomWebinarCategory
 
         # @var KalturaNullableBoolean
         self.enableWebinarUploads = enableWebinarUploads
 
-        # @var string
-        self.jwtToken = jwtToken
-
         # @var KalturaNullableBoolean
         self.enableZoomTranscription = enableZoomTranscription
 
-        # @var string
+        # @var str
         self.zoomAccountDescription = zoomAccountDescription
 
-        # @var string
+        # @var str
         self.optOutGroupNames = optOutGroupNames
 
-        # @var string
+        # @var str
         self.optInGroupNames = optInGroupNames
 
         # @var KalturaZoomGroupParticipationType
         self.groupParticipationType = groupParticipationType
+
+        # @var KalturaHandleParticipantsMode
+        self.handleCohostsMode = handleCohostsMode
+
+        # @var KalturaHandleParticipantsMode
+        self.handleAlternativeHostsMode = handleAlternativeHostsMode
 
 
     PROPERTY_LOADERS = {
@@ -331,12 +409,13 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         'zoomUserPostfix': getXmlNodeText, 
         'zoomWebinarCategory': getXmlNodeText, 
         'enableWebinarUploads': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
-        'jwtToken': getXmlNodeText, 
         'enableZoomTranscription': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'zoomAccountDescription': getXmlNodeText, 
         'optOutGroupNames': getXmlNodeText, 
         'optInGroupNames': getXmlNodeText, 
         'groupParticipationType': (KalturaEnumsFactory.createInt, "KalturaZoomGroupParticipationType"), 
+        'handleCohostsMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
+        'handleAlternativeHostsMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
     }
 
     def fromXml(self, node):
@@ -352,12 +431,13 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         kparams.addStringIfDefined("zoomUserPostfix", self.zoomUserPostfix)
         kparams.addStringIfDefined("zoomWebinarCategory", self.zoomWebinarCategory)
         kparams.addIntEnumIfDefined("enableWebinarUploads", self.enableWebinarUploads)
-        kparams.addStringIfDefined("jwtToken", self.jwtToken)
         kparams.addIntEnumIfDefined("enableZoomTranscription", self.enableZoomTranscription)
         kparams.addStringIfDefined("zoomAccountDescription", self.zoomAccountDescription)
         kparams.addStringIfDefined("optOutGroupNames", self.optOutGroupNames)
         kparams.addStringIfDefined("optInGroupNames", self.optInGroupNames)
         kparams.addIntEnumIfDefined("groupParticipationType", self.groupParticipationType)
+        kparams.addIntEnumIfDefined("handleCohostsMode", self.handleCohostsMode)
+        kparams.addIntEnumIfDefined("handleAlternativeHostsMode", self.handleAlternativeHostsMode)
         return kparams
 
     def getZoomCategory(self):
@@ -396,12 +476,6 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
     def setEnableWebinarUploads(self, newEnableWebinarUploads):
         self.enableWebinarUploads = newEnableWebinarUploads
 
-    def getJwtToken(self):
-        return self.jwtToken
-
-    def setJwtToken(self, newJwtToken):
-        self.jwtToken = newJwtToken
-
     def getEnableZoomTranscription(self):
         return self.enableZoomTranscription
 
@@ -432,17 +506,29 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
     def setGroupParticipationType(self, newGroupParticipationType):
         self.groupParticipationType = newGroupParticipationType
 
+    def getHandleCohostsMode(self):
+        return self.handleCohostsMode
+
+    def setHandleCohostsMode(self, newHandleCohostsMode):
+        self.handleCohostsMode = newHandleCohostsMode
+
+    def getHandleAlternativeHostsMode(self):
+        return self.handleAlternativeHostsMode
+
+    def setHandleAlternativeHostsMode(self, newHandleAlternativeHostsMode):
+        self.handleAlternativeHostsMode = newHandleAlternativeHostsMode
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaZoomIntegrationSettingResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaZoomIntegrationSetting
+        # @var List[KalturaZoomIntegrationSetting]
         # @readonly
         self.objects = objects
 
@@ -511,9 +597,9 @@ class KalturaZoomVendorService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaZoomIntegrationSettingResponse')
 
-    def localRegistrationPage(self, jwt):
+    def localRegistrationPage(self, zoomAccountId):
         kparams = KalturaParams()
-        kparams.addStringIfDefined("jwt", jwt)
+        kparams.addStringIfDefined("zoomAccountId", zoomAccountId)
         self.client.queueServiceActionCall("vendor_zoomvendor", "localRegistrationPage", "None", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
@@ -539,10 +625,11 @@ class KalturaZoomVendorService(KalturaServiceBase):
 
     def recordingComplete(self):
         kparams = KalturaParams()
-        self.client.queueServiceActionCall("vendor_zoomvendor", "recordingComplete", "None", kparams)
+        self.client.queueServiceActionCall("vendor_zoomvendor", "recordingComplete", "KalturaEndpointValidationResponse", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEndpointValidationResponse')
 
     def submitRegistration(self, accountId, integrationSetting):
         kparams = KalturaParams()
@@ -641,12 +728,15 @@ class KalturaVendorClientPlugin(KalturaClientPlugin):
     def getEnums(self):
         return {
             'KalturaHandleParticipantsMode': KalturaHandleParticipantsMode,
+            'KalturaRecordingFileType': KalturaRecordingFileType,
+            'KalturaRecordingType': KalturaRecordingType,
             'KalturaVendorIntegrationStatus': KalturaVendorIntegrationStatus,
             'KalturaZoomUsersMatching': KalturaZoomUsersMatching,
         }
 
     def getTypes(self):
         return {
+            'KalturaEndpointValidationResponse': KalturaEndpointValidationResponse,
             'KalturaIntegrationSetting': KalturaIntegrationSetting,
             'KalturaZoomIntegrationSetting': KalturaZoomIntegrationSetting,
             'KalturaZoomIntegrationSettingResponse': KalturaZoomIntegrationSettingResponse,

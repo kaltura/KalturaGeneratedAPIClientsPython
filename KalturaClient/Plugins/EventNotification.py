@@ -46,6 +46,18 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaEventNotificationDelayedCondition(object):
+    NONE = 0
+    PENDING_ENTRY_READY = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaEventNotificationTemplateStatus(object):
     DISABLED = 1
     ACTIVE = 2
@@ -72,6 +84,7 @@ class KalturaEventNotificationEventObjectType(object):
     DROP_FOLDER_FILE = "dropFolderEventNotifications.DropFolderFile"
     METADATA = "metadataEventNotifications.Metadata"
     TRANSCRIPT_ASSET = "transcriptAssetEventNotifications.TranscriptAsset"
+    VIRTUAL_EVENT = "virtualEventEventNotifications.VirtualEvent"
     ENTRY = "1"
     CATEGORY = "2"
     ASSET = "3"
@@ -160,11 +173,13 @@ class KalturaEventNotificationTemplateOrderBy(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEventNotificationTemplateType(object):
+    BOOLEAN = "booleanNotification.Boolean"
     BPM_ABORT = "businessProcessNotification.BusinessProcessAbort"
     BPM_SIGNAL = "businessProcessNotification.BusinessProcessSignal"
     BPM_START = "businessProcessNotification.BusinessProcessStart"
     EMAIL = "emailNotification.Email"
     HTTP = "httpNotification.Http"
+    KAFKA = "kafkaNotification.Kafka"
     PUSH = "pushNotification.Push"
 
     def __init__(self, value):
@@ -178,16 +193,16 @@ class KalturaEventNotificationTemplateType(object):
 # @subpackage Client
 class KalturaEventNotificationParameter(KalturaObjectBase):
     def __init__(self,
-            key=NotImplemented,
-            description=NotImplemented,
-            value=NotImplemented):
+            key = NotImplemented,
+            description = NotImplemented,
+            value = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The key in the subject and body to be replaced with the dynamic value
-        # @var string
+        # @var str
         self.key = key
 
-        # @var string
+        # @var str
         self.description = description
 
         # The dynamic value to be placed in the final output
@@ -236,22 +251,23 @@ class KalturaEventNotificationParameter(KalturaObjectBase):
 # @subpackage Client
 class KalturaEventNotificationTemplate(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -262,13 +278,13 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaEventNotificationTemplateType
@@ -299,21 +315,25 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
         # @var KalturaEventNotificationEventType
         self.eventType = eventType
 
-        # Define the object that raied the event that should trigger this notification
+        # Define the object that raised the event that should trigger this notification
         # @var KalturaEventNotificationEventObjectType
         self.eventObjectType = eventObjectType
 
         # Define the conditions that cause this notification to be triggered
-        # @var array of KalturaCondition
+        # @var List[KalturaCondition]
         self.eventConditions = eventConditions
 
         # Define the content dynamic parameters
-        # @var array of KalturaEventNotificationParameter
+        # @var List[KalturaEventNotificationParameter]
         self.contentParameters = contentParameters
 
         # Define the content dynamic parameters
-        # @var array of KalturaEventNotificationParameter
+        # @var List[KalturaEventNotificationParameter]
         self.userParameters = userParameters
+
+        # Event batch job will be delayed until specific condition criteria is met
+        # @var KalturaEventNotificationDelayedCondition
+        self.eventDelayedCondition = eventDelayedCondition
 
 
     PROPERTY_LOADERS = {
@@ -333,6 +353,7 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
         'eventConditions': (KalturaObjectFactory.createArray, 'KalturaCondition'), 
         'contentParameters': (KalturaObjectFactory.createArray, 'KalturaEventNotificationParameter'), 
         'userParameters': (KalturaObjectFactory.createArray, 'KalturaEventNotificationParameter'), 
+        'eventDelayedCondition': (KalturaEnumsFactory.createInt, "KalturaEventNotificationDelayedCondition"), 
     }
 
     def fromXml(self, node):
@@ -353,6 +374,7 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
         kparams.addArrayIfDefined("eventConditions", self.eventConditions)
         kparams.addArrayIfDefined("contentParameters", self.contentParameters)
         kparams.addArrayIfDefined("userParameters", self.userParameters)
+        kparams.addIntEnumIfDefined("eventDelayedCondition", self.eventDelayedCondition)
         return kparams
 
     def getId(self):
@@ -436,15 +458,21 @@ class KalturaEventNotificationTemplate(KalturaObjectBase):
     def setUserParameters(self, newUserParameters):
         self.userParameters = newUserParameters
 
+    def getEventDelayedCondition(self):
+        return self.eventDelayedCondition
+
+    def setEventDelayedCondition(self, newEventDelayedCondition):
+        self.eventDelayedCondition = newEventDelayedCondition
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaEventFieldCondition(KalturaCondition):
     def __init__(self,
-            type=NotImplemented,
-            description=NotImplemented,
-            not_=NotImplemented,
-            field=NotImplemented):
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            field = NotImplemented):
         KalturaCondition.__init__(self,
             type,
             description,
@@ -480,21 +508,21 @@ class KalturaEventFieldCondition(KalturaCondition):
 # @subpackage Client
 class KalturaEventNotificationArrayParameter(KalturaEventNotificationParameter):
     def __init__(self,
-            key=NotImplemented,
-            description=NotImplemented,
-            value=NotImplemented,
-            values=NotImplemented,
-            allowedValues=NotImplemented):
+            key = NotImplemented,
+            description = NotImplemented,
+            value = NotImplemented,
+            values = NotImplemented,
+            allowedValues = NotImplemented):
         KalturaEventNotificationParameter.__init__(self,
             key,
             description,
             value)
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.values = values
 
         # Used to restrict the values to close list
-        # @var array of KalturaStringValue
+        # @var List[KalturaStringValue]
         self.allowedValues = allowedValues
 
 
@@ -531,15 +559,15 @@ class KalturaEventNotificationArrayParameter(KalturaEventNotificationParameter):
 # @subpackage Client
 class KalturaEventNotificationDispatchJobData(KalturaJobData):
     def __init__(self,
-            templateId=NotImplemented,
-            contentParameters=NotImplemented):
+            templateId = NotImplemented,
+            contentParameters = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var int
         self.templateId = templateId
 
         # Define the content dynamic parameters
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.contentParameters = contentParameters
 
 
@@ -576,11 +604,11 @@ class KalturaEventNotificationDispatchJobData(KalturaJobData):
 # @subpackage Client
 class KalturaEventNotificationScope(KalturaScope):
     def __init__(self,
-            objectId=NotImplemented,
-            scopeObjectType=NotImplemented):
+            objectId = NotImplemented,
+            scopeObjectType = NotImplemented):
         KalturaScope.__init__(self)
 
-        # @var string
+        # @var str
         self.objectId = objectId
 
         # @var KalturaEventNotificationEventObjectType
@@ -620,22 +648,22 @@ class KalturaEventNotificationScope(KalturaScope):
 # @subpackage Client
 class KalturaEventNotificationTemplateBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -643,31 +671,31 @@ class KalturaEventNotificationTemplateBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
         # @var KalturaEventNotificationTemplateType
         self.typeEqual = typeEqual
 
-        # @var string
+        # @var str
         self.typeIn = typeIn
 
         # @var KalturaEventNotificationTemplateStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -812,12 +840,12 @@ class KalturaEventNotificationTemplateBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaEventNotificationTemplateListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaEventNotificationTemplate
+        # @var List[KalturaEventNotificationTemplate]
         # @readonly
         self.objects = objects
 
@@ -843,17 +871,17 @@ class KalturaEventNotificationTemplateListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaEventObjectChangedCondition(KalturaCondition):
     def __init__(self,
-            type=NotImplemented,
-            description=NotImplemented,
-            not_=NotImplemented,
-            modifiedColumns=NotImplemented):
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            modifiedColumns = NotImplemented):
         KalturaCondition.__init__(self,
             type,
             description,
             not_)
 
         # Comma seperated column names to be tested
-        # @var string
+        # @var str
         self.modifiedColumns = modifiedColumns
 
 
@@ -882,14 +910,14 @@ class KalturaEventObjectChangedCondition(KalturaCondition):
 # @subpackage Client
 class KalturaEventNotificationDispatchScope(KalturaEventNotificationScope):
     def __init__(self,
-            objectId=NotImplemented,
-            scopeObjectType=NotImplemented,
-            dynamicValues=NotImplemented):
+            objectId = NotImplemented,
+            scopeObjectType = NotImplemented,
+            dynamicValues = NotImplemented):
         KalturaEventNotificationScope.__init__(self,
             objectId,
             scopeObjectType)
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.dynamicValues = dynamicValues
 
 
@@ -918,22 +946,22 @@ class KalturaEventNotificationDispatchScope(KalturaEventNotificationScope):
 # @subpackage Client
 class KalturaEventNotificationTemplateFilter(KalturaEventNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEventNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1134,6 +1162,7 @@ class KalturaEventNotificationClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
+            'KalturaEventNotificationDelayedCondition': KalturaEventNotificationDelayedCondition,
             'KalturaEventNotificationTemplateStatus': KalturaEventNotificationTemplateStatus,
             'KalturaEventNotificationEventObjectType': KalturaEventNotificationEventObjectType,
             'KalturaEventNotificationEventType': KalturaEventNotificationEventType,

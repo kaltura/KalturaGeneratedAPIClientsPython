@@ -49,27 +49,27 @@ from ..Base import (
 # @subpackage Client
 class KalturaSystemPartnerUsageItem(KalturaObjectBase):
     def __init__(self,
-            partnerId=NotImplemented,
-            partnerName=NotImplemented,
-            partnerStatus=NotImplemented,
-            partnerPackage=NotImplemented,
-            partnerCreatedAt=NotImplemented,
-            views=NotImplemented,
-            plays=NotImplemented,
-            entriesCount=NotImplemented,
-            totalEntriesCount=NotImplemented,
-            videoEntriesCount=NotImplemented,
-            imageEntriesCount=NotImplemented,
-            audioEntriesCount=NotImplemented,
-            mixEntriesCount=NotImplemented,
-            bandwidth=NotImplemented,
-            totalStorage=NotImplemented,
-            storage=NotImplemented,
-            peakStorage=NotImplemented,
-            avgStorage=NotImplemented,
-            combinedBandwidthStorage=NotImplemented,
-            deletedStorage=NotImplemented,
-            transcodingUsage=NotImplemented):
+            partnerId = NotImplemented,
+            partnerName = NotImplemented,
+            partnerStatus = NotImplemented,
+            partnerPackage = NotImplemented,
+            partnerCreatedAt = NotImplemented,
+            views = NotImplemented,
+            plays = NotImplemented,
+            entriesCount = NotImplemented,
+            totalEntriesCount = NotImplemented,
+            videoEntriesCount = NotImplemented,
+            imageEntriesCount = NotImplemented,
+            audioEntriesCount = NotImplemented,
+            mixEntriesCount = NotImplemented,
+            bandwidth = NotImplemented,
+            totalStorage = NotImplemented,
+            storage = NotImplemented,
+            peakStorage = NotImplemented,
+            avgStorage = NotImplemented,
+            combinedBandwidthStorage = NotImplemented,
+            deletedStorage = NotImplemented,
+            transcodingUsage = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Partner ID
@@ -77,7 +77,7 @@ class KalturaSystemPartnerUsageItem(KalturaObjectBase):
         self.partnerId = partnerId
 
         # Partner name
-        # @var string
+        # @var str
         self.partnerName = partnerName
 
         # Partner status
@@ -342,11 +342,11 @@ class KalturaSystemPartnerUsageItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaSystemPartnerUsageFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            fromDate=NotImplemented,
-            toDate=NotImplemented,
-            timezoneOffset=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            fromDate = NotImplemented,
+            toDate = NotImplemented,
+            timezoneOffset = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -405,12 +405,12 @@ class KalturaSystemPartnerUsageFilter(KalturaFilter):
 # @subpackage Client
 class KalturaSystemPartnerUsageListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaSystemPartnerUsageItem
+        # @var List[KalturaSystemPartnerUsageItem]
         self.objects = objects
 
 
@@ -439,29 +439,29 @@ class KalturaSystemPartnerUsageListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaSystemPartnerFilter(KalturaPartnerFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            nameLike=NotImplemented,
-            nameMultiLikeOr=NotImplemented,
-            nameMultiLikeAnd=NotImplemented,
-            nameEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            partnerPackageEqual=NotImplemented,
-            partnerPackageGreaterThanOrEqual=NotImplemented,
-            partnerPackageLessThanOrEqual=NotImplemented,
-            partnerPackageIn=NotImplemented,
-            partnerGroupTypeEqual=NotImplemented,
-            partnerNameDescriptionWebsiteAdminNameAdminEmailLike=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            idGreaterThan=NotImplemented,
-            monitorUsageEqual=NotImplemented,
-            partnerParentIdEqual=NotImplemented,
-            partnerParentIdIn=NotImplemented,
-            adminEmailEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            nameLike = NotImplemented,
+            nameMultiLikeOr = NotImplemented,
+            nameMultiLikeAnd = NotImplemented,
+            nameEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            partnerPackageEqual = NotImplemented,
+            partnerPackageGreaterThanOrEqual = NotImplemented,
+            partnerPackageLessThanOrEqual = NotImplemented,
+            partnerPackageIn = NotImplemented,
+            partnerGroupTypeEqual = NotImplemented,
+            partnerNameDescriptionWebsiteAdminNameAdminEmailLike = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            idGreaterThan = NotImplemented,
+            monitorUsageEqual = NotImplemented,
+            partnerParentIdEqual = NotImplemented,
+            partnerParentIdIn = NotImplemented,
+            adminEmailEqual = NotImplemented):
         KalturaPartnerFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -487,10 +487,10 @@ class KalturaSystemPartnerFilter(KalturaPartnerFilter):
         # @var int
         self.partnerParentIdEqual = partnerParentIdEqual
 
-        # @var string
+        # @var str
         self.partnerParentIdIn = partnerParentIdIn
 
-        # @var string
+        # @var str
         self.adminEmailEqual = adminEmailEqual
 
 

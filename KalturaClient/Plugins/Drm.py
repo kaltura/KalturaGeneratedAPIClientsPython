@@ -151,14 +151,14 @@ class KalturaDrmProviderType(object):
 # @subpackage Client
 class KalturaDrmLicenseAccessDetails(KalturaObjectBase):
     def __init__(self,
-            policy=NotImplemented,
-            duration=NotImplemented,
-            absolute_duration=NotImplemented,
-            licenseParams=NotImplemented):
+            policy = NotImplemented,
+            duration = NotImplemented,
+            absolute_duration = NotImplemented,
+            licenseParams = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Drm policy name
-        # @var string
+        # @var str
         self.policy = policy
 
         # movie duration in seconds
@@ -169,7 +169,7 @@ class KalturaDrmLicenseAccessDetails(KalturaObjectBase):
         # @var int
         self.absolute_duration = absolute_duration
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.licenseParams = licenseParams
 
 
@@ -222,20 +222,20 @@ class KalturaDrmLicenseAccessDetails(KalturaObjectBase):
 # @subpackage Client
 class KalturaDrmPolicy(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            provider=NotImplemented,
-            status=NotImplemented,
-            scenario=NotImplemented,
-            licenseType=NotImplemented,
-            licenseExpirationPolicy=NotImplemented,
-            duration=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            licenseParams=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            provider = NotImplemented,
+            status = NotImplemented,
+            scenario = NotImplemented,
+            licenseType = NotImplemented,
+            licenseExpirationPolicy = NotImplemented,
+            duration = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            licenseParams = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -246,13 +246,13 @@ class KalturaDrmPolicy(KalturaObjectBase):
         # @insertonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaDrmProviderType
@@ -282,7 +282,7 @@ class KalturaDrmPolicy(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.licenseParams = licenseParams
 
 
@@ -403,17 +403,17 @@ class KalturaDrmPolicy(KalturaObjectBase):
 # @subpackage Client
 class KalturaDrmProfile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            provider=NotImplemented,
-            status=NotImplemented,
-            licenseServerUrl=NotImplemented,
-            defaultPolicy=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            signingKey=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            provider = NotImplemented,
+            status = NotImplemented,
+            licenseServerUrl = NotImplemented,
+            defaultPolicy = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            signingKey = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -424,10 +424,10 @@ class KalturaDrmProfile(KalturaObjectBase):
         # @insertonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaDrmProviderType
@@ -436,10 +436,10 @@ class KalturaDrmProfile(KalturaObjectBase):
         # @var KalturaDrmProfileStatus
         self.status = status
 
-        # @var string
+        # @var str
         self.licenseServerUrl = licenseServerUrl
 
-        # @var string
+        # @var str
         self.defaultPolicy = defaultPolicy
 
         # @var int
@@ -450,7 +450,7 @@ class KalturaDrmProfile(KalturaObjectBase):
         # @readonly
         self.updatedAt = updatedAt
 
-        # @var string
+        # @var str
         self.signingKey = signingKey
 
 
@@ -547,8 +547,8 @@ class KalturaDrmProfile(KalturaObjectBase):
 # @subpackage Client
 class KalturaAccessControlDrmPolicyAction(KalturaRuleAction):
     def __init__(self,
-            type=NotImplemented,
-            policyId=NotImplemented):
+            type = NotImplemented,
+            policyId = NotImplemented):
         KalturaRuleAction.__init__(self,
             type)
 
@@ -582,18 +582,18 @@ class KalturaAccessControlDrmPolicyAction(KalturaRuleAction):
 # @subpackage Client
 class KalturaDrmPolicyBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            systemNameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            scenarioEqual=NotImplemented,
-            scenarioIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            systemNameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            scenarioEqual = NotImplemented,
+            scenarioIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -601,31 +601,31 @@ class KalturaDrmPolicyBaseFilter(KalturaFilter):
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.nameLike = nameLike
 
-        # @var string
+        # @var str
         self.systemNameLike = systemNameLike
 
         # @var KalturaDrmProviderType
         self.providerEqual = providerEqual
 
-        # @var string
+        # @var str
         self.providerIn = providerIn
 
         # @var KalturaDrmPolicyStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaDrmLicenseScenario
         self.scenarioEqual = scenarioEqual
 
-        # @var string
+        # @var str
         self.scenarioIn = scenarioIn
 
 
@@ -726,12 +726,12 @@ class KalturaDrmPolicyBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDrmPolicyListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDrmPolicy
+        # @var List[KalturaDrmPolicy]
         # @readonly
         self.objects = objects
 
@@ -757,17 +757,17 @@ class KalturaDrmPolicyListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaDrmProfileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -775,28 +775,28 @@ class KalturaDrmProfileBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.nameLike = nameLike
 
         # @var KalturaDrmProviderType
         self.providerEqual = providerEqual
 
-        # @var string
+        # @var str
         self.providerIn = providerIn
 
         # @var KalturaDrmProfileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
 
@@ -889,12 +889,12 @@ class KalturaDrmProfileBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaDrmProfileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaDrmProfile
+        # @var List[KalturaDrmProfile]
         # @readonly
         self.objects = objects
 
@@ -920,18 +920,18 @@ class KalturaDrmProfileListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaDrmPolicyFilter(KalturaDrmPolicyBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            systemNameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            scenarioEqual=NotImplemented,
-            scenarioIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            systemNameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            scenarioEqual = NotImplemented,
+            scenarioIn = NotImplemented):
         KalturaDrmPolicyBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -964,17 +964,17 @@ class KalturaDrmPolicyFilter(KalturaDrmPolicyBaseFilter):
 # @subpackage Client
 class KalturaDrmProfileFilter(KalturaDrmProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDrmProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

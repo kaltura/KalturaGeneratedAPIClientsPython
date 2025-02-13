@@ -96,16 +96,16 @@ class KalturaOptionalAnswer(KalturaObjectBase):
     """A representation of an optional answer for question cue point"""
 
     def __init__(self,
-            key=NotImplemented,
-            text=NotImplemented,
-            weight=NotImplemented,
-            isCorrect=NotImplemented):
+            key = NotImplemented,
+            text = NotImplemented,
+            weight = NotImplemented,
+            isCorrect = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.key = key
 
-        # @var string
+        # @var str
         self.text = text
 
         # @var float
@@ -164,16 +164,16 @@ class KalturaOptionalAnswer(KalturaObjectBase):
 # @subpackage Client
 class KalturaQuiz(KalturaObjectBase):
     def __init__(self,
-            version=NotImplemented,
-            uiAttributes=NotImplemented,
-            showResultOnAnswer=NotImplemented,
-            showCorrectKeyOnAnswer=NotImplemented,
-            allowAnswerUpdate=NotImplemented,
-            showCorrectAfterSubmission=NotImplemented,
-            allowDownload=NotImplemented,
-            showGradeAfterSubmission=NotImplemented,
-            attemptsAllowed=NotImplemented,
-            scoreType=NotImplemented):
+            version = NotImplemented,
+            uiAttributes = NotImplemented,
+            showResultOnAnswer = NotImplemented,
+            showCorrectKeyOnAnswer = NotImplemented,
+            allowAnswerUpdate = NotImplemented,
+            showCorrectAfterSubmission = NotImplemented,
+            allowDownload = NotImplemented,
+            showGradeAfterSubmission = NotImplemented,
+            attemptsAllowed = NotImplemented,
+            scoreType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -181,7 +181,7 @@ class KalturaQuiz(KalturaObjectBase):
         self.version = version
 
         # Array of key value ui related objects
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.uiAttributes = uiAttributes
 
         # @var KalturaNullableBoolean
@@ -302,33 +302,33 @@ class KalturaQuiz(KalturaObjectBase):
 # @subpackage Client
 class KalturaAnswerCuePoint(KalturaCuePoint):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented,
-            parentId=NotImplemented,
-            quizUserEntryId=NotImplemented,
-            answerKey=NotImplemented,
-            openAnswer=NotImplemented,
-            isCorrect=NotImplemented,
-            correctAnswerKeys=NotImplemented,
-            explanation=NotImplemented,
-            feedback=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented,
+            parentId = NotImplemented,
+            quizUserEntryId = NotImplemented,
+            answerKey = NotImplemented,
+            openAnswer = NotImplemented,
+            isCorrect = NotImplemented,
+            correctAnswerKeys = NotImplemented,
+            explanation = NotImplemented,
+            feedback = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -350,18 +350,18 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
             isMomentary,
             copiedFrom)
 
-        # @var string
+        # @var str
         # @insertonly
         self.parentId = parentId
 
-        # @var string
+        # @var str
         # @insertonly
         self.quizUserEntryId = quizUserEntryId
 
-        # @var string
+        # @var str
         self.answerKey = answerKey
 
-        # @var string
+        # @var str
         self.openAnswer = openAnswer
 
         # @var KalturaNullableBoolean
@@ -369,15 +369,15 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
         self.isCorrect = isCorrect
 
         # Array of string
-        # @var array of KalturaString
+        # @var List[KalturaString]
         # @readonly
         self.correctAnswerKeys = correctAnswerKeys
 
-        # @var string
+        # @var str
         # @readonly
         self.explanation = explanation
 
-        # @var string
+        # @var str
         self.feedback = feedback
 
 
@@ -450,32 +450,32 @@ class KalturaAnswerCuePoint(KalturaCuePoint):
 # @subpackage Client
 class KalturaQuestionCuePoint(KalturaCuePoint):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented,
-            optionalAnswers=NotImplemented,
-            hint=NotImplemented,
-            question=NotImplemented,
-            explanation=NotImplemented,
-            questionType=NotImplemented,
-            presentationOrder=NotImplemented,
-            excludeFromScore=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented,
+            optionalAnswers = NotImplemented,
+            hint = NotImplemented,
+            question = NotImplemented,
+            explanation = NotImplemented,
+            questionType = NotImplemented,
+            presentationOrder = NotImplemented,
+            excludeFromScore = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -498,16 +498,16 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
             copiedFrom)
 
         # Array of key value answerKey->optionAnswer objects
-        # @var array of KalturaOptionalAnswer
+        # @var List[KalturaOptionalAnswer]
         self.optionalAnswers = optionalAnswers
 
-        # @var string
+        # @var str
         self.hint = hint
 
-        # @var string
+        # @var str
         self.question = question
 
-        # @var string
+        # @var str
         self.explanation = explanation
 
         # @var KalturaQuestionType
@@ -593,7 +593,7 @@ class KalturaQuestionCuePoint(KalturaCuePoint):
 # @subpackage Client
 class KalturaQuizAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            isQuiz=NotImplemented):
+            isQuiz = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -625,12 +625,12 @@ class KalturaQuizAdvancedFilter(KalturaSearchItem):
 # @subpackage Client
 class KalturaQuizListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaQuiz
+        # @var List[KalturaQuiz]
         # @readonly
         self.objects = objects
 
@@ -656,20 +656,20 @@ class KalturaQuizListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaQuizFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
         # This filter should be in use for retrieving only a specific quiz entry (identified by its entryId).
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
         # This filter should be in use for retrieving few specific quiz entries (string should include comma separated list of entryId strings).
-        # @var string
+        # @var str
         self.entryIdIn = entryIdIn
 
 
@@ -706,43 +706,43 @@ class KalturaQuizFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            quizUserEntryIdEqual=NotImplemented,
-            quizUserEntryIdIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            quizUserEntryIdEqual = NotImplemented,
+            quizUserEntryIdIn = NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -778,16 +778,16 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
-        # @var string
+        # @var str
         self.parentIdEqual = parentIdEqual
 
-        # @var string
+        # @var str
         self.parentIdIn = parentIdIn
 
-        # @var string
+        # @var str
         self.quizUserEntryIdEqual = quizUserEntryIdEqual
 
-        # @var string
+        # @var str
         self.quizUserEntryIdIn = quizUserEntryIdIn
 
 
@@ -840,42 +840,42 @@ class KalturaAnswerCuePointBaseFilter(KalturaCuePointFilter):
 # @subpackage Client
 class KalturaQuestionCuePointBaseFilter(KalturaCuePointFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            questionLike=NotImplemented,
-            questionMultiLikeOr=NotImplemented,
-            questionMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            questionLike = NotImplemented,
+            questionMultiLikeOr = NotImplemented,
+            questionMultiLikeAnd = NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -911,13 +911,13 @@ class KalturaQuestionCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
-        # @var string
+        # @var str
         self.questionLike = questionLike
 
-        # @var string
+        # @var str
         self.questionMultiLikeOr = questionMultiLikeOr
 
-        # @var string
+        # @var str
         self.questionMultiLikeAnd = questionMultiLikeAnd
 
 
@@ -962,43 +962,43 @@ class KalturaQuestionCuePointBaseFilter(KalturaCuePointFilter):
 # @subpackage Client
 class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            quizUserEntryIdEqual=NotImplemented,
-            quizUserEntryIdIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            quizUserEntryIdEqual = NotImplemented,
+            quizUserEntryIdIn = NotImplemented):
         KalturaAnswerCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1056,42 +1056,42 @@ class KalturaAnswerCuePointFilter(KalturaAnswerCuePointBaseFilter):
 # @subpackage Client
 class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            questionLike=NotImplemented,
-            questionMultiLikeOr=NotImplemented,
-            questionMultiLikeAnd=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            questionLike = NotImplemented,
+            questionMultiLikeOr = NotImplemented,
+            questionMultiLikeAnd = NotImplemented):
         KalturaQuestionCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1148,31 +1148,28 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
 # @subpackage Client
 class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            entryIdNotIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            userIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            extendedStatusEqual=NotImplemented,
-            extendedStatusIn=NotImplemented,
-            extendedStatusNotIn=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented,
-            privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented,
-            partnerId=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            entryIdNotIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            userIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            typeEqual = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            isAnonymous = NotImplemented,
+            privacyContextEqual = NotImplemented,
+            privacyContextIn = NotImplemented,
+            partnerId = NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1191,9 +1188,6 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             typeEqual,
-            extendedStatusEqual,
-            extendedStatusIn,
-            extendedStatusNotIn,
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,

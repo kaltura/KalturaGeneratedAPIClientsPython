@@ -86,15 +86,15 @@ class KalturaYahooDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaYahooDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -124,20 +124,20 @@ class KalturaYahooDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaYahooDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            smallThumbPath=NotImplemented,
-            largeThumbPath=NotImplemented,
-            videoAssetFilePath=NotImplemented):
+            fieldValues = NotImplemented,
+            smallThumbPath = NotImplemented,
+            largeThumbPath = NotImplemented,
+            videoAssetFilePath = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.smallThumbPath = smallThumbPath
 
-        # @var string
+        # @var str
         self.largeThumbPath = largeThumbPath
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
 
@@ -182,42 +182,42 @@ class KalturaYahooDistributionJobProviderData(KalturaConfigurableDistributionJob
 # @subpackage Client
 class KalturaYahooDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            ftpPath=NotImplemented,
-            ftpUsername=NotImplemented,
-            ftpPassword=NotImplemented,
-            ftpHost=NotImplemented,
-            contactTelephone=NotImplemented,
-            contactEmail=NotImplemented,
-            processFeed=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            ftpPath = NotImplemented,
+            ftpUsername = NotImplemented,
+            ftpPassword = NotImplemented,
+            ftpHost = NotImplemented,
+            contactTelephone = NotImplemented,
+            contactEmail = NotImplemented,
+            processFeed = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -249,22 +249,22 @@ class KalturaYahooDistributionProfile(KalturaConfigurableDistributionProfile):
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.ftpPath = ftpPath
 
-        # @var string
+        # @var str
         self.ftpUsername = ftpUsername
 
-        # @var string
+        # @var str
         self.ftpPassword = ftpPassword
 
-        # @var string
+        # @var str
         self.ftpHost = ftpHost
 
-        # @var string
+        # @var str
         self.contactTelephone = contactTelephone
 
-        # @var string
+        # @var str
         self.contactEmail = contactEmail
 
         # @var KalturaYahooDistributionProcessFeedActionStatus
@@ -344,10 +344,10 @@ class KalturaYahooDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaYahooDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -372,10 +372,10 @@ class KalturaYahooDistributionProviderBaseFilter(KalturaDistributionProviderFilt
 # @subpackage Client
 class KalturaYahooDistributionProviderFilter(KalturaYahooDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaYahooDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -400,16 +400,16 @@ class KalturaYahooDistributionProviderFilter(KalturaYahooDistributionProviderBas
 # @subpackage Client
 class KalturaYahooDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -440,16 +440,16 @@ class KalturaYahooDistributionProfileBaseFilter(KalturaConfigurableDistributionP
 # @subpackage Client
 class KalturaYahooDistributionProfileFilter(KalturaYahooDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaYahooDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

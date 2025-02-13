@@ -197,30 +197,30 @@ class KalturaAuditTrailInfo(KalturaObjectBase):
 # @subpackage Client
 class KalturaAuditTrail(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            parsedAt=NotImplemented,
-            status=NotImplemented,
-            auditObjectType=NotImplemented,
-            objectId=NotImplemented,
-            relatedObjectId=NotImplemented,
-            relatedObjectType=NotImplemented,
-            entryId=NotImplemented,
-            masterPartnerId=NotImplemented,
-            partnerId=NotImplemented,
-            requestId=NotImplemented,
-            userId=NotImplemented,
-            action=NotImplemented,
-            data=NotImplemented,
-            ks=NotImplemented,
-            context=NotImplemented,
-            entryPoint=NotImplemented,
-            serverName=NotImplemented,
-            ipAddress=NotImplemented,
-            userAgent=NotImplemented,
-            clientTag=NotImplemented,
-            description=NotImplemented,
-            errorDescription=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            parsedAt = NotImplemented,
+            status = NotImplemented,
+            auditObjectType = NotImplemented,
+            objectId = NotImplemented,
+            relatedObjectId = NotImplemented,
+            relatedObjectType = NotImplemented,
+            entryId = NotImplemented,
+            masterPartnerId = NotImplemented,
+            partnerId = NotImplemented,
+            requestId = NotImplemented,
+            userId = NotImplemented,
+            action = NotImplemented,
+            data = NotImplemented,
+            ks = NotImplemented,
+            context = NotImplemented,
+            entryPoint = NotImplemented,
+            serverName = NotImplemented,
+            ipAddress = NotImplemented,
+            userAgent = NotImplemented,
+            clientTag = NotImplemented,
+            description = NotImplemented,
+            errorDescription = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -243,16 +243,16 @@ class KalturaAuditTrail(KalturaObjectBase):
         # @var KalturaAuditTrailObjectType
         self.auditObjectType = auditObjectType
 
-        # @var string
+        # @var str
         self.objectId = objectId
 
-        # @var string
+        # @var str
         self.relatedObjectId = relatedObjectId
 
         # @var KalturaAuditTrailObjectType
         self.relatedObjectType = relatedObjectType
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # @var int
@@ -263,11 +263,11 @@ class KalturaAuditTrail(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         # @readonly
         self.requestId = requestId
 
-        # @var string
+        # @var str
         self.userId = userId
 
         # @var KalturaAuditTrailAction
@@ -276,7 +276,7 @@ class KalturaAuditTrail(KalturaObjectBase):
         # @var KalturaAuditTrailInfo
         self.data = data
 
-        # @var string
+        # @var str
         # @readonly
         self.ks = ks
 
@@ -285,29 +285,29 @@ class KalturaAuditTrail(KalturaObjectBase):
         self.context = context
 
         # The API service and action that called and caused this audit
-        # @var string
+        # @var str
         # @readonly
         self.entryPoint = entryPoint
 
-        # @var string
+        # @var str
         # @readonly
         self.serverName = serverName
 
-        # @var string
+        # @var str
         # @readonly
         self.ipAddress = ipAddress
 
-        # @var string
+        # @var str
         # @readonly
         self.userAgent = userAgent
 
-        # @var string
+        # @var str
         self.clientTag = clientTag
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         # @readonly
         self.errorDescription = errorDescription
 
@@ -465,18 +465,18 @@ class KalturaAuditTrail(KalturaObjectBase):
 # @subpackage Client
 class KalturaAuditTrailChangeItem(KalturaObjectBase):
     def __init__(self,
-            descriptor=NotImplemented,
-            oldValue=NotImplemented,
-            newValue=NotImplemented):
+            descriptor = NotImplemented,
+            oldValue = NotImplemented,
+            newValue = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.descriptor = descriptor
 
-        # @var string
+        # @var str
         self.oldValue = oldValue
 
-        # @var string
+        # @var str
         self.newValue = newValue
 
 
@@ -521,10 +521,10 @@ class KalturaAuditTrailChangeItem(KalturaObjectBase):
 # @subpackage Client
 class KalturaAuditTrailChangeInfo(KalturaAuditTrailInfo):
     def __init__(self,
-            changedItems=NotImplemented):
+            changedItems = NotImplemented):
         KalturaAuditTrailInfo.__init__(self)
 
-        # @var array of KalturaAuditTrailChangeItem
+        # @var List[KalturaAuditTrailChangeItem]
         self.changedItems = changedItems
 
 
@@ -553,10 +553,10 @@ class KalturaAuditTrailChangeInfo(KalturaAuditTrailInfo):
 # @subpackage Client
 class KalturaAuditTrailChangeXmlNode(KalturaAuditTrailChangeItem):
     def __init__(self,
-            descriptor=NotImplemented,
-            oldValue=NotImplemented,
-            newValue=NotImplemented,
-            type=NotImplemented):
+            descriptor = NotImplemented,
+            oldValue = NotImplemented,
+            newValue = NotImplemented,
+            type = NotImplemented):
         KalturaAuditTrailChangeItem.__init__(self,
             descriptor,
             oldValue,
@@ -591,14 +591,14 @@ class KalturaAuditTrailChangeXmlNode(KalturaAuditTrailChangeItem):
 # @subpackage Client
 class KalturaAuditTrailFileSyncCreateInfo(KalturaAuditTrailInfo):
     def __init__(self,
-            version=NotImplemented,
-            objectSubType=NotImplemented,
-            dc=NotImplemented,
-            original=NotImplemented,
-            fileType=NotImplemented):
+            version = NotImplemented,
+            objectSubType = NotImplemented,
+            dc = NotImplemented,
+            original = NotImplemented,
+            fileType = NotImplemented):
         KalturaAuditTrailInfo.__init__(self)
 
-        # @var string
+        # @var str
         self.version = version
 
         # @var int
@@ -671,12 +671,12 @@ class KalturaAuditTrailFileSyncCreateInfo(KalturaAuditTrailInfo):
 # @subpackage Client
 class KalturaAuditTrailListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaAuditTrail
+        # @var List[KalturaAuditTrail]
         # @readonly
         self.objects = objects
 
@@ -702,10 +702,10 @@ class KalturaAuditTrailListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaAuditTrailTextInfo(KalturaAuditTrailInfo):
     def __init__(self,
-            info=NotImplemented):
+            info = NotImplemented):
         KalturaAuditTrailInfo.__init__(self)
 
-        # @var string
+        # @var str
         self.info = info
 
 
@@ -734,45 +734,45 @@ class KalturaAuditTrailTextInfo(KalturaAuditTrailInfo):
 # @subpackage Client
 class KalturaAuditTrailBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            parsedAtGreaterThanOrEqual=NotImplemented,
-            parsedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            auditObjectTypeEqual=NotImplemented,
-            auditObjectTypeIn=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            relatedObjectIdEqual=NotImplemented,
-            relatedObjectIdIn=NotImplemented,
-            relatedObjectTypeEqual=NotImplemented,
-            relatedObjectTypeIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            masterPartnerIdEqual=NotImplemented,
-            masterPartnerIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            requestIdEqual=NotImplemented,
-            requestIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            actionEqual=NotImplemented,
-            actionIn=NotImplemented,
-            ksEqual=NotImplemented,
-            contextEqual=NotImplemented,
-            contextIn=NotImplemented,
-            entryPointEqual=NotImplemented,
-            entryPointIn=NotImplemented,
-            serverNameEqual=NotImplemented,
-            serverNameIn=NotImplemented,
-            ipAddressEqual=NotImplemented,
-            ipAddressIn=NotImplemented,
-            clientTagEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            parsedAtGreaterThanOrEqual = NotImplemented,
+            parsedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            auditObjectTypeEqual = NotImplemented,
+            auditObjectTypeIn = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            relatedObjectIdEqual = NotImplemented,
+            relatedObjectIdIn = NotImplemented,
+            relatedObjectTypeEqual = NotImplemented,
+            relatedObjectTypeIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            masterPartnerIdEqual = NotImplemented,
+            masterPartnerIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            requestIdEqual = NotImplemented,
+            requestIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            actionEqual = NotImplemented,
+            actionIn = NotImplemented,
+            ksEqual = NotImplemented,
+            contextEqual = NotImplemented,
+            contextIn = NotImplemented,
+            entryPointEqual = NotImplemented,
+            entryPointIn = NotImplemented,
+            serverNameEqual = NotImplemented,
+            serverNameIn = NotImplemented,
+            ipAddressEqual = NotImplemented,
+            ipAddressIn = NotImplemented,
+            clientTagEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -795,97 +795,97 @@ class KalturaAuditTrailBaseFilter(KalturaRelatedFilter):
         # @var KalturaAuditTrailStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaAuditTrailObjectType
         self.auditObjectTypeEqual = auditObjectTypeEqual
 
-        # @var string
+        # @var str
         self.auditObjectTypeIn = auditObjectTypeIn
 
-        # @var string
+        # @var str
         self.objectIdEqual = objectIdEqual
 
-        # @var string
+        # @var str
         self.objectIdIn = objectIdIn
 
-        # @var string
+        # @var str
         self.relatedObjectIdEqual = relatedObjectIdEqual
 
-        # @var string
+        # @var str
         self.relatedObjectIdIn = relatedObjectIdIn
 
         # @var KalturaAuditTrailObjectType
         self.relatedObjectTypeEqual = relatedObjectTypeEqual
 
-        # @var string
+        # @var str
         self.relatedObjectTypeIn = relatedObjectTypeIn
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
-        # @var string
+        # @var str
         self.entryIdIn = entryIdIn
 
         # @var int
         self.masterPartnerIdEqual = masterPartnerIdEqual
 
-        # @var string
+        # @var str
         self.masterPartnerIdIn = masterPartnerIdIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.requestIdEqual = requestIdEqual
 
-        # @var string
+        # @var str
         self.requestIdIn = requestIdIn
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
         # @var KalturaAuditTrailAction
         self.actionEqual = actionEqual
 
-        # @var string
+        # @var str
         self.actionIn = actionIn
 
-        # @var string
+        # @var str
         self.ksEqual = ksEqual
 
         # @var KalturaAuditTrailContext
         self.contextEqual = contextEqual
 
-        # @var string
+        # @var str
         self.contextIn = contextIn
 
-        # @var string
+        # @var str
         self.entryPointEqual = entryPointEqual
 
-        # @var string
+        # @var str
         self.entryPointIn = entryPointIn
 
-        # @var string
+        # @var str
         self.serverNameEqual = serverNameEqual
 
-        # @var string
+        # @var str
         self.serverNameIn = serverNameIn
 
-        # @var string
+        # @var str
         self.ipAddressEqual = ipAddressEqual
 
-        # @var string
+        # @var str
         self.ipAddressIn = ipAddressIn
 
-        # @var string
+        # @var str
         self.clientTagEqual = clientTagEqual
 
 
@@ -1202,45 +1202,45 @@ class KalturaAuditTrailBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaAuditTrailFilter(KalturaAuditTrailBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            parsedAtGreaterThanOrEqual=NotImplemented,
-            parsedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            auditObjectTypeEqual=NotImplemented,
-            auditObjectTypeIn=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            relatedObjectIdEqual=NotImplemented,
-            relatedObjectIdIn=NotImplemented,
-            relatedObjectTypeEqual=NotImplemented,
-            relatedObjectTypeIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            masterPartnerIdEqual=NotImplemented,
-            masterPartnerIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            requestIdEqual=NotImplemented,
-            requestIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            actionEqual=NotImplemented,
-            actionIn=NotImplemented,
-            ksEqual=NotImplemented,
-            contextEqual=NotImplemented,
-            contextIn=NotImplemented,
-            entryPointEqual=NotImplemented,
-            entryPointIn=NotImplemented,
-            serverNameEqual=NotImplemented,
-            serverNameIn=NotImplemented,
-            ipAddressEqual=NotImplemented,
-            ipAddressIn=NotImplemented,
-            clientTagEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            parsedAtGreaterThanOrEqual = NotImplemented,
+            parsedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            auditObjectTypeEqual = NotImplemented,
+            auditObjectTypeIn = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            relatedObjectIdEqual = NotImplemented,
+            relatedObjectIdIn = NotImplemented,
+            relatedObjectTypeEqual = NotImplemented,
+            relatedObjectTypeIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            masterPartnerIdEqual = NotImplemented,
+            masterPartnerIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            requestIdEqual = NotImplemented,
+            requestIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            actionEqual = NotImplemented,
+            actionIn = NotImplemented,
+            ksEqual = NotImplemented,
+            contextEqual = NotImplemented,
+            contextIn = NotImplemented,
+            entryPointEqual = NotImplemented,
+            entryPointIn = NotImplemented,
+            serverNameEqual = NotImplemented,
+            serverNameIn = NotImplemented,
+            ipAddressEqual = NotImplemented,
+            ipAddressIn = NotImplemented,
+            clientTagEqual = NotImplemented):
         KalturaAuditTrailBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

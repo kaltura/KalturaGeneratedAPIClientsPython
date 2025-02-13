@@ -113,31 +113,31 @@ class KalturaDailymotionDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaDailymotionDistributionCaptionInfo(KalturaObjectBase):
     def __init__(self,
-            language=NotImplemented,
-            filePath=NotImplemented,
-            remoteId=NotImplemented,
-            action=NotImplemented,
-            version=NotImplemented,
-            assetId=NotImplemented,
-            format=NotImplemented):
+            language = NotImplemented,
+            filePath = NotImplemented,
+            remoteId = NotImplemented,
+            action = NotImplemented,
+            version = NotImplemented,
+            assetId = NotImplemented,
+            format = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.language = language
 
-        # @var string
+        # @var str
         self.filePath = filePath
 
-        # @var string
+        # @var str
         self.remoteId = remoteId
 
         # @var KalturaDailymotionDistributionCaptionAction
         self.action = action
 
-        # @var string
+        # @var str
         self.version = version
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
         # @var KalturaDailymotionDistributionCaptionFormat
@@ -217,15 +217,15 @@ class KalturaDailymotionDistributionCaptionInfo(KalturaObjectBase):
 # @subpackage Client
 class KalturaDailymotionDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -255,24 +255,24 @@ class KalturaDailymotionDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaDailymotionDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePath=NotImplemented,
-            accessControlGeoBlockingOperation=NotImplemented,
-            accessControlGeoBlockingCountryList=NotImplemented,
-            captionsInfo=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePath = NotImplemented,
+            accessControlGeoBlockingOperation = NotImplemented,
+            accessControlGeoBlockingCountryList = NotImplemented,
+            captionsInfo = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
-        # @var string
+        # @var str
         self.accessControlGeoBlockingOperation = accessControlGeoBlockingOperation
 
-        # @var string
+        # @var str
         self.accessControlGeoBlockingCountryList = accessControlGeoBlockingCountryList
 
-        # @var array of KalturaDailymotionDistributionCaptionInfo
+        # @var List[KalturaDailymotionDistributionCaptionInfo]
         self.captionsInfo = captionsInfo
 
 
@@ -325,38 +325,38 @@ class KalturaDailymotionDistributionJobProviderData(KalturaConfigurableDistribut
 # @subpackage Client
 class KalturaDailymotionDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            user=NotImplemented,
-            password=NotImplemented,
-            geoBlockingMapping=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            user = NotImplemented,
+            password = NotImplemented,
+            geoBlockingMapping = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -388,10 +388,10 @@ class KalturaDailymotionDistributionProfile(KalturaConfigurableDistributionProfi
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.user = user
 
-        # @var string
+        # @var str
         self.password = password
 
         # @var KalturaDailymotionGeoBlockingMapping
@@ -439,10 +439,10 @@ class KalturaDailymotionDistributionProfile(KalturaConfigurableDistributionProfi
 # @subpackage Client
 class KalturaDailymotionDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -467,10 +467,10 @@ class KalturaDailymotionDistributionProviderBaseFilter(KalturaDistributionProvid
 # @subpackage Client
 class KalturaDailymotionDistributionProviderFilter(KalturaDailymotionDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDailymotionDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -495,16 +495,16 @@ class KalturaDailymotionDistributionProviderFilter(KalturaDailymotionDistributio
 # @subpackage Client
 class KalturaDailymotionDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -535,16 +535,16 @@ class KalturaDailymotionDistributionProfileBaseFilter(KalturaConfigurableDistrib
 # @subpackage Client
 class KalturaDailymotionDistributionProfileFilter(KalturaDailymotionDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDailymotionDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

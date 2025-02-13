@@ -87,34 +87,34 @@ class KalturaYoutubeApiDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
     def __init__(self,
-            language=NotImplemented,
-            label=NotImplemented,
-            filePath=NotImplemented,
-            remoteId=NotImplemented,
-            action=NotImplemented,
-            version=NotImplemented,
-            assetId=NotImplemented):
+            language = NotImplemented,
+            label = NotImplemented,
+            filePath = NotImplemented,
+            remoteId = NotImplemented,
+            action = NotImplemented,
+            version = NotImplemented,
+            assetId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.language = language
 
-        # @var string
+        # @var str
         self.label = label
 
-        # @var string
+        # @var str
         self.filePath = filePath
 
-        # @var string
+        # @var str
         self.remoteId = remoteId
 
         # @var KalturaYouTubeApiDistributionCaptionAction
         self.action = action
 
-        # @var string
+        # @var str
         self.version = version
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
 
@@ -191,15 +191,15 @@ class KalturaYouTubeApiCaptionDistributionInfo(KalturaObjectBase):
 # @subpackage Client
 class KalturaYoutubeApiDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -229,20 +229,20 @@ class KalturaYoutubeApiDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaYoutubeApiDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePath=NotImplemented,
-            thumbAssetFilePath=NotImplemented,
-            captionsInfo=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePath = NotImplemented,
+            thumbAssetFilePath = NotImplemented,
+            captionsInfo = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
-        # @var string
+        # @var str
         self.thumbAssetFilePath = thumbAssetFilePath
 
-        # @var array of KalturaYouTubeApiCaptionDistributionInfo
+        # @var List[KalturaYouTubeApiCaptionDistributionInfo]
         self.captionsInfo = captionsInfo
 
 
@@ -287,47 +287,47 @@ class KalturaYoutubeApiDistributionJobProviderData(KalturaConfigurableDistributi
 # @subpackage Client
 class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            username=NotImplemented,
-            defaultCategory=NotImplemented,
-            allowComments=NotImplemented,
-            allowEmbedding=NotImplemented,
-            allowRatings=NotImplemented,
-            allowResponses=NotImplemented,
-            apiAuthorizeUrl=NotImplemented,
-            googleClientId=NotImplemented,
-            googleClientSecret=NotImplemented,
-            googleTokenData=NotImplemented,
-            assumeSuccess=NotImplemented,
-            privacyStatus=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            username = NotImplemented,
+            defaultCategory = NotImplemented,
+            allowComments = NotImplemented,
+            allowEmbedding = NotImplemented,
+            allowRatings = NotImplemented,
+            allowResponses = NotImplemented,
+            apiAuthorizeUrl = NotImplemented,
+            googleClientId = NotImplemented,
+            googleClientSecret = NotImplemented,
+            googleTokenData = NotImplemented,
+            assumeSuccess = NotImplemented,
+            privacyStatus = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -359,40 +359,40 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.username = username
 
         # @var int
         self.defaultCategory = defaultCategory
 
-        # @var string
+        # @var str
         self.allowComments = allowComments
 
-        # @var string
+        # @var str
         self.allowEmbedding = allowEmbedding
 
-        # @var string
+        # @var str
         self.allowRatings = allowRatings
 
-        # @var string
+        # @var str
         self.allowResponses = allowResponses
 
-        # @var string
+        # @var str
         self.apiAuthorizeUrl = apiAuthorizeUrl
 
-        # @var string
+        # @var str
         self.googleClientId = googleClientId
 
-        # @var string
+        # @var str
         self.googleClientSecret = googleClientSecret
 
-        # @var string
+        # @var str
         self.googleTokenData = googleTokenData
 
         # @var bool
         self.assumeSuccess = assumeSuccess
 
-        # @var string
+        # @var str
         self.privacyStatus = privacyStatus
 
 
@@ -509,10 +509,10 @@ class KalturaYoutubeApiDistributionProfile(KalturaConfigurableDistributionProfil
 # @subpackage Client
 class KalturaYoutubeApiDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -537,10 +537,10 @@ class KalturaYoutubeApiDistributionProviderBaseFilter(KalturaDistributionProvide
 # @subpackage Client
 class KalturaYoutubeApiDistributionProviderFilter(KalturaYoutubeApiDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaYoutubeApiDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -565,16 +565,16 @@ class KalturaYoutubeApiDistributionProviderFilter(KalturaYoutubeApiDistributionP
 # @subpackage Client
 class KalturaYoutubeApiDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -605,16 +605,16 @@ class KalturaYoutubeApiDistributionProfileBaseFilter(KalturaConfigurableDistribu
 # @subpackage Client
 class KalturaYoutubeApiDistributionProfileFilter(KalturaYoutubeApiDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaYoutubeApiDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

@@ -50,18 +50,18 @@ from ..Base import (
 # @subpackage Client
 class KalturaFairplayDrmProfile(KalturaDrmProfile):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            provider=NotImplemented,
-            status=NotImplemented,
-            licenseServerUrl=NotImplemented,
-            defaultPolicy=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            signingKey=NotImplemented,
-            publicCertificate=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            provider = NotImplemented,
+            status = NotImplemented,
+            licenseServerUrl = NotImplemented,
+            defaultPolicy = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            signingKey = NotImplemented,
+            publicCertificate = NotImplemented):
         KalturaDrmProfile.__init__(self,
             id,
             partnerId,
@@ -75,7 +75,7 @@ class KalturaFairplayDrmProfile(KalturaDrmProfile):
             updatedAt,
             signingKey)
 
-        # @var string
+        # @var str
         self.publicCertificate = publicCertificate
 
 
@@ -104,12 +104,12 @@ class KalturaFairplayDrmProfile(KalturaDrmProfile):
 # @subpackage Client
 class KalturaFairplayEntryContextPluginData(KalturaPluginData):
     def __init__(self,
-            publicCertificate=NotImplemented):
+            publicCertificate = NotImplemented):
         KalturaPluginData.__init__(self)
 
         # For fairplay (and maybe in the future other drm providers) we need to return a public certificate to encrypt
         # 	 the request from the player to the server.
-        # @var string
+        # @var str
         self.publicCertificate = publicCertificate
 
 

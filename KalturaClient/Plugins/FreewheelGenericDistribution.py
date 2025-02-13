@@ -75,15 +75,15 @@ class KalturaFreewheelGenericDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -113,22 +113,22 @@ class KalturaFreewheelGenericDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaFreewheelGenericDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePaths=NotImplemented,
-            thumbAssetFilePath=NotImplemented,
-            cuePoints=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePaths = NotImplemented,
+            thumbAssetFilePath = NotImplemented,
+            cuePoints = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
         # Demonstrate passing array of paths to the job
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.videoAssetFilePaths = videoAssetFilePaths
 
         # Demonstrate passing single path to the job
-        # @var string
+        # @var str
         self.thumbAssetFilePath = thumbAssetFilePath
 
-        # @var array of KalturaCuePoint
+        # @var List[KalturaCuePoint]
         self.cuePoints = cuePoints
 
 
@@ -173,46 +173,46 @@ class KalturaFreewheelGenericDistributionJobProviderData(KalturaConfigurableDist
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            apikey=NotImplemented,
-            email=NotImplemented,
-            sftpPass=NotImplemented,
-            sftpLogin=NotImplemented,
-            contentOwner=NotImplemented,
-            upstreamVideoId=NotImplemented,
-            upstreamNetworkName=NotImplemented,
-            upstreamNetworkId=NotImplemented,
-            categoryId=NotImplemented,
-            replaceGroup=NotImplemented,
-            replaceAirDates=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            apikey = NotImplemented,
+            email = NotImplemented,
+            sftpPass = NotImplemented,
+            sftpLogin = NotImplemented,
+            contentOwner = NotImplemented,
+            upstreamVideoId = NotImplemented,
+            upstreamNetworkName = NotImplemented,
+            upstreamNetworkId = NotImplemented,
+            categoryId = NotImplemented,
+            replaceGroup = NotImplemented,
+            replaceAirDates = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -244,31 +244,31 @@ class KalturaFreewheelGenericDistributionProfile(KalturaConfigurableDistribution
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.apikey = apikey
 
-        # @var string
+        # @var str
         self.email = email
 
-        # @var string
+        # @var str
         self.sftpPass = sftpPass
 
-        # @var string
+        # @var str
         self.sftpLogin = sftpLogin
 
-        # @var string
+        # @var str
         self.contentOwner = contentOwner
 
-        # @var string
+        # @var str
         self.upstreamVideoId = upstreamVideoId
 
-        # @var string
+        # @var str
         self.upstreamNetworkName = upstreamNetworkName
 
-        # @var string
+        # @var str
         self.upstreamNetworkId = upstreamNetworkId
 
-        # @var string
+        # @var str
         self.categoryId = categoryId
 
         # @var bool
@@ -383,10 +383,10 @@ class KalturaFreewheelGenericDistributionProfile(KalturaConfigurableDistribution
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -411,10 +411,10 @@ class KalturaFreewheelGenericDistributionProviderBaseFilter(KalturaDistributionP
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProviderFilter(KalturaFreewheelGenericDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFreewheelGenericDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -439,16 +439,16 @@ class KalturaFreewheelGenericDistributionProviderFilter(KalturaFreewheelGenericD
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -479,16 +479,16 @@ class KalturaFreewheelGenericDistributionProfileBaseFilter(KalturaConfigurableDi
 # @subpackage Client
 class KalturaFreewheelGenericDistributionProfileFilter(KalturaFreewheelGenericDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFreewheelGenericDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

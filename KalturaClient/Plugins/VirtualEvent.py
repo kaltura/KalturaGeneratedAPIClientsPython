@@ -89,21 +89,23 @@ class KalturaVirtualEventOrderBy(object):
 # @subpackage Client
 class KalturaVirtualEvent(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            tags=NotImplemented,
-            attendeesGroupIds=NotImplemented,
-            adminsGroupIds=NotImplemented,
-            registrationScheduleEventId=NotImplemented,
-            agendaScheduleEventId=NotImplemented,
-            mainEventScheduleEventId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletionDueDate=NotImplemented,
-            registrationFormSchema=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            tags = NotImplemented,
+            attendeesGroupIds = NotImplemented,
+            adminsGroupIds = NotImplemented,
+            registrationScheduleEventId = NotImplemented,
+            agendaScheduleEventId = NotImplemented,
+            mainEventScheduleEventId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletionDueDate = NotImplemented,
+            registrationFormSchema = NotImplemented,
+            eventUrl = NotImplemented,
+            webhookRegistrationToken = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -114,23 +116,23 @@ class KalturaVirtualEvent(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaVirtualEventStatus
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         self.tags = tags
 
-        # @var string
+        # @var str
         self.attendeesGroupIds = attendeesGroupIds
 
-        # @var string
+        # @var str
         self.adminsGroupIds = adminsGroupIds
 
         # @var int
@@ -154,8 +156,16 @@ class KalturaVirtualEvent(KalturaObjectBase):
         self.deletionDueDate = deletionDueDate
 
         # JSON-Schema of the Registration Form
-        # @var string
+        # @var str
         self.registrationFormSchema = registrationFormSchema
+
+        # The Virtual Event Url
+        # @var str
+        self.eventUrl = eventUrl
+
+        # The Virtual Event WebHook registration token
+        # @var str
+        self.webhookRegistrationToken = webhookRegistrationToken
 
 
     PROPERTY_LOADERS = {
@@ -174,6 +184,8 @@ class KalturaVirtualEvent(KalturaObjectBase):
         'updatedAt': getXmlNodeInt, 
         'deletionDueDate': getXmlNodeInt, 
         'registrationFormSchema': getXmlNodeText, 
+        'eventUrl': getXmlNodeText, 
+        'webhookRegistrationToken': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -193,6 +205,8 @@ class KalturaVirtualEvent(KalturaObjectBase):
         kparams.addIntIfDefined("mainEventScheduleEventId", self.mainEventScheduleEventId)
         kparams.addIntIfDefined("deletionDueDate", self.deletionDueDate)
         kparams.addStringIfDefined("registrationFormSchema", self.registrationFormSchema)
+        kparams.addStringIfDefined("eventUrl", self.eventUrl)
+        kparams.addStringIfDefined("webhookRegistrationToken", self.webhookRegistrationToken)
         return kparams
 
     def getId(self):
@@ -270,24 +284,36 @@ class KalturaVirtualEvent(KalturaObjectBase):
     def setRegistrationFormSchema(self, newRegistrationFormSchema):
         self.registrationFormSchema = newRegistrationFormSchema
 
+    def getEventUrl(self):
+        return self.eventUrl
+
+    def setEventUrl(self, newEventUrl):
+        self.eventUrl = newEventUrl
+
+    def getWebhookRegistrationToken(self):
+        return self.webhookRegistrationToken
+
+    def setWebhookRegistrationToken(self, newWebhookRegistrationToken):
+        self.webhookRegistrationToken = newWebhookRegistrationToken
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaVirtualEventBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -295,22 +321,22 @@ class KalturaVirtualEventBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.idNotIn = idNotIn
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
         # @var KalturaVirtualEventStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var int
@@ -431,12 +457,12 @@ class KalturaVirtualEventBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaVirtualEventListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaVirtualEvent
+        # @var List[KalturaVirtualEvent]
         self.objects = objects
 
 
@@ -465,35 +491,35 @@ class KalturaVirtualEventListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaVirtualScheduleEvent(KalturaScheduleEvent):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            parentId=NotImplemented,
-            summary=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            startDate=NotImplemented,
-            endDate=NotImplemented,
-            referenceId=NotImplemented,
-            linkedTo=NotImplemented,
-            linkedBy=NotImplemented,
-            classificationType=NotImplemented,
-            geoLatitude=NotImplemented,
-            geoLongitude=NotImplemented,
-            location=NotImplemented,
-            organizer=NotImplemented,
-            ownerId=NotImplemented,
-            priority=NotImplemented,
-            sequence=NotImplemented,
-            recurrenceType=NotImplemented,
-            duration=NotImplemented,
-            contact=NotImplemented,
-            comment=NotImplemented,
-            tags=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            recurrence=NotImplemented,
-            virtualEventId=NotImplemented,
-            virtualScheduleEventSubType=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            parentId = NotImplemented,
+            summary = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            startDate = NotImplemented,
+            endDate = NotImplemented,
+            referenceId = NotImplemented,
+            linkedTo = NotImplemented,
+            linkedBy = NotImplemented,
+            classificationType = NotImplemented,
+            geoLatitude = NotImplemented,
+            geoLongitude = NotImplemented,
+            location = NotImplemented,
+            organizer = NotImplemented,
+            ownerId = NotImplemented,
+            priority = NotImplemented,
+            sequence = NotImplemented,
+            recurrenceType = NotImplemented,
+            duration = NotImplemented,
+            contact = NotImplemented,
+            comment = NotImplemented,
+            tags = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            recurrence = NotImplemented,
+            virtualEventId = NotImplemented,
+            virtualScheduleEventSubType = NotImplemented):
         KalturaScheduleEvent.__init__(self,
             id,
             partnerId,
@@ -566,19 +592,19 @@ class KalturaVirtualScheduleEvent(KalturaScheduleEvent):
 # @subpackage Client
 class KalturaVirtualEventFilter(KalturaVirtualEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaVirtualEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -612,50 +638,50 @@ class KalturaVirtualEventFilter(KalturaVirtualEventBaseFilter):
 # @subpackage Client
 class KalturaVirtualScheduleEventBaseFilter(KalturaScheduleEventFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented):
         KalturaScheduleEventFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -720,50 +746,50 @@ class KalturaVirtualScheduleEventBaseFilter(KalturaScheduleEventFilter):
 # @subpackage Client
 class KalturaVirtualScheduleEventFilter(KalturaVirtualScheduleEventBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            parentIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            startDateGreaterThanOrEqual=NotImplemented,
-            startDateLessThanOrEqual=NotImplemented,
-            endDateGreaterThanOrEqual=NotImplemented,
-            endDateLessThanOrEqual=NotImplemented,
-            referenceIdEqual=NotImplemented,
-            referenceIdIn=NotImplemented,
-            ownerIdEqual=NotImplemented,
-            ownerIdIn=NotImplemented,
-            priorityEqual=NotImplemented,
-            priorityIn=NotImplemented,
-            priorityGreaterThanOrEqual=NotImplemented,
-            priorityLessThanOrEqual=NotImplemented,
-            recurrenceTypeEqual=NotImplemented,
-            recurrenceTypeIn=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            resourceIdsLike=NotImplemented,
-            resourceIdsMultiLikeOr=NotImplemented,
-            resourceIdsMultiLikeAnd=NotImplemented,
-            parentResourceIdsLike=NotImplemented,
-            parentResourceIdsMultiLikeOr=NotImplemented,
-            parentResourceIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeAnd=NotImplemented,
-            templateEntryCategoriesIdsMultiLikeOr=NotImplemented,
-            resourceSystemNamesMultiLikeOr=NotImplemented,
-            templateEntryCategoriesIdsLike=NotImplemented,
-            resourceSystemNamesMultiLikeAnd=NotImplemented,
-            resourceSystemNamesLike=NotImplemented,
-            resourceIdEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            parentIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            startDateGreaterThanOrEqual = NotImplemented,
+            startDateLessThanOrEqual = NotImplemented,
+            endDateGreaterThanOrEqual = NotImplemented,
+            endDateLessThanOrEqual = NotImplemented,
+            referenceIdEqual = NotImplemented,
+            referenceIdIn = NotImplemented,
+            ownerIdEqual = NotImplemented,
+            ownerIdIn = NotImplemented,
+            priorityEqual = NotImplemented,
+            priorityIn = NotImplemented,
+            priorityGreaterThanOrEqual = NotImplemented,
+            priorityLessThanOrEqual = NotImplemented,
+            recurrenceTypeEqual = NotImplemented,
+            recurrenceTypeIn = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            resourceIdsLike = NotImplemented,
+            resourceIdsMultiLikeOr = NotImplemented,
+            resourceIdsMultiLikeAnd = NotImplemented,
+            parentResourceIdsLike = NotImplemented,
+            parentResourceIdsMultiLikeOr = NotImplemented,
+            parentResourceIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeAnd = NotImplemented,
+            templateEntryCategoriesIdsMultiLikeOr = NotImplemented,
+            resourceSystemNamesMultiLikeOr = NotImplemented,
+            templateEntryCategoriesIdsLike = NotImplemented,
+            resourceSystemNamesMultiLikeAnd = NotImplemented,
+            resourceSystemNamesLike = NotImplemented,
+            resourceIdEqual = NotImplemented):
         KalturaVirtualScheduleEventBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

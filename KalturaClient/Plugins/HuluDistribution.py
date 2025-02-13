@@ -75,15 +75,15 @@ class KalturaHuluDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaHuluDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -113,28 +113,28 @@ class KalturaHuluDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaHuluDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePath=NotImplemented,
-            thumbAssetFilePath=NotImplemented,
-            cuePoints=NotImplemented,
-            fileBaseName=NotImplemented,
-            captionLocalPaths=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePath = NotImplemented,
+            thumbAssetFilePath = NotImplemented,
+            cuePoints = NotImplemented,
+            fileBaseName = NotImplemented,
+            captionLocalPaths = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
-        # @var string
+        # @var str
         self.thumbAssetFilePath = thumbAssetFilePath
 
-        # @var array of KalturaCuePoint
+        # @var List[KalturaCuePoint]
         self.cuePoints = cuePoints
 
-        # @var string
+        # @var str
         self.fileBaseName = fileBaseName
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.captionLocalPaths = captionLocalPaths
 
 
@@ -195,54 +195,54 @@ class KalturaHuluDistributionJobProviderData(KalturaConfigurableDistributionJobP
 # @subpackage Client
 class KalturaHuluDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            sftpHost=NotImplemented,
-            sftpLogin=NotImplemented,
-            sftpPass=NotImplemented,
-            seriesChannel=NotImplemented,
-            seriesPrimaryCategory=NotImplemented,
-            seriesAdditionalCategories=NotImplemented,
-            seasonNumber=NotImplemented,
-            seasonSynopsis=NotImplemented,
-            seasonTuneInInformation=NotImplemented,
-            videoMediaType=NotImplemented,
-            disableEpisodeNumberCustomValidation=NotImplemented,
-            protocol=NotImplemented,
-            asperaHost=NotImplemented,
-            asperaLogin=NotImplemented,
-            asperaPass=NotImplemented,
-            port=NotImplemented,
-            passphrase=NotImplemented,
-            asperaPublicKey=NotImplemented,
-            asperaPrivateKey=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            sftpHost = NotImplemented,
+            sftpLogin = NotImplemented,
+            sftpPass = NotImplemented,
+            seriesChannel = NotImplemented,
+            seriesPrimaryCategory = NotImplemented,
+            seriesAdditionalCategories = NotImplemented,
+            seasonNumber = NotImplemented,
+            seasonSynopsis = NotImplemented,
+            seasonTuneInInformation = NotImplemented,
+            videoMediaType = NotImplemented,
+            disableEpisodeNumberCustomValidation = NotImplemented,
+            protocol = NotImplemented,
+            asperaHost = NotImplemented,
+            asperaLogin = NotImplemented,
+            asperaPass = NotImplemented,
+            port = NotImplemented,
+            passphrase = NotImplemented,
+            asperaPublicKey = NotImplemented,
+            asperaPrivateKey = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -274,34 +274,34 @@ class KalturaHuluDistributionProfile(KalturaConfigurableDistributionProfile):
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.sftpHost = sftpHost
 
-        # @var string
+        # @var str
         self.sftpLogin = sftpLogin
 
-        # @var string
+        # @var str
         self.sftpPass = sftpPass
 
-        # @var string
+        # @var str
         self.seriesChannel = seriesChannel
 
-        # @var string
+        # @var str
         self.seriesPrimaryCategory = seriesPrimaryCategory
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.seriesAdditionalCategories = seriesAdditionalCategories
 
-        # @var string
+        # @var str
         self.seasonNumber = seasonNumber
 
-        # @var string
+        # @var str
         self.seasonSynopsis = seasonSynopsis
 
-        # @var string
+        # @var str
         self.seasonTuneInInformation = seasonTuneInInformation
 
-        # @var string
+        # @var str
         self.videoMediaType = videoMediaType
 
         # @var bool
@@ -310,25 +310,25 @@ class KalturaHuluDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var KalturaDistributionProtocol
         self.protocol = protocol
 
-        # @var string
+        # @var str
         self.asperaHost = asperaHost
 
-        # @var string
+        # @var str
         self.asperaLogin = asperaLogin
 
-        # @var string
+        # @var str
         self.asperaPass = asperaPass
 
         # @var int
         self.port = port
 
-        # @var string
+        # @var str
         self.passphrase = passphrase
 
-        # @var string
+        # @var str
         self.asperaPublicKey = asperaPublicKey
 
-        # @var string
+        # @var str
         self.asperaPrivateKey = asperaPrivateKey
 
 
@@ -501,10 +501,10 @@ class KalturaHuluDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaHuluDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -529,10 +529,10 @@ class KalturaHuluDistributionProviderBaseFilter(KalturaDistributionProviderFilte
 # @subpackage Client
 class KalturaHuluDistributionProviderFilter(KalturaHuluDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaHuluDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -557,16 +557,16 @@ class KalturaHuluDistributionProviderFilter(KalturaHuluDistributionProviderBaseF
 # @subpackage Client
 class KalturaHuluDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -597,16 +597,16 @@ class KalturaHuluDistributionProfileBaseFilter(KalturaConfigurableDistributionPr
 # @subpackage Client
 class KalturaHuluDistributionProfileFilter(KalturaHuluDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaHuluDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

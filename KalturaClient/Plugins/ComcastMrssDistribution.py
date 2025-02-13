@@ -76,15 +76,15 @@ class KalturaComcastMrssDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaComcastMrssDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -114,47 +114,47 @@ class KalturaComcastMrssDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaComcastMrssDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            metadataProfileId=NotImplemented,
-            feedUrl=NotImplemented,
-            feedTitle=NotImplemented,
-            feedLink=NotImplemented,
-            feedDescription=NotImplemented,
-            feedLastBuildDate=NotImplemented,
-            itemLink=NotImplemented,
-            cPlatformTvSeries=NotImplemented,
-            cPlatformTvSeriesField=NotImplemented,
-            shouldIncludeCuePoints=NotImplemented,
-            shouldIncludeCaptions=NotImplemented,
-            shouldAddThumbExtension=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            metadataProfileId = NotImplemented,
+            feedUrl = NotImplemented,
+            feedTitle = NotImplemented,
+            feedLink = NotImplemented,
+            feedDescription = NotImplemented,
+            feedLastBuildDate = NotImplemented,
+            itemLink = NotImplemented,
+            cPlatformTvSeries = NotImplemented,
+            cPlatformTvSeriesField = NotImplemented,
+            shouldIncludeCuePoints = NotImplemented,
+            shouldIncludeCaptions = NotImplemented,
+            shouldAddThumbExtension = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -189,29 +189,29 @@ class KalturaComcastMrssDistributionProfile(KalturaConfigurableDistributionProfi
         # @var int
         self.metadataProfileId = metadataProfileId
 
-        # @var string
+        # @var str
         # @readonly
         self.feedUrl = feedUrl
 
-        # @var string
+        # @var str
         self.feedTitle = feedTitle
 
-        # @var string
+        # @var str
         self.feedLink = feedLink
 
-        # @var string
+        # @var str
         self.feedDescription = feedDescription
 
-        # @var string
+        # @var str
         self.feedLastBuildDate = feedLastBuildDate
 
-        # @var string
+        # @var str
         self.itemLink = itemLink
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.cPlatformTvSeries = cPlatformTvSeries
 
-        # @var string
+        # @var str
         self.cPlatformTvSeriesField = cPlatformTvSeriesField
 
         # @var bool
@@ -333,10 +333,10 @@ class KalturaComcastMrssDistributionProfile(KalturaConfigurableDistributionProfi
 # @subpackage Client
 class KalturaComcastMrssDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -361,10 +361,10 @@ class KalturaComcastMrssDistributionProviderBaseFilter(KalturaDistributionProvid
 # @subpackage Client
 class KalturaComcastMrssDistributionProviderFilter(KalturaComcastMrssDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaComcastMrssDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -389,16 +389,16 @@ class KalturaComcastMrssDistributionProviderFilter(KalturaComcastMrssDistributio
 # @subpackage Client
 class KalturaComcastMrssDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -429,16 +429,16 @@ class KalturaComcastMrssDistributionProfileBaseFilter(KalturaConfigurableDistrib
 # @subpackage Client
 class KalturaComcastMrssDistributionProfileFilter(KalturaComcastMrssDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaComcastMrssDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

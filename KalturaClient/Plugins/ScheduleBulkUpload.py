@@ -51,39 +51,39 @@ from ..Base import (
 # @subpackage Client
 class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
     def __init__(self,
-            id=NotImplemented,
-            bulkUploadJobId=NotImplemented,
-            lineIndex=NotImplemented,
-            partnerId=NotImplemented,
-            status=NotImplemented,
-            action=NotImplemented,
-            objectId=NotImplemented,
-            objectStatus=NotImplemented,
-            bulkUploadResultObjectType=NotImplemented,
-            rowData=NotImplemented,
-            partnerData=NotImplemented,
-            objectErrorDescription=NotImplemented,
-            pluginsData=NotImplemented,
-            errorDescription=NotImplemented,
-            errorCode=NotImplemented,
-            errorType=NotImplemented,
-            referenceId=NotImplemented,
-            templateEntryId=NotImplemented,
-            eventType=NotImplemented,
-            title=NotImplemented,
-            description=NotImplemented,
-            tags=NotImplemented,
-            categoryIds=NotImplemented,
-            resourceId=NotImplemented,
-            startTime=NotImplemented,
-            duration=NotImplemented,
-            endTime=NotImplemented,
-            recurrence=NotImplemented,
-            coEditors=NotImplemented,
-            coPublishers=NotImplemented,
-            eventOrganizerId=NotImplemented,
-            contentOwnerId=NotImplemented,
-            templateEntryType=NotImplemented):
+            id = NotImplemented,
+            bulkUploadJobId = NotImplemented,
+            lineIndex = NotImplemented,
+            partnerId = NotImplemented,
+            status = NotImplemented,
+            action = NotImplemented,
+            objectId = NotImplemented,
+            objectStatus = NotImplemented,
+            bulkUploadResultObjectType = NotImplemented,
+            rowData = NotImplemented,
+            partnerData = NotImplemented,
+            objectErrorDescription = NotImplemented,
+            pluginsData = NotImplemented,
+            errorDescription = NotImplemented,
+            errorCode = NotImplemented,
+            errorType = NotImplemented,
+            referenceId = NotImplemented,
+            templateEntryId = NotImplemented,
+            eventType = NotImplemented,
+            title = NotImplemented,
+            description = NotImplemented,
+            tags = NotImplemented,
+            categoryIds = NotImplemented,
+            resourceId = NotImplemented,
+            startTime = NotImplemented,
+            duration = NotImplemented,
+            endTime = NotImplemented,
+            recurrence = NotImplemented,
+            coEditors = NotImplemented,
+            coPublishers = NotImplemented,
+            eventOrganizerId = NotImplemented,
+            contentOwnerId = NotImplemented,
+            templateEntryType = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -102,29 +102,29 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
             errorCode,
             errorType)
 
-        # @var string
+        # @var str
         self.referenceId = referenceId
 
-        # @var string
+        # @var str
         self.templateEntryId = templateEntryId
 
         # @var int
         self.eventType = eventType
 
-        # @var string
+        # @var str
         self.title = title
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         self.tags = tags
 
-        # @var string
+        # @var str
         self.categoryIds = categoryIds
 
         # ID of the resource specified for the new event.
-        # @var string
+        # @var str
         self.resourceId = resourceId
 
         # @var int
@@ -136,22 +136,22 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
         # @var int
         self.endTime = endTime
 
-        # @var string
+        # @var str
         self.recurrence = recurrence
 
-        # @var string
+        # @var str
         self.coEditors = coEditors
 
-        # @var string
+        # @var str
         self.coPublishers = coPublishers
 
-        # @var string
+        # @var str
         self.eventOrganizerId = eventOrganizerId
 
-        # @var string
+        # @var str
         self.contentOwnerId = contentOwnerId
 
-        # @var string
+        # @var str
         self.templateEntryType = templateEntryType
 
 
@@ -308,30 +308,30 @@ class KalturaBulkUploadResultScheduleEvent(KalturaBulkUploadResult):
 # @subpackage Client
 class KalturaBulkUploadResultScheduleResource(KalturaBulkUploadResult):
     def __init__(self,
-            id=NotImplemented,
-            bulkUploadJobId=NotImplemented,
-            lineIndex=NotImplemented,
-            partnerId=NotImplemented,
-            status=NotImplemented,
-            action=NotImplemented,
-            objectId=NotImplemented,
-            objectStatus=NotImplemented,
-            bulkUploadResultObjectType=NotImplemented,
-            rowData=NotImplemented,
-            partnerData=NotImplemented,
-            objectErrorDescription=NotImplemented,
-            pluginsData=NotImplemented,
-            errorDescription=NotImplemented,
-            errorCode=NotImplemented,
-            errorType=NotImplemented,
-            resourceId=NotImplemented,
-            name=NotImplemented,
-            type=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            tags=NotImplemented,
-            parentType=NotImplemented,
-            parentSystemName=NotImplemented):
+            id = NotImplemented,
+            bulkUploadJobId = NotImplemented,
+            lineIndex = NotImplemented,
+            partnerId = NotImplemented,
+            status = NotImplemented,
+            action = NotImplemented,
+            objectId = NotImplemented,
+            objectStatus = NotImplemented,
+            bulkUploadResultObjectType = NotImplemented,
+            rowData = NotImplemented,
+            partnerData = NotImplemented,
+            objectErrorDescription = NotImplemented,
+            pluginsData = NotImplemented,
+            errorDescription = NotImplemented,
+            errorCode = NotImplemented,
+            errorType = NotImplemented,
+            resourceId = NotImplemented,
+            name = NotImplemented,
+            type = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            tags = NotImplemented,
+            parentType = NotImplemented,
+            parentSystemName = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -350,28 +350,28 @@ class KalturaBulkUploadResultScheduleResource(KalturaBulkUploadResult):
             errorCode,
             errorType)
 
-        # @var string
+        # @var str
         self.resourceId = resourceId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.type = type
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
-        # @var string
+        # @var str
         self.tags = tags
 
-        # @var string
+        # @var str
         self.parentType = parentType
 
-        # @var string
+        # @var str
         self.parentSystemName = parentSystemName
 
 
@@ -458,21 +458,21 @@ class KalturaBulkUploadScheduleEventJobData(KalturaBulkUploadJobData):
     """Represents the abstract Bulk upload job data for general bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
             uploadedBy,
@@ -510,22 +510,22 @@ class KalturaBulkUploadICalJobData(KalturaBulkUploadScheduleEventJobData):
     """Represents the Bulk upload job data for iCal bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented,
-            eventsType=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented,
+            eventsType = NotImplemented):
         KalturaBulkUploadScheduleEventJobData.__init__(self,
             userId,
             uploadedBy,
@@ -575,23 +575,23 @@ class KalturaBulkUploadScheduleEventCsvJobData(KalturaBulkUploadScheduleEventJob
     """Represents the Bulk upload job data for CSV bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented,
-            csvVersion=NotImplemented,
-            columns=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented,
+            csvVersion = NotImplemented,
+            columns = NotImplemented):
         KalturaBulkUploadScheduleEventJobData.__init__(self,
             userId,
             uploadedBy,
@@ -615,7 +615,7 @@ class KalturaBulkUploadScheduleEventCsvJobData(KalturaBulkUploadScheduleEventJob
         self.csvVersion = csvVersion
 
         # Array containing CSV headers
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.columns = columns
 
 

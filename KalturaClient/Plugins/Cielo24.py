@@ -76,29 +76,29 @@ class KalturaCielo24Priority(object):
 # @subpackage Client
 class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
     def __init__(self,
-            entryId=NotImplemented,
-            flavorAssetId=NotImplemented,
-            captionAssetFormats=NotImplemented,
-            priority=NotImplemented,
-            fidelity=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            baseUrl=NotImplemented,
-            spokenLanguage=NotImplemented,
-            replaceMediaContent=NotImplemented,
-            additionalParameters=NotImplemented):
+            entryId = NotImplemented,
+            flavorAssetId = NotImplemented,
+            captionAssetFormats = NotImplemented,
+            priority = NotImplemented,
+            fidelity = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            baseUrl = NotImplemented,
+            spokenLanguage = NotImplemented,
+            replaceMediaContent = NotImplemented,
+            additionalParameters = NotImplemented):
         KalturaIntegrationJobProviderData.__init__(self)
 
         # Entry ID
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # Flavor ID
-        # @var string
+        # @var str
         self.flavorAssetId = flavorAssetId
 
         # Caption formats
-        # @var string
+        # @var str
         self.captionAssetFormats = captionAssetFormats
 
         # @var KalturaCielo24Priority
@@ -108,17 +108,17 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
         self.fidelity = fidelity
 
         # Api key for service provider
-        # @var string
+        # @var str
         # @readonly
         self.username = username
 
         # Api key for service provider
-        # @var string
+        # @var str
         # @readonly
         self.password = password
 
         # Base url for service provider
-        # @var string
+        # @var str
         # @readonly
         self.baseUrl = baseUrl
 
@@ -131,7 +131,7 @@ class KalturaCielo24JobProviderData(KalturaIntegrationJobProviderData):
         self.replaceMediaContent = replaceMediaContent
 
         # additional parameters to send to Cielo24
-        # @var string
+        # @var str
         self.additionalParameters = additionalParameters
 
 

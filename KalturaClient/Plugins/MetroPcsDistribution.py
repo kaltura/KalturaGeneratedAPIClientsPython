@@ -74,15 +74,15 @@ class KalturaMetroPcsDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaMetroPcsDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -112,16 +112,16 @@ class KalturaMetroPcsDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaMetroPcsDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            assetLocalPaths=NotImplemented,
-            thumbUrls=NotImplemented):
+            fieldValues = NotImplemented,
+            assetLocalPaths = NotImplemented,
+            thumbUrls = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.assetLocalPaths = assetLocalPaths
 
-        # @var string
+        # @var str
         self.thumbUrls = thumbUrls
 
 
@@ -158,45 +158,45 @@ class KalturaMetroPcsDistributionJobProviderData(KalturaConfigurableDistribution
 # @subpackage Client
 class KalturaMetroPcsDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            ftpHost=NotImplemented,
-            ftpLogin=NotImplemented,
-            ftpPass=NotImplemented,
-            ftpPath=NotImplemented,
-            providerName=NotImplemented,
-            providerId=NotImplemented,
-            copyright=NotImplemented,
-            entitlements=NotImplemented,
-            rating=NotImplemented,
-            itemType=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            ftpHost = NotImplemented,
+            ftpLogin = NotImplemented,
+            ftpPass = NotImplemented,
+            ftpPath = NotImplemented,
+            providerName = NotImplemented,
+            providerId = NotImplemented,
+            copyright = NotImplemented,
+            entitlements = NotImplemented,
+            rating = NotImplemented,
+            itemType = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -228,34 +228,34 @@ class KalturaMetroPcsDistributionProfile(KalturaConfigurableDistributionProfile)
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.ftpHost = ftpHost
 
-        # @var string
+        # @var str
         self.ftpLogin = ftpLogin
 
-        # @var string
+        # @var str
         self.ftpPass = ftpPass
 
-        # @var string
+        # @var str
         self.ftpPath = ftpPath
 
-        # @var string
+        # @var str
         self.providerName = providerName
 
-        # @var string
+        # @var str
         self.providerId = providerId
 
-        # @var string
+        # @var str
         self.copyright = copyright
 
-        # @var string
+        # @var str
         self.entitlements = entitlements
 
-        # @var string
+        # @var str
         self.rating = rating
 
-        # @var string
+        # @var str
         self.itemType = itemType
 
 
@@ -356,10 +356,10 @@ class KalturaMetroPcsDistributionProfile(KalturaConfigurableDistributionProfile)
 # @subpackage Client
 class KalturaMetroPcsDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -384,10 +384,10 @@ class KalturaMetroPcsDistributionProviderBaseFilter(KalturaDistributionProviderF
 # @subpackage Client
 class KalturaMetroPcsDistributionProviderFilter(KalturaMetroPcsDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaMetroPcsDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -412,16 +412,16 @@ class KalturaMetroPcsDistributionProviderFilter(KalturaMetroPcsDistributionProvi
 # @subpackage Client
 class KalturaMetroPcsDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -452,16 +452,16 @@ class KalturaMetroPcsDistributionProfileBaseFilter(KalturaConfigurableDistributi
 # @subpackage Client
 class KalturaMetroPcsDistributionProfileFilter(KalturaMetroPcsDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaMetroPcsDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

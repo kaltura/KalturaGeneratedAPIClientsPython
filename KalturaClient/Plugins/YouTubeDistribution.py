@@ -87,15 +87,15 @@ class KalturaYouTubeDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaYouTubeDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -125,80 +125,80 @@ class KalturaYouTubeDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePath=NotImplemented,
-            thumbAssetFilePath=NotImplemented,
-            thumbAssetId=NotImplemented,
-            captionAssetIds=NotImplemented,
-            sftpDirectory=NotImplemented,
-            sftpMetadataFilename=NotImplemented,
-            currentPlaylists=NotImplemented,
-            newPlaylists=NotImplemented,
-            submitXml=NotImplemented,
-            updateXml=NotImplemented,
-            deleteXml=NotImplemented,
-            googleClientId=NotImplemented,
-            googleClientSecret=NotImplemented,
-            googleTokenData=NotImplemented,
-            captionsCsvMap=NotImplemented,
-            submitCsvMap=NotImplemented,
-            updateCsvMap=NotImplemented,
-            deleteVideoIds=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePath = NotImplemented,
+            thumbAssetFilePath = NotImplemented,
+            thumbAssetId = NotImplemented,
+            captionAssetIds = NotImplemented,
+            sftpDirectory = NotImplemented,
+            sftpMetadataFilename = NotImplemented,
+            currentPlaylists = NotImplemented,
+            newPlaylists = NotImplemented,
+            submitXml = NotImplemented,
+            updateXml = NotImplemented,
+            deleteXml = NotImplemented,
+            googleClientId = NotImplemented,
+            googleClientSecret = NotImplemented,
+            googleTokenData = NotImplemented,
+            captionsCsvMap = NotImplemented,
+            submitCsvMap = NotImplemented,
+            updateCsvMap = NotImplemented,
+            deleteVideoIds = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
-        # @var string
+        # @var str
         self.thumbAssetFilePath = thumbAssetFilePath
 
-        # @var string
+        # @var str
         self.thumbAssetId = thumbAssetId
 
-        # @var string
+        # @var str
         self.captionAssetIds = captionAssetIds
 
-        # @var string
+        # @var str
         self.sftpDirectory = sftpDirectory
 
-        # @var string
+        # @var str
         self.sftpMetadataFilename = sftpMetadataFilename
 
-        # @var string
+        # @var str
         self.currentPlaylists = currentPlaylists
 
-        # @var string
+        # @var str
         self.newPlaylists = newPlaylists
 
-        # @var string
+        # @var str
         self.submitXml = submitXml
 
-        # @var string
+        # @var str
         self.updateXml = updateXml
 
-        # @var string
+        # @var str
         self.deleteXml = deleteXml
 
-        # @var string
+        # @var str
         self.googleClientId = googleClientId
 
-        # @var string
+        # @var str
         self.googleClientSecret = googleClientSecret
 
-        # @var string
+        # @var str
         self.googleTokenData = googleTokenData
 
-        # @var string
+        # @var str
         self.captionsCsvMap = captionsCsvMap
 
-        # @var string
+        # @var str
         self.submitCsvMap = submitCsvMap
 
-        # @var string
+        # @var str
         self.updateCsvMap = updateCsvMap
 
-        # @var string
+        # @var str
         self.deleteVideoIds = deleteVideoIds
 
 
@@ -363,79 +363,79 @@ class KalturaYouTubeDistributionJobProviderData(KalturaConfigurableDistributionJ
 # @subpackage Client
 class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            feedSpecVersion=NotImplemented,
-            username=NotImplemented,
-            notificationEmail=NotImplemented,
-            sftpHost=NotImplemented,
-            sftpPort=NotImplemented,
-            sftpLogin=NotImplemented,
-            sftpPublicKey=NotImplemented,
-            sftpPrivateKey=NotImplemented,
-            sftpBaseDir=NotImplemented,
-            ownerName=NotImplemented,
-            defaultCategory=NotImplemented,
-            allowComments=NotImplemented,
-            allowEmbedding=NotImplemented,
-            allowRatings=NotImplemented,
-            allowResponses=NotImplemented,
-            commercialPolicy=NotImplemented,
-            ugcPolicy=NotImplemented,
-            target=NotImplemented,
-            adServerPartnerId=NotImplemented,
-            enableAdServer=NotImplemented,
-            allowPreRollAds=NotImplemented,
-            allowPostRollAds=NotImplemented,
-            strict=NotImplemented,
-            overrideManualEdits=NotImplemented,
-            urgentReference=NotImplemented,
-            allowSyndication=NotImplemented,
-            hideViewCount=NotImplemented,
-            allowAdsenseForVideo=NotImplemented,
-            allowInvideo=NotImplemented,
-            allowMidRollAds=NotImplemented,
-            instreamStandard=NotImplemented,
-            instreamTrueview=NotImplemented,
-            claimType=NotImplemented,
-            blockOutsideOwnership=NotImplemented,
-            captionAutosync=NotImplemented,
-            deleteReference=NotImplemented,
-            releaseClaims=NotImplemented,
-            apiAuthorizeUrl=NotImplemented,
-            privacyStatus=NotImplemented,
-            enableContentId=NotImplemented,
-            thirdPartyAds=NotImplemented,
-            productListingAds=NotImplemented,
-            domainWhitelist=NotImplemented,
-            notifySubscribers=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            feedSpecVersion = NotImplemented,
+            username = NotImplemented,
+            notificationEmail = NotImplemented,
+            sftpHost = NotImplemented,
+            sftpPort = NotImplemented,
+            sftpLogin = NotImplemented,
+            sftpPublicKey = NotImplemented,
+            sftpPrivateKey = NotImplemented,
+            sftpBaseDir = NotImplemented,
+            ownerName = NotImplemented,
+            defaultCategory = NotImplemented,
+            allowComments = NotImplemented,
+            allowEmbedding = NotImplemented,
+            allowRatings = NotImplemented,
+            allowResponses = NotImplemented,
+            commercialPolicy = NotImplemented,
+            ugcPolicy = NotImplemented,
+            target = NotImplemented,
+            adServerPartnerId = NotImplemented,
+            enableAdServer = NotImplemented,
+            allowPreRollAds = NotImplemented,
+            allowPostRollAds = NotImplemented,
+            strict = NotImplemented,
+            overrideManualEdits = NotImplemented,
+            urgentReference = NotImplemented,
+            allowSyndication = NotImplemented,
+            hideViewCount = NotImplemented,
+            allowAdsenseForVideo = NotImplemented,
+            allowInvideo = NotImplemented,
+            allowMidRollAds = NotImplemented,
+            instreamStandard = NotImplemented,
+            instreamTrueview = NotImplemented,
+            claimType = NotImplemented,
+            blockOutsideOwnership = NotImplemented,
+            captionAutosync = NotImplemented,
+            deleteReference = NotImplemented,
+            releaseClaims = NotImplemented,
+            apiAuthorizeUrl = NotImplemented,
+            privacyStatus = NotImplemented,
+            enableContentId = NotImplemented,
+            thirdPartyAds = NotImplemented,
+            productListingAds = NotImplemented,
+            domainWhitelist = NotImplemented,
+            notifySubscribers = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -470,58 +470,58 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var KalturaYouTubeDistributionFeedSpecVersion
         self.feedSpecVersion = feedSpecVersion
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.notificationEmail = notificationEmail
 
-        # @var string
+        # @var str
         self.sftpHost = sftpHost
 
         # @var int
         self.sftpPort = sftpPort
 
-        # @var string
+        # @var str
         self.sftpLogin = sftpLogin
 
-        # @var string
+        # @var str
         self.sftpPublicKey = sftpPublicKey
 
-        # @var string
+        # @var str
         self.sftpPrivateKey = sftpPrivateKey
 
-        # @var string
+        # @var str
         self.sftpBaseDir = sftpBaseDir
 
-        # @var string
+        # @var str
         self.ownerName = ownerName
 
-        # @var string
+        # @var str
         self.defaultCategory = defaultCategory
 
-        # @var string
+        # @var str
         self.allowComments = allowComments
 
-        # @var string
+        # @var str
         self.allowEmbedding = allowEmbedding
 
-        # @var string
+        # @var str
         self.allowRatings = allowRatings
 
-        # @var string
+        # @var str
         self.allowResponses = allowResponses
 
-        # @var string
+        # @var str
         self.commercialPolicy = commercialPolicy
 
-        # @var string
+        # @var str
         self.ugcPolicy = ugcPolicy
 
-        # @var string
+        # @var str
         self.target = target
 
-        # @var string
+        # @var str
         self.adServerPartnerId = adServerPartnerId
 
         # @var bool
@@ -533,43 +533,43 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var bool
         self.allowPostRollAds = allowPostRollAds
 
-        # @var string
+        # @var str
         self.strict = strict
 
-        # @var string
+        # @var str
         self.overrideManualEdits = overrideManualEdits
 
-        # @var string
+        # @var str
         self.urgentReference = urgentReference
 
-        # @var string
+        # @var str
         self.allowSyndication = allowSyndication
 
-        # @var string
+        # @var str
         self.hideViewCount = hideViewCount
 
-        # @var string
+        # @var str
         self.allowAdsenseForVideo = allowAdsenseForVideo
 
-        # @var string
+        # @var str
         self.allowInvideo = allowInvideo
 
         # @var bool
         self.allowMidRollAds = allowMidRollAds
 
-        # @var string
+        # @var str
         self.instreamStandard = instreamStandard
 
-        # @var string
+        # @var str
         self.instreamTrueview = instreamTrueview
 
-        # @var string
+        # @var str
         self.claimType = claimType
 
-        # @var string
+        # @var str
         self.blockOutsideOwnership = blockOutsideOwnership
 
-        # @var string
+        # @var str
         self.captionAutosync = captionAutosync
 
         # @var bool
@@ -578,25 +578,25 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var bool
         self.releaseClaims = releaseClaims
 
-        # @var string
+        # @var str
         self.apiAuthorizeUrl = apiAuthorizeUrl
 
-        # @var string
+        # @var str
         self.privacyStatus = privacyStatus
 
-        # @var string
+        # @var str
         self.enableContentId = enableContentId
 
-        # @var string
+        # @var str
         self.thirdPartyAds = thirdPartyAds
 
-        # @var string
+        # @var str
         self.productListingAds = productListingAds
 
-        # @var string
+        # @var str
         self.domainWhitelist = domainWhitelist
 
-        # @var string
+        # @var str
         self.notifySubscribers = notifySubscribers
 
 
@@ -969,10 +969,10 @@ class KalturaYouTubeDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaYouTubeDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -997,10 +997,10 @@ class KalturaYouTubeDistributionProviderBaseFilter(KalturaDistributionProviderFi
 # @subpackage Client
 class KalturaYouTubeDistributionProviderFilter(KalturaYouTubeDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaYouTubeDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1025,16 +1025,16 @@ class KalturaYouTubeDistributionProviderFilter(KalturaYouTubeDistributionProvide
 # @subpackage Client
 class KalturaYouTubeDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1065,16 +1065,16 @@ class KalturaYouTubeDistributionProfileBaseFilter(KalturaConfigurableDistributio
 # @subpackage Client
 class KalturaYouTubeDistributionProfileFilter(KalturaYouTubeDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaYouTubeDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

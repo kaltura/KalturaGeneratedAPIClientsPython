@@ -76,21 +76,21 @@ class KalturaActivitiBusinessProcessServerProtocol(object):
 # @subpackage Client
 class KalturaActivitiBusinessProcessServer(KalturaBusinessProcessServer):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            dc=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            protocol=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            dc = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            protocol = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented):
         KalturaBusinessProcessServer.__init__(self,
             id,
             createdAt,
@@ -103,7 +103,7 @@ class KalturaActivitiBusinessProcessServer(KalturaBusinessProcessServer):
             type,
             dc)
 
-        # @var string
+        # @var str
         self.host = host
 
         # @var int
@@ -112,10 +112,10 @@ class KalturaActivitiBusinessProcessServer(KalturaBusinessProcessServer):
         # @var KalturaActivitiBusinessProcessServerProtocol
         self.protocol = protocol
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
 
@@ -176,27 +176,27 @@ class KalturaActivitiBusinessProcessServer(KalturaBusinessProcessServer):
 # @subpackage Client
 class KalturaActivitiBusinessProcessServerBaseFilter(KalturaBusinessProcessServerFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcEqOrNull=NotImplemented,
-            currentDcOrExternal=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusNotEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcEqOrNull = NotImplemented,
+            currentDcOrExternal = NotImplemented,
+            currentDc = NotImplemented):
         KalturaBusinessProcessServerFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -238,27 +238,27 @@ class KalturaActivitiBusinessProcessServerBaseFilter(KalturaBusinessProcessServe
 # @subpackage Client
 class KalturaActivitiBusinessProcessServerFilter(KalturaActivitiBusinessProcessServerBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcEqOrNull=NotImplemented,
-            currentDcOrExternal=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusNotEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcEqOrNull = NotImplemented,
+            currentDcOrExternal = NotImplemented,
+            currentDc = NotImplemented):
         KalturaActivitiBusinessProcessServerBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

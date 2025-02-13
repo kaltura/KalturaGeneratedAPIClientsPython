@@ -51,41 +51,41 @@ from ..Base import (
 # @subpackage Client
 class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
     def __init__(self,
-            entryId=NotImplemented,
-            flavorAssetId=NotImplemented,
-            transcriptId=NotImplemented,
-            captionAssetFormats=NotImplemented,
-            apiKey=NotImplemented,
-            apiPassword=NotImplemented,
-            spokenLanguage=NotImplemented,
-            fileLocation=NotImplemented,
-            replaceMediaContent=NotImplemented,
-            additionalParameters=NotImplemented):
+            entryId = NotImplemented,
+            flavorAssetId = NotImplemented,
+            transcriptId = NotImplemented,
+            captionAssetFormats = NotImplemented,
+            apiKey = NotImplemented,
+            apiPassword = NotImplemented,
+            spokenLanguage = NotImplemented,
+            fileLocation = NotImplemented,
+            replaceMediaContent = NotImplemented,
+            additionalParameters = NotImplemented):
         KalturaIntegrationJobProviderData.__init__(self)
 
         # Entry ID
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # Flavor ID
-        # @var string
+        # @var str
         self.flavorAssetId = flavorAssetId
 
         # input Transcript-asset ID
-        # @var string
+        # @var str
         self.transcriptId = transcriptId
 
         # Caption formats
-        # @var string
+        # @var str
         self.captionAssetFormats = captionAssetFormats
 
         # Api key for service provider
-        # @var string
+        # @var str
         # @readonly
         self.apiKey = apiKey
 
         # Api key for service provider
-        # @var string
+        # @var str
         # @readonly
         self.apiPassword = apiPassword
 
@@ -94,7 +94,7 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
         self.spokenLanguage = spokenLanguage
 
         # Transcript Content location
-        # @var string
+        # @var str
         # @readonly
         self.fileLocation = fileLocation
 
@@ -103,7 +103,7 @@ class KalturaVoicebaseJobProviderData(KalturaIntegrationJobProviderData):
         self.replaceMediaContent = replaceMediaContent
 
         # additional parameters to send to VoiceBase
-        # @var string
+        # @var str
         # @readonly
         self.additionalParameters = additionalParameters
 

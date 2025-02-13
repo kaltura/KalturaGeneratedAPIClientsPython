@@ -76,34 +76,34 @@ class KalturaAnnotationOrderBy(object):
 # @subpackage Client
 class KalturaAnnotation(KalturaCuePoint):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented,
-            parentId=NotImplemented,
-            text=NotImplemented,
-            endTime=NotImplemented,
-            duration=NotImplemented,
-            depth=NotImplemented,
-            childrenCount=NotImplemented,
-            directChildrenCount=NotImplemented,
-            isPublic=NotImplemented,
-            searchableOnEntry=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented,
+            parentId = NotImplemented,
+            text = NotImplemented,
+            endTime = NotImplemented,
+            duration = NotImplemented,
+            depth = NotImplemented,
+            childrenCount = NotImplemented,
+            directChildrenCount = NotImplemented,
+            isPublic = NotImplemented,
+            searchableOnEntry = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -125,11 +125,11 @@ class KalturaAnnotation(KalturaCuePoint):
             isMomentary,
             copiedFrom)
 
-        # @var string
+        # @var str
         # @insertonly
         self.parentId = parentId
 
-        # @var string
+        # @var str
         self.text = text
 
         # End time in milliseconds
@@ -238,12 +238,12 @@ class KalturaAnnotation(KalturaCuePoint):
 # @subpackage Client
 class KalturaAnnotationListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaAnnotation
+        # @var List[KalturaAnnotation]
         # @readonly
         self.objects = objects
 
@@ -269,49 +269,49 @@ class KalturaAnnotationListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            textLike=NotImplemented,
-            textMultiLikeOr=NotImplemented,
-            textMultiLikeAnd=NotImplemented,
-            endTimeGreaterThanOrEqual=NotImplemented,
-            endTimeLessThanOrEqual=NotImplemented,
-            durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented,
-            isPublicEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            textLike = NotImplemented,
+            textMultiLikeOr = NotImplemented,
+            textMultiLikeAnd = NotImplemented,
+            endTimeGreaterThanOrEqual = NotImplemented,
+            endTimeLessThanOrEqual = NotImplemented,
+            durationGreaterThanOrEqual = NotImplemented,
+            durationLessThanOrEqual = NotImplemented,
+            isPublicEqual = NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -347,19 +347,19 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
-        # @var string
+        # @var str
         self.parentIdEqual = parentIdEqual
 
-        # @var string
+        # @var str
         self.parentIdIn = parentIdIn
 
-        # @var string
+        # @var str
         self.textLike = textLike
 
-        # @var string
+        # @var str
         self.textMultiLikeOr = textMultiLikeOr
 
-        # @var string
+        # @var str
         self.textMultiLikeAnd = textMultiLikeAnd
 
         # @var int
@@ -475,49 +475,49 @@ class KalturaAnnotationBaseFilter(KalturaCuePointFilter):
 # @subpackage Client
 class KalturaAnnotationFilter(KalturaAnnotationBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            parentIdEqual=NotImplemented,
-            parentIdIn=NotImplemented,
-            textLike=NotImplemented,
-            textMultiLikeOr=NotImplemented,
-            textMultiLikeAnd=NotImplemented,
-            endTimeGreaterThanOrEqual=NotImplemented,
-            endTimeLessThanOrEqual=NotImplemented,
-            durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented,
-            isPublicEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            parentIdEqual = NotImplemented,
+            parentIdIn = NotImplemented,
+            textLike = NotImplemented,
+            textMultiLikeOr = NotImplemented,
+            textMultiLikeAnd = NotImplemented,
+            endTimeGreaterThanOrEqual = NotImplemented,
+            endTimeLessThanOrEqual = NotImplemented,
+            durationGreaterThanOrEqual = NotImplemented,
+            durationLessThanOrEqual = NotImplemented,
+            isPublicEqual = NotImplemented):
         KalturaAnnotationBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

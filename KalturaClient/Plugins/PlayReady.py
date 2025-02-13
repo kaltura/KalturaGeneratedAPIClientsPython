@@ -218,7 +218,7 @@ class KalturaPlayReadyProfileOrderBy(object):
 # @subpackage Client
 class KalturaPlayReadyAnalogVideoOPIdHolder(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented):
+            type = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The type of the play enabler
@@ -251,16 +251,16 @@ class KalturaPlayReadyAnalogVideoOPIdHolder(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyContentKey(KalturaObjectBase):
     def __init__(self,
-            keyId=NotImplemented,
-            contentKey=NotImplemented):
+            keyId = NotImplemented,
+            contentKey = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Guid - key id of the specific content
-        # @var string
+        # @var str
         self.keyId = keyId
 
         # License content key 64 bit encoded
-        # @var string
+        # @var str
         self.contentKey = contentKey
 
 
@@ -297,7 +297,7 @@ class KalturaPlayReadyContentKey(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyCopyEnablerHolder(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented):
+            type = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The type of the copy enabler
@@ -330,7 +330,7 @@ class KalturaPlayReadyCopyEnablerHolder(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyDigitalAudioOPIdHolder(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented):
+            type = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The type of the play enabler
@@ -383,25 +383,25 @@ class KalturaPlayReadyRight(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyPolicy(KalturaDrmPolicy):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            provider=NotImplemented,
-            status=NotImplemented,
-            scenario=NotImplemented,
-            licenseType=NotImplemented,
-            licenseExpirationPolicy=NotImplemented,
-            duration=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            licenseParams=NotImplemented,
-            gracePeriod=NotImplemented,
-            licenseRemovalPolicy=NotImplemented,
-            licenseRemovalDuration=NotImplemented,
-            minSecurityLevel=NotImplemented,
-            rights=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            provider = NotImplemented,
+            status = NotImplemented,
+            scenario = NotImplemented,
+            licenseType = NotImplemented,
+            licenseExpirationPolicy = NotImplemented,
+            duration = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            licenseParams = NotImplemented,
+            gracePeriod = NotImplemented,
+            licenseRemovalPolicy = NotImplemented,
+            licenseRemovalDuration = NotImplemented,
+            minSecurityLevel = NotImplemented,
+            rights = NotImplemented):
         KalturaDrmPolicy.__init__(self,
             id,
             partnerId,
@@ -430,7 +430,7 @@ class KalturaPlayReadyPolicy(KalturaDrmPolicy):
         # @var KalturaPlayReadyMinimumLicenseSecurityLevel
         self.minSecurityLevel = minSecurityLevel
 
-        # @var array of KalturaPlayReadyRight
+        # @var List[KalturaPlayReadyRight]
         self.rights = rights
 
 
@@ -491,10 +491,10 @@ class KalturaPlayReadyPolicy(KalturaDrmPolicy):
 # @subpackage Client
 class KalturaPlayReadyLicenseDetails(KalturaObjectBase):
     def __init__(self,
-            policy=NotImplemented,
-            beginDate=NotImplemented,
-            expirationDate=NotImplemented,
-            removalDate=NotImplemented):
+            policy = NotImplemented,
+            beginDate = NotImplemented,
+            expirationDate = NotImplemented,
+            removalDate = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # PlayReady policy object
@@ -563,7 +563,7 @@ class KalturaPlayReadyLicenseDetails(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyPlayEnablerHolder(KalturaObjectBase):
     def __init__(self,
-            type=NotImplemented):
+            type = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The type of the play enabler
@@ -596,14 +596,14 @@ class KalturaPlayReadyPlayEnablerHolder(KalturaObjectBase):
 # @subpackage Client
 class KalturaPlayReadyCopyRight(KalturaPlayReadyRight):
     def __init__(self,
-            copyCount=NotImplemented,
-            copyEnablers=NotImplemented):
+            copyCount = NotImplemented,
+            copyEnablers = NotImplemented):
         KalturaPlayReadyRight.__init__(self)
 
         # @var int
         self.copyCount = copyCount
 
-        # @var array of KalturaPlayReadyCopyEnablerHolder
+        # @var List[KalturaPlayReadyCopyEnablerHolder]
         self.copyEnablers = copyEnablers
 
 
@@ -640,21 +640,21 @@ class KalturaPlayReadyCopyRight(KalturaPlayReadyRight):
 # @subpackage Client
 class KalturaPlayReadyPlayRight(KalturaPlayReadyRight):
     def __init__(self,
-            analogVideoOPL=NotImplemented,
-            analogVideoOutputProtectionList=NotImplemented,
-            compressedDigitalAudioOPL=NotImplemented,
-            compressedDigitalVideoOPL=NotImplemented,
-            digitalAudioOutputProtectionList=NotImplemented,
-            uncompressedDigitalAudioOPL=NotImplemented,
-            uncompressedDigitalVideoOPL=NotImplemented,
-            firstPlayExpiration=NotImplemented,
-            playEnablers=NotImplemented):
+            analogVideoOPL = NotImplemented,
+            analogVideoOutputProtectionList = NotImplemented,
+            compressedDigitalAudioOPL = NotImplemented,
+            compressedDigitalVideoOPL = NotImplemented,
+            digitalAudioOutputProtectionList = NotImplemented,
+            uncompressedDigitalAudioOPL = NotImplemented,
+            uncompressedDigitalVideoOPL = NotImplemented,
+            firstPlayExpiration = NotImplemented,
+            playEnablers = NotImplemented):
         KalturaPlayReadyRight.__init__(self)
 
         # @var KalturaPlayReadyAnalogVideoOPL
         self.analogVideoOPL = analogVideoOPL
 
-        # @var array of KalturaPlayReadyAnalogVideoOPIdHolder
+        # @var List[KalturaPlayReadyAnalogVideoOPIdHolder]
         self.analogVideoOutputProtectionList = analogVideoOutputProtectionList
 
         # @var KalturaPlayReadyDigitalAudioOPL
@@ -663,7 +663,7 @@ class KalturaPlayReadyPlayRight(KalturaPlayReadyRight):
         # @var KalturaPlayReadyCompressedDigitalVideoOPL
         self.compressedDigitalVideoOPL = compressedDigitalVideoOPL
 
-        # @var array of KalturaPlayReadyDigitalAudioOPIdHolder
+        # @var List[KalturaPlayReadyDigitalAudioOPIdHolder]
         self.digitalAudioOutputProtectionList = digitalAudioOutputProtectionList
 
         # @var KalturaPlayReadyDigitalAudioOPL
@@ -675,7 +675,7 @@ class KalturaPlayReadyPlayRight(KalturaPlayReadyRight):
         # @var int
         self.firstPlayExpiration = firstPlayExpiration
 
-        # @var array of KalturaPlayReadyPlayEnablerHolder
+        # @var List[KalturaPlayReadyPlayEnablerHolder]
         self.playEnablers = playEnablers
 
 
@@ -768,18 +768,18 @@ class KalturaPlayReadyPlayRight(KalturaPlayReadyRight):
 # @subpackage Client
 class KalturaPlayReadyProfile(KalturaDrmProfile):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            description=NotImplemented,
-            provider=NotImplemented,
-            status=NotImplemented,
-            licenseServerUrl=NotImplemented,
-            defaultPolicy=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            signingKey=NotImplemented,
-            keySeed=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            description = NotImplemented,
+            provider = NotImplemented,
+            status = NotImplemented,
+            licenseServerUrl = NotImplemented,
+            defaultPolicy = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            signingKey = NotImplemented,
+            keySeed = NotImplemented):
         KalturaDrmProfile.__init__(self,
             id,
             partnerId,
@@ -793,7 +793,7 @@ class KalturaPlayReadyProfile(KalturaDrmProfile):
             updatedAt,
             signingKey)
 
-        # @var string
+        # @var str
         self.keySeed = keySeed
 
 
@@ -822,18 +822,18 @@ class KalturaPlayReadyProfile(KalturaDrmProfile):
 # @subpackage Client
 class KalturaPlayReadyPolicyBaseFilter(KalturaDrmPolicyFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            systemNameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            scenarioEqual=NotImplemented,
-            scenarioIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            systemNameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            scenarioEqual = NotImplemented,
+            scenarioIn = NotImplemented):
         KalturaDrmPolicyFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -866,17 +866,17 @@ class KalturaPlayReadyPolicyBaseFilter(KalturaDrmPolicyFilter):
 # @subpackage Client
 class KalturaPlayReadyProfileBaseFilter(KalturaDrmProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaDrmProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -908,18 +908,18 @@ class KalturaPlayReadyProfileBaseFilter(KalturaDrmProfileFilter):
 # @subpackage Client
 class KalturaPlayReadyPolicyFilter(KalturaPlayReadyPolicyBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            systemNameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            scenarioEqual=NotImplemented,
-            scenarioIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            systemNameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            scenarioEqual = NotImplemented,
+            scenarioIn = NotImplemented):
         KalturaPlayReadyPolicyBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -952,17 +952,17 @@ class KalturaPlayReadyPolicyFilter(KalturaPlayReadyPolicyBaseFilter):
 # @subpackage Client
 class KalturaPlayReadyProfileFilter(KalturaPlayReadyProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameLike=NotImplemented,
-            providerEqual=NotImplemented,
-            providerIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameLike = NotImplemented,
+            providerEqual = NotImplemented,
+            providerIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaPlayReadyProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

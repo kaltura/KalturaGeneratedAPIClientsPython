@@ -74,30 +74,30 @@ class KalturaFacebookDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaFacebookCaptionDistributionInfo(KalturaObjectBase):
     def __init__(self,
-            language=NotImplemented,
-            label=NotImplemented,
-            filePath=NotImplemented,
-            remoteId=NotImplemented,
-            version=NotImplemented,
-            assetId=NotImplemented):
+            language = NotImplemented,
+            label = NotImplemented,
+            filePath = NotImplemented,
+            remoteId = NotImplemented,
+            version = NotImplemented,
+            assetId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.language = language
 
-        # @var string
+        # @var str
         self.label = label
 
-        # @var string
+        # @var str
         self.filePath = filePath
 
-        # @var string
+        # @var str
         self.remoteId = remoteId
 
-        # @var string
+        # @var str
         self.version = version
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
 
@@ -166,15 +166,15 @@ class KalturaFacebookCaptionDistributionInfo(KalturaObjectBase):
 # @subpackage Client
 class KalturaFacebookDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -204,20 +204,20 @@ class KalturaFacebookDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            videoAssetFilePath=NotImplemented,
-            thumbAssetId=NotImplemented,
-            captionsInfo=NotImplemented):
+            fieldValues = NotImplemented,
+            videoAssetFilePath = NotImplemented,
+            thumbAssetId = NotImplemented,
+            captionsInfo = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.videoAssetFilePath = videoAssetFilePath
 
-        # @var string
+        # @var str
         self.thumbAssetId = thumbAssetId
 
-        # @var array of KalturaFacebookCaptionDistributionInfo
+        # @var List[KalturaFacebookCaptionDistributionInfo]
         self.captionsInfo = captionsInfo
 
 
@@ -262,42 +262,42 @@ class KalturaFacebookDistributionJobProviderData(KalturaConfigurableDistribution
 # @subpackage Client
 class KalturaFacebookDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            apiAuthorizeUrl=NotImplemented,
-            pageId=NotImplemented,
-            pageAccessToken=NotImplemented,
-            userAccessToken=NotImplemented,
-            state=NotImplemented,
-            permissions=NotImplemented,
-            reRequestPermissions=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            apiAuthorizeUrl = NotImplemented,
+            pageId = NotImplemented,
+            pageAccessToken = NotImplemented,
+            userAccessToken = NotImplemented,
+            state = NotImplemented,
+            permissions = NotImplemented,
+            reRequestPermissions = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -329,22 +329,22 @@ class KalturaFacebookDistributionProfile(KalturaConfigurableDistributionProfile)
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.apiAuthorizeUrl = apiAuthorizeUrl
 
-        # @var string
+        # @var str
         self.pageId = pageId
 
-        # @var string
+        # @var str
         self.pageAccessToken = pageAccessToken
 
-        # @var string
+        # @var str
         self.userAccessToken = userAccessToken
 
-        # @var string
+        # @var str
         self.state = state
 
-        # @var string
+        # @var str
         self.permissions = permissions
 
         # @var int
@@ -424,10 +424,10 @@ class KalturaFacebookDistributionProfile(KalturaConfigurableDistributionProfile)
 # @subpackage Client
 class KalturaFacebookDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -452,10 +452,10 @@ class KalturaFacebookDistributionProviderBaseFilter(KalturaDistributionProviderF
 # @subpackage Client
 class KalturaFacebookDistributionProviderFilter(KalturaFacebookDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFacebookDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -480,16 +480,16 @@ class KalturaFacebookDistributionProviderFilter(KalturaFacebookDistributionProvi
 # @subpackage Client
 class KalturaFacebookDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -520,16 +520,16 @@ class KalturaFacebookDistributionProfileBaseFilter(KalturaConfigurableDistributi
 # @subpackage Client
 class KalturaFacebookDistributionProfileFilter(KalturaFacebookDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFacebookDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

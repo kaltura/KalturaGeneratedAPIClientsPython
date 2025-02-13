@@ -80,6 +80,18 @@ class KalturaCaptionAssetOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaCaptionAssetUsage(object):
+    CAPTION = "0"
+    EXTENDED_AUDIO_DESCRIPTION = "1"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaCaptionParamsOrderBy(object):
 
     def __init__(self, value):
@@ -121,33 +133,34 @@ class KalturaCaptionType(object):
 # @subpackage Client
 class KalturaCaptionAsset(KalturaAsset):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            version=NotImplemented,
-            size=NotImplemented,
-            tags=NotImplemented,
-            fileExt=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            deletedAt=NotImplemented,
-            description=NotImplemented,
-            partnerData=NotImplemented,
-            partnerDescription=NotImplemented,
-            actualSourceAssetParamsIds=NotImplemented,
-            sizeInBytes=NotImplemented,
-            captionParamsId=NotImplemented,
-            language=NotImplemented,
-            languageCode=NotImplemented,
-            isDefault=NotImplemented,
-            label=NotImplemented,
-            format=NotImplemented,
-            source=NotImplemented,
-            status=NotImplemented,
-            parentId=NotImplemented,
-            accuracy=NotImplemented,
-            displayOnPlayer=NotImplemented,
-            associatedTranscriptIds=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            version = NotImplemented,
+            size = NotImplemented,
+            tags = NotImplemented,
+            fileExt = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            description = NotImplemented,
+            partnerData = NotImplemented,
+            partnerDescription = NotImplemented,
+            actualSourceAssetParamsIds = NotImplemented,
+            sizeInBytes = NotImplemented,
+            captionParamsId = NotImplemented,
+            language = NotImplemented,
+            languageCode = NotImplemented,
+            isDefault = NotImplemented,
+            label = NotImplemented,
+            format = NotImplemented,
+            source = NotImplemented,
+            status = NotImplemented,
+            parentId = NotImplemented,
+            accuracy = NotImplemented,
+            displayOnPlayer = NotImplemented,
+            associatedTranscriptIds = NotImplemented,
+            usage = NotImplemented):
         KalturaAsset.__init__(self,
             id,
             entryId,
@@ -184,7 +197,7 @@ class KalturaCaptionAsset(KalturaAsset):
         self.isDefault = isDefault
 
         # Friendly label
-        # @var string
+        # @var str
         self.label = label
 
         # The caption format
@@ -203,7 +216,7 @@ class KalturaCaptionAsset(KalturaAsset):
         self.status = status
 
         # The parent id of the asset
-        # @var string
+        # @var str
         # @insertonly
         self.parentId = parentId
 
@@ -216,8 +229,12 @@ class KalturaCaptionAsset(KalturaAsset):
         self.displayOnPlayer = displayOnPlayer
 
         # List of associated transcript asset id's, comma separated
-        # @var string
+        # @var str
         self.associatedTranscriptIds = associatedTranscriptIds
+
+        # The usage of the asset
+        # @var KalturaCaptionAssetUsage
+        self.usage = usage
 
 
     PROPERTY_LOADERS = {
@@ -233,6 +250,7 @@ class KalturaCaptionAsset(KalturaAsset):
         'accuracy': getXmlNodeInt, 
         'displayOnPlayer': getXmlNodeBool, 
         'associatedTranscriptIds': getXmlNodeText, 
+        'usage': (KalturaEnumsFactory.createString, "KalturaCaptionAssetUsage"), 
     }
 
     def fromXml(self, node):
@@ -252,6 +270,7 @@ class KalturaCaptionAsset(KalturaAsset):
         kparams.addIntIfDefined("accuracy", self.accuracy)
         kparams.addBoolIfDefined("displayOnPlayer", self.displayOnPlayer)
         kparams.addStringIfDefined("associatedTranscriptIds", self.associatedTranscriptIds)
+        kparams.addStringEnumIfDefined("usage", self.usage)
         return kparams
 
     def getCaptionParamsId(self):
@@ -320,29 +339,35 @@ class KalturaCaptionAsset(KalturaAsset):
     def setAssociatedTranscriptIds(self, newAssociatedTranscriptIds):
         self.associatedTranscriptIds = newAssociatedTranscriptIds
 
+    def getUsage(self):
+        return self.usage
+
+    def setUsage(self, newUsage):
+        self.usage = newUsage
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaCaptionParams(KalturaAssetParams):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            isSystemDefault=NotImplemented,
-            tags=NotImplemented,
-            requiredPermissions=NotImplemented,
-            sourceRemoteStorageProfileId=NotImplemented,
-            remoteStorageProfileIds=NotImplemented,
-            mediaParserType=NotImplemented,
-            sourceAssetParamsIds=NotImplemented,
-            language=NotImplemented,
-            isDefault=NotImplemented,
-            label=NotImplemented,
-            format=NotImplemented,
-            sourceParamsId=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            createdAt = NotImplemented,
+            isSystemDefault = NotImplemented,
+            tags = NotImplemented,
+            requiredPermissions = NotImplemented,
+            sourceRemoteStorageProfileId = NotImplemented,
+            remoteStorageProfileIds = NotImplemented,
+            mediaParserType = NotImplemented,
+            sourceAssetParamsIds = NotImplemented,
+            language = NotImplemented,
+            isDefault = NotImplemented,
+            label = NotImplemented,
+            format = NotImplemented,
+            sourceParamsId = NotImplemented):
         KalturaAssetParams.__init__(self,
             id,
             partnerId,
@@ -368,7 +393,7 @@ class KalturaCaptionParams(KalturaAssetParams):
         self.isDefault = isDefault
 
         # Friendly label
-        # @var string
+        # @var str
         self.label = label
 
         # The caption format
@@ -438,34 +463,34 @@ class KalturaCaptionParams(KalturaAssetParams):
 # @subpackage Client
 class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
     def __init__(self,
-            label=NotImplemented,
-            format=NotImplemented,
-            language=NotImplemented,
-            webVttUrl=NotImplemented,
-            url=NotImplemented,
-            isDefault=NotImplemented,
-            languageCode=NotImplemented):
+            label = NotImplemented,
+            format = NotImplemented,
+            language = NotImplemented,
+            webVttUrl = NotImplemented,
+            url = NotImplemented,
+            isDefault = NotImplemented,
+            languageCode = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.label = label
 
-        # @var string
+        # @var str
         self.format = format
 
-        # @var string
+        # @var str
         self.language = language
 
-        # @var string
+        # @var str
         self.webVttUrl = webVttUrl
 
-        # @var string
+        # @var str
         self.url = url
 
         # @var bool
         self.isDefault = isDefault
 
-        # @var string
+        # @var str
         self.languageCode = languageCode
 
 
@@ -542,12 +567,12 @@ class KalturaCaptionPlaybackPluginData(KalturaObjectBase):
 # @subpackage Client
 class KalturaCaptionAssetListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaCaptionAsset
+        # @var List[KalturaCaptionAsset]
         # @readonly
         self.objects = objects
 
@@ -573,12 +598,12 @@ class KalturaCaptionAssetListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaCaptionParamsListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaCaptionParams
+        # @var List[KalturaCaptionParams]
         # @readonly
         self.objects = objects
 
@@ -604,26 +629,26 @@ class KalturaCaptionParamsListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaConvertCaptionAssetJobData(KalturaJobData):
     def __init__(self,
-            captionAssetId=NotImplemented,
-            fileLocation=NotImplemented,
-            fileEncryptionKey=NotImplemented,
-            fromType=NotImplemented,
-            toType=NotImplemented):
+            captionAssetId = NotImplemented,
+            fileLocation = NotImplemented,
+            fileEncryptionKey = NotImplemented,
+            fromType = NotImplemented,
+            toType = NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
+        # @var str
         self.captionAssetId = captionAssetId
 
-        # @var string
+        # @var str
         self.fileLocation = fileLocation
 
-        # @var string
+        # @var str
         self.fileEncryptionKey = fileEncryptionKey
 
-        # @var string
+        # @var str
         self.fromType = fromType
 
-        # @var string
+        # @var str
         self.toType = toType
 
 
@@ -684,17 +709,17 @@ class KalturaConvertCaptionAssetJobData(KalturaJobData):
 # @subpackage Client
 class KalturaCopyCaptionsJobData(KalturaJobData):
     def __init__(self,
-            entryId=NotImplemented,
-            clipsDescriptionArray=NotImplemented,
-            fullCopy=NotImplemented):
+            entryId = NotImplemented,
+            clipsDescriptionArray = NotImplemented,
+            fullCopy = NotImplemented):
         KalturaJobData.__init__(self)
 
         # entry Id
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # an array of source start time and duration
-        # @var array of KalturaClipDescription
+        # @var List[KalturaClipDescription]
         self.clipsDescriptionArray = clipsDescriptionArray
 
         # @var bool
@@ -742,22 +767,22 @@ class KalturaCopyCaptionsJobData(KalturaJobData):
 # @subpackage Client
 class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
     def __init__(self,
-            multiLanaguageCaptionAssetId=NotImplemented,
-            entryId=NotImplemented,
-            fileLocation=NotImplemented,
-            fileEncryptionKey=NotImplemented):
+            multiLanaguageCaptionAssetId = NotImplemented,
+            entryId = NotImplemented,
+            fileLocation = NotImplemented,
+            fileEncryptionKey = NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
+        # @var str
         self.multiLanaguageCaptionAssetId = multiLanaguageCaptionAssetId
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
-        # @var string
+        # @var str
         self.fileLocation = fileLocation
 
-        # @var string
+        # @var str
         self.fileEncryptionKey = fileEncryptionKey
 
 
@@ -810,33 +835,33 @@ class KalturaParseMultiLanguageCaptionAssetJobData(KalturaJobData):
 # @subpackage Client
 class KalturaCaptionAssetBaseFilter(KalturaAssetFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            captionParamsIdEqual=NotImplemented,
-            captionParamsIdIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            captionParamsIdEqual = NotImplemented,
+            captionParamsIdIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaAssetFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -862,22 +887,22 @@ class KalturaCaptionAssetBaseFilter(KalturaAssetFilter):
         # @var int
         self.captionParamsIdEqual = captionParamsIdEqual
 
-        # @var string
+        # @var str
         self.captionParamsIdIn = captionParamsIdIn
 
         # @var KalturaCaptionType
         self.formatEqual = formatEqual
 
-        # @var string
+        # @var str
         self.formatIn = formatIn
 
         # @var KalturaCaptionAssetStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.statusNotIn = statusNotIn
 
 
@@ -954,16 +979,16 @@ class KalturaCaptionAssetBaseFilter(KalturaAssetFilter):
 # @subpackage Client
 class KalturaCaptionParamsBaseFilter(KalturaAssetParamsFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            isSystemDefaultEqual=NotImplemented,
-            tagsEqual=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            isSystemDefaultEqual = NotImplemented,
+            tagsEqual = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented):
         KalturaAssetParamsFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -977,7 +1002,7 @@ class KalturaCaptionParamsBaseFilter(KalturaAssetParamsFilter):
         # @var KalturaCaptionType
         self.formatEqual = formatEqual
 
-        # @var string
+        # @var str
         self.formatIn = formatIn
 
 
@@ -1014,33 +1039,33 @@ class KalturaCaptionParamsBaseFilter(KalturaAssetParamsFilter):
 # @subpackage Client
 class KalturaCaptionAssetFilter(KalturaCaptionAssetBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            sizeGreaterThanOrEqual=NotImplemented,
-            sizeLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            deletedAtGreaterThanOrEqual=NotImplemented,
-            deletedAtLessThanOrEqual=NotImplemented,
-            typeIn=NotImplemented,
-            captionParamsIdEqual=NotImplemented,
-            captionParamsIdIn=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            captionParamsIdEqual = NotImplemented,
+            captionParamsIdIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
         KalturaCaptionAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1088,16 +1113,16 @@ class KalturaCaptionAssetFilter(KalturaCaptionAssetBaseFilter):
 # @subpackage Client
 class KalturaCaptionParamsFilter(KalturaCaptionParamsBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            isSystemDefaultEqual=NotImplemented,
-            tagsEqual=NotImplemented,
-            formatEqual=NotImplemented,
-            formatIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            isSystemDefaultEqual = NotImplemented,
+            tagsEqual = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented):
         KalturaCaptionParamsBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1368,6 +1393,7 @@ class KalturaCaptionClientPlugin(KalturaClientPlugin):
         return {
             'KalturaCaptionAssetStatus': KalturaCaptionAssetStatus,
             'KalturaCaptionAssetOrderBy': KalturaCaptionAssetOrderBy,
+            'KalturaCaptionAssetUsage': KalturaCaptionAssetUsage,
             'KalturaCaptionParamsOrderBy': KalturaCaptionParamsOrderBy,
             'KalturaCaptionSource': KalturaCaptionSource,
             'KalturaCaptionType': KalturaCaptionType,

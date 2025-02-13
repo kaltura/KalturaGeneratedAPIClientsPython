@@ -74,15 +74,15 @@ class KalturaMsnDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaMsnDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -112,12 +112,12 @@ class KalturaMsnDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaMsnDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            xml=NotImplemented):
+            fieldValues = NotImplemented,
+            xml = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.xml = xml
 
 
@@ -146,50 +146,50 @@ class KalturaMsnDistributionJobProviderData(KalturaConfigurableDistributionJobPr
 # @subpackage Client
 class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            domain=NotImplemented,
-            csId=NotImplemented,
-            source=NotImplemented,
-            sourceFriendlyName=NotImplemented,
-            pageGroup=NotImplemented,
-            sourceFlavorParamsId=NotImplemented,
-            wmvFlavorParamsId=NotImplemented,
-            flvFlavorParamsId=NotImplemented,
-            slFlavorParamsId=NotImplemented,
-            slHdFlavorParamsId=NotImplemented,
-            msnvideoCat=NotImplemented,
-            msnvideoTop=NotImplemented,
-            msnvideoTopCat=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            domain = NotImplemented,
+            csId = NotImplemented,
+            source = NotImplemented,
+            sourceFriendlyName = NotImplemented,
+            pageGroup = NotImplemented,
+            sourceFlavorParamsId = NotImplemented,
+            wmvFlavorParamsId = NotImplemented,
+            flvFlavorParamsId = NotImplemented,
+            slFlavorParamsId = NotImplemented,
+            slHdFlavorParamsId = NotImplemented,
+            msnvideoCat = NotImplemented,
+            msnvideoTop = NotImplemented,
+            msnvideoTopCat = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -221,25 +221,25 @@ class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
-        # @var string
+        # @var str
         self.domain = domain
 
-        # @var string
+        # @var str
         self.csId = csId
 
-        # @var string
+        # @var str
         self.source = source
 
-        # @var string
+        # @var str
         self.sourceFriendlyName = sourceFriendlyName
 
-        # @var string
+        # @var str
         self.pageGroup = pageGroup
 
         # @var int
@@ -257,13 +257,13 @@ class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
         # @var int
         self.slHdFlavorParamsId = slHdFlavorParamsId
 
-        # @var string
+        # @var str
         self.msnvideoCat = msnvideoCat
 
-        # @var string
+        # @var str
         self.msnvideoTop = msnvideoTop
 
-        # @var string
+        # @var str
         self.msnvideoTopCat = msnvideoTopCat
 
 
@@ -404,10 +404,10 @@ class KalturaMsnDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaMsnDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -432,10 +432,10 @@ class KalturaMsnDistributionProviderBaseFilter(KalturaDistributionProviderFilter
 # @subpackage Client
 class KalturaMsnDistributionProviderFilter(KalturaMsnDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaMsnDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -460,16 +460,16 @@ class KalturaMsnDistributionProviderFilter(KalturaMsnDistributionProviderBaseFil
 # @subpackage Client
 class KalturaMsnDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -500,16 +500,16 @@ class KalturaMsnDistributionProfileBaseFilter(KalturaConfigurableDistributionPro
 # @subpackage Client
 class KalturaMsnDistributionProfileFilter(KalturaMsnDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaMsnDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

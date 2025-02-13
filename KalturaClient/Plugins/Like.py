@@ -59,17 +59,17 @@ class KalturaLikeOrderBy(object):
 # @subpackage Client
 class KalturaLike(KalturaObjectBase):
     def __init__(self,
-            entryId=NotImplemented,
-            userId=NotImplemented,
-            createdAt=NotImplemented):
+            entryId = NotImplemented,
+            userId = NotImplemented,
+            createdAt = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The id of the entry that the like belongs to
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # The id of user that the like belongs to
-        # @var string
+        # @var str
         self.userId = userId
 
         # The date of the like's creation
@@ -118,12 +118,12 @@ class KalturaLike(KalturaObjectBase):
 # @subpackage Client
 class KalturaLikeListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaLike
+        # @var List[KalturaLike]
         # @readonly
         self.objects = objects
 
@@ -149,24 +149,24 @@ class KalturaLikeListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaLikeBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
-        # @var string
+        # @var str
         self.entryIdIn = entryIdIn
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
         # @var int
@@ -233,13 +233,13 @@ class KalturaLikeBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaLikeFilter(KalturaLikeBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented):
         KalturaLikeBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

@@ -53,7 +53,7 @@ class KalturaBulkServiceFilterDataBase(KalturaBulkServiceData):
     """Represents the Bulk service input for filter bulk upload"""
 
     def __init__(self,
-            filter=NotImplemented):
+            filter = NotImplemented):
         KalturaBulkServiceData.__init__(self)
 
         # Filter for extracting the objects list to upload
@@ -86,23 +86,23 @@ class KalturaBulkServiceFilterDataBase(KalturaBulkServiceData):
 # @subpackage Client
 class KalturaBulkUploadResultJob(KalturaBulkUploadResult):
     def __init__(self,
-            id=NotImplemented,
-            bulkUploadJobId=NotImplemented,
-            lineIndex=NotImplemented,
-            partnerId=NotImplemented,
-            status=NotImplemented,
-            action=NotImplemented,
-            objectId=NotImplemented,
-            objectStatus=NotImplemented,
-            bulkUploadResultObjectType=NotImplemented,
-            rowData=NotImplemented,
-            partnerData=NotImplemented,
-            objectErrorDescription=NotImplemented,
-            pluginsData=NotImplemented,
-            errorDescription=NotImplemented,
-            errorCode=NotImplemented,
-            errorType=NotImplemented,
-            jobObjectId=NotImplemented):
+            id = NotImplemented,
+            bulkUploadJobId = NotImplemented,
+            lineIndex = NotImplemented,
+            partnerId = NotImplemented,
+            status = NotImplemented,
+            action = NotImplemented,
+            objectId = NotImplemented,
+            objectStatus = NotImplemented,
+            bulkUploadResultObjectType = NotImplemented,
+            rowData = NotImplemented,
+            partnerData = NotImplemented,
+            objectErrorDescription = NotImplemented,
+            pluginsData = NotImplemented,
+            errorDescription = NotImplemented,
+            errorCode = NotImplemented,
+            errorType = NotImplemented,
+            jobObjectId = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -153,8 +153,8 @@ class KalturaBulkServiceFilterData(KalturaBulkServiceFilterDataBase):
     """Represents the Bulk service input for filter bulk upload"""
 
     def __init__(self,
-            filter=NotImplemented,
-            templateObject=NotImplemented):
+            filter = NotImplemented,
+            templateObject = NotImplemented):
         KalturaBulkServiceFilterDataBase.__init__(self,
             filter)
 
@@ -190,23 +190,23 @@ class KalturaBulkUploadFilterJobData(KalturaBulkUploadJobData):
     """Represents the Bulk upload job data for filter bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented,
-            filter=NotImplemented,
-            templateObject=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented,
+            filter = NotImplemented,
+            templateObject = NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
             uploadedBy,

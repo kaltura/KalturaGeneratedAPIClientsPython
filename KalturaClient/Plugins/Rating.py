@@ -59,12 +59,12 @@ class KalturaRatingCountOrderBy(object):
 # @subpackage Client
 class KalturaRatingCount(KalturaObjectBase):
     def __init__(self,
-            entryId=NotImplemented,
-            rank=NotImplemented,
-            count=NotImplemented):
+            entryId = NotImplemented,
+            rank = NotImplemented,
+            count = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.entryId = entryId
 
         # @var int
@@ -115,12 +115,12 @@ class KalturaRatingCount(KalturaObjectBase):
 # @subpackage Client
 class KalturaRatingCountListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaRatingCount
+        # @var List[KalturaRatingCount]
         # @readonly
         self.objects = objects
 
@@ -146,18 +146,18 @@ class KalturaRatingCountListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaRatingCountBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            rankIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            rankIn = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
-        # @var string
+        # @var str
         self.rankIn = rankIn
 
 
@@ -194,10 +194,10 @@ class KalturaRatingCountBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaRatingCountFilter(KalturaRatingCountBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            entryIdEqual=NotImplemented,
-            rankIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            entryIdEqual = NotImplemented,
+            rankIn = NotImplemented):
         KalturaRatingCountBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

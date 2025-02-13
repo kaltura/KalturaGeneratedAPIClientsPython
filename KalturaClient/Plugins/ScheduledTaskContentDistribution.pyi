@@ -25,53 +25,20 @@
 #
 # @ignore
 # ===================================================================================================
-# @package Kaltura
-# @subpackage Client
-from __future__ import absolute_import
-
+from typing import List, IO, Any
 from .Core import *
-from ..Base import (
-    getXmlNodeBool,
-    getXmlNodeFloat,
-    getXmlNodeInt,
-    getXmlNodeText,
-    KalturaClientPlugin,
-    KalturaEnumsFactory,
-    KalturaObjectBase,
-    KalturaObjectFactory,
-    KalturaParams,
-    KalturaServiceBase,
-)
+from .ScheduledTask import *
+from .ContentDistribution import *
+from KalturaClient.Base import KalturaObjectBase, KalturaServiceBase
 
-########## enums ##########
-########## classes ##########
-########## services ##########
-########## main ##########
-class KalturaKalturaInternalToolsClientPlugin(KalturaClientPlugin):
-    # KalturaKalturaInternalToolsClientPlugin
-    instance = None
+class KalturaDistributeObjectTask(KalturaObjectTask):
+    distributionProfileId: str
+    def __init__(self,
+            type: KalturaObjectTaskType = NotImplemented,
+            stopProcessingOnError: bool = NotImplemented,
+            distributionProfileId: str = NotImplemented): ...
 
-    # @return KalturaKalturaInternalToolsClientPlugin
-    @staticmethod
-    def get():
-        if KalturaKalturaInternalToolsClientPlugin.instance == None:
-            KalturaKalturaInternalToolsClientPlugin.instance = KalturaKalturaInternalToolsClientPlugin()
-        return KalturaKalturaInternalToolsClientPlugin.instance
+    def getDistributionProfileId(self) -> str: ...
+    def setDistributionProfileId(self, newDistributionProfileId: str) -> None: ...
 
-    # @return array<KalturaServiceBase>
-    def getServices(self):
-        return {
-        }
-
-    def getEnums(self):
-        return {
-        }
-
-    def getTypes(self):
-        return {
-        }
-
-    # @return string
-    def getName(self):
-        return 'KalturaInternalTools'
-
+class KalturaScheduledTaskContentDistributionClientPluginServicesProxy:

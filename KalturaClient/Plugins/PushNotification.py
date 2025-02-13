@@ -77,16 +77,16 @@ class KalturaPushNotificationTemplateOrderBy(object):
 # @subpackage Client
 class KalturaPushEventNotificationParameter(KalturaEventNotificationParameter):
     def __init__(self,
-            key=NotImplemented,
-            description=NotImplemented,
-            value=NotImplemented,
-            queueKeyToken=NotImplemented):
+            key = NotImplemented,
+            description = NotImplemented,
+            value = NotImplemented,
+            queueKeyToken = NotImplemented):
         KalturaEventNotificationParameter.__init__(self,
             key,
             description,
             value)
 
-        # @var string
+        # @var str
         self.queueKeyToken = queueKeyToken
 
 
@@ -115,20 +115,20 @@ class KalturaPushEventNotificationParameter(KalturaEventNotificationParameter):
 # @subpackage Client
 class KalturaPushNotificationData(KalturaObjectBase):
     def __init__(self,
-            queueName=NotImplemented,
-            queueKey=NotImplemented,
-            url=NotImplemented):
+            queueName = NotImplemented,
+            queueKey = NotImplemented,
+            url = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         # @readonly
         self.queueName = queueName
 
-        # @var string
+        # @var str
         # @readonly
         self.queueKey = queueKey
 
-        # @var string
+        # @var str
         # @readonly
         self.url = url
 
@@ -164,11 +164,11 @@ class KalturaPushNotificationParams(KalturaObjectBase):
     """Object which contains contextual entry-related data."""
 
     def __init__(self,
-            userParams=NotImplemented):
+            userParams = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # User params
-        # @var array of KalturaPushEventNotificationParameter
+        # @var List[KalturaPushEventNotificationParameter]
         self.userParams = userParams
 
 
@@ -197,27 +197,28 @@ class KalturaPushNotificationParams(KalturaObjectBase):
 # @subpackage Client
 class KalturaPushNotificationTemplate(KalturaEventNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            queueNameParameters=NotImplemented,
-            queueKeyParameters=NotImplemented,
-            apiObjectType=NotImplemented,
-            objectFormat=NotImplemented,
-            responseProfileId=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            queueNameParameters = NotImplemented,
+            queueKeyParameters = NotImplemented,
+            apiObjectType = NotImplemented,
+            objectFormat = NotImplemented,
+            responseProfileId = NotImplemented):
         KalturaEventNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -234,18 +235,19 @@ class KalturaPushNotificationTemplate(KalturaEventNotificationTemplate):
             eventObjectType,
             eventConditions,
             contentParameters,
-            userParameters)
+            userParameters,
+            eventDelayedCondition)
 
         # Define the content dynamic parameters
-        # @var array of KalturaPushEventNotificationParameter
+        # @var List[KalturaPushEventNotificationParameter]
         self.queueNameParameters = queueNameParameters
 
         # Define the content dynamic parameters
-        # @var array of KalturaPushEventNotificationParameter
+        # @var List[KalturaPushEventNotificationParameter]
         self.queueKeyParameters = queueKeyParameters
 
         # Kaltura API object type
-        # @var string
+        # @var str
         self.apiObjectType = apiObjectType
 
         # Kaltura Object format
@@ -314,22 +316,22 @@ class KalturaPushNotificationTemplate(KalturaEventNotificationTemplate):
 # @subpackage Client
 class KalturaPushNotificationTemplateBaseFilter(KalturaEventNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEventNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -366,22 +368,22 @@ class KalturaPushNotificationTemplateBaseFilter(KalturaEventNotificationTemplate
 # @subpackage Client
 class KalturaPushNotificationTemplateFilter(KalturaPushNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaPushNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

@@ -51,7 +51,7 @@ from ..Base import (
 # @subpackage Client
 class KalturaDropFolderXmlBulkUploadFileHandlerConfig(KalturaDropFolderFileHandlerConfig):
     def __init__(self,
-            handlerType=NotImplemented):
+            handlerType = NotImplemented):
         KalturaDropFolderFileHandlerConfig.__init__(self,
             handlerType)
 
@@ -75,22 +75,22 @@ class KalturaDropFolderXmlBulkUploadJobData(KalturaBulkUploadXmlJobData):
     """Represents the Bulk upload job data for drop folder xml bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented,
-            dropFolderId=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented,
+            dropFolderId = NotImplemented):
         KalturaBulkUploadXmlJobData.__init__(self,
             userId,
             uploadedBy,

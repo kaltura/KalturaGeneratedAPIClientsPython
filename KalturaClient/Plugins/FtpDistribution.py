@@ -84,30 +84,30 @@ class KalturaFtpScheduledDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaFtpDistributionFile(KalturaObjectBase):
     def __init__(self,
-            assetId=NotImplemented,
-            filename=NotImplemented,
-            contents=NotImplemented,
-            localFilePath=NotImplemented,
-            version=NotImplemented,
-            hash=NotImplemented):
+            assetId = NotImplemented,
+            filename = NotImplemented,
+            contents = NotImplemented,
+            localFilePath = NotImplemented,
+            version = NotImplemented,
+            hash = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.assetId = assetId
 
-        # @var string
+        # @var str
         self.filename = filename
 
-        # @var string
+        # @var str
         self.contents = contents
 
-        # @var string
+        # @var str
         self.localFilePath = localFilePath
 
-        # @var string
+        # @var str
         self.version = version
 
-        # @var string
+        # @var str
         self.hash = hash
 
 
@@ -176,15 +176,15 @@ class KalturaFtpDistributionFile(KalturaObjectBase):
 # @subpackage Client
 class KalturaFtpDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -214,12 +214,12 @@ class KalturaFtpDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaFtpDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            filesForDistribution=NotImplemented):
+            fieldValues = NotImplemented,
+            filesForDistribution = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var array of KalturaFtpDistributionFile
+        # @var List[KalturaFtpDistributionFile]
         self.filesForDistribution = filesForDistribution
 
 
@@ -248,53 +248,53 @@ class KalturaFtpDistributionJobProviderData(KalturaConfigurableDistributionJobPr
 # @subpackage Client
 class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            protocol=NotImplemented,
-            host=NotImplemented,
-            port=NotImplemented,
-            basePath=NotImplemented,
-            username=NotImplemented,
-            password=NotImplemented,
-            passphrase=NotImplemented,
-            sftpPublicKey=NotImplemented,
-            sftpPrivateKey=NotImplemented,
-            disableMetadata=NotImplemented,
-            metadataXslt=NotImplemented,
-            metadataFilenameXslt=NotImplemented,
-            flavorAssetFilenameXslt=NotImplemented,
-            thumbnailAssetFilenameXslt=NotImplemented,
-            assetFilenameXslt=NotImplemented,
-            asperaPublicKey=NotImplemented,
-            asperaPrivateKey=NotImplemented,
-            sendMetadataAfterAssets=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            protocol = NotImplemented,
+            host = NotImplemented,
+            port = NotImplemented,
+            basePath = NotImplemented,
+            username = NotImplemented,
+            password = NotImplemented,
+            passphrase = NotImplemented,
+            sftpPublicKey = NotImplemented,
+            sftpPrivateKey = NotImplemented,
+            disableMetadata = NotImplemented,
+            metadataXslt = NotImplemented,
+            metadataFilenameXslt = NotImplemented,
+            flavorAssetFilenameXslt = NotImplemented,
+            thumbnailAssetFilenameXslt = NotImplemented,
+            assetFilenameXslt = NotImplemented,
+            asperaPublicKey = NotImplemented,
+            asperaPrivateKey = NotImplemented,
+            sendMetadataAfterAssets = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -330,52 +330,52 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
         # @insertonly
         self.protocol = protocol
 
-        # @var string
+        # @var str
         self.host = host
 
         # @var int
         self.port = port
 
-        # @var string
+        # @var str
         self.basePath = basePath
 
-        # @var string
+        # @var str
         self.username = username
 
-        # @var string
+        # @var str
         self.password = password
 
-        # @var string
+        # @var str
         self.passphrase = passphrase
 
-        # @var string
+        # @var str
         self.sftpPublicKey = sftpPublicKey
 
-        # @var string
+        # @var str
         self.sftpPrivateKey = sftpPrivateKey
 
         # @var bool
         self.disableMetadata = disableMetadata
 
-        # @var string
+        # @var str
         self.metadataXslt = metadataXslt
 
-        # @var string
+        # @var str
         self.metadataFilenameXslt = metadataFilenameXslt
 
-        # @var string
+        # @var str
         self.flavorAssetFilenameXslt = flavorAssetFilenameXslt
 
-        # @var string
+        # @var str
         self.thumbnailAssetFilenameXslt = thumbnailAssetFilenameXslt
 
-        # @var string
+        # @var str
         self.assetFilenameXslt = assetFilenameXslt
 
-        # @var string
+        # @var str
         self.asperaPublicKey = asperaPublicKey
 
-        # @var string
+        # @var str
         self.asperaPrivateKey = asperaPrivateKey
 
         # @var bool
@@ -543,15 +543,15 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
 # @subpackage Client
 class KalturaFtpScheduledDistributionProvider(KalturaFtpDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaFtpDistributionProvider.__init__(self,
             type,
             name,
@@ -581,10 +581,10 @@ class KalturaFtpScheduledDistributionProvider(KalturaFtpDistributionProvider):
 # @subpackage Client
 class KalturaFtpDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -609,10 +609,10 @@ class KalturaFtpDistributionProviderBaseFilter(KalturaDistributionProviderFilter
 # @subpackage Client
 class KalturaFtpDistributionProviderFilter(KalturaFtpDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFtpDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -637,16 +637,16 @@ class KalturaFtpDistributionProviderFilter(KalturaFtpDistributionProviderBaseFil
 # @subpackage Client
 class KalturaFtpDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -677,10 +677,10 @@ class KalturaFtpDistributionProfileBaseFilter(KalturaConfigurableDistributionPro
 # @subpackage Client
 class KalturaFtpScheduledDistributionProviderBaseFilter(KalturaFtpDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFtpDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -705,16 +705,16 @@ class KalturaFtpScheduledDistributionProviderBaseFilter(KalturaFtpDistributionPr
 # @subpackage Client
 class KalturaFtpDistributionProfileFilter(KalturaFtpDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaFtpDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -745,10 +745,10 @@ class KalturaFtpDistributionProfileFilter(KalturaFtpDistributionProfileBaseFilte
 # @subpackage Client
 class KalturaFtpScheduledDistributionProviderFilter(KalturaFtpScheduledDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaFtpScheduledDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

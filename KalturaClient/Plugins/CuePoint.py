@@ -145,6 +145,7 @@ class KalturaCuePointType(object):
     EVENT = "eventCuePoint.Event"
     QUIZ_ANSWER = "quiz.QUIZ_ANSWER"
     QUIZ_QUESTION = "quiz.QUIZ_QUESTION"
+    SESSION = "sessionCuePoint.Session"
     THUMB = "thumbCuePoint.Thumb"
 
     def __init__(self, value):
@@ -158,28 +159,28 @@ class KalturaCuePointType(object):
 # @subpackage Client
 class KalturaCuePoint(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         # @readonly
         self.id = id
 
@@ -195,7 +196,7 @@ class KalturaCuePoint(KalturaObjectBase):
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         # @insertonly
         self.entryId = entryId
 
@@ -214,17 +215,17 @@ class KalturaCuePoint(KalturaObjectBase):
         # @var int
         self.triggeredAt = triggeredAt
 
-        # @var string
+        # @var str
         self.tags = tags
 
         # Start time in milliseconds
         # @var int
         self.startTime = startTime
 
-        # @var string
+        # @var str
         self.userId = userId
 
-        # @var string
+        # @var str
         self.partnerData = partnerData
 
         # @var int
@@ -236,14 +237,14 @@ class KalturaCuePoint(KalturaObjectBase):
         # @var int
         self.thumbOffset = thumbOffset
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
         # @var bool
         # @readonly
         self.isMomentary = isMomentary
 
-        # @var string
+        # @var str
         # @readonly
         self.copiedFrom = copiedFrom
 
@@ -381,12 +382,12 @@ class KalturaCuePoint(KalturaObjectBase):
 # @subpackage Client
 class KalturaCuePointListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaCuePoint
+        # @var List[KalturaCuePoint]
         # @readonly
         self.objects = objects
 
@@ -412,62 +413,62 @@ class KalturaCuePointListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaCuePointBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var KalturaCuePointType
         self.cuePointTypeEqual = cuePointTypeEqual
 
-        # @var string
+        # @var str
         self.cuePointTypeIn = cuePointTypeIn
 
         # @var KalturaCuePointStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.entryIdEqual = entryIdEqual
 
-        # @var string
+        # @var str
         self.entryIdIn = entryIdIn
 
         # @var int
@@ -488,13 +489,13 @@ class KalturaCuePointBaseFilter(KalturaRelatedFilter):
         # @var int
         self.triggeredAtLessThanOrEqual = triggeredAtLessThanOrEqual
 
-        # @var string
+        # @var str
         self.tagsLike = tagsLike
 
-        # @var string
+        # @var str
         self.tagsMultiLikeOr = tagsMultiLikeOr
 
-        # @var string
+        # @var str
         self.tagsMultiLikeAnd = tagsMultiLikeAnd
 
         # @var int
@@ -503,16 +504,16 @@ class KalturaCuePointBaseFilter(KalturaRelatedFilter):
         # @var int
         self.startTimeLessThanOrEqual = startTimeLessThanOrEqual
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
         # @var int
         self.partnerSortValueEqual = partnerSortValueEqual
 
-        # @var string
+        # @var str
         self.partnerSortValueIn = partnerSortValueIn
 
         # @var int
@@ -524,10 +525,10 @@ class KalturaCuePointBaseFilter(KalturaRelatedFilter):
         # @var KalturaNullableBoolean
         self.forceStopEqual = forceStopEqual
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
 
@@ -772,39 +773,39 @@ class KalturaCuePointBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaCuePointFilter(KalturaCuePointBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented):
         KalturaCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -837,7 +838,7 @@ class KalturaCuePointFilter(KalturaCuePointBaseFilter):
             systemNameEqual,
             systemNameIn)
 
-        # @var string
+        # @var str
         self.freeText = freeText
 
         # @var KalturaNullableBoolean

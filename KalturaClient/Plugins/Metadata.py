@@ -142,17 +142,17 @@ class KalturaMetadataProfileOrderBy(object):
 # @subpackage Client
 class KalturaMetadata(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataProfileVersion=NotImplemented,
-            metadataObjectType=NotImplemented,
-            objectId=NotImplemented,
-            version=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            status=NotImplemented,
-            xml=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataProfileVersion = NotImplemented,
+            metadataObjectType = NotImplemented,
+            objectId = NotImplemented,
+            version = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            xml = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -175,7 +175,7 @@ class KalturaMetadata(KalturaObjectBase):
         # @readonly
         self.metadataObjectType = metadataObjectType
 
-        # @var string
+        # @var str
         # @readonly
         self.objectId = objectId
 
@@ -195,7 +195,7 @@ class KalturaMetadata(KalturaObjectBase):
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         # @readonly
         self.xml = xml
 
@@ -261,21 +261,21 @@ class KalturaMetadata(KalturaObjectBase):
 # @subpackage Client
 class KalturaMetadataProfile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            metadataObjectType=NotImplemented,
-            version=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            status=NotImplemented,
-            xsd=NotImplemented,
-            views=NotImplemented,
-            xslt=NotImplemented,
-            createMode=NotImplemented,
-            disableReIndexing=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            metadataObjectType = NotImplemented,
+            version = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            xsd = NotImplemented,
+            views = NotImplemented,
+            xslt = NotImplemented,
+            createMode = NotImplemented,
+            disableReIndexing = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -293,13 +293,13 @@ class KalturaMetadataProfile(KalturaObjectBase):
         # @readonly
         self.version = version
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var int
@@ -314,15 +314,15 @@ class KalturaMetadataProfile(KalturaObjectBase):
         # @readonly
         self.status = status
 
-        # @var string
+        # @var str
         # @readonly
         self.xsd = xsd
 
-        # @var string
+        # @var str
         # @readonly
         self.views = views
 
-        # @var string
+        # @var str
         # @readonly
         self.xslt = xslt
 
@@ -434,25 +434,25 @@ class KalturaMetadataProfile(KalturaObjectBase):
 # @subpackage Client
 class KalturaMetadataProfileField(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            xPath=NotImplemented,
-            key=NotImplemented,
-            label=NotImplemented):
+            id = NotImplemented,
+            xPath = NotImplemented,
+            key = NotImplemented,
+            label = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
         # @readonly
         self.id = id
 
-        # @var string
+        # @var str
         # @readonly
         self.xPath = xPath
 
-        # @var string
+        # @var str
         # @readonly
         self.key = key
 
-        # @var string
+        # @var str
         # @readonly
         self.label = label
 
@@ -490,15 +490,15 @@ class KalturaMetadataProfileField(KalturaObjectBase):
 # @subpackage Client
 class KalturaImportMetadataJobData(KalturaJobData):
     def __init__(self,
-            srcFileUrl=NotImplemented,
-            destFileLocalPath=NotImplemented,
-            metadataId=NotImplemented):
+            srcFileUrl = NotImplemented,
+            destFileLocalPath = NotImplemented,
+            metadataId = NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
+        # @var str
         self.srcFileUrl = srcFileUrl
 
-        # @var string
+        # @var str
         self.destFileLocalPath = destFileLocalPath
 
         # @var int
@@ -546,12 +546,12 @@ class KalturaImportMetadataJobData(KalturaJobData):
 # @subpackage Client
 class KalturaMetadataListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaMetadata
+        # @var List[KalturaMetadata]
         # @readonly
         self.objects = objects
 
@@ -577,26 +577,26 @@ class KalturaMetadataListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaMetadataProfileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            metadataObjectTypeIn=NotImplemented,
-            versionEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createModeEqual=NotImplemented,
-            createModeNotEqual=NotImplemented,
-            createModeIn=NotImplemented,
-            createModeNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            metadataObjectTypeEqual = NotImplemented,
+            metadataObjectTypeIn = NotImplemented,
+            versionEqual = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createModeEqual = NotImplemented,
+            createModeNotEqual = NotImplemented,
+            createModeIn = NotImplemented,
+            createModeNotIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -610,19 +610,19 @@ class KalturaMetadataProfileBaseFilter(KalturaFilter):
         # @var KalturaMetadataObjectType
         self.metadataObjectTypeEqual = metadataObjectTypeEqual
 
-        # @var string
+        # @var str
         self.metadataObjectTypeIn = metadataObjectTypeIn
 
         # @var int
         self.versionEqual = versionEqual
 
-        # @var string
+        # @var str
         self.nameEqual = nameEqual
 
-        # @var string
+        # @var str
         self.systemNameEqual = systemNameEqual
 
-        # @var string
+        # @var str
         self.systemNameIn = systemNameIn
 
         # @var int
@@ -640,7 +640,7 @@ class KalturaMetadataProfileBaseFilter(KalturaFilter):
         # @var KalturaMetadataProfileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaMetadataProfileCreateMode
@@ -649,10 +649,10 @@ class KalturaMetadataProfileBaseFilter(KalturaFilter):
         # @var KalturaMetadataProfileCreateMode
         self.createModeNotEqual = createModeNotEqual
 
-        # @var string
+        # @var str
         self.createModeIn = createModeIn
 
-        # @var string
+        # @var str
         self.createModeNotIn = createModeNotIn
 
 
@@ -817,12 +817,12 @@ class KalturaMetadataProfileBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaMetadataProfileFieldListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaMetadataProfileField
+        # @var List[KalturaMetadataProfileField]
         # @readonly
         self.objects = objects
 
@@ -848,12 +848,12 @@ class KalturaMetadataProfileFieldListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaMetadataProfileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaMetadataProfile
+        # @var List[KalturaMetadataProfile]
         # @readonly
         self.objects = objects
 
@@ -881,7 +881,7 @@ class KalturaMetadataReplacementOptionsItem(KalturaPluginReplacementOptionsItem)
     """Advanced metadata configuration for entry replacement process"""
 
     def __init__(self,
-            shouldCopyMetadata=NotImplemented):
+            shouldCopyMetadata = NotImplemented):
         KalturaPluginReplacementOptionsItem.__init__(self)
 
         # If true custom-metadata transferred to temp entry on entry replacement
@@ -914,9 +914,9 @@ class KalturaMetadataReplacementOptionsItem(KalturaPluginReplacementOptionsItem)
 # @subpackage Client
 class KalturaMetadataResponseProfileMapping(KalturaResponseProfileMapping):
     def __init__(self,
-            parentProperty=NotImplemented,
-            filterProperty=NotImplemented,
-            allowNull=NotImplemented):
+            parentProperty = NotImplemented,
+            filterProperty = NotImplemented,
+            allowNull = NotImplemented):
         KalturaResponseProfileMapping.__init__(self,
             parentProperty,
             filterProperty,
@@ -940,11 +940,11 @@ class KalturaMetadataResponseProfileMapping(KalturaResponseProfileMapping):
 # @subpackage Client
 class KalturaTransformMetadataJobData(KalturaJobData):
     def __init__(self,
-            srcXsl=NotImplemented,
-            srcVersion=NotImplemented,
-            destVersion=NotImplemented,
-            destXsd=NotImplemented,
-            metadataProfileId=NotImplemented):
+            srcXsl = NotImplemented,
+            srcVersion = NotImplemented,
+            destVersion = NotImplemented,
+            destXsd = NotImplemented,
+            metadataProfileId = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var KalturaFileContainer
@@ -1020,14 +1020,14 @@ class KalturaTransformMetadataJobData(KalturaJobData):
 # @subpackage Client
 class KalturaCompareMetadataCondition(KalturaCompareCondition):
     def __init__(self,
-            type=NotImplemented,
-            description=NotImplemented,
-            not_=NotImplemented,
-            value=NotImplemented,
-            comparison=NotImplemented,
-            xPath=NotImplemented,
-            profileId=NotImplemented,
-            profileSystemName=NotImplemented):
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            value = NotImplemented,
+            comparison = NotImplemented,
+            xPath = NotImplemented,
+            profileId = NotImplemented,
+            profileSystemName = NotImplemented):
         KalturaCompareCondition.__init__(self,
             type,
             description,
@@ -1039,7 +1039,7 @@ class KalturaCompareMetadataCondition(KalturaCompareCondition):
         # 	 1. Slashed xPath, e.g. /metadata/myElementName
         # 	 2. Using local-name function, e.g. /[local-name()='metadata']/[local-name()='myElementName']
         # 	 3. Using only the field name, e.g. myElementName, it will be searched as //myElementName
-        # @var string
+        # @var str
         self.xPath = xPath
 
         # Metadata profile id
@@ -1047,7 +1047,7 @@ class KalturaCompareMetadataCondition(KalturaCompareCondition):
         self.profileId = profileId
 
         # Metadata profile system name
-        # @var string
+        # @var str
         self.profileSystemName = profileSystemName
 
 
@@ -1092,14 +1092,14 @@ class KalturaCompareMetadataCondition(KalturaCompareCondition):
 # @subpackage Client
 class KalturaDynamicObjectSearchItem(KalturaSearchOperator):
     def __init__(self,
-            type=NotImplemented,
-            items=NotImplemented,
-            field=NotImplemented):
+            type = NotImplemented,
+            items = NotImplemented,
+            field = NotImplemented):
         KalturaSearchOperator.__init__(self,
             type,
             items)
 
-        # @var string
+        # @var str
         self.field = field
 
 
@@ -1128,14 +1128,14 @@ class KalturaDynamicObjectSearchItem(KalturaSearchOperator):
 # @subpackage Client
 class KalturaMatchMetadataCondition(KalturaMatchCondition):
     def __init__(self,
-            type=NotImplemented,
-            description=NotImplemented,
-            not_=NotImplemented,
-            values=NotImplemented,
-            matchType=NotImplemented,
-            xPath=NotImplemented,
-            profileId=NotImplemented,
-            profileSystemName=NotImplemented):
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            values = NotImplemented,
+            matchType = NotImplemented,
+            xPath = NotImplemented,
+            profileId = NotImplemented,
+            profileSystemName = NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
@@ -1147,7 +1147,7 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
         # 	 1. Slashed xPath, e.g. /metadata/myElementName
         # 	 2. Using local-name function, e.g. /[local-name()='metadata']/[local-name()='myElementName']
         # 	 3. Using only the field name, e.g. myElementName, it will be searched as //myElementName
-        # @var string
+        # @var str
         self.xPath = xPath
 
         # Metadata profile id
@@ -1155,7 +1155,7 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
         self.profileId = profileId
 
         # Metadata profile system name
-        # @var string
+        # @var str
         self.profileSystemName = profileSystemName
 
 
@@ -1200,26 +1200,26 @@ class KalturaMatchMetadataCondition(KalturaMatchCondition):
 # @subpackage Client
 class KalturaMetadataBaseFilter(KalturaRelatedFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataProfileIdEqual=NotImplemented,
-            metadataProfileIdIn=NotImplemented,
-            metadataProfileVersionEqual=NotImplemented,
-            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
-            metadataProfileVersionLessThanOrEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionGreaterThanOrEqual=NotImplemented,
-            versionLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            metadataProfileIdEqual = NotImplemented,
+            metadataProfileIdIn = NotImplemented,
+            metadataProfileVersionEqual = NotImplemented,
+            metadataProfileVersionGreaterThanOrEqual = NotImplemented,
+            metadataProfileVersionLessThanOrEqual = NotImplemented,
+            metadataObjectTypeEqual = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            versionEqual = NotImplemented,
+            versionGreaterThanOrEqual = NotImplemented,
+            versionLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaRelatedFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -1230,7 +1230,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
         # @var int
         self.metadataProfileIdEqual = metadataProfileIdEqual
 
-        # @var string
+        # @var str
         self.metadataProfileIdIn = metadataProfileIdIn
 
         # @var int
@@ -1246,10 +1246,10 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
         # @var KalturaMetadataObjectType
         self.metadataObjectTypeEqual = metadataObjectTypeEqual
 
-        # @var string
+        # @var str
         self.objectIdEqual = objectIdEqual
 
-        # @var string
+        # @var str
         self.objectIdIn = objectIdIn
 
         # @var int
@@ -1276,7 +1276,7 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
         # @var KalturaMetadataStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
 
@@ -1441,16 +1441,16 @@ class KalturaMetadataBaseFilter(KalturaRelatedFilter):
 # @subpackage Client
 class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
     def __init__(self,
-            type=NotImplemented,
-            description=NotImplemented,
-            not_=NotImplemented,
-            values=NotImplemented,
-            matchType=NotImplemented,
-            xPath=NotImplemented,
-            profileId=NotImplemented,
-            profileSystemName=NotImplemented,
-            versionA=NotImplemented,
-            versionB=NotImplemented):
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            values = NotImplemented,
+            matchType = NotImplemented,
+            xPath = NotImplemented,
+            profileId = NotImplemented,
+            profileSystemName = NotImplemented,
+            versionA = NotImplemented,
+            versionB = NotImplemented):
         KalturaMatchCondition.__init__(self,
             type,
             description,
@@ -1462,7 +1462,7 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
         # 	 1. Slashed xPath, e.g. /metadata/myElementName
         # 	 2. Using local-name function, e.g. /[local-name()='metadata']/[local-name()='myElementName']
         # 	 3. Using only the field name, e.g. myElementName, it will be searched as //myElementName
-        # @var string
+        # @var str
         self.xPath = xPath
 
         # Metadata profile id
@@ -1470,13 +1470,13 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
         self.profileId = profileId
 
         # Metadata profile system name
-        # @var string
+        # @var str
         self.profileSystemName = profileSystemName
 
-        # @var string
+        # @var str
         self.versionA = versionA
 
-        # @var string
+        # @var str
         self.versionB = versionB
 
 
@@ -1537,26 +1537,26 @@ class KalturaMetadataFieldChangedCondition(KalturaMatchCondition):
 # @subpackage Client
 class KalturaMetadataProfileFilter(KalturaMetadataProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            metadataObjectTypeIn=NotImplemented,
-            versionEqual=NotImplemented,
-            nameEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createModeEqual=NotImplemented,
-            createModeNotEqual=NotImplemented,
-            createModeIn=NotImplemented,
-            createModeNotIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            metadataObjectTypeEqual = NotImplemented,
+            metadataObjectTypeIn = NotImplemented,
+            versionEqual = NotImplemented,
+            nameEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createModeEqual = NotImplemented,
+            createModeNotEqual = NotImplemented,
+            createModeIn = NotImplemented,
+            createModeNotIn = NotImplemented):
         KalturaMetadataProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1597,10 +1597,10 @@ class KalturaMetadataProfileFilter(KalturaMetadataProfileBaseFilter):
 # @subpackage Client
 class KalturaMetadataSearchItem(KalturaSearchOperator):
     def __init__(self,
-            type=NotImplemented,
-            items=NotImplemented,
-            metadataProfileId=NotImplemented,
-            orderBy=NotImplemented):
+            type = NotImplemented,
+            items = NotImplemented,
+            metadataProfileId = NotImplemented,
+            orderBy = NotImplemented):
         KalturaSearchOperator.__init__(self,
             type,
             items)
@@ -1608,7 +1608,7 @@ class KalturaMetadataSearchItem(KalturaSearchOperator):
         # @var int
         self.metadataProfileId = metadataProfileId
 
-        # @var string
+        # @var str
         self.orderBy = orderBy
 
 
@@ -1645,11 +1645,11 @@ class KalturaMetadataSearchItem(KalturaSearchOperator):
 # @subpackage Client
 class KalturaMetadataField(KalturaStringField):
     def __init__(self,
-            description=NotImplemented,
-            value=NotImplemented,
-            xPath=NotImplemented,
-            profileId=NotImplemented,
-            profileSystemName=NotImplemented):
+            description = NotImplemented,
+            value = NotImplemented,
+            xPath = NotImplemented,
+            profileId = NotImplemented,
+            profileSystemName = NotImplemented):
         KalturaStringField.__init__(self,
             description,
             value)
@@ -1658,7 +1658,7 @@ class KalturaMetadataField(KalturaStringField):
         # 	 1. Slashed xPath, e.g. /metadata/myElementName
         # 	 2. Using local-name function, e.g. /[local-name()='metadata']/[local-name()='myElementName']
         # 	 3. Using only the field name, e.g. myElementName, it will be searched as //myElementName
-        # @var string
+        # @var str
         self.xPath = xPath
 
         # Metadata profile id
@@ -1666,7 +1666,7 @@ class KalturaMetadataField(KalturaStringField):
         self.profileId = profileId
 
         # Metadata profile system name
-        # @var string
+        # @var str
         self.profileSystemName = profileSystemName
 
 
@@ -1711,26 +1711,26 @@ class KalturaMetadataField(KalturaStringField):
 # @subpackage Client
 class KalturaMetadataFilter(KalturaMetadataBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            metadataProfileIdEqual=NotImplemented,
-            metadataProfileIdIn=NotImplemented,
-            metadataProfileVersionEqual=NotImplemented,
-            metadataProfileVersionGreaterThanOrEqual=NotImplemented,
-            metadataProfileVersionLessThanOrEqual=NotImplemented,
-            metadataObjectTypeEqual=NotImplemented,
-            objectIdEqual=NotImplemented,
-            objectIdIn=NotImplemented,
-            versionEqual=NotImplemented,
-            versionGreaterThanOrEqual=NotImplemented,
-            versionLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            metadataProfileIdEqual = NotImplemented,
+            metadataProfileIdIn = NotImplemented,
+            metadataProfileVersionEqual = NotImplemented,
+            metadataProfileVersionGreaterThanOrEqual = NotImplemented,
+            metadataProfileVersionLessThanOrEqual = NotImplemented,
+            metadataObjectTypeEqual = NotImplemented,
+            objectIdEqual = NotImplemented,
+            objectIdIn = NotImplemented,
+            versionEqual = NotImplemented,
+            versionGreaterThanOrEqual = NotImplemented,
+            versionLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaMetadataBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

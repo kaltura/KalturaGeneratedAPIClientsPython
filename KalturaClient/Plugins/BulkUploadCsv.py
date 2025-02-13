@@ -65,25 +65,25 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
     """Represents the Bulk upload job data for xml bulk upload"""
 
     def __init__(self,
-            userId=NotImplemented,
-            uploadedBy=NotImplemented,
-            conversionProfileId=NotImplemented,
-            resultsFileLocalPath=NotImplemented,
-            resultsFileUrl=NotImplemented,
-            numOfEntries=NotImplemented,
-            numOfObjects=NotImplemented,
-            filePath=NotImplemented,
-            bulkUploadObjectType=NotImplemented,
-            fileName=NotImplemented,
-            objectData=NotImplemented,
-            type=NotImplemented,
-            emailRecipients=NotImplemented,
-            numOfErrorObjects=NotImplemented,
-            privileges=NotImplemented,
-            csvVersion=NotImplemented,
-            columns=NotImplemented,
-            processObjectId=NotImplemented,
-            processObjectType=NotImplemented):
+            userId = NotImplemented,
+            uploadedBy = NotImplemented,
+            conversionProfileId = NotImplemented,
+            resultsFileLocalPath = NotImplemented,
+            resultsFileUrl = NotImplemented,
+            numOfEntries = NotImplemented,
+            numOfObjects = NotImplemented,
+            filePath = NotImplemented,
+            bulkUploadObjectType = NotImplemented,
+            fileName = NotImplemented,
+            objectData = NotImplemented,
+            type = NotImplemented,
+            emailRecipients = NotImplemented,
+            numOfErrorObjects = NotImplemented,
+            privileges = NotImplemented,
+            csvVersion = NotImplemented,
+            columns = NotImplemented,
+            processObjectId = NotImplemented,
+            processObjectType = NotImplemented):
         KalturaBulkUploadJobData.__init__(self,
             userId,
             uploadedBy,
@@ -107,15 +107,15 @@ class KalturaBulkUploadCsvJobData(KalturaBulkUploadJobData):
         self.csvVersion = csvVersion
 
         # Array containing CSV headers
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.columns = columns
 
         # The object in process
-        # @var string
+        # @var str
         self.processObjectId = processObjectId
 
         # The type of the object in process
-        # @var string
+        # @var str
         self.processObjectType = processObjectType
 
 

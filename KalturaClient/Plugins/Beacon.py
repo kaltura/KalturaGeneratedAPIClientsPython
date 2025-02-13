@@ -121,23 +121,23 @@ class KalturaBeaconScheduledResourceOrderByFieldName(object):
 # @subpackage Client
 class KalturaBeacon(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            indexType=NotImplemented,
-            updatedAt=NotImplemented,
-            relatedObjectType=NotImplemented,
-            eventType=NotImplemented,
-            objectId=NotImplemented,
-            privateData=NotImplemented,
-            rawData=NotImplemented):
+            id = NotImplemented,
+            indexType = NotImplemented,
+            updatedAt = NotImplemented,
+            relatedObjectType = NotImplemented,
+            eventType = NotImplemented,
+            objectId = NotImplemented,
+            privateData = NotImplemented,
+            rawData = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Beacon id
-        # @var string
+        # @var str
         # @readonly
         self.id = id
 
         # Beacon indexType
-        # @var string
+        # @var str
         # @readonly
         self.indexType = indexType
 
@@ -150,16 +150,16 @@ class KalturaBeacon(KalturaObjectBase):
         # @var KalturaBeaconObjectTypes
         self.relatedObjectType = relatedObjectType
 
-        # @var string
+        # @var str
         self.eventType = eventType
 
-        # @var string
+        # @var str
         self.objectId = objectId
 
-        # @var string
+        # @var str
         self.privateData = privateData
 
-        # @var string
+        # @var str
         self.rawData = rawData
 
 
@@ -232,10 +232,10 @@ class KalturaBeacon(KalturaObjectBase):
 # @subpackage Client
 class KalturaBeaconSearchParams(KalturaObjectBase):
     def __init__(self,
-            objectId=NotImplemented):
+            objectId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.objectId = objectId
 
 
@@ -264,8 +264,8 @@ class KalturaBeaconSearchParams(KalturaObjectBase):
 # @subpackage Client
 class KalturaBeaconSearchScheduledResourceOrderByItem(KalturaESearchOrderByItem):
     def __init__(self,
-            sortOrder=NotImplemented,
-            sortField=NotImplemented):
+            sortOrder = NotImplemented,
+            sortField = NotImplemented):
         KalturaESearchOrderByItem.__init__(self,
             sortOrder)
 
@@ -298,10 +298,10 @@ class KalturaBeaconSearchScheduledResourceOrderByItem(KalturaESearchOrderByItem)
 # @subpackage Client
 class KalturaBeaconSearchScheduledResourceOrderBy(KalturaObjectBase):
     def __init__(self,
-            orderItems=NotImplemented):
+            orderItems = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var array of KalturaBeaconSearchScheduledResourceOrderByItem
+        # @var List[KalturaBeaconSearchScheduledResourceOrderByItem]
         self.orderItems = orderItems
 
 
@@ -330,14 +330,14 @@ class KalturaBeaconSearchScheduledResourceOrderBy(KalturaObjectBase):
 # @subpackage Client
 class KalturaBeaconBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            relatedObjectTypeIn=NotImplemented,
-            relatedObjectTypeEqual=NotImplemented,
-            eventTypeIn=NotImplemented,
-            objectIdIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            relatedObjectTypeIn = NotImplemented,
+            relatedObjectTypeEqual = NotImplemented,
+            eventTypeIn = NotImplemented,
+            objectIdIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -348,16 +348,16 @@ class KalturaBeaconBaseFilter(KalturaFilter):
         # @var int
         self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
-        # @var string
+        # @var str
         self.relatedObjectTypeIn = relatedObjectTypeIn
 
         # @var KalturaBeaconObjectTypes
         self.relatedObjectTypeEqual = relatedObjectTypeEqual
 
-        # @var string
+        # @var str
         self.eventTypeIn = eventTypeIn
 
-        # @var string
+        # @var str
         self.objectIdIn = objectIdIn
 
 
@@ -426,15 +426,15 @@ class KalturaBeaconBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaBeaconEnhanceFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            externalElasticQueryObject=NotImplemented,
-            indexTypeEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            externalElasticQueryObject = NotImplemented,
+            indexTypeEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
 
-        # @var string
+        # @var str
         self.externalElasticQueryObject = externalElasticQueryObject
 
         # @var KalturaBeaconIndexType
@@ -474,12 +474,12 @@ class KalturaBeaconEnhanceFilter(KalturaFilter):
 # @subpackage Client
 class KalturaBeaconListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaBeacon
+        # @var List[KalturaBeacon]
         # @readonly
         self.objects = objects
 
@@ -505,14 +505,14 @@ class KalturaBeaconListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaBeaconScheduledResourceOperator(KalturaBeaconScheduledResourceBaseItem):
     def __init__(self,
-            operator=NotImplemented,
-            searchItems=NotImplemented):
+            operator = NotImplemented,
+            searchItems = NotImplemented):
         KalturaBeaconScheduledResourceBaseItem.__init__(self)
 
         # @var KalturaESearchOperatorType
         self.operator = operator
 
-        # @var array of KalturaBeaconScheduledResourceBaseItem
+        # @var List[KalturaBeaconScheduledResourceBaseItem]
         self.searchItems = searchItems
 
 
@@ -549,9 +549,9 @@ class KalturaBeaconScheduledResourceOperator(KalturaBeaconScheduledResourceBaseI
 # @subpackage Client
 class KalturaBeaconScheduledResourceSearchParams(KalturaBeaconSearchParams):
     def __init__(self,
-            objectId=NotImplemented,
-            searchOperator=NotImplemented,
-            orderBy=NotImplemented):
+            objectId = NotImplemented,
+            searchOperator = NotImplemented,
+            orderBy = NotImplemented):
         KalturaBeaconSearchParams.__init__(self,
             objectId)
 
@@ -595,15 +595,15 @@ class KalturaBeaconScheduledResourceSearchParams(KalturaBeaconSearchParams):
 # @subpackage Client
 class KalturaBeaconFilter(KalturaBeaconBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            relatedObjectTypeIn=NotImplemented,
-            relatedObjectTypeEqual=NotImplemented,
-            eventTypeIn=NotImplemented,
-            objectIdIn=NotImplemented,
-            indexTypeEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            relatedObjectTypeIn = NotImplemented,
+            relatedObjectTypeEqual = NotImplemented,
+            eventTypeIn = NotImplemented,
+            objectIdIn = NotImplemented,
+            indexTypeEqual = NotImplemented):
         KalturaBeaconBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -643,10 +643,10 @@ class KalturaBeaconFilter(KalturaBeaconBaseFilter):
 # @subpackage Client
 class KalturaBeaconScheduledResourceItem(KalturaBeaconAbstractScheduledResourceItem):
     def __init__(self,
-            searchTerm=NotImplemented,
-            itemType=NotImplemented,
-            range=NotImplemented,
-            fieldName=NotImplemented):
+            searchTerm = NotImplemented,
+            itemType = NotImplemented,
+            range = NotImplemented,
+            fieldName = NotImplemented):
         KalturaBeaconAbstractScheduledResourceItem.__init__(self,
             searchTerm,
             itemType,

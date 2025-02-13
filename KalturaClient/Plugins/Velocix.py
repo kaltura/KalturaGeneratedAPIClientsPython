@@ -49,22 +49,22 @@ from ..Base import (
 # @subpackage Client
 class KalturaVelocixProvisionJobData(KalturaProvisionJobData):
     def __init__(self,
-            streamID=NotImplemented,
-            backupStreamID=NotImplemented,
-            rtmp=NotImplemented,
-            encoderIP=NotImplemented,
-            backupEncoderIP=NotImplemented,
-            encoderPassword=NotImplemented,
-            encoderUsername=NotImplemented,
-            endDate=NotImplemented,
-            returnVal=NotImplemented,
-            mediaType=NotImplemented,
-            primaryBroadcastingUrl=NotImplemented,
-            secondaryBroadcastingUrl=NotImplemented,
-            streamName=NotImplemented,
-            provisioningParams=NotImplemented,
-            userName=NotImplemented,
-            password=NotImplemented):
+            streamID = NotImplemented,
+            backupStreamID = NotImplemented,
+            rtmp = NotImplemented,
+            encoderIP = NotImplemented,
+            backupEncoderIP = NotImplemented,
+            encoderPassword = NotImplemented,
+            encoderUsername = NotImplemented,
+            endDate = NotImplemented,
+            returnVal = NotImplemented,
+            mediaType = NotImplemented,
+            primaryBroadcastingUrl = NotImplemented,
+            secondaryBroadcastingUrl = NotImplemented,
+            streamName = NotImplemented,
+            provisioningParams = NotImplemented,
+            userName = NotImplemented,
+            password = NotImplemented):
         KalturaProvisionJobData.__init__(self,
             streamID,
             backupStreamID,
@@ -80,13 +80,13 @@ class KalturaVelocixProvisionJobData(KalturaProvisionJobData):
             secondaryBroadcastingUrl,
             streamName)
 
-        # @var array of KalturaKeyValue
+        # @var List[KalturaKeyValue]
         self.provisioningParams = provisioningParams
 
-        # @var string
+        # @var str
         self.userName = userName
 
-        # @var string
+        # @var str
         self.password = password
 
 

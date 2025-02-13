@@ -51,11 +51,11 @@ from ..Base import (
 # @subpackage Client
 class KalturaExecuteMetadataXsltObjectTask(KalturaObjectTask):
     def __init__(self,
-            type=NotImplemented,
-            stopProcessingOnError=NotImplemented,
-            metadataProfileId=NotImplemented,
-            metadataObjectType=NotImplemented,
-            xslt=NotImplemented):
+            type = NotImplemented,
+            stopProcessingOnError = NotImplemented,
+            metadataProfileId = NotImplemented,
+            metadataObjectType = NotImplemented,
+            xslt = NotImplemented):
         KalturaObjectTask.__init__(self,
             type,
             stopProcessingOnError)
@@ -69,7 +69,7 @@ class KalturaExecuteMetadataXsltObjectTask(KalturaObjectTask):
         self.metadataObjectType = metadataObjectType
 
         # The XSLT to execute
-        # @var string
+        # @var str
         self.xslt = xslt
 
 

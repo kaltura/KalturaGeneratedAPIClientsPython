@@ -51,20 +51,20 @@ from ..Base import (
 # @subpackage Client
 class KalturaBpmEventNotificationIntegrationJobTriggerData(KalturaIntegrationJobTriggerData):
     def __init__(self,
-            templateId=NotImplemented,
-            businessProcessId=NotImplemented,
-            caseId=NotImplemented):
+            templateId = NotImplemented,
+            businessProcessId = NotImplemented,
+            caseId = NotImplemented):
         KalturaIntegrationJobTriggerData.__init__(self)
 
         # KalturaBusinessProcessNotificationTemplate id
         # @var int
         self.templateId = templateId
 
-        # @var string
+        # @var str
         self.businessProcessId = businessProcessId
 
         # Execution unique id
-        # @var string
+        # @var str
         self.caseId = caseId
 
 

@@ -76,29 +76,29 @@ class KalturaCodeCuePointOrderBy(object):
 # @subpackage Client
 class KalturaCodeCuePoint(KalturaCuePoint):
     def __init__(self,
-            id=NotImplemented,
-            intId=NotImplemented,
-            cuePointType=NotImplemented,
-            status=NotImplemented,
-            entryId=NotImplemented,
-            partnerId=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            triggeredAt=NotImplemented,
-            tags=NotImplemented,
-            startTime=NotImplemented,
-            userId=NotImplemented,
-            partnerData=NotImplemented,
-            partnerSortValue=NotImplemented,
-            forceStop=NotImplemented,
-            thumbOffset=NotImplemented,
-            systemName=NotImplemented,
-            isMomentary=NotImplemented,
-            copiedFrom=NotImplemented,
-            code=NotImplemented,
-            description=NotImplemented,
-            endTime=NotImplemented,
-            duration=NotImplemented):
+            id = NotImplemented,
+            intId = NotImplemented,
+            cuePointType = NotImplemented,
+            status = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            triggeredAt = NotImplemented,
+            tags = NotImplemented,
+            startTime = NotImplemented,
+            userId = NotImplemented,
+            partnerData = NotImplemented,
+            partnerSortValue = NotImplemented,
+            forceStop = NotImplemented,
+            thumbOffset = NotImplemented,
+            systemName = NotImplemented,
+            isMomentary = NotImplemented,
+            copiedFrom = NotImplemented,
+            code = NotImplemented,
+            description = NotImplemented,
+            endTime = NotImplemented,
+            duration = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -120,10 +120,10 @@ class KalturaCodeCuePoint(KalturaCuePoint):
             isMomentary,
             copiedFrom)
 
-        # @var string
+        # @var str
         self.code = code
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var int
@@ -180,51 +180,51 @@ class KalturaCodeCuePoint(KalturaCuePoint):
 # @subpackage Client
 class KalturaCodeCuePointBaseFilter(KalturaCuePointFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            codeLike=NotImplemented,
-            codeMultiLikeOr=NotImplemented,
-            codeMultiLikeAnd=NotImplemented,
-            codeEqual=NotImplemented,
-            codeIn=NotImplemented,
-            descriptionLike=NotImplemented,
-            descriptionMultiLikeOr=NotImplemented,
-            descriptionMultiLikeAnd=NotImplemented,
-            endTimeGreaterThanOrEqual=NotImplemented,
-            endTimeLessThanOrEqual=NotImplemented,
-            durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            codeLike = NotImplemented,
+            codeMultiLikeOr = NotImplemented,
+            codeMultiLikeAnd = NotImplemented,
+            codeEqual = NotImplemented,
+            codeIn = NotImplemented,
+            descriptionLike = NotImplemented,
+            descriptionMultiLikeOr = NotImplemented,
+            descriptionMultiLikeAnd = NotImplemented,
+            endTimeGreaterThanOrEqual = NotImplemented,
+            endTimeLessThanOrEqual = NotImplemented,
+            durationGreaterThanOrEqual = NotImplemented,
+            durationLessThanOrEqual = NotImplemented):
         KalturaCuePointFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -260,28 +260,28 @@ class KalturaCodeCuePointBaseFilter(KalturaCuePointFilter):
             userIdEqualCurrent,
             userIdCurrent)
 
-        # @var string
+        # @var str
         self.codeLike = codeLike
 
-        # @var string
+        # @var str
         self.codeMultiLikeOr = codeMultiLikeOr
 
-        # @var string
+        # @var str
         self.codeMultiLikeAnd = codeMultiLikeAnd
 
-        # @var string
+        # @var str
         self.codeEqual = codeEqual
 
-        # @var string
+        # @var str
         self.codeIn = codeIn
 
-        # @var string
+        # @var str
         self.descriptionLike = descriptionLike
 
-        # @var string
+        # @var str
         self.descriptionMultiLikeOr = descriptionMultiLikeOr
 
-        # @var string
+        # @var str
         self.descriptionMultiLikeAnd = descriptionMultiLikeAnd
 
         # @var int
@@ -410,51 +410,51 @@ class KalturaCodeCuePointBaseFilter(KalturaCuePointFilter):
 # @subpackage Client
 class KalturaCodeCuePointFilter(KalturaCodeCuePointBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            cuePointTypeEqual=NotImplemented,
-            cuePointTypeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            triggeredAtGreaterThanOrEqual=NotImplemented,
-            triggeredAtLessThanOrEqual=NotImplemented,
-            tagsLike=NotImplemented,
-            tagsMultiLikeOr=NotImplemented,
-            tagsMultiLikeAnd=NotImplemented,
-            startTimeGreaterThanOrEqual=NotImplemented,
-            startTimeLessThanOrEqual=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            partnerSortValueEqual=NotImplemented,
-            partnerSortValueIn=NotImplemented,
-            partnerSortValueGreaterThanOrEqual=NotImplemented,
-            partnerSortValueLessThanOrEqual=NotImplemented,
-            forceStopEqual=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            freeText=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            userIdCurrent=NotImplemented,
-            codeLike=NotImplemented,
-            codeMultiLikeOr=NotImplemented,
-            codeMultiLikeAnd=NotImplemented,
-            codeEqual=NotImplemented,
-            codeIn=NotImplemented,
-            descriptionLike=NotImplemented,
-            descriptionMultiLikeOr=NotImplemented,
-            descriptionMultiLikeAnd=NotImplemented,
-            endTimeGreaterThanOrEqual=NotImplemented,
-            endTimeLessThanOrEqual=NotImplemented,
-            durationGreaterThanOrEqual=NotImplemented,
-            durationLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            cuePointTypeEqual = NotImplemented,
+            cuePointTypeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            triggeredAtGreaterThanOrEqual = NotImplemented,
+            triggeredAtLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            startTimeGreaterThanOrEqual = NotImplemented,
+            startTimeLessThanOrEqual = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            partnerSortValueEqual = NotImplemented,
+            partnerSortValueIn = NotImplemented,
+            partnerSortValueGreaterThanOrEqual = NotImplemented,
+            partnerSortValueLessThanOrEqual = NotImplemented,
+            forceStopEqual = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            freeText = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            userIdCurrent = NotImplemented,
+            codeLike = NotImplemented,
+            codeMultiLikeOr = NotImplemented,
+            codeMultiLikeAnd = NotImplemented,
+            codeEqual = NotImplemented,
+            codeIn = NotImplemented,
+            descriptionLike = NotImplemented,
+            descriptionMultiLikeOr = NotImplemented,
+            descriptionMultiLikeAnd = NotImplemented,
+            endTimeGreaterThanOrEqual = NotImplemented,
+            endTimeLessThanOrEqual = NotImplemented,
+            durationGreaterThanOrEqual = NotImplemented,
+            durationLessThanOrEqual = NotImplemented):
         KalturaCodeCuePointBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

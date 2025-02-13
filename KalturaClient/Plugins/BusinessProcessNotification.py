@@ -152,17 +152,17 @@ class KalturaBusinessProcessStartNotificationTemplateOrderBy(object):
 # @subpackage Client
 class KalturaBusinessProcessCase(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            businessProcessId=NotImplemented,
-            businessProcessStartNotificationTemplateId=NotImplemented,
-            suspended=NotImplemented,
-            activityId=NotImplemented):
+            id = NotImplemented,
+            businessProcessId = NotImplemented,
+            businessProcessStartNotificationTemplateId = NotImplemented,
+            suspended = NotImplemented,
+            activityId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
-        # @var string
+        # @var str
         self.id = id
 
-        # @var string
+        # @var str
         self.businessProcessId = businessProcessId
 
         # @var int
@@ -171,7 +171,7 @@ class KalturaBusinessProcessCase(KalturaObjectBase):
         # @var bool
         self.suspended = suspended
 
-        # @var string
+        # @var str
         self.activityId = activityId
 
 
@@ -232,16 +232,16 @@ class KalturaBusinessProcessCase(KalturaObjectBase):
 # @subpackage Client
 class KalturaBusinessProcessServer(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            status=NotImplemented,
-            type=NotImplemented,
-            dc=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            status = NotImplemented,
+            type = NotImplemented,
+            dc = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # Auto generated identifier
@@ -263,13 +263,13 @@ class KalturaBusinessProcessServer(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
-        # @var string
+        # @var str
         self.systemName = systemName
 
-        # @var string
+        # @var str
         self.description = description
 
         # @var KalturaBusinessProcessServerStatus
@@ -359,25 +359,26 @@ class KalturaBusinessProcessServer(KalturaObjectBase):
 # @subpackage Client
 class KalturaBusinessProcessNotificationTemplate(KalturaEventNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            serverId=NotImplemented,
-            processId=NotImplemented,
-            mainObjectCode=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            serverId = NotImplemented,
+            processId = NotImplemented,
+            mainObjectCode = NotImplemented):
         KalturaEventNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -394,18 +395,19 @@ class KalturaBusinessProcessNotificationTemplate(KalturaEventNotificationTemplat
             eventObjectType,
             eventConditions,
             contentParameters,
-            userParameters)
+            userParameters,
+            eventDelayedCondition)
 
         # Define the integrated BPM server id
         # @var int
         self.serverId = serverId
 
         # Define the integrated BPM process id
-        # @var string
+        # @var str
         self.processId = processId
 
         # Code to load the main triggering object
-        # @var string
+        # @var str
         self.mainObjectCode = mainObjectCode
 
 
@@ -450,25 +452,25 @@ class KalturaBusinessProcessNotificationTemplate(KalturaEventNotificationTemplat
 # @subpackage Client
 class KalturaBusinessProcessServerBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcEqOrNull=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusNotEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcEqOrNull = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -476,10 +478,10 @@ class KalturaBusinessProcessServerBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.idNotIn = idNotIn
 
         # @var int
@@ -497,7 +499,7 @@ class KalturaBusinessProcessServerBaseFilter(KalturaFilter):
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
         # @var KalturaBusinessProcessServerStatus
@@ -506,16 +508,16 @@ class KalturaBusinessProcessServerBaseFilter(KalturaFilter):
         # @var KalturaBusinessProcessServerStatus
         self.statusNotEqual = statusNotEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
-        # @var string
+        # @var str
         self.statusNotIn = statusNotIn
 
         # @var KalturaBusinessProcessProvider
         self.typeEqual = typeEqual
 
-        # @var string
+        # @var str
         self.typeIn = typeIn
 
         # @var int
@@ -678,12 +680,12 @@ class KalturaBusinessProcessServerBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaBusinessProcessServerListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaBusinessProcessServer
+        # @var List[KalturaBusinessProcessServer]
         # @readonly
         self.objects = objects
 
@@ -709,25 +711,26 @@ class KalturaBusinessProcessServerListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaBusinessProcessAbortNotificationTemplate(KalturaBusinessProcessNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            serverId=NotImplemented,
-            processId=NotImplemented,
-            mainObjectCode=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            serverId = NotImplemented,
+            processId = NotImplemented,
+            mainObjectCode = NotImplemented):
         KalturaBusinessProcessNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -745,6 +748,7 @@ class KalturaBusinessProcessAbortNotificationTemplate(KalturaBusinessProcessNoti
             eventConditions,
             contentParameters,
             userParameters,
+            eventDelayedCondition,
             serverId,
             processId,
             mainObjectCode)
@@ -767,10 +771,10 @@ class KalturaBusinessProcessAbortNotificationTemplate(KalturaBusinessProcessNoti
 # @subpackage Client
 class KalturaBusinessProcessNotificationDispatchJobData(KalturaEventNotificationDispatchJobData):
     def __init__(self,
-            templateId=NotImplemented,
-            contentParameters=NotImplemented,
-            server=NotImplemented,
-            caseId=NotImplemented):
+            templateId = NotImplemented,
+            contentParameters = NotImplemented,
+            server = NotImplemented,
+            caseId = NotImplemented):
         KalturaEventNotificationDispatchJobData.__init__(self,
             templateId,
             contentParameters)
@@ -778,7 +782,7 @@ class KalturaBusinessProcessNotificationDispatchJobData(KalturaEventNotification
         # @var KalturaBusinessProcessServer
         self.server = server
 
-        # @var string
+        # @var str
         self.caseId = caseId
 
 
@@ -815,27 +819,27 @@ class KalturaBusinessProcessNotificationDispatchJobData(KalturaEventNotification
 # @subpackage Client
 class KalturaBusinessProcessServerFilter(KalturaBusinessProcessServerBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusNotEqual=NotImplemented,
-            statusIn=NotImplemented,
-            statusNotIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            dcEqual=NotImplemented,
-            dcEqOrNull=NotImplemented,
-            currentDcOrExternal=NotImplemented,
-            currentDc=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusNotEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            dcEqual = NotImplemented,
+            dcEqOrNull = NotImplemented,
+            currentDcOrExternal = NotImplemented,
+            currentDc = NotImplemented):
         KalturaBusinessProcessServerBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -897,27 +901,28 @@ class KalturaBusinessProcessServerFilter(KalturaBusinessProcessServerBaseFilter)
 # @subpackage Client
 class KalturaBusinessProcessSignalNotificationTemplate(KalturaBusinessProcessNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            serverId=NotImplemented,
-            processId=NotImplemented,
-            mainObjectCode=NotImplemented,
-            message=NotImplemented,
-            eventId=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            serverId = NotImplemented,
+            processId = NotImplemented,
+            mainObjectCode = NotImplemented,
+            message = NotImplemented,
+            eventId = NotImplemented):
         KalturaBusinessProcessNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -935,16 +940,17 @@ class KalturaBusinessProcessSignalNotificationTemplate(KalturaBusinessProcessNot
             eventConditions,
             contentParameters,
             userParameters,
+            eventDelayedCondition,
             serverId,
             processId,
             mainObjectCode)
 
         # Define the message to be sent
-        # @var string
+        # @var str
         self.message = message
 
         # Define the event that waiting to the signal
-        # @var string
+        # @var str
         self.eventId = eventId
 
 
@@ -981,26 +987,27 @@ class KalturaBusinessProcessSignalNotificationTemplate(KalturaBusinessProcessNot
 # @subpackage Client
 class KalturaBusinessProcessStartNotificationTemplate(KalturaBusinessProcessNotificationTemplate):
     def __init__(self,
-            id=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            systemName=NotImplemented,
-            description=NotImplemented,
-            type=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            manualDispatchEnabled=NotImplemented,
-            automaticDispatchEnabled=NotImplemented,
-            eventType=NotImplemented,
-            eventObjectType=NotImplemented,
-            eventConditions=NotImplemented,
-            contentParameters=NotImplemented,
-            userParameters=NotImplemented,
-            serverId=NotImplemented,
-            processId=NotImplemented,
-            mainObjectCode=NotImplemented,
-            abortOnDeletion=NotImplemented):
+            id = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            description = NotImplemented,
+            type = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            manualDispatchEnabled = NotImplemented,
+            automaticDispatchEnabled = NotImplemented,
+            eventType = NotImplemented,
+            eventObjectType = NotImplemented,
+            eventConditions = NotImplemented,
+            contentParameters = NotImplemented,
+            userParameters = NotImplemented,
+            eventDelayedCondition = NotImplemented,
+            serverId = NotImplemented,
+            processId = NotImplemented,
+            mainObjectCode = NotImplemented,
+            abortOnDeletion = NotImplemented):
         KalturaBusinessProcessNotificationTemplate.__init__(self,
             id,
             partnerId,
@@ -1018,6 +1025,7 @@ class KalturaBusinessProcessStartNotificationTemplate(KalturaBusinessProcessNoti
             eventConditions,
             contentParameters,
             userParameters,
+            eventDelayedCondition,
             serverId,
             processId,
             mainObjectCode)
@@ -1052,22 +1060,22 @@ class KalturaBusinessProcessStartNotificationTemplate(KalturaBusinessProcessNoti
 # @subpackage Client
 class KalturaBusinessProcessNotificationTemplateBaseFilter(KalturaEventNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaEventNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1104,22 +1112,22 @@ class KalturaBusinessProcessNotificationTemplateBaseFilter(KalturaEventNotificat
 # @subpackage Client
 class KalturaBusinessProcessNotificationTemplateFilter(KalturaBusinessProcessNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1156,22 +1164,22 @@ class KalturaBusinessProcessNotificationTemplateFilter(KalturaBusinessProcessNot
 # @subpackage Client
 class KalturaBusinessProcessAbortNotificationTemplateBaseFilter(KalturaBusinessProcessNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1208,22 +1216,22 @@ class KalturaBusinessProcessAbortNotificationTemplateBaseFilter(KalturaBusinessP
 # @subpackage Client
 class KalturaBusinessProcessSignalNotificationTemplateBaseFilter(KalturaBusinessProcessNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1260,22 +1268,22 @@ class KalturaBusinessProcessSignalNotificationTemplateBaseFilter(KalturaBusiness
 # @subpackage Client
 class KalturaBusinessProcessStartNotificationTemplateBaseFilter(KalturaBusinessProcessNotificationTemplateFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessNotificationTemplateFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1312,22 +1320,22 @@ class KalturaBusinessProcessStartNotificationTemplateBaseFilter(KalturaBusinessP
 # @subpackage Client
 class KalturaBusinessProcessAbortNotificationTemplateFilter(KalturaBusinessProcessAbortNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessAbortNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1364,22 +1372,22 @@ class KalturaBusinessProcessAbortNotificationTemplateFilter(KalturaBusinessProce
 # @subpackage Client
 class KalturaBusinessProcessSignalNotificationTemplateFilter(KalturaBusinessProcessSignalNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessSignalNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1416,22 +1424,22 @@ class KalturaBusinessProcessSignalNotificationTemplateFilter(KalturaBusinessProc
 # @subpackage Client
 class KalturaBusinessProcessStartNotificationTemplateFilter(KalturaBusinessProcessStartNotificationTemplateBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            systemNameEqual=NotImplemented,
-            systemNameIn=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            systemNameEqual = NotImplemented,
+            systemNameIn = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented):
         KalturaBusinessProcessStartNotificationTemplateBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

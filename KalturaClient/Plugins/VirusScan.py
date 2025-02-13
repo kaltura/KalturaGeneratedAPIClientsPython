@@ -118,15 +118,15 @@ class KalturaVirusScanProfileOrderBy(object):
 # @subpackage Client
 class KalturaVirusScanProfile(KalturaObjectBase):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            engineType=NotImplemented,
-            entryFilter=NotImplemented,
-            actionIfInfected=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            engineType = NotImplemented,
+            entryFilter = NotImplemented,
+            actionIfInfected = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -145,7 +145,7 @@ class KalturaVirusScanProfile(KalturaObjectBase):
         # @readonly
         self.partnerId = partnerId
 
-        # @var string
+        # @var str
         self.name = name
 
         # @var KalturaVirusScanProfileStatus
@@ -234,10 +234,10 @@ class KalturaVirusScanProfile(KalturaObjectBase):
 # @subpackage Client
 class KalturaParseCaptionAssetJobData(KalturaJobData):
     def __init__(self,
-            captionAssetId=NotImplemented):
+            captionAssetId = NotImplemented):
         KalturaJobData.__init__(self)
 
-        # @var string
+        # @var str
         self.captionAssetId = captionAssetId
 
 
@@ -266,16 +266,16 @@ class KalturaParseCaptionAssetJobData(KalturaJobData):
 # @subpackage Client
 class KalturaVirusScanJobData(KalturaJobData):
     def __init__(self,
-            fileContainer=NotImplemented,
-            flavorAssetId=NotImplemented,
-            scanResult=NotImplemented,
-            virusFoundAction=NotImplemented):
+            fileContainer = NotImplemented,
+            flavorAssetId = NotImplemented,
+            scanResult = NotImplemented,
+            virusFoundAction = NotImplemented):
         KalturaJobData.__init__(self)
 
         # @var KalturaFileContainer
         self.fileContainer = fileContainer
 
-        # @var string
+        # @var str
         self.flavorAssetId = flavorAssetId
 
         # @var KalturaVirusScanJobResult
@@ -334,22 +334,22 @@ class KalturaVirusScanJobData(KalturaJobData):
 # @subpackage Client
 class KalturaVirusScanProfileBaseFilter(KalturaFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            nameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            engineTypeEqual=NotImplemented,
-            engineTypeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            nameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            engineTypeEqual = NotImplemented,
+            engineTypeIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -357,7 +357,7 @@ class KalturaVirusScanProfileBaseFilter(KalturaFilter):
         # @var int
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
         # @var int
@@ -375,25 +375,25 @@ class KalturaVirusScanProfileBaseFilter(KalturaFilter):
         # @var int
         self.partnerIdEqual = partnerIdEqual
 
-        # @var string
+        # @var str
         self.partnerIdIn = partnerIdIn
 
-        # @var string
+        # @var str
         self.nameEqual = nameEqual
 
-        # @var string
+        # @var str
         self.nameLike = nameLike
 
         # @var KalturaVirusScanProfileStatus
         self.statusEqual = statusEqual
 
-        # @var string
+        # @var str
         self.statusIn = statusIn
 
         # @var KalturaVirusScanEngineType
         self.engineTypeEqual = engineTypeEqual
 
-        # @var string
+        # @var str
         self.engineTypeIn = engineTypeIn
 
 
@@ -526,12 +526,12 @@ class KalturaVirusScanProfileBaseFilter(KalturaFilter):
 # @subpackage Client
 class KalturaVirusScanProfileListResponse(KalturaListResponse):
     def __init__(self,
-            totalCount=NotImplemented,
-            objects=NotImplemented):
+            totalCount = NotImplemented,
+            objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var array of KalturaVirusScanProfile
+        # @var List[KalturaVirusScanProfile]
         # @readonly
         self.objects = objects
 
@@ -557,22 +557,22 @@ class KalturaVirusScanProfileListResponse(KalturaListResponse):
 # @subpackage Client
 class KalturaVirusScanProfileFilter(KalturaVirusScanProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            partnerIdEqual=NotImplemented,
-            partnerIdIn=NotImplemented,
-            nameEqual=NotImplemented,
-            nameLike=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented,
-            engineTypeEqual=NotImplemented,
-            engineTypeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            nameEqual = NotImplemented,
+            nameLike = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            engineTypeEqual = NotImplemented,
+            engineTypeIn = NotImplemented):
         KalturaVirusScanProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

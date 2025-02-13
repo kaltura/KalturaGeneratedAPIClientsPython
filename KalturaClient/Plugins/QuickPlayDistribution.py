@@ -74,15 +74,15 @@ class KalturaQuickPlayDistributionProviderOrderBy(object):
 # @subpackage Client
 class KalturaQuickPlayDistributionProvider(KalturaDistributionProvider):
     def __init__(self,
-            type=NotImplemented,
-            name=NotImplemented,
-            scheduleUpdateEnabled=NotImplemented,
-            availabilityUpdateEnabled=NotImplemented,
-            deleteInsteadUpdate=NotImplemented,
-            intervalBeforeSunrise=NotImplemented,
-            intervalBeforeSunset=NotImplemented,
-            updateRequiredEntryFields=NotImplemented,
-            updateRequiredMetadataXPaths=NotImplemented):
+            type = NotImplemented,
+            name = NotImplemented,
+            scheduleUpdateEnabled = NotImplemented,
+            availabilityUpdateEnabled = NotImplemented,
+            deleteInsteadUpdate = NotImplemented,
+            intervalBeforeSunrise = NotImplemented,
+            intervalBeforeSunset = NotImplemented,
+            updateRequiredEntryFields = NotImplemented,
+            updateRequiredMetadataXPaths = NotImplemented):
         KalturaDistributionProvider.__init__(self,
             type,
             name,
@@ -112,20 +112,20 @@ class KalturaQuickPlayDistributionProvider(KalturaDistributionProvider):
 # @subpackage Client
 class KalturaQuickPlayDistributionJobProviderData(KalturaConfigurableDistributionJobProviderData):
     def __init__(self,
-            fieldValues=NotImplemented,
-            xml=NotImplemented,
-            videoFilePaths=NotImplemented,
-            thumbnailFilePaths=NotImplemented):
+            fieldValues = NotImplemented,
+            xml = NotImplemented,
+            videoFilePaths = NotImplemented,
+            thumbnailFilePaths = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
-        # @var string
+        # @var str
         self.xml = xml
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.videoFilePaths = videoFilePaths
 
-        # @var array of KalturaString
+        # @var List[KalturaString]
         self.thumbnailFilePaths = thumbnailFilePaths
 
 
@@ -170,52 +170,52 @@ class KalturaQuickPlayDistributionJobProviderData(KalturaConfigurableDistributio
 # @subpackage Client
 class KalturaQuickPlayDistributionProfile(KalturaConfigurableDistributionProfile):
     def __init__(self,
-            id=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            partnerId=NotImplemented,
-            providerType=NotImplemented,
-            name=NotImplemented,
-            status=NotImplemented,
-            submitEnabled=NotImplemented,
-            updateEnabled=NotImplemented,
-            deleteEnabled=NotImplemented,
-            reportEnabled=NotImplemented,
-            autoCreateFlavors=NotImplemented,
-            autoCreateThumb=NotImplemented,
-            optionalFlavorParamsIds=NotImplemented,
-            requiredFlavorParamsIds=NotImplemented,
-            optionalThumbDimensions=NotImplemented,
-            requiredThumbDimensions=NotImplemented,
-            optionalAssetDistributionRules=NotImplemented,
-            requiredAssetDistributionRules=NotImplemented,
-            sunriseDefaultOffset=NotImplemented,
-            sunsetDefaultOffset=NotImplemented,
-            recommendedStorageProfileForDownload=NotImplemented,
-            recommendedDcForDownload=NotImplemented,
-            recommendedDcForExecute=NotImplemented,
-            distributeTrigger=NotImplemented,
-            supportImageEntry=NotImplemented,
-            fieldConfigArray=NotImplemented,
-            itemXpathsToExtend=NotImplemented,
-            useCategoryEntries=NotImplemented,
-            sftpHost=NotImplemented,
-            sftpLogin=NotImplemented,
-            sftpPass=NotImplemented,
-            sftpBasePath=NotImplemented,
-            channelTitle=NotImplemented,
-            channelLink=NotImplemented,
-            channelDescription=NotImplemented,
-            channelManagingEditor=NotImplemented,
-            channelLanguage=NotImplemented,
-            channelImageTitle=NotImplemented,
-            channelImageWidth=NotImplemented,
-            channelImageHeight=NotImplemented,
-            channelImageLink=NotImplemented,
-            channelImageUrl=NotImplemented,
-            channelCopyright=NotImplemented,
-            channelGenerator=NotImplemented,
-            channelRating=NotImplemented):
+            id = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            partnerId = NotImplemented,
+            providerType = NotImplemented,
+            name = NotImplemented,
+            status = NotImplemented,
+            submitEnabled = NotImplemented,
+            updateEnabled = NotImplemented,
+            deleteEnabled = NotImplemented,
+            reportEnabled = NotImplemented,
+            autoCreateFlavors = NotImplemented,
+            autoCreateThumb = NotImplemented,
+            optionalFlavorParamsIds = NotImplemented,
+            requiredFlavorParamsIds = NotImplemented,
+            optionalThumbDimensions = NotImplemented,
+            requiredThumbDimensions = NotImplemented,
+            optionalAssetDistributionRules = NotImplemented,
+            requiredAssetDistributionRules = NotImplemented,
+            sunriseDefaultOffset = NotImplemented,
+            sunsetDefaultOffset = NotImplemented,
+            recommendedStorageProfileForDownload = NotImplemented,
+            recommendedDcForDownload = NotImplemented,
+            recommendedDcForExecute = NotImplemented,
+            distributeTrigger = NotImplemented,
+            supportImageEntry = NotImplemented,
+            fieldConfigArray = NotImplemented,
+            itemXpathsToExtend = NotImplemented,
+            useCategoryEntries = NotImplemented,
+            sftpHost = NotImplemented,
+            sftpLogin = NotImplemented,
+            sftpPass = NotImplemented,
+            sftpBasePath = NotImplemented,
+            channelTitle = NotImplemented,
+            channelLink = NotImplemented,
+            channelDescription = NotImplemented,
+            channelManagingEditor = NotImplemented,
+            channelLanguage = NotImplemented,
+            channelImageTitle = NotImplemented,
+            channelImageWidth = NotImplemented,
+            channelImageHeight = NotImplemented,
+            channelImageLink = NotImplemented,
+            channelImageUrl = NotImplemented,
+            channelCopyright = NotImplemented,
+            channelGenerator = NotImplemented,
+            channelRating = NotImplemented):
         KalturaConfigurableDistributionProfile.__init__(self,
             id,
             createdAt,
@@ -247,55 +247,55 @@ class KalturaQuickPlayDistributionProfile(KalturaConfigurableDistributionProfile
             itemXpathsToExtend,
             useCategoryEntries)
 
-        # @var string
+        # @var str
         self.sftpHost = sftpHost
 
-        # @var string
+        # @var str
         self.sftpLogin = sftpLogin
 
-        # @var string
+        # @var str
         self.sftpPass = sftpPass
 
-        # @var string
+        # @var str
         self.sftpBasePath = sftpBasePath
 
-        # @var string
+        # @var str
         self.channelTitle = channelTitle
 
-        # @var string
+        # @var str
         self.channelLink = channelLink
 
-        # @var string
+        # @var str
         self.channelDescription = channelDescription
 
-        # @var string
+        # @var str
         self.channelManagingEditor = channelManagingEditor
 
-        # @var string
+        # @var str
         self.channelLanguage = channelLanguage
 
-        # @var string
+        # @var str
         self.channelImageTitle = channelImageTitle
 
-        # @var string
+        # @var str
         self.channelImageWidth = channelImageWidth
 
-        # @var string
+        # @var str
         self.channelImageHeight = channelImageHeight
 
-        # @var string
+        # @var str
         self.channelImageLink = channelImageLink
 
-        # @var string
+        # @var str
         self.channelImageUrl = channelImageUrl
 
-        # @var string
+        # @var str
         self.channelCopyright = channelCopyright
 
-        # @var string
+        # @var str
         self.channelGenerator = channelGenerator
 
-        # @var string
+        # @var str
         self.channelRating = channelRating
 
 
@@ -452,10 +452,10 @@ class KalturaQuickPlayDistributionProfile(KalturaConfigurableDistributionProfile
 # @subpackage Client
 class KalturaQuickPlayDistributionProviderBaseFilter(KalturaDistributionProviderFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaDistributionProviderFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -480,10 +480,10 @@ class KalturaQuickPlayDistributionProviderBaseFilter(KalturaDistributionProvider
 # @subpackage Client
 class KalturaQuickPlayDistributionProviderFilter(KalturaQuickPlayDistributionProviderBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            typeEqual=NotImplemented,
-            typeIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            typeEqual = NotImplemented,
+            typeIn = NotImplemented):
         KalturaQuickPlayDistributionProviderBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -508,16 +508,16 @@ class KalturaQuickPlayDistributionProviderFilter(KalturaQuickPlayDistributionPro
 # @subpackage Client
 class KalturaQuickPlayDistributionProfileBaseFilter(KalturaConfigurableDistributionProfileFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaConfigurableDistributionProfileFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -548,16 +548,16 @@ class KalturaQuickPlayDistributionProfileBaseFilter(KalturaConfigurableDistribut
 # @subpackage Client
 class KalturaQuickPlayDistributionProfileFilter(KalturaQuickPlayDistributionProfileBaseFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            statusEqual=NotImplemented,
-            statusIn=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented):
         KalturaQuickPlayDistributionProfileBaseFilter.__init__(self,
             orderBy,
             advancedSearch,

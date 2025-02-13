@@ -49,19 +49,19 @@ from ..Base import (
 # @subpackage Client
 class KalturaViewHistoryUserEntry(KalturaUserEntry):
     def __init__(self,
-            id=NotImplemented,
-            entryId=NotImplemented,
-            userId=NotImplemented,
-            partnerId=NotImplemented,
-            status=NotImplemented,
-            createdAt=NotImplemented,
-            updatedAt=NotImplemented,
-            type=NotImplemented,
-            extendedStatus=NotImplemented,
-            playbackContext=NotImplemented,
-            lastTimeReached=NotImplemented,
-            lastUpdateTime=NotImplemented,
-            playlistLastEntryId=NotImplemented):
+            id = NotImplemented,
+            entryId = NotImplemented,
+            userId = NotImplemented,
+            partnerId = NotImplemented,
+            status = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            type = NotImplemented,
+            playbackContext = NotImplemented,
+            lastTimeReached = NotImplemented,
+            lastUpdateTime = NotImplemented,
+            playlistLastEntryId = NotImplemented,
+            extendedStatus = NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -70,11 +70,10 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
             status,
             createdAt,
             updatedAt,
-            type,
-            extendedStatus)
+            type)
 
         # Playback context
-        # @var string
+        # @var str
         self.playbackContext = playbackContext
 
         # Last playback time reached by user
@@ -85,8 +84,11 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
         self.lastUpdateTime = lastUpdateTime
 
         # Property to save last entry ID played in a playlist.
-        # @var string
+        # @var str
         self.playlistLastEntryId = playlistLastEntryId
+
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatus = extendedStatus
 
 
     PROPERTY_LOADERS = {
@@ -94,6 +96,7 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
         'lastTimeReached': getXmlNodeInt, 
         'lastUpdateTime': getXmlNodeInt, 
         'playlistLastEntryId': getXmlNodeText, 
+        'extendedStatus': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
     }
 
     def fromXml(self, node):
@@ -107,6 +110,7 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
         kparams.addIntIfDefined("lastTimeReached", self.lastTimeReached)
         kparams.addIntIfDefined("lastUpdateTime", self.lastUpdateTime)
         kparams.addStringIfDefined("playlistLastEntryId", self.playlistLastEntryId)
+        kparams.addStringEnumIfDefined("extendedStatus", self.extendedStatus)
         return kparams
 
     def getPlaybackContext(self):
@@ -133,43 +137,49 @@ class KalturaViewHistoryUserEntry(KalturaUserEntry):
     def setPlaylistLastEntryId(self, newPlaylistLastEntryId):
         self.playlistLastEntryId = newPlaylistLastEntryId
 
+    def getExtendedStatus(self):
+        return self.extendedStatus
+
+    def setExtendedStatus(self, newExtendedStatus):
+        self.extendedStatus = newExtendedStatus
+
 
 # @package Kaltura
 # @subpackage Client
 class KalturaViewHistoryUserEntryAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            extendedStatusEqual=NotImplemented,
-            extendedStatusIn=NotImplemented):
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            extendedStatusEqual = NotImplemented,
+            extendedStatusIn = NotImplemented):
         KalturaSearchItem.__init__(self)
 
-        # @var string
+        # @var str
         self.idEqual = idEqual
 
-        # @var string
+        # @var str
         self.idIn = idIn
 
-        # @var string
+        # @var str
         self.userIdEqual = userIdEqual
 
-        # @var string
+        # @var str
         self.userIdIn = userIdIn
 
-        # @var string
+        # @var str
         self.updatedAtGreaterThanOrEqual = updatedAtGreaterThanOrEqual
 
-        # @var string
+        # @var str
         self.updatedAtLessThanOrEqual = updatedAtLessThanOrEqual
 
         # @var KalturaUserEntryExtendedStatus
         self.extendedStatusEqual = extendedStatusEqual
 
-        # @var string
+        # @var str
         self.extendedStatusIn = extendedStatusIn
 
 
@@ -254,31 +264,31 @@ class KalturaViewHistoryUserEntryAdvancedFilter(KalturaSearchItem):
 # @subpackage Client
 class KalturaViewHistoryUserEntryFilter(KalturaUserEntryFilter):
     def __init__(self,
-            orderBy=NotImplemented,
-            advancedSearch=NotImplemented,
-            idEqual=NotImplemented,
-            idIn=NotImplemented,
-            idNotIn=NotImplemented,
-            entryIdEqual=NotImplemented,
-            entryIdIn=NotImplemented,
-            entryIdNotIn=NotImplemented,
-            userIdEqual=NotImplemented,
-            userIdIn=NotImplemented,
-            userIdNotIn=NotImplemented,
-            statusEqual=NotImplemented,
-            createdAtLessThanOrEqual=NotImplemented,
-            createdAtGreaterThanOrEqual=NotImplemented,
-            updatedAtLessThanOrEqual=NotImplemented,
-            updatedAtGreaterThanOrEqual=NotImplemented,
-            typeEqual=NotImplemented,
-            extendedStatusEqual=NotImplemented,
-            extendedStatusIn=NotImplemented,
-            extendedStatusNotIn=NotImplemented,
-            userIdEqualCurrent=NotImplemented,
-            isAnonymous=NotImplemented,
-            privacyContextEqual=NotImplemented,
-            privacyContextIn=NotImplemented,
-            partnerId=NotImplemented):
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            entryIdNotIn = NotImplemented,
+            userIdEqual = NotImplemented,
+            userIdIn = NotImplemented,
+            userIdNotIn = NotImplemented,
+            statusEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            typeEqual = NotImplemented,
+            userIdEqualCurrent = NotImplemented,
+            isAnonymous = NotImplemented,
+            privacyContextEqual = NotImplemented,
+            privacyContextIn = NotImplemented,
+            partnerId = NotImplemented,
+            extendedStatusEqual = NotImplemented,
+            extendedStatusIn = NotImplemented,
+            extendedStatusNotIn = NotImplemented):
         KalturaUserEntryFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -297,17 +307,26 @@ class KalturaViewHistoryUserEntryFilter(KalturaUserEntryFilter):
             updatedAtLessThanOrEqual,
             updatedAtGreaterThanOrEqual,
             typeEqual,
-            extendedStatusEqual,
-            extendedStatusIn,
-            extendedStatusNotIn,
             userIdEqualCurrent,
             isAnonymous,
             privacyContextEqual,
             privacyContextIn,
             partnerId)
 
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatusEqual = extendedStatusEqual
+
+        # @var str
+        self.extendedStatusIn = extendedStatusIn
+
+        # @var str
+        self.extendedStatusNotIn = extendedStatusNotIn
+
 
     PROPERTY_LOADERS = {
+        'extendedStatusEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
+        'extendedStatusIn': getXmlNodeText, 
+        'extendedStatusNotIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -317,7 +336,28 @@ class KalturaViewHistoryUserEntryFilter(KalturaUserEntryFilter):
     def toParams(self):
         kparams = KalturaUserEntryFilter.toParams(self)
         kparams.put("objectType", "KalturaViewHistoryUserEntryFilter")
+        kparams.addStringEnumIfDefined("extendedStatusEqual", self.extendedStatusEqual)
+        kparams.addStringIfDefined("extendedStatusIn", self.extendedStatusIn)
+        kparams.addStringIfDefined("extendedStatusNotIn", self.extendedStatusNotIn)
         return kparams
+
+    def getExtendedStatusEqual(self):
+        return self.extendedStatusEqual
+
+    def setExtendedStatusEqual(self, newExtendedStatusEqual):
+        self.extendedStatusEqual = newExtendedStatusEqual
+
+    def getExtendedStatusIn(self):
+        return self.extendedStatusIn
+
+    def setExtendedStatusIn(self, newExtendedStatusIn):
+        self.extendedStatusIn = newExtendedStatusIn
+
+    def getExtendedStatusNotIn(self):
+        return self.extendedStatusNotIn
+
+    def setExtendedStatusNotIn(self, newExtendedStatusNotIn):
+        self.extendedStatusNotIn = newExtendedStatusNotIn
 
 
 ########## services ##########
