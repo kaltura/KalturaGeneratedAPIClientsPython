@@ -34,6 +34,7 @@ from .EventNotification import *
 from .BulkUpload import *
 from .Caption import *
 from .Schedule import *
+from .Transcript import *
 from ..Base import (
     getXmlNodeBool,
     getXmlNodeFloat,
@@ -174,6 +175,7 @@ class KalturaVendorServiceFeature(object):
     QUIZ = 12
     SUMMARY = 13
     VIDEO_ANALYSIS = 14
+    MODERATION = 15
 
     def __init__(self, value):
         self.value = value
@@ -1949,6 +1951,67 @@ class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaModerationVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            ruleIds = NotImplemented,
+            policyIds = NotImplemented,
+            moderationOutputJson = NotImplemented):
+        KalturaVendorTaskData.__init__(self,
+            entryDuration)
+
+        # A comma seperated string of rule IDs.
+        # @var str
+        self.ruleIds = ruleIds
+
+        # A comma seperated string of policy IDs.
+        # @var str
+        self.policyIds = policyIds
+
+        # JSON string containing the moderation output.
+        # @var str
+        self.moderationOutputJson = moderationOutputJson
+
+
+    PROPERTY_LOADERS = {
+        'ruleIds': getXmlNodeText, 
+        'policyIds': getXmlNodeText, 
+        'moderationOutputJson': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaModerationVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaModerationVendorTaskData")
+        kparams.addStringIfDefined("ruleIds", self.ruleIds)
+        kparams.addStringIfDefined("policyIds", self.policyIds)
+        kparams.addStringIfDefined("moderationOutputJson", self.moderationOutputJson)
+        return kparams
+
+    def getRuleIds(self):
+        return self.ruleIds
+
+    def setRuleIds(self, newRuleIds):
+        self.ruleIds = newRuleIds
+
+    def getPolicyIds(self):
+        return self.policyIds
+
+    def setPolicyIds(self, newPolicyIds):
+        self.policyIds = newPolicyIds
+
+    def getModerationOutputJson(self):
+        return self.moderationOutputJson
+
+    def setModerationOutputJson(self, newModerationOutputJson):
+        self.moderationOutputJson = newModerationOutputJson
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaQuizVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
@@ -3006,6 +3069,70 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorIntelligentTaggingCatalogItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            adminTagsToExclude = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            adminTagsToExclude)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorModerationCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorModerationCatalogItem")
         return kparams
 
 
@@ -5201,6 +5328,68 @@ class KalturaVendorIntelligentTaggingCatalogItemFilter(KalturaVendorCatalogItemF
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorModerationCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorModerationCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorModerationCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorQuizCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -6567,6 +6756,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaClipsVendorTaskData': KalturaClipsVendorTaskData,
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
             'KalturaIntelligentTaggingVendorTaskData': KalturaIntelligentTaggingVendorTaskData,
+            'KalturaModerationVendorTaskData': KalturaModerationVendorTaskData,
             'KalturaQuizVendorTaskData': KalturaQuizVendorTaskData,
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaScheduledVendorTaskData': KalturaScheduledVendorTaskData,
@@ -6582,6 +6772,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorDubbingCatalogItem': KalturaVendorDubbingCatalogItem,
             'KalturaVendorExtendedAudioDescriptionCatalogItem': KalturaVendorExtendedAudioDescriptionCatalogItem,
             'KalturaVendorIntelligentTaggingCatalogItem': KalturaVendorIntelligentTaggingCatalogItem,
+            'KalturaVendorModerationCatalogItem': KalturaVendorModerationCatalogItem,
             'KalturaVendorQuizCatalogItem': KalturaVendorQuizCatalogItem,
             'KalturaVendorSummaryCatalogItem': KalturaVendorSummaryCatalogItem,
             'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
@@ -6606,6 +6797,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorClipsCatalogItemFilter': KalturaVendorClipsCatalogItemFilter,
             'KalturaVendorDubbingCatalogItemBaseFilter': KalturaVendorDubbingCatalogItemBaseFilter,
             'KalturaVendorIntelligentTaggingCatalogItemFilter': KalturaVendorIntelligentTaggingCatalogItemFilter,
+            'KalturaVendorModerationCatalogItemFilter': KalturaVendorModerationCatalogItemFilter,
             'KalturaVendorQuizCatalogItemFilter': KalturaVendorQuizCatalogItemFilter,
             'KalturaVendorSummaryCatalogItemFilter': KalturaVendorSummaryCatalogItemFilter,
             'KalturaVendorVideoAnalysisCatalogItemFilter': KalturaVendorVideoAnalysisCatalogItemFilter,

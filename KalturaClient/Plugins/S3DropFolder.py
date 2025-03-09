@@ -82,7 +82,9 @@ class KalturaS3DropFolder(KalturaDropFolder):
             s3Host = NotImplemented,
             s3Region = NotImplemented,
             s3UserId = NotImplemented,
-            s3Password = NotImplemented):
+            s3Password = NotImplemented,
+            useS3Arn = NotImplemented,
+            s3Arn = NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
             partnerId,
@@ -126,12 +128,21 @@ class KalturaS3DropFolder(KalturaDropFolder):
         # @var str
         self.s3Password = s3Password
 
+        # @var bool
+        self.useS3Arn = useS3Arn
+
+        # @var str
+        # @readonly
+        self.s3Arn = s3Arn
+
 
     PROPERTY_LOADERS = {
         's3Host': getXmlNodeText, 
         's3Region': getXmlNodeText, 
         's3UserId': getXmlNodeText, 
         's3Password': getXmlNodeText, 
+        'useS3Arn': getXmlNodeBool, 
+        's3Arn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -145,6 +156,7 @@ class KalturaS3DropFolder(KalturaDropFolder):
         kparams.addStringIfDefined("s3Region", self.s3Region)
         kparams.addStringIfDefined("s3UserId", self.s3UserId)
         kparams.addStringIfDefined("s3Password", self.s3Password)
+        kparams.addBoolIfDefined("useS3Arn", self.useS3Arn)
         return kparams
 
     def getS3Host(self):
@@ -170,6 +182,15 @@ class KalturaS3DropFolder(KalturaDropFolder):
 
     def setS3Password(self, newS3Password):
         self.s3Password = newS3Password
+
+    def getUseS3Arn(self):
+        return self.useS3Arn
+
+    def setUseS3Arn(self, newUseS3Arn):
+        self.useS3Arn = newUseS3Arn
+
+    def getS3Arn(self):
+        return self.s3Arn
 
 
 # @package Kaltura

@@ -636,6 +636,7 @@ class KalturaDropFolderContentProcessorJobData(KalturaJobData):
 class KalturaDropFolderFileBaseFilter(KalturaFilter):
     idEqual: int
     idIn: str
+    idGreaterThanOrEqual: int
     partnerIdEqual: int
     partnerIdIn: str
     dropFolderIdEqual: int
@@ -666,6 +667,7 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
             advancedSearch: KalturaSearchItem = NotImplemented,
             idEqual: int = NotImplemented,
             idIn: str = NotImplemented,
+            idGreaterThanOrEqual: int = NotImplemented,
             partnerIdEqual: int = NotImplemented,
             partnerIdIn: str = NotImplemented,
             dropFolderIdEqual: int = NotImplemented,
@@ -696,6 +698,8 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
     def setIdEqual(self, newIdEqual: int) -> None: ...
     def getIdIn(self) -> str: ...
     def setIdIn(self, newIdIn: str) -> None: ...
+    def getIdGreaterThanOrEqual(self) -> int: ...
+    def setIdGreaterThanOrEqual(self, newIdGreaterThanOrEqual: int) -> None: ...
     def getPartnerIdEqual(self) -> int: ...
     def setPartnerIdEqual(self, newPartnerIdEqual: int) -> None: ...
     def getPartnerIdIn(self) -> str: ...
@@ -802,6 +806,7 @@ class KalturaDropFolderFileFilter(KalturaDropFolderFileBaseFilter):
             advancedSearch: KalturaSearchItem = NotImplemented,
             idEqual: int = NotImplemented,
             idIn: str = NotImplemented,
+            idGreaterThanOrEqual: int = NotImplemented,
             partnerIdEqual: int = NotImplemented,
             partnerIdIn: str = NotImplemented,
             dropFolderIdEqual: int = NotImplemented,

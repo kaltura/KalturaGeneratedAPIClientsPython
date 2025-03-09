@@ -208,6 +208,7 @@ from KalturaClient.Plugins.KafkaNotification import KalturaKafkaNotificationClie
 from KalturaClient.Plugins.WebexAPIDropFolder import KalturaWebexAPIDropFolderClientPluginServicesProxy
 from KalturaClient.Plugins.Room import KalturaRoomClientPluginServicesProxy
 from KalturaClient.Plugins.SessionCuePoint import KalturaSessionCuePointClientPluginServicesProxy
+from KalturaClient.Plugins.Rsvp import KalturaRsvpClientPluginServicesProxy
 
 class MultiRequestSubResult(object):
     def __init__(self, value): ...
@@ -411,3 +412,4 @@ class KalturaClient:
     WebexAPIDropFolder: KalturaWebexAPIDropFolderClientPluginServicesProxy
     room: KalturaRoomClientPluginServicesProxy
     sessionCuePoint: KalturaSessionCuePointClientPluginServicesProxy
+    rsvp: KalturaRsvpClientPluginServicesProxy

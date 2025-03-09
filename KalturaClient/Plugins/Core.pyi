@@ -4773,6 +4773,7 @@ class KalturaUserEntryType(object):
     PERMISSION_LEVEL = "entryPermissionLevel.PERMISSION_LEVEL"
     QUIZ = "quiz.QUIZ"
     REGISTRATION = "registration.REGISTRATION"
+    RSVP = "rsvp.RSVP"
     VIEW_HISTORY = "viewHistory.VIEW_HISTORY"
     WATCH_LATER = "watchLater.WATCH_LATER"
 
@@ -11680,12 +11681,14 @@ class KalturaReportExportItem(KalturaObjectBase):
 
 class KalturaReportExportParams(KalturaObjectBase):
     recipientEmail: str
+    recipientName: str
     timeZoneOffset: int
     reportItems: List[KalturaReportExportItem]
     reportsItemsGroup: str
     baseUrl: str
     def __init__(self,
             recipientEmail: str = NotImplemented,
+            recipientName: str = NotImplemented,
             timeZoneOffset: int = NotImplemented,
             reportItems: List[KalturaReportExportItem] = NotImplemented,
             reportsItemsGroup: str = NotImplemented,
@@ -11693,6 +11696,8 @@ class KalturaReportExportParams(KalturaObjectBase):
 
     def getRecipientEmail(self) -> str: ...
     def setRecipientEmail(self, newRecipientEmail: str) -> None: ...
+    def getRecipientName(self) -> str: ...
+    def setRecipientName(self, newRecipientName: str) -> None: ...
     def getTimeZoneOffset(self) -> int: ...
     def setTimeZoneOffset(self, newTimeZoneOffset: int) -> None: ...
     def getReportItems(self) -> List[KalturaReportExportItem]: ...
@@ -16608,6 +16613,7 @@ class KalturaRenderCaptionAttributes(KalturaCaptionAttributes):
 
 class KalturaReportExportJobData(KalturaJobData):
     recipientEmail: str
+    recipientName: str
     reportItems: List[KalturaReportExportItem]
     filePaths: str
     reportsGroup: str
@@ -16615,6 +16621,7 @@ class KalturaReportExportJobData(KalturaJobData):
     baseUrl: str
     def __init__(self,
             recipientEmail: str = NotImplemented,
+            recipientName: str = NotImplemented,
             reportItems: List[KalturaReportExportItem] = NotImplemented,
             filePaths: str = NotImplemented,
             reportsGroup: str = NotImplemented,
@@ -16623,6 +16630,8 @@ class KalturaReportExportJobData(KalturaJobData):
 
     def getRecipientEmail(self) -> str: ...
     def setRecipientEmail(self, newRecipientEmail: str) -> None: ...
+    def getRecipientName(self) -> str: ...
+    def setRecipientName(self, newRecipientName: str) -> None: ...
     def getReportItems(self) -> List[KalturaReportExportItem]: ...
     def setReportItems(self, newReportItems: List[KalturaReportExportItem]) -> None: ...
     def getFilePaths(self) -> str: ...

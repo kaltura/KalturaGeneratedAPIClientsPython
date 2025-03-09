@@ -31,6 +31,7 @@ from .EventNotification import *
 from .BulkUpload import *
 from .Caption import *
 from .Schedule import *
+from .Transcript import *
 from KalturaClient.Base import KalturaObjectBase, KalturaServiceBase
 
 class KalturaEntryVendorTaskCreationMode(object):
@@ -125,6 +126,7 @@ class KalturaVendorServiceFeature(object):
     QUIZ = 12
     SUMMARY = 13
     VIDEO_ANALYSIS = 14
+    MODERATION = 15
 
     def __init__(self, value: int): ...
 
@@ -828,6 +830,23 @@ class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
     def getAssetId(self) -> str: ...
     def setAssetId(self, newAssetId: str) -> None: ...
 
+class KalturaModerationVendorTaskData(KalturaVendorTaskData):
+    ruleIds: str
+    policyIds: str
+    moderationOutputJson: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            ruleIds: str = NotImplemented,
+            policyIds: str = NotImplemented,
+            moderationOutputJson: str = NotImplemented): ...
+
+    def getRuleIds(self) -> str: ...
+    def setRuleIds(self, newRuleIds: str) -> None: ...
+    def getPolicyIds(self) -> str: ...
+    def setPolicyIds(self, newPolicyIds: str) -> None: ...
+    def getModerationOutputJson(self) -> str: ...
+    def setModerationOutputJson(self, newModerationOutputJson: str) -> None: ...
+
 class KalturaQuizVendorTaskData(KalturaVendorTaskData):
     numberOfQuestions: int
     questionsType: str
@@ -1173,6 +1192,32 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
     def setOutputFormat(self, newOutputFormat: KalturaVendorCatalogItemOutputFormat) -> None: ...
 
 class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented): ...
+        pass
+
+class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id: int = NotImplemented,
             vendorPartnerId: int = NotImplemented,
@@ -1968,6 +2013,31 @@ class KalturaVendorDubbingCatalogItemBaseFilter(KalturaVendorCatalogItemFilter):
     def setTargetLanguageIn(self, newTargetLanguageIn: str) -> None: ...
 
 class KalturaVendorIntelligentTaggingCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorModerationCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,

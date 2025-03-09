@@ -1528,6 +1528,7 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
             advancedSearch = NotImplemented,
             idEqual = NotImplemented,
             idIn = NotImplemented,
+            idGreaterThanOrEqual = NotImplemented,
             partnerIdEqual = NotImplemented,
             partnerIdIn = NotImplemented,
             dropFolderIdEqual = NotImplemented,
@@ -1562,6 +1563,9 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
 
         # @var str
         self.idIn = idIn
+
+        # @var int
+        self.idGreaterThanOrEqual = idGreaterThanOrEqual
 
         # @var int
         self.partnerIdEqual = partnerIdEqual
@@ -1642,6 +1646,7 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeInt, 
         'idIn': getXmlNodeText, 
+        'idGreaterThanOrEqual': getXmlNodeInt, 
         'partnerIdEqual': getXmlNodeInt, 
         'partnerIdIn': getXmlNodeText, 
         'dropFolderIdEqual': getXmlNodeInt, 
@@ -1678,6 +1683,7 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
         kparams.put("objectType", "KalturaDropFolderFileBaseFilter")
         kparams.addIntIfDefined("idEqual", self.idEqual)
         kparams.addStringIfDefined("idIn", self.idIn)
+        kparams.addIntIfDefined("idGreaterThanOrEqual", self.idGreaterThanOrEqual)
         kparams.addIntIfDefined("partnerIdEqual", self.partnerIdEqual)
         kparams.addStringIfDefined("partnerIdIn", self.partnerIdIn)
         kparams.addIntIfDefined("dropFolderIdEqual", self.dropFolderIdEqual)
@@ -1716,6 +1722,12 @@ class KalturaDropFolderFileBaseFilter(KalturaFilter):
 
     def setIdIn(self, newIdIn):
         self.idIn = newIdIn
+
+    def getIdGreaterThanOrEqual(self):
+        return self.idGreaterThanOrEqual
+
+    def setIdGreaterThanOrEqual(self, newIdGreaterThanOrEqual):
+        self.idGreaterThanOrEqual = newIdGreaterThanOrEqual
 
     def getPartnerIdEqual(self):
         return self.partnerIdEqual
@@ -2016,6 +2028,7 @@ class KalturaDropFolderFileFilter(KalturaDropFolderFileBaseFilter):
             advancedSearch = NotImplemented,
             idEqual = NotImplemented,
             idIn = NotImplemented,
+            idGreaterThanOrEqual = NotImplemented,
             partnerIdEqual = NotImplemented,
             partnerIdIn = NotImplemented,
             dropFolderIdEqual = NotImplemented,
@@ -2046,6 +2059,7 @@ class KalturaDropFolderFileFilter(KalturaDropFolderFileBaseFilter):
             advancedSearch,
             idEqual,
             idIn,
+            idGreaterThanOrEqual,
             partnerIdEqual,
             partnerIdIn,
             dropFolderIdEqual,

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.9.0'
+API_VERSION = '21.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -5856,6 +5856,7 @@ class KalturaUserEntryType(object):
     PERMISSION_LEVEL = "entryPermissionLevel.PERMISSION_LEVEL"
     QUIZ = "quiz.QUIZ"
     REGISTRATION = "registration.REGISTRATION"
+    RSVP = "rsvp.RSVP"
     VIEW_HISTORY = "viewHistory.VIEW_HISTORY"
     WATCH_LATER = "watchLater.WATCH_LATER"
 
@@ -27035,6 +27036,7 @@ class KalturaReportExportItem(KalturaObjectBase):
 class KalturaReportExportParams(KalturaObjectBase):
     def __init__(self,
             recipientEmail = NotImplemented,
+            recipientName = NotImplemented,
             timeZoneOffset = NotImplemented,
             reportItems = NotImplemented,
             reportsItemsGroup = NotImplemented,
@@ -27043,6 +27045,9 @@ class KalturaReportExportParams(KalturaObjectBase):
 
         # @var str
         self.recipientEmail = recipientEmail
+
+        # @var str
+        self.recipientName = recipientName
 
         # Time zone offset in minutes (between client to UTC)
         # @var int
@@ -27060,6 +27065,7 @@ class KalturaReportExportParams(KalturaObjectBase):
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
+        'recipientName': getXmlNodeText, 
         'timeZoneOffset': getXmlNodeInt, 
         'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
         'reportsItemsGroup': getXmlNodeText, 
@@ -27074,6 +27080,7 @@ class KalturaReportExportParams(KalturaObjectBase):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaReportExportParams")
         kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
+        kparams.addStringIfDefined("recipientName", self.recipientName)
         kparams.addIntIfDefined("timeZoneOffset", self.timeZoneOffset)
         kparams.addArrayIfDefined("reportItems", self.reportItems)
         kparams.addStringIfDefined("reportsItemsGroup", self.reportsItemsGroup)
@@ -27085,6 +27092,12 @@ class KalturaReportExportParams(KalturaObjectBase):
 
     def setRecipientEmail(self, newRecipientEmail):
         self.recipientEmail = newRecipientEmail
+
+    def getRecipientName(self):
+        return self.recipientName
+
+    def setRecipientName(self, newRecipientName):
+        self.recipientName = newRecipientName
 
     def getTimeZoneOffset(self):
         return self.timeZoneOffset
@@ -42801,6 +42814,7 @@ class KalturaRenderCaptionAttributes(KalturaCaptionAttributes):
 class KalturaReportExportJobData(KalturaJobData):
     def __init__(self,
             recipientEmail = NotImplemented,
+            recipientName = NotImplemented,
             reportItems = NotImplemented,
             filePaths = NotImplemented,
             reportsGroup = NotImplemented,
@@ -42810,6 +42824,9 @@ class KalturaReportExportJobData(KalturaJobData):
 
         # @var str
         self.recipientEmail = recipientEmail
+
+        # @var str
+        self.recipientName = recipientName
 
         # @var List[KalturaReportExportItem]
         self.reportItems = reportItems
@@ -42829,6 +42846,7 @@ class KalturaReportExportJobData(KalturaJobData):
 
     PROPERTY_LOADERS = {
         'recipientEmail': getXmlNodeText, 
+        'recipientName': getXmlNodeText, 
         'reportItems': (KalturaObjectFactory.createArray, 'KalturaReportExportItem'), 
         'filePaths': getXmlNodeText, 
         'reportsGroup': getXmlNodeText, 
@@ -42844,6 +42862,7 @@ class KalturaReportExportJobData(KalturaJobData):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaReportExportJobData")
         kparams.addStringIfDefined("recipientEmail", self.recipientEmail)
+        kparams.addStringIfDefined("recipientName", self.recipientName)
         kparams.addArrayIfDefined("reportItems", self.reportItems)
         kparams.addStringIfDefined("filePaths", self.filePaths)
         kparams.addStringIfDefined("reportsGroup", self.reportsGroup)
@@ -42856,6 +42875,12 @@ class KalturaReportExportJobData(KalturaJobData):
 
     def setRecipientEmail(self, newRecipientEmail):
         self.recipientEmail = newRecipientEmail
+
+    def getRecipientName(self):
+        return self.recipientName
+
+    def setRecipientName(self, newRecipientName):
+        self.recipientName = newRecipientName
 
     def getReportItems(self):
         return self.reportItems
