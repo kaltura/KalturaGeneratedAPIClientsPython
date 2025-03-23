@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.11.0'
+API_VERSION = '21.12.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -42534,7 +42534,8 @@ class KalturaQuizUserEntry(KalturaUserEntry):
             score = NotImplemented,
             calculatedScore = NotImplemented,
             feedback = NotImplemented,
-            version = NotImplemented):
+            version = NotImplemented,
+            extendedStatus = NotImplemented):
         KalturaUserEntry.__init__(self,
             id,
             entryId,
@@ -42560,12 +42561,16 @@ class KalturaQuizUserEntry(KalturaUserEntry):
         # @readonly
         self.version = version
 
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatus = extendedStatus
+
 
     PROPERTY_LOADERS = {
         'score': getXmlNodeFloat, 
         'calculatedScore': getXmlNodeFloat, 
         'feedback': getXmlNodeText, 
         'version': getXmlNodeInt, 
+        'extendedStatus': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
     }
 
     def fromXml(self, node):
@@ -42576,6 +42581,7 @@ class KalturaQuizUserEntry(KalturaUserEntry):
         kparams = KalturaUserEntry.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntry")
         kparams.addStringIfDefined("feedback", self.feedback)
+        kparams.addStringEnumIfDefined("extendedStatus", self.extendedStatus)
         return kparams
 
     def getScore(self):
@@ -42592,6 +42598,12 @@ class KalturaQuizUserEntry(KalturaUserEntry):
 
     def getVersion(self):
         return self.version
+
+    def getExtendedStatus(self):
+        return self.extendedStatus
+
+    def setExtendedStatus(self, newExtendedStatus):
+        self.extendedStatus = newExtendedStatus
 
 
 # @package Kaltura
@@ -69787,6 +69799,15 @@ class KalturaUserService(KalturaServiceBase):
         kparams = KalturaParams()
         kparams.addStringIfDefined("userId", userId)
         self.client.queueServiceActionCall("user", "delete", "KalturaUser", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaUser')
+
+    def demoteAdmin(self, userId):
+        kparams = KalturaParams()
+        kparams.addStringIfDefined("userId", userId)
+        self.client.queueServiceActionCall("user", "demoteAdmin", "KalturaUser", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()
         resultNode = self.client.doQueue()

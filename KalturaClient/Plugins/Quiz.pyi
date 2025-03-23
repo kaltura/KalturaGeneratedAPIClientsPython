@@ -446,6 +446,9 @@ class KalturaQuestionCuePointFilter(KalturaQuestionCuePointBaseFilter):
         pass
 
 class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
+    extendedStatusEqual: KalturaUserEntryExtendedStatus
+    extendedStatusIn: str
+    extendedStatusNotIn: str
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -468,8 +471,17 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             isAnonymous: KalturaNullableBoolean = NotImplemented,
             privacyContextEqual: str = NotImplemented,
             privacyContextIn: str = NotImplemented,
-            partnerId: int = NotImplemented): ...
-        pass
+            partnerId: int = NotImplemented,
+            extendedStatusEqual: KalturaUserEntryExtendedStatus = NotImplemented,
+            extendedStatusIn: str = NotImplemented,
+            extendedStatusNotIn: str = NotImplemented): ...
+
+    def getExtendedStatusEqual(self) -> KalturaUserEntryExtendedStatus: ...
+    def setExtendedStatusEqual(self, newExtendedStatusEqual: KalturaUserEntryExtendedStatus) -> None: ...
+    def getExtendedStatusIn(self) -> str: ...
+    def setExtendedStatusIn(self, newExtendedStatusIn: str) -> None: ...
+    def getExtendedStatusNotIn(self) -> str: ...
+    def setExtendedStatusNotIn(self, newExtendedStatusNotIn: str) -> None: ...
 
 class KalturaQuizService(KalturaServiceBase):
     def add(self, entryId: str, quiz: KalturaQuiz) -> KalturaQuiz: ...

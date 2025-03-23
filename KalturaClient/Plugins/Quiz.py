@@ -1169,7 +1169,10 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             isAnonymous = NotImplemented,
             privacyContextEqual = NotImplemented,
             privacyContextIn = NotImplemented,
-            partnerId = NotImplemented):
+            partnerId = NotImplemented,
+            extendedStatusEqual = NotImplemented,
+            extendedStatusIn = NotImplemented,
+            extendedStatusNotIn = NotImplemented):
         KalturaQuizUserEntryBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -1194,8 +1197,20 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
             privacyContextIn,
             partnerId)
 
+        # @var KalturaUserEntryExtendedStatus
+        self.extendedStatusEqual = extendedStatusEqual
+
+        # @var str
+        self.extendedStatusIn = extendedStatusIn
+
+        # @var str
+        self.extendedStatusNotIn = extendedStatusNotIn
+
 
     PROPERTY_LOADERS = {
+        'extendedStatusEqual': (KalturaEnumsFactory.createString, "KalturaUserEntryExtendedStatus"), 
+        'extendedStatusIn': getXmlNodeText, 
+        'extendedStatusNotIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -1205,7 +1220,28 @@ class KalturaQuizUserEntryFilter(KalturaQuizUserEntryBaseFilter):
     def toParams(self):
         kparams = KalturaQuizUserEntryBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaQuizUserEntryFilter")
+        kparams.addStringEnumIfDefined("extendedStatusEqual", self.extendedStatusEqual)
+        kparams.addStringIfDefined("extendedStatusIn", self.extendedStatusIn)
+        kparams.addStringIfDefined("extendedStatusNotIn", self.extendedStatusNotIn)
         return kparams
+
+    def getExtendedStatusEqual(self):
+        return self.extendedStatusEqual
+
+    def setExtendedStatusEqual(self, newExtendedStatusEqual):
+        self.extendedStatusEqual = newExtendedStatusEqual
+
+    def getExtendedStatusIn(self):
+        return self.extendedStatusIn
+
+    def setExtendedStatusIn(self, newExtendedStatusIn):
+        self.extendedStatusIn = newExtendedStatusIn
+
+    def getExtendedStatusNotIn(self):
+        return self.extendedStatusNotIn
+
+    def setExtendedStatusNotIn(self, newExtendedStatusNotIn):
+        self.extendedStatusNotIn = newExtendedStatusNotIn
 
 
 ########## services ##########
