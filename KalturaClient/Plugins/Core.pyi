@@ -384,6 +384,14 @@ class KalturaGender(object):
 
     def getValue(self) -> int: ...
 
+class KalturaGroupType(object):
+    GROUP = 1
+    APPLICATIVE_GROUP = 2
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
 class KalturaGroupUserCreationMode(object):
     MANUAL = 1
     AUTOMATIC = 2
@@ -1115,6 +1123,7 @@ class KalturaUserStatus(object):
 class KalturaUserType(object):
     USER = 0
     GROUP = 1
+    APPLICATIVE_GROUP = 2
 
     def __init__(self, value: int): ...
 
@@ -8807,6 +8816,7 @@ class KalturaGroupUser(KalturaObjectBase):
     updatedAt: int
     creationMode: KalturaGroupUserCreationMode
     userRole: KalturaGroupUserRole
+    groupType: KalturaGroupType
     def __init__(self,
             id: str = NotImplemented,
             userId: str = NotImplemented,
@@ -8816,7 +8826,8 @@ class KalturaGroupUser(KalturaObjectBase):
             createdAt: int = NotImplemented,
             updatedAt: int = NotImplemented,
             creationMode: KalturaGroupUserCreationMode = NotImplemented,
-            userRole: KalturaGroupUserRole = NotImplemented): ...
+            userRole: KalturaGroupUserRole = NotImplemented,
+            groupType: KalturaGroupType = NotImplemented): ...
 
     def getId(self) -> str: ...
     def getUserId(self) -> str: ...
@@ -8831,6 +8842,7 @@ class KalturaGroupUser(KalturaObjectBase):
     def setCreationMode(self, newCreationMode: KalturaGroupUserCreationMode) -> None: ...
     def getUserRole(self) -> KalturaGroupUserRole: ...
     def setUserRole(self, newUserRole: KalturaGroupUserRole) -> None: ...
+    def getGroupType(self) -> KalturaGroupType: ...
 
 class KalturaObject(KalturaObjectBase):
     relatedObjects: map
@@ -20946,6 +20958,7 @@ class KalturaGoogleVideoSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilt
         pass
 
 class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
+    groupType: KalturaGroupType
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -20958,8 +20971,11 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
             createdAtGreaterThanOrEqual: int = NotImplemented,
             createdAtLessThanOrEqual: int = NotImplemented,
             updatedAtGreaterThanOrEqual: int = NotImplemented,
-            updatedAtLessThanOrEqual: int = NotImplemented): ...
-        pass
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            groupType: KalturaGroupType = NotImplemented): ...
+
+    def getGroupType(self) -> KalturaGroupType: ...
+    def setGroupType(self, newGroupType: KalturaGroupType) -> None: ...
 
 class KalturaHttpHeaderCondition(KalturaRegexCondition):
     headerName: str

@@ -83,6 +83,7 @@ class KalturaESearchGroupBaseItem(KalturaESearchBaseItem):
 class KalturaGroup(KalturaBaseUser):
     membersCount: int
     processStatus: KalturaGroupProcessStatus
+    groupType: KalturaGroupType
     def __init__(self,
             id: str = NotImplemented,
             partnerId: int = NotImplemented,
@@ -113,11 +114,14 @@ class KalturaGroup(KalturaBaseUser):
             userMode: KalturaUserMode = NotImplemented,
             capabilities: List[KalturaUserCapability] = NotImplemented,
             membersCount: int = NotImplemented,
-            processStatus: KalturaGroupProcessStatus = NotImplemented): ...
+            processStatus: KalturaGroupProcessStatus = NotImplemented,
+            groupType: KalturaGroupType = NotImplemented): ...
 
     def getMembersCount(self) -> int: ...
     def getProcessStatus(self) -> KalturaGroupProcessStatus: ...
     def setProcessStatus(self, newProcessStatus: KalturaGroupProcessStatus) -> None: ...
+    def getGroupType(self) -> KalturaGroupType: ...
+    def setGroupType(self, newGroupType: KalturaGroupType) -> None: ...
 
 class KalturaESearchGroupOperator(KalturaESearchGroupBaseItem):
     operator: KalturaESearchOperatorType
@@ -192,6 +196,7 @@ class KalturaESearchGroupMetadataItem(KalturaESearchAbstractGroupItem):
     def setMetadataFieldId(self, newMetadataFieldId: int) -> None: ...
 
 class KalturaGroupFilter(KalturaUserFilter):
+    groupType: KalturaGroupType
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -222,8 +227,11 @@ class KalturaGroupFilter(KalturaUserFilter):
             roleIdsIn: str = NotImplemented,
             firstNameOrLastNameStartsWith: str = NotImplemented,
             permissionNamesMultiLikeOr: str = NotImplemented,
-            permissionNamesMultiLikeAnd: str = NotImplemented): ...
-        pass
+            permissionNamesMultiLikeAnd: str = NotImplemented,
+            groupType: KalturaGroupType = NotImplemented): ...
+
+    def getGroupType(self) -> KalturaGroupType: ...
+    def setGroupType(self, newGroupType: KalturaGroupType) -> None: ...
 
 class KalturaGroupService(KalturaServiceBase):
     def add(self, group: KalturaGroup) -> KalturaGroup: ...

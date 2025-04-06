@@ -157,7 +157,8 @@ class KalturaGroup(KalturaBaseUser):
             userMode = NotImplemented,
             capabilities = NotImplemented,
             membersCount = NotImplemented,
-            processStatus = NotImplemented):
+            processStatus = NotImplemented,
+            groupType = NotImplemented):
         KalturaBaseUser.__init__(self,
             id,
             partnerId,
@@ -195,10 +196,14 @@ class KalturaGroup(KalturaBaseUser):
         # @var KalturaGroupProcessStatus
         self.processStatus = processStatus
 
+        # @var KalturaGroupType
+        self.groupType = groupType
+
 
     PROPERTY_LOADERS = {
         'membersCount': getXmlNodeInt, 
         'processStatus': (KalturaEnumsFactory.createInt, "KalturaGroupProcessStatus"), 
+        'groupType': (KalturaEnumsFactory.createInt, "KalturaGroupType"), 
     }
 
     def fromXml(self, node):
@@ -209,6 +214,7 @@ class KalturaGroup(KalturaBaseUser):
         kparams = KalturaBaseUser.toParams(self)
         kparams.put("objectType", "KalturaGroup")
         kparams.addIntEnumIfDefined("processStatus", self.processStatus)
+        kparams.addIntEnumIfDefined("groupType", self.groupType)
         return kparams
 
     def getMembersCount(self):
@@ -219,6 +225,12 @@ class KalturaGroup(KalturaBaseUser):
 
     def setProcessStatus(self, newProcessStatus):
         self.processStatus = newProcessStatus
+
+    def getGroupType(self):
+        return self.groupType
+
+    def setGroupType(self, newGroupType):
+        self.groupType = newGroupType
 
 
 # @package Kaltura
@@ -501,7 +513,8 @@ class KalturaGroupFilter(KalturaUserFilter):
             roleIdsIn = NotImplemented,
             firstNameOrLastNameStartsWith = NotImplemented,
             permissionNamesMultiLikeOr = NotImplemented,
-            permissionNamesMultiLikeAnd = NotImplemented):
+            permissionNamesMultiLikeAnd = NotImplemented,
+            groupType = NotImplemented):
         KalturaUserFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -534,8 +547,12 @@ class KalturaGroupFilter(KalturaUserFilter):
             permissionNamesMultiLikeOr,
             permissionNamesMultiLikeAnd)
 
+        # @var KalturaGroupType
+        self.groupType = groupType
+
 
     PROPERTY_LOADERS = {
+        'groupType': (KalturaEnumsFactory.createInt, "KalturaGroupType"), 
     }
 
     def fromXml(self, node):
@@ -545,7 +562,14 @@ class KalturaGroupFilter(KalturaUserFilter):
     def toParams(self):
         kparams = KalturaUserFilter.toParams(self)
         kparams.put("objectType", "KalturaGroupFilter")
+        kparams.addIntEnumIfDefined("groupType", self.groupType)
         return kparams
+
+    def getGroupType(self):
+        return self.groupType
+
+    def setGroupType(self, newGroupType):
+        self.groupType = newGroupType
 
 
 ########## services ##########

@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.12.0'
+API_VERSION = '21.13.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -534,6 +534,18 @@ class KalturaGender(object):
     UNKNOWN = 0
     MALE = 1
     FEMALE = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaGroupType(object):
+    GROUP = 1
+    APPLICATIVE_GROUP = 2
 
     def __init__(self, value):
         self.value = value
@@ -1514,6 +1526,7 @@ class KalturaUserStatus(object):
 class KalturaUserType(object):
     USER = 0
     GROUP = 1
+    APPLICATIVE_GROUP = 2
 
     def __init__(self, value):
         self.value = value
@@ -18769,7 +18782,8 @@ class KalturaGroupUser(KalturaObjectBase):
             createdAt = NotImplemented,
             updatedAt = NotImplemented,
             creationMode = NotImplemented,
-            userRole = NotImplemented):
+            userRole = NotImplemented,
+            groupType = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var str
@@ -18809,6 +18823,10 @@ class KalturaGroupUser(KalturaObjectBase):
         # @var KalturaGroupUserRole
         self.userRole = userRole
 
+        # @var KalturaGroupType
+        # @readonly
+        self.groupType = groupType
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeText, 
@@ -18820,6 +18838,7 @@ class KalturaGroupUser(KalturaObjectBase):
         'updatedAt': getXmlNodeInt, 
         'creationMode': (KalturaEnumsFactory.createInt, "KalturaGroupUserCreationMode"), 
         'userRole': (KalturaEnumsFactory.createInt, "KalturaGroupUserRole"), 
+        'groupType': (KalturaEnumsFactory.createInt, "KalturaGroupType"), 
     }
 
     def fromXml(self, node):
@@ -18873,6 +18892,9 @@ class KalturaGroupUser(KalturaObjectBase):
 
     def setUserRole(self, newUserRole):
         self.userRole = newUserRole
+
+    def getGroupType(self):
+        return self.groupType
 
 
 # @package Kaltura
@@ -55973,7 +55995,8 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
             createdAtGreaterThanOrEqual = NotImplemented,
             createdAtLessThanOrEqual = NotImplemented,
             updatedAtGreaterThanOrEqual = NotImplemented,
-            updatedAtLessThanOrEqual = NotImplemented):
+            updatedAtLessThanOrEqual = NotImplemented,
+            groupType = NotImplemented):
         KalturaGroupUserBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -55988,8 +56011,12 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
             updatedAtGreaterThanOrEqual,
             updatedAtLessThanOrEqual)
 
+        # @var KalturaGroupType
+        self.groupType = groupType
+
 
     PROPERTY_LOADERS = {
+        'groupType': (KalturaEnumsFactory.createInt, "KalturaGroupType"), 
     }
 
     def fromXml(self, node):
@@ -55999,7 +56026,14 @@ class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
     def toParams(self):
         kparams = KalturaGroupUserBaseFilter.toParams(self)
         kparams.put("objectType", "KalturaGroupUserFilter")
+        kparams.addIntEnumIfDefined("groupType", self.groupType)
         return kparams
+
+    def getGroupType(self):
+        return self.groupType
+
+    def setGroupType(self, newGroupType):
+        self.groupType = newGroupType
 
 
 # @package Kaltura
@@ -70244,6 +70278,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaFlavorAssetStatus': KalturaFlavorAssetStatus,
             'KalturaFlavorReadyBehaviorType': KalturaFlavorReadyBehaviorType,
             'KalturaGender': KalturaGender,
+            'KalturaGroupType': KalturaGroupType,
             'KalturaGroupUserCreationMode': KalturaGroupUserCreationMode,
             'KalturaGroupUserRole': KalturaGroupUserRole,
             'KalturaGroupUserStatus': KalturaGroupUserStatus,
