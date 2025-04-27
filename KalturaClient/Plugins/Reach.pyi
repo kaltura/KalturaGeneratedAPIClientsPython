@@ -660,6 +660,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     createdBy: str
     notes: str
     partnerId: int
+    defaultReachProfileId: int
     adminTagsToExclude: str
     def __init__(self,
             id: int = NotImplemented,
@@ -683,6 +684,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
 
     def getId(self) -> int: ...
@@ -722,6 +724,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     def setNotes(self, newNotes: str) -> None: ...
     def getPartnerId(self) -> int: ...
     def setPartnerId(self, newPartnerId: int) -> None: ...
+    def getDefaultReachProfileId(self) -> int: ...
+    def setDefaultReachProfileId(self, newDefaultReachProfileId: int) -> None: ...
     def getAdminTagsToExclude(self) -> str: ...
     def setAdminTagsToExclude(self, newAdminTagsToExclude: str) -> None: ...
 
@@ -975,6 +979,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented): ...
 
@@ -1006,6 +1011,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             flavorParamsId: int = NotImplemented,
             clearAudioFlavorParamsId: int = NotImplemented): ...
@@ -1041,6 +1047,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableSpeakerId: KalturaNullableBoolean = NotImplemented,
@@ -1084,6 +1091,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1110,6 +1118,7 @@ class KalturaVendorClipsCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1159,6 +1168,7 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             flavorParamsId: int = NotImplemented,
             clearAudioFlavorParamsId: int = NotImplemented,
@@ -1197,6 +1207,7 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             flavorParamsId: int = NotImplemented,
             clearAudioFlavorParamsId: int = NotImplemented,
@@ -1232,6 +1243,7 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1258,6 +1270,7 @@ class KalturaVendorMetadataEnrichmentCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1284,6 +1297,7 @@ class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1310,6 +1324,7 @@ class KalturaVendorQuizCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1336,6 +1351,7 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
@@ -1373,6 +1389,7 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             videoAnalysisType: KalturaVendorVideoAnalysisType = NotImplemented,
             maxVideoDuration: int = NotImplemented): ...
@@ -1777,6 +1794,7 @@ class KalturaVendorLiveCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableSpeakerId: KalturaNullableBoolean = NotImplemented,
@@ -1817,6 +1835,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableSpeakerId: KalturaNullableBoolean = NotImplemented,
@@ -1890,6 +1909,8 @@ class KalturaVendorCatalogItemFilter(KalturaVendorCatalogItemBaseFilter):
     def setCatalogItemIdEqual(self, newCatalogItemIdEqual: int) -> None: ...
 
 class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
+    startTimeBuffer: int
+    endTimeBuffer: int
     def __init__(self,
             id: int = NotImplemented,
             vendorPartnerId: int = NotImplemented,
@@ -1912,14 +1933,21 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableSpeakerId: KalturaNullableBoolean = NotImplemented,
             fixedPriceAddons: int = NotImplemented,
             minimalRefundTime: int = NotImplemented,
             minimalOrderTime: int = NotImplemented,
-            durationLimit: int = NotImplemented): ...
-        pass
+            durationLimit: int = NotImplemented,
+            startTimeBuffer: int = NotImplemented,
+            endTimeBuffer: int = NotImplemented): ...
+
+    def getStartTimeBuffer(self) -> int: ...
+    def setStartTimeBuffer(self, newStartTimeBuffer: int) -> None: ...
+    def getEndTimeBuffer(self) -> int: ...
+    def setEndTimeBuffer(self, newEndTimeBuffer: int) -> None: ...
 
 class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
     targetLanguage: KalturaCatalogItemLanguage
@@ -1945,6 +1973,7 @@ class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy: str = NotImplemented,
             notes: str = NotImplemented,
             partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
             outputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableSpeakerId: KalturaNullableBoolean = NotImplemented,
@@ -2543,7 +2572,7 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
     def updateJob(self, id: int, entryVendorTask: KalturaEntryVendorTask) -> KalturaEntryVendorTask: ...
 
 class KalturaPartnerCatalogItemService(KalturaServiceBase):
-    def add(self, id: int) -> KalturaVendorCatalogItem: ...
+    def add(self, id: int, defaultReachProfileId: int = NotImplemented) -> KalturaVendorCatalogItem: ...
     def delete(self, id: int) -> None: ...
 
 class KalturaReachClientPluginServicesProxy:

@@ -1331,6 +1331,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -1403,6 +1404,9 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         # @var int
         self.partnerId = partnerId
 
+        # @var int
+        self.defaultReachProfileId = defaultReachProfileId
+
         # @var str
         self.adminTagsToExclude = adminTagsToExclude
 
@@ -1429,6 +1433,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         'createdBy': getXmlNodeText, 
         'notes': getXmlNodeText, 
         'partnerId': getXmlNodeInt, 
+        'defaultReachProfileId': getXmlNodeInt, 
         'adminTagsToExclude': getXmlNodeText, 
     }
 
@@ -1455,6 +1460,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
         kparams.addStringIfDefined("createdBy", self.createdBy)
         kparams.addStringIfDefined("notes", self.notes)
         kparams.addIntIfDefined("partnerId", self.partnerId)
+        kparams.addIntIfDefined("defaultReachProfileId", self.defaultReachProfileId)
         kparams.addStringIfDefined("adminTagsToExclude", self.adminTagsToExclude)
         return kparams
 
@@ -1568,6 +1574,12 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
 
     def setPartnerId(self, newPartnerId):
         self.partnerId = newPartnerId
+
+    def getDefaultReachProfileId(self):
+        return self.defaultReachProfileId
+
+    def setDefaultReachProfileId(self, newDefaultReachProfileId):
+        self.defaultReachProfileId = newDefaultReachProfileId
 
     def getAdminTagsToExclude(self):
         return self.adminTagsToExclude
@@ -2407,6 +2419,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
@@ -2431,6 +2444,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var KalturaVendorCatalogItemOutputFormat
@@ -2483,6 +2497,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             flavorParamsId = NotImplemented,
             clearAudioFlavorParamsId = NotImplemented):
@@ -2508,6 +2523,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var int
@@ -2571,6 +2587,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented,
             enableSpeakerId = NotImplemented,
@@ -2597,6 +2614,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var KalturaVendorCatalogItemOutputFormat
@@ -2702,6 +2720,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -2725,6 +2744,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -2766,6 +2786,7 @@ class KalturaVendorClipsCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -2789,6 +2810,7 @@ class KalturaVendorClipsCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -2898,6 +2920,7 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             flavorParamsId = NotImplemented,
             clearAudioFlavorParamsId = NotImplemented,
@@ -2924,6 +2947,7 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var int
@@ -2998,6 +3022,7 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             flavorParamsId = NotImplemented,
             clearAudioFlavorParamsId = NotImplemented,
@@ -3024,6 +3049,7 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var int
@@ -3098,6 +3124,7 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -3121,6 +3148,7 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -3162,6 +3190,7 @@ class KalturaVendorMetadataEnrichmentCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -3185,6 +3214,7 @@ class KalturaVendorMetadataEnrichmentCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -3226,6 +3256,7 @@ class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -3249,6 +3280,7 @@ class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -3290,6 +3322,7 @@ class KalturaVendorQuizCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -3313,6 +3346,7 @@ class KalturaVendorQuizCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -3354,6 +3388,7 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
@@ -3377,6 +3412,7 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
 
@@ -3454,6 +3490,7 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             videoAnalysisType = NotImplemented,
             maxVideoDuration = NotImplemented):
@@ -3479,6 +3516,7 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude)
 
         # @var KalturaVendorVideoAnalysisType
@@ -4628,6 +4666,7 @@ class KalturaVendorLiveCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented,
             enableSpeakerId = NotImplemented,
@@ -4657,6 +4696,7 @@ class KalturaVendorLiveCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude,
             outputFormat,
             enableSpeakerId,
@@ -4734,6 +4774,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented,
             enableSpeakerId = NotImplemented,
@@ -4762,6 +4803,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude,
             outputFormat,
             enableSpeakerId,
@@ -4996,13 +5038,16 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented,
             enableSpeakerId = NotImplemented,
             fixedPriceAddons = NotImplemented,
             minimalRefundTime = NotImplemented,
             minimalOrderTime = NotImplemented,
-            durationLimit = NotImplemented):
+            durationLimit = NotImplemented,
+            startTimeBuffer = NotImplemented,
+            endTimeBuffer = NotImplemented):
         KalturaVendorLiveCatalogItem.__init__(self,
             id,
             vendorPartnerId,
@@ -5025,6 +5070,7 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude,
             outputFormat,
             enableSpeakerId,
@@ -5033,8 +5079,20 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             minimalOrderTime,
             durationLimit)
 
+        # How long before the live stream start should service activate? (in secs)
+        # @var int
+        # @insertonly
+        self.startTimeBuffer = startTimeBuffer
+
+        # How long after the live stream end should service de-activate? (in secs)
+        # @var int
+        # @insertonly
+        self.endTimeBuffer = endTimeBuffer
+
 
     PROPERTY_LOADERS = {
+        'startTimeBuffer': getXmlNodeInt, 
+        'endTimeBuffer': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -5044,7 +5102,21 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
     def toParams(self):
         kparams = KalturaVendorLiveCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorLiveCaptionCatalogItem")
+        kparams.addIntIfDefined("startTimeBuffer", self.startTimeBuffer)
+        kparams.addIntIfDefined("endTimeBuffer", self.endTimeBuffer)
         return kparams
+
+    def getStartTimeBuffer(self):
+        return self.startTimeBuffer
+
+    def setStartTimeBuffer(self, newStartTimeBuffer):
+        self.startTimeBuffer = newStartTimeBuffer
+
+    def getEndTimeBuffer(self):
+        return self.endTimeBuffer
+
+    def setEndTimeBuffer(self, newEndTimeBuffer):
+        self.endTimeBuffer = newEndTimeBuffer
 
 
 # @package Kaltura
@@ -5072,6 +5144,7 @@ class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy = NotImplemented,
             notes = NotImplemented,
             partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
             outputFormat = NotImplemented,
             enableSpeakerId = NotImplemented,
@@ -5102,6 +5175,7 @@ class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
             createdBy,
             notes,
             partnerId,
+            defaultReachProfileId,
             adminTagsToExclude,
             outputFormat,
             enableSpeakerId,
@@ -6862,11 +6936,12 @@ class KalturaPartnerCatalogItemService(KalturaServiceBase):
     def __init__(self, client = None):
         KalturaServiceBase.__init__(self, client)
 
-    def add(self, id):
+    def add(self, id, defaultReachProfileId = NotImplemented):
         """Assign existing catalogItem to specific account"""
 
         kparams = KalturaParams()
         kparams.addIntIfDefined("id", id);
+        kparams.addIntIfDefined("defaultReachProfileId", defaultReachProfileId);
         self.client.queueServiceActionCall("reach_partnercatalogitem", "add", "KalturaVendorCatalogItem", kparams)
         if self.client.isMultiRequest():
             return self.client.getMultiRequestResult()

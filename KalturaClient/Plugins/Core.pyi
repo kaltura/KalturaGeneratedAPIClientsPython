@@ -1722,6 +1722,7 @@ class KalturaConditionType(object):
     ENTRY_SCHEDULED = "19"
     ACTION_NAME = "20"
     URL_AUTH_PARAMS = "21"
+    SESSION_TYPE = "22"
 
     def __init__(self, value: str): ...
 
@@ -11650,14 +11651,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 class KalturaReportResponseOptions(KalturaObjectBase):
     delimiter: str
     skipEmptyDates: bool
+    useFriendlyHeadersNames: bool
     def __init__(self,
             delimiter: str = NotImplemented,
-            skipEmptyDates: bool = NotImplemented): ...
+            skipEmptyDates: bool = NotImplemented,
+            useFriendlyHeadersNames: bool = NotImplemented): ...
 
     def getDelimiter(self) -> str: ...
     def setDelimiter(self, newDelimiter: str) -> None: ...
     def getSkipEmptyDates(self) -> bool: ...
     def setSkipEmptyDates(self, newSkipEmptyDates: bool) -> None: ...
+    def getUseFriendlyHeadersNames(self) -> bool: ...
+    def setUseFriendlyHeadersNames(self, newUseFriendlyHeadersNames: bool) -> None: ...
 
 class KalturaReportExportItem(KalturaObjectBase):
     reportTitle: str
@@ -16913,6 +16918,17 @@ class KalturaSessionResponse(KalturaStartWidgetSessionResponse):
 class KalturaSessionRestriction(KalturaBaseRestriction):
     def __init__(self): ...
         pass
+
+class KalturaSessionTypeCondition(KalturaCondition):
+    sessionType: KalturaSessionType
+    def __init__(self,
+            type: KalturaConditionType = NotImplemented,
+            description: str = NotImplemented,
+            not_: bool = NotImplemented,
+            sessionType: KalturaSessionType = NotImplemented): ...
+
+    def getSessionType(self) -> KalturaSessionType: ...
+    def setSessionType(self, newSessionType: KalturaSessionType) -> None: ...
 
 class KalturaSiteRestriction(KalturaBaseRestriction):
     siteRestrictionType: KalturaSiteRestrictionType

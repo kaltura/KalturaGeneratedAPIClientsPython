@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.13.0'
+API_VERSION = '21.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2285,6 +2285,7 @@ class KalturaConditionType(object):
     ENTRY_SCHEDULED = "19"
     ACTION_NAME = "20"
     URL_AUTH_PARAMS = "21"
+    SESSION_TYPE = "22"
 
     def __init__(self, value):
         self.value = value
@@ -26910,7 +26911,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 class KalturaReportResponseOptions(KalturaObjectBase):
     def __init__(self,
             delimiter = NotImplemented,
-            skipEmptyDates = NotImplemented):
+            skipEmptyDates = NotImplemented,
+            useFriendlyHeadersNames = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var str
@@ -26919,10 +26921,14 @@ class KalturaReportResponseOptions(KalturaObjectBase):
         # @var bool
         self.skipEmptyDates = skipEmptyDates
 
+        # @var bool
+        self.useFriendlyHeadersNames = useFriendlyHeadersNames
+
 
     PROPERTY_LOADERS = {
         'delimiter': getXmlNodeText, 
         'skipEmptyDates': getXmlNodeBool, 
+        'useFriendlyHeadersNames': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -26934,6 +26940,7 @@ class KalturaReportResponseOptions(KalturaObjectBase):
         kparams.put("objectType", "KalturaReportResponseOptions")
         kparams.addStringIfDefined("delimiter", self.delimiter)
         kparams.addBoolIfDefined("skipEmptyDates", self.skipEmptyDates)
+        kparams.addBoolIfDefined("useFriendlyHeadersNames", self.useFriendlyHeadersNames)
         return kparams
 
     def getDelimiter(self):
@@ -26947,6 +26954,12 @@ class KalturaReportResponseOptions(KalturaObjectBase):
 
     def setSkipEmptyDates(self, newSkipEmptyDates):
         self.skipEmptyDates = newSkipEmptyDates
+
+    def getUseFriendlyHeadersNames(self):
+        return self.useFriendlyHeadersNames
+
+    def setUseFriendlyHeadersNames(self, newUseFriendlyHeadersNames):
+        self.useFriendlyHeadersNames = newUseFriendlyHeadersNames
 
 
 # @package Kaltura
@@ -43796,6 +43809,45 @@ class KalturaSessionRestriction(KalturaBaseRestriction):
         kparams = KalturaBaseRestriction.toParams(self)
         kparams.put("objectType", "KalturaSessionRestriction")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSessionTypeCondition(KalturaCondition):
+    def __init__(self,
+            type = NotImplemented,
+            description = NotImplemented,
+            not_ = NotImplemented,
+            sessionType = NotImplemented):
+        KalturaCondition.__init__(self,
+            type,
+            description,
+            not_)
+
+        # The privelege needed to remove the restriction
+        # @var KalturaSessionType
+        self.sessionType = sessionType
+
+
+    PROPERTY_LOADERS = {
+        'sessionType': (KalturaEnumsFactory.createInt, "KalturaSessionType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaCondition.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSessionTypeCondition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaCondition.toParams(self)
+        kparams.put("objectType", "KalturaSessionTypeCondition")
+        kparams.addIntEnumIfDefined("sessionType", self.sessionType)
+        return kparams
+
+    def getSessionType(self):
+        return self.sessionType
+
+    def setSessionType(self, newSessionType):
+        self.sessionType = newSessionType
 
 
 # @package Kaltura
@@ -70885,6 +70937,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaServerNodeListResponse': KalturaServerNodeListResponse,
             'KalturaSessionResponse': KalturaSessionResponse,
             'KalturaSessionRestriction': KalturaSessionRestriction,
+            'KalturaSessionTypeCondition': KalturaSessionTypeCondition,
             'KalturaSiteRestriction': KalturaSiteRestriction,
             'KalturaStorageAddAction': KalturaStorageAddAction,
             'KalturaStorageJobData': KalturaStorageJobData,
