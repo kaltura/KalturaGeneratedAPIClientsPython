@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.14.0'
+API_VERSION = '21.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2880,6 +2880,7 @@ class KalturaEntryApplication(object):
     PERSONAL_CAPTURE = "6"
     KALTURA_MEETING = "7"
     EP = "8"
+    CONTENT_LAB = "9"
 
     def __init__(self, value):
         self.value = value

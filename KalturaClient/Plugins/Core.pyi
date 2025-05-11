@@ -2193,6 +2193,7 @@ class KalturaEntryApplication(object):
     PERSONAL_CAPTURE = "6"
     KALTURA_MEETING = "7"
     EP = "8"
+    CONTENT_LAB = "9"
 
     def __init__(self, value: str): ...
 
