@@ -1293,6 +1293,9 @@ class KalturaAssetParamsOutputOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaAssetType(object):
+    FLAVOR = "1"
+    THUMBNAIL = "2"
+    LIVE = "3"
     ATTACHMENT = "attachment.Attachment"
     CAPTION = "caption.Caption"
     DOCUMENT = "document.Document"
@@ -1302,9 +1305,6 @@ class KalturaAssetType(object):
     TIMED_THUMB_ASSET = "thumbCuePoint.timedThumb"
     TRANSCRIPT = "transcript.Transcript"
     WIDEVINE_FLAVOR = "widevine.WidevineFlavor"
-    FLAVOR = "1"
-    THUMBNAIL = "2"
-    LIVE = "3"
 
     def __init__(self, value: str): ...
 
@@ -1330,11 +1330,6 @@ class KalturaAudioCodec(object):
     def getValue(self) -> str: ...
 
 class KalturaBaseEntryCloneOptions(object):
-    AD_CUE_POINTS = "adCuePoint.AD_CUE_POINTS"
-    ANNOTATION_CUE_POINTS = "annotation.ANNOTATION_CUE_POINTS"
-    CODE_CUE_POINTS = "codeCuePoint.CODE_CUE_POINTS"
-    SESSION_CUE_POINTS = "sessionCuePoint.SESSION_CUE_POINTS"
-    THUMB_CUE_POINTS = "thumbCuePoint.THUMB_CUE_POINTS"
     USERS = "1"
     CATEGORIES = "2"
     CHILD_ENTRIES = "3"
@@ -1342,6 +1337,11 @@ class KalturaBaseEntryCloneOptions(object):
     METADATA = "5"
     FLAVORS = "6"
     CAPTIONS = "7"
+    AD_CUE_POINTS = "adCuePoint.AD_CUE_POINTS"
+    ANNOTATION_CUE_POINTS = "annotation.ANNOTATION_CUE_POINTS"
+    CODE_CUE_POINTS = "codeCuePoint.CODE_CUE_POINTS"
+    SESSION_CUE_POINTS = "sessionCuePoint.SESSION_CUE_POINTS"
+    THUMB_CUE_POINTS = "thumbCuePoint.THUMB_CUE_POINTS"
 
     def __init__(self, value: str): ...
 
@@ -1443,16 +1443,16 @@ class KalturaBaseUserOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaBatchJobObjectType(object):
-    ENTRY_DISTRIBUTION = "contentDistribution.EntryDistribution"
-    DROP_FOLDER_FILE = "dropFolderXmlBulkUpload.DropFolderFile"
-    METADATA = "metadata.Metadata"
-    METADATA_PROFILE = "metadata.MetadataProfile"
-    SCHEDULED_TASK_PROFILE = "scheduledTask.ScheduledTaskProfile"
     ENTRY = "1"
     CATEGORY = "2"
     FILE_SYNC = "3"
     ASSET = "4"
     USER = "5"
+    ENTRY_DISTRIBUTION = "contentDistribution.EntryDistribution"
+    DROP_FOLDER_FILE = "dropFolderXmlBulkUpload.DropFolderFile"
+    METADATA = "metadata.Metadata"
+    METADATA_PROFILE = "metadata.MetadataProfile"
+    SCHEDULED_TASK_PROFILE = "scheduledTask.ScheduledTaskProfile"
 
     def __init__(self, value: str): ...
 
@@ -1484,29 +1484,6 @@ class KalturaBatchJobOrderBy(object):
 
 class KalturaBatchJobType(object):
     CONVERT = "0"
-    REACH_INTERNAL_QUEUE_HANDLER = "ReachInternal.ReachInternalQueueHandler"
-    CONVERT_CAPTION_ASSET = "caption.convertcaptionasset"
-    PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
-    PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
-    DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
-    DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
-    DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
-    DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
-    DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
-    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
-    DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
-    DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
-    DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
-    EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
-    INTEGRATION = "integration.Integration"
-    ENTRY_VENDOR_TASK_CSV = "reach.EntryVendorTasksCsv"
-    SYNC_REACH_CREDIT_TASK = "reach.SyncReachCreditTask"
-    SCHEDULED_TASK = "scheduledTask.ScheduledTask"
-    SEARCH_TERM_CSV = "searchHistory.searchTermsCsv"
-    INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
-    TAG_RESOLVE = "tagSearch.TagResolve"
-    VIRUS_SCAN = "virusScan.VirusScan"
-    WIDEVINE_REPOSITORY_SYNC = "widevine.WidevineRepositorySync"
     IMPORT = "1"
     DELETE = "2"
     FLATTEN = "3"
@@ -1560,13 +1537,35 @@ class KalturaBatchJobType(object):
     STORAGE_PERIODIC_DELETE_LOCAL = "55"
     REACH_JOB_CLEANER = "56"
     MULTI_CLIP_CONCAT = "57"
+    REACH_INTERNAL_QUEUE_HANDLER = "ReachInternal.ReachInternalQueueHandler"
+    CONVERT_CAPTION_ASSET = "caption.convertcaptionasset"
+    PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
+    PARSE_CAPTION_ASSET = "captionSearch.parseCaptionAsset"
+    DISTRIBUTION_DELETE = "contentDistribution.DistributionDelete"
+    DISTRIBUTION_DISABLE = "contentDistribution.DistributionDisable"
+    DISTRIBUTION_ENABLE = "contentDistribution.DistributionEnable"
+    DISTRIBUTION_FETCH_REPORT = "contentDistribution.DistributionFetchReport"
+    DISTRIBUTION_SUBMIT = "contentDistribution.DistributionSubmit"
+    DISTRIBUTION_SYNC = "contentDistribution.DistributionSync"
+    DISTRIBUTION_UPDATE = "contentDistribution.DistributionUpdate"
+    DROP_FOLDER_CONTENT_PROCESSOR = "dropFolder.DropFolderContentProcessor"
+    DROP_FOLDER_WATCHER = "dropFolder.DropFolderWatcher"
+    EVENT_NOTIFICATION_HANDLER = "eventNotification.EventNotificationHandler"
+    INTEGRATION = "integration.Integration"
+    ENTRY_VENDOR_TASK_CSV = "reach.EntryVendorTasksCsv"
+    SYNC_REACH_CREDIT_TASK = "reach.SyncReachCreditTask"
+    SCHEDULED_TASK = "scheduledTask.ScheduledTask"
+    SEARCH_TERM_CSV = "searchHistory.searchTermsCsv"
+    INDEX_TAGS = "tagSearch.IndexTagsByPrivacyContext"
+    TAG_RESOLVE = "tagSearch.TagResolve"
+    VIRUS_SCAN = "virusScan.VirusScan"
+    WIDEVINE_REPOSITORY_SYNC = "widevine.WidevineRepositorySync"
 
     def __init__(self, value: str): ...
 
     def getValue(self) -> str: ...
 
 class KalturaBulkUploadAction(object):
-    CANCEL = "scheduleBulkUpload.CANCEL"
     ADD = "1"
     UPDATE = "2"
     DELETE = "3"
@@ -1576,15 +1575,13 @@ class KalturaBulkUploadAction(object):
     ACTIVATE = "7"
     REJECT = "8"
     UPDATE_STATUS = "9"
+    CANCEL = "scheduleBulkUpload.CANCEL"
 
     def __init__(self, value: str): ...
 
     def getValue(self) -> str: ...
 
 class KalturaBulkUploadObjectType(object):
-    JOB = "bulkUploadFilter.JOB"
-    SCHEDULE_EVENT = "scheduleBulkUpload.SCHEDULE_EVENT"
-    SCHEDULE_RESOURCE = "scheduleBulkUpload.SCHEDULE_RESOURCE"
     ENTRY = "1"
     CATEGORY = "2"
     USER = "3"
@@ -1592,6 +1589,9 @@ class KalturaBulkUploadObjectType(object):
     CATEGORY_ENTRY = "5"
     USER_ENTRY = "6"
     VENDOR_CATALOG_ITEM = "7"
+    JOB = "bulkUploadFilter.JOB"
+    SCHEDULE_EVENT = "scheduleBulkUpload.SCHEDULE_EVENT"
+    SCHEDULE_RESOURCE = "scheduleBulkUpload.SCHEDULE_RESOURCE"
 
     def __init__(self, value: str): ...
 
@@ -1694,13 +1694,6 @@ class KalturaCloneComponentSelectorType(object):
     def getValue(self) -> str: ...
 
 class KalturaConditionType(object):
-    ABC_WATERMARK = "abcScreenersWatermarkAccessControl.abcWatermark"
-    EVENT_NOTIFICATION_FIELD = "eventNotification.BooleanField"
-    EVENT_NOTIFICATION_OBJECT_CHANGED = "eventNotification.ObjectChanged"
-    METADATA_FIELD_CHANGED = "metadata.FieldChanged"
-    METADATA_FIELD_COMPARE = "metadata.FieldCompare"
-    METADATA_FIELD_MATCH = "metadata.FieldMatch"
-    EVENT_CATEGORY_ENTRY = "reach.CategoryEntry"
     AUTHENTICATED = "1"
     COUNTRY = "2"
     IP_ADDRESS = "3"
@@ -1723,6 +1716,13 @@ class KalturaConditionType(object):
     ACTION_NAME = "20"
     URL_AUTH_PARAMS = "21"
     SESSION_TYPE = "22"
+    ABC_WATERMARK = "abcScreenersWatermarkAccessControl.abcWatermark"
+    EVENT_NOTIFICATION_FIELD = "eventNotification.BooleanField"
+    EVENT_NOTIFICATION_OBJECT_CHANGED = "eventNotification.ObjectChanged"
+    METADATA_FIELD_CHANGED = "metadata.FieldChanged"
+    METADATA_FIELD_COMPARE = "metadata.FieldCompare"
+    METADATA_FIELD_MATCH = "metadata.FieldMatch"
+    EVENT_CATEGORY_ENTRY = "reach.CategoryEntry"
 
     def __init__(self, value: str): ...
 
@@ -2003,13 +2003,6 @@ class KalturaDeliveryProfileRtmpOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaDeliveryProfileType(object):
-    EDGE_CAST_HTTP = "edgeCast.EDGE_CAST_HTTP"
-    EDGE_CAST_RTMP = "edgeCast.EDGE_CAST_RTMP"
-    KONTIKI_HTTP = "kontiki.KONTIKI_HTTP"
-    UPLYNK_HTTP = "uplynk.UPLYNK_HTTP"
-    UPLYNK_RTMP = "uplynk.UPLYNK_RTMP"
-    VELOCIX_HDS = "velocix.VELOCIX_HDS"
-    VELOCIX_HLS = "velocix.VELOCIX_HLS"
     APPLE_HTTP = "1"
     HDS = "3"
     HTTP = "4"
@@ -2055,6 +2048,13 @@ class KalturaDeliveryProfileType(object):
     LIVE_PACKAGER_DASH = "1009"
     LIVE_PACKAGER_MSS = "1010"
     LIVE_AKAMAI_HDS = "1013"
+    EDGE_CAST_HTTP = "edgeCast.EDGE_CAST_HTTP"
+    EDGE_CAST_RTMP = "edgeCast.EDGE_CAST_RTMP"
+    KONTIKI_HTTP = "kontiki.KONTIKI_HTTP"
+    UPLYNK_HTTP = "uplynk.UPLYNK_HTTP"
+    UPLYNK_RTMP = "uplynk.UPLYNK_RTMP"
+    VELOCIX_HDS = "velocix.VELOCIX_HDS"
+    VELOCIX_HLS = "velocix.VELOCIX_HLS"
 
     def __init__(self, value: str): ...
 
@@ -2241,8 +2241,6 @@ class KalturaEntryStatus(object):
     ERROR_IMPORTING = "-2"
     ERROR_CONVERTING = "-1"
     IMPORT = "0"
-    INFECTED = "virusScan.Infected"
-    SCAN_FAILURE = "virusScan.ScanFailure"
     PRECONVERT = "1"
     READY = "2"
     DELETED = "3"
@@ -2250,6 +2248,8 @@ class KalturaEntryStatus(object):
     MODERATE = "5"
     BLOCKED = "6"
     NO_CONTENT = "7"
+    INFECTED = "virusScan.Infected"
+    SCAN_FAILURE = "virusScan.ScanFailure"
 
     def __init__(self, value: str): ...
 
@@ -2257,10 +2257,6 @@ class KalturaEntryStatus(object):
 
 class KalturaEntryType(object):
     AUTOMATIC = "-1"
-    CONFERENCE_ENTRY_SERVER = "conference.CONFERENCE_ENTRY_SERVER"
-    EXTERNAL_MEDIA = "externalMedia.externalMedia"
-    ROOM = "room.room"
-    SIP_ENTRY_SERVER = "sip.SIP_ENTRY_SERVER"
     MEDIA_CLIP = "1"
     MIX = "2"
     PLAYLIST = "5"
@@ -2268,6 +2264,10 @@ class KalturaEntryType(object):
     LIVE_STREAM = "7"
     LIVE_CHANNEL = "8"
     DOCUMENT = "10"
+    CONFERENCE_ENTRY_SERVER = "conference.CONFERENCE_ENTRY_SERVER"
+    EXTERNAL_MEDIA = "externalMedia.externalMedia"
+    ROOM = "room.room"
+    SIP_ENTRY_SERVER = "sip.SIP_ENTRY_SERVER"
 
     def __init__(self, value: str): ...
 
@@ -2350,11 +2350,6 @@ class KalturaFileAssetStatus(object):
     def getValue(self) -> str: ...
 
 class KalturaFileSyncObjectType(object):
-    DISTRIBUTION_PROFILE = "contentDistribution.DistributionProfile"
-    ENTRY_DISTRIBUTION = "contentDistribution.EntryDistribution"
-    GENERIC_DISTRIBUTION_ACTION = "contentDistribution.GenericDistributionAction"
-    EMAIL_NOTIFICATION_TEMPLATE = "emailNotification.EmailNotificationTemplate"
-    HTTP_NOTIFICATION_TEMPLATE = "httpNotification.HttpNotificationTemplate"
     ENTRY = "1"
     UICONF = "2"
     BATCHJOB = "3"
@@ -2365,6 +2360,11 @@ class KalturaFileSyncObjectType(object):
     SYNDICATION_FEED = "7"
     CONVERSION_PROFILE = "8"
     FILE_ASSET = "9"
+    DISTRIBUTION_PROFILE = "contentDistribution.DistributionProfile"
+    ENTRY_DISTRIBUTION = "contentDistribution.EntryDistribution"
+    GENERIC_DISTRIBUTION_ACTION = "contentDistribution.GenericDistributionAction"
+    EMAIL_NOTIFICATION_TEMPLATE = "emailNotification.EmailNotificationTemplate"
+    HTTP_NOTIFICATION_TEMPLATE = "httpNotification.HttpNotificationTemplate"
 
     def __init__(self, value: str): ...
 
@@ -2782,8 +2782,8 @@ class KalturaLanguage(object):
     KPO = "Ikposo"
     ILO = "Iloko"
     SMN = "Inari Sami"
-    IN = "Indonesian"
     ID = "Indonesian"
+    IN = "Indonesian"
     IZH = "Ingrian"
     INH = "Ingush"
     IA = "Interlingua"
@@ -3925,8 +3925,8 @@ class KalturaMediaInfoOrderBy(object):
 
 class KalturaMediaParserType(object):
     MEDIAINFO = "0"
-    REMOTE_MEDIAINFO = "remoteMediaInfo.RemoteMediaInfo"
     FFMPEG = "1"
+    REMOTE_MEDIAINFO = "remoteMediaInfo.RemoteMediaInfo"
 
     def __init__(self, value: str): ...
 
@@ -4294,10 +4294,6 @@ class KalturaReportOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaReportType(object):
-    QUIZ = "quiz.QUIZ"
-    QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"
-    QUIZ_USER_AGGREGATE_BY_QUESTION = "quiz.QUIZ_USER_AGGREGATE_BY_QUESTION"
-    QUIZ_USER_PERCENTAGE = "quiz.QUIZ_USER_PERCENTAGE"
     TOP_CONTENT = "1"
     CONTENT_DROPOFF = "2"
     CONTENT_INTERACTIONS = "3"
@@ -4361,6 +4357,7 @@ class KalturaReportType(object):
     REACH_CATALOG_USAGE = "65"
     REACH_PROFILE_USAGE = "66"
     SELF_SERVE_BANDWIDTH = "67"
+    PARTNER_USAGE_SF = "68"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -4506,6 +4503,10 @@ class KalturaReportType(object):
     EP_TOP_SESSIONS = "60017"
     EP_WEBCAST_ENGAGEMENT_OVER_TIME = "60018"
     CNC_PARTICIPATION = "70001"
+    QUIZ = "quiz.QUIZ"
+    QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"
+    QUIZ_USER_AGGREGATE_BY_QUESTION = "quiz.QUIZ_USER_AGGREGATE_BY_QUESTION"
+    QUIZ_USER_PERCENTAGE = "quiz.QUIZ_USER_PERCENTAGE"
 
     def __init__(self, value: str): ...
 
@@ -4533,8 +4534,6 @@ class KalturaResponseProfileOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaRuleActionType(object):
-    DRM_POLICY = "drm.DRM_POLICY"
-    ADD_ENTRY_VENDOR_TASK = "reach.ADD_ENTRY_VENDOR_TASK"
     BLOCK = "1"
     PREVIEW = "2"
     LIMIT_FLAVORS = "3"
@@ -4543,6 +4542,8 @@ class KalturaRuleActionType(object):
     SERVE_FROM_REMOTE_SERVER = "6"
     REQUEST_HOST_REGEX = "7"
     LIMIT_THUMBNAIL_CAPTURE = "8"
+    DRM_POLICY = "drm.DRM_POLICY"
+    ADD_ENTRY_VENDOR_TASK = "reach.ADD_ENTRY_VENDOR_TASK"
 
     def __init__(self, value: str): ...
 
@@ -4585,19 +4586,17 @@ class KalturaServerNodeOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaServerNodeType(object):
+    EDGE = "1"
     CONFERENCE_SERVER = "conference.CONFERENCE_SERVER"
     LIVE_CLUSTER_MEDIA_SERVER = "liveCluster.LIVE_CLUSTER_MEDIA_SERVER"
     SIP_SERVER = "sip.SIP_SERVER"
     WOWZA_MEDIA_SERVER = "wowza.WOWZA_MEDIA_SERVER"
-    EDGE = "1"
 
     def __init__(self, value: str): ...
 
     def getValue(self) -> str: ...
 
 class KalturaSourceType(object):
-    LIMELIGHT_LIVE = "limeLight.LIVE_STREAM"
-    VELOCIX_LIVE = "velocix.VELOCIX_LIVE"
     FILE = "1"
     WEBCAM = "2"
     URL = "5"
@@ -4612,6 +4611,8 @@ class KalturaSourceType(object):
     KALTURA_RECORDED_LIVE = "36"
     LECTURE_CAPTURE = "37"
     LIVE_STREAM_ONTEXTDATA_CAPTIONS = "42"
+    LIMELIGHT_LIVE = "limeLight.LIVE_STREAM"
+    VELOCIX_LIVE = "velocix.VELOCIX_LIVE"
 
     def __init__(self, value: str): ...
 
@@ -4628,13 +4629,13 @@ class KalturaStorageProfileOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaStorageProfileProtocol(object):
-    KONTIKI = "kontiki.KONTIKI"
     KALTURA_DC = "0"
     FTP = "1"
     SCP = "2"
     SFTP = "3"
     S3 = "6"
     LOCAL = "7"
+    KONTIKI = "kontiki.KONTIKI"
 
     def __init__(self, value: str): ...
 
@@ -4771,10 +4772,10 @@ class KalturaUserEntryOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaUserEntryStatus(object):
-    QUIZ_SUBMITTED = "quiz.3"
     ACTIVE = "1"
     DELETED = "2"
     RECYCLED = "3"
+    QUIZ_SUBMITTED = "quiz.3"
 
     def __init__(self, value: str): ...
 
@@ -5127,63 +5128,17 @@ class KalturaAccessControlScope(KalturaObjectBase):
     def getHashes(self) -> List[KalturaKeyValue]: ...
     def setHashes(self, newHashes: List[KalturaKeyValue]) -> None: ...
 
-class KalturaSearchItem(KalturaObjectBase):
-    def __init__(self): ...
-        pass
-
-class KalturaFilter(KalturaObjectBase):
-    orderBy: str
-    advancedSearch: KalturaSearchItem
+class KalturaReportFilter(KalturaObjectBase):
+    dimension: str
+    values: str
     def __init__(self,
-            orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            dimension: str = NotImplemented,
+            values: str = NotImplemented): ...
 
-    def getOrderBy(self) -> str: ...
-    def setOrderBy(self, newOrderBy: str) -> None: ...
-    def getAdvancedSearch(self) -> KalturaSearchItem: ...
-    def setAdvancedSearch(self, newAdvancedSearch: KalturaSearchItem) -> None: ...
-
-class KalturaReportBaseFilter(KalturaFilter):
-    idEqual: int
-    idIn: str
-    partnerIdEqual: int
-    partnerIdIn: str
-    systemNameEqual: str
-    systemNameIn: str
-    def __init__(self,
-            orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented,
-            idEqual: int = NotImplemented,
-            idIn: str = NotImplemented,
-            partnerIdEqual: int = NotImplemented,
-            partnerIdIn: str = NotImplemented,
-            systemNameEqual: str = NotImplemented,
-            systemNameIn: str = NotImplemented): ...
-
-    def getIdEqual(self) -> int: ...
-    def setIdEqual(self, newIdEqual: int) -> None: ...
-    def getIdIn(self) -> str: ...
-    def setIdIn(self, newIdIn: str) -> None: ...
-    def getPartnerIdEqual(self) -> int: ...
-    def setPartnerIdEqual(self, newPartnerIdEqual: int) -> None: ...
-    def getPartnerIdIn(self) -> str: ...
-    def setPartnerIdIn(self, newPartnerIdIn: str) -> None: ...
-    def getSystemNameEqual(self) -> str: ...
-    def setSystemNameEqual(self, newSystemNameEqual: str) -> None: ...
-    def getSystemNameIn(self) -> str: ...
-    def setSystemNameIn(self, newSystemNameIn: str) -> None: ...
-
-class KalturaReportFilter(KalturaReportBaseFilter):
-    def __init__(self,
-            orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented,
-            idEqual: int = NotImplemented,
-            idIn: str = NotImplemented,
-            partnerIdEqual: int = NotImplemented,
-            partnerIdIn: str = NotImplemented,
-            systemNameEqual: str = NotImplemented,
-            systemNameIn: str = NotImplemented): ...
-        pass
+    def getDimension(self) -> str: ...
+    def setDimension(self, newDimension: str) -> None: ...
+    def getValues(self) -> str: ...
+    def setValues(self, newValues: str) -> None: ...
 
 class KalturaAnalyticsFilter(KalturaObjectBase):
     from_time: str
@@ -7408,6 +7363,22 @@ class KalturaUrlTokenizer(KalturaObjectBase):
     def setKey(self, newKey: str) -> None: ...
     def getLimitIpAddress(self) -> bool: ...
     def setLimitIpAddress(self, newLimitIpAddress: bool) -> None: ...
+
+class KalturaSearchItem(KalturaObjectBase):
+    def __init__(self): ...
+        pass
+
+class KalturaFilter(KalturaObjectBase):
+    orderBy: str
+    advancedSearch: KalturaSearchItem
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented): ...
+
+    def getOrderBy(self) -> str: ...
+    def setOrderBy(self, newOrderBy: str) -> None: ...
+    def getAdvancedSearch(self) -> KalturaSearchItem: ...
+    def setAdvancedSearch(self, newAdvancedSearch: KalturaSearchItem) -> None: ...
 
 class KalturaRelatedFilter(KalturaFilter):
     def __init__(self,
@@ -16632,6 +16603,36 @@ class KalturaRenderCaptionAttributes(KalturaCaptionAttributes):
     def setAlignment(self, newAlignment: KalturaCaptionsAlignment) -> None: ...
     def getCaptionAssetId(self) -> str: ...
     def setCaptionAssetId(self, newCaptionAssetId: str) -> None: ...
+
+class KalturaReportBaseFilter(KalturaFilter):
+    idEqual: int
+    idIn: str
+    partnerIdEqual: int
+    partnerIdIn: str
+    systemNameEqual: str
+    systemNameIn: str
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            partnerIdIn: str = NotImplemented,
+            systemNameEqual: str = NotImplemented,
+            systemNameIn: str = NotImplemented): ...
+
+    def getIdEqual(self) -> int: ...
+    def setIdEqual(self, newIdEqual: int) -> None: ...
+    def getIdIn(self) -> str: ...
+    def setIdIn(self, newIdIn: str) -> None: ...
+    def getPartnerIdEqual(self) -> int: ...
+    def setPartnerIdEqual(self, newPartnerIdEqual: int) -> None: ...
+    def getPartnerIdIn(self) -> str: ...
+    def setPartnerIdIn(self, newPartnerIdIn: str) -> None: ...
+    def getSystemNameEqual(self) -> str: ...
+    def setSystemNameEqual(self, newSystemNameEqual: str) -> None: ...
+    def getSystemNameIn(self) -> str: ...
+    def setSystemNameIn(self, newSystemNameIn: str) -> None: ...
 
 class KalturaReportExportJobData(KalturaJobData):
     recipientEmail: str

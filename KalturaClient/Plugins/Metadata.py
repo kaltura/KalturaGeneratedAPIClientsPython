@@ -86,18 +86,18 @@ class KalturaMetadataStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaMetadataObjectType(object):
-    AD_CUE_POINT = "adCuePointMetadata.AdCuePoint"
-    ANNOTATION = "annotationMetadata.Annotation"
-    CODE_CUE_POINT = "codeCuePointMetadata.CodeCuePoint"
-    ANSWER_CUE_POINT = "quiz.AnswerCuePoint"
-    QUESTION_CUE_POINT = "quiz.QuestionCuePoint"
-    THUMB_CUE_POINT = "thumbCuePointMetadata.thumbCuePoint"
     ENTRY = "1"
     CATEGORY = "2"
     USER = "3"
     PARTNER = "4"
     DYNAMIC_OBJECT = "5"
     USER_ENTRY = "6"
+    AD_CUE_POINT = "adCuePointMetadata.AdCuePoint"
+    ANNOTATION = "annotationMetadata.Annotation"
+    CODE_CUE_POINT = "codeCuePointMetadata.CodeCuePoint"
+    ANSWER_CUE_POINT = "quiz.AnswerCuePoint"
+    QUESTION_CUE_POINT = "quiz.QuestionCuePoint"
+    THUMB_CUE_POINT = "thumbCuePointMetadata.thumbCuePoint"
 
     def __init__(self, value):
         self.value = value

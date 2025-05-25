@@ -93,14 +93,6 @@ class KalturaDropFolderErrorCode(object):
     def getValue(self) -> str: ...
 
 class KalturaDropFolderFileErrorCode(object):
-    ERROR_ADDING_BULK_UPLOAD = "dropFolderXmlBulkUpload.ERROR_ADDING_BULK_UPLOAD"
-    ERROR_ADD_CONTENT_RESOURCE = "dropFolderXmlBulkUpload.ERROR_ADD_CONTENT_RESOURCE"
-    ERROR_IN_BULK_UPLOAD = "dropFolderXmlBulkUpload.ERROR_IN_BULK_UPLOAD"
-    ERROR_WRITING_TEMP_FILE = "dropFolderXmlBulkUpload.ERROR_WRITING_TEMP_FILE"
-    LOCAL_FILE_WRONG_CHECKSUM = "dropFolderXmlBulkUpload.LOCAL_FILE_WRONG_CHECKSUM"
-    LOCAL_FILE_WRONG_SIZE = "dropFolderXmlBulkUpload.LOCAL_FILE_WRONG_SIZE"
-    MALFORMED_XML_FILE = "dropFolderXmlBulkUpload.MALFORMED_XML_FILE"
-    XML_FILE_SIZE_EXCEED_LIMIT = "dropFolderXmlBulkUpload.XML_FILE_SIZE_EXCEED_LIMIT"
     ERROR_UPDATE_ENTRY = "1"
     ERROR_ADD_ENTRY = "2"
     FLAVOR_NOT_FOUND = "3"
@@ -113,16 +105,24 @@ class KalturaDropFolderFileErrorCode(object):
     ERROR_IN_CONTENT_PROCESSOR = "11"
     ERROR_DELETING_FILE = "12"
     FILE_NO_MATCH = "13"
+    ERROR_ADDING_BULK_UPLOAD = "dropFolderXmlBulkUpload.ERROR_ADDING_BULK_UPLOAD"
+    ERROR_ADD_CONTENT_RESOURCE = "dropFolderXmlBulkUpload.ERROR_ADD_CONTENT_RESOURCE"
+    ERROR_IN_BULK_UPLOAD = "dropFolderXmlBulkUpload.ERROR_IN_BULK_UPLOAD"
+    ERROR_WRITING_TEMP_FILE = "dropFolderXmlBulkUpload.ERROR_WRITING_TEMP_FILE"
+    LOCAL_FILE_WRONG_CHECKSUM = "dropFolderXmlBulkUpload.LOCAL_FILE_WRONG_CHECKSUM"
+    LOCAL_FILE_WRONG_SIZE = "dropFolderXmlBulkUpload.LOCAL_FILE_WRONG_SIZE"
+    MALFORMED_XML_FILE = "dropFolderXmlBulkUpload.MALFORMED_XML_FILE"
+    XML_FILE_SIZE_EXCEED_LIMIT = "dropFolderXmlBulkUpload.XML_FILE_SIZE_EXCEED_LIMIT"
 
     def __init__(self, value: str): ...
 
     def getValue(self) -> str: ...
 
 class KalturaDropFolderFileHandlerType(object):
+    CONTENT = "1"
     TR_RDS = "TrRdsSyncDropFolder.TR_RDS"
     XML = "dropFolderXmlBulkUpload.XML"
     ICAL = "scheduleDropFolder.ICAL"
-    CONTENT = "1"
 
     def __init__(self, value: str): ...
 
@@ -165,6 +165,11 @@ class KalturaDropFolderOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaDropFolderType(object):
+    LOCAL = "1"
+    FTP = "2"
+    SCP = "3"
+    SFTP = "4"
+    S3 = "6"
     AP_FEED = "ApFeedDropFolder.AP_FEED"
     FEED = "FeedDropFolder.FEED"
     MS_TEAMS = "MicrosoftTeamsDropFolder.MS_TEAMS"
@@ -174,11 +179,6 @@ class KalturaDropFolderType(object):
     WEBEX_API = "WebexAPIDropFolder.WEBEX_API"
     WEBEX = "WebexDropFolder.WEBEX"
     ZOOM = "ZoomDropFolder.ZOOM"
-    LOCAL = "1"
-    FTP = "2"
-    SCP = "3"
-    SFTP = "4"
-    S3 = "6"
 
     def __init__(self, value: str): ...
 

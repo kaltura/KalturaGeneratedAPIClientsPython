@@ -41,8 +41,8 @@ class KalturaIntegrationProviderType(object):
     def getValue(self) -> str: ...
 
 class KalturaIntegrationTriggerType(object):
-    BPM_EVENT_NOTIFICATION = "bpmEventNotificationIntegration.BpmEventNotification"
     MANUAL = "1"
+    BPM_EVENT_NOTIFICATION = "bpmEventNotificationIntegration.BpmEventNotification"
 
     def __init__(self, value: str): ...
 

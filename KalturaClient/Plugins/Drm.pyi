@@ -90,10 +90,10 @@ class KalturaDrmProfileOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaDrmProviderType(object):
+    CENC = "1"
     FAIRPLAY = "fairplay.FAIRPLAY"
     PLAY_READY = "playReady.PLAY_READY"
     WIDEVINE = "widevine.WIDEVINE"
-    CENC = "1"
 
     def __init__(self, value: str): ...
 

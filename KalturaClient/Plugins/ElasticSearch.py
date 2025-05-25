@@ -1044,7 +1044,9 @@ class KalturaESearchParams(KalturaObjectBase):
             objectStatuses = NotImplemented,
             objectId = NotImplemented,
             orderBy = NotImplemented,
-            ignoreSynonym = NotImplemented):
+            ignoreSynonym = NotImplemented,
+            objectIds = NotImplemented,
+            objectIdsNotIn = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var str
@@ -1059,12 +1061,20 @@ class KalturaESearchParams(KalturaObjectBase):
         # @var bool
         self.ignoreSynonym = ignoreSynonym
 
+        # @var str
+        self.objectIds = objectIds
+
+        # @var KalturaNullableBoolean
+        self.objectIdsNotIn = objectIdsNotIn
+
 
     PROPERTY_LOADERS = {
         'objectStatuses': getXmlNodeText, 
         'objectId': getXmlNodeText, 
         'orderBy': (KalturaObjectFactory.create, 'KalturaESearchOrderBy'), 
         'ignoreSynonym': getXmlNodeBool, 
+        'objectIds': getXmlNodeText, 
+        'objectIdsNotIn': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
     }
 
     def fromXml(self, node):
@@ -1078,6 +1088,8 @@ class KalturaESearchParams(KalturaObjectBase):
         kparams.addStringIfDefined("objectId", self.objectId)
         kparams.addObjectIfDefined("orderBy", self.orderBy)
         kparams.addBoolIfDefined("ignoreSynonym", self.ignoreSynonym)
+        kparams.addStringIfDefined("objectIds", self.objectIds)
+        kparams.addIntEnumIfDefined("objectIdsNotIn", self.objectIdsNotIn)
         return kparams
 
     def getObjectStatuses(self):
@@ -1103,6 +1115,18 @@ class KalturaESearchParams(KalturaObjectBase):
 
     def setIgnoreSynonym(self, newIgnoreSynonym):
         self.ignoreSynonym = newIgnoreSynonym
+
+    def getObjectIds(self):
+        return self.objectIds
+
+    def setObjectIds(self, newObjectIds):
+        self.objectIds = newObjectIds
+
+    def getObjectIdsNotIn(self):
+        return self.objectIdsNotIn
+
+    def setObjectIdsNotIn(self, newObjectIdsNotIn):
+        self.objectIdsNotIn = newObjectIdsNotIn
 
 
 # @package Kaltura
@@ -1516,12 +1540,16 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
             objectId = NotImplemented,
             orderBy = NotImplemented,
             ignoreSynonym = NotImplemented,
+            objectIds = NotImplemented,
+            objectIdsNotIn = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
             orderBy,
-            ignoreSynonym)
+            ignoreSynonym,
+            objectIds,
+            objectIdsNotIn)
 
         # @var KalturaESearchCategoryOperator
         self.searchOperator = searchOperator
@@ -1867,13 +1895,17 @@ class KalturaESearchEntryParams(KalturaESearchParams):
             objectId = NotImplemented,
             orderBy = NotImplemented,
             ignoreSynonym = NotImplemented,
+            objectIds = NotImplemented,
+            objectIdsNotIn = NotImplemented,
             searchOperator = NotImplemented,
             aggregations = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
             orderBy,
-            ignoreSynonym)
+            ignoreSynonym,
+            objectIds,
+            objectIdsNotIn)
 
         # @var KalturaESearchEntryOperator
         self.searchOperator = searchOperator
@@ -1993,12 +2025,16 @@ class KalturaESearchGroupParams(KalturaESearchParams):
             objectId = NotImplemented,
             orderBy = NotImplemented,
             ignoreSynonym = NotImplemented,
+            objectIds = NotImplemented,
+            objectIdsNotIn = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
             orderBy,
-            ignoreSynonym)
+            ignoreSynonym,
+            objectIds,
+            objectIdsNotIn)
 
         # @var KalturaESearchGroupOperator
         self.searchOperator = searchOperator
@@ -2304,12 +2340,16 @@ class KalturaESearchUserParams(KalturaESearchParams):
             objectId = NotImplemented,
             orderBy = NotImplemented,
             ignoreSynonym = NotImplemented,
+            objectIds = NotImplemented,
+            objectIdsNotIn = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
             objectId,
             orderBy,
-            ignoreSynonym)
+            ignoreSynonym,
+            objectIds,
+            objectIdsNotIn)
 
         # @var KalturaESearchUserOperator
         self.searchOperator = searchOperator

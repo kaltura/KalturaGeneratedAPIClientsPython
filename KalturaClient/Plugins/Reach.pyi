@@ -135,6 +135,7 @@ class KalturaVendorServiceFeature(object):
     VIDEO_ANALYSIS = 14
     MODERATION = 15
     METADATA_ENRICHMENT = 16
+    SENTIMENT_ANALYSIS = 17
 
     def __init__(self, value: int): ...
 
@@ -375,6 +376,7 @@ class KalturaVendorCatalogItemPriceFunction(object):
     PRICE_PER_HOUR = "kReachUtils::calcPricePerHour"
     PRICE_PER_MINUTE = "kReachUtils::calcPricePerMinute"
     PRICE_PER_SECOND = "kReachUtils::calcPricePerSecond"
+    PRICE_PER_TOKEN = "kReachUtils::calcPricePerToken"
 
     def __init__(self, value: str): ...
 
@@ -440,6 +442,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     price: float
     userId: str
     entryObjectType: KalturaEntryObjectType
+    unitsUsed: int
     moderatingUser: str
     errDescription: str
     accessKey: str
@@ -472,6 +475,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             price: float = NotImplemented,
             userId: str = NotImplemented,
             entryObjectType: KalturaEntryObjectType = NotImplemented,
+            unitsUsed: int = NotImplemented,
             moderatingUser: str = NotImplemented,
             errDescription: str = NotImplemented,
             accessKey: str = NotImplemented,
@@ -509,6 +513,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     def getUserId(self) -> str: ...
     def getEntryObjectType(self) -> KalturaEntryObjectType: ...
     def setEntryObjectType(self, newEntryObjectType: KalturaEntryObjectType) -> None: ...
+    def getUnitsUsed(self) -> int: ...
+    def setUnitsUsed(self, newUnitsUsed: int) -> None: ...
     def getModeratingUser(self) -> str: ...
     def getErrDescription(self) -> str: ...
     def setErrDescription(self, newErrDescription: str) -> None: ...
@@ -664,7 +670,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     engineType: KalturaReachVendorEngineType
     sourceLanguage: KalturaCatalogItemLanguage
     allowResubmission: bool
-    requiresOverages: bool
+    payPerUse: bool
     vendorData: str
     stage: KalturaVendorCatalogItemStage
     lastBulkUpdateId: int
@@ -689,7 +695,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -723,8 +729,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     def setSourceLanguage(self, newSourceLanguage: KalturaCatalogItemLanguage) -> None: ...
     def getAllowResubmission(self) -> bool: ...
     def setAllowResubmission(self, newAllowResubmission: bool) -> None: ...
-    def getRequiresOverages(self) -> bool: ...
-    def setRequiresOverages(self, newRequiresOverages: bool) -> None: ...
+    def getPayPerUse(self) -> bool: ...
+    def setPayPerUse(self, newPayPerUse: bool) -> None: ...
     def getVendorData(self) -> str: ...
     def setVendorData(self, newVendorData: str) -> None: ...
     def getStage(self) -> KalturaVendorCatalogItemStage: ...
@@ -870,17 +876,21 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaVendorTaskData):
 class KalturaModerationVendorTaskData(KalturaVendorTaskData):
     ruleIds: str
     policyIds: str
+    categoryIds: str
     moderationOutputJson: str
     def __init__(self,
             entryDuration: int = NotImplemented,
             ruleIds: str = NotImplemented,
             policyIds: str = NotImplemented,
+            categoryIds: str = NotImplemented,
             moderationOutputJson: str = NotImplemented): ...
 
     def getRuleIds(self) -> str: ...
     def setRuleIds(self, newRuleIds: str) -> None: ...
     def getPolicyIds(self) -> str: ...
     def setPolicyIds(self, newPolicyIds: str) -> None: ...
+    def getCategoryIds(self) -> str: ...
+    def setCategoryIds(self, newCategoryIds: str) -> None: ...
     def getModerationOutputJson(self) -> str: ...
     def setModerationOutputJson(self, newModerationOutputJson: str) -> None: ...
 
@@ -938,6 +948,15 @@ class KalturaScheduledVendorTaskData(KalturaVendorTaskData):
     def getScheduledEventId(self) -> int: ...
     def setScheduledEventId(self, newScheduledEventId: int) -> None: ...
 
+class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
+    language: KalturaLanguageCode
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            language: KalturaLanguageCode = NotImplemented): ...
+
+    def getLanguage(self) -> KalturaLanguageCode: ...
+    def setLanguage(self, newLanguage: KalturaLanguageCode) -> None: ...
+
 class KalturaSummaryVendorTaskData(KalturaVendorTaskData):
     typeOfSummary: KalturaTypeOfSummaryTaskData
     writingStyle: KalturaSummaryWritingStyleTaskData
@@ -987,7 +1006,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1020,7 +1039,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1057,7 +1076,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1102,7 +1121,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1130,7 +1149,7 @@ class KalturaVendorClipsCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1147,13 +1166,11 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
     fromDate: int
     overageCredit: int
     addOn: int
-    allowNegativeOverageCredit: bool
     def __init__(self,
             credit: int = NotImplemented,
             fromDate: int = NotImplemented,
             overageCredit: int = NotImplemented,
-            addOn: int = NotImplemented,
-            allowNegativeOverageCredit: bool = NotImplemented): ...
+            addOn: int = NotImplemented): ...
 
     def getCredit(self) -> int: ...
     def setCredit(self, newCredit: int) -> None: ...
@@ -1163,8 +1180,6 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
     def setOverageCredit(self, newOverageCredit: int) -> None: ...
     def getAddOn(self) -> int: ...
     def setAddOn(self, newAddOn: int) -> None: ...
-    def getAllowNegativeOverageCredit(self) -> bool: ...
-    def setAllowNegativeOverageCredit(self, newAllowNegativeOverageCredit: bool) -> None: ...
 
 class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
     flavorParamsId: int
@@ -1185,7 +1200,7 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1225,7 +1240,7 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1262,7 +1277,7 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1290,7 +1305,7 @@ class KalturaVendorMetadataEnrichmentCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1318,7 +1333,7 @@ class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1346,7 +1361,35 @@ class KalturaVendorQuizCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented): ...
+        pass
+
+class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1374,7 +1417,7 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1413,7 +1456,7 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1730,7 +1773,6 @@ class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
             fromDate: int = NotImplemented,
             overageCredit: int = NotImplemented,
             addOn: int = NotImplemented,
-            allowNegativeOverageCredit: bool = NotImplemented,
             toDate: int = NotImplemented): ...
 
     def getToDate(self) -> int: ...
@@ -1835,7 +1877,7 @@ class KalturaVendorLiveCatalogItem(KalturaVendorCaptionsCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1877,7 +1919,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -1921,7 +1963,6 @@ class KalturaReoccurringVendorCredit(KalturaTimeRangeVendorCredit):
             fromDate: int = NotImplemented,
             overageCredit: int = NotImplemented,
             addOn: int = NotImplemented,
-            allowNegativeOverageCredit: bool = NotImplemented,
             toDate: int = NotImplemented,
             frequency: KalturaVendorCreditRecurrenceFrequency = NotImplemented): ...
 
@@ -1977,7 +2018,7 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -2018,7 +2059,7 @@ class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
-            requiresOverages: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
             vendorData: str = NotImplemented,
             stage: KalturaVendorCatalogItemStage = NotImplemented,
             lastBulkUpdateId: int = NotImplemented,
@@ -2214,6 +2255,31 @@ class KalturaVendorModerationCatalogItemFilter(KalturaVendorCatalogItemFilter):
         pass
 
 class KalturaVendorQuizCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorSentimentAnalysisCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,

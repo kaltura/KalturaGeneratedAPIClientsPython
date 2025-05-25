@@ -468,11 +468,15 @@ class KalturaESearchParams(KalturaObjectBase):
     objectId: str
     orderBy: KalturaESearchOrderBy
     ignoreSynonym: bool
+    objectIds: str
+    objectIdsNotIn: KalturaNullableBoolean
     def __init__(self,
             objectStatuses: str = NotImplemented,
             objectId: str = NotImplemented,
             orderBy: KalturaESearchOrderBy = NotImplemented,
-            ignoreSynonym: bool = NotImplemented): ...
+            ignoreSynonym: bool = NotImplemented,
+            objectIds: str = NotImplemented,
+            objectIdsNotIn: KalturaNullableBoolean = NotImplemented): ...
 
     def getObjectStatuses(self) -> str: ...
     def setObjectStatuses(self, newObjectStatuses: str) -> None: ...
@@ -482,6 +486,10 @@ class KalturaESearchParams(KalturaObjectBase):
     def setOrderBy(self, newOrderBy: KalturaESearchOrderBy) -> None: ...
     def getIgnoreSynonym(self) -> bool: ...
     def setIgnoreSynonym(self, newIgnoreSynonym: bool) -> None: ...
+    def getObjectIds(self) -> str: ...
+    def setObjectIds(self, newObjectIds: str) -> None: ...
+    def getObjectIdsNotIn(self) -> KalturaNullableBoolean: ...
+    def setObjectIdsNotIn(self, newObjectIdsNotIn: KalturaNullableBoolean) -> None: ...
 
 class KalturaESearchRange(KalturaObjectBase):
     greaterThanOrEqual: int
@@ -602,6 +610,8 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
             objectId: str = NotImplemented,
             orderBy: KalturaESearchOrderBy = NotImplemented,
             ignoreSynonym: bool = NotImplemented,
+            objectIds: str = NotImplemented,
+            objectIdsNotIn: KalturaNullableBoolean = NotImplemented,
             searchOperator: KalturaESearchCategoryOperator = NotImplemented): ...
 
     def getSearchOperator(self) -> KalturaESearchCategoryOperator: ...
@@ -707,6 +717,8 @@ class KalturaESearchEntryParams(KalturaESearchParams):
             objectId: str = NotImplemented,
             orderBy: KalturaESearchOrderBy = NotImplemented,
             ignoreSynonym: bool = NotImplemented,
+            objectIds: str = NotImplemented,
+            objectIdsNotIn: KalturaNullableBoolean = NotImplemented,
             searchOperator: KalturaESearchEntryOperator = NotImplemented,
             aggregations: KalturaESearchAggregation = NotImplemented): ...
 
@@ -742,6 +754,8 @@ class KalturaESearchGroupParams(KalturaESearchParams):
             objectId: str = NotImplemented,
             orderBy: KalturaESearchOrderBy = NotImplemented,
             ignoreSynonym: bool = NotImplemented,
+            objectIds: str = NotImplemented,
+            objectIdsNotIn: KalturaNullableBoolean = NotImplemented,
             searchOperator: KalturaESearchGroupOperator = NotImplemented): ...
 
     def getSearchOperator(self) -> KalturaESearchGroupOperator: ...
@@ -830,6 +844,8 @@ class KalturaESearchUserParams(KalturaESearchParams):
             objectId: str = NotImplemented,
             orderBy: KalturaESearchOrderBy = NotImplemented,
             ignoreSynonym: bool = NotImplemented,
+            objectIds: str = NotImplemented,
+            objectIdsNotIn: KalturaNullableBoolean = NotImplemented,
             searchOperator: KalturaESearchUserOperator = NotImplemented): ...
 
     def getSearchOperator(self) -> KalturaESearchUserOperator: ...

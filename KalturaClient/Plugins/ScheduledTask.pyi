@@ -76,9 +76,6 @@ class KalturaObjectFilterEngineType(object):
     def getValue(self) -> str: ...
 
 class KalturaObjectTaskType(object):
-    DISTRIBUTE = "scheduledTaskContentDistribution.Distribute"
-    DISPATCH_EVENT_NOTIFICATION = "scheduledTaskEventNotification.DispatchEventNotification"
-    EXECUTE_METADATA_XSLT = "scheduledTaskMetadata.ExecuteMetadataXslt"
     DELETE_ENTRY = "1"
     MODIFY_CATEGORIES = "2"
     DELETE_ENTRY_FLAVORS = "3"
@@ -88,6 +85,9 @@ class KalturaObjectTaskType(object):
     MODIFY_ENTRY = "7"
     MAIL_NOTIFICATION = "8"
     RECYCLE_BIN_CLEANUP = "9"
+    DISTRIBUTE = "scheduledTaskContentDistribution.Distribute"
+    DISPATCH_EVENT_NOTIFICATION = "scheduledTaskEventNotification.DispatchEventNotification"
+    EXECUTE_METADATA_XSLT = "scheduledTaskMetadata.ExecuteMetadataXslt"
 
     def __init__(self, value: str): ...
 

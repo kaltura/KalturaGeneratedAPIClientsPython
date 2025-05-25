@@ -195,6 +195,8 @@ class KalturaDistributionProviderOrderBy(object):
     def getValue(self) -> str: ...
 
 class KalturaDistributionProviderType(object):
+    GENERIC = "1"
+    SYNDICATION = "2"
     ATT_UVERSE = "attUverseDistribution.ATT_UVERSE"
     AVN = "avnDistribution.AVN"
     COMCAST_MRSS = "comcastMrssDistribution.COMCAST_MRSS"
@@ -226,8 +228,6 @@ class KalturaDistributionProviderType(object):
     YAHOO = "yahooDistribution.YAHOO"
     YOUTUBE = "youTubeDistribution.YOUTUBE"
     YOUTUBE_API = "youtubeApiDistribution.YOUTUBE_API"
-    GENERIC = "1"
-    SYNDICATION = "2"
 
     def __init__(self, value: str): ...
 

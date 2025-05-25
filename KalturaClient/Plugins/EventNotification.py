@@ -72,22 +72,6 @@ class KalturaEventNotificationTemplateStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEventNotificationEventObjectType(object):
-    AD_CUE_POINT = "adCuePointEventNotifications.AdCuePoint"
-    ANNOTATION = "annotationEventNotifications.Annotation"
-    ATTACHMENT_ASSET = "attachmentAssetEventNotifications.AttachmentAsset"
-    CAPTION_ASSET = "captionAssetEventNotifications.CaptionAsset"
-    CODE_CUE_POINT = "codeCuePointEventNotifications.CodeCuePoint"
-    DISTRIBUTION_PROFILE = "contentDistributionEventNotifications.DistributionProfile"
-    ENTRY_DISTRIBUTION = "contentDistributionEventNotifications.EntryDistribution"
-    CUE_POINT = "cuePointEventNotifications.CuePoint"
-    DROP_FOLDER = "dropFolderEventNotifications.DropFolder"
-    DROP_FOLDER_FILE = "dropFolderEventNotifications.DropFolderFile"
-    METADATA = "metadataEventNotifications.Metadata"
-    SCHEDULE_EVENT = "scheduleEventNotifications.ScheduleEvent"
-    SCHEDULE_EVENT_RESOURCE = "scheduleEventNotifications.ScheduleEventResource"
-    SCHEDULE_RESOURCE = "scheduleEventNotifications.ScheduleResource"
-    TRANSCRIPT_ASSET = "transcriptAssetEventNotifications.TranscriptAsset"
-    VIRTUAL_EVENT = "virtualEventEventNotifications.VirtualEvent"
     ENTRY = "1"
     CATEGORY = "2"
     ASSET = "3"
@@ -126,6 +110,23 @@ class KalturaEventNotificationEventObjectType(object):
     ENTRY_SERVER_NODE = "40"
     REACH_PROFILE = "41"
     ENTRY_VENDOR_TASK = "42"
+    GROUPUSER = "43"
+    AD_CUE_POINT = "adCuePointEventNotifications.AdCuePoint"
+    ANNOTATION = "annotationEventNotifications.Annotation"
+    ATTACHMENT_ASSET = "attachmentAssetEventNotifications.AttachmentAsset"
+    CAPTION_ASSET = "captionAssetEventNotifications.CaptionAsset"
+    CODE_CUE_POINT = "codeCuePointEventNotifications.CodeCuePoint"
+    DISTRIBUTION_PROFILE = "contentDistributionEventNotifications.DistributionProfile"
+    ENTRY_DISTRIBUTION = "contentDistributionEventNotifications.EntryDistribution"
+    CUE_POINT = "cuePointEventNotifications.CuePoint"
+    DROP_FOLDER = "dropFolderEventNotifications.DropFolder"
+    DROP_FOLDER_FILE = "dropFolderEventNotifications.DropFolderFile"
+    METADATA = "metadataEventNotifications.Metadata"
+    SCHEDULE_EVENT = "scheduleEventNotifications.ScheduleEvent"
+    SCHEDULE_EVENT_RESOURCE = "scheduleEventNotifications.ScheduleEventResource"
+    SCHEDULE_RESOURCE = "scheduleEventNotifications.ScheduleResource"
+    TRANSCRIPT_ASSET = "transcriptAssetEventNotifications.TranscriptAsset"
+    VIRTUAL_EVENT = "virtualEventEventNotifications.VirtualEvent"
 
     def __init__(self, value):
         self.value = value
@@ -136,7 +137,6 @@ class KalturaEventNotificationEventObjectType(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaEventNotificationEventType(object):
-    INTEGRATION_JOB_CLOSED = "integrationEventNotifications.INTEGRATION_JOB_CLOSED"
     BATCH_JOB_STATUS = "1"
     OBJECT_ADDED = "2"
     OBJECT_CHANGED = "3"
@@ -150,6 +150,7 @@ class KalturaEventNotificationEventType(object):
     OBJECT_UPDATED = "11"
     OBJECT_REPLACED = "12"
     OBJECT_READY_FOR_INDEX = "13"
+    INTEGRATION_JOB_CLOSED = "integrationEventNotifications.INTEGRATION_JOB_CLOSED"
 
     def __init__(self, value):
         self.value = value
