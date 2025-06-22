@@ -60,6 +60,7 @@ class KalturaAttachmentType(object):
     MEDIA = "2"
     DOCUMENT = "3"
     JSON = "4"
+    MARKDOWN = "5"
 
     def __init__(self, value: str): ...
 

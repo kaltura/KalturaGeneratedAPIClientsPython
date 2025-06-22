@@ -101,6 +101,14 @@ class KalturaVendorCatalogItemOutputFormat(object):
 
     def getValue(self) -> int: ...
 
+class KalturaVendorCatalogItemSignLanguageOutputFormat(object):
+    ASPECT_RATIO_16_9 = 1
+    ASPECT_RATIO_4_3 = 2
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
 class KalturaVendorCatalogItemStage(object):
     PRODUCTION = 1
     QA = 2
@@ -113,6 +121,13 @@ class KalturaVendorCatalogItemStatus(object):
     DEPRECATED = 1
     ACTIVE = 2
     DELETED = 3
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
+class KalturaVendorDocumentEnrichmentType(object):
+    MD_CONVERSION = 1
 
     def __init__(self, value: int): ...
 
@@ -136,6 +151,8 @@ class KalturaVendorServiceFeature(object):
     MODERATION = 15
     METADATA_ENRICHMENT = 16
     SENTIMENT_ANALYSIS = 17
+    DOCUMENT_ENRICHMENT = 18
+    SIGN_LANGUAGE = 19
 
     def __init__(self, value: int): ...
 
@@ -284,6 +301,14 @@ class KalturaCatalogItemLanguage(object):
     CY = "Welsh"
     XH = "Xhosa"
     ZU = "Zulu"
+
+    def __init__(self, value: str): ...
+
+    def getValue(self) -> str: ...
+
+class KalturaCatalogItemSignLanguage(object):
+    ENGLISH_ASL = "English (ASL)"
+    ENGLISH_BSL = "English (BSL)"
 
     def __init__(self, value: str): ...
 
@@ -818,27 +843,6 @@ class KalturaCategoryEntryCondition(KalturaCondition):
     def getComparison(self) -> KalturaSearchConditionComparison: ...
     def setComparison(self, newComparison: KalturaSearchConditionComparison) -> None: ...
 
-class KalturaClipsVendorTaskData(KalturaVendorTaskData):
-    clipsDuration: int
-    eventSessionContextId: str
-    instruction: str
-    clipsOutputJson: str
-    def __init__(self,
-            entryDuration: int = NotImplemented,
-            clipsDuration: int = NotImplemented,
-            eventSessionContextId: str = NotImplemented,
-            instruction: str = NotImplemented,
-            clipsOutputJson: str = NotImplemented): ...
-
-    def getClipsDuration(self) -> int: ...
-    def setClipsDuration(self, newClipsDuration: int) -> None: ...
-    def getEventSessionContextId(self) -> str: ...
-    def setEventSessionContextId(self, newEventSessionContextId: str) -> None: ...
-    def getInstruction(self) -> str: ...
-    def setInstruction(self, newInstruction: str) -> None: ...
-    def getClipsOutputJson(self) -> str: ...
-    def setClipsOutputJson(self, newClipsOutputJson: str) -> None: ...
-
 class KalturaEntryVendorTaskListResponse(KalturaListResponse):
     objects: List[KalturaEntryVendorTask]
     def __init__(self,
@@ -856,20 +860,16 @@ class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
     def getAssetId(self) -> str: ...
     def setAssetId(self, newAssetId: str) -> None: ...
 
-class KalturaMetadataEnrichmentVendorTaskData(KalturaVendorTaskData):
-    detailLevel: str
-    instruction: str
+class KalturaLocalizedVendorTaskData(KalturaVendorTaskData):
+    outputLanguage: KalturaLanguage
     outputJson: str
     def __init__(self,
             entryDuration: int = NotImplemented,
-            detailLevel: str = NotImplemented,
-            instruction: str = NotImplemented,
+            outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented): ...
 
-    def getDetailLevel(self) -> str: ...
-    def setDetailLevel(self, newDetailLevel: str) -> None: ...
-    def getInstruction(self) -> str: ...
-    def setInstruction(self, newInstruction: str) -> None: ...
+    def getOutputLanguage(self) -> KalturaLanguage: ...
+    def setOutputLanguage(self, newOutputLanguage: KalturaLanguage) -> None: ...
     def getOutputJson(self) -> str: ...
     def setOutputJson(self, newOutputJson: str) -> None: ...
 
@@ -893,35 +893,6 @@ class KalturaModerationVendorTaskData(KalturaVendorTaskData):
     def setCategoryIds(self, newCategoryIds: str) -> None: ...
     def getModerationOutputJson(self) -> str: ...
     def setModerationOutputJson(self, newModerationOutputJson: str) -> None: ...
-
-class KalturaQuizVendorTaskData(KalturaVendorTaskData):
-    numberOfQuestions: int
-    questionsType: str
-    context: str
-    formalStyle: str
-    createQuiz: bool
-    quizOutput: str
-    def __init__(self,
-            entryDuration: int = NotImplemented,
-            numberOfQuestions: int = NotImplemented,
-            questionsType: str = NotImplemented,
-            context: str = NotImplemented,
-            formalStyle: str = NotImplemented,
-            createQuiz: bool = NotImplemented,
-            quizOutput: str = NotImplemented): ...
-
-    def getNumberOfQuestions(self) -> int: ...
-    def setNumberOfQuestions(self, newNumberOfQuestions: int) -> None: ...
-    def getQuestionsType(self) -> str: ...
-    def setQuestionsType(self, newQuestionsType: str) -> None: ...
-    def getContext(self) -> str: ...
-    def setContext(self, newContext: str) -> None: ...
-    def getFormalStyle(self) -> str: ...
-    def setFormalStyle(self, newFormalStyle: str) -> None: ...
-    def getCreateQuiz(self) -> bool: ...
-    def setCreateQuiz(self, newCreateQuiz: bool) -> None: ...
-    def getQuizOutput(self) -> str: ...
-    def setQuizOutput(self, newQuizOutput: str) -> None: ...
 
 class KalturaReachProfileListResponse(KalturaListResponse):
     objects: List[KalturaReachProfile]
@@ -956,27 +927,6 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 
     def getLanguage(self) -> KalturaLanguageCode: ...
     def setLanguage(self, newLanguage: KalturaLanguageCode) -> None: ...
-
-class KalturaSummaryVendorTaskData(KalturaVendorTaskData):
-    typeOfSummary: KalturaTypeOfSummaryTaskData
-    writingStyle: KalturaSummaryWritingStyleTaskData
-    language: KalturaLanguageCode
-    summaryOutputJson: str
-    def __init__(self,
-            entryDuration: int = NotImplemented,
-            typeOfSummary: KalturaTypeOfSummaryTaskData = NotImplemented,
-            writingStyle: KalturaSummaryWritingStyleTaskData = NotImplemented,
-            language: KalturaLanguageCode = NotImplemented,
-            summaryOutputJson: str = NotImplemented): ...
-
-    def getTypeOfSummary(self) -> KalturaTypeOfSummaryTaskData: ...
-    def setTypeOfSummary(self, newTypeOfSummary: KalturaTypeOfSummaryTaskData) -> None: ...
-    def getWritingStyle(self) -> KalturaSummaryWritingStyleTaskData: ...
-    def setWritingStyle(self, newWritingStyle: KalturaSummaryWritingStyleTaskData) -> None: ...
-    def getLanguage(self) -> KalturaLanguageCode: ...
-    def setLanguage(self, newLanguage: KalturaLanguageCode) -> None: ...
-    def getSummaryOutputJson(self) -> str: ...
-    def setSummaryOutputJson(self, newSummaryOutputJson: str) -> None: ...
 
 class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
     credit: int
@@ -1180,6 +1130,38 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
     def setOverageCredit(self, newOverageCredit: int) -> None: ...
     def getAddOn(self) -> int: ...
     def setAddOn(self, newAddOn: int) -> None: ...
+
+class KalturaVendorDocumentEnrichmentCatalogItem(KalturaVendorCatalogItem):
+    documentEnrichmentType: KalturaVendorDocumentEnrichmentType
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented,
+            documentEnrichmentType: KalturaVendorDocumentEnrichmentType = NotImplemented): ...
+
+    def getDocumentEnrichmentType(self) -> KalturaVendorDocumentEnrichmentType: ...
+    def setDocumentEnrichmentType(self, newDocumentEnrichmentType: KalturaVendorDocumentEnrichmentType) -> None: ...
 
 class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
     flavorParamsId: int
@@ -1401,6 +1383,42 @@ class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
+class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
+    targetLanguage: KalturaCatalogItemSignLanguage
+    outputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented,
+            targetLanguage: KalturaCatalogItemSignLanguage = NotImplemented,
+            outputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat = NotImplemented): ...
+
+    def getTargetLanguage(self) -> KalturaCatalogItemSignLanguage: ...
+    def setTargetLanguage(self, newTargetLanguage: KalturaCatalogItemSignLanguage) -> None: ...
+    def getOutputFormat(self) -> KalturaVendorCatalogItemSignLanguageOutputFormat: ...
+    def setOutputFormat(self, newOutputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat) -> None: ...
+
 class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id: int = NotImplemented,
@@ -1487,6 +1505,29 @@ class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def setTextTranscriptAssetId(self, newTextTranscriptAssetId: str) -> None: ...
     def getJsonTranscriptAssetId(self) -> str: ...
     def setJsonTranscriptAssetId(self, newJsonTranscriptAssetId: str) -> None: ...
+
+class KalturaClipsVendorTaskData(KalturaLocalizedVendorTaskData):
+    clipsDuration: int
+    eventSessionContextId: str
+    instruction: str
+    clipsOutputJson: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            outputLanguage: KalturaLanguage = NotImplemented,
+            outputJson: str = NotImplemented,
+            clipsDuration: int = NotImplemented,
+            eventSessionContextId: str = NotImplemented,
+            instruction: str = NotImplemented,
+            clipsOutputJson: str = NotImplemented): ...
+
+    def getClipsDuration(self) -> int: ...
+    def setClipsDuration(self, newClipsDuration: int) -> None: ...
+    def getEventSessionContextId(self) -> str: ...
+    def setEventSessionContextId(self, newEventSessionContextId: str) -> None: ...
+    def getInstruction(self) -> str: ...
+    def setInstruction(self, newInstruction: str) -> None: ...
+    def getClipsOutputJson(self) -> str: ...
+    def setClipsOutputJson(self, newClipsOutputJson: str) -> None: ...
 
 class KalturaEntryVendorTaskBaseFilter(KalturaRelatedFilter):
     idEqual: int
@@ -1651,6 +1692,52 @@ class KalturaEntryVendorTaskCsvJobData(KalturaExportCsvJobData):
     def getFilter(self) -> KalturaEntryVendorTaskFilter: ...
     def setFilter(self, newFilter: KalturaEntryVendorTaskFilter) -> None: ...
 
+class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
+    detailLevel: str
+    instruction: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            outputLanguage: KalturaLanguage = NotImplemented,
+            outputJson: str = NotImplemented,
+            detailLevel: str = NotImplemented,
+            instruction: str = NotImplemented): ...
+
+    def getDetailLevel(self) -> str: ...
+    def setDetailLevel(self, newDetailLevel: str) -> None: ...
+    def getInstruction(self) -> str: ...
+    def setInstruction(self, newInstruction: str) -> None: ...
+
+class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
+    numberOfQuestions: int
+    questionsType: str
+    context: str
+    formalStyle: str
+    createQuiz: bool
+    quizOutput: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            outputLanguage: KalturaLanguage = NotImplemented,
+            outputJson: str = NotImplemented,
+            numberOfQuestions: int = NotImplemented,
+            questionsType: str = NotImplemented,
+            context: str = NotImplemented,
+            formalStyle: str = NotImplemented,
+            createQuiz: bool = NotImplemented,
+            quizOutput: str = NotImplemented): ...
+
+    def getNumberOfQuestions(self) -> int: ...
+    def setNumberOfQuestions(self, newNumberOfQuestions: int) -> None: ...
+    def getQuestionsType(self) -> str: ...
+    def setQuestionsType(self, newQuestionsType: str) -> None: ...
+    def getContext(self) -> str: ...
+    def setContext(self, newContext: str) -> None: ...
+    def getFormalStyle(self) -> str: ...
+    def setFormalStyle(self, newFormalStyle: str) -> None: ...
+    def getCreateQuiz(self) -> bool: ...
+    def setCreateQuiz(self, newCreateQuiz: bool) -> None: ...
+    def getQuizOutput(self) -> str: ...
+    def setQuizOutput(self, newQuizOutput: str) -> None: ...
+
 class KalturaReachProfileBaseFilter(KalturaRelatedFilter):
     idEqual: int
     idIn: str
@@ -1765,6 +1852,25 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
     def setServiceFeature(self, newServiceFeature: KalturaVendorServiceFeature) -> None: ...
     def getTurnAroundTime(self) -> KalturaVendorServiceTurnAroundTime: ...
     def setTurnAroundTime(self, newTurnAroundTime: KalturaVendorServiceTurnAroundTime) -> None: ...
+
+class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
+    typeOfSummary: KalturaTypeOfSummaryTaskData
+    writingStyle: KalturaSummaryWritingStyleTaskData
+    summaryOutputJson: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            outputLanguage: KalturaLanguage = NotImplemented,
+            outputJson: str = NotImplemented,
+            typeOfSummary: KalturaTypeOfSummaryTaskData = NotImplemented,
+            writingStyle: KalturaSummaryWritingStyleTaskData = NotImplemented,
+            summaryOutputJson: str = NotImplemented): ...
+
+    def getTypeOfSummary(self) -> KalturaTypeOfSummaryTaskData: ...
+    def setTypeOfSummary(self, newTypeOfSummary: KalturaTypeOfSummaryTaskData) -> None: ...
+    def getWritingStyle(self) -> KalturaSummaryWritingStyleTaskData: ...
+    def setWritingStyle(self, newWritingStyle: KalturaSummaryWritingStyleTaskData) -> None: ...
+    def getSummaryOutputJson(self) -> str: ...
+    def setSummaryOutputJson(self, newSummaryOutputJson: str) -> None: ...
 
 class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
     toDate: int
@@ -2122,6 +2228,31 @@ class KalturaVendorCaptionsCatalogItemBaseFilter(KalturaVendorCatalogItemFilter)
     def setOutputFormatIn(self, newOutputFormatIn: str) -> None: ...
 
 class KalturaVendorClipsCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorDocumentEnrichmentCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -2555,6 +2686,33 @@ class KalturaVendorLiveCaptionCatalogItemFilter(KalturaVendorCaptionsCatalogItem
             outputFormatIn: str = NotImplemented): ...
         pass
 
+class KalturaVendorSignLanguageCatalogItemFilter(KalturaVendorDubbingCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented,
+            targetLanguageEqual: KalturaCatalogItemLanguage = NotImplemented,
+            targetLanguageIn: str = NotImplemented): ...
+        pass
+
 class KalturaVendorTranslationCatalogItemBaseFilter(KalturaVendorCaptionsCatalogItemFilter):
     targetLanguageEqual: KalturaCatalogItemLanguage
     targetLanguageIn: str
@@ -2685,6 +2843,7 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
     def getServeUrl(self, filterType: str = NotImplemented, filterInput: int = NotImplemented, status: int = NotImplemented, dueDate: str = NotImplemented) -> str: ...
     def list(self, filter: KalturaEntryVendorTaskFilter = NotImplemented, pager: KalturaFilterPager = NotImplemented) -> KalturaEntryVendorTaskListResponse: ...
     def reject(self, id: int, rejectReason: str = NotImplemented) -> KalturaEntryVendorTask: ...
+    def replaceOutput(self, id: int, newOutput: str) -> KalturaEntryVendorTask: ...
     def serve(self, vendorPartnerId: int = NotImplemented, partnerId: int = NotImplemented, status: int = NotImplemented, dueDate: str = NotImplemented) -> IO[Any]: ...
     def serveCsv(self, id: str) -> str: ...
     def update(self, id: int, entryVendorTask: KalturaEntryVendorTask) -> KalturaEntryVendorTask: ...

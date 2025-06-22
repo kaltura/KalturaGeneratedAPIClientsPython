@@ -146,6 +146,18 @@ class KalturaVendorCatalogItemOutputFormat(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorCatalogItemSignLanguageOutputFormat(object):
+    ASPECT_RATIO_16_9 = 1
+    ASPECT_RATIO_4_3 = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorCatalogItemStage(object):
     PRODUCTION = 1
     QA = 2
@@ -162,6 +174,17 @@ class KalturaVendorCatalogItemStatus(object):
     DEPRECATED = 1
     ACTIVE = 2
     DELETED = 3
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorDocumentEnrichmentType(object):
+    MD_CONVERSION = 1
 
     def __init__(self, value):
         self.value = value
@@ -189,6 +212,8 @@ class KalturaVendorServiceFeature(object):
     MODERATION = 15
     METADATA_ENRICHMENT = 16
     SENTIMENT_ANALYSIS = 17
+    DOCUMENT_ENRICHMENT = 18
+    SIGN_LANGUAGE = 19
 
     def __init__(self, value):
         self.value = value
@@ -357,6 +382,18 @@ class KalturaCatalogItemLanguage(object):
     CY = "Welsh"
     XH = "Xhosa"
     ZU = "Zulu"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaCatalogItemSignLanguage(object):
+    ENGLISH_ASL = "English (ASL)"
+    ENGLISH_BSL = "English (BSL)"
 
     def __init__(self, value):
         self.value = value
@@ -1869,84 +1906,6 @@ class KalturaCategoryEntryCondition(KalturaCondition):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaClipsVendorTaskData(KalturaVendorTaskData):
-    def __init__(self,
-            entryDuration = NotImplemented,
-            clipsDuration = NotImplemented,
-            eventSessionContextId = NotImplemented,
-            instruction = NotImplemented,
-            clipsOutputJson = NotImplemented):
-        KalturaVendorTaskData.__init__(self,
-            entryDuration)
-
-        # Estimated duration of the clips, in seconds.
-        # @var int
-        # @insertonly
-        self.clipsDuration = clipsDuration
-
-        # Event session context ID used to enhance clip results.
-        # @var str
-        # @insertonly
-        self.eventSessionContextId = eventSessionContextId
-
-        # Instruction describing the moments to capture or the objectives to achieve with the clips.
-        # @var str
-        # @insertonly
-        self.instruction = instruction
-
-        # List of clips as JSON string.
-        # 	 For example: [{"title": "Title of the first clip", "description": "Description of the first clip", "tags": "Tagged-Example", "start": 127, "duration": 30}]
-        # @var str
-        self.clipsOutputJson = clipsOutputJson
-
-
-    PROPERTY_LOADERS = {
-        'clipsDuration': getXmlNodeInt, 
-        'eventSessionContextId': getXmlNodeText, 
-        'instruction': getXmlNodeText, 
-        'clipsOutputJson': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaVendorTaskData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaClipsVendorTaskData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaVendorTaskData.toParams(self)
-        kparams.put("objectType", "KalturaClipsVendorTaskData")
-        kparams.addIntIfDefined("clipsDuration", self.clipsDuration)
-        kparams.addStringIfDefined("eventSessionContextId", self.eventSessionContextId)
-        kparams.addStringIfDefined("instruction", self.instruction)
-        kparams.addStringIfDefined("clipsOutputJson", self.clipsOutputJson)
-        return kparams
-
-    def getClipsDuration(self):
-        return self.clipsDuration
-
-    def setClipsDuration(self, newClipsDuration):
-        self.clipsDuration = newClipsDuration
-
-    def getEventSessionContextId(self):
-        return self.eventSessionContextId
-
-    def setEventSessionContextId(self, newEventSessionContextId):
-        self.eventSessionContextId = newEventSessionContextId
-
-    def getInstruction(self):
-        return self.instruction
-
-    def setInstruction(self, newInstruction):
-        self.instruction = newInstruction
-
-    def getClipsOutputJson(self):
-        return self.clipsOutputJson
-
-    def setClipsOutputJson(self, newClipsOutputJson):
-        self.clipsOutputJson = newClipsOutputJson
-
-
-# @package Kaltura
-# @subpackage Client
 class KalturaEntryVendorTaskListResponse(KalturaListResponse):
     def __init__(self,
             totalCount = NotImplemented,
@@ -2014,60 +1973,44 @@ class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaMetadataEnrichmentVendorTaskData(KalturaVendorTaskData):
+class KalturaLocalizedVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
-            detailLevel = NotImplemented,
-            instruction = NotImplemented,
+            outputLanguage = NotImplemented,
             outputJson = NotImplemented):
         KalturaVendorTaskData.__init__(self,
             entryDuration)
 
-        # The level of detail for the metadata enrichment process.
-        # @var str
-        # @insertonly
-        self.detailLevel = detailLevel
+        # Language code
+        # @var KalturaLanguage
+        self.outputLanguage = outputLanguage
 
-        # Instructions describing what should be taken into account during the metadata enrichment process.
-        # @var str
-        # @insertonly
-        self.instruction = instruction
-
-        # Metadata enrichment result as JSON string.
-        # 	 For example: {"titles": ["The first title", "The second title"], "descriptions": ["The first description"], "tags": ["Tag1", "Tag2"]}
+        # result as JSON string.
         # @var str
         self.outputJson = outputJson
 
 
     PROPERTY_LOADERS = {
-        'detailLevel': getXmlNodeText, 
-        'instruction': getXmlNodeText, 
+        'outputLanguage': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
         'outputJson': getXmlNodeText, 
     }
 
     def fromXml(self, node):
         KalturaVendorTaskData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaMetadataEnrichmentVendorTaskData.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaLocalizedVendorTaskData.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaVendorTaskData.toParams(self)
-        kparams.put("objectType", "KalturaMetadataEnrichmentVendorTaskData")
-        kparams.addStringIfDefined("detailLevel", self.detailLevel)
-        kparams.addStringIfDefined("instruction", self.instruction)
+        kparams.put("objectType", "KalturaLocalizedVendorTaskData")
+        kparams.addStringEnumIfDefined("outputLanguage", self.outputLanguage)
         kparams.addStringIfDefined("outputJson", self.outputJson)
         return kparams
 
-    def getDetailLevel(self):
-        return self.detailLevel
+    def getOutputLanguage(self):
+        return self.outputLanguage
 
-    def setDetailLevel(self, newDetailLevel):
-        self.detailLevel = newDetailLevel
-
-    def getInstruction(self):
-        return self.instruction
-
-    def setInstruction(self, newInstruction):
-        self.instruction = newInstruction
+    def setOutputLanguage(self, newOutputLanguage):
+        self.outputLanguage = newOutputLanguage
 
     def getOutputJson(self):
         return self.outputJson
@@ -2148,106 +2091,6 @@ class KalturaModerationVendorTaskData(KalturaVendorTaskData):
 
     def setModerationOutputJson(self, newModerationOutputJson):
         self.moderationOutputJson = newModerationOutputJson
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaQuizVendorTaskData(KalturaVendorTaskData):
-    def __init__(self,
-            entryDuration = NotImplemented,
-            numberOfQuestions = NotImplemented,
-            questionsType = NotImplemented,
-            context = NotImplemented,
-            formalStyle = NotImplemented,
-            createQuiz = NotImplemented,
-            quizOutput = NotImplemented):
-        KalturaVendorTaskData.__init__(self,
-            entryDuration)
-
-        # Number Of Questions.
-        # @var int
-        self.numberOfQuestions = numberOfQuestions
-
-        # Questions Type.
-        # @var str
-        self.questionsType = questionsType
-
-        # Quiz Context.
-        # @var str
-        self.context = context
-
-        # Formal Style.
-        # @var str
-        self.formalStyle = formalStyle
-
-        # Create quiz flag.
-        # @var bool
-        self.createQuiz = createQuiz
-
-        # Quiz entry Id
-        # @var str
-        self.quizOutput = quizOutput
-
-
-    PROPERTY_LOADERS = {
-        'numberOfQuestions': getXmlNodeInt, 
-        'questionsType': getXmlNodeText, 
-        'context': getXmlNodeText, 
-        'formalStyle': getXmlNodeText, 
-        'createQuiz': getXmlNodeBool, 
-        'quizOutput': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaVendorTaskData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaQuizVendorTaskData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaVendorTaskData.toParams(self)
-        kparams.put("objectType", "KalturaQuizVendorTaskData")
-        kparams.addIntIfDefined("numberOfQuestions", self.numberOfQuestions)
-        kparams.addStringIfDefined("questionsType", self.questionsType)
-        kparams.addStringIfDefined("context", self.context)
-        kparams.addStringIfDefined("formalStyle", self.formalStyle)
-        kparams.addBoolIfDefined("createQuiz", self.createQuiz)
-        kparams.addStringIfDefined("quizOutput", self.quizOutput)
-        return kparams
-
-    def getNumberOfQuestions(self):
-        return self.numberOfQuestions
-
-    def setNumberOfQuestions(self, newNumberOfQuestions):
-        self.numberOfQuestions = newNumberOfQuestions
-
-    def getQuestionsType(self):
-        return self.questionsType
-
-    def setQuestionsType(self, newQuestionsType):
-        self.questionsType = newQuestionsType
-
-    def getContext(self):
-        return self.context
-
-    def setContext(self, newContext):
-        self.context = newContext
-
-    def getFormalStyle(self):
-        return self.formalStyle
-
-    def setFormalStyle(self, newFormalStyle):
-        self.formalStyle = newFormalStyle
-
-    def getCreateQuiz(self):
-        return self.createQuiz
-
-    def setCreateQuiz(self, newCreateQuiz):
-        self.createQuiz = newCreateQuiz
-
-    def getQuizOutput(self):
-        return self.quizOutput
-
-    def setQuizOutput(self, newQuizOutput):
-        self.quizOutput = newQuizOutput
 
 
 # @package Kaltura
@@ -2375,80 +2218,6 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 
     def setLanguage(self, newLanguage):
         self.language = newLanguage
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaSummaryVendorTaskData(KalturaVendorTaskData):
-    def __init__(self,
-            entryDuration = NotImplemented,
-            typeOfSummary = NotImplemented,
-            writingStyle = NotImplemented,
-            language = NotImplemented,
-            summaryOutputJson = NotImplemented):
-        KalturaVendorTaskData.__init__(self,
-            entryDuration)
-
-        # Type of summary.
-        # @var KalturaTypeOfSummaryTaskData
-        self.typeOfSummary = typeOfSummary
-
-        # Writing style of the summary.
-        # @var KalturaSummaryWritingStyleTaskData
-        self.writingStyle = writingStyle
-
-        # Language code
-        # @var KalturaLanguageCode
-        self.language = language
-
-        # JSON string containing the summary output.
-        # @var str
-        self.summaryOutputJson = summaryOutputJson
-
-
-    PROPERTY_LOADERS = {
-        'typeOfSummary': (KalturaEnumsFactory.createString, "KalturaTypeOfSummaryTaskData"), 
-        'writingStyle': (KalturaEnumsFactory.createString, "KalturaSummaryWritingStyleTaskData"), 
-        'language': (KalturaEnumsFactory.createString, "KalturaLanguageCode"), 
-        'summaryOutputJson': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaVendorTaskData.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaSummaryVendorTaskData.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaVendorTaskData.toParams(self)
-        kparams.put("objectType", "KalturaSummaryVendorTaskData")
-        kparams.addStringEnumIfDefined("typeOfSummary", self.typeOfSummary)
-        kparams.addStringEnumIfDefined("writingStyle", self.writingStyle)
-        kparams.addStringEnumIfDefined("language", self.language)
-        kparams.addStringIfDefined("summaryOutputJson", self.summaryOutputJson)
-        return kparams
-
-    def getTypeOfSummary(self):
-        return self.typeOfSummary
-
-    def setTypeOfSummary(self, newTypeOfSummary):
-        self.typeOfSummary = newTypeOfSummary
-
-    def getWritingStyle(self):
-        return self.writingStyle
-
-    def setWritingStyle(self, newWritingStyle):
-        self.writingStyle = newWritingStyle
-
-    def getLanguage(self):
-        return self.language
-
-    def setLanguage(self, newLanguage):
-        self.language = newLanguage
-
-    def getSummaryOutputJson(self):
-        return self.summaryOutputJson
-
-    def setSummaryOutputJson(self, newSummaryOutputJson):
-        self.summaryOutputJson = newSummaryOutputJson
 
 
 # @package Kaltura
@@ -3005,6 +2774,86 @@ class KalturaVendorCredit(KalturaBaseVendorCredit):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorDocumentEnrichmentCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented,
+            documentEnrichmentType = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+        # @var KalturaVendorDocumentEnrichmentType
+        self.documentEnrichmentType = documentEnrichmentType
+
+
+    PROPERTY_LOADERS = {
+        'documentEnrichmentType': (KalturaEnumsFactory.createInt, "KalturaVendorDocumentEnrichmentType"), 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorDocumentEnrichmentCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorDocumentEnrichmentCatalogItem")
+        kparams.addIntEnumIfDefined("documentEnrichmentType", self.documentEnrichmentType)
+        return kparams
+
+    def getDocumentEnrichmentType(self):
+        return self.documentEnrichmentType
+
+    def setDocumentEnrichmentType(self, newDocumentEnrichmentType):
+        self.documentEnrichmentType = newDocumentEnrichmentType
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id = NotImplemented,
@@ -3553,6 +3402,98 @@ class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented,
+            targetLanguage = NotImplemented,
+            outputFormat = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+        # @var KalturaCatalogItemSignLanguage
+        self.targetLanguage = targetLanguage
+
+        # @var KalturaVendorCatalogItemSignLanguageOutputFormat
+        self.outputFormat = outputFormat
+
+
+    PROPERTY_LOADERS = {
+        'targetLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemSignLanguage"), 
+        'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemSignLanguageOutputFormat"), 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorSignLanguageCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorSignLanguageCatalogItem")
+        kparams.addStringEnumIfDefined("targetLanguage", self.targetLanguage)
+        kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
+        return kparams
+
+    def getTargetLanguage(self):
+        return self.targetLanguage
+
+    def setTargetLanguage(self, newTargetLanguage):
+        self.targetLanguage = newTargetLanguage
+
+    def getOutputFormat(self):
+        return self.outputFormat
+
+    def setOutputFormat(self, newOutputFormat):
+        self.outputFormat = newOutputFormat
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id = NotImplemented,
@@ -3796,6 +3737,88 @@ class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
 
     def setJsonTranscriptAssetId(self, newJsonTranscriptAssetId):
         self.jsonTranscriptAssetId = newJsonTranscriptAssetId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaClipsVendorTaskData(KalturaLocalizedVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            outputLanguage = NotImplemented,
+            outputJson = NotImplemented,
+            clipsDuration = NotImplemented,
+            eventSessionContextId = NotImplemented,
+            instruction = NotImplemented,
+            clipsOutputJson = NotImplemented):
+        KalturaLocalizedVendorTaskData.__init__(self,
+            entryDuration,
+            outputLanguage,
+            outputJson)
+
+        # Estimated duration of the clips, in seconds.
+        # @var int
+        # @insertonly
+        self.clipsDuration = clipsDuration
+
+        # Event session context ID used to enhance clip results.
+        # @var str
+        # @insertonly
+        self.eventSessionContextId = eventSessionContextId
+
+        # Instruction describing the moments to capture or the objectives to achieve with the clips.
+        # @var str
+        # @insertonly
+        self.instruction = instruction
+
+        # List of clips as JSON string.
+        # 	 For example: [{"title": "Title of the first clip", "description": "Description of the first clip", "tags": "Tagged-Example", "start": 127, "duration": 30}]
+        # @var str
+        self.clipsOutputJson = clipsOutputJson
+
+
+    PROPERTY_LOADERS = {
+        'clipsDuration': getXmlNodeInt, 
+        'eventSessionContextId': getXmlNodeText, 
+        'instruction': getXmlNodeText, 
+        'clipsOutputJson': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLocalizedVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaClipsVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLocalizedVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaClipsVendorTaskData")
+        kparams.addIntIfDefined("clipsDuration", self.clipsDuration)
+        kparams.addStringIfDefined("eventSessionContextId", self.eventSessionContextId)
+        kparams.addStringIfDefined("instruction", self.instruction)
+        kparams.addStringIfDefined("clipsOutputJson", self.clipsOutputJson)
+        return kparams
+
+    def getClipsDuration(self):
+        return self.clipsDuration
+
+    def setClipsDuration(self, newClipsDuration):
+        self.clipsDuration = newClipsDuration
+
+    def getEventSessionContextId(self):
+        return self.eventSessionContextId
+
+    def setEventSessionContextId(self, newEventSessionContextId):
+        self.eventSessionContextId = newEventSessionContextId
+
+    def getInstruction(self):
+        return self.instruction
+
+    def setInstruction(self, newInstruction):
+        self.instruction = newInstruction
+
+    def getClipsOutputJson(self):
+        return self.clipsOutputJson
+
+    def setClipsOutputJson(self, newClipsOutputJson):
+        self.clipsOutputJson = newClipsOutputJson
 
 
 # @package Kaltura
@@ -4279,6 +4302,164 @@ class KalturaEntryVendorTaskCsvJobData(KalturaExportCsvJobData):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            outputLanguage = NotImplemented,
+            outputJson = NotImplemented,
+            detailLevel = NotImplemented,
+            instruction = NotImplemented):
+        KalturaLocalizedVendorTaskData.__init__(self,
+            entryDuration,
+            outputLanguage,
+            outputJson)
+
+        # The level of detail for the metadata enrichment process.
+        # @var str
+        # @insertonly
+        self.detailLevel = detailLevel
+
+        # Instructions describing what should be taken into account during the metadata enrichment process.
+        # @var str
+        # @insertonly
+        self.instruction = instruction
+
+
+    PROPERTY_LOADERS = {
+        'detailLevel': getXmlNodeText, 
+        'instruction': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLocalizedVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMetadataEnrichmentVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLocalizedVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaMetadataEnrichmentVendorTaskData")
+        kparams.addStringIfDefined("detailLevel", self.detailLevel)
+        kparams.addStringIfDefined("instruction", self.instruction)
+        return kparams
+
+    def getDetailLevel(self):
+        return self.detailLevel
+
+    def setDetailLevel(self, newDetailLevel):
+        self.detailLevel = newDetailLevel
+
+    def getInstruction(self):
+        return self.instruction
+
+    def setInstruction(self, newInstruction):
+        self.instruction = newInstruction
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            outputLanguage = NotImplemented,
+            outputJson = NotImplemented,
+            numberOfQuestions = NotImplemented,
+            questionsType = NotImplemented,
+            context = NotImplemented,
+            formalStyle = NotImplemented,
+            createQuiz = NotImplemented,
+            quizOutput = NotImplemented):
+        KalturaLocalizedVendorTaskData.__init__(self,
+            entryDuration,
+            outputLanguage,
+            outputJson)
+
+        # Number Of Questions.
+        # @var int
+        self.numberOfQuestions = numberOfQuestions
+
+        # Questions Type.
+        # @var str
+        self.questionsType = questionsType
+
+        # Quiz Context.
+        # @var str
+        self.context = context
+
+        # Formal Style.
+        # @var str
+        self.formalStyle = formalStyle
+
+        # Create quiz flag.
+        # @var bool
+        self.createQuiz = createQuiz
+
+        # Quiz entry Id
+        # @var str
+        self.quizOutput = quizOutput
+
+
+    PROPERTY_LOADERS = {
+        'numberOfQuestions': getXmlNodeInt, 
+        'questionsType': getXmlNodeText, 
+        'context': getXmlNodeText, 
+        'formalStyle': getXmlNodeText, 
+        'createQuiz': getXmlNodeBool, 
+        'quizOutput': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLocalizedVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaQuizVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLocalizedVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaQuizVendorTaskData")
+        kparams.addIntIfDefined("numberOfQuestions", self.numberOfQuestions)
+        kparams.addStringIfDefined("questionsType", self.questionsType)
+        kparams.addStringIfDefined("context", self.context)
+        kparams.addStringIfDefined("formalStyle", self.formalStyle)
+        kparams.addBoolIfDefined("createQuiz", self.createQuiz)
+        kparams.addStringIfDefined("quizOutput", self.quizOutput)
+        return kparams
+
+    def getNumberOfQuestions(self):
+        return self.numberOfQuestions
+
+    def setNumberOfQuestions(self, newNumberOfQuestions):
+        self.numberOfQuestions = newNumberOfQuestions
+
+    def getQuestionsType(self):
+        return self.questionsType
+
+    def setQuestionsType(self, newQuestionsType):
+        self.questionsType = newQuestionsType
+
+    def getContext(self):
+        return self.context
+
+    def setContext(self, newContext):
+        self.context = newContext
+
+    def getFormalStyle(self):
+        return self.formalStyle
+
+    def setFormalStyle(self, newFormalStyle):
+        self.formalStyle = newFormalStyle
+
+    def getCreateQuiz(self):
+        return self.createQuiz
+
+    def setCreateQuiz(self, newCreateQuiz):
+        self.createQuiz = newCreateQuiz
+
+    def getQuizOutput(self):
+        return self.quizOutput
+
+    def setQuizOutput(self, newQuizOutput):
+        self.quizOutput = newQuizOutput
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReachProfileBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -4581,6 +4762,71 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
 
     def setTurnAroundTime(self, newTurnAroundTime):
         self.turnAroundTime = newTurnAroundTime
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            outputLanguage = NotImplemented,
+            outputJson = NotImplemented,
+            typeOfSummary = NotImplemented,
+            writingStyle = NotImplemented,
+            summaryOutputJson = NotImplemented):
+        KalturaLocalizedVendorTaskData.__init__(self,
+            entryDuration,
+            outputLanguage,
+            outputJson)
+
+        # Type of summary.
+        # @var KalturaTypeOfSummaryTaskData
+        self.typeOfSummary = typeOfSummary
+
+        # Writing style of the summary.
+        # @var KalturaSummaryWritingStyleTaskData
+        self.writingStyle = writingStyle
+
+        # JSON string containing the summary output.
+        # @var str
+        self.summaryOutputJson = summaryOutputJson
+
+
+    PROPERTY_LOADERS = {
+        'typeOfSummary': (KalturaEnumsFactory.createString, "KalturaTypeOfSummaryTaskData"), 
+        'writingStyle': (KalturaEnumsFactory.createString, "KalturaSummaryWritingStyleTaskData"), 
+        'summaryOutputJson': getXmlNodeText, 
+    }
+
+    def fromXml(self, node):
+        KalturaLocalizedVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSummaryVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaLocalizedVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaSummaryVendorTaskData")
+        kparams.addStringEnumIfDefined("typeOfSummary", self.typeOfSummary)
+        kparams.addStringEnumIfDefined("writingStyle", self.writingStyle)
+        kparams.addStringIfDefined("summaryOutputJson", self.summaryOutputJson)
+        return kparams
+
+    def getTypeOfSummary(self):
+        return self.typeOfSummary
+
+    def setTypeOfSummary(self, newTypeOfSummary):
+        self.typeOfSummary = newTypeOfSummary
+
+    def getWritingStyle(self):
+        return self.writingStyle
+
+    def setWritingStyle(self, newWritingStyle):
+        self.writingStyle = newWritingStyle
+
+    def getSummaryOutputJson(self):
+        return self.summaryOutputJson
+
+    def setSummaryOutputJson(self, newSummaryOutputJson):
+        self.summaryOutputJson = newSummaryOutputJson
 
 
 # @package Kaltura
@@ -5625,6 +5871,68 @@ class KalturaVendorClipsCatalogItemFilter(KalturaVendorCatalogItemFilter):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorDocumentEnrichmentCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorDocumentEnrichmentCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorDocumentEnrichmentCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorDubbingCatalogItemBaseFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -6631,6 +6939,72 @@ class KalturaVendorLiveCaptionCatalogItemFilter(KalturaVendorCaptionsCatalogItem
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorSignLanguageCatalogItemFilter(KalturaVendorDubbingCatalogItemBaseFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented,
+            targetLanguageEqual = NotImplemented,
+            targetLanguageIn = NotImplemented):
+        KalturaVendorDubbingCatalogItemBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual,
+            targetLanguageEqual,
+            targetLanguageIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorDubbingCatalogItemBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorSignLanguageCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorDubbingCatalogItemBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorSignLanguageCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorTranslationCatalogItemBaseFilter(KalturaVendorCaptionsCatalogItemFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -7187,6 +7561,16 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
 
+    def replaceOutput(self, id, newOutput):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addStringIfDefined("newOutput", newOutput)
+        self.client.queueServiceActionCall("reach_entryvendortask", "replaceOutput", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
     def serve(self, vendorPartnerId = NotImplemented, partnerId = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
         kparams = KalturaParams()
         kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
@@ -7292,14 +7676,17 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaReachProfileStatus': KalturaReachProfileStatus,
             'KalturaReachProfileType': KalturaReachProfileType,
             'KalturaVendorCatalogItemOutputFormat': KalturaVendorCatalogItemOutputFormat,
+            'KalturaVendorCatalogItemSignLanguageOutputFormat': KalturaVendorCatalogItemSignLanguageOutputFormat,
             'KalturaVendorCatalogItemStage': KalturaVendorCatalogItemStage,
             'KalturaVendorCatalogItemStatus': KalturaVendorCatalogItemStatus,
+            'KalturaVendorDocumentEnrichmentType': KalturaVendorDocumentEnrichmentType,
             'KalturaVendorServiceFeature': KalturaVendorServiceFeature,
             'KalturaVendorServiceTurnAroundTime': KalturaVendorServiceTurnAroundTime,
             'KalturaVendorServiceType': KalturaVendorServiceType,
             'KalturaVendorTaskProcessingRegion': KalturaVendorTaskProcessingRegion,
             'KalturaVendorVideoAnalysisType': KalturaVendorVideoAnalysisType,
             'KalturaCatalogItemLanguage': KalturaCatalogItemLanguage,
+            'KalturaCatalogItemSignLanguage': KalturaCatalogItemSignLanguage,
             'KalturaEntryVendorTaskOrderBy': KalturaEntryVendorTaskOrderBy,
             'KalturaReachProfileOrderBy': KalturaReachProfileOrderBy,
             'KalturaReachVendorEngineType': KalturaReachVendorEngineType,
@@ -7324,16 +7711,13 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaAddEntryVendorTaskAction': KalturaAddEntryVendorTaskAction,
             'KalturaCatalogItemAdvancedFilter': KalturaCatalogItemAdvancedFilter,
             'KalturaCategoryEntryCondition': KalturaCategoryEntryCondition,
-            'KalturaClipsVendorTaskData': KalturaClipsVendorTaskData,
             'KalturaEntryVendorTaskListResponse': KalturaEntryVendorTaskListResponse,
             'KalturaIntelligentTaggingVendorTaskData': KalturaIntelligentTaggingVendorTaskData,
-            'KalturaMetadataEnrichmentVendorTaskData': KalturaMetadataEnrichmentVendorTaskData,
+            'KalturaLocalizedVendorTaskData': KalturaLocalizedVendorTaskData,
             'KalturaModerationVendorTaskData': KalturaModerationVendorTaskData,
-            'KalturaQuizVendorTaskData': KalturaQuizVendorTaskData,
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaScheduledVendorTaskData': KalturaScheduledVendorTaskData,
             'KalturaSentimentAnalysisVendorTaskData': KalturaSentimentAnalysisVendorTaskData,
-            'KalturaSummaryVendorTaskData': KalturaSummaryVendorTaskData,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
             'KalturaVendorAlignmentCatalogItem': KalturaVendorAlignmentCatalogItem,
             'KalturaVendorAudioDescriptionCatalogItem': KalturaVendorAudioDescriptionCatalogItem,
@@ -7342,6 +7726,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorChapteringCatalogItem': KalturaVendorChapteringCatalogItem,
             'KalturaVendorClipsCatalogItem': KalturaVendorClipsCatalogItem,
             'KalturaVendorCredit': KalturaVendorCredit,
+            'KalturaVendorDocumentEnrichmentCatalogItem': KalturaVendorDocumentEnrichmentCatalogItem,
             'KalturaVendorDubbingCatalogItem': KalturaVendorDubbingCatalogItem,
             'KalturaVendorExtendedAudioDescriptionCatalogItem': KalturaVendorExtendedAudioDescriptionCatalogItem,
             'KalturaVendorIntelligentTaggingCatalogItem': KalturaVendorIntelligentTaggingCatalogItem,
@@ -7349,15 +7734,20 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorModerationCatalogItem': KalturaVendorModerationCatalogItem,
             'KalturaVendorQuizCatalogItem': KalturaVendorQuizCatalogItem,
             'KalturaVendorSentimentAnalysisCatalogItem': KalturaVendorSentimentAnalysisCatalogItem,
+            'KalturaVendorSignLanguageCatalogItem': KalturaVendorSignLanguageCatalogItem,
             'KalturaVendorSummaryCatalogItem': KalturaVendorSummaryCatalogItem,
             'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
             'KalturaVendorVideoAnalysisCatalogItem': KalturaVendorVideoAnalysisCatalogItem,
             'KalturaAlignmentVendorTaskData': KalturaAlignmentVendorTaskData,
+            'KalturaClipsVendorTaskData': KalturaClipsVendorTaskData,
             'KalturaEntryVendorTaskBaseFilter': KalturaEntryVendorTaskBaseFilter,
             'KalturaEntryVendorTaskFilter': KalturaEntryVendorTaskFilter,
             'KalturaEntryVendorTaskCsvJobData': KalturaEntryVendorTaskCsvJobData,
+            'KalturaMetadataEnrichmentVendorTaskData': KalturaMetadataEnrichmentVendorTaskData,
+            'KalturaQuizVendorTaskData': KalturaQuizVendorTaskData,
             'KalturaReachProfileBaseFilter': KalturaReachProfileBaseFilter,
             'KalturaReachReportInputFilter': KalturaReachReportInputFilter,
+            'KalturaSummaryVendorTaskData': KalturaSummaryVendorTaskData,
             'KalturaTimeRangeVendorCredit': KalturaTimeRangeVendorCredit,
             'KalturaTranslationVendorTaskData': KalturaTranslationVendorTaskData,
             'KalturaVendorCatalogItemBaseFilter': KalturaVendorCatalogItemBaseFilter,
@@ -7370,6 +7760,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorLiveTranslationCatalogItem': KalturaVendorLiveTranslationCatalogItem,
             'KalturaVendorCaptionsCatalogItemBaseFilter': KalturaVendorCaptionsCatalogItemBaseFilter,
             'KalturaVendorClipsCatalogItemFilter': KalturaVendorClipsCatalogItemFilter,
+            'KalturaVendorDocumentEnrichmentCatalogItemFilter': KalturaVendorDocumentEnrichmentCatalogItemFilter,
             'KalturaVendorDubbingCatalogItemBaseFilter': KalturaVendorDubbingCatalogItemBaseFilter,
             'KalturaVendorIntelligentTaggingCatalogItemFilter': KalturaVendorIntelligentTaggingCatalogItemFilter,
             'KalturaVendorMetadataEnrichmentCatalogItemFilter': KalturaVendorMetadataEnrichmentCatalogItemFilter,
@@ -7385,6 +7776,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorDubbingCatalogItemFilter': KalturaVendorDubbingCatalogItemFilter,
             'KalturaVendorExtendedAudioDescriptionCatalogItemFilter': KalturaVendorExtendedAudioDescriptionCatalogItemFilter,
             'KalturaVendorLiveCaptionCatalogItemFilter': KalturaVendorLiveCaptionCatalogItemFilter,
+            'KalturaVendorSignLanguageCatalogItemFilter': KalturaVendorSignLanguageCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemBaseFilter': KalturaVendorTranslationCatalogItemBaseFilter,
             'KalturaVendorLiveTranslationCatalogItemFilter': KalturaVendorLiveTranslationCatalogItemFilter,
             'KalturaVendorTranslationCatalogItemFilter': KalturaVendorTranslationCatalogItemFilter,

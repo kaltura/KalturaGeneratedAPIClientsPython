@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.16.0'
+API_VERSION = '21.18.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -67549,11 +67549,12 @@ class KalturaMediaService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return getXmlNodeText(resultNode)
 
-    def getVolumeMap(self, entryId):
+    def getVolumeMap(self, entryId, desiredLines = NotImplemented):
         """Get volume map by entry id"""
 
         kparams = KalturaParams()
         kparams.addStringIfDefined("entryId", entryId)
+        kparams.addIntIfDefined("desiredLines", desiredLines);
         self.client.queueServiceActionCall('media', 'getVolumeMap', None ,kparams)
         return self.client.getServeUrl()
 
