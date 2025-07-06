@@ -114,6 +114,19 @@ class KalturaZoomUsersMatching(object):
     def getValue(self):
         return self.value
 
+# @package Kaltura
+# @subpackage Client
+class KalturaZoomUsersSearchMethod(object):
+    ID = 0
+    EMAIL = 1
+    ALL = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
@@ -346,7 +359,8 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             optInGroupNames = NotImplemented,
             groupParticipationType = NotImplemented,
             handleCohostsMode = NotImplemented,
-            handleAlternativeHostsMode = NotImplemented):
+            handleAlternativeHostsMode = NotImplemented,
+            userSearchMethod = NotImplemented):
         KalturaIntegrationSetting.__init__(self,
             id,
             status,
@@ -401,6 +415,9 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         # @var KalturaHandleParticipantsMode
         self.handleAlternativeHostsMode = handleAlternativeHostsMode
 
+        # @var KalturaZoomUsersSearchMethod
+        self.userSearchMethod = userSearchMethod
+
 
     PROPERTY_LOADERS = {
         'zoomCategory': getXmlNodeText, 
@@ -416,6 +433,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         'groupParticipationType': (KalturaEnumsFactory.createInt, "KalturaZoomGroupParticipationType"), 
         'handleCohostsMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
         'handleAlternativeHostsMode': (KalturaEnumsFactory.createInt, "KalturaHandleParticipantsMode"), 
+        'userSearchMethod': (KalturaEnumsFactory.createInt, "KalturaZoomUsersSearchMethod"), 
     }
 
     def fromXml(self, node):
@@ -438,6 +456,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
         kparams.addIntEnumIfDefined("groupParticipationType", self.groupParticipationType)
         kparams.addIntEnumIfDefined("handleCohostsMode", self.handleCohostsMode)
         kparams.addIntEnumIfDefined("handleAlternativeHostsMode", self.handleAlternativeHostsMode)
+        kparams.addIntEnumIfDefined("userSearchMethod", self.userSearchMethod)
         return kparams
 
     def getZoomCategory(self):
@@ -517,6 +536,12 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
 
     def setHandleAlternativeHostsMode(self, newHandleAlternativeHostsMode):
         self.handleAlternativeHostsMode = newHandleAlternativeHostsMode
+
+    def getUserSearchMethod(self):
+        return self.userSearchMethod
+
+    def setUserSearchMethod(self, newUserSearchMethod):
+        self.userSearchMethod = newUserSearchMethod
 
 
 # @package Kaltura
@@ -732,6 +757,7 @@ class KalturaVendorClientPlugin(KalturaClientPlugin):
             'KalturaRecordingType': KalturaRecordingType,
             'KalturaVendorIntegrationStatus': KalturaVendorIntegrationStatus,
             'KalturaZoomUsersMatching': KalturaZoomUsersMatching,
+            'KalturaZoomUsersSearchMethod': KalturaZoomUsersSearchMethod,
         }
 
     def getTypes(self):

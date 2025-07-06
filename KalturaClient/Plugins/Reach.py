@@ -429,6 +429,19 @@ class KalturaEntryVendorTaskOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMetadataEnrichmentApplyMode(object):
+    FILL_EMPTY = "FILL_EMPTY"
+    FILL_EMPTY_AND_OVERRIDE_LIST = "FILL_EMPTY_AND_OVERRIDE_LIST"
+    OVERRIDE_ALL = "OVERRIDE_ALL"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaReachProfileOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     ID_ASC = "+id"
@@ -4308,7 +4321,10 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
             outputLanguage = NotImplemented,
             outputJson = NotImplemented,
             detailLevel = NotImplemented,
-            instruction = NotImplemented):
+            instruction = NotImplemented,
+            shouldApply = NotImplemented,
+            applyMode = NotImplemented,
+            overrideFields = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
             outputLanguage,
@@ -4324,10 +4340,27 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
         # @insertonly
         self.instruction = instruction
 
+        # Indicates whether the metadata enrichment results should be automatically applied on the task entry.
+        # 	 Default is false.
+        # @var bool
+        self.shouldApply = shouldApply
+
+        # Specifies how metadata fields should be applied during enrichment.
+        # 	 If 'FILL_EMPTY_AND_OVERRIDE_LIST', use overrideFields to specify which fields to override.
+        # @var KalturaMetadataEnrichmentApplyMode
+        self.applyMode = applyMode
+
+        # List of entry fields to override when applyMode is set to 'FILL_EMPTY_AND_OVERRIDE_LIST'.
+        # @var List[KalturaString]
+        self.overrideFields = overrideFields
+
 
     PROPERTY_LOADERS = {
         'detailLevel': getXmlNodeText, 
         'instruction': getXmlNodeText, 
+        'shouldApply': getXmlNodeBool, 
+        'applyMode': (KalturaEnumsFactory.createString, "KalturaMetadataEnrichmentApplyMode"), 
+        'overrideFields': (KalturaObjectFactory.createArray, 'KalturaString'), 
     }
 
     def fromXml(self, node):
@@ -4339,6 +4372,9 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
         kparams.put("objectType", "KalturaMetadataEnrichmentVendorTaskData")
         kparams.addStringIfDefined("detailLevel", self.detailLevel)
         kparams.addStringIfDefined("instruction", self.instruction)
+        kparams.addBoolIfDefined("shouldApply", self.shouldApply)
+        kparams.addStringEnumIfDefined("applyMode", self.applyMode)
+        kparams.addArrayIfDefined("overrideFields", self.overrideFields)
         return kparams
 
     def getDetailLevel(self):
@@ -4352,6 +4388,24 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
 
     def setInstruction(self, newInstruction):
         self.instruction = newInstruction
+
+    def getShouldApply(self):
+        return self.shouldApply
+
+    def setShouldApply(self, newShouldApply):
+        self.shouldApply = newShouldApply
+
+    def getApplyMode(self):
+        return self.applyMode
+
+    def setApplyMode(self, newApplyMode):
+        self.applyMode = newApplyMode
+
+    def getOverrideFields(self):
+        return self.overrideFields
+
+    def setOverrideFields(self, newOverrideFields):
+        self.overrideFields = newOverrideFields
 
 
 # @package Kaltura
@@ -7688,6 +7742,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaCatalogItemLanguage': KalturaCatalogItemLanguage,
             'KalturaCatalogItemSignLanguage': KalturaCatalogItemSignLanguage,
             'KalturaEntryVendorTaskOrderBy': KalturaEntryVendorTaskOrderBy,
+            'KalturaMetadataEnrichmentApplyMode': KalturaMetadataEnrichmentApplyMode,
             'KalturaReachProfileOrderBy': KalturaReachProfileOrderBy,
             'KalturaReachVendorEngineType': KalturaReachVendorEngineType,
             'KalturaSummaryWritingStyleTaskData': KalturaSummaryWritingStyleTaskData,

@@ -79,6 +79,15 @@ class KalturaZoomUsersMatching(object):
 
     def getValue(self) -> int: ...
 
+class KalturaZoomUsersSearchMethod(object):
+    ID = 0
+    EMAIL = 1
+    ALL = 2
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
 class KalturaEndpointValidationResponse(KalturaObjectBase):
     plainToken: str
     encryptedToken: str
@@ -155,6 +164,7 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
     groupParticipationType: KalturaZoomGroupParticipationType
     handleCohostsMode: KalturaHandleParticipantsMode
     handleAlternativeHostsMode: KalturaHandleParticipantsMode
+    userSearchMethod: KalturaZoomUsersSearchMethod
     def __init__(self,
             id: int = NotImplemented,
             status: KalturaVendorIntegrationStatus = NotImplemented,
@@ -181,7 +191,8 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
             optInGroupNames: str = NotImplemented,
             groupParticipationType: KalturaZoomGroupParticipationType = NotImplemented,
             handleCohostsMode: KalturaHandleParticipantsMode = NotImplemented,
-            handleAlternativeHostsMode: KalturaHandleParticipantsMode = NotImplemented): ...
+            handleAlternativeHostsMode: KalturaHandleParticipantsMode = NotImplemented,
+            userSearchMethod: KalturaZoomUsersSearchMethod = NotImplemented): ...
 
     def getZoomCategory(self) -> str: ...
     def setZoomCategory(self, newZoomCategory: str) -> None: ...
@@ -209,6 +220,8 @@ class KalturaZoomIntegrationSetting(KalturaIntegrationSetting):
     def setHandleCohostsMode(self, newHandleCohostsMode: KalturaHandleParticipantsMode) -> None: ...
     def getHandleAlternativeHostsMode(self) -> KalturaHandleParticipantsMode: ...
     def setHandleAlternativeHostsMode(self, newHandleAlternativeHostsMode: KalturaHandleParticipantsMode) -> None: ...
+    def getUserSearchMethod(self) -> KalturaZoomUsersSearchMethod: ...
+    def setUserSearchMethod(self, newUserSearchMethod: KalturaZoomUsersSearchMethod) -> None: ...
 
 class KalturaZoomIntegrationSettingResponse(KalturaListResponse):
     objects: List[KalturaZoomIntegrationSetting]
