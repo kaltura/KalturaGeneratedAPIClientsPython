@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.19.0'
+API_VERSION = '21.20.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -1777,6 +1777,7 @@ class KalturaAssetType(object):
     IMAGE = "document.Image"
     PDF = "document.PDF"
     SWF = "document.SWF"
+    MARKDOWN = "markdown.Markdown"
     TIMED_THUMB_ASSET = "thumbCuePoint.timedThumb"
     TRANSCRIPT = "transcript.Transcript"
     WIDEVINE_FLAVOR = "widevine.WidevineFlavor"
@@ -5493,6 +5494,7 @@ class KalturaReportType(object):
     EP_TOP_MOMENTS = "60016"
     EP_TOP_SESSIONS = "60017"
     EP_WEBCAST_ENGAGEMENT_OVER_TIME = "60018"
+    EP_LATEST_DOWNLOADED_ATTACHMENTS = "60019"
     CNC_PARTICIPATION = "70001"
     QUIZ = "quiz.QUIZ"
     QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"

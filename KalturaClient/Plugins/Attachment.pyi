@@ -100,6 +100,37 @@ class KalturaAttachmentAsset(KalturaAsset):
     def setFormat(self, newFormat: KalturaAttachmentType) -> None: ...
     def getStatus(self) -> KalturaAttachmentAssetStatus: ...
 
+class KalturaTextualAttachmentAsset(KalturaAttachmentAsset):
+    language: KalturaLanguage
+    humanVerified: KalturaNullableBoolean
+    def __init__(self,
+            id: str = NotImplemented,
+            entryId: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            version: int = NotImplemented,
+            size: int = NotImplemented,
+            tags: str = NotImplemented,
+            fileExt: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            deletedAt: int = NotImplemented,
+            description: str = NotImplemented,
+            partnerData: str = NotImplemented,
+            partnerDescription: str = NotImplemented,
+            actualSourceAssetParamsIds: str = NotImplemented,
+            sizeInBytes: int = NotImplemented,
+            filename: str = NotImplemented,
+            title: str = NotImplemented,
+            format: KalturaAttachmentType = NotImplemented,
+            status: KalturaAttachmentAssetStatus = NotImplemented,
+            language: KalturaLanguage = NotImplemented,
+            humanVerified: KalturaNullableBoolean = NotImplemented): ...
+
+    def getLanguage(self) -> KalturaLanguage: ...
+    def setLanguage(self, newLanguage: KalturaLanguage) -> None: ...
+    def getHumanVerified(self) -> KalturaNullableBoolean: ...
+    def setHumanVerified(self, newHumanVerified: KalturaNullableBoolean) -> None: ...
+
 class KalturaAttachmentAssetListResponse(KalturaListResponse):
     objects: List[KalturaAttachmentAsset]
     def __init__(self,
@@ -113,6 +144,14 @@ class KalturaAttachmentServeOptions(KalturaAssetServeOptions):
             download: bool = NotImplemented,
             referrer: str = NotImplemented): ...
         pass
+
+class KalturaTextualAttachmentAssetListResponse(KalturaListResponse):
+    objects: List[KalturaTextualAttachmentAsset]
+    def __init__(self,
+            totalCount: int = NotImplemented,
+            objects: List[KalturaTextualAttachmentAsset] = NotImplemented): ...
+
+    def getObjects(self) -> List[KalturaTextualAttachmentAsset]: ...
 
 class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
     formatEqual: KalturaAttachmentType
@@ -159,6 +198,64 @@ class KalturaAttachmentAssetBaseFilter(KalturaAssetFilter):
     def setStatusNotIn(self, newStatusNotIn: str) -> None: ...
 
 class KalturaAttachmentAssetFilter(KalturaAttachmentAssetBaseFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented,
+            entryIdEqual: str = NotImplemented,
+            entryIdIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            partnerIdIn: str = NotImplemented,
+            sizeGreaterThanOrEqual: int = NotImplemented,
+            sizeLessThanOrEqual: int = NotImplemented,
+            tagsLike: str = NotImplemented,
+            tagsMultiLikeOr: str = NotImplemented,
+            tagsMultiLikeAnd: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            deletedAtGreaterThanOrEqual: int = NotImplemented,
+            deletedAtLessThanOrEqual: int = NotImplemented,
+            typeIn: str = NotImplemented,
+            formatEqual: KalturaAttachmentType = NotImplemented,
+            formatIn: str = NotImplemented,
+            statusEqual: KalturaAttachmentAssetStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            statusNotIn: str = NotImplemented): ...
+        pass
+
+class KalturaTextualAttachmentAssetBaseFilter(KalturaAttachmentAssetFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented,
+            entryIdEqual: str = NotImplemented,
+            entryIdIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            partnerIdIn: str = NotImplemented,
+            sizeGreaterThanOrEqual: int = NotImplemented,
+            sizeLessThanOrEqual: int = NotImplemented,
+            tagsLike: str = NotImplemented,
+            tagsMultiLikeOr: str = NotImplemented,
+            tagsMultiLikeAnd: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            deletedAtGreaterThanOrEqual: int = NotImplemented,
+            deletedAtLessThanOrEqual: int = NotImplemented,
+            typeIn: str = NotImplemented,
+            formatEqual: KalturaAttachmentType = NotImplemented,
+            formatIn: str = NotImplemented,
+            statusEqual: KalturaAttachmentAssetStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            statusNotIn: str = NotImplemented): ...
+        pass
+
+class KalturaTextualAttachmentAssetFilter(KalturaTextualAttachmentAssetBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,

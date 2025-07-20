@@ -170,6 +170,7 @@ from KalturaClient.Plugins.BusinessProcessNotification import KalturaBusinessPro
 from KalturaClient.Plugins.ActivitiBusinessProcessNotification import KalturaActivitiBusinessProcessNotificationClientPluginServicesProxy
 from KalturaClient.Plugins.Quiz import KalturaQuizClientPluginServicesProxy
 from KalturaClient.Plugins.Transcript import KalturaTranscriptClientPluginServicesProxy
+from KalturaClient.Plugins.Markdown import KalturaMarkdownClientPluginServicesProxy
 from KalturaClient.Plugins.DexterIntegration import KalturaDexterIntegrationClientPluginServicesProxy
 from KalturaClient.Plugins.Voicebase import KalturaVoicebaseClientPluginServicesProxy
 from KalturaClient.Plugins.Cielo24 import KalturaCielo24ClientPluginServicesProxy
@@ -374,6 +375,7 @@ class KalturaClient:
     activitiBusinessProcessNotification: KalturaActivitiBusinessProcessNotificationClientPluginServicesProxy
     quiz: KalturaQuizClientPluginServicesProxy
     transcript: KalturaTranscriptClientPluginServicesProxy
+    markdown: KalturaMarkdownClientPluginServicesProxy
     dexterIntegration: KalturaDexterIntegrationClientPluginServicesProxy
     voicebase: KalturaVoicebaseClientPluginServicesProxy
     cielo24: KalturaCielo24ClientPluginServicesProxy

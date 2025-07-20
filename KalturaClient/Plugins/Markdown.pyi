@@ -30,7 +30,7 @@ from .Core import *
 from .Attachment import *
 from KalturaClient.Base import KalturaObjectBase, KalturaServiceBase
 
-class KalturaTranscriptAssetOrderBy(object):
+class KalturaMarkdownAssetOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DELETED_AT_ASC = "+deletedAt"
     SIZE_ASC = "+size"
@@ -44,17 +44,16 @@ class KalturaTranscriptAssetOrderBy(object):
 
     def getValue(self) -> str: ...
 
-class KalturaTranscriptProviderType(object):
-    CIELO24 = "cielo24.Cielo24"
-    VOICEBASE = "voicebase.Voicebase"
+class KalturaMarkdownProviderType(object):
+    KAI = "0"
 
     def __init__(self, value: str): ...
 
     def getValue(self) -> str: ...
 
-class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
-    accuracy: float
-    providerType: KalturaTranscriptProviderType
+class KalturaMarkdownAsset(KalturaAttachmentAsset):
+    accuracy: int
+    providerType: KalturaMarkdownProviderType
     def __init__(self,
             id: str = NotImplemented,
             entryId: str = NotImplemented,
@@ -75,41 +74,23 @@ class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
             title: str = NotImplemented,
             format: KalturaAttachmentType = NotImplemented,
             status: KalturaAttachmentAssetStatus = NotImplemented,
-            language: KalturaLanguage = NotImplemented,
-            humanVerified: KalturaNullableBoolean = NotImplemented,
-            accuracy: float = NotImplemented,
-            providerType: KalturaTranscriptProviderType = NotImplemented): ...
+            accuracy: int = NotImplemented,
+            providerType: KalturaMarkdownProviderType = NotImplemented): ...
 
-    def getAccuracy(self) -> float: ...
-    def setAccuracy(self, newAccuracy: float) -> None: ...
-    def getProviderType(self) -> KalturaTranscriptProviderType: ...
-    def setProviderType(self, newProviderType: KalturaTranscriptProviderType) -> None: ...
+    def getAccuracy(self) -> int: ...
+    def setAccuracy(self, newAccuracy: int) -> None: ...
+    def getProviderType(self) -> KalturaMarkdownProviderType: ...
+    def setProviderType(self, newProviderType: KalturaMarkdownProviderType) -> None: ...
 
-class KalturaEntryTranscriptAssetSearchItem(KalturaSearchItem):
-    contentLike: str
-    contentMultiLikeOr: str
-    contentMultiLikeAnd: str
-    def __init__(self,
-            contentLike: str = NotImplemented,
-            contentMultiLikeOr: str = NotImplemented,
-            contentMultiLikeAnd: str = NotImplemented): ...
-
-    def getContentLike(self) -> str: ...
-    def setContentLike(self, newContentLike: str) -> None: ...
-    def getContentMultiLikeOr(self) -> str: ...
-    def setContentMultiLikeOr(self, newContentMultiLikeOr: str) -> None: ...
-    def getContentMultiLikeAnd(self) -> str: ...
-    def setContentMultiLikeAnd(self, newContentMultiLikeAnd: str) -> None: ...
-
-class KalturaTranscriptAssetListResponse(KalturaListResponse):
-    objects: List[KalturaTranscriptAsset]
+class KalturaMarkdownAssetListResponse(KalturaListResponse):
+    objects: List[KalturaMarkdownAsset]
     def __init__(self,
             totalCount: int = NotImplemented,
-            objects: List[KalturaTranscriptAsset] = NotImplemented): ...
+            objects: List[KalturaMarkdownAsset] = NotImplemented): ...
 
-    def getObjects(self) -> List[KalturaTranscriptAsset]: ...
+    def getObjects(self) -> List[KalturaMarkdownAsset]: ...
 
-class KalturaTranscriptAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
+class KalturaMarkdownAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -138,7 +119,7 @@ class KalturaTranscriptAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
             statusNotIn: str = NotImplemented): ...
         pass
 
-class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
+class KalturaMarkdownAssetFilter(KalturaMarkdownAssetBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
@@ -167,4 +148,4 @@ class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
             statusNotIn: str = NotImplemented): ...
         pass
 
-class KalturaTranscriptClientPluginServicesProxy:
+class KalturaMarkdownClientPluginServicesProxy:

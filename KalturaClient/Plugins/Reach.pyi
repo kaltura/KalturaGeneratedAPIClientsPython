@@ -36,6 +36,7 @@ from KalturaClient.Base import KalturaObjectBase, KalturaServiceBase
 
 class KalturaEntryObjectType(object):
     ENTRY = 1
+    ASSET = 2
 
     def __init__(self, value: int): ...
 
@@ -96,14 +97,6 @@ class KalturaVendorCatalogItemOutputFormat(object):
     SRT = 1
     DFXP = 2
     VTT = 3
-
-    def __init__(self, value: int): ...
-
-    def getValue(self) -> int: ...
-
-class KalturaVendorCatalogItemSignLanguageOutputFormat(object):
-    ASPECT_RATIO_16_9 = 1
-    ASPECT_RATIO_4_3 = 2
 
     def __init__(self, value: int): ...
 
@@ -1394,7 +1387,6 @@ class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
 
 class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
     targetLanguage: KalturaCatalogItemSignLanguage
-    outputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat
     def __init__(self,
             id: int = NotImplemented,
             vendorPartnerId: int = NotImplemented,
@@ -1420,13 +1412,10 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
             partnerId: int = NotImplemented,
             defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
-            targetLanguage: KalturaCatalogItemSignLanguage = NotImplemented,
-            outputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat = NotImplemented): ...
+            targetLanguage: KalturaCatalogItemSignLanguage = NotImplemented): ...
 
     def getTargetLanguage(self) -> KalturaCatalogItemSignLanguage: ...
     def setTargetLanguage(self, newTargetLanguage: KalturaCatalogItemSignLanguage) -> None: ...
-    def getOutputFormat(self) -> KalturaVendorCatalogItemSignLanguageOutputFormat: ...
-    def setOutputFormat(self, newOutputFormat: KalturaVendorCatalogItemSignLanguageOutputFormat) -> None: ...
 
 class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,

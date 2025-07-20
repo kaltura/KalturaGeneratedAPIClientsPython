@@ -47,7 +47,7 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
-class KalturaTranscriptAssetOrderBy(object):
+class KalturaMarkdownAssetOrderBy(object):
     CREATED_AT_ASC = "+createdAt"
     DELETED_AT_ASC = "+deletedAt"
     SIZE_ASC = "+size"
@@ -65,9 +65,8 @@ class KalturaTranscriptAssetOrderBy(object):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTranscriptProviderType(object):
-    CIELO24 = "cielo24.Cielo24"
-    VOICEBASE = "voicebase.Voicebase"
+class KalturaMarkdownProviderType(object):
+    KAI = "0"
 
     def __init__(self, value):
         self.value = value
@@ -78,7 +77,7 @@ class KalturaTranscriptProviderType(object):
 ########## classes ##########
 # @package Kaltura
 # @subpackage Client
-class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
+class KalturaMarkdownAsset(KalturaAttachmentAsset):
     def __init__(self,
             id = NotImplemented,
             entryId = NotImplemented,
@@ -99,11 +98,9 @@ class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
             title = NotImplemented,
             format = NotImplemented,
             status = NotImplemented,
-            language = NotImplemented,
-            humanVerified = NotImplemented,
             accuracy = NotImplemented,
             providerType = NotImplemented):
-        KalturaTextualAttachmentAsset.__init__(self,
+        KalturaAttachmentAsset.__init__(self,
             id,
             entryId,
             partnerId,
@@ -122,32 +119,30 @@ class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
             filename,
             title,
             format,
-            status,
-            language,
-            humanVerified)
+            status)
 
-        # The accuracy of the transcript - values between 0 and 1
-        # @var float
+        # The percentage accuracy of the markdown - values between 0 and 100
+        # @var int
         self.accuracy = accuracy
 
-        # The provider of the transcript
-        # @var KalturaTranscriptProviderType
+        # The provider of the markdown
+        # @var KalturaMarkdownProviderType
         self.providerType = providerType
 
 
     PROPERTY_LOADERS = {
-        'accuracy': getXmlNodeFloat, 
-        'providerType': (KalturaEnumsFactory.createString, "KalturaTranscriptProviderType"), 
+        'accuracy': getXmlNodeInt, 
+        'providerType': (KalturaEnumsFactory.createString, "KalturaMarkdownProviderType"), 
     }
 
     def fromXml(self, node):
-        KalturaTextualAttachmentAsset.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTranscriptAsset.PROPERTY_LOADERS)
+        KalturaAttachmentAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMarkdownAsset.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaTextualAttachmentAsset.toParams(self)
-        kparams.put("objectType", "KalturaTranscriptAsset")
-        kparams.addFloatIfDefined("accuracy", self.accuracy)
+        kparams = KalturaAttachmentAsset.toParams(self)
+        kparams.put("objectType", "KalturaMarkdownAsset")
+        kparams.addIntIfDefined("accuracy", self.accuracy)
         kparams.addStringEnumIfDefined("providerType", self.providerType)
         return kparams
 
@@ -166,85 +161,29 @@ class KalturaTranscriptAsset(KalturaTextualAttachmentAsset):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaEntryTranscriptAssetSearchItem(KalturaSearchItem):
-    def __init__(self,
-            contentLike = NotImplemented,
-            contentMultiLikeOr = NotImplemented,
-            contentMultiLikeAnd = NotImplemented):
-        KalturaSearchItem.__init__(self)
-
-        # @var str
-        self.contentLike = contentLike
-
-        # @var str
-        self.contentMultiLikeOr = contentMultiLikeOr
-
-        # @var str
-        self.contentMultiLikeAnd = contentMultiLikeAnd
-
-
-    PROPERTY_LOADERS = {
-        'contentLike': getXmlNodeText, 
-        'contentMultiLikeOr': getXmlNodeText, 
-        'contentMultiLikeAnd': getXmlNodeText, 
-    }
-
-    def fromXml(self, node):
-        KalturaSearchItem.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaEntryTranscriptAssetSearchItem.PROPERTY_LOADERS)
-
-    def toParams(self):
-        kparams = KalturaSearchItem.toParams(self)
-        kparams.put("objectType", "KalturaEntryTranscriptAssetSearchItem")
-        kparams.addStringIfDefined("contentLike", self.contentLike)
-        kparams.addStringIfDefined("contentMultiLikeOr", self.contentMultiLikeOr)
-        kparams.addStringIfDefined("contentMultiLikeAnd", self.contentMultiLikeAnd)
-        return kparams
-
-    def getContentLike(self):
-        return self.contentLike
-
-    def setContentLike(self, newContentLike):
-        self.contentLike = newContentLike
-
-    def getContentMultiLikeOr(self):
-        return self.contentMultiLikeOr
-
-    def setContentMultiLikeOr(self, newContentMultiLikeOr):
-        self.contentMultiLikeOr = newContentMultiLikeOr
-
-    def getContentMultiLikeAnd(self):
-        return self.contentMultiLikeAnd
-
-    def setContentMultiLikeAnd(self, newContentMultiLikeAnd):
-        self.contentMultiLikeAnd = newContentMultiLikeAnd
-
-
-# @package Kaltura
-# @subpackage Client
-class KalturaTranscriptAssetListResponse(KalturaListResponse):
+class KalturaMarkdownAssetListResponse(KalturaListResponse):
     def __init__(self,
             totalCount = NotImplemented,
             objects = NotImplemented):
         KalturaListResponse.__init__(self,
             totalCount)
 
-        # @var List[KalturaTranscriptAsset]
+        # @var List[KalturaMarkdownAsset]
         # @readonly
         self.objects = objects
 
 
     PROPERTY_LOADERS = {
-        'objects': (KalturaObjectFactory.createArray, 'KalturaTranscriptAsset'), 
+        'objects': (KalturaObjectFactory.createArray, 'KalturaMarkdownAsset'), 
     }
 
     def fromXml(self, node):
         KalturaListResponse.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTranscriptAssetListResponse.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaMarkdownAssetListResponse.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaListResponse.toParams(self)
-        kparams.put("objectType", "KalturaTranscriptAssetListResponse")
+        kparams.put("objectType", "KalturaMarkdownAssetListResponse")
         return kparams
 
     def getObjects(self):
@@ -253,7 +192,7 @@ class KalturaTranscriptAssetListResponse(KalturaListResponse):
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTranscriptAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
+class KalturaMarkdownAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
     def __init__(self,
             orderBy = NotImplemented,
             advancedSearch = NotImplemented,
@@ -313,17 +252,17 @@ class KalturaTranscriptAssetBaseFilter(KalturaTextualAttachmentAssetFilter):
 
     def fromXml(self, node):
         KalturaTextualAttachmentAssetFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTranscriptAssetBaseFilter.PROPERTY_LOADERS)
+        self.fromXmlImpl(node, KalturaMarkdownAssetBaseFilter.PROPERTY_LOADERS)
 
     def toParams(self):
         kparams = KalturaTextualAttachmentAssetFilter.toParams(self)
-        kparams.put("objectType", "KalturaTranscriptAssetBaseFilter")
+        kparams.put("objectType", "KalturaMarkdownAssetBaseFilter")
         return kparams
 
 
 # @package Kaltura
 # @subpackage Client
-class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
+class KalturaMarkdownAssetFilter(KalturaMarkdownAssetBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
             advancedSearch = NotImplemented,
@@ -350,7 +289,7 @@ class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
             statusEqual = NotImplemented,
             statusIn = NotImplemented,
             statusNotIn = NotImplemented):
-        KalturaTranscriptAssetBaseFilter.__init__(self,
+        KalturaMarkdownAssetBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
             idEqual,
@@ -382,27 +321,27 @@ class KalturaTranscriptAssetFilter(KalturaTranscriptAssetBaseFilter):
     }
 
     def fromXml(self, node):
-        KalturaTranscriptAssetBaseFilter.fromXml(self, node)
-        self.fromXmlImpl(node, KalturaTranscriptAssetFilter.PROPERTY_LOADERS)
+        KalturaMarkdownAssetBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMarkdownAssetFilter.PROPERTY_LOADERS)
 
     def toParams(self):
-        kparams = KalturaTranscriptAssetBaseFilter.toParams(self)
-        kparams.put("objectType", "KalturaTranscriptAssetFilter")
+        kparams = KalturaMarkdownAssetBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaMarkdownAssetFilter")
         return kparams
 
 
 ########## services ##########
 ########## main ##########
-class KalturaTranscriptClientPlugin(KalturaClientPlugin):
-    # KalturaTranscriptClientPlugin
+class KalturaMarkdownClientPlugin(KalturaClientPlugin):
+    # KalturaMarkdownClientPlugin
     instance = None
 
-    # @return KalturaTranscriptClientPlugin
+    # @return KalturaMarkdownClientPlugin
     @staticmethod
     def get():
-        if KalturaTranscriptClientPlugin.instance == None:
-            KalturaTranscriptClientPlugin.instance = KalturaTranscriptClientPlugin()
-        return KalturaTranscriptClientPlugin.instance
+        if KalturaMarkdownClientPlugin.instance == None:
+            KalturaMarkdownClientPlugin.instance = KalturaMarkdownClientPlugin()
+        return KalturaMarkdownClientPlugin.instance
 
     # @return array<KalturaServiceBase>
     def getServices(self):
@@ -411,20 +350,19 @@ class KalturaTranscriptClientPlugin(KalturaClientPlugin):
 
     def getEnums(self):
         return {
-            'KalturaTranscriptAssetOrderBy': KalturaTranscriptAssetOrderBy,
-            'KalturaTranscriptProviderType': KalturaTranscriptProviderType,
+            'KalturaMarkdownAssetOrderBy': KalturaMarkdownAssetOrderBy,
+            'KalturaMarkdownProviderType': KalturaMarkdownProviderType,
         }
 
     def getTypes(self):
         return {
-            'KalturaTranscriptAsset': KalturaTranscriptAsset,
-            'KalturaEntryTranscriptAssetSearchItem': KalturaEntryTranscriptAssetSearchItem,
-            'KalturaTranscriptAssetListResponse': KalturaTranscriptAssetListResponse,
-            'KalturaTranscriptAssetBaseFilter': KalturaTranscriptAssetBaseFilter,
-            'KalturaTranscriptAssetFilter': KalturaTranscriptAssetFilter,
+            'KalturaMarkdownAsset': KalturaMarkdownAsset,
+            'KalturaMarkdownAssetListResponse': KalturaMarkdownAssetListResponse,
+            'KalturaMarkdownAssetBaseFilter': KalturaMarkdownAssetBaseFilter,
+            'KalturaMarkdownAssetFilter': KalturaMarkdownAssetFilter,
         }
 
     # @return string
     def getName(self):
-        return 'transcript'
+        return 'markdown'
 

@@ -195,6 +195,90 @@ class KalturaAttachmentAsset(KalturaAsset):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaTextualAttachmentAsset(KalturaAttachmentAsset):
+    def __init__(self,
+            id = NotImplemented,
+            entryId = NotImplemented,
+            partnerId = NotImplemented,
+            version = NotImplemented,
+            size = NotImplemented,
+            tags = NotImplemented,
+            fileExt = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            deletedAt = NotImplemented,
+            description = NotImplemented,
+            partnerData = NotImplemented,
+            partnerDescription = NotImplemented,
+            actualSourceAssetParamsIds = NotImplemented,
+            sizeInBytes = NotImplemented,
+            filename = NotImplemented,
+            title = NotImplemented,
+            format = NotImplemented,
+            status = NotImplemented,
+            language = NotImplemented,
+            humanVerified = NotImplemented):
+        KalturaAttachmentAsset.__init__(self,
+            id,
+            entryId,
+            partnerId,
+            version,
+            size,
+            tags,
+            fileExt,
+            createdAt,
+            updatedAt,
+            deletedAt,
+            description,
+            partnerData,
+            partnerDescription,
+            actualSourceAssetParamsIds,
+            sizeInBytes,
+            filename,
+            title,
+            format,
+            status)
+
+        # The language of the transcript
+        # @var KalturaLanguage
+        self.language = language
+
+        # Was verified by human or machine
+        # @var KalturaNullableBoolean
+        self.humanVerified = humanVerified
+
+
+    PROPERTY_LOADERS = {
+        'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
+        'humanVerified': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+    }
+
+    def fromXml(self, node):
+        KalturaAttachmentAsset.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTextualAttachmentAsset.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAttachmentAsset.toParams(self)
+        kparams.put("objectType", "KalturaTextualAttachmentAsset")
+        kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addIntEnumIfDefined("humanVerified", self.humanVerified)
+        return kparams
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
+
+    def getHumanVerified(self):
+        return self.humanVerified
+
+    def setHumanVerified(self, newHumanVerified):
+        self.humanVerified = newHumanVerified
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaAttachmentAssetListResponse(KalturaListResponse):
     def __init__(self,
             totalCount = NotImplemented,
@@ -246,6 +330,37 @@ class KalturaAttachmentServeOptions(KalturaAssetServeOptions):
         kparams = KalturaAssetServeOptions.toParams(self)
         kparams.put("objectType", "KalturaAttachmentServeOptions")
         return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaTextualAttachmentAssetListResponse(KalturaListResponse):
+    def __init__(self,
+            totalCount = NotImplemented,
+            objects = NotImplemented):
+        KalturaListResponse.__init__(self,
+            totalCount)
+
+        # @var List[KalturaTextualAttachmentAsset]
+        # @readonly
+        self.objects = objects
+
+
+    PROPERTY_LOADERS = {
+        'objects': (KalturaObjectFactory.createArray, 'KalturaTextualAttachmentAsset'), 
+    }
+
+    def fromXml(self, node):
+        KalturaListResponse.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTextualAttachmentAssetListResponse.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaListResponse.toParams(self)
+        kparams.put("objectType", "KalturaTextualAttachmentAssetListResponse")
+        return kparams
+
+    def getObjects(self):
+        return self.objects
 
 
 # @package Kaltura
@@ -438,6 +553,146 @@ class KalturaAttachmentAssetFilter(KalturaAttachmentAssetBaseFilter):
         return kparams
 
 
+# @package Kaltura
+# @subpackage Client
+class KalturaTextualAttachmentAssetBaseFilter(KalturaAttachmentAssetFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
+        KalturaAttachmentAssetFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            entryIdEqual,
+            entryIdIn,
+            partnerIdEqual,
+            partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual,
+            typeIn,
+            formatEqual,
+            formatIn,
+            statusEqual,
+            statusIn,
+            statusNotIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaAttachmentAssetFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTextualAttachmentAssetBaseFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaAttachmentAssetFilter.toParams(self)
+        kparams.put("objectType", "KalturaTextualAttachmentAssetBaseFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaTextualAttachmentAssetFilter(KalturaTextualAttachmentAssetBaseFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            entryIdEqual = NotImplemented,
+            entryIdIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            partnerIdIn = NotImplemented,
+            sizeGreaterThanOrEqual = NotImplemented,
+            sizeLessThanOrEqual = NotImplemented,
+            tagsLike = NotImplemented,
+            tagsMultiLikeOr = NotImplemented,
+            tagsMultiLikeAnd = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            deletedAtGreaterThanOrEqual = NotImplemented,
+            deletedAtLessThanOrEqual = NotImplemented,
+            typeIn = NotImplemented,
+            formatEqual = NotImplemented,
+            formatIn = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            statusNotIn = NotImplemented):
+        KalturaTextualAttachmentAssetBaseFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            entryIdEqual,
+            entryIdIn,
+            partnerIdEqual,
+            partnerIdIn,
+            sizeGreaterThanOrEqual,
+            sizeLessThanOrEqual,
+            tagsLike,
+            tagsMultiLikeOr,
+            tagsMultiLikeAnd,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            deletedAtGreaterThanOrEqual,
+            deletedAtLessThanOrEqual,
+            typeIn,
+            formatEqual,
+            formatIn,
+            statusEqual,
+            statusIn,
+            statusNotIn)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaTextualAttachmentAssetBaseFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaTextualAttachmentAssetFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaTextualAttachmentAssetBaseFilter.toParams(self)
+        kparams.put("objectType", "KalturaTextualAttachmentAssetFilter")
+        return kparams
+
+
 ########## services ##########
 
 # @package Kaltura
@@ -573,10 +828,14 @@ class KalturaAttachmentClientPlugin(KalturaClientPlugin):
     def getTypes(self):
         return {
             'KalturaAttachmentAsset': KalturaAttachmentAsset,
+            'KalturaTextualAttachmentAsset': KalturaTextualAttachmentAsset,
             'KalturaAttachmentAssetListResponse': KalturaAttachmentAssetListResponse,
             'KalturaAttachmentServeOptions': KalturaAttachmentServeOptions,
+            'KalturaTextualAttachmentAssetListResponse': KalturaTextualAttachmentAssetListResponse,
             'KalturaAttachmentAssetBaseFilter': KalturaAttachmentAssetBaseFilter,
             'KalturaAttachmentAssetFilter': KalturaAttachmentAssetFilter,
+            'KalturaTextualAttachmentAssetBaseFilter': KalturaTextualAttachmentAssetBaseFilter,
+            'KalturaTextualAttachmentAssetFilter': KalturaTextualAttachmentAssetFilter,
         }
 
     # @return string

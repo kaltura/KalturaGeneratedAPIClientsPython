@@ -80,9 +80,8 @@ class KalturaZoomUsersMatching(object):
     def getValue(self) -> int: ...
 
 class KalturaZoomUsersSearchMethod(object):
-    ID = 0
-    EMAIL = 1
-    ALL = 2
+    EMAIL = 0
+    EXTERNAL = 1
 
     def __init__(self, value: int): ...
 

@@ -53,6 +53,7 @@ from ..Base import (
 # @subpackage Client
 class KalturaEntryObjectType(object):
     ENTRY = 1
+    ASSET = 2
 
     def __init__(self, value):
         self.value = value
@@ -137,18 +138,6 @@ class KalturaVendorCatalogItemOutputFormat(object):
     SRT = 1
     DFXP = 2
     VTT = 3
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaVendorCatalogItemSignLanguageOutputFormat(object):
-    ASPECT_RATIO_16_9 = 1
-    ASPECT_RATIO_4_3 = 2
 
     def __init__(self, value):
         self.value = value
@@ -3441,8 +3430,7 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
             partnerId = NotImplemented,
             defaultReachProfileId = NotImplemented,
             adminTagsToExclude = NotImplemented,
-            targetLanguage = NotImplemented,
-            outputFormat = NotImplemented):
+            targetLanguage = NotImplemented):
         KalturaVendorCatalogItem.__init__(self,
             id,
             vendorPartnerId,
@@ -3472,13 +3460,9 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
         # @var KalturaCatalogItemSignLanguage
         self.targetLanguage = targetLanguage
 
-        # @var KalturaVendorCatalogItemSignLanguageOutputFormat
-        self.outputFormat = outputFormat
-
 
     PROPERTY_LOADERS = {
         'targetLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemSignLanguage"), 
-        'outputFormat': (KalturaEnumsFactory.createInt, "KalturaVendorCatalogItemSignLanguageOutputFormat"), 
     }
 
     def fromXml(self, node):
@@ -3489,7 +3473,6 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorSignLanguageCatalogItem")
         kparams.addStringEnumIfDefined("targetLanguage", self.targetLanguage)
-        kparams.addIntEnumIfDefined("outputFormat", self.outputFormat)
         return kparams
 
     def getTargetLanguage(self):
@@ -3497,12 +3480,6 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
 
     def setTargetLanguage(self, newTargetLanguage):
         self.targetLanguage = newTargetLanguage
-
-    def getOutputFormat(self):
-        return self.outputFormat
-
-    def setOutputFormat(self, newOutputFormat):
-        self.outputFormat = newOutputFormat
 
 
 # @package Kaltura
@@ -7730,7 +7707,6 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaReachProfileStatus': KalturaReachProfileStatus,
             'KalturaReachProfileType': KalturaReachProfileType,
             'KalturaVendorCatalogItemOutputFormat': KalturaVendorCatalogItemOutputFormat,
-            'KalturaVendorCatalogItemSignLanguageOutputFormat': KalturaVendorCatalogItemSignLanguageOutputFormat,
             'KalturaVendorCatalogItemStage': KalturaVendorCatalogItemStage,
             'KalturaVendorCatalogItemStatus': KalturaVendorCatalogItemStatus,
             'KalturaVendorDocumentEnrichmentType': KalturaVendorDocumentEnrichmentType,
