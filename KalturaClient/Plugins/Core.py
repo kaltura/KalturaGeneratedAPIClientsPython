@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '21.20.0'
+API_VERSION = '22.0.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -6810,6 +6810,52 @@ class KalturaAccessControlScope(KalturaObjectBase):
 
     def setHashes(self, newHashes):
         self.hashes = newHashes
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaActiveLiveStreamTime(KalturaObjectBase):
+    def __init__(self,
+            startTime = NotImplemented,
+            endTime = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # The start time of the live stream (unix timestamp in seconds)
+        # @var int
+        self.startTime = startTime
+
+        # The end time of the live stream (unix timestamp in seconds)
+        # @var int
+        self.endTime = endTime
+
+
+    PROPERTY_LOADERS = {
+        'startTime': getXmlNodeInt, 
+        'endTime': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaActiveLiveStreamTime.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaActiveLiveStreamTime")
+        kparams.addIntIfDefined("startTime", self.startTime)
+        kparams.addIntIfDefined("endTime", self.endTime)
+        return kparams
+
+    def getStartTime(self):
+        return self.startTime
+
+    def setStartTime(self, newStartTime):
+        self.startTime = newStartTime
+
+    def getEndTime(self):
+        return self.endTime
+
+    def setEndTime(self, newEndTime):
+        self.endTime = newEndTime
 
 
 # @package Kaltura
@@ -25428,7 +25474,8 @@ class KalturaPlaybackContext(KalturaObjectBase):
             flavorAssets = NotImplemented,
             actions = NotImplemented,
             messages = NotImplemented,
-            bumperData = NotImplemented):
+            bumperData = NotImplemented,
+            activeLiveStreamTime = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var List[KalturaPlaybackSource]
@@ -25451,6 +25498,9 @@ class KalturaPlaybackContext(KalturaObjectBase):
         # @var List[KalturaObject]
         self.bumperData = bumperData
 
+        # @var KalturaActiveLiveStreamTime
+        self.activeLiveStreamTime = activeLiveStreamTime
+
 
     PROPERTY_LOADERS = {
         'sources': (KalturaObjectFactory.createArray, 'KalturaPlaybackSource'), 
@@ -25459,6 +25509,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         'actions': (KalturaObjectFactory.createArray, 'KalturaRuleAction'), 
         'messages': (KalturaObjectFactory.createArray, 'KalturaAccessControlMessage'), 
         'bumperData': (KalturaObjectFactory.createArray, 'KalturaObject'), 
+        'activeLiveStreamTime': (KalturaObjectFactory.create, 'KalturaActiveLiveStreamTime'), 
     }
 
     def fromXml(self, node):
@@ -25474,6 +25525,7 @@ class KalturaPlaybackContext(KalturaObjectBase):
         kparams.addArrayIfDefined("actions", self.actions)
         kparams.addArrayIfDefined("messages", self.messages)
         kparams.addArrayIfDefined("bumperData", self.bumperData)
+        kparams.addObjectIfDefined("activeLiveStreamTime", self.activeLiveStreamTime)
         return kparams
 
     def getSources(self):
@@ -25511,6 +25563,12 @@ class KalturaPlaybackContext(KalturaObjectBase):
 
     def setBumperData(self, newBumperData):
         self.bumperData = newBumperData
+
+    def getActiveLiveStreamTime(self):
+        return self.activeLiveStreamTime
+
+    def setActiveLiveStreamTime(self, newActiveLiveStreamTime):
+        self.activeLiveStreamTime = newActiveLiveStreamTime
 
 
 # @package Kaltura
@@ -70602,6 +70660,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaAccessControlProfile': KalturaAccessControlProfile,
             'KalturaKeyValue': KalturaKeyValue,
             'KalturaAccessControlScope': KalturaAccessControlScope,
+            'KalturaActiveLiveStreamTime': KalturaActiveLiveStreamTime,
             'KalturaReportFilter': KalturaReportFilter,
             'KalturaAnalyticsFilter': KalturaAnalyticsFilter,
             'KalturaApiExceptionArg': KalturaApiExceptionArg,

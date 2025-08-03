@@ -4397,7 +4397,8 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
             context = NotImplemented,
             formalStyle = NotImplemented,
             createQuiz = NotImplemented,
-            quizOutput = NotImplemented):
+            quizOutput = NotImplemented,
+            instruction = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
             outputLanguage,
@@ -4427,6 +4428,11 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
         # @var str
         self.quizOutput = quizOutput
 
+        # Instructions describing what should be taken into account during the quiz creation process.
+        # @var str
+        # @insertonly
+        self.instruction = instruction
+
 
     PROPERTY_LOADERS = {
         'numberOfQuestions': getXmlNodeInt, 
@@ -4435,6 +4441,7 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
         'formalStyle': getXmlNodeText, 
         'createQuiz': getXmlNodeBool, 
         'quizOutput': getXmlNodeText, 
+        'instruction': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -4450,6 +4457,7 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
         kparams.addStringIfDefined("formalStyle", self.formalStyle)
         kparams.addBoolIfDefined("createQuiz", self.createQuiz)
         kparams.addStringIfDefined("quizOutput", self.quizOutput)
+        kparams.addStringIfDefined("instruction", self.instruction)
         return kparams
 
     def getNumberOfQuestions(self):
@@ -4487,6 +4495,12 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
 
     def setQuizOutput(self, newQuizOutput):
         self.quizOutput = newQuizOutput
+
+    def getInstruction(self):
+        return self.instruction
+
+    def setInstruction(self, newInstruction):
+        self.instruction = newInstruction
 
 
 # @package Kaltura
