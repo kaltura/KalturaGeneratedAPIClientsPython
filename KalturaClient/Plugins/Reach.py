@@ -4704,6 +4704,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             playbackModeIn = NotImplemented,
             companyIn = NotImplemented,
             eventSessionContextIdIn = NotImplemented,
+            videoCodecIn = NotImplemented,
             serviceType = NotImplemented,
             serviceFeature = NotImplemented,
             turnAroundTime = NotImplemented):
@@ -4760,7 +4761,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             industryIn,
             playbackModeIn,
             companyIn,
-            eventSessionContextIdIn)
+            eventSessionContextIdIn,
+            videoCodecIn)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
@@ -4818,7 +4820,8 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
             outputJson = NotImplemented,
             typeOfSummary = NotImplemented,
             writingStyle = NotImplemented,
-            summaryOutputJson = NotImplemented):
+            summaryOutputJson = NotImplemented,
+            instruction = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
             outputLanguage,
@@ -4836,11 +4839,17 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
         # @var str
         self.summaryOutputJson = summaryOutputJson
 
+        # Additional instruction for the summary.
+        # @var str
+        # @insertonly
+        self.instruction = instruction
+
 
     PROPERTY_LOADERS = {
         'typeOfSummary': (KalturaEnumsFactory.createString, "KalturaTypeOfSummaryTaskData"), 
         'writingStyle': (KalturaEnumsFactory.createString, "KalturaSummaryWritingStyleTaskData"), 
         'summaryOutputJson': getXmlNodeText, 
+        'instruction': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -4853,6 +4862,7 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
         kparams.addStringEnumIfDefined("typeOfSummary", self.typeOfSummary)
         kparams.addStringEnumIfDefined("writingStyle", self.writingStyle)
         kparams.addStringIfDefined("summaryOutputJson", self.summaryOutputJson)
+        kparams.addStringIfDefined("instruction", self.instruction)
         return kparams
 
     def getTypeOfSummary(self):
@@ -4872,6 +4882,12 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
 
     def setSummaryOutputJson(self, newSummaryOutputJson):
         self.summaryOutputJson = newSummaryOutputJson
+
+    def getInstruction(self):
+        return self.instruction
+
+    def setInstruction(self, newInstruction):
+        self.instruction = newInstruction
 
 
 # @package Kaltura

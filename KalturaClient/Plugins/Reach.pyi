@@ -1856,6 +1856,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             playbackModeIn: str = NotImplemented,
             companyIn: str = NotImplemented,
             eventSessionContextIdIn: str = NotImplemented,
+            videoCodecIn: str = NotImplemented,
             serviceType: KalturaVendorServiceType = NotImplemented,
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented): ...
@@ -1871,13 +1872,15 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
     typeOfSummary: KalturaTypeOfSummaryTaskData
     writingStyle: KalturaSummaryWritingStyleTaskData
     summaryOutputJson: str
+    instruction: str
     def __init__(self,
             entryDuration: int = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented,
             typeOfSummary: KalturaTypeOfSummaryTaskData = NotImplemented,
             writingStyle: KalturaSummaryWritingStyleTaskData = NotImplemented,
-            summaryOutputJson: str = NotImplemented): ...
+            summaryOutputJson: str = NotImplemented,
+            instruction: str = NotImplemented): ...
 
     def getTypeOfSummary(self) -> KalturaTypeOfSummaryTaskData: ...
     def setTypeOfSummary(self, newTypeOfSummary: KalturaTypeOfSummaryTaskData) -> None: ...
@@ -1885,6 +1888,8 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
     def setWritingStyle(self, newWritingStyle: KalturaSummaryWritingStyleTaskData) -> None: ...
     def getSummaryOutputJson(self) -> str: ...
     def setSummaryOutputJson(self, newSummaryOutputJson: str) -> None: ...
+    def getInstruction(self) -> str: ...
+    def setInstruction(self, newInstruction: str) -> None: ...
 
 class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
     toDate: int

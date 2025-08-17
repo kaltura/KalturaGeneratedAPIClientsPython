@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.0.0'
+API_VERSION = '22.1.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -26276,7 +26276,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             industryIn = NotImplemented,
             playbackModeIn = NotImplemented,
             companyIn = NotImplemented,
-            eventSessionContextIdIn = NotImplemented):
+            eventSessionContextIdIn = NotImplemented,
+            videoCodecIn = NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26476,6 +26477,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var str
         self.eventSessionContextIdIn = eventSessionContextIdIn
 
+        # filter by event video codec
+        # @var str
+        self.videoCodecIn = videoCodecIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26527,6 +26532,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'playbackModeIn': getXmlNodeText, 
         'companyIn': getXmlNodeText, 
         'eventSessionContextIdIn': getXmlNodeText, 
+        'videoCodecIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26585,6 +26591,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("playbackModeIn", self.playbackModeIn)
         kparams.addStringIfDefined("companyIn", self.companyIn)
         kparams.addStringIfDefined("eventSessionContextIdIn", self.eventSessionContextIdIn)
+        kparams.addStringIfDefined("videoCodecIn", self.videoCodecIn)
         return kparams
 
     def getKeywords(self):
@@ -26880,6 +26887,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setEventSessionContextIdIn(self, newEventSessionContextIdIn):
         self.eventSessionContextIdIn = newEventSessionContextIdIn
+
+    def getVideoCodecIn(self):
+        return self.videoCodecIn
+
+    def setVideoCodecIn(self, newVideoCodecIn):
+        self.videoCodecIn = newVideoCodecIn
 
 
 # @package Kaltura
@@ -49613,6 +49626,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playbackModeIn = NotImplemented,
             companyIn = NotImplemented,
             eventSessionContextIdIn = NotImplemented,
+            videoCodecIn = NotImplemented,
             application = NotImplemented,
             userIds = NotImplemented,
             playbackContext = NotImplemented,
@@ -49670,7 +49684,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             industryIn,
             playbackModeIn,
             companyIn,
-            eventSessionContextIdIn)
+            eventSessionContextIdIn,
+            videoCodecIn)
 
         # @var str
         self.application = application

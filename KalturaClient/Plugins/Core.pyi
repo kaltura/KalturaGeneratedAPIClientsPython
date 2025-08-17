@@ -11484,6 +11484,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     playbackModeIn: str
     companyIn: str
     eventSessionContextIdIn: str
+    videoCodecIn: str
     def __init__(self,
             fromDate: int = NotImplemented,
             toDate: int = NotImplemented,
@@ -11537,7 +11538,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             industryIn: str = NotImplemented,
             playbackModeIn: str = NotImplemented,
             companyIn: str = NotImplemented,
-            eventSessionContextIdIn: str = NotImplemented): ...
+            eventSessionContextIdIn: str = NotImplemented,
+            videoCodecIn: str = NotImplemented): ...
 
     def getKeywords(self) -> str: ...
     def setKeywords(self, newKeywords: str) -> None: ...
@@ -11637,6 +11639,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setCompanyIn(self, newCompanyIn: str) -> None: ...
     def getEventSessionContextIdIn(self) -> str: ...
     def setEventSessionContextIdIn(self, newEventSessionContextIdIn: str) -> None: ...
+    def getVideoCodecIn(self) -> str: ...
+    def setVideoCodecIn(self, newVideoCodecIn: str) -> None: ...
 
 class KalturaReportResponseOptions(KalturaObjectBase):
     delimiter: str
@@ -18825,6 +18829,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playbackModeIn: str = NotImplemented,
             companyIn: str = NotImplemented,
             eventSessionContextIdIn: str = NotImplemented,
+            videoCodecIn: str = NotImplemented,
             application: str = NotImplemented,
             userIds: str = NotImplemented,
             playbackContext: str = NotImplemented,
