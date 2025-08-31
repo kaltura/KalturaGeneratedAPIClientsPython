@@ -1682,7 +1682,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
 class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
     def __init__(self,
             type = NotImplemented,
-            catalogItemIds = NotImplemented):
+            catalogItemIds = NotImplemented,
+            entryObjectType = NotImplemented):
         KalturaRuleAction.__init__(self,
             type)
 
@@ -1690,9 +1691,14 @@ class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
         # @var str
         self.catalogItemIds = catalogItemIds
 
+        # Entry Object Type
+        # @var KalturaEntryObjectType
+        self.entryObjectType = entryObjectType
+
 
     PROPERTY_LOADERS = {
         'catalogItemIds': getXmlNodeText, 
+        'entryObjectType': (KalturaEnumsFactory.createInt, "KalturaEntryObjectType"), 
     }
 
     def fromXml(self, node):
@@ -1703,6 +1709,7 @@ class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
         kparams = KalturaRuleAction.toParams(self)
         kparams.put("objectType", "KalturaAddEntryVendorTaskAction")
         kparams.addStringIfDefined("catalogItemIds", self.catalogItemIds)
+        kparams.addIntEnumIfDefined("entryObjectType", self.entryObjectType)
         return kparams
 
     def getCatalogItemIds(self):
@@ -1710,6 +1717,12 @@ class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
 
     def setCatalogItemIds(self, newCatalogItemIds):
         self.catalogItemIds = newCatalogItemIds
+
+    def getEntryObjectType(self):
+        return self.entryObjectType
+
+    def setEntryObjectType(self, newEntryObjectType):
+        self.entryObjectType = newEntryObjectType
 
 
 # @package Kaltura
