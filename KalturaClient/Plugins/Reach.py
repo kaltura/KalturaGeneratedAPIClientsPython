@@ -299,8 +299,10 @@ class KalturaCatalogItemLanguage(object):
     DA = "Danish"
     NL = "Dutch"
     EN = "English"
+    EN_ASL = "English (ASL)"
     EN_US = "English (American)"
     EN_AU = "English (Australian)"
+    EN_BSL = "English (BSL)"
     EN_GB = "English (British)"
     EO = "Esperanto"
     ET = "Estonian"
@@ -371,18 +373,6 @@ class KalturaCatalogItemLanguage(object):
     CY = "Welsh"
     XH = "Xhosa"
     ZU = "Zulu"
-
-    def __init__(self, value):
-        self.value = value
-
-    def getValue(self):
-        return self.value
-
-# @package Kaltura
-# @subpackage Client
-class KalturaCatalogItemSignLanguage(object):
-    ENGLISH_ASL = "English (ASL)"
-    ENGLISH_BSL = "English (BSL)"
 
     def __init__(self, value):
         self.value = value
@@ -3470,12 +3460,12 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
             defaultReachProfileId,
             adminTagsToExclude)
 
-        # @var KalturaCatalogItemSignLanguage
+        # @var KalturaCatalogItemLanguage
         self.targetLanguage = targetLanguage
 
 
     PROPERTY_LOADERS = {
-        'targetLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemSignLanguage"), 
+        'targetLanguage': (KalturaEnumsFactory.createString, "KalturaCatalogItemLanguage"), 
     }
 
     def fromXml(self, node):
@@ -7759,7 +7749,6 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorTaskProcessingRegion': KalturaVendorTaskProcessingRegion,
             'KalturaVendorVideoAnalysisType': KalturaVendorVideoAnalysisType,
             'KalturaCatalogItemLanguage': KalturaCatalogItemLanguage,
-            'KalturaCatalogItemSignLanguage': KalturaCatalogItemSignLanguage,
             'KalturaEntryVendorTaskOrderBy': KalturaEntryVendorTaskOrderBy,
             'KalturaMetadataEnrichmentApplyMode': KalturaMetadataEnrichmentApplyMode,
             'KalturaReachProfileOrderBy': KalturaReachProfileOrderBy,

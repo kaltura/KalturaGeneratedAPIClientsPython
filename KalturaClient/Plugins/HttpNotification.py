@@ -281,11 +281,16 @@ class KalturaHttpNotificationData(KalturaObjectBase):
 class KalturaHttpNotificationDataFields(KalturaHttpNotificationData):
     """If this class used as the template data, the fields will be taken from the content parameters"""
 
-    def __init__(self):
+    def __init__(self,
+            contentType = NotImplemented):
         KalturaHttpNotificationData.__init__(self)
+
+        # @var str
+        self.contentType = contentType
 
 
     PROPERTY_LOADERS = {
+        'contentType': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -295,22 +300,34 @@ class KalturaHttpNotificationDataFields(KalturaHttpNotificationData):
     def toParams(self):
         kparams = KalturaHttpNotificationData.toParams(self)
         kparams.put("objectType", "KalturaHttpNotificationDataFields")
+        kparams.addStringIfDefined("contentType", self.contentType)
         return kparams
+
+    def getContentType(self):
+        return self.contentType
+
+    def setContentType(self, newContentType):
+        self.contentType = newContentType
 
 
 # @package Kaltura
 # @subpackage Client
 class KalturaHttpNotificationDataText(KalturaHttpNotificationData):
     def __init__(self,
-            content = NotImplemented):
+            content = NotImplemented,
+            contentType = NotImplemented):
         KalturaHttpNotificationData.__init__(self)
 
         # @var KalturaStringValue
         self.content = content
 
+        # @var str
+        self.contentType = contentType
+
 
     PROPERTY_LOADERS = {
         'content': (KalturaObjectFactory.create, 'KalturaStringValue'), 
+        'contentType': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -321,6 +338,7 @@ class KalturaHttpNotificationDataText(KalturaHttpNotificationData):
         kparams = KalturaHttpNotificationData.toParams(self)
         kparams.put("objectType", "KalturaHttpNotificationDataText")
         kparams.addObjectIfDefined("content", self.content)
+        kparams.addStringIfDefined("contentType", self.contentType)
         return kparams
 
     def getContent(self):
@@ -328,6 +346,12 @@ class KalturaHttpNotificationDataText(KalturaHttpNotificationData):
 
     def setContent(self, newContent):
         self.content = newContent
+
+    def getContentType(self):
+        return self.contentType
+
+    def setContentType(self, newContentType):
+        self.contentType = newContentType
 
 
 # @package Kaltura

@@ -222,8 +222,10 @@ class KalturaCatalogItemLanguage(object):
     DA = "Danish"
     NL = "Dutch"
     EN = "English"
+    EN_ASL = "English (ASL)"
     EN_US = "English (American)"
     EN_AU = "English (Australian)"
+    EN_BSL = "English (BSL)"
     EN_GB = "English (British)"
     EO = "Esperanto"
     ET = "Estonian"
@@ -294,14 +296,6 @@ class KalturaCatalogItemLanguage(object):
     CY = "Welsh"
     XH = "Xhosa"
     ZU = "Zulu"
-
-    def __init__(self, value: str): ...
-
-    def getValue(self) -> str: ...
-
-class KalturaCatalogItemSignLanguage(object):
-    ENGLISH_ASL = "English (ASL)"
-    ENGLISH_BSL = "English (BSL)"
 
     def __init__(self, value: str): ...
 
@@ -1390,7 +1384,7 @@ class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
         pass
 
 class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
-    targetLanguage: KalturaCatalogItemSignLanguage
+    targetLanguage: KalturaCatalogItemLanguage
     def __init__(self,
             id: int = NotImplemented,
             vendorPartnerId: int = NotImplemented,
@@ -1416,10 +1410,10 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
             partnerId: int = NotImplemented,
             defaultReachProfileId: int = NotImplemented,
             adminTagsToExclude: str = NotImplemented,
-            targetLanguage: KalturaCatalogItemSignLanguage = NotImplemented): ...
+            targetLanguage: KalturaCatalogItemLanguage = NotImplemented): ...
 
-    def getTargetLanguage(self) -> KalturaCatalogItemSignLanguage: ...
-    def setTargetLanguage(self, newTargetLanguage: KalturaCatalogItemSignLanguage) -> None: ...
+    def getTargetLanguage(self) -> KalturaCatalogItemLanguage: ...
+    def setTargetLanguage(self, newTargetLanguage: KalturaCatalogItemLanguage) -> None: ...
 
 class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
