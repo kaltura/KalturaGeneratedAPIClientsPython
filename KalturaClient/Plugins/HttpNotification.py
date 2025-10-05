@@ -364,7 +364,8 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
             format = NotImplemented,
             ignoreNull = NotImplemented,
             code = NotImplemented,
-            dataStringReplacements = NotImplemented):
+            dataStringReplacements = NotImplemented,
+            responseProfileId = NotImplemented):
         KalturaHttpNotificationData.__init__(self)
 
         # Kaltura API object type
@@ -387,6 +388,9 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         # @var List[KalturaKeyValue]
         self.dataStringReplacements = dataStringReplacements
 
+        # @var int
+        self.responseProfileId = responseProfileId
+
 
     PROPERTY_LOADERS = {
         'apiObjectType': getXmlNodeText, 
@@ -394,6 +398,7 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         'ignoreNull': getXmlNodeBool, 
         'code': getXmlNodeText, 
         'dataStringReplacements': (KalturaObjectFactory.createArray, 'KalturaKeyValue'), 
+        'responseProfileId': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -408,6 +413,7 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
         kparams.addBoolIfDefined("ignoreNull", self.ignoreNull)
         kparams.addStringIfDefined("code", self.code)
         kparams.addArrayIfDefined("dataStringReplacements", self.dataStringReplacements)
+        kparams.addIntIfDefined("responseProfileId", self.responseProfileId)
         return kparams
 
     def getApiObjectType(self):
@@ -439,6 +445,12 @@ class KalturaHttpNotificationObjectData(KalturaHttpNotificationData):
 
     def setDataStringReplacements(self, newDataStringReplacements):
         self.dataStringReplacements = newDataStringReplacements
+
+    def getResponseProfileId(self):
+        return self.responseProfileId
+
+    def setResponseProfileId(self, newResponseProfileId):
+        self.responseProfileId = newResponseProfileId
 
 
 # @package Kaltura
