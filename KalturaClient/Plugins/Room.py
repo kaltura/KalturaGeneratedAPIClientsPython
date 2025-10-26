@@ -148,7 +148,8 @@ class KalturaRoomEntry(KalturaBaseEntry):
             responseLanguage = NotImplemented,
             roomType = NotImplemented,
             broadcastEntryId = NotImplemented,
-            templateRoomEntryId = NotImplemented):
+            templateRoomEntryId = NotImplemented,
+            recordedEntryId = NotImplemented):
         KalturaBaseEntry.__init__(self,
             id,
             name,
@@ -215,11 +216,16 @@ class KalturaRoomEntry(KalturaBaseEntry):
         # @var str
         self.templateRoomEntryId = templateRoomEntryId
 
+        # The entryId of the recording
+        # @var str
+        self.recordedEntryId = recordedEntryId
+
 
     PROPERTY_LOADERS = {
         'roomType': (KalturaEnumsFactory.createInt, "KalturaRoomType"), 
         'broadcastEntryId': getXmlNodeText, 
         'templateRoomEntryId': getXmlNodeText, 
+        'recordedEntryId': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -232,6 +238,7 @@ class KalturaRoomEntry(KalturaBaseEntry):
         kparams.addIntEnumIfDefined("roomType", self.roomType)
         kparams.addStringIfDefined("broadcastEntryId", self.broadcastEntryId)
         kparams.addStringIfDefined("templateRoomEntryId", self.templateRoomEntryId)
+        kparams.addStringIfDefined("recordedEntryId", self.recordedEntryId)
         return kparams
 
     def getRoomType(self):
@@ -251,6 +258,12 @@ class KalturaRoomEntry(KalturaBaseEntry):
 
     def setTemplateRoomEntryId(self, newTemplateRoomEntryId):
         self.templateRoomEntryId = newTemplateRoomEntryId
+
+    def getRecordedEntryId(self):
+        return self.recordedEntryId
+
+    def setRecordedEntryId(self, newRecordedEntryId):
+        self.recordedEntryId = newRecordedEntryId
 
 
 # @package Kaltura
