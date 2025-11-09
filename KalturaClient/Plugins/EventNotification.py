@@ -111,6 +111,7 @@ class KalturaEventNotificationEventObjectType(object):
     REACH_PROFILE = "41"
     ENTRY_VENDOR_TASK = "42"
     GROUPUSER = "43"
+    USER_ENTRY = "44"
     AD_CUE_POINT = "adCuePointEventNotifications.AdCuePoint"
     ANNOTATION = "annotationEventNotifications.Annotation"
     ATTACHMENT_ASSET = "attachmentAssetEventNotifications.AttachmentAsset"

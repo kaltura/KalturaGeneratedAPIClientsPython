@@ -292,6 +292,7 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
             flavorAssetFilenameXslt = NotImplemented,
             thumbnailAssetFilenameXslt = NotImplemented,
             assetFilenameXslt = NotImplemented,
+            dataContentFilenameXslt = NotImplemented,
             asperaPublicKey = NotImplemented,
             asperaPrivateKey = NotImplemented,
             sendMetadataAfterAssets = NotImplemented):
@@ -373,6 +374,9 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
         self.assetFilenameXslt = assetFilenameXslt
 
         # @var str
+        self.dataContentFilenameXslt = dataContentFilenameXslt
+
+        # @var str
         self.asperaPublicKey = asperaPublicKey
 
         # @var str
@@ -398,6 +402,7 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
         'flavorAssetFilenameXslt': getXmlNodeText, 
         'thumbnailAssetFilenameXslt': getXmlNodeText, 
         'assetFilenameXslt': getXmlNodeText, 
+        'dataContentFilenameXslt': getXmlNodeText, 
         'asperaPublicKey': getXmlNodeText, 
         'asperaPrivateKey': getXmlNodeText, 
         'sendMetadataAfterAssets': getXmlNodeBool, 
@@ -425,6 +430,7 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
         kparams.addStringIfDefined("flavorAssetFilenameXslt", self.flavorAssetFilenameXslt)
         kparams.addStringIfDefined("thumbnailAssetFilenameXslt", self.thumbnailAssetFilenameXslt)
         kparams.addStringIfDefined("assetFilenameXslt", self.assetFilenameXslt)
+        kparams.addStringIfDefined("dataContentFilenameXslt", self.dataContentFilenameXslt)
         kparams.addStringIfDefined("asperaPublicKey", self.asperaPublicKey)
         kparams.addStringIfDefined("asperaPrivateKey", self.asperaPrivateKey)
         kparams.addBoolIfDefined("sendMetadataAfterAssets", self.sendMetadataAfterAssets)
@@ -519,6 +525,12 @@ class KalturaFtpDistributionProfile(KalturaConfigurableDistributionProfile):
 
     def setAssetFilenameXslt(self, newAssetFilenameXslt):
         self.assetFilenameXslt = newAssetFilenameXslt
+
+    def getDataContentFilenameXslt(self):
+        return self.dataContentFilenameXslt
+
+    def setDataContentFilenameXslt(self, newDataContentFilenameXslt):
+        self.dataContentFilenameXslt = newDataContentFilenameXslt
 
     def getAsperaPublicKey(self):
         return self.asperaPublicKey

@@ -2411,15 +2411,20 @@ class KalturaESearchUserResponse(KalturaESearchResponse):
 # @subpackage Client
 class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
     def __init__(self,
-            hasCaption = NotImplemented):
+            hasCaption = NotImplemented,
+            language = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var KalturaNullableBoolean
         self.hasCaption = hasCaption
 
+        # @var KalturaLanguage
+        self.language = language
+
 
     PROPERTY_LOADERS = {
         'hasCaption': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
     }
 
     def fromXml(self, node):
@@ -2430,6 +2435,7 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
         kparams = KalturaSearchItem.toParams(self)
         kparams.put("objectType", "KalturaEntryCaptionAdvancedFilter")
         kparams.addIntEnumIfDefined("hasCaption", self.hasCaption)
+        kparams.addStringEnumIfDefined("language", self.language)
         return kparams
 
     def getHasCaption(self):
@@ -2437,6 +2443,12 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
 
     def setHasCaption(self, newHasCaption):
         self.hasCaption = newHasCaption
+
+    def getLanguage(self):
+        return self.language
+
+    def setLanguage(self, newLanguage):
+        self.language = newLanguage
 
 
 # @package Kaltura
