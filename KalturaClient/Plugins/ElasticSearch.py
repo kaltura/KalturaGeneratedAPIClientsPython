@@ -1336,7 +1336,9 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
             endsAt = NotImplemented,
             language = NotImplemented,
             captionAssetId = NotImplemented,
-            label = NotImplemented):
+            label = NotImplemented,
+            accuracy = NotImplemented,
+            usage = NotImplemented):
         KalturaESearchItemData.__init__(self,
             highlight)
 
@@ -1358,6 +1360,12 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
         # @var str
         self.label = label
 
+        # @var int
+        self.accuracy = accuracy
+
+        # @var int
+        self.usage = usage
+
 
     PROPERTY_LOADERS = {
         'line': getXmlNodeText, 
@@ -1366,6 +1374,8 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
         'language': getXmlNodeText, 
         'captionAssetId': getXmlNodeText, 
         'label': getXmlNodeText, 
+        'accuracy': getXmlNodeInt, 
+        'usage': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -1381,6 +1391,8 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
         kparams.addStringIfDefined("language", self.language)
         kparams.addStringIfDefined("captionAssetId", self.captionAssetId)
         kparams.addStringIfDefined("label", self.label)
+        kparams.addIntIfDefined("accuracy", self.accuracy)
+        kparams.addIntIfDefined("usage", self.usage)
         return kparams
 
     def getLine(self):
@@ -1418,6 +1430,18 @@ class KalturaESearchCaptionItemData(KalturaESearchItemData):
 
     def setLabel(self, newLabel):
         self.label = newLabel
+
+    def getAccuracy(self):
+        return self.accuracy
+
+    def setAccuracy(self, newAccuracy):
+        self.accuracy = newAccuracy
+
+    def getUsage(self):
+        return self.usage
+
+    def setUsage(self, newUsage):
+        self.usage = newUsage
 
 
 # @package Kaltura
@@ -2412,7 +2436,12 @@ class KalturaESearchUserResponse(KalturaESearchResponse):
 class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
     def __init__(self,
             hasCaption = NotImplemented,
-            language = NotImplemented):
+            language = NotImplemented,
+            accuracyGreaterThanOrEqual = NotImplemented,
+            accuracyLessThanOrEqual = NotImplemented,
+            accuracyGreaterThan = NotImplemented,
+            accuracyLessThan = NotImplemented,
+            usage = NotImplemented):
         KalturaSearchItem.__init__(self)
 
         # @var KalturaNullableBoolean
@@ -2421,10 +2450,30 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
         # @var KalturaLanguage
         self.language = language
 
+        # @var int
+        self.accuracyGreaterThanOrEqual = accuracyGreaterThanOrEqual
+
+        # @var int
+        self.accuracyLessThanOrEqual = accuracyLessThanOrEqual
+
+        # @var int
+        self.accuracyGreaterThan = accuracyGreaterThan
+
+        # @var int
+        self.accuracyLessThan = accuracyLessThan
+
+        # @var KalturaCaptionAssetUsage
+        self.usage = usage
+
 
     PROPERTY_LOADERS = {
         'hasCaption': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'language': (KalturaEnumsFactory.createString, "KalturaLanguage"), 
+        'accuracyGreaterThanOrEqual': getXmlNodeInt, 
+        'accuracyLessThanOrEqual': getXmlNodeInt, 
+        'accuracyGreaterThan': getXmlNodeInt, 
+        'accuracyLessThan': getXmlNodeInt, 
+        'usage': (KalturaEnumsFactory.createString, "KalturaCaptionAssetUsage"), 
     }
 
     def fromXml(self, node):
@@ -2436,6 +2485,11 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
         kparams.put("objectType", "KalturaEntryCaptionAdvancedFilter")
         kparams.addIntEnumIfDefined("hasCaption", self.hasCaption)
         kparams.addStringEnumIfDefined("language", self.language)
+        kparams.addIntIfDefined("accuracyGreaterThanOrEqual", self.accuracyGreaterThanOrEqual)
+        kparams.addIntIfDefined("accuracyLessThanOrEqual", self.accuracyLessThanOrEqual)
+        kparams.addIntIfDefined("accuracyGreaterThan", self.accuracyGreaterThan)
+        kparams.addIntIfDefined("accuracyLessThan", self.accuracyLessThan)
+        kparams.addStringEnumIfDefined("usage", self.usage)
         return kparams
 
     def getHasCaption(self):
@@ -2449,6 +2503,36 @@ class KalturaEntryCaptionAdvancedFilter(KalturaSearchItem):
 
     def setLanguage(self, newLanguage):
         self.language = newLanguage
+
+    def getAccuracyGreaterThanOrEqual(self):
+        return self.accuracyGreaterThanOrEqual
+
+    def setAccuracyGreaterThanOrEqual(self, newAccuracyGreaterThanOrEqual):
+        self.accuracyGreaterThanOrEqual = newAccuracyGreaterThanOrEqual
+
+    def getAccuracyLessThanOrEqual(self):
+        return self.accuracyLessThanOrEqual
+
+    def setAccuracyLessThanOrEqual(self, newAccuracyLessThanOrEqual):
+        self.accuracyLessThanOrEqual = newAccuracyLessThanOrEqual
+
+    def getAccuracyGreaterThan(self):
+        return self.accuracyGreaterThan
+
+    def setAccuracyGreaterThan(self, newAccuracyGreaterThan):
+        self.accuracyGreaterThan = newAccuracyGreaterThan
+
+    def getAccuracyLessThan(self):
+        return self.accuracyLessThan
+
+    def setAccuracyLessThan(self, newAccuracyLessThan):
+        self.accuracyLessThan = newAccuracyLessThan
+
+    def getUsage(self):
+        return self.usage
+
+    def setUsage(self, newUsage):
+        self.usage = newUsage
 
 
 # @package Kaltura

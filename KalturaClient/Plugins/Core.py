@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.6.0'
+API_VERSION = '22.7.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -34466,7 +34466,8 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
             lastName = NotImplemented,
             group = NotImplemented,
             externalId = NotImplemented,
-            capabilities = NotImplemented):
+            capabilities = NotImplemented,
+            groupUserCreationMode = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -34533,6 +34534,9 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         # @var str
         self.capabilities = capabilities
 
+        # @var int
+        self.groupUserCreationMode = groupUserCreationMode
+
 
     PROPERTY_LOADERS = {
         'userId': getXmlNodeText, 
@@ -34551,6 +34555,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         'group': getXmlNodeText, 
         'externalId': getXmlNodeText, 
         'capabilities': getXmlNodeText, 
+        'groupUserCreationMode': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -34576,6 +34581,7 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
         kparams.addStringIfDefined("group", self.group)
         kparams.addStringIfDefined("externalId", self.externalId)
         kparams.addStringIfDefined("capabilities", self.capabilities)
+        kparams.addIntIfDefined("groupUserCreationMode", self.groupUserCreationMode)
         return kparams
 
     def getUserId(self):
@@ -34673,6 +34679,12 @@ class KalturaBulkUploadResultUser(KalturaBulkUploadResult):
 
     def setCapabilities(self, newCapabilities):
         self.capabilities = newCapabilities
+
+    def getGroupUserCreationMode(self):
+        return self.groupUserCreationMode
+
+    def setGroupUserCreationMode(self, newGroupUserCreationMode):
+        self.groupUserCreationMode = newGroupUserCreationMode
 
 
 # @package Kaltura

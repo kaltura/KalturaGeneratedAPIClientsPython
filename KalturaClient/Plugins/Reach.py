@@ -7635,6 +7635,18 @@ class KalturaEntryVendorTaskService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
 
+    def reset(self, id, catalogItemId):
+        """Reset entry vendor task. change status back to pending with a new catalog item"""
+
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("id", id);
+        kparams.addIntIfDefined("catalogItemId", catalogItemId);
+        self.client.queueServiceActionCall("reach_entryvendortask", "reset", "KalturaEntryVendorTask", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaEntryVendorTask')
+
     def serve(self, vendorPartnerId = NotImplemented, partnerId = NotImplemented, status = NotImplemented, dueDate = NotImplemented):
         kparams = KalturaParams()
         kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
