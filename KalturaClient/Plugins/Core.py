@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.7.0'
+API_VERSION = '22.8.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -17340,7 +17340,8 @@ class KalturaFlavorParams(KalturaAssetParams):
             contentAwareness = NotImplemented,
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
-            clipDuration = NotImplemented):
+            clipDuration = NotImplemented,
+            audioLanguages = NotImplemented):
         KalturaAssetParams.__init__(self,
             id,
             partnerId,
@@ -17492,6 +17493,11 @@ class KalturaFlavorParams(KalturaAssetParams):
         # @var int
         self.clipDuration = clipDuration
 
+        # Audio languages extracted from multiStream field
+        # @var List[KalturaString]
+        # @readonly
+        self.audioLanguages = audioLanguages
+
 
     PROPERTY_LOADERS = {
         'videoCodec': (KalturaEnumsFactory.createString, "KalturaVideoCodec"), 
@@ -17535,6 +17541,7 @@ class KalturaFlavorParams(KalturaAssetParams):
         'chunkedEncodeMode': getXmlNodeInt, 
         'clipOffset': getXmlNodeInt, 
         'clipDuration': getXmlNodeInt, 
+        'audioLanguages': (KalturaObjectFactory.createArray, 'KalturaString'), 
     }
 
     def fromXml(self, node):
@@ -17833,6 +17840,9 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setClipDuration(self, newClipDuration):
         self.clipDuration = newClipDuration
 
+    def getAudioLanguages(self):
+        return self.audioLanguages
+
 
 # @package Kaltura
 # @subpackage Client
@@ -17951,6 +17961,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -18011,7 +18022,8 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
         # @var int
         self.flavorParamsId = flavorParamsId
@@ -51174,6 +51186,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             streamSuffix = NotImplemented):
         KalturaFlavorParams.__init__(self,
             id,
@@ -51229,7 +51242,8 @@ class KalturaLiveParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
         # Suffix to be added to the stream name after the entry id {entry_id}_{stream_suffix}, e.g. for entry id 0_kjdu5jr6 and suffix 1, the stream name will be 0_kjdu5jr6_1
         # @var str
@@ -51393,7 +51407,8 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             contentAwareness = NotImplemented,
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
-            clipDuration = NotImplemented):
+            clipDuration = NotImplemented,
+            audioLanguages = NotImplemented):
         KalturaFlavorParams.__init__(self,
             id,
             partnerId,
@@ -51448,7 +51463,8 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
 
     PROPERTY_LOADERS = {
@@ -56834,6 +56850,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -56895,6 +56912,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,

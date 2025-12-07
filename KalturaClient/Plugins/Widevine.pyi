@@ -231,7 +231,8 @@ class KalturaWidevineFlavorParams(KalturaFlavorParams):
             contentAwareness: float = NotImplemented,
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
-            clipDuration: int = NotImplemented): ...
+            clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented): ...
         pass
 
 class KalturaWidevineFlavorParamsOutput(KalturaFlavorParamsOutput):
@@ -292,6 +293,7 @@ class KalturaWidevineFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,

@@ -463,7 +463,8 @@ class KalturaWidevineFlavorParams(KalturaFlavorParams):
             contentAwareness = NotImplemented,
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
-            clipDuration = NotImplemented):
+            clipDuration = NotImplemented,
+            audioLanguages = NotImplemented):
         KalturaFlavorParams.__init__(self,
             id,
             partnerId,
@@ -518,7 +519,8 @@ class KalturaWidevineFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
 
     PROPERTY_LOADERS = {
@@ -592,6 +594,7 @@ class KalturaWidevineFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -655,6 +658,7 @@ class KalturaWidevineFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,

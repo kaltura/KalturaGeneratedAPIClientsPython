@@ -182,6 +182,7 @@ class KalturaESearchEntryFieldName(object):
     ENTITLED_USER_VIEW = "entitled_kusers_view"
     ENTRY_TYPE = "entry_type"
     EXTERNAL_SOURCE_TYPE = "external_source_type"
+    FLAVOR_PARAMS_IDS = "flavor_params_ids"
     ID = "id"
     IS_LIVE = "is_live"
     IS_QUIZ = "is_quiz"

@@ -103,7 +103,8 @@ class KalturaAnnotation(KalturaCuePoint):
             childrenCount = NotImplemented,
             directChildrenCount = NotImplemented,
             isPublic = NotImplemented,
-            searchableOnEntry = NotImplemented):
+            searchableOnEntry = NotImplemented,
+            originalCuePointCreateAt = NotImplemented):
         KalturaCuePoint.__init__(self,
             id,
             intId,
@@ -164,6 +165,10 @@ class KalturaAnnotation(KalturaCuePoint):
         # @var KalturaNullableBoolean
         self.searchableOnEntry = searchableOnEntry
 
+        # In case of cloned annotation it will hold source cuepoint createdAt.
+        # @var int
+        self.originalCuePointCreateAt = originalCuePointCreateAt
+
 
     PROPERTY_LOADERS = {
         'parentId': getXmlNodeText, 
@@ -175,6 +180,7 @@ class KalturaAnnotation(KalturaCuePoint):
         'directChildrenCount': getXmlNodeInt, 
         'isPublic': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'searchableOnEntry': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'originalCuePointCreateAt': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -189,6 +195,7 @@ class KalturaAnnotation(KalturaCuePoint):
         kparams.addIntIfDefined("endTime", self.endTime)
         kparams.addIntEnumIfDefined("isPublic", self.isPublic)
         kparams.addIntEnumIfDefined("searchableOnEntry", self.searchableOnEntry)
+        kparams.addIntIfDefined("originalCuePointCreateAt", self.originalCuePointCreateAt)
         return kparams
 
     def getParentId(self):
@@ -232,6 +239,12 @@ class KalturaAnnotation(KalturaCuePoint):
 
     def setSearchableOnEntry(self, newSearchableOnEntry):
         self.searchableOnEntry = newSearchableOnEntry
+
+    def getOriginalCuePointCreateAt(self):
+        return self.originalCuePointCreateAt
+
+    def setOriginalCuePointCreateAt(self, newOriginalCuePointCreateAt):
+        self.originalCuePointCreateAt = newOriginalCuePointCreateAt
 
 
 # @package Kaltura

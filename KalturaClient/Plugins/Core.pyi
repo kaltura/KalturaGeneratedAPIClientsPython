@@ -8368,6 +8368,7 @@ class KalturaFlavorParams(KalturaAssetParams):
     chunkedEncodeMode: int
     clipOffset: int
     clipDuration: int
+    audioLanguages: List[KalturaString]
     def __init__(self,
             id: int = NotImplemented,
             partnerId: int = NotImplemented,
@@ -8422,7 +8423,8 @@ class KalturaFlavorParams(KalturaAssetParams):
             contentAwareness: float = NotImplemented,
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
-            clipDuration: int = NotImplemented): ...
+            clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented): ...
 
     def getVideoCodec(self) -> KalturaVideoCodec: ...
     def setVideoCodec(self, newVideoCodec: KalturaVideoCodec) -> None: ...
@@ -8506,6 +8508,7 @@ class KalturaFlavorParams(KalturaAssetParams):
     def setClipOffset(self, newClipOffset: int) -> None: ...
     def getClipDuration(self) -> int: ...
     def setClipDuration(self, newClipDuration: int) -> None: ...
+    def getAudioLanguages(self) -> List[KalturaString]: ...
 
 class KalturaFlavorAssetWithParams(KalturaObjectBase):
     flavorAsset: KalturaFlavorAsset
@@ -8585,6 +8588,7 @@ class KalturaFlavorParamsOutput(KalturaFlavorParams):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,
@@ -19346,6 +19350,7 @@ class KalturaLiveParams(KalturaFlavorParams):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             streamSuffix: str = NotImplemented): ...
 
     def getStreamSuffix(self) -> str: ...
@@ -19430,7 +19435,8 @@ class KalturaMediaFlavorParams(KalturaFlavorParams):
             contentAwareness: float = NotImplemented,
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
-            clipDuration: int = NotImplemented): ...
+            clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented): ...
         pass
 
 class KalturaMediaInfoFilter(KalturaMediaInfoBaseFilter):
@@ -21239,6 +21245,7 @@ class KalturaMediaFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,

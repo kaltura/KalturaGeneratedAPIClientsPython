@@ -241,7 +241,8 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             contentAwareness: float = NotImplemented,
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
-            clipDuration: int = NotImplemented): ...
+            clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented): ...
         pass
 
 class KalturaImageFlavorParams(KalturaFlavorParams):
@@ -305,6 +306,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             densityWidth: int = NotImplemented,
             densityHeight: int = NotImplemented,
             sizeWidth: int = NotImplemented,
@@ -379,6 +381,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             readonly: bool = NotImplemented): ...
 
     def getReadonly(self) -> bool: ...
@@ -442,6 +445,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flashVersion: int = NotImplemented,
             poly2Bitmap: bool = NotImplemented): ...
 
@@ -506,6 +510,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,
@@ -575,6 +580,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,
@@ -655,6 +661,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,
@@ -724,6 +731,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode: int = NotImplemented,
             clipOffset: int = NotImplemented,
             clipDuration: int = NotImplemented,
+            audioLanguages: List[KalturaString] = NotImplemented,
             flavorParamsId: int = NotImplemented,
             commandLinesStr: str = NotImplemented,
             flavorParamsVersion: str = NotImplemented,

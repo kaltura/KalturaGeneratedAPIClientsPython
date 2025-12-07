@@ -408,7 +408,8 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             contentAwareness = NotImplemented,
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
-            clipDuration = NotImplemented):
+            clipDuration = NotImplemented,
+            audioLanguages = NotImplemented):
         KalturaFlavorParams.__init__(self,
             id,
             partnerId,
@@ -463,7 +464,8 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
 
     PROPERTY_LOADERS = {
@@ -537,6 +539,7 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             densityWidth = NotImplemented,
             densityHeight = NotImplemented,
             sizeWidth = NotImplemented,
@@ -596,7 +599,8 @@ class KalturaImageFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
         # @var int
         self.densityWidth = densityWidth
@@ -725,6 +729,7 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             readonly = NotImplemented):
         KalturaFlavorParams.__init__(self,
             id,
@@ -780,7 +785,8 @@ class KalturaPdfFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
         # @var bool
         self.readonly = readonly
@@ -865,6 +871,7 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flashVersion = NotImplemented,
             poly2Bitmap = NotImplemented):
         KalturaFlavorParams.__init__(self,
@@ -921,7 +928,8 @@ class KalturaSwfFlavorParams(KalturaFlavorParams):
             contentAwareness,
             chunkedEncodeMode,
             clipOffset,
-            clipDuration)
+            clipDuration,
+            audioLanguages)
 
         # @var int
         self.flashVersion = flashVersion
@@ -1017,6 +1025,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -1078,6 +1087,7 @@ class KalturaDocumentFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,
@@ -1157,6 +1167,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -1223,6 +1234,7 @@ class KalturaImageFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,
@@ -1357,6 +1369,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -1419,6 +1432,7 @@ class KalturaPdfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,
@@ -1509,6 +1523,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode = NotImplemented,
             clipOffset = NotImplemented,
             clipDuration = NotImplemented,
+            audioLanguages = NotImplemented,
             flavorParamsId = NotImplemented,
             commandLinesStr = NotImplemented,
             flavorParamsVersion = NotImplemented,
@@ -1572,6 +1587,7 @@ class KalturaSwfFlavorParamsOutput(KalturaFlavorParamsOutput):
             chunkedEncodeMode,
             clipOffset,
             clipDuration,
+            audioLanguages,
             flavorParamsId,
             commandLinesStr,
             flavorParamsVersion,
