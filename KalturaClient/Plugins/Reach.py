@@ -7383,9 +7383,10 @@ class KalturaVendorCatalogItemService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaVendorCatalogItemListResponse')
 
-    def serve(self, vendorPartnerId = NotImplemented):
+    def serve(self, vendorPartnerId = NotImplemented, filter = NotImplemented):
         kparams = KalturaParams()
         kparams.addIntIfDefined("vendorPartnerId", vendorPartnerId);
+        kparams.addObjectIfDefined("filter", filter)
         self.client.queueServiceActionCall('reach_vendorcatalogitem', 'serve', None ,kparams)
         return self.client.getServeUrl()
 

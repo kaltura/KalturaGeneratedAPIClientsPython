@@ -318,6 +318,53 @@ class KalturaESearchMetadataAggregateByFieldName(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchScoreFunctionBoostMode(object):
+    MULTIPLY = "multiply"
+    SUM = "sum"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchScoreFunctionDecayAlgorithm(object):
+    EXP = "exp"
+    GAUSS = "gauss"
+    LINEAR = "linear"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchScoreFunctionField(object):
+    CREATED_AT = "created_at"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaESearchScoreFunctionOrigin(object):
+    NOW = "now"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchSortOrder(object):
     ORDER_BY_ASC = "asc"
     ORDER_BY_DESC = "desc"
@@ -1040,6 +1087,110 @@ class KalturaESearchOrderBy(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaESearchScoreFunctionParams(KalturaObjectBase):
+    def __init__(self,
+            decayAlgorithm = NotImplemented,
+            functionField = NotImplemented,
+            boostMode = NotImplemented,
+            origin = NotImplemented,
+            weight = NotImplemented,
+            scale = NotImplemented,
+            decay = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaESearchScoreFunctionDecayAlgorithm
+        self.decayAlgorithm = decayAlgorithm
+
+        # @var KalturaESearchScoreFunctionField
+        self.functionField = functionField
+
+        # @var KalturaESearchScoreFunctionBoostMode
+        self.boostMode = boostMode
+
+        # @var KalturaESearchScoreFunctionOrigin
+        self.origin = origin
+
+        # @var float
+        self.weight = weight
+
+        # @var str
+        self.scale = scale
+
+        # @var float
+        self.decay = decay
+
+
+    PROPERTY_LOADERS = {
+        'decayAlgorithm': (KalturaEnumsFactory.createString, "KalturaESearchScoreFunctionDecayAlgorithm"), 
+        'functionField': (KalturaEnumsFactory.createString, "KalturaESearchScoreFunctionField"), 
+        'boostMode': (KalturaEnumsFactory.createString, "KalturaESearchScoreFunctionBoostMode"), 
+        'origin': (KalturaEnumsFactory.createString, "KalturaESearchScoreFunctionOrigin"), 
+        'weight': getXmlNodeFloat, 
+        'scale': getXmlNodeText, 
+        'decay': getXmlNodeFloat, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaESearchScoreFunctionParams.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaESearchScoreFunctionParams")
+        kparams.addStringEnumIfDefined("decayAlgorithm", self.decayAlgorithm)
+        kparams.addStringEnumIfDefined("functionField", self.functionField)
+        kparams.addStringEnumIfDefined("boostMode", self.boostMode)
+        kparams.addStringEnumIfDefined("origin", self.origin)
+        kparams.addFloatIfDefined("weight", self.weight)
+        kparams.addStringIfDefined("scale", self.scale)
+        kparams.addFloatIfDefined("decay", self.decay)
+        return kparams
+
+    def getDecayAlgorithm(self):
+        return self.decayAlgorithm
+
+    def setDecayAlgorithm(self, newDecayAlgorithm):
+        self.decayAlgorithm = newDecayAlgorithm
+
+    def getFunctionField(self):
+        return self.functionField
+
+    def setFunctionField(self, newFunctionField):
+        self.functionField = newFunctionField
+
+    def getBoostMode(self):
+        return self.boostMode
+
+    def setBoostMode(self, newBoostMode):
+        self.boostMode = newBoostMode
+
+    def getOrigin(self):
+        return self.origin
+
+    def setOrigin(self, newOrigin):
+        self.origin = newOrigin
+
+    def getWeight(self):
+        return self.weight
+
+    def setWeight(self, newWeight):
+        self.weight = newWeight
+
+    def getScale(self):
+        return self.scale
+
+    def setScale(self, newScale):
+        self.scale = newScale
+
+    def getDecay(self):
+        return self.decay
+
+    def setDecay(self, newDecay):
+        self.decay = newDecay
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaESearchParams(KalturaObjectBase):
     def __init__(self,
             objectStatuses = NotImplemented,
@@ -1047,7 +1198,8 @@ class KalturaESearchParams(KalturaObjectBase):
             orderBy = NotImplemented,
             ignoreSynonym = NotImplemented,
             objectIds = NotImplemented,
-            objectIdsNotIn = NotImplemented):
+            objectIdsNotIn = NotImplemented,
+            scoreFunctionParams = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var str
@@ -1068,6 +1220,9 @@ class KalturaESearchParams(KalturaObjectBase):
         # @var KalturaNullableBoolean
         self.objectIdsNotIn = objectIdsNotIn
 
+        # @var KalturaESearchScoreFunctionParams
+        self.scoreFunctionParams = scoreFunctionParams
+
 
     PROPERTY_LOADERS = {
         'objectStatuses': getXmlNodeText, 
@@ -1076,6 +1231,7 @@ class KalturaESearchParams(KalturaObjectBase):
         'ignoreSynonym': getXmlNodeBool, 
         'objectIds': getXmlNodeText, 
         'objectIdsNotIn': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
+        'scoreFunctionParams': (KalturaObjectFactory.create, 'KalturaESearchScoreFunctionParams'), 
     }
 
     def fromXml(self, node):
@@ -1091,6 +1247,7 @@ class KalturaESearchParams(KalturaObjectBase):
         kparams.addBoolIfDefined("ignoreSynonym", self.ignoreSynonym)
         kparams.addStringIfDefined("objectIds", self.objectIds)
         kparams.addIntEnumIfDefined("objectIdsNotIn", self.objectIdsNotIn)
+        kparams.addObjectIfDefined("scoreFunctionParams", self.scoreFunctionParams)
         return kparams
 
     def getObjectStatuses(self):
@@ -1128,6 +1285,12 @@ class KalturaESearchParams(KalturaObjectBase):
 
     def setObjectIdsNotIn(self, newObjectIdsNotIn):
         self.objectIdsNotIn = newObjectIdsNotIn
+
+    def getScoreFunctionParams(self):
+        return self.scoreFunctionParams
+
+    def setScoreFunctionParams(self, newScoreFunctionParams):
+        self.scoreFunctionParams = newScoreFunctionParams
 
 
 # @package Kaltura
@@ -1567,6 +1730,7 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
             ignoreSynonym = NotImplemented,
             objectIds = NotImplemented,
             objectIdsNotIn = NotImplemented,
+            scoreFunctionParams = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
@@ -1574,7 +1738,8 @@ class KalturaESearchCategoryParams(KalturaESearchParams):
             orderBy,
             ignoreSynonym,
             objectIds,
-            objectIdsNotIn)
+            objectIdsNotIn,
+            scoreFunctionParams)
 
         # @var KalturaESearchCategoryOperator
         self.searchOperator = searchOperator
@@ -1922,6 +2087,7 @@ class KalturaESearchEntryParams(KalturaESearchParams):
             ignoreSynonym = NotImplemented,
             objectIds = NotImplemented,
             objectIdsNotIn = NotImplemented,
+            scoreFunctionParams = NotImplemented,
             searchOperator = NotImplemented,
             aggregations = NotImplemented):
         KalturaESearchParams.__init__(self,
@@ -1930,7 +2096,8 @@ class KalturaESearchEntryParams(KalturaESearchParams):
             orderBy,
             ignoreSynonym,
             objectIds,
-            objectIdsNotIn)
+            objectIdsNotIn,
+            scoreFunctionParams)
 
         # @var KalturaESearchEntryOperator
         self.searchOperator = searchOperator
@@ -2052,6 +2219,7 @@ class KalturaESearchGroupParams(KalturaESearchParams):
             ignoreSynonym = NotImplemented,
             objectIds = NotImplemented,
             objectIdsNotIn = NotImplemented,
+            scoreFunctionParams = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
@@ -2059,7 +2227,8 @@ class KalturaESearchGroupParams(KalturaESearchParams):
             orderBy,
             ignoreSynonym,
             objectIds,
-            objectIdsNotIn)
+            objectIdsNotIn,
+            scoreFunctionParams)
 
         # @var KalturaESearchGroupOperator
         self.searchOperator = searchOperator
@@ -2367,6 +2536,7 @@ class KalturaESearchUserParams(KalturaESearchParams):
             ignoreSynonym = NotImplemented,
             objectIds = NotImplemented,
             objectIdsNotIn = NotImplemented,
+            scoreFunctionParams = NotImplemented,
             searchOperator = NotImplemented):
         KalturaESearchParams.__init__(self,
             objectStatuses,
@@ -2374,7 +2544,8 @@ class KalturaESearchUserParams(KalturaESearchParams):
             orderBy,
             ignoreSynonym,
             objectIds,
-            objectIdsNotIn)
+            objectIdsNotIn,
+            scoreFunctionParams)
 
         # @var KalturaESearchUserOperator
         self.searchOperator = searchOperator
@@ -3632,6 +3803,10 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchEntryFieldName': KalturaESearchEntryFieldName,
             'KalturaESearchEntryOrderByFieldName': KalturaESearchEntryOrderByFieldName,
             'KalturaESearchMetadataAggregateByFieldName': KalturaESearchMetadataAggregateByFieldName,
+            'KalturaESearchScoreFunctionBoostMode': KalturaESearchScoreFunctionBoostMode,
+            'KalturaESearchScoreFunctionDecayAlgorithm': KalturaESearchScoreFunctionDecayAlgorithm,
+            'KalturaESearchScoreFunctionField': KalturaESearchScoreFunctionField,
+            'KalturaESearchScoreFunctionOrigin': KalturaESearchScoreFunctionOrigin,
             'KalturaESearchSortOrder': KalturaESearchSortOrder,
             'KalturaESearchUserFieldName': KalturaESearchUserFieldName,
             'KalturaESearchUserOrderByFieldName': KalturaESearchUserOrderByFieldName,
@@ -3660,6 +3835,7 @@ class KalturaElasticSearchClientPlugin(KalturaClientPlugin):
             'KalturaESearchEntryResult': KalturaESearchEntryResult,
             'KalturaESearchGroupResult': KalturaESearchGroupResult,
             'KalturaESearchOrderBy': KalturaESearchOrderBy,
+            'KalturaESearchScoreFunctionParams': KalturaESearchScoreFunctionParams,
             'KalturaESearchParams': KalturaESearchParams,
             'KalturaESearchRange': KalturaESearchRange,
             'KalturaESearchResponse': KalturaESearchResponse,
