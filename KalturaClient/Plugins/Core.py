@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.9.0'
+API_VERSION = '22.10.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -33079,13 +33079,23 @@ class KalturaBaseEntryListResponse(KalturaListResponse):
 class KalturaBaseSyndicationFeedBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
 
+        # @var str
+        self.idEqual = idEqual
+
+        # @var str
+        self.idIn = idIn
+
 
     PROPERTY_LOADERS = {
+        'idEqual': getXmlNodeText, 
+        'idIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -33095,7 +33105,21 @@ class KalturaBaseSyndicationFeedBaseFilter(KalturaFilter):
     def toParams(self):
         kparams = KalturaFilter.toParams(self)
         kparams.put("objectType", "KalturaBaseSyndicationFeedBaseFilter")
+        kparams.addStringIfDefined("idEqual", self.idEqual)
+        kparams.addStringIfDefined("idIn", self.idIn)
         return kparams
+
+    def getIdEqual(self):
+        return self.idEqual
+
+    def setIdEqual(self, newIdEqual):
+        self.idEqual = newIdEqual
+
+    def getIdIn(self):
+        return self.idIn
+
+    def setIdIn(self, newIdIn):
+        self.idIn = newIdIn
 
 
 # @package Kaltura
@@ -47540,10 +47564,14 @@ class KalturaAssetResource(KalturaContentResource):
 class KalturaBaseSyndicationFeedFilter(KalturaBaseSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -56104,10 +56132,14 @@ class KalturaGenericDataCenterContentResource(KalturaDataCenterContentResource):
 class KalturaGenericSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -56128,10 +56160,14 @@ class KalturaGenericSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
 class KalturaGoogleVideoSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -56251,10 +56287,14 @@ class KalturaHttpHeaderCondition(KalturaRegexCondition):
 class KalturaITunesSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -57425,10 +57465,14 @@ class KalturaTimeContextField(KalturaIntegerField):
 class KalturaTubeMogulSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -57905,10 +57949,14 @@ class KalturaWebcamTokenResource(KalturaDataCenterContentResource):
 class KalturaYahooSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaBaseSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -59039,10 +59087,14 @@ class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
 class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaGenericSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -59063,10 +59115,14 @@ class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilte
 class KalturaGoogleVideoSyndicationFeedFilter(KalturaGoogleVideoSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaGoogleVideoSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -59087,10 +59143,14 @@ class KalturaGoogleVideoSyndicationFeedFilter(KalturaGoogleVideoSyndicationFeedB
 class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaITunesSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -59803,10 +59863,14 @@ class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
 class KalturaTubeMogulSyndicationFeedFilter(KalturaTubeMogulSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaTubeMogulSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -59862,10 +59926,14 @@ class KalturaUploadedFileTokenResource(KalturaGenericDataCenterContentResource):
 class KalturaYahooSyndicationFeedFilter(KalturaYahooSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaYahooSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -60504,10 +60572,14 @@ class KalturaFlavorParamsFilter(KalturaFlavorParamsBaseFilter):
 class KalturaGenericXsltSyndicationFeedBaseFilter(KalturaGenericSyndicationFeedFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaGenericSyndicationFeedFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {
@@ -61514,10 +61586,14 @@ class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
 class KalturaGenericXsltSyndicationFeedFilter(KalturaGenericXsltSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy = NotImplemented,
-            advancedSearch = NotImplemented):
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented):
         KalturaGenericXsltSyndicationFeedBaseFilter.__init__(self,
             orderBy,
-            advancedSearch)
+            advancedSearch,
+            idEqual,
+            idIn)
 
 
     PROPERTY_LOADERS = {

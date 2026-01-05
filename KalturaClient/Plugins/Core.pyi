@@ -13564,10 +13564,18 @@ class KalturaBaseEntryListResponse(KalturaListResponse):
     def getObjects(self) -> List[KalturaBaseEntry]: ...
 
 class KalturaBaseSyndicationFeedBaseFilter(KalturaFilter):
+    idEqual: str
+    idIn: str
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
-        pass
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
+
+    def getIdEqual(self) -> str: ...
+    def setIdEqual(self, newIdEqual: str) -> None: ...
+    def getIdIn(self) -> str: ...
+    def setIdIn(self, newIdIn: str) -> None: ...
 
 class KalturaBaseSyndicationFeedListResponse(KalturaListResponse):
     objects: List[KalturaBaseSyndicationFeed]
@@ -18074,7 +18082,9 @@ class KalturaAssetResource(KalturaContentResource):
 class KalturaBaseSyndicationFeedFilter(KalturaBaseSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaBulkUploadFilter(KalturaBulkUploadBaseFilter):
@@ -20999,13 +21009,17 @@ class KalturaGenericDataCenterContentResource(KalturaDataCenterContentResource):
 class KalturaGenericSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaGoogleVideoSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaGroupUserFilter(KalturaGroupUserBaseFilter):
@@ -21044,7 +21058,9 @@ class KalturaHttpHeaderCondition(KalturaRegexCondition):
 class KalturaITunesSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaIpAddressContextField(KalturaStringField):
@@ -21397,7 +21413,9 @@ class KalturaTimeContextField(KalturaIntegerField):
 class KalturaTubeMogulSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaUserAgentCondition(KalturaRegexCondition):
@@ -21549,7 +21567,9 @@ class KalturaWebcamTokenResource(KalturaDataCenterContentResource):
 class KalturaYahooSyndicationFeedBaseFilter(KalturaBaseSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaAmazonS3StorageProfileFilter(KalturaAmazonS3StorageProfileBaseFilter):
@@ -21996,19 +22016,25 @@ class KalturaFlavorParamsBaseFilter(KalturaAssetParamsFilter):
 class KalturaGenericSyndicationFeedFilter(KalturaGenericSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaGoogleVideoSyndicationFeedFilter(KalturaGoogleVideoSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaITunesSyndicationFeedFilter(KalturaITunesSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaLiveEntryServerNodeFilter(KalturaLiveEntryServerNodeBaseFilter):
@@ -22294,7 +22320,9 @@ class KalturaThumbParamsBaseFilter(KalturaAssetParamsFilter):
 class KalturaTubeMogulSyndicationFeedFilter(KalturaTubeMogulSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaUploadedFileTokenResource(KalturaGenericDataCenterContentResource):
@@ -22308,7 +22336,9 @@ class KalturaUploadedFileTokenResource(KalturaGenericDataCenterContentResource):
 class KalturaYahooSyndicationFeedFilter(KalturaYahooSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaApiActionPermissionItemFilter(KalturaApiActionPermissionItemBaseFilter):
@@ -22569,7 +22599,9 @@ class KalturaFlavorParamsFilter(KalturaFlavorParamsBaseFilter):
 class KalturaGenericXsltSyndicationFeedBaseFilter(KalturaGenericSyndicationFeedFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
@@ -23002,7 +23034,9 @@ class KalturaFlavorParamsOutputBaseFilter(KalturaFlavorParamsFilter):
 class KalturaGenericXsltSyndicationFeedFilter(KalturaGenericXsltSyndicationFeedBaseFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
-            advancedSearch: KalturaSearchItem = NotImplemented): ...
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: str = NotImplemented,
+            idIn: str = NotImplemented): ...
         pass
 
 class KalturaLiveAssetBaseFilter(KalturaFlavorAssetFilter):

@@ -244,7 +244,8 @@ class KalturaCortexApiDistributionJobProviderData(KalturaConfigurableDistributio
             fieldValues = NotImplemented,
             videoAssetFilePath = NotImplemented,
             thumbAssetFilePath = NotImplemented,
-            captionsInfo = NotImplemented):
+            captionsInfo = NotImplemented,
+            mediaType = NotImplemented):
         KalturaConfigurableDistributionJobProviderData.__init__(self,
             fieldValues)
 
@@ -257,11 +258,15 @@ class KalturaCortexApiDistributionJobProviderData(KalturaConfigurableDistributio
         # @var List[KalturaCortexApiCaptionDistributionInfo]
         self.captionsInfo = captionsInfo
 
+        # @var KalturaMediaType
+        self.mediaType = mediaType
+
 
     PROPERTY_LOADERS = {
         'videoAssetFilePath': getXmlNodeText, 
         'thumbAssetFilePath': getXmlNodeText, 
         'captionsInfo': (KalturaObjectFactory.createArray, 'KalturaCortexApiCaptionDistributionInfo'), 
+        'mediaType': (KalturaEnumsFactory.createInt, "KalturaMediaType"), 
     }
 
     def fromXml(self, node):
@@ -274,6 +279,7 @@ class KalturaCortexApiDistributionJobProviderData(KalturaConfigurableDistributio
         kparams.addStringIfDefined("videoAssetFilePath", self.videoAssetFilePath)
         kparams.addStringIfDefined("thumbAssetFilePath", self.thumbAssetFilePath)
         kparams.addArrayIfDefined("captionsInfo", self.captionsInfo)
+        kparams.addIntEnumIfDefined("mediaType", self.mediaType)
         return kparams
 
     def getVideoAssetFilePath(self):
@@ -293,6 +299,12 @@ class KalturaCortexApiDistributionJobProviderData(KalturaConfigurableDistributio
 
     def setCaptionsInfo(self, newCaptionsInfo):
         self.captionsInfo = newCaptionsInfo
+
+    def getMediaType(self):
+        return self.mediaType
+
+    def setMediaType(self, newMediaType):
+        self.mediaType = newMediaType
 
 
 # @package Kaltura
