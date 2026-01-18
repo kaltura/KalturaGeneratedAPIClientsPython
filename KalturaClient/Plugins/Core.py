@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.10.0'
+API_VERSION = '22.11.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -2053,6 +2053,7 @@ class KalturaBatchJobType(object):
     STORAGE_PERIODIC_DELETE_LOCAL = "55"
     REACH_JOB_CLEANER = "56"
     MULTI_CLIP_CONCAT = "57"
+    UPDATE_USER_ENTRIES = "58"
     REACH_INTERNAL_QUEUE_HANDLER = "ReachInternal.ReachInternalQueueHandler"
     CONVERT_CAPTION_ASSET = "caption.convertcaptionasset"
     PARSE_MULTI_LANGUAGE_CAPTION_ASSET = "caption.parsemultilanguagecaptionasset"
@@ -30691,7 +30692,6 @@ class KalturaUserEntry(KalturaObjectBase):
         self.partnerId = partnerId
 
         # @var KalturaUserEntryStatus
-        # @readonly
         self.status = status
 
         # @var int
@@ -30727,6 +30727,7 @@ class KalturaUserEntry(KalturaObjectBase):
         kparams.put("objectType", "KalturaUserEntry")
         kparams.addStringIfDefined("entryId", self.entryId)
         kparams.addStringIfDefined("userId", self.userId)
+        kparams.addStringEnumIfDefined("status", self.status)
         return kparams
 
     def getId(self):
@@ -30749,6 +30750,9 @@ class KalturaUserEntry(KalturaObjectBase):
 
     def getStatus(self):
         return self.status
+
+    def setStatus(self, newStatus):
+        self.status = newStatus
 
     def getCreatedAt(self):
         return self.createdAt
@@ -45006,6 +45010,50 @@ class KalturaUiConfListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaUpdateUserEntriesData(KalturaJobData):
+    def __init__(self,
+            oldStatus = NotImplemented,
+            newStatus = NotImplemented):
+        KalturaJobData.__init__(self)
+
+        # @var KalturaUserEntryStatus
+        self.oldStatus = oldStatus
+
+        # @var KalturaUserEntryStatus
+        self.newStatus = newStatus
+
+
+    PROPERTY_LOADERS = {
+        'oldStatus': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
+        'newStatus': (KalturaEnumsFactory.createString, "KalturaUserEntryStatus"), 
+    }
+
+    def fromXml(self, node):
+        KalturaJobData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaUpdateUserEntriesData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaJobData.toParams(self)
+        kparams.put("objectType", "KalturaUpdateUserEntriesData")
+        kparams.addStringEnumIfDefined("oldStatus", self.oldStatus)
+        kparams.addStringEnumIfDefined("newStatus", self.newStatus)
+        return kparams
+
+    def getOldStatus(self):
+        return self.oldStatus
+
+    def setOldStatus(self, newOldStatus):
+        self.oldStatus = newOldStatus
+
+    def getNewStatus(self):
+        return self.newStatus
+
+    def setNewStatus(self, newNewStatus):
+        self.newStatus = newNewStatus
 
 
 # @package Kaltura
@@ -71147,6 +71195,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaTubeMogulSyndicationFeed': KalturaTubeMogulSyndicationFeed,
             'KalturaUiConfBaseFilter': KalturaUiConfBaseFilter,
             'KalturaUiConfListResponse': KalturaUiConfListResponse,
+            'KalturaUpdateUserEntriesData': KalturaUpdateUserEntriesData,
             'KalturaUploadTokenBaseFilter': KalturaUploadTokenBaseFilter,
             'KalturaUploadTokenListResponse': KalturaUploadTokenListResponse,
             'KalturaUrlAuthenticationParamsCondition': KalturaUrlAuthenticationParamsCondition,
