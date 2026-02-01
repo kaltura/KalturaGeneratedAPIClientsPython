@@ -146,6 +146,7 @@ class KalturaVendorServiceFeature(object):
     SENTIMENT_ANALYSIS = 17
     DOCUMENT_ENRICHMENT = 18
     SIGN_LANGUAGE = 19
+    SPEECH_TO_VIDEO = 20
 
     def __init__(self, value: int): ...
 
@@ -481,6 +482,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     serviceFeature: KalturaVendorServiceFeature
     turnAroundTime: KalturaVendorServiceTurnAroundTime
     externalTaskId: str
+    isPayPerUse: bool
     def __init__(self,
             id: int = NotImplemented,
             partnerId: int = NotImplemented,
@@ -513,7 +515,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             serviceType: KalturaVendorServiceType = NotImplemented,
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
-            externalTaskId: str = NotImplemented): ...
+            externalTaskId: str = NotImplemented,
+            isPayPerUse: bool = NotImplemented): ...
 
     def getId(self) -> int: ...
     def getPartnerId(self) -> int: ...
@@ -561,6 +564,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     def getTurnAroundTime(self) -> KalturaVendorServiceTurnAroundTime: ...
     def getExternalTaskId(self) -> str: ...
     def setExternalTaskId(self, newExternalTaskId: str) -> None: ...
+    def getIsPayPerUse(self) -> bool: ...
 
 class KalturaReachProfile(KalturaObjectBase):
     id: int
@@ -927,6 +931,19 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 
     def getLanguage(self) -> KalturaLanguageCode: ...
     def setLanguage(self, newLanguage: KalturaLanguageCode) -> None: ...
+
+class KalturaSpeechToVideoVendorTaskData(KalturaVendorTaskData):
+    avatarId: str
+    conversionProfileId: int
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            avatarId: str = NotImplemented,
+            conversionProfileId: int = NotImplemented): ...
+
+    def getAvatarId(self) -> str: ...
+    def setAvatarId(self, newAvatarId: str) -> None: ...
+    def getConversionProfileId(self) -> int: ...
+    def setConversionProfileId(self, newConversionProfileId: int) -> None: ...
 
 class KalturaUnlimitedVendorCredit(KalturaBaseVendorCredit):
     credit: int
@@ -1414,6 +1431,34 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
 
     def getTargetLanguage(self) -> KalturaCatalogItemLanguage: ...
     def setTargetLanguage(self, newTargetLanguage: KalturaCatalogItemLanguage) -> None: ...
+
+class KalturaVendorSpeechToVideoCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented): ...
+        pass
 
 class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
@@ -2428,6 +2473,31 @@ class KalturaVendorQuizCatalogItemFilter(KalturaVendorCatalogItemFilter):
         pass
 
 class KalturaVendorSentimentAnalysisCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorSpeechToVideoCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,

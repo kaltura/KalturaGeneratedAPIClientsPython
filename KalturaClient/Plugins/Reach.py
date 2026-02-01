@@ -203,6 +203,7 @@ class KalturaVendorServiceFeature(object):
     SENTIMENT_ANALYSIS = 17
     DOCUMENT_ENRICHMENT = 18
     SIGN_LANGUAGE = 19
+    SPEECH_TO_VIDEO = 20
 
     def __init__(self, value):
         self.value = value
@@ -678,7 +679,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             serviceType = NotImplemented,
             serviceFeature = NotImplemented,
             turnAroundTime = NotImplemented,
-            externalTaskId = NotImplemented):
+            externalTaskId = NotImplemented,
+            isPayPerUse = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -814,6 +816,11 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         # @var str
         self.externalTaskId = externalTaskId
 
+        # Indicates if the task is pay-per-use based on the catalog item
+        # @var bool
+        # @readonly
+        self.isPayPerUse = isPayPerUse
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -848,6 +855,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
         'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
         'externalTaskId': getXmlNodeText, 
+        'isPayPerUse': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -1010,6 +1018,9 @@ class KalturaEntryVendorTask(KalturaObjectBase):
 
     def setExternalTaskId(self, newExternalTaskId):
         self.externalTaskId = newExternalTaskId
+
+    def getIsPayPerUse(self):
+        return self.isPayPerUse
 
 
 # @package Kaltura
@@ -2223,6 +2234,54 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 
     def setLanguage(self, newLanguage):
         self.language = newLanguage
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaSpeechToVideoVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration = NotImplemented,
+            avatarId = NotImplemented,
+            conversionProfileId = NotImplemented):
+        KalturaVendorTaskData.__init__(self,
+            entryDuration)
+
+        # The identifier of the avatar to be used for generating the video
+        # @var str
+        self.avatarId = avatarId
+
+        # Optional. Conversion profile to be used for the generated video media entry
+        # @var int
+        self.conversionProfileId = conversionProfileId
+
+
+    PROPERTY_LOADERS = {
+        'avatarId': getXmlNodeText, 
+        'conversionProfileId': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaVendorTaskData.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaSpeechToVideoVendorTaskData.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorTaskData.toParams(self)
+        kparams.put("objectType", "KalturaSpeechToVideoVendorTaskData")
+        kparams.addStringIfDefined("avatarId", self.avatarId)
+        kparams.addIntIfDefined("conversionProfileId", self.conversionProfileId)
+        return kparams
+
+    def getAvatarId(self):
+        return self.avatarId
+
+    def setAvatarId(self, newAvatarId):
+        self.avatarId = newAvatarId
+
+    def getConversionProfileId(self):
+        return self.conversionProfileId
+
+    def setConversionProfileId(self, newConversionProfileId):
+        self.conversionProfileId = newConversionProfileId
 
 
 # @package Kaltura
@@ -3483,6 +3542,74 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
 
     def setTargetLanguage(self, newTargetLanguage):
         self.targetLanguage = newTargetLanguage
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorSpeechToVideoCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorSpeechToVideoCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorSpeechToVideoCatalogItem")
+        return kparams
 
 
 # @package Kaltura
@@ -6393,6 +6520,68 @@ class KalturaVendorSentimentAnalysisCatalogItemFilter(KalturaVendorCatalogItemFi
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorSpeechToVideoCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorSpeechToVideoCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorSpeechToVideoCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorSummaryCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -7794,6 +7983,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaReachProfileListResponse': KalturaReachProfileListResponse,
             'KalturaScheduledVendorTaskData': KalturaScheduledVendorTaskData,
             'KalturaSentimentAnalysisVendorTaskData': KalturaSentimentAnalysisVendorTaskData,
+            'KalturaSpeechToVideoVendorTaskData': KalturaSpeechToVideoVendorTaskData,
             'KalturaUnlimitedVendorCredit': KalturaUnlimitedVendorCredit,
             'KalturaVendorAlignmentCatalogItem': KalturaVendorAlignmentCatalogItem,
             'KalturaVendorAudioDescriptionCatalogItem': KalturaVendorAudioDescriptionCatalogItem,
@@ -7811,6 +8001,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorQuizCatalogItem': KalturaVendorQuizCatalogItem,
             'KalturaVendorSentimentAnalysisCatalogItem': KalturaVendorSentimentAnalysisCatalogItem,
             'KalturaVendorSignLanguageCatalogItem': KalturaVendorSignLanguageCatalogItem,
+            'KalturaVendorSpeechToVideoCatalogItem': KalturaVendorSpeechToVideoCatalogItem,
             'KalturaVendorSummaryCatalogItem': KalturaVendorSummaryCatalogItem,
             'KalturaVendorTaskDataCaptionAsset': KalturaVendorTaskDataCaptionAsset,
             'KalturaVendorVideoAnalysisCatalogItem': KalturaVendorVideoAnalysisCatalogItem,
@@ -7843,6 +8034,7 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorModerationCatalogItemFilter': KalturaVendorModerationCatalogItemFilter,
             'KalturaVendorQuizCatalogItemFilter': KalturaVendorQuizCatalogItemFilter,
             'KalturaVendorSentimentAnalysisCatalogItemFilter': KalturaVendorSentimentAnalysisCatalogItemFilter,
+            'KalturaVendorSpeechToVideoCatalogItemFilter': KalturaVendorSpeechToVideoCatalogItemFilter,
             'KalturaVendorSummaryCatalogItemFilter': KalturaVendorSummaryCatalogItemFilter,
             'KalturaVendorVideoAnalysisCatalogItemFilter': KalturaVendorVideoAnalysisCatalogItemFilter,
             'KalturaVendorAlignmentCatalogItemFilter': KalturaVendorAlignmentCatalogItemFilter,
