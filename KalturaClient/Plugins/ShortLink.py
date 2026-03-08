@@ -87,6 +87,7 @@ class KalturaShortLink(KalturaObjectBase):
             name = NotImplemented,
             systemName = NotImplemented,
             fullUrl = NotImplemented,
+            uniqueId = NotImplemented,
             status = NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -121,6 +122,10 @@ class KalturaShortLink(KalturaObjectBase):
         # @var str
         self.fullUrl = fullUrl
 
+        # @var str
+        # @insertonly
+        self.uniqueId = uniqueId
+
         # @var KalturaShortLinkStatus
         self.status = status
 
@@ -135,6 +140,7 @@ class KalturaShortLink(KalturaObjectBase):
         'name': getXmlNodeText, 
         'systemName': getXmlNodeText, 
         'fullUrl': getXmlNodeText, 
+        'uniqueId': getXmlNodeText, 
         'status': (KalturaEnumsFactory.createInt, "KalturaShortLinkStatus"), 
     }
 
@@ -150,6 +156,7 @@ class KalturaShortLink(KalturaObjectBase):
         kparams.addStringIfDefined("name", self.name)
         kparams.addStringIfDefined("systemName", self.systemName)
         kparams.addStringIfDefined("fullUrl", self.fullUrl)
+        kparams.addStringIfDefined("uniqueId", self.uniqueId)
         kparams.addIntEnumIfDefined("status", self.status)
         return kparams
 
@@ -195,6 +202,12 @@ class KalturaShortLink(KalturaObjectBase):
     def setFullUrl(self, newFullUrl):
         self.fullUrl = newFullUrl
 
+    def getUniqueId(self):
+        return self.uniqueId
+
+    def setUniqueId(self, newUniqueId):
+        self.uniqueId = newUniqueId
+
     def getStatus(self):
         return self.status
 
@@ -223,7 +236,8 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
             systemNameEqual = NotImplemented,
             systemNameIn = NotImplemented,
             statusEqual = NotImplemented,
-            statusIn = NotImplemented):
+            statusIn = NotImplemented,
+            uniqueIdEqual = NotImplemented):
         KalturaFilter.__init__(self,
             orderBy,
             advancedSearch)
@@ -276,6 +290,9 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
         # @var str
         self.statusIn = statusIn
 
+        # @var str
+        self.uniqueIdEqual = uniqueIdEqual
+
 
     PROPERTY_LOADERS = {
         'idEqual': getXmlNodeText, 
@@ -294,6 +311,7 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
         'systemNameIn': getXmlNodeText, 
         'statusEqual': (KalturaEnumsFactory.createInt, "KalturaShortLinkStatus"), 
         'statusIn': getXmlNodeText, 
+        'uniqueIdEqual': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -319,6 +337,7 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
         kparams.addStringIfDefined("systemNameIn", self.systemNameIn)
         kparams.addIntEnumIfDefined("statusEqual", self.statusEqual)
         kparams.addStringIfDefined("statusIn", self.statusIn)
+        kparams.addStringIfDefined("uniqueIdEqual", self.uniqueIdEqual)
         return kparams
 
     def getIdEqual(self):
@@ -417,6 +436,12 @@ class KalturaShortLinkBaseFilter(KalturaFilter):
     def setStatusIn(self, newStatusIn):
         self.statusIn = newStatusIn
 
+    def getUniqueIdEqual(self):
+        return self.uniqueIdEqual
+
+    def setUniqueIdEqual(self, newUniqueIdEqual):
+        self.uniqueIdEqual = newUniqueIdEqual
+
 
 # @package Kaltura
 # @subpackage Client
@@ -470,7 +495,8 @@ class KalturaShortLinkFilter(KalturaShortLinkBaseFilter):
             systemNameEqual = NotImplemented,
             systemNameIn = NotImplemented,
             statusEqual = NotImplemented,
-            statusIn = NotImplemented):
+            statusIn = NotImplemented,
+            uniqueIdEqual = NotImplemented):
         KalturaShortLinkBaseFilter.__init__(self,
             orderBy,
             advancedSearch,
@@ -489,7 +515,8 @@ class KalturaShortLinkFilter(KalturaShortLinkBaseFilter):
             systemNameEqual,
             systemNameIn,
             statusEqual,
-            statusIn)
+            statusIn,
+            uniqueIdEqual)
 
 
     PROPERTY_LOADERS = {

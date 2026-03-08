@@ -679,8 +679,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             serviceType = NotImplemented,
             serviceFeature = NotImplemented,
             turnAroundTime = NotImplemented,
-            externalTaskId = NotImplemented,
-            isPayPerUse = NotImplemented):
+            externalTaskId = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -816,11 +815,6 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         # @var str
         self.externalTaskId = externalTaskId
 
-        # Indicates if the task is pay-per-use based on the catalog item
-        # @var bool
-        # @readonly
-        self.isPayPerUse = isPayPerUse
-
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -855,7 +849,6 @@ class KalturaEntryVendorTask(KalturaObjectBase):
         'serviceFeature': (KalturaEnumsFactory.createInt, "KalturaVendorServiceFeature"), 
         'turnAroundTime': (KalturaEnumsFactory.createInt, "KalturaVendorServiceTurnAroundTime"), 
         'externalTaskId': getXmlNodeText, 
-        'isPayPerUse': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -1018,9 +1011,6 @@ class KalturaEntryVendorTask(KalturaObjectBase):
 
     def setExternalTaskId(self, newExternalTaskId):
         self.externalTaskId = newExternalTaskId
-
-    def getIsPayPerUse(self):
-        return self.isPayPerUse
 
 
 # @package Kaltura

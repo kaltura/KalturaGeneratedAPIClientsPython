@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.13.0'
+API_VERSION = '22.14.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -21367,6 +21367,26 @@ class KalturaLiveStreamStats(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaCompositionAttributes(KalturaObjectBase):
+    def __init__(self):
+        KalturaObjectBase.__init__(self)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaMediaCompositionAttributes.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaMediaCompositionAttributes")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaBaseEntryBaseFilter(KalturaRelatedFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -29394,6 +29414,40 @@ class KalturaStorageProfile(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaStringArrayObject(KalturaObjectBase):
+    """A wrapper object for KalturaStringArray to be used in arrays"""
+
+    def __init__(self,
+            value = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var List[KalturaString]
+        self.value = value
+
+
+    PROPERTY_LOADERS = {
+        'value': (KalturaObjectFactory.createArray, 'KalturaString'), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaStringArrayObject.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaStringArrayObject")
+        kparams.addArrayIfDefined("value", self.value)
+        return kparams
+
+    def getValue(self):
+        return self.value
+
+    def setValue(self, newValue):
+        self.value = newValue
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaSyndicationFeedEntryCount(KalturaObjectBase):
     def __init__(self,
             totalEntryCount = NotImplemented,
@@ -35473,7 +35527,8 @@ class KalturaClipAttributes(KalturaOperationAttributes):
             globalOffsetInDestination = NotImplemented,
             effectArray = NotImplemented,
             cropAlignment = NotImplemented,
-            captionAttributes = NotImplemented):
+            captionAttributes = NotImplemented,
+            mediaCompositionAttributesArray = NotImplemented):
         KalturaOperationAttributes.__init__(self)
 
         # Offset in milliseconds
@@ -35498,6 +35553,9 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         # @var List[KalturaCaptionAttributes]
         self.captionAttributes = captionAttributes
 
+        # @var List[KalturaMediaCompositionAttributes]
+        self.mediaCompositionAttributesArray = mediaCompositionAttributesArray
+
 
     PROPERTY_LOADERS = {
         'offset': getXmlNodeInt, 
@@ -35506,6 +35564,7 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         'effectArray': (KalturaObjectFactory.createArray, 'KalturaEffect'), 
         'cropAlignment': getXmlNodeInt, 
         'captionAttributes': (KalturaObjectFactory.createArray, 'KalturaCaptionAttributes'), 
+        'mediaCompositionAttributesArray': (KalturaObjectFactory.createArray, 'KalturaMediaCompositionAttributes'), 
     }
 
     def fromXml(self, node):
@@ -35521,6 +35580,7 @@ class KalturaClipAttributes(KalturaOperationAttributes):
         kparams.addArrayIfDefined("effectArray", self.effectArray)
         kparams.addIntIfDefined("cropAlignment", self.cropAlignment)
         kparams.addArrayIfDefined("captionAttributes", self.captionAttributes)
+        kparams.addArrayIfDefined("mediaCompositionAttributesArray", self.mediaCompositionAttributesArray)
         return kparams
 
     def getOffset(self):
@@ -35558,6 +35618,12 @@ class KalturaClipAttributes(KalturaOperationAttributes):
 
     def setCaptionAttributes(self, newCaptionAttributes):
         self.captionAttributes = newCaptionAttributes
+
+    def getMediaCompositionAttributesArray(self):
+        return self.mediaCompositionAttributesArray
+
+    def setMediaCompositionAttributesArray(self, newMediaCompositionAttributesArray):
+        self.mediaCompositionAttributesArray = newMediaCompositionAttributesArray
 
 
 # @package Kaltura
@@ -35800,6 +35866,7 @@ class KalturaConcatAttributes(KalturaOperationAttributes):
 class KalturaConcatJobData(KalturaJobData):
     def __init__(self,
             srcFiles = NotImplemented,
+            inputFiles = NotImplemented,
             destFilePath = NotImplemented,
             flavorAssetId = NotImplemented,
             offset = NotImplemented,
@@ -35813,6 +35880,10 @@ class KalturaConcatJobData(KalturaJobData):
         # Source files to be concatenated
         # @var List[KalturaString]
         self.srcFiles = srcFiles
+
+        # Additional input files to be used in conversion pre concatenation
+        # @var List[KalturaStringArrayObject]
+        self.inputFiles = inputFiles
 
         # Output file
         # @var str
@@ -35848,6 +35919,7 @@ class KalturaConcatJobData(KalturaJobData):
 
     PROPERTY_LOADERS = {
         'srcFiles': (KalturaObjectFactory.createArray, 'KalturaString'), 
+        'inputFiles': (KalturaObjectFactory.createArray, 'KalturaStringArrayObject'), 
         'destFilePath': getXmlNodeText, 
         'flavorAssetId': getXmlNodeText, 
         'offset': getXmlNodeFloat, 
@@ -35866,6 +35938,7 @@ class KalturaConcatJobData(KalturaJobData):
         kparams = KalturaJobData.toParams(self)
         kparams.put("objectType", "KalturaConcatJobData")
         kparams.addArrayIfDefined("srcFiles", self.srcFiles)
+        kparams.addArrayIfDefined("inputFiles", self.inputFiles)
         kparams.addStringIfDefined("destFilePath", self.destFilePath)
         kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
         kparams.addFloatIfDefined("offset", self.offset)
@@ -35881,6 +35954,12 @@ class KalturaConcatJobData(KalturaJobData):
 
     def setSrcFiles(self, newSrcFiles):
         self.srcFiles = newSrcFiles
+
+    def getInputFiles(self):
+        return self.inputFiles
+
+    def setInputFiles(self, newInputFiles):
+        self.inputFiles = newInputFiles
 
     def getDestFilePath(self):
         return self.destFilePath
@@ -42057,6 +42136,52 @@ class KalturaOrCondition(KalturaCondition):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
+    def __init__(self,
+            resource = NotImplemented,
+            resourceMediaCompositionAttributesArray = NotImplemented):
+        KalturaMediaCompositionAttributes.__init__(self)
+
+        # Only KalturaEntryResource and KalturaAssetResource are supported
+        # @var KalturaContentResource
+        self.resource = resource
+
+        # Only KalturaReplaceBackgroundAttributes is supported
+        # @var List[KalturaMediaCompositionAttributes]
+        self.resourceMediaCompositionAttributesArray = resourceMediaCompositionAttributesArray
+
+
+    PROPERTY_LOADERS = {
+        'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
+        'resourceMediaCompositionAttributesArray': (KalturaObjectFactory.createArray, 'KalturaMediaCompositionAttributes'), 
+    }
+
+    def fromXml(self, node):
+        KalturaMediaCompositionAttributes.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaOverlayAttributes.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMediaCompositionAttributes.toParams(self)
+        kparams.put("objectType", "KalturaOverlayAttributes")
+        kparams.addObjectIfDefined("resource", self.resource)
+        kparams.addArrayIfDefined("resourceMediaCompositionAttributesArray", self.resourceMediaCompositionAttributesArray)
+        return kparams
+
+    def getResource(self):
+        return self.resource
+
+    def setResource(self, newResource):
+        self.resource = newResource
+
+    def getResourceMediaCompositionAttributesArray(self):
+        return self.resourceMediaCompositionAttributesArray
+
+    def setResourceMediaCompositionAttributesArray(self, newResourceMediaCompositionAttributesArray):
+        self.resourceMediaCompositionAttributesArray = newResourceMediaCompositionAttributesArray
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaPartnerBaseFilter(KalturaFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -42895,6 +43020,39 @@ class KalturaRenderCaptionAttributes(KalturaCaptionAttributes):
 
     def setCaptionAssetId(self, newCaptionAssetId):
         self.captionAssetId = newCaptionAssetId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
+    def __init__(self,
+            resource = NotImplemented):
+        KalturaMediaCompositionAttributes.__init__(self)
+
+        # Only KalturaEntryResource and KalturaAssetResource are supported
+        # @var KalturaContentResource
+        self.resource = resource
+
+
+    PROPERTY_LOADERS = {
+        'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
+    }
+
+    def fromXml(self, node):
+        KalturaMediaCompositionAttributes.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaReplaceBackgroundAttributes.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaMediaCompositionAttributes.toParams(self)
+        kparams.put("objectType", "KalturaReplaceBackgroundAttributes")
+        kparams.addObjectIfDefined("resource", self.resource)
+        return kparams
+
+    def getResource(self):
+        return self.resource
+
+    def setResource(self, newResource):
+        self.resource = newResource
 
 
 # @package Kaltura
@@ -70949,6 +71107,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStreamEntry': KalturaLiveStreamEntry,
             'KalturaLiveStreamParams': KalturaLiveStreamParams,
             'KalturaLiveStreamStats': KalturaLiveStreamStats,
+            'KalturaMediaCompositionAttributes': KalturaMediaCompositionAttributes,
             'KalturaBaseEntryBaseFilter': KalturaBaseEntryBaseFilter,
             'KalturaBaseEntryFilter': KalturaBaseEntryFilter,
             'KalturaPlayableEntryBaseFilter': KalturaPlayableEntryBaseFilter,
@@ -70999,6 +71158,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaStatsEvent': KalturaStatsEvent,
             'KalturaStatsKmcEvent': KalturaStatsKmcEvent,
             'KalturaStorageProfile': KalturaStorageProfile,
+            'KalturaStringArrayObject': KalturaStringArrayObject,
             'KalturaSyndicationFeedEntryCount': KalturaSyndicationFeedEntryCount,
             'KalturaThumbAsset': KalturaThumbAsset,
             'KalturaThumbParams': KalturaThumbParams,
@@ -71156,6 +71316,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaNotificationJobData': KalturaNotificationJobData,
             'KalturaObjectListResponse': KalturaObjectListResponse,
             'KalturaOrCondition': KalturaOrCondition,
+            'KalturaOverlayAttributes': KalturaOverlayAttributes,
             'KalturaPartnerBaseFilter': KalturaPartnerBaseFilter,
             'KalturaPartnerListResponse': KalturaPartnerListResponse,
             'KalturaPermissionItemListResponse': KalturaPermissionItemListResponse,
@@ -71166,6 +71327,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaRecalculateCacheJobData': KalturaRecalculateCacheJobData,
             'KalturaRemotePathListResponse': KalturaRemotePathListResponse,
             'KalturaRenderCaptionAttributes': KalturaRenderCaptionAttributes,
+            'KalturaReplaceBackgroundAttributes': KalturaReplaceBackgroundAttributes,
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportExportJobData': KalturaReportExportJobData,
             'KalturaReportListResponse': KalturaReportListResponse,
