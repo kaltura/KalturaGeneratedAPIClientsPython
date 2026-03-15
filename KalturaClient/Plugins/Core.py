@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.14.0'
+API_VERSION = '22.15.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -3394,6 +3394,9 @@ class KalturaLanguage(object):
     APJ = "Apache (Jicarilla)"
     APW = "Apache (Western)"
     AR = "Arabic"
+    AR_LB = "Arabic (Lebanon)"
+    AR_QA = "Arabic (Qatar)"
+    AR_SA = "Arabic (Saudi Arabia)"
     ARB = "Arabic (standard)"
     B_T = "Arabic Tunisian Spoken"
     ARC = "Aramaic"
@@ -3948,6 +3951,9 @@ class KalturaLanguageCode(object):
     ALG = "alg"
     AM = "am"
     AR = "ar"
+    AR_LB = "ar_lb"
+    AR_QA = "ar_qa"
+    AR_SA = "ar_sa"
     AS_ = "as"
     ATH = "ath"
     AY = "ay"
