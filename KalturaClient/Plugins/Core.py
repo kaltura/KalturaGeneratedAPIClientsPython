@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.15.0'
+API_VERSION = '22.16.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25833,6 +25833,50 @@ class KalturaPlaylist(KalturaBaseEntry):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaPosition(KalturaObjectBase):
+    def __init__(self,
+            x = NotImplemented,
+            y = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var float
+        self.x = x
+
+        # @var float
+        self.y = y
+
+
+    PROPERTY_LOADERS = {
+        'x': getXmlNodeFloat, 
+        'y': getXmlNodeFloat, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaPosition.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaPosition")
+        kparams.addFloatIfDefined("x", self.x)
+        kparams.addFloatIfDefined("y", self.y)
+        return kparams
+
+    def getX(self):
+        return self.x
+
+    def setX(self, newX):
+        self.x = newX
+
+    def getY(self):
+        return self.y
+
+    def setY(self, newY):
+        self.y = newY
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaRemotePath(KalturaObjectBase):
     def __init__(self,
             storageProfileId = NotImplemented,
@@ -43032,16 +43076,31 @@ class KalturaRenderCaptionAttributes(KalturaCaptionAttributes):
 # @subpackage Client
 class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
     def __init__(self,
-            resource = NotImplemented):
+            resource = NotImplemented,
+            backgroundColorCode = NotImplemented,
+            foregroundScalePercentage = NotImplemented,
+            foregroundPositionPercentage = NotImplemented):
         KalturaMediaCompositionAttributes.__init__(self)
 
         # Only KalturaEntryResource and KalturaAssetResource are supported
         # @var KalturaContentResource
         self.resource = resource
 
+        # @var str
+        self.backgroundColorCode = backgroundColorCode
+
+        # @var float
+        self.foregroundScalePercentage = foregroundScalePercentage
+
+        # @var KalturaPosition
+        self.foregroundPositionPercentage = foregroundPositionPercentage
+
 
     PROPERTY_LOADERS = {
         'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
+        'backgroundColorCode': getXmlNodeText, 
+        'foregroundScalePercentage': getXmlNodeFloat, 
+        'foregroundPositionPercentage': (KalturaObjectFactory.create, 'KalturaPosition'), 
     }
 
     def fromXml(self, node):
@@ -43052,6 +43111,9 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
         kparams = KalturaMediaCompositionAttributes.toParams(self)
         kparams.put("objectType", "KalturaReplaceBackgroundAttributes")
         kparams.addObjectIfDefined("resource", self.resource)
+        kparams.addStringIfDefined("backgroundColorCode", self.backgroundColorCode)
+        kparams.addFloatIfDefined("foregroundScalePercentage", self.foregroundScalePercentage)
+        kparams.addObjectIfDefined("foregroundPositionPercentage", self.foregroundPositionPercentage)
         return kparams
 
     def getResource(self):
@@ -43059,6 +43121,24 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
 
     def setResource(self, newResource):
         self.resource = newResource
+
+    def getBackgroundColorCode(self):
+        return self.backgroundColorCode
+
+    def setBackgroundColorCode(self, newBackgroundColorCode):
+        self.backgroundColorCode = newBackgroundColorCode
+
+    def getForegroundScalePercentage(self):
+        return self.foregroundScalePercentage
+
+    def setForegroundScalePercentage(self, newForegroundScalePercentage):
+        self.foregroundScalePercentage = newForegroundScalePercentage
+
+    def getForegroundPositionPercentage(self):
+        return self.foregroundPositionPercentage
+
+    def setForegroundPositionPercentage(self, newForegroundPositionPercentage):
+        self.foregroundPositionPercentage = newForegroundPositionPercentage
 
 
 # @package Kaltura
@@ -43290,6 +43370,50 @@ class KalturaReportListResponse(KalturaListResponse):
 
     def getObjects(self):
         return self.objects
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaResolutionCropAttributes(KalturaDimensionsAttributes):
+    def __init__(self,
+            targetWidth = NotImplemented,
+            targetHeight = NotImplemented):
+        KalturaDimensionsAttributes.__init__(self)
+
+        # @var int
+        self.targetWidth = targetWidth
+
+        # @var int
+        self.targetHeight = targetHeight
+
+
+    PROPERTY_LOADERS = {
+        'targetWidth': getXmlNodeInt, 
+        'targetHeight': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaDimensionsAttributes.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaResolutionCropAttributes.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaDimensionsAttributes.toParams(self)
+        kparams.put("objectType", "KalturaResolutionCropAttributes")
+        kparams.addIntIfDefined("targetWidth", self.targetWidth)
+        kparams.addIntIfDefined("targetHeight", self.targetHeight)
+        return kparams
+
+    def getTargetWidth(self):
+        return self.targetWidth
+
+    def setTargetWidth(self, newTargetWidth):
+        self.targetWidth = newTargetWidth
+
+    def getTargetHeight(self):
+        return self.targetHeight
+
+    def setTargetHeight(self, newTargetHeight):
+        self.targetHeight = newTargetHeight
 
 
 # @package Kaltura
@@ -71132,6 +71256,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaPermissionItem': KalturaPermissionItem,
             'KalturaPlaybackContext': KalturaPlaybackContext,
             'KalturaPlaylist': KalturaPlaylist,
+            'KalturaPosition': KalturaPosition,
             'KalturaRemotePath': KalturaRemotePath,
             'KalturaUrlResource': KalturaUrlResource,
             'KalturaRemoteStorageResource': KalturaRemoteStorageResource,
@@ -71337,6 +71462,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaReportBaseFilter': KalturaReportBaseFilter,
             'KalturaReportExportJobData': KalturaReportExportJobData,
             'KalturaReportListResponse': KalturaReportListResponse,
+            'KalturaResolutionCropAttributes': KalturaResolutionCropAttributes,
             'KalturaResponseProfileBaseFilter': KalturaResponseProfileBaseFilter,
             'KalturaResponseProfileHolder': KalturaResponseProfileHolder,
             'KalturaResponseProfileListResponse': KalturaResponseProfileListResponse,

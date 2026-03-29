@@ -147,6 +147,8 @@ class KalturaVendorServiceFeature(object):
     DOCUMENT_ENRICHMENT = 18
     SIGN_LANGUAGE = 19
     SPEECH_TO_VIDEO = 20
+    IMMERSIVE_AGENT_CALL = 21
+    IMMERSIVE_AGENT_CHAT = 22
 
     def __init__(self, value: int): ...
 
@@ -855,6 +857,20 @@ class KalturaEntryVendorTaskListResponse(KalturaListResponse):
 
     def getObjects(self) -> List[KalturaEntryVendorTask]: ...
 
+class KalturaImmersiveAgentCallVendorTaskData(KalturaVendorTaskData):
+    callId: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            callId: str = NotImplemented): ...
+
+    def getCallId(self) -> str: ...
+    def setCallId(self, newCallId: str) -> None: ...
+
+class KalturaImmersiveAgentChatVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration: int = NotImplemented): ...
+        pass
+
 class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
     assetId: str
     def __init__(self,
@@ -1259,6 +1275,62 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
     def setClearAudioFlavorParamsId(self, newClearAudioFlavorParamsId: int) -> None: ...
     def getOutputFormat(self) -> KalturaVendorCatalogItemOutputFormat: ...
     def setOutputFormat(self, newOutputFormat: KalturaVendorCatalogItemOutputFormat) -> None: ...
+
+class KalturaVendorImmersiveAgentCallCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented): ...
+        pass
+
+class KalturaVendorImmersiveAgentChatCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented): ...
+        pass
 
 class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
@@ -2371,6 +2443,56 @@ class KalturaVendorDubbingCatalogItemBaseFilter(KalturaVendorCatalogItemFilter):
     def setTargetLanguageEqual(self, newTargetLanguageEqual: KalturaCatalogItemLanguage) -> None: ...
     def getTargetLanguageIn(self) -> str: ...
     def setTargetLanguageIn(self, newTargetLanguageIn: str) -> None: ...
+
+class KalturaVendorImmersiveAgentCallCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorImmersiveAgentChatCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
 
 class KalturaVendorIntelligentTaggingCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,

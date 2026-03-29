@@ -278,7 +278,8 @@ class KalturaZoomDropFolder(KalturaDropFolder):
             shouldValidateKS = NotImplemented,
             zoomVendorIntegrationId = NotImplemented,
             zoomVendorIntegration = NotImplemented,
-            lastHandledMeetingTime = NotImplemented):
+            lastHandledMeetingTime = NotImplemented,
+            fileProcessingGracePeriod = NotImplemented):
         KalturaDropFolder.__init__(self,
             id,
             partnerId,
@@ -321,11 +322,16 @@ class KalturaZoomDropFolder(KalturaDropFolder):
         # @var int
         self.lastHandledMeetingTime = lastHandledMeetingTime
 
+        # The amount of time, in seconds, to wait before processing a drop folder file
+        # @var int
+        self.fileProcessingGracePeriod = fileProcessingGracePeriod
+
 
     PROPERTY_LOADERS = {
         'zoomVendorIntegrationId': getXmlNodeInt, 
         'zoomVendorIntegration': (KalturaObjectFactory.create, 'KalturaZoomIntegrationSetting'), 
         'lastHandledMeetingTime': getXmlNodeInt, 
+        'fileProcessingGracePeriod': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -336,6 +342,7 @@ class KalturaZoomDropFolder(KalturaDropFolder):
         kparams = KalturaDropFolder.toParams(self)
         kparams.put("objectType", "KalturaZoomDropFolder")
         kparams.addIntIfDefined("lastHandledMeetingTime", self.lastHandledMeetingTime)
+        kparams.addIntIfDefined("fileProcessingGracePeriod", self.fileProcessingGracePeriod)
         return kparams
 
     def getZoomVendorIntegrationId(self):
@@ -349,6 +356,12 @@ class KalturaZoomDropFolder(KalturaDropFolder):
 
     def setLastHandledMeetingTime(self, newLastHandledMeetingTime):
         self.lastHandledMeetingTime = newLastHandledMeetingTime
+
+    def getFileProcessingGracePeriod(self):
+        return self.fileProcessingGracePeriod
+
+    def setFileProcessingGracePeriod(self, newFileProcessingGracePeriod):
+        self.fileProcessingGracePeriod = newFileProcessingGracePeriod
 
 
 # @package Kaltura
