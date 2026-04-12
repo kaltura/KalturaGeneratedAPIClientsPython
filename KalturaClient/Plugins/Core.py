@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.16.0'
+API_VERSION = '22.17.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -723,6 +723,25 @@ class KalturaMailJobStatus(object):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaMediaCompositionAlignment(object):
+    BOTTOM_LEFT = 1
+    BOTTOM_CENTER = 2
+    BOTTOM_RIGHT = 3
+    TOP_LEFT = 4
+    TOP_CENTER = 6
+    TOP_RIGHT = 7
+    CENTER_LEFT = 8
+    CENTER_CENTER = 10
+    CENTER_RIGHT = 11
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaMediaType(object):
     VIDEO = 1
     IMAGE = 2
@@ -822,6 +841,20 @@ class KalturaNullableBoolean(object):
     NULL_VALUE = -1
     FALSE_VALUE = 0
     TRUE_VALUE = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaOverlayShape(object):
+    CIRCLE = 1
+    RECTANGLE = 2
+    RECTANGLE_ROUNDED_CORNERS = 3
+    ELLIPSE = 4
 
     def __init__(self, value):
         self.value = value
@@ -5357,6 +5390,7 @@ class KalturaReportType(object):
     REACH_PROFILE_USAGE = "66"
     SELF_SERVE_BANDWIDTH = "67"
     PARTNER_USAGE_SF = "68"
+    REACH_UNITS_USAGE = "69"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -5503,6 +5537,12 @@ class KalturaReportType(object):
     EP_WEBCAST_ENGAGEMENT_OVER_TIME = "60018"
     EP_LATEST_DOWNLOADED_ATTACHMENTS = "60019"
     CNC_PARTICIPATION = "70001"
+    IMMERSIVE_AGENTS_HIGHLIGHTS = "80001"
+    IMMERSIVE_AGENTS_MESSAGES_OVERTIME = "80002"
+    IMMERSIVE_AGENTS_MESSAGE_FEEDBACK = "80003"
+    IMMERSIVE_AGENTS_TOP_SOURCES = "80004"
+    IMMERSIVE_AGENTS_AVATAR_SESSIONS = "80005"
+    IMMERSIVE_AGENTS_RESPONSE_EXPERIENCE_TYPES = "80006"
     QUIZ = "quiz.QUIZ"
     QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"
     QUIZ_USER_AGGREGATE_BY_QUESTION = "quiz.QUIZ_USER_AGGREGATE_BY_QUESTION"
@@ -7826,6 +7866,38 @@ class KalturaAssetServeOptions(KalturaObjectBase):
 
     def setReferrer(self, newReferrer):
         self.referrer = newReferrer
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaAudioAttributes(KalturaObjectBase):
+    def __init__(self,
+            volume = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var float
+        self.volume = volume
+
+
+    PROPERTY_LOADERS = {
+        'volume': getXmlNodeFloat, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaAudioAttributes.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaAudioAttributes")
+        kparams.addFloatIfDefined("volume", self.volume)
+        return kparams
+
+    def getVolume(self):
+        return self.volume
+
+    def setVolume(self, newVolume):
+        self.volume = newVolume
 
 
 # @package Kaltura
@@ -26360,7 +26432,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             playbackModeIn = NotImplemented,
             companyIn = NotImplemented,
             eventSessionContextIdIn = NotImplemented,
-            videoCodecIn = NotImplemented):
+            videoCodecIn = NotImplemented,
+            agentIdIn = NotImplemented,
+            genieIdIn = NotImplemented,
+            reachProfileIdIn = NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26564,6 +26639,18 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var str
         self.videoCodecIn = videoCodecIn
 
+        # filter by agent id
+        # @var str
+        self.agentIdIn = agentIdIn
+
+        # filter by Genie id
+        # @var str
+        self.genieIdIn = genieIdIn
+
+        # filter by reach profile id
+        # @var str
+        self.reachProfileIdIn = reachProfileIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26616,6 +26703,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'companyIn': getXmlNodeText, 
         'eventSessionContextIdIn': getXmlNodeText, 
         'videoCodecIn': getXmlNodeText, 
+        'agentIdIn': getXmlNodeText, 
+        'genieIdIn': getXmlNodeText, 
+        'reachProfileIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26675,6 +26765,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("companyIn", self.companyIn)
         kparams.addStringIfDefined("eventSessionContextIdIn", self.eventSessionContextIdIn)
         kparams.addStringIfDefined("videoCodecIn", self.videoCodecIn)
+        kparams.addStringIfDefined("agentIdIn", self.agentIdIn)
+        kparams.addStringIfDefined("genieIdIn", self.genieIdIn)
+        kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
         return kparams
 
     def getKeywords(self):
@@ -26976,6 +27069,24 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setVideoCodecIn(self, newVideoCodecIn):
         self.videoCodecIn = newVideoCodecIn
+
+    def getAgentIdIn(self):
+        return self.agentIdIn
+
+    def setAgentIdIn(self, newAgentIdIn):
+        self.agentIdIn = newAgentIdIn
+
+    def getGenieIdIn(self):
+        return self.genieIdIn
+
+    def setGenieIdIn(self, newGenieIdIn):
+        self.genieIdIn = newGenieIdIn
+
+    def getReachProfileIdIn(self):
+        return self.reachProfileIdIn
+
+    def setReachProfileIdIn(self, newReachProfileIdIn):
+        self.reachProfileIdIn = newReachProfileIdIn
 
 
 # @package Kaltura
@@ -42189,7 +42300,12 @@ class KalturaOrCondition(KalturaCondition):
 class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
     def __init__(self,
             resource = NotImplemented,
-            resourceMediaCompositionAttributesArray = NotImplemented):
+            resourceMediaCompositionAttributesArray = NotImplemented,
+            marginsPercentage = NotImplemented,
+            overlayScalePercentage = NotImplemented,
+            overlayPlacement = NotImplemented,
+            overlayShape = NotImplemented,
+            audioAttributes = NotImplemented):
         KalturaMediaCompositionAttributes.__init__(self)
 
         # Only KalturaEntryResource and KalturaAssetResource are supported
@@ -42200,10 +42316,30 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
         # @var List[KalturaMediaCompositionAttributes]
         self.resourceMediaCompositionAttributesArray = resourceMediaCompositionAttributesArray
 
+        # @var float
+        self.marginsPercentage = marginsPercentage
+
+        # @var float
+        self.overlayScalePercentage = overlayScalePercentage
+
+        # @var KalturaMediaCompositionAlignment
+        self.overlayPlacement = overlayPlacement
+
+        # @var KalturaOverlayShape
+        self.overlayShape = overlayShape
+
+        # @var KalturaAudioAttributes
+        self.audioAttributes = audioAttributes
+
 
     PROPERTY_LOADERS = {
         'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
         'resourceMediaCompositionAttributesArray': (KalturaObjectFactory.createArray, 'KalturaMediaCompositionAttributes'), 
+        'marginsPercentage': getXmlNodeFloat, 
+        'overlayScalePercentage': getXmlNodeFloat, 
+        'overlayPlacement': (KalturaEnumsFactory.createInt, "KalturaMediaCompositionAlignment"), 
+        'overlayShape': (KalturaEnumsFactory.createInt, "KalturaOverlayShape"), 
+        'audioAttributes': (KalturaObjectFactory.create, 'KalturaAudioAttributes'), 
     }
 
     def fromXml(self, node):
@@ -42215,6 +42351,11 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
         kparams.put("objectType", "KalturaOverlayAttributes")
         kparams.addObjectIfDefined("resource", self.resource)
         kparams.addArrayIfDefined("resourceMediaCompositionAttributesArray", self.resourceMediaCompositionAttributesArray)
+        kparams.addFloatIfDefined("marginsPercentage", self.marginsPercentage)
+        kparams.addFloatIfDefined("overlayScalePercentage", self.overlayScalePercentage)
+        kparams.addIntEnumIfDefined("overlayPlacement", self.overlayPlacement)
+        kparams.addIntEnumIfDefined("overlayShape", self.overlayShape)
+        kparams.addObjectIfDefined("audioAttributes", self.audioAttributes)
         return kparams
 
     def getResource(self):
@@ -42228,6 +42369,36 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
 
     def setResourceMediaCompositionAttributesArray(self, newResourceMediaCompositionAttributesArray):
         self.resourceMediaCompositionAttributesArray = newResourceMediaCompositionAttributesArray
+
+    def getMarginsPercentage(self):
+        return self.marginsPercentage
+
+    def setMarginsPercentage(self, newMarginsPercentage):
+        self.marginsPercentage = newMarginsPercentage
+
+    def getOverlayScalePercentage(self):
+        return self.overlayScalePercentage
+
+    def setOverlayScalePercentage(self, newOverlayScalePercentage):
+        self.overlayScalePercentage = newOverlayScalePercentage
+
+    def getOverlayPlacement(self):
+        return self.overlayPlacement
+
+    def setOverlayPlacement(self, newOverlayPlacement):
+        self.overlayPlacement = newOverlayPlacement
+
+    def getOverlayShape(self):
+        return self.overlayShape
+
+    def setOverlayShape(self, newOverlayShape):
+        self.overlayShape = newOverlayShape
+
+    def getAudioAttributes(self):
+        return self.audioAttributes
+
+    def setAudioAttributes(self, newAudioAttributes):
+        self.audioAttributes = newAudioAttributes
 
 
 # @package Kaltura
@@ -43079,7 +43250,8 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
             resource = NotImplemented,
             backgroundColorCode = NotImplemented,
             foregroundScalePercentage = NotImplemented,
-            foregroundPositionPercentage = NotImplemented):
+            foregroundPositionPercentage = NotImplemented,
+            audioAttributes = NotImplemented):
         KalturaMediaCompositionAttributes.__init__(self)
 
         # Only KalturaEntryResource and KalturaAssetResource are supported
@@ -43095,12 +43267,16 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
         # @var KalturaPosition
         self.foregroundPositionPercentage = foregroundPositionPercentage
 
+        # @var KalturaAudioAttributes
+        self.audioAttributes = audioAttributes
+
 
     PROPERTY_LOADERS = {
         'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
         'backgroundColorCode': getXmlNodeText, 
         'foregroundScalePercentage': getXmlNodeFloat, 
         'foregroundPositionPercentage': (KalturaObjectFactory.create, 'KalturaPosition'), 
+        'audioAttributes': (KalturaObjectFactory.create, 'KalturaAudioAttributes'), 
     }
 
     def fromXml(self, node):
@@ -43114,6 +43290,7 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
         kparams.addStringIfDefined("backgroundColorCode", self.backgroundColorCode)
         kparams.addFloatIfDefined("foregroundScalePercentage", self.foregroundScalePercentage)
         kparams.addObjectIfDefined("foregroundPositionPercentage", self.foregroundPositionPercentage)
+        kparams.addObjectIfDefined("audioAttributes", self.audioAttributes)
         return kparams
 
     def getResource(self):
@@ -43139,6 +43316,12 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
 
     def setForegroundPositionPercentage(self, newForegroundPositionPercentage):
         self.foregroundPositionPercentage = newForegroundPositionPercentage
+
+    def getAudioAttributes(self):
+        return self.audioAttributes
+
+    def setAudioAttributes(self, newAudioAttributes):
+        self.audioAttributes = newAudioAttributes
 
 
 # @package Kaltura
@@ -50015,6 +50198,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             companyIn = NotImplemented,
             eventSessionContextIdIn = NotImplemented,
             videoCodecIn = NotImplemented,
+            agentIdIn = NotImplemented,
+            genieIdIn = NotImplemented,
+            reachProfileIdIn = NotImplemented,
             application = NotImplemented,
             userIds = NotImplemented,
             playbackContext = NotImplemented,
@@ -50073,7 +50259,10 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             playbackModeIn,
             companyIn,
             eventSessionContextIdIn,
-            videoCodecIn)
+            videoCodecIn,
+            agentIdIn,
+            genieIdIn,
+            reachProfileIdIn)
 
         # @var str
         self.application = application
@@ -70873,6 +71062,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaLiveStatsEventType': KalturaLiveStatsEventType,
             'KalturaLiveStreamBroadcastStatus': KalturaLiveStreamBroadcastStatus,
             'KalturaMailJobStatus': KalturaMailJobStatus,
+            'KalturaMediaCompositionAlignment': KalturaMediaCompositionAlignment,
             'KalturaMediaType': KalturaMediaType,
             'KalturaModerationFlagType': KalturaModerationFlagType,
             'KalturaMrssExtensionMode': KalturaMrssExtensionMode,
@@ -70880,6 +71070,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaNotificationStatus': KalturaNotificationStatus,
             'KalturaNotificationType': KalturaNotificationType,
             'KalturaNullableBoolean': KalturaNullableBoolean,
+            'KalturaOverlayShape': KalturaOverlayShape,
             'KalturaPartnerAuthenticationType': KalturaPartnerAuthenticationType,
             'KalturaPartnerGroupType': KalturaPartnerGroupType,
             'KalturaPartnerStatus': KalturaPartnerStatus,
@@ -71130,6 +71321,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaContentResource': KalturaContentResource,
             'KalturaAssetParamsResourceContainer': KalturaAssetParamsResourceContainer,
             'KalturaAssetServeOptions': KalturaAssetServeOptions,
+            'KalturaAudioAttributes': KalturaAudioAttributes,
             'KalturaAuthentication': KalturaAuthentication,
             'KalturaMultiLingualString': KalturaMultiLingualString,
             'KalturaOperationAttributes': KalturaOperationAttributes,

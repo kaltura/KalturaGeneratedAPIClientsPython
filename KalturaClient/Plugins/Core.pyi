@@ -512,6 +512,21 @@ class KalturaMailJobStatus(object):
 
     def getValue(self) -> int: ...
 
+class KalturaMediaCompositionAlignment(object):
+    BOTTOM_LEFT = 1
+    BOTTOM_CENTER = 2
+    BOTTOM_RIGHT = 3
+    TOP_LEFT = 4
+    TOP_CENTER = 6
+    TOP_RIGHT = 7
+    CENTER_LEFT = 8
+    CENTER_CENTER = 10
+    CENTER_RIGHT = 11
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
 class KalturaMediaType(object):
     VIDEO = 1
     IMAGE = 2
@@ -587,6 +602,16 @@ class KalturaNullableBoolean(object):
     NULL_VALUE = -1
     FALSE_VALUE = 0
     TRUE_VALUE = 1
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
+class KalturaOverlayShape(object):
+    CIRCLE = 1
+    RECTANGLE = 2
+    RECTANGLE_ROUNDED_CORNERS = 3
+    ELLIPSE = 4
 
     def __init__(self, value: int): ...
 
@@ -4366,6 +4391,7 @@ class KalturaReportType(object):
     REACH_PROFILE_USAGE = "66"
     SELF_SERVE_BANDWIDTH = "67"
     PARTNER_USAGE_SF = "68"
+    REACH_UNITS_USAGE = "69"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -4512,6 +4538,12 @@ class KalturaReportType(object):
     EP_WEBCAST_ENGAGEMENT_OVER_TIME = "60018"
     EP_LATEST_DOWNLOADED_ATTACHMENTS = "60019"
     CNC_PARTICIPATION = "70001"
+    IMMERSIVE_AGENTS_HIGHLIGHTS = "80001"
+    IMMERSIVE_AGENTS_MESSAGES_OVERTIME = "80002"
+    IMMERSIVE_AGENTS_MESSAGE_FEEDBACK = "80003"
+    IMMERSIVE_AGENTS_TOP_SOURCES = "80004"
+    IMMERSIVE_AGENTS_AVATAR_SESSIONS = "80005"
+    IMMERSIVE_AGENTS_RESPONSE_EXPERIENCE_TYPES = "80006"
     QUIZ = "quiz.QUIZ"
     QUIZ_AGGREGATE_BY_QUESTION = "quiz.QUIZ_AGGREGATE_BY_QUESTION"
     QUIZ_USER_AGGREGATE_BY_QUESTION = "quiz.QUIZ_USER_AGGREGATE_BY_QUESTION"
@@ -5419,6 +5451,14 @@ class KalturaAssetServeOptions(KalturaObjectBase):
     def setDownload(self, newDownload: bool) -> None: ...
     def getReferrer(self) -> str: ...
     def setReferrer(self, newReferrer: str) -> None: ...
+
+class KalturaAudioAttributes(KalturaObjectBase):
+    volume: float
+    def __init__(self,
+            volume: float = NotImplemented): ...
+
+    def getVolume(self) -> float: ...
+    def setVolume(self, newVolume: float) -> None: ...
 
 class KalturaAuthentication(KalturaObjectBase):
     qrCode: str
@@ -11512,6 +11552,9 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     companyIn: str
     eventSessionContextIdIn: str
     videoCodecIn: str
+    agentIdIn: str
+    genieIdIn: str
+    reachProfileIdIn: str
     def __init__(self,
             fromDate: int = NotImplemented,
             toDate: int = NotImplemented,
@@ -11566,7 +11609,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             playbackModeIn: str = NotImplemented,
             companyIn: str = NotImplemented,
             eventSessionContextIdIn: str = NotImplemented,
-            videoCodecIn: str = NotImplemented): ...
+            videoCodecIn: str = NotImplemented,
+            agentIdIn: str = NotImplemented,
+            genieIdIn: str = NotImplemented,
+            reachProfileIdIn: str = NotImplemented): ...
 
     def getKeywords(self) -> str: ...
     def setKeywords(self, newKeywords: str) -> None: ...
@@ -11668,6 +11714,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setEventSessionContextIdIn(self, newEventSessionContextIdIn: str) -> None: ...
     def getVideoCodecIn(self) -> str: ...
     def setVideoCodecIn(self, newVideoCodecIn: str) -> None: ...
+    def getAgentIdIn(self) -> str: ...
+    def setAgentIdIn(self, newAgentIdIn: str) -> None: ...
+    def getGenieIdIn(self) -> str: ...
+    def setGenieIdIn(self, newGenieIdIn: str) -> None: ...
+    def getReachProfileIdIn(self) -> str: ...
+    def setReachProfileIdIn(self, newReachProfileIdIn: str) -> None: ...
 
 class KalturaReportResponseOptions(KalturaObjectBase):
     delimiter: str
@@ -16426,14 +16478,34 @@ class KalturaOrCondition(KalturaCondition):
 class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
     resource: KalturaContentResource
     resourceMediaCompositionAttributesArray: List[KalturaMediaCompositionAttributes]
+    marginsPercentage: float
+    overlayScalePercentage: float
+    overlayPlacement: KalturaMediaCompositionAlignment
+    overlayShape: KalturaOverlayShape
+    audioAttributes: KalturaAudioAttributes
     def __init__(self,
             resource: KalturaContentResource = NotImplemented,
-            resourceMediaCompositionAttributesArray: List[KalturaMediaCompositionAttributes] = NotImplemented): ...
+            resourceMediaCompositionAttributesArray: List[KalturaMediaCompositionAttributes] = NotImplemented,
+            marginsPercentage: float = NotImplemented,
+            overlayScalePercentage: float = NotImplemented,
+            overlayPlacement: KalturaMediaCompositionAlignment = NotImplemented,
+            overlayShape: KalturaOverlayShape = NotImplemented,
+            audioAttributes: KalturaAudioAttributes = NotImplemented): ...
 
     def getResource(self) -> KalturaContentResource: ...
     def setResource(self, newResource: KalturaContentResource) -> None: ...
     def getResourceMediaCompositionAttributesArray(self) -> List[KalturaMediaCompositionAttributes]: ...
     def setResourceMediaCompositionAttributesArray(self, newResourceMediaCompositionAttributesArray: List[KalturaMediaCompositionAttributes]) -> None: ...
+    def getMarginsPercentage(self) -> float: ...
+    def setMarginsPercentage(self, newMarginsPercentage: float) -> None: ...
+    def getOverlayScalePercentage(self) -> float: ...
+    def setOverlayScalePercentage(self, newOverlayScalePercentage: float) -> None: ...
+    def getOverlayPlacement(self) -> KalturaMediaCompositionAlignment: ...
+    def setOverlayPlacement(self, newOverlayPlacement: KalturaMediaCompositionAlignment) -> None: ...
+    def getOverlayShape(self) -> KalturaOverlayShape: ...
+    def setOverlayShape(self, newOverlayShape: KalturaOverlayShape) -> None: ...
+    def getAudioAttributes(self) -> KalturaAudioAttributes: ...
+    def setAudioAttributes(self, newAudioAttributes: KalturaAudioAttributes) -> None: ...
 
 class KalturaPartnerBaseFilter(KalturaFilter):
     idEqual: int
@@ -16699,11 +16771,13 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
     backgroundColorCode: str
     foregroundScalePercentage: float
     foregroundPositionPercentage: KalturaPosition
+    audioAttributes: KalturaAudioAttributes
     def __init__(self,
             resource: KalturaContentResource = NotImplemented,
             backgroundColorCode: str = NotImplemented,
             foregroundScalePercentage: float = NotImplemented,
-            foregroundPositionPercentage: KalturaPosition = NotImplemented): ...
+            foregroundPositionPercentage: KalturaPosition = NotImplemented,
+            audioAttributes: KalturaAudioAttributes = NotImplemented): ...
 
     def getResource(self) -> KalturaContentResource: ...
     def setResource(self, newResource: KalturaContentResource) -> None: ...
@@ -16713,6 +16787,8 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
     def setForegroundScalePercentage(self, newForegroundScalePercentage: float) -> None: ...
     def getForegroundPositionPercentage(self) -> KalturaPosition: ...
     def setForegroundPositionPercentage(self, newForegroundPositionPercentage: KalturaPosition) -> None: ...
+    def getAudioAttributes(self) -> KalturaAudioAttributes: ...
+    def setAudioAttributes(self, newAudioAttributes: KalturaAudioAttributes) -> None: ...
 
 class KalturaReportBaseFilter(KalturaFilter):
     idEqual: int
@@ -18944,6 +19020,9 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             companyIn: str = NotImplemented,
             eventSessionContextIdIn: str = NotImplemented,
             videoCodecIn: str = NotImplemented,
+            agentIdIn: str = NotImplemented,
+            genieIdIn: str = NotImplemented,
+            reachProfileIdIn: str = NotImplemented,
             application: str = NotImplemented,
             userIds: str = NotImplemented,
             playbackContext: str = NotImplemented,
