@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.17.0'
+API_VERSION = '22.18.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -10271,7 +10271,8 @@ class KalturaPartner(KalturaObjectBase):
             verticalClassificationId = NotImplemented,
             recycleBinRetentionPeriod = NotImplemented,
             customAnalyticsDomain = NotImplemented,
-            allowedEmailDomainsForAdmins = NotImplemented):
+            allowedEmailDomainsForAdmins = NotImplemented,
+            externalIdentifier = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -10579,6 +10580,9 @@ class KalturaPartner(KalturaObjectBase):
         # @var str
         self.allowedEmailDomainsForAdmins = allowedEmailDomainsForAdmins
 
+        # @var str
+        self.externalIdentifier = externalIdentifier
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10667,6 +10671,7 @@ class KalturaPartner(KalturaObjectBase):
         'recycleBinRetentionPeriod': getXmlNodeInt, 
         'customAnalyticsDomain': getXmlNodeText, 
         'allowedEmailDomainsForAdmins': getXmlNodeText, 
+        'externalIdentifier': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -10721,6 +10726,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addStringIfDefined("eventPlatformAllowedTemplates", self.eventPlatformAllowedTemplates)
         kparams.addStringIfDefined("customAnalyticsDomain", self.customAnalyticsDomain)
         kparams.addStringIfDefined("allowedEmailDomainsForAdmins", self.allowedEmailDomainsForAdmins)
+        kparams.addStringIfDefined("externalIdentifier", self.externalIdentifier)
         return kparams
 
     def getId(self):
@@ -11115,6 +11121,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def setAllowedEmailDomainsForAdmins(self, newAllowedEmailDomainsForAdmins):
         self.allowedEmailDomainsForAdmins = newAllowedEmailDomainsForAdmins
+
+    def getExternalIdentifier(self):
+        return self.externalIdentifier
+
+    def setExternalIdentifier(self, newExternalIdentifier):
+        self.externalIdentifier = newExternalIdentifier
 
 
 # @package Kaltura
@@ -26435,7 +26447,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             videoCodecIn = NotImplemented,
             agentIdIn = NotImplemented,
             genieIdIn = NotImplemented,
-            reachProfileIdIn = NotImplemented):
+            reachProfileIdIn = NotImplemented,
+            isPreview = NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26651,6 +26664,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var str
         self.reachProfileIdIn = reachProfileIdIn
 
+        # filter by preview mode
+        # @var bool
+        self.isPreview = isPreview
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26706,6 +26723,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'agentIdIn': getXmlNodeText, 
         'genieIdIn': getXmlNodeText, 
         'reachProfileIdIn': getXmlNodeText, 
+        'isPreview': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -26768,6 +26786,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("agentIdIn", self.agentIdIn)
         kparams.addStringIfDefined("genieIdIn", self.genieIdIn)
         kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
+        kparams.addBoolIfDefined("isPreview", self.isPreview)
         return kparams
 
     def getKeywords(self):
@@ -27087,6 +27106,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setReachProfileIdIn(self, newReachProfileIdIn):
         self.reachProfileIdIn = newReachProfileIdIn
+
+    def getIsPreview(self):
+        return self.isPreview
+
+    def setIsPreview(self, newIsPreview):
+        self.isPreview = newIsPreview
 
 
 # @package Kaltura
@@ -50201,6 +50226,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             agentIdIn = NotImplemented,
             genieIdIn = NotImplemented,
             reachProfileIdIn = NotImplemented,
+            isPreview = NotImplemented,
             application = NotImplemented,
             userIds = NotImplemented,
             playbackContext = NotImplemented,
@@ -50262,7 +50288,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             videoCodecIn,
             agentIdIn,
             genieIdIn,
-            reachProfileIdIn)
+            reachProfileIdIn,
+            isPreview)
 
         # @var str
         self.application = application

@@ -6236,6 +6236,7 @@ class KalturaPartner(KalturaObjectBase):
     recycleBinRetentionPeriod: int
     customAnalyticsDomain: str
     allowedEmailDomainsForAdmins: str
+    externalIdentifier: str
     def __init__(self,
             id: int = NotImplemented,
             name: str = NotImplemented,
@@ -6322,7 +6323,8 @@ class KalturaPartner(KalturaObjectBase):
             verticalClassificationId: int = NotImplemented,
             recycleBinRetentionPeriod: int = NotImplemented,
             customAnalyticsDomain: str = NotImplemented,
-            allowedEmailDomainsForAdmins: str = NotImplemented): ...
+            allowedEmailDomainsForAdmins: str = NotImplemented,
+            externalIdentifier: str = NotImplemented): ...
 
     def getId(self) -> int: ...
     def getName(self) -> str: ...
@@ -6455,6 +6457,8 @@ class KalturaPartner(KalturaObjectBase):
     def setCustomAnalyticsDomain(self, newCustomAnalyticsDomain: str) -> None: ...
     def getAllowedEmailDomainsForAdmins(self) -> str: ...
     def setAllowedEmailDomainsForAdmins(self, newAllowedEmailDomainsForAdmins: str) -> None: ...
+    def getExternalIdentifier(self) -> str: ...
+    def setExternalIdentifier(self, newExternalIdentifier: str) -> None: ...
 
 class KalturaValue(KalturaObjectBase):
     description: str
@@ -11555,6 +11559,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     agentIdIn: str
     genieIdIn: str
     reachProfileIdIn: str
+    isPreview: bool
     def __init__(self,
             fromDate: int = NotImplemented,
             toDate: int = NotImplemented,
@@ -11612,7 +11617,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             videoCodecIn: str = NotImplemented,
             agentIdIn: str = NotImplemented,
             genieIdIn: str = NotImplemented,
-            reachProfileIdIn: str = NotImplemented): ...
+            reachProfileIdIn: str = NotImplemented,
+            isPreview: bool = NotImplemented): ...
 
     def getKeywords(self) -> str: ...
     def setKeywords(self, newKeywords: str) -> None: ...
@@ -11720,6 +11726,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setGenieIdIn(self, newGenieIdIn: str) -> None: ...
     def getReachProfileIdIn(self) -> str: ...
     def setReachProfileIdIn(self, newReachProfileIdIn: str) -> None: ...
+    def getIsPreview(self) -> bool: ...
+    def setIsPreview(self, newIsPreview: bool) -> None: ...
 
 class KalturaReportResponseOptions(KalturaObjectBase):
     delimiter: str
@@ -19023,6 +19031,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             agentIdIn: str = NotImplemented,
             genieIdIn: str = NotImplemented,
             reachProfileIdIn: str = NotImplemented,
+            isPreview: bool = NotImplemented,
             application: str = NotImplemented,
             userIds: str = NotImplemented,
             playbackContext: str = NotImplemented,

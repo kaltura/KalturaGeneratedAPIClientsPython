@@ -1139,7 +1139,6 @@ class KalturaReachProfile(KalturaObjectBase):
         self.credit = credit
 
         # @var float
-        # @readonly
         self.usedCredit = usedCredit
 
         # @var List[KalturaDictionary]
@@ -1207,6 +1206,7 @@ class KalturaReachProfile(KalturaObjectBase):
         kparams.addIntEnumIfDefined("contentDeletionPolicy", self.contentDeletionPolicy)
         kparams.addArrayIfDefined("rules", self.rules)
         kparams.addObjectIfDefined("credit", self.credit)
+        kparams.addFloatIfDefined("usedCredit", self.usedCredit)
         kparams.addArrayIfDefined("dictionaries", self.dictionaries)
         kparams.addStringIfDefined("flavorParamsIds", self.flavorParamsIds)
         kparams.addIntEnumIfDefined("vendorTaskProcessingRegion", self.vendorTaskProcessingRegion)
@@ -1331,6 +1331,9 @@ class KalturaReachProfile(KalturaObjectBase):
 
     def getUsedCredit(self):
         return self.usedCredit
+
+    def setUsedCredit(self, newUsedCredit):
+        self.usedCredit = newUsedCredit
 
     def getDictionaries(self):
         return self.dictionaries
@@ -5110,6 +5113,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             agentIdIn = NotImplemented,
             genieIdIn = NotImplemented,
             reachProfileIdIn = NotImplemented,
+            isPreview = NotImplemented,
             serviceType = NotImplemented,
             serviceFeature = NotImplemented,
             turnAroundTime = NotImplemented):
@@ -5170,7 +5174,8 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             videoCodecIn,
             agentIdIn,
             genieIdIn,
-            reachProfileIdIn)
+            reachProfileIdIn,
+            isPreview)
 
         # @var KalturaVendorServiceType
         self.serviceType = serviceType
