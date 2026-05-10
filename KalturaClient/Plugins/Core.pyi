@@ -9510,6 +9510,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
     streamName: str
     streamUrl: str
     hlsStreamUrl: str
+    readyForDeletion: bool
     urlManager: str
     encodingIP1: str
     encodingIP2: str
@@ -9630,6 +9631,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             streamName: str = NotImplemented,
             streamUrl: str = NotImplemented,
             hlsStreamUrl: str = NotImplemented,
+            readyForDeletion: bool = NotImplemented,
             urlManager: str = NotImplemented,
             encodingIP1: str = NotImplemented,
             encodingIP2: str = NotImplemented,
@@ -9670,6 +9672,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
     def setStreamUrl(self, newStreamUrl: str) -> None: ...
     def getHlsStreamUrl(self) -> str: ...
     def setHlsStreamUrl(self, newHlsStreamUrl: str) -> None: ...
+    def getReadyForDeletion(self) -> bool: ...
     def getUrlManager(self) -> str: ...
     def setUrlManager(self, newUrlManager: str) -> None: ...
     def getEncodingIP1(self) -> str: ...
@@ -22900,6 +22903,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             streamName: str = NotImplemented,
             streamUrl: str = NotImplemented,
             hlsStreamUrl: str = NotImplemented,
+            readyForDeletion: bool = NotImplemented,
             urlManager: str = NotImplemented,
             encodingIP1: str = NotImplemented,
             encodingIP2: str = NotImplemented,

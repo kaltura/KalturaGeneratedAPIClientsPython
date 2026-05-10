@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.18.0'
+API_VERSION = '22.19.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -20912,6 +20912,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
             streamName = NotImplemented,
             streamUrl = NotImplemented,
             hlsStreamUrl = NotImplemented,
+            readyForDeletion = NotImplemented,
             urlManager = NotImplemented,
             encodingIP1 = NotImplemented,
             encodingIP2 = NotImplemented,
@@ -21072,6 +21073,11 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         # @var str
         self.hlsStreamUrl = hlsStreamUrl
 
+        # Indicates whether the live entry is ready to be deleted
+        # @var bool
+        # @readonly
+        self.readyForDeletion = readyForDeletion
+
         # URL Manager to handle the live stream URL (for instance, add token)
         # @var str
         self.urlManager = urlManager
@@ -21127,6 +21133,7 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
         'streamName': getXmlNodeText, 
         'streamUrl': getXmlNodeText, 
         'hlsStreamUrl': getXmlNodeText, 
+        'readyForDeletion': getXmlNodeBool, 
         'urlManager': getXmlNodeText, 
         'encodingIP1': getXmlNodeText, 
         'encodingIP2': getXmlNodeText, 
@@ -21255,6 +21262,9 @@ class KalturaLiveStreamEntry(KalturaLiveEntry):
 
     def setHlsStreamUrl(self, newHlsStreamUrl):
         self.hlsStreamUrl = newHlsStreamUrl
+
+    def getReadyForDeletion(self):
+        return self.readyForDeletion
 
     def getUrlManager(self):
         return self.urlManager
@@ -61261,6 +61271,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             streamName = NotImplemented,
             streamUrl = NotImplemented,
             hlsStreamUrl = NotImplemented,
+            readyForDeletion = NotImplemented,
             urlManager = NotImplemented,
             encodingIP1 = NotImplemented,
             encodingIP2 = NotImplemented,
@@ -61381,6 +61392,7 @@ class KalturaLiveStreamAdminEntry(KalturaLiveStreamEntry):
             streamName,
             streamUrl,
             hlsStreamUrl,
+            readyForDeletion,
             urlManager,
             encodingIP1,
             encodingIP2,

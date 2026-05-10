@@ -59,6 +59,7 @@ class KalturaESearchGroupFieldName(object):
     TITLE = "title"
     UPDATED_AT = "updated_at"
     USER_ID = "user_id"
+    TYPE = "user_type"
 
     def __init__(self, value: str): ...
 
