@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '22.20.0'
+API_VERSION = '23.0.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -841,6 +841,18 @@ class KalturaNullableBoolean(object):
     NULL_VALUE = -1
     FALSE_VALUE = 0
     TRUE_VALUE = 1
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaOverlayScaleBehavior(object):
+    CROP = 1
+    SCALE = 2
 
     def __init__(self, value):
         self.value = value
@@ -5397,6 +5409,7 @@ class KalturaReportType(object):
     DOCUMENT_ENTRY_MAP_OVERLAY_CITY = "73"
     DOCUMENT_ENTRY_PLATFORMS = "74"
     DOCUMENT_ENTRY_DOMAINS = "75"
+    DOCUMENT_ENTRY_USER_ENGAGEMENT = "76"
     PARTNER_USAGE = "201"
     MAP_OVERLAY_COUNTRY_REALTIME = "10001"
     MAP_OVERLAY_REGION_REALTIME = "10002"
@@ -15398,6 +15411,50 @@ class KalturaDimensionsAttributes(KalturaObjectBase):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDimensionsPercentage(KalturaObjectBase):
+    def __init__(self,
+            heightPercentage = NotImplemented,
+            widthPercentage = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var float
+        self.heightPercentage = heightPercentage
+
+        # @var float
+        self.widthPercentage = widthPercentage
+
+
+    PROPERTY_LOADERS = {
+        'heightPercentage': getXmlNodeFloat, 
+        'widthPercentage': getXmlNodeFloat, 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDimensionsPercentage.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaDimensionsPercentage")
+        kparams.addFloatIfDefined("heightPercentage", self.heightPercentage)
+        kparams.addFloatIfDefined("widthPercentage", self.widthPercentage)
+        return kparams
+
+    def getHeightPercentage(self):
+        return self.heightPercentage
+
+    def setHeightPercentage(self, newHeightPercentage):
+        self.heightPercentage = newHeightPercentage
+
+    def getWidthPercentage(self):
+        return self.widthPercentage
+
+    def setWidthPercentage(self, newWidthPercentage):
+        self.widthPercentage = newWidthPercentage
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDynamicEmailContents(KalturaObjectBase):
     def __init__(self,
             emailSubject = NotImplemented,
@@ -25146,6 +25203,50 @@ class KalturaOperationResource(KalturaContentResource):
 
     def setAssetParamsId(self, newAssetParamsId):
         self.assetParamsId = newAssetParamsId
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaOverlayScaleAttribute(KalturaObjectBase):
+    def __init__(self,
+            scalePercentage = NotImplemented,
+            scaleBehavior = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaDimensionsPercentage
+        self.scalePercentage = scalePercentage
+
+        # @var KalturaOverlayScaleBehavior
+        self.scaleBehavior = scaleBehavior
+
+
+    PROPERTY_LOADERS = {
+        'scalePercentage': (KalturaObjectFactory.create, 'KalturaDimensionsPercentage'), 
+        'scaleBehavior': (KalturaEnumsFactory.createInt, "KalturaOverlayScaleBehavior"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaOverlayScaleAttribute.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaOverlayScaleAttribute")
+        kparams.addObjectIfDefined("scalePercentage", self.scalePercentage)
+        kparams.addIntEnumIfDefined("scaleBehavior", self.scaleBehavior)
+        return kparams
+
+    def getScalePercentage(self):
+        return self.scalePercentage
+
+    def setScalePercentage(self, newScalePercentage):
+        self.scalePercentage = newScalePercentage
+
+    def getScaleBehavior(self):
+        return self.scaleBehavior
+
+    def setScaleBehavior(self, newScaleBehavior):
+        self.scaleBehavior = newScaleBehavior
 
 
 # @package Kaltura
@@ -42343,7 +42444,7 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
             resource = NotImplemented,
             resourceMediaCompositionAttributesArray = NotImplemented,
             marginsPercentage = NotImplemented,
-            overlayScalePercentage = NotImplemented,
+            overlayScaleAttribute = NotImplemented,
             overlayPlacement = NotImplemented,
             overlayShape = NotImplemented,
             audioAttributes = NotImplemented):
@@ -42357,11 +42458,11 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
         # @var List[KalturaMediaCompositionAttributes]
         self.resourceMediaCompositionAttributesArray = resourceMediaCompositionAttributesArray
 
-        # @var float
+        # @var KalturaDimensionsPercentage
         self.marginsPercentage = marginsPercentage
 
-        # @var float
-        self.overlayScalePercentage = overlayScalePercentage
+        # @var KalturaOverlayScaleAttribute
+        self.overlayScaleAttribute = overlayScaleAttribute
 
         # @var KalturaMediaCompositionAlignment
         self.overlayPlacement = overlayPlacement
@@ -42376,8 +42477,8 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
     PROPERTY_LOADERS = {
         'resource': (KalturaObjectFactory.create, 'KalturaContentResource'), 
         'resourceMediaCompositionAttributesArray': (KalturaObjectFactory.createArray, 'KalturaMediaCompositionAttributes'), 
-        'marginsPercentage': getXmlNodeFloat, 
-        'overlayScalePercentage': getXmlNodeFloat, 
+        'marginsPercentage': (KalturaObjectFactory.create, 'KalturaDimensionsPercentage'), 
+        'overlayScaleAttribute': (KalturaObjectFactory.create, 'KalturaOverlayScaleAttribute'), 
         'overlayPlacement': (KalturaEnumsFactory.createInt, "KalturaMediaCompositionAlignment"), 
         'overlayShape': (KalturaEnumsFactory.createInt, "KalturaOverlayShape"), 
         'audioAttributes': (KalturaObjectFactory.create, 'KalturaAudioAttributes'), 
@@ -42392,8 +42493,8 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
         kparams.put("objectType", "KalturaOverlayAttributes")
         kparams.addObjectIfDefined("resource", self.resource)
         kparams.addArrayIfDefined("resourceMediaCompositionAttributesArray", self.resourceMediaCompositionAttributesArray)
-        kparams.addFloatIfDefined("marginsPercentage", self.marginsPercentage)
-        kparams.addFloatIfDefined("overlayScalePercentage", self.overlayScalePercentage)
+        kparams.addObjectIfDefined("marginsPercentage", self.marginsPercentage)
+        kparams.addObjectIfDefined("overlayScaleAttribute", self.overlayScaleAttribute)
         kparams.addIntEnumIfDefined("overlayPlacement", self.overlayPlacement)
         kparams.addIntEnumIfDefined("overlayShape", self.overlayShape)
         kparams.addObjectIfDefined("audioAttributes", self.audioAttributes)
@@ -42417,11 +42518,11 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
     def setMarginsPercentage(self, newMarginsPercentage):
         self.marginsPercentage = newMarginsPercentage
 
-    def getOverlayScalePercentage(self):
-        return self.overlayScalePercentage
+    def getOverlayScaleAttribute(self):
+        return self.overlayScaleAttribute
 
-    def setOverlayScalePercentage(self, newOverlayScalePercentage):
-        self.overlayScalePercentage = newOverlayScalePercentage
+    def setOverlayScaleAttribute(self, newOverlayScaleAttribute):
+        self.overlayScaleAttribute = newOverlayScaleAttribute
 
     def getOverlayPlacement(self):
         return self.overlayPlacement
@@ -71115,6 +71216,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaNotificationStatus': KalturaNotificationStatus,
             'KalturaNotificationType': KalturaNotificationType,
             'KalturaNullableBoolean': KalturaNullableBoolean,
+            'KalturaOverlayScaleBehavior': KalturaOverlayScaleBehavior,
             'KalturaOverlayShape': KalturaOverlayShape,
             'KalturaPartnerAuthenticationType': KalturaPartnerAuthenticationType,
             'KalturaPartnerGroupType': KalturaPartnerGroupType,
@@ -71430,6 +71532,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaResponseProfileMapping': KalturaResponseProfileMapping,
             'KalturaDetachedResponseProfile': KalturaDetachedResponseProfile,
             'KalturaDimensionsAttributes': KalturaDimensionsAttributes,
+            'KalturaDimensionsPercentage': KalturaDimensionsPercentage,
             'KalturaDynamicEmailContents': KalturaDynamicEmailContents,
             'KalturaUser': KalturaUser,
             'KalturaEffect': KalturaEffect,
@@ -71486,6 +71589,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaMixEntry': KalturaMixEntry,
             'KalturaModerationFlag': KalturaModerationFlag,
             'KalturaOperationResource': KalturaOperationResource,
+            'KalturaOverlayScaleAttribute': KalturaOverlayScaleAttribute,
             'KalturaPartnerPublicInfo': KalturaPartnerPublicInfo,
             'KalturaPartnerStatistics': KalturaPartnerStatistics,
             'KalturaPartnerUsage': KalturaPartnerUsage,
