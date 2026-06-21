@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '23.0.0'
+API_VERSION = '23.1.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -25156,7 +25156,7 @@ class KalturaOperationResource(KalturaContentResource):
             assetParamsId = NotImplemented):
         KalturaContentResource.__init__(self)
 
-        # Only KalturaEntryResource and KalturaAssetResource are supported
+        # Only KalturaEntryResource, KalturaAssetResource and KalturaDocumentImagesResource are supported
         # @var KalturaContentResource
         self.resource = resource
 
@@ -42450,7 +42450,7 @@ class KalturaOverlayAttributes(KalturaMediaCompositionAttributes):
             audioAttributes = NotImplemented):
         KalturaMediaCompositionAttributes.__init__(self)
 
-        # Only KalturaEntryResource and KalturaAssetResource are supported
+        # Only KalturaEntryResource, KalturaAssetResource and KalturaDocumentImagesResource are supported
         # @var KalturaContentResource
         self.resource = resource
 
@@ -43396,7 +43396,7 @@ class KalturaReplaceBackgroundAttributes(KalturaMediaCompositionAttributes):
             audioAttributes = NotImplemented):
         KalturaMediaCompositionAttributes.__init__(self)
 
-        # Only KalturaEntryResource and KalturaAssetResource are supported
+        # Only KalturaEntryResource, KalturaAssetResource and KalturaDocumentImagesResource are supported
         # @var KalturaContentResource
         self.resource = resource
 

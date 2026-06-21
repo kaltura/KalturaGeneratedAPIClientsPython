@@ -449,6 +449,18 @@ class KalturaDictionary(KalturaObjectBase):
     def getData(self) -> str: ...
     def setData(self, newData: str) -> None: ...
 
+class KalturaEntryVendorTaskUnit(KalturaObjectBase):
+    unitsUsed: float
+    serviceName: str
+    def __init__(self,
+            unitsUsed: float = NotImplemented,
+            serviceName: str = NotImplemented): ...
+
+    def getUnitsUsed(self) -> float: ...
+    def setUnitsUsed(self, newUnitsUsed: float) -> None: ...
+    def getServiceName(self) -> str: ...
+    def setServiceName(self, newServiceName: str) -> None: ...
+
 class KalturaVendorTaskData(KalturaObjectBase):
     entryDuration: int
     def __init__(self,
@@ -472,6 +484,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     userId: str
     entryObjectType: KalturaEntryObjectType
     unitsUsed: int
+    unitsUsedArray: List[KalturaEntryVendorTaskUnit]
     moderatingUser: str
     errDescription: str
     accessKey: str
@@ -506,6 +519,7 @@ class KalturaEntryVendorTask(KalturaObjectBase):
             userId: str = NotImplemented,
             entryObjectType: KalturaEntryObjectType = NotImplemented,
             unitsUsed: int = NotImplemented,
+            unitsUsedArray: List[KalturaEntryVendorTaskUnit] = NotImplemented,
             moderatingUser: str = NotImplemented,
             errDescription: str = NotImplemented,
             accessKey: str = NotImplemented,
@@ -546,6 +560,8 @@ class KalturaEntryVendorTask(KalturaObjectBase):
     def setEntryObjectType(self, newEntryObjectType: KalturaEntryObjectType) -> None: ...
     def getUnitsUsed(self) -> int: ...
     def setUnitsUsed(self, newUnitsUsed: int) -> None: ...
+    def getUnitsUsedArray(self) -> List[KalturaEntryVendorTaskUnit]: ...
+    def setUnitsUsedArray(self, newUnitsUsedArray: List[KalturaEntryVendorTaskUnit]) -> None: ...
     def getModeratingUser(self) -> str: ...
     def getErrDescription(self) -> str: ...
     def setErrDescription(self, newErrDescription: str) -> None: ...
@@ -689,6 +705,18 @@ class KalturaVendorCatalogItemPricing(KalturaObjectBase):
     def getPriceFunction(self) -> KalturaVendorCatalogItemPriceFunction: ...
     def setPriceFunction(self, newPriceFunction: KalturaVendorCatalogItemPriceFunction) -> None: ...
 
+class KalturaVendorCatalogItemUnitPricing(KalturaObjectBase):
+    serviceName: str
+    priceUnit: KalturaVendorCatalogItemPricing
+    def __init__(self,
+            serviceName: str = NotImplemented,
+            priceUnit: KalturaVendorCatalogItemPricing = NotImplemented): ...
+
+    def getServiceName(self) -> str: ...
+    def setServiceName(self, newServiceName: str) -> None: ...
+    def getPriceUnit(self) -> KalturaVendorCatalogItemPricing: ...
+    def setPriceUnit(self, newPriceUnit: KalturaVendorCatalogItemPricing) -> None: ...
+
 class KalturaVendorCatalogItem(KalturaObjectBase):
     id: int
     vendorPartnerId: int
@@ -701,6 +729,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     serviceFeature: KalturaVendorServiceFeature
     turnAroundTime: KalturaVendorServiceTurnAroundTime
     pricing: KalturaVendorCatalogItemPricing
+    pricingArray: List[KalturaVendorCatalogItemUnitPricing]
     engineType: KalturaReachVendorEngineType
     sourceLanguage: KalturaCatalogItemLanguage
     allowResubmission: bool
@@ -726,6 +755,7 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -757,6 +787,8 @@ class KalturaVendorCatalogItem(KalturaObjectBase):
     def setTurnAroundTime(self, newTurnAroundTime: KalturaVendorServiceTurnAroundTime) -> None: ...
     def getPricing(self) -> KalturaVendorCatalogItemPricing: ...
     def setPricing(self, newPricing: KalturaVendorCatalogItemPricing) -> None: ...
+    def getPricingArray(self) -> List[KalturaVendorCatalogItemUnitPricing]: ...
+    def setPricingArray(self, newPricingArray: List[KalturaVendorCatalogItemUnitPricing]) -> None: ...
     def getEngineType(self) -> KalturaReachVendorEngineType: ...
     def setEngineType(self, newEngineType: KalturaReachVendorEngineType) -> None: ...
     def getSourceLanguage(self) -> KalturaCatalogItemLanguage: ...
@@ -993,6 +1025,7 @@ class KalturaVendorAlignmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1026,6 +1059,7 @@ class KalturaVendorAudioDescriptionCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1060,6 +1094,7 @@ class KalturaVendorAvatarVodCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1091,6 +1126,7 @@ class KalturaVendorCaptionsCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1136,6 +1172,7 @@ class KalturaVendorChapteringCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1164,6 +1201,7 @@ class KalturaVendorClipsCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1213,6 +1251,7 @@ class KalturaVendorDocumentEnrichmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1247,6 +1286,7 @@ class KalturaVendorDubbingCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1287,6 +1327,7 @@ class KalturaVendorExtendedAudioDescriptionCatalogItem(KalturaVendorCatalogItem)
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1324,6 +1365,7 @@ class KalturaVendorImmersiveAgentCallCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1352,6 +1394,7 @@ class KalturaVendorImmersiveAgentChatCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1380,6 +1423,7 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1408,6 +1452,7 @@ class KalturaVendorMetadataEnrichmentCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1436,6 +1481,7 @@ class KalturaVendorModerationCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1464,6 +1510,7 @@ class KalturaVendorQuizCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1492,6 +1539,7 @@ class KalturaVendorSentimentAnalysisCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1521,6 +1569,7 @@ class KalturaVendorSignLanguageCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1552,6 +1601,7 @@ class KalturaVendorSpeechToVideoCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1580,6 +1630,7 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -1619,6 +1670,7 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -2153,6 +2205,7 @@ class KalturaVendorLiveCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -2195,6 +2248,7 @@ class KalturaVendorTranslationCatalogItem(KalturaVendorCaptionsCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -2294,6 +2348,7 @@ class KalturaVendorLiveCaptionCatalogItem(KalturaVendorLiveCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,
@@ -2335,6 +2390,7 @@ class KalturaVendorLiveTranslationCatalogItem(KalturaVendorLiveCatalogItem):
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
             pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
             engineType: KalturaReachVendorEngineType = NotImplemented,
             sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
             allowResubmission: bool = NotImplemented,

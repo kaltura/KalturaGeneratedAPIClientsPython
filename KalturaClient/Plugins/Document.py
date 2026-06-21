@@ -483,6 +483,56 @@ class KalturaDocumentFlavorParams(KalturaFlavorParams):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaDocumentImagesResource(KalturaContentResource):
+    """Used to ingest a single image extracted from a document entry's
+     generated image list. The image is selected by its zero-based index
+     within the document's imagesList.xml."""
+
+    def __init__(self,
+            flavorAssetId = NotImplemented,
+            index = NotImplemented):
+        KalturaContentResource.__init__(self)
+
+        # ID of the flavor asset containing the image list
+        # @var str
+        self.flavorAssetId = flavorAssetId
+
+        # Zero-based index of the image to retrieve from the list
+        # @var int
+        self.index = index
+
+
+    PROPERTY_LOADERS = {
+        'flavorAssetId': getXmlNodeText, 
+        'index': getXmlNodeInt, 
+    }
+
+    def fromXml(self, node):
+        KalturaContentResource.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaDocumentImagesResource.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaContentResource.toParams(self)
+        kparams.put("objectType", "KalturaDocumentImagesResource")
+        kparams.addStringIfDefined("flavorAssetId", self.flavorAssetId)
+        kparams.addIntIfDefined("index", self.index)
+        return kparams
+
+    def getFlavorAssetId(self):
+        return self.flavorAssetId
+
+    def setFlavorAssetId(self, newFlavorAssetId):
+        self.flavorAssetId = newFlavorAssetId
+
+    def getIndex(self):
+        return self.index
+
+    def setIndex(self, newIndex):
+        self.index = newIndex
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaImageFlavorParams(KalturaFlavorParams):
     def __init__(self,
             id = NotImplemented,
@@ -3009,6 +3059,7 @@ class KalturaDocumentClientPlugin(KalturaClientPlugin):
             'KalturaDocumentEntry': KalturaDocumentEntry,
             'KalturaDocumentListResponse': KalturaDocumentListResponse,
             'KalturaDocumentFlavorParams': KalturaDocumentFlavorParams,
+            'KalturaDocumentImagesResource': KalturaDocumentImagesResource,
             'KalturaImageFlavorParams': KalturaImageFlavorParams,
             'KalturaPdfFlavorParams': KalturaPdfFlavorParams,
             'KalturaSwfFlavorParams': KalturaSwfFlavorParams,
