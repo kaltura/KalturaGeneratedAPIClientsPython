@@ -1119,7 +1119,8 @@ class KalturaReachProfile(KalturaObjectBase):
             usedCredit = NotImplemented,
             dictionaries = NotImplemented,
             flavorParamsIds = NotImplemented,
-            vendorTaskProcessingRegion = NotImplemented):
+            vendorTaskProcessingRegion = NotImplemented,
+            allowedCatalogItemIds = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -1208,6 +1209,10 @@ class KalturaReachProfile(KalturaObjectBase):
         # @var KalturaVendorTaskProcessingRegion
         self.vendorTaskProcessingRegion = vendorTaskProcessingRegion
 
+        # Comma separated catalogItemIds that are allowed for ordering using this reach profile
+        # @var str
+        self.allowedCatalogItemIds = allowedCatalogItemIds
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -1236,6 +1241,7 @@ class KalturaReachProfile(KalturaObjectBase):
         'dictionaries': (KalturaObjectFactory.createArray, 'KalturaDictionary'), 
         'flavorParamsIds': getXmlNodeText, 
         'vendorTaskProcessingRegion': (KalturaEnumsFactory.createInt, "KalturaVendorTaskProcessingRegion"), 
+        'allowedCatalogItemIds': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -1266,6 +1272,7 @@ class KalturaReachProfile(KalturaObjectBase):
         kparams.addArrayIfDefined("dictionaries", self.dictionaries)
         kparams.addStringIfDefined("flavorParamsIds", self.flavorParamsIds)
         kparams.addIntEnumIfDefined("vendorTaskProcessingRegion", self.vendorTaskProcessingRegion)
+        kparams.addStringIfDefined("allowedCatalogItemIds", self.allowedCatalogItemIds)
         return kparams
 
     def getId(self):
@@ -1408,6 +1415,12 @@ class KalturaReachProfile(KalturaObjectBase):
 
     def setVendorTaskProcessingRegion(self, newVendorTaskProcessingRegion):
         self.vendorTaskProcessingRegion = newVendorTaskProcessingRegion
+
+    def getAllowedCatalogItemIds(self):
+        return self.allowedCatalogItemIds
+
+    def setAllowedCatalogItemIds(self, newAllowedCatalogItemIds):
+        self.allowedCatalogItemIds = newAllowedCatalogItemIds
 
 
 # @package Kaltura
