@@ -463,10 +463,14 @@ class KalturaEntryVendorTaskUnit(KalturaObjectBase):
 
 class KalturaVendorTaskData(KalturaObjectBase):
     entryDuration: int
+    vendorComment: str
     def __init__(self,
-            entryDuration: int = NotImplemented): ...
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented): ...
 
     def getEntryDuration(self) -> int: ...
+    def getVendorComment(self) -> str: ...
+    def setVendorComment(self, newVendorComment: str) -> None: ...
 
 class KalturaEntryVendorTask(KalturaObjectBase):
     id: int
@@ -904,6 +908,7 @@ class KalturaImmersiveAgentCallVendorTaskData(KalturaVendorTaskData):
     callId: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             callId: str = NotImplemented): ...
 
     def getCallId(self) -> str: ...
@@ -911,13 +916,15 @@ class KalturaImmersiveAgentCallVendorTaskData(KalturaVendorTaskData):
 
 class KalturaImmersiveAgentChatVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
-            entryDuration: int = NotImplemented): ...
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented): ...
         pass
 
 class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
     assetId: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             assetId: str = NotImplemented): ...
 
     def getAssetId(self) -> str: ...
@@ -928,6 +935,7 @@ class KalturaLocalizedVendorTaskData(KalturaVendorTaskData):
     outputJson: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented): ...
 
@@ -943,6 +951,7 @@ class KalturaModerationVendorTaskData(KalturaVendorTaskData):
     moderationOutputJson: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             ruleIds: str = NotImplemented,
             policyIds: str = NotImplemented,
             categoryIds: str = NotImplemented,
@@ -971,6 +980,7 @@ class KalturaScheduledVendorTaskData(KalturaVendorTaskData):
     scheduledEventId: int
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             startDate: int = NotImplemented,
             endDate: int = NotImplemented,
             scheduledEventId: int = NotImplemented): ...
@@ -986,6 +996,7 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
     language: KalturaLanguageCode
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             language: KalturaLanguageCode = NotImplemented): ...
 
     def getLanguage(self) -> KalturaLanguageCode: ...
@@ -996,6 +1007,7 @@ class KalturaSpeechToVideoVendorTaskData(KalturaVendorTaskData):
     conversionProfileId: int
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             avatarId: str = NotImplemented,
             conversionProfileId: int = NotImplemented): ...
 
@@ -1654,6 +1666,7 @@ class KalturaVendorTaskDataCaptionAsset(KalturaVendorTaskData):
     captionAssetId: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             captionAssetId: str = NotImplemented): ...
 
     def getCaptionAssetId(self) -> str: ...
@@ -1701,6 +1714,7 @@ class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     jsonTranscriptAssetId: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             captionAssetId: str = NotImplemented,
             textTranscriptAssetId: str = NotImplemented,
             jsonTranscriptAssetId: str = NotImplemented): ...
@@ -1717,6 +1731,7 @@ class KalturaClipsVendorTaskData(KalturaLocalizedVendorTaskData):
     clipsOutputJson: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented,
             clipsDuration: int = NotImplemented,
@@ -1904,6 +1919,7 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
     overrideFields: List[KalturaString]
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented,
             detailLevel: str = NotImplemented,
@@ -1933,6 +1949,7 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
     instruction: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented,
             numberOfQuestions: int = NotImplemented,
@@ -2085,6 +2102,7 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
     instruction: str
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             outputLanguage: KalturaLanguage = NotImplemented,
             outputJson: str = NotImplemented,
             typeOfSummary: KalturaTypeOfSummaryTaskData = NotImplemented,
@@ -2116,6 +2134,7 @@ class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
 class KalturaTranslationVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def __init__(self,
             entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
             captionAssetId: str = NotImplemented): ...
         pass
 

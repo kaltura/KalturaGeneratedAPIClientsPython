@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '23.2.0'
+API_VERSION = '23.3.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -3284,6 +3284,20 @@ class KalturaGroupUserOrderBy(object):
     UPDATED_AT_ASC = "+updatedAt"
     CREATED_AT_DESC = "-createdAt"
     UPDATED_AT_DESC = "-updatedAt"
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaHTMLPurifierBehaviourType(object):
+    IGNORE = "0"
+    NOTIFY = "1"
+    SANITIZE = "2"
+    BLOCK = "3"
 
     def __init__(self, value):
         self.value = value
@@ -10291,7 +10305,11 @@ class KalturaPartner(KalturaObjectBase):
             recycleBinRetentionPeriod = NotImplemented,
             customAnalyticsDomain = NotImplemented,
             allowedEmailDomainsForAdmins = NotImplemented,
-            externalIdentifier = NotImplemented):
+            externalIdentifier = NotImplemented,
+            htmlPurifierBehaviour = NotImplemented,
+            htmlPurifierBaseListUsage = NotImplemented,
+            purifyImageContent = NotImplemented,
+            fileTypeRestrictionEnabled = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # @var int
@@ -10602,6 +10620,18 @@ class KalturaPartner(KalturaObjectBase):
         # @var str
         self.externalIdentifier = externalIdentifier
 
+        # @var KalturaHTMLPurifierBehaviourType
+        self.htmlPurifierBehaviour = htmlPurifierBehaviour
+
+        # @var bool
+        self.htmlPurifierBaseListUsage = htmlPurifierBaseListUsage
+
+        # @var bool
+        self.purifyImageContent = purifyImageContent
+
+        # @var bool
+        self.fileTypeRestrictionEnabled = fileTypeRestrictionEnabled
+
 
     PROPERTY_LOADERS = {
         'id': getXmlNodeInt, 
@@ -10691,6 +10721,10 @@ class KalturaPartner(KalturaObjectBase):
         'customAnalyticsDomain': getXmlNodeText, 
         'allowedEmailDomainsForAdmins': getXmlNodeText, 
         'externalIdentifier': getXmlNodeText, 
+        'htmlPurifierBehaviour': (KalturaEnumsFactory.createString, "KalturaHTMLPurifierBehaviourType"), 
+        'htmlPurifierBaseListUsage': getXmlNodeBool, 
+        'purifyImageContent': getXmlNodeBool, 
+        'fileTypeRestrictionEnabled': getXmlNodeBool, 
     }
 
     def fromXml(self, node):
@@ -10746,6 +10780,10 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addStringIfDefined("customAnalyticsDomain", self.customAnalyticsDomain)
         kparams.addStringIfDefined("allowedEmailDomainsForAdmins", self.allowedEmailDomainsForAdmins)
         kparams.addStringIfDefined("externalIdentifier", self.externalIdentifier)
+        kparams.addStringEnumIfDefined("htmlPurifierBehaviour", self.htmlPurifierBehaviour)
+        kparams.addBoolIfDefined("htmlPurifierBaseListUsage", self.htmlPurifierBaseListUsage)
+        kparams.addBoolIfDefined("purifyImageContent", self.purifyImageContent)
+        kparams.addBoolIfDefined("fileTypeRestrictionEnabled", self.fileTypeRestrictionEnabled)
         return kparams
 
     def getId(self):
@@ -11146,6 +11184,30 @@ class KalturaPartner(KalturaObjectBase):
 
     def setExternalIdentifier(self, newExternalIdentifier):
         self.externalIdentifier = newExternalIdentifier
+
+    def getHtmlPurifierBehaviour(self):
+        return self.htmlPurifierBehaviour
+
+    def setHtmlPurifierBehaviour(self, newHtmlPurifierBehaviour):
+        self.htmlPurifierBehaviour = newHtmlPurifierBehaviour
+
+    def getHtmlPurifierBaseListUsage(self):
+        return self.htmlPurifierBaseListUsage
+
+    def setHtmlPurifierBaseListUsage(self, newHtmlPurifierBaseListUsage):
+        self.htmlPurifierBaseListUsage = newHtmlPurifierBaseListUsage
+
+    def getPurifyImageContent(self):
+        return self.purifyImageContent
+
+    def setPurifyImageContent(self, newPurifyImageContent):
+        self.purifyImageContent = newPurifyImageContent
+
+    def getFileTypeRestrictionEnabled(self):
+        return self.fileTypeRestrictionEnabled
+
+    def setFileTypeRestrictionEnabled(self, newFileTypeRestrictionEnabled):
+        self.fileTypeRestrictionEnabled = newFileTypeRestrictionEnabled
 
 
 # @package Kaltura
@@ -35181,6 +35243,7 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
             enableSpeakerId = NotImplemented,
             fixedPriceAddons = NotImplemented,
             pricing = NotImplemented,
+            pricingArray = NotImplemented,
             flavorParamsId = NotImplemented,
             clearAudioFlavorParamsId = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
@@ -35240,6 +35303,9 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         # @var KalturaVendorCatalogItemPricing
         self.pricing = pricing
 
+        # @var List[KalturaVendorCatalogItemUnitPricing]
+        self.pricingArray = pricingArray
+
         # @var int
         self.flavorParamsId = flavorParamsId
 
@@ -35261,6 +35327,7 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         'enableSpeakerId': (KalturaEnumsFactory.createInt, "KalturaNullableBoolean"), 
         'fixedPriceAddons': getXmlNodeInt, 
         'pricing': (KalturaObjectFactory.create, 'KalturaVendorCatalogItemPricing'), 
+        'pricingArray': (KalturaObjectFactory.createArray, 'KalturaVendorCatalogItemUnitPricing'), 
         'flavorParamsId': getXmlNodeInt, 
         'clearAudioFlavorParamsId': getXmlNodeInt, 
     }
@@ -35285,6 +35352,7 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         kparams.addIntEnumIfDefined("enableSpeakerId", self.enableSpeakerId)
         kparams.addIntIfDefined("fixedPriceAddons", self.fixedPriceAddons)
         kparams.addObjectIfDefined("pricing", self.pricing)
+        kparams.addArrayIfDefined("pricingArray", self.pricingArray)
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
         kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
         return kparams
@@ -35366,6 +35434,12 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
 
     def setPricing(self, newPricing):
         self.pricing = newPricing
+
+    def getPricingArray(self):
+        return self.pricingArray
+
+    def setPricingArray(self, newPricingArray):
+        self.pricingArray = newPricingArray
 
     def getFlavorParamsId(self):
         return self.flavorParamsId
@@ -71352,6 +71426,7 @@ class KalturaCoreClient(KalturaClientPlugin):
             'KalturaGoogleSyndicationFeedAdultValues': KalturaGoogleSyndicationFeedAdultValues,
             'KalturaGoogleVideoSyndicationFeedOrderBy': KalturaGoogleVideoSyndicationFeedOrderBy,
             'KalturaGroupUserOrderBy': KalturaGroupUserOrderBy,
+            'KalturaHTMLPurifierBehaviourType': KalturaHTMLPurifierBehaviourType,
             'KalturaITunesSyndicationFeedAdultValues': KalturaITunesSyndicationFeedAdultValues,
             'KalturaITunesSyndicationFeedCategories': KalturaITunesSyndicationFeedCategories,
             'KalturaITunesSyndicationFeedOrderBy': KalturaITunesSyndicationFeedOrderBy,

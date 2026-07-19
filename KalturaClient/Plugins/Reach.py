@@ -669,7 +669,8 @@ class KalturaEntryVendorTaskUnit(KalturaObjectBase):
 # @subpackage Client
 class KalturaVendorTaskData(KalturaObjectBase):
     def __init__(self,
-            entryDuration = NotImplemented):
+            entryDuration = NotImplemented,
+            vendorComment = NotImplemented):
         KalturaObjectBase.__init__(self)
 
         # The duration of the entry for which the task was created for in milliseconds
@@ -677,9 +678,14 @@ class KalturaVendorTaskData(KalturaObjectBase):
         # @readonly
         self.entryDuration = entryDuration
 
+        # string containing the comment provided by vendor
+        # @var str
+        self.vendorComment = vendorComment
+
 
     PROPERTY_LOADERS = {
         'entryDuration': getXmlNodeInt, 
+        'vendorComment': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -689,10 +695,17 @@ class KalturaVendorTaskData(KalturaObjectBase):
     def toParams(self):
         kparams = KalturaObjectBase.toParams(self)
         kparams.put("objectType", "KalturaVendorTaskData")
+        kparams.addStringIfDefined("vendorComment", self.vendorComment)
         return kparams
 
     def getEntryDuration(self):
         return self.entryDuration
+
+    def getVendorComment(self):
+        return self.vendorComment
+
+    def setVendorComment(self, newVendorComment):
+        self.vendorComment = newVendorComment
 
 
 # @package Kaltura
@@ -2095,9 +2108,11 @@ class KalturaEntryVendorTaskListResponse(KalturaListResponse):
 class KalturaImmersiveAgentCallVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             callId = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # The unique identifier for the immersive agent call
         # @var str
@@ -2129,9 +2144,11 @@ class KalturaImmersiveAgentCallVendorTaskData(KalturaVendorTaskData):
 # @subpackage Client
 class KalturaImmersiveAgentChatVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
-            entryDuration = NotImplemented):
+            entryDuration = NotImplemented,
+            vendorComment = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
 
     PROPERTY_LOADERS = {
@@ -2152,9 +2169,11 @@ class KalturaImmersiveAgentChatVendorTaskData(KalturaVendorTaskData):
 class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             assetId = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # Optional - The id of the caption asset object
         # @var str
@@ -2188,10 +2207,12 @@ class KalturaIntelligentTaggingVendorTaskData(KalturaVendorTaskData):
 class KalturaLocalizedVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             outputLanguage = NotImplemented,
             outputJson = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # Language code
         # @var KalturaLanguage
@@ -2236,12 +2257,14 @@ class KalturaLocalizedVendorTaskData(KalturaVendorTaskData):
 class KalturaModerationVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             ruleIds = NotImplemented,
             policyIds = NotImplemented,
             categoryIds = NotImplemented,
             moderationOutputJson = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # A comma seperated string of rule IDs.
         # @var str
@@ -2341,11 +2364,13 @@ class KalturaReachProfileListResponse(KalturaListResponse):
 class KalturaScheduledVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             startDate = NotImplemented,
             endDate = NotImplemented,
             scheduledEventId = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # @var int
         # @insertonly
@@ -2402,9 +2427,11 @@ class KalturaScheduledVendorTaskData(KalturaVendorTaskData):
 class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             language = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # Language code
         # @var KalturaLanguageCode
@@ -2437,10 +2464,12 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 class KalturaSpeechToVideoVendorTaskData(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             avatarId = NotImplemented,
             conversionProfileId = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # The identifier of the avatar to be used for generating the video
         # @var str
@@ -4123,9 +4152,11 @@ class KalturaVendorSummaryCatalogItem(KalturaVendorCatalogItem):
 class KalturaVendorTaskDataCaptionAsset(KalturaVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             captionAssetId = NotImplemented):
         KalturaVendorTaskData.__init__(self,
-            entryDuration)
+            entryDuration,
+            vendorComment)
 
         # Optional - The id of the caption asset object
         # @var str
@@ -4253,11 +4284,13 @@ class KalturaVendorVideoAnalysisCatalogItem(KalturaVendorCatalogItem):
 class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             captionAssetId = NotImplemented,
             textTranscriptAssetId = NotImplemented,
             jsonTranscriptAssetId = NotImplemented):
         KalturaVendorTaskDataCaptionAsset.__init__(self,
             entryDuration,
+            vendorComment,
             captionAssetId)
 
         # The id of the text transcript object the vendor should use while runing the alignment task
@@ -4304,6 +4337,7 @@ class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
 class KalturaClipsVendorTaskData(KalturaLocalizedVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             outputLanguage = NotImplemented,
             outputJson = NotImplemented,
             clipsDuration = NotImplemented,
@@ -4312,6 +4346,7 @@ class KalturaClipsVendorTaskData(KalturaLocalizedVendorTaskData):
             clipsOutputJson = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
+            vendorComment,
             outputLanguage,
             outputJson)
 
@@ -4865,6 +4900,7 @@ class KalturaEntryVendorTaskCsvJobData(KalturaExportCsvJobData):
 class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             outputLanguage = NotImplemented,
             outputJson = NotImplemented,
             detailLevel = NotImplemented,
@@ -4874,6 +4910,7 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
             overrideFields = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
+            vendorComment,
             outputLanguage,
             outputJson)
 
@@ -4960,6 +4997,7 @@ class KalturaMetadataEnrichmentVendorTaskData(KalturaLocalizedVendorTaskData):
 class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             outputLanguage = NotImplemented,
             outputJson = NotImplemented,
             numberOfQuestions = NotImplemented,
@@ -4971,6 +5009,7 @@ class KalturaQuizVendorTaskData(KalturaLocalizedVendorTaskData):
             instruction = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
+            vendorComment,
             outputLanguage,
             outputJson)
 
@@ -5394,6 +5433,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
 class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             outputLanguage = NotImplemented,
             outputJson = NotImplemented,
             typeOfSummary = NotImplemented,
@@ -5402,6 +5442,7 @@ class KalturaSummaryVendorTaskData(KalturaLocalizedVendorTaskData):
             instruction = NotImplemented):
         KalturaLocalizedVendorTaskData.__init__(self,
             entryDuration,
+            vendorComment,
             outputLanguage,
             outputJson)
 
@@ -5513,9 +5554,11 @@ class KalturaTimeRangeVendorCredit(KalturaVendorCredit):
 class KalturaTranslationVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     def __init__(self,
             entryDuration = NotImplemented,
+            vendorComment = NotImplemented,
             captionAssetId = NotImplemented):
         KalturaVendorTaskDataCaptionAsset.__init__(self,
             entryDuration,
+            vendorComment,
             captionAssetId)
 
 
