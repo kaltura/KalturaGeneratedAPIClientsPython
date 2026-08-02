@@ -186,6 +186,7 @@ class KalturaESearchEntryFieldName(object):
     ID = "id"
     IS_LIVE = "is_live"
     IS_QUIZ = "is_quiz"
+    IS_SCHEDULED = "is_scheduled"
     USER_ID = "kuser_id"
     LAST_PLAYED_AT = "last_played_at"
     LENGTH_IN_MSECS = "length_in_msecs"
@@ -285,6 +286,7 @@ class KalturaESearchSortOrder(object):
     def getValue(self) -> str: ...
 
 class KalturaESearchUserFieldName(object):
+    ADMIN_TAGS = "admin_tags"
     CAPABILITIES = "capabilities"
     COMPANY = "company"
     COUNTRY = "country"

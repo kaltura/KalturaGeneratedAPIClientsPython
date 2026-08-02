@@ -39,6 +39,7 @@ class KalturaGroupProcessStatus(object):
     def getValue(self) -> int: ...
 
 class KalturaESearchGroupFieldName(object):
+    ADMIN_TAGS = "admin_tags"
     CAPABILITIES = "capabilities"
     COMPANY = "company"
     COUNTRY = "country"

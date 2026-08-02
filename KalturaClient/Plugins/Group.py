@@ -60,6 +60,7 @@ class KalturaGroupProcessStatus(object):
 # @package Kaltura
 # @subpackage Client
 class KalturaESearchGroupFieldName(object):
+    ADMIN_TAGS = "admin_tags"
     CAPABILITIES = "capabilities"
     COMPANY = "company"
     COUNTRY = "country"
