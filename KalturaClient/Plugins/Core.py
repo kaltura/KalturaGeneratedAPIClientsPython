@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '23.4.0'
+API_VERSION = '23.5.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -26627,7 +26627,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             agentIdIn = NotImplemented,
             genieIdIn = NotImplemented,
             reachProfileIdIn = NotImplemented,
-            isPreview = NotImplemented):
+            isPreview = NotImplemented,
+            streamTypeIn = NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26847,6 +26848,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var bool
         self.isPreview = isPreview
 
+        # filter by stream type
+        # @var str
+        self.streamTypeIn = streamTypeIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26903,6 +26908,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'genieIdIn': getXmlNodeText, 
         'reachProfileIdIn': getXmlNodeText, 
         'isPreview': getXmlNodeBool, 
+        'streamTypeIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26966,6 +26972,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("genieIdIn", self.genieIdIn)
         kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
         kparams.addBoolIfDefined("isPreview", self.isPreview)
+        kparams.addStringIfDefined("streamTypeIn", self.streamTypeIn)
         return kparams
 
     def getKeywords(self):
@@ -27291,6 +27298,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setIsPreview(self, newIsPreview):
         self.isPreview = newIsPreview
+
+    def getStreamTypeIn(self):
+        return self.streamTypeIn
+
+    def setStreamTypeIn(self, newStreamTypeIn):
+        self.streamTypeIn = newStreamTypeIn
 
 
 # @package Kaltura
@@ -35245,7 +35258,8 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
             pricing = NotImplemented,
             pricingArray = NotImplemented,
             flavorParamsId = NotImplemented,
-            clearAudioFlavorParamsId = NotImplemented):
+            clearAudioFlavorParamsId = NotImplemented,
+            vendorData = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -35312,6 +35326,9 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         # @var int
         self.clearAudioFlavorParamsId = clearAudioFlavorParamsId
 
+        # @var str
+        self.vendorData = vendorData
+
 
     PROPERTY_LOADERS = {
         'vendorCatalogItemId': getXmlNodeInt, 
@@ -35330,6 +35347,7 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         'pricingArray': (KalturaObjectFactory.createArray, 'KalturaVendorCatalogItemUnitPricing'), 
         'flavorParamsId': getXmlNodeInt, 
         'clearAudioFlavorParamsId': getXmlNodeInt, 
+        'vendorData': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -35355,6 +35373,7 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
         kparams.addArrayIfDefined("pricingArray", self.pricingArray)
         kparams.addIntIfDefined("flavorParamsId", self.flavorParamsId)
         kparams.addIntIfDefined("clearAudioFlavorParamsId", self.clearAudioFlavorParamsId)
+        kparams.addStringIfDefined("vendorData", self.vendorData)
         return kparams
 
     def getVendorCatalogItemId(self):
@@ -35452,6 +35471,12 @@ class KalturaBulkUploadResultVendorCatalogItem(KalturaBulkUploadResult):
 
     def setClearAudioFlavorParamsId(self, newClearAudioFlavorParamsId):
         self.clearAudioFlavorParamsId = newClearAudioFlavorParamsId
+
+    def getVendorData(self):
+        return self.vendorData
+
+    def setVendorData(self, newVendorData):
+        self.vendorData = newVendorData
 
 
 # @package Kaltura
@@ -50418,6 +50443,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             genieIdIn = NotImplemented,
             reachProfileIdIn = NotImplemented,
             isPreview = NotImplemented,
+            streamTypeIn = NotImplemented,
             application = NotImplemented,
             userIds = NotImplemented,
             playbackContext = NotImplemented,
@@ -50480,7 +50506,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             agentIdIn,
             genieIdIn,
             reachProfileIdIn,
-            isPreview)
+            isPreview,
+            streamTypeIn)
 
         # @var str
         self.application = application

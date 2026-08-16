@@ -166,6 +166,7 @@ class KalturaVendorServiceTurnAroundTime(object):
     FIVE_BUSINESS_DAYS = 5
     SIX_BUSINESS_DAYS = 6
     SEVEN_BUSINESS_DAYS = 7
+    TEN_BUSINESS_DAYS = 10
     THIRTY_MINUTES = 1800
     TWO_HOURS = 7200
     THREE_HOURS = 10800
@@ -185,6 +186,7 @@ class KalturaVendorServiceTurnAroundTime(object):
 class KalturaVendorServiceType(object):
     HUMAN = 1
     MACHINE = 2
+    HYBRID = 3
 
     def __init__(self, value: int): ...
 
@@ -605,8 +607,10 @@ class KalturaReachProfile(KalturaObjectBase):
     defaultOutputFormat: KalturaVendorCatalogItemOutputFormat
     enableMachineModeration: KalturaNullableBoolean
     enableHumanModeration: KalturaNullableBoolean
+    enableHybridModeration: KalturaNullableBoolean
     autoDisplayMachineCaptionsOnPlayer: KalturaNullableBoolean
     autoDisplayHumanCaptionsOnPlayer: KalturaNullableBoolean
+    autoDisplayHybridCaptionsOnPlayer: KalturaNullableBoolean
     enableMetadataExtraction: KalturaNullableBoolean
     enableSpeakerChangeIndication: KalturaNullableBoolean
     enableAudioTags: KalturaNullableBoolean
@@ -614,6 +618,7 @@ class KalturaReachProfile(KalturaObjectBase):
     maxCharactersPerCaptionLine: int
     labelAdditionForMachineServiceType: str
     labelAdditionForHumanServiceType: str
+    labelAdditionForHybridServiceType: str
     contentDeletionPolicy: KalturaReachProfileContentDeletionPolicy
     rules: List[KalturaRule]
     credit: KalturaBaseVendorCredit
@@ -633,8 +638,10 @@ class KalturaReachProfile(KalturaObjectBase):
             defaultOutputFormat: KalturaVendorCatalogItemOutputFormat = NotImplemented,
             enableMachineModeration: KalturaNullableBoolean = NotImplemented,
             enableHumanModeration: KalturaNullableBoolean = NotImplemented,
+            enableHybridModeration: KalturaNullableBoolean = NotImplemented,
             autoDisplayMachineCaptionsOnPlayer: KalturaNullableBoolean = NotImplemented,
             autoDisplayHumanCaptionsOnPlayer: KalturaNullableBoolean = NotImplemented,
+            autoDisplayHybridCaptionsOnPlayer: KalturaNullableBoolean = NotImplemented,
             enableMetadataExtraction: KalturaNullableBoolean = NotImplemented,
             enableSpeakerChangeIndication: KalturaNullableBoolean = NotImplemented,
             enableAudioTags: KalturaNullableBoolean = NotImplemented,
@@ -642,6 +649,7 @@ class KalturaReachProfile(KalturaObjectBase):
             maxCharactersPerCaptionLine: int = NotImplemented,
             labelAdditionForMachineServiceType: str = NotImplemented,
             labelAdditionForHumanServiceType: str = NotImplemented,
+            labelAdditionForHybridServiceType: str = NotImplemented,
             contentDeletionPolicy: KalturaReachProfileContentDeletionPolicy = NotImplemented,
             rules: List[KalturaRule] = NotImplemented,
             credit: KalturaBaseVendorCredit = NotImplemented,
@@ -666,10 +674,14 @@ class KalturaReachProfile(KalturaObjectBase):
     def setEnableMachineModeration(self, newEnableMachineModeration: KalturaNullableBoolean) -> None: ...
     def getEnableHumanModeration(self) -> KalturaNullableBoolean: ...
     def setEnableHumanModeration(self, newEnableHumanModeration: KalturaNullableBoolean) -> None: ...
+    def getEnableHybridModeration(self) -> KalturaNullableBoolean: ...
+    def setEnableHybridModeration(self, newEnableHybridModeration: KalturaNullableBoolean) -> None: ...
     def getAutoDisplayMachineCaptionsOnPlayer(self) -> KalturaNullableBoolean: ...
     def setAutoDisplayMachineCaptionsOnPlayer(self, newAutoDisplayMachineCaptionsOnPlayer: KalturaNullableBoolean) -> None: ...
     def getAutoDisplayHumanCaptionsOnPlayer(self) -> KalturaNullableBoolean: ...
     def setAutoDisplayHumanCaptionsOnPlayer(self, newAutoDisplayHumanCaptionsOnPlayer: KalturaNullableBoolean) -> None: ...
+    def getAutoDisplayHybridCaptionsOnPlayer(self) -> KalturaNullableBoolean: ...
+    def setAutoDisplayHybridCaptionsOnPlayer(self, newAutoDisplayHybridCaptionsOnPlayer: KalturaNullableBoolean) -> None: ...
     def getEnableMetadataExtraction(self) -> KalturaNullableBoolean: ...
     def setEnableMetadataExtraction(self, newEnableMetadataExtraction: KalturaNullableBoolean) -> None: ...
     def getEnableSpeakerChangeIndication(self) -> KalturaNullableBoolean: ...
@@ -684,6 +696,8 @@ class KalturaReachProfile(KalturaObjectBase):
     def setLabelAdditionForMachineServiceType(self, newLabelAdditionForMachineServiceType: str) -> None: ...
     def getLabelAdditionForHumanServiceType(self) -> str: ...
     def setLabelAdditionForHumanServiceType(self, newLabelAdditionForHumanServiceType: str) -> None: ...
+    def getLabelAdditionForHybridServiceType(self) -> str: ...
+    def setLabelAdditionForHybridServiceType(self, newLabelAdditionForHybridServiceType: str) -> None: ...
     def getContentDeletionPolicy(self) -> KalturaReachProfileContentDeletionPolicy: ...
     def setContentDeletionPolicy(self, newContentDeletionPolicy: KalturaReachProfileContentDeletionPolicy) -> None: ...
     def getRules(self) -> List[KalturaRule]: ...
@@ -837,6 +851,18 @@ class KalturaAddEntryVendorTaskAction(KalturaRuleAction):
     def getEntryObjectType(self) -> KalturaEntryObjectType: ...
     def setEntryObjectType(self, newEntryObjectType: KalturaEntryObjectType) -> None: ...
 
+class KalturaAudioDescriptionVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented): ...
+        pass
+
+class KalturaCaptionVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented): ...
+        pass
+
 class KalturaCatalogItemAdvancedFilter(KalturaSearchItem):
     serviceTypeEqual: KalturaVendorServiceType
     serviceTypeIn: str
@@ -895,6 +921,12 @@ class KalturaCategoryEntryCondition(KalturaCondition):
     def setCategoryUserPermission(self, newCategoryUserPermission: KalturaCategoryUserPermissionLevel) -> None: ...
     def getComparison(self) -> KalturaSearchConditionComparison: ...
     def setComparison(self, newComparison: KalturaSearchConditionComparison) -> None: ...
+
+class KalturaDubbingVendorTaskData(KalturaVendorTaskData):
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented): ...
+        pass
 
 class KalturaEntryVendorTaskListResponse(KalturaListResponse):
     objects: List[KalturaEntryVendorTask]
@@ -1001,6 +1033,16 @@ class KalturaSentimentAnalysisVendorTaskData(KalturaVendorTaskData):
 
     def getLanguage(self) -> KalturaLanguageCode: ...
     def setLanguage(self, newLanguage: KalturaLanguageCode) -> None: ...
+
+class KalturaSignLanguageVendorTaskData(KalturaVendorTaskData):
+    assetId: str
+    def __init__(self,
+            entryDuration: int = NotImplemented,
+            vendorComment: str = NotImplemented,
+            assetId: str = NotImplemented): ...
+
+    def getAssetId(self) -> str: ...
+    def setAssetId(self, newAssetId: str) -> None: ...
 
 class KalturaSpeechToVideoVendorTaskData(KalturaVendorTaskData):
     avatarId: str
@@ -2084,6 +2126,7 @@ class KalturaReachReportInputFilter(KalturaReportInputFilter):
             genieIdIn: str = NotImplemented,
             reachProfileIdIn: str = NotImplemented,
             isPreview: bool = NotImplemented,
+            streamTypeIn: str = NotImplemented,
             serviceType: KalturaVendorServiceType = NotImplemented,
             serviceFeature: KalturaVendorServiceFeature = NotImplemented,
             turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented): ...
