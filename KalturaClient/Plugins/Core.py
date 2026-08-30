@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '23.5.0'
+API_VERSION = '23.6.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -34176,7 +34176,8 @@ class KalturaBulkUploadResultCategory(KalturaBulkUploadResult):
             owner = NotImplemented,
             contributionPolicy = NotImplemented,
             partnerSortValue = NotImplemented,
-            moderation = NotImplemented):
+            moderation = NotImplemented,
+            adminTags = NotImplemented):
         KalturaBulkUploadResult.__init__(self,
             id,
             bulkUploadJobId,
@@ -34237,6 +34238,9 @@ class KalturaBulkUploadResultCategory(KalturaBulkUploadResult):
         # @var bool
         self.moderation = moderation
 
+        # @var str
+        self.adminTags = adminTags
+
 
     PROPERTY_LOADERS = {
         'relativePath': getXmlNodeText, 
@@ -34253,6 +34257,7 @@ class KalturaBulkUploadResultCategory(KalturaBulkUploadResult):
         'contributionPolicy': getXmlNodeInt, 
         'partnerSortValue': getXmlNodeInt, 
         'moderation': getXmlNodeBool, 
+        'adminTags': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -34276,6 +34281,7 @@ class KalturaBulkUploadResultCategory(KalturaBulkUploadResult):
         kparams.addIntIfDefined("contributionPolicy", self.contributionPolicy)
         kparams.addIntIfDefined("partnerSortValue", self.partnerSortValue)
         kparams.addBoolIfDefined("moderation", self.moderation)
+        kparams.addStringIfDefined("adminTags", self.adminTags)
         return kparams
 
     def getRelativePath(self):
@@ -34361,6 +34367,12 @@ class KalturaBulkUploadResultCategory(KalturaBulkUploadResult):
 
     def setModeration(self, newModeration):
         self.moderation = newModeration
+
+    def getAdminTags(self):
+        return self.adminTags
+
+    def setAdminTags(self, newAdminTags):
+        self.adminTags = newAdminTags
 
 
 # @package Kaltura

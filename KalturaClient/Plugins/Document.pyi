@@ -117,6 +117,7 @@ class KalturaSwfFlavorParamsOutputOrderBy(object):
 class KalturaDocumentEntry(KalturaBaseEntry):
     documentType: KalturaDocumentType
     assetParamsIds: str
+    views: int
     def __init__(self,
             id: str = NotImplemented,
             name: str = NotImplemented,
@@ -172,11 +173,13 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             defaultLanguage: str = NotImplemented,
             responseLanguage: str = NotImplemented,
             documentType: KalturaDocumentType = NotImplemented,
-            assetParamsIds: str = NotImplemented): ...
+            assetParamsIds: str = NotImplemented,
+            views: int = NotImplemented): ...
 
     def getDocumentType(self) -> KalturaDocumentType: ...
     def setDocumentType(self, newDocumentType: KalturaDocumentType) -> None: ...
     def getAssetParamsIds(self) -> str: ...
+    def getViews(self) -> int: ...
 
 class KalturaDocumentListResponse(KalturaListResponse):
     objects: List[KalturaDocumentEntry]

@@ -228,7 +228,8 @@ class KalturaDocumentEntry(KalturaBaseEntry):
             defaultLanguage = NotImplemented,
             responseLanguage = NotImplemented,
             documentType = NotImplemented,
-            assetParamsIds = NotImplemented):
+            assetParamsIds = NotImplemented,
+            views = NotImplemented):
         KalturaBaseEntry.__init__(self,
             id,
             name,
@@ -294,10 +295,16 @@ class KalturaDocumentEntry(KalturaBaseEntry):
         # @readonly
         self.assetParamsIds = assetParamsIds
 
+        # Number of views
+        # @var int
+        # @readonly
+        self.views = views
+
 
     PROPERTY_LOADERS = {
         'documentType': (KalturaEnumsFactory.createInt, "KalturaDocumentType"), 
         'assetParamsIds': getXmlNodeText, 
+        'views': getXmlNodeInt, 
     }
 
     def fromXml(self, node):
@@ -318,6 +325,9 @@ class KalturaDocumentEntry(KalturaBaseEntry):
 
     def getAssetParamsIds(self):
         return self.assetParamsIds
+
+    def getViews(self):
+        return self.views
 
 
 # @package Kaltura
