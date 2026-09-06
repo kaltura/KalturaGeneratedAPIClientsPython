@@ -46,6 +46,27 @@ from ..Base import (
 ########## enums ##########
 # @package Kaltura
 # @subpackage Client
+class KalturaDrmKeyManagementPolicy(object):
+    UNKNOWN = 0
+    CLEAR = 1
+    SHARED_KEY = 2
+    ALL_VIDEO = 3
+    SD_HD = 4
+    SD_HD_UHD = 5
+    SD_HD_UHD1_UHD2 = 6
+    SD_HD1_HD2_UHD1_UHD2 = 7
+    SD_HD1_HD2_UHD = 8
+    SDHD1_HD2_UHD = 9
+    SDHD1_HD2_UHD1_UHD2 = 10
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
 class KalturaDrmLicenseExpirationPolicy(object):
     FIXED_DURATION = 1
     ENTRY_SCHEDULING_END = 2
@@ -74,6 +95,18 @@ class KalturaDrmPolicyStatus(object):
 class KalturaDrmProfileStatus(object):
     ACTIVE = 1
     DELETED = 2
+
+    def __init__(self, value):
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+# @package Kaltura
+# @subpackage Client
+class KalturaKeyManagementPolicyObjectType(object):
+    PARTNER = 1
+    ENTRY = 2
 
     def __init__(self, value):
         self.value = value
@@ -541,6 +574,38 @@ class KalturaDrmProfile(KalturaObjectBase):
 
     def setSigningKey(self, newSigningKey):
         self.signingKey = newSigningKey
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaKeyManagementPolicy(KalturaObjectBase):
+    def __init__(self,
+            keyManagementPolicy = NotImplemented):
+        KalturaObjectBase.__init__(self)
+
+        # @var KalturaDrmKeyManagementPolicy
+        self.keyManagementPolicy = keyManagementPolicy
+
+
+    PROPERTY_LOADERS = {
+        'keyManagementPolicy': (KalturaEnumsFactory.createInt, "KalturaDrmKeyManagementPolicy"), 
+    }
+
+    def fromXml(self, node):
+        KalturaObjectBase.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaKeyManagementPolicy.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaObjectBase.toParams(self)
+        kparams.put("objectType", "KalturaKeyManagementPolicy")
+        kparams.addIntEnumIfDefined("keyManagementPolicy", self.keyManagementPolicy)
+        return kparams
+
+    def getKeyManagementPolicy(self):
+        return self.keyManagementPolicy
+
+    def setKeyManagementPolicy(self, newKeyManagementPolicy):
+        self.keyManagementPolicy = newKeyManagementPolicy
 
 
 # @package Kaltura
@@ -1166,6 +1231,34 @@ class KalturaDrmLicenseAccessService(KalturaServiceBase):
         resultNode = self.client.doQueue()
         return KalturaObjectFactory.create(resultNode, 'KalturaDrmLicenseAccessDetails')
 
+
+# @package Kaltura
+# @subpackage Client
+class KalturaKeyManagementPolicyService(KalturaServiceBase):
+    def __init__(self, client = None):
+        KalturaServiceBase.__init__(self, client)
+
+    def get(self, objectType, objectId):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("objectType", objectType);
+        kparams.addStringIfDefined("objectId", objectId)
+        self.client.queueServiceActionCall("drm_keymanagementpolicy", "get", "KalturaKeyManagementPolicy", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaKeyManagementPolicy')
+
+    def update(self, objectType, objectId, keyManagementPolicy):
+        kparams = KalturaParams()
+        kparams.addIntIfDefined("objectType", objectType);
+        kparams.addStringIfDefined("objectId", objectId)
+        kparams.addObjectIfDefined("keyManagementPolicy", keyManagementPolicy)
+        self.client.queueServiceActionCall("drm_keymanagementpolicy", "update", "KalturaKeyManagementPolicy", kparams)
+        if self.client.isMultiRequest():
+            return self.client.getMultiRequestResult()
+        resultNode = self.client.doQueue()
+        return KalturaObjectFactory.create(resultNode, 'KalturaKeyManagementPolicy')
+
 ########## main ##########
 class KalturaDrmClientPlugin(KalturaClientPlugin):
     # KalturaDrmClientPlugin
@@ -1184,13 +1277,16 @@ class KalturaDrmClientPlugin(KalturaClientPlugin):
             'drmPolicy': KalturaDrmPolicyService,
             'drmProfile': KalturaDrmProfileService,
             'drmLicenseAccess': KalturaDrmLicenseAccessService,
+            'keyManagementPolicy': KalturaKeyManagementPolicyService,
         }
 
     def getEnums(self):
         return {
+            'KalturaDrmKeyManagementPolicy': KalturaDrmKeyManagementPolicy,
             'KalturaDrmLicenseExpirationPolicy': KalturaDrmLicenseExpirationPolicy,
             'KalturaDrmPolicyStatus': KalturaDrmPolicyStatus,
             'KalturaDrmProfileStatus': KalturaDrmProfileStatus,
+            'KalturaKeyManagementPolicyObjectType': KalturaKeyManagementPolicyObjectType,
             'KalturaDrmLicenseScenario': KalturaDrmLicenseScenario,
             'KalturaDrmLicenseType': KalturaDrmLicenseType,
             'KalturaDrmPolicyOrderBy': KalturaDrmPolicyOrderBy,
@@ -1203,6 +1299,7 @@ class KalturaDrmClientPlugin(KalturaClientPlugin):
             'KalturaDrmLicenseAccessDetails': KalturaDrmLicenseAccessDetails,
             'KalturaDrmPolicy': KalturaDrmPolicy,
             'KalturaDrmProfile': KalturaDrmProfile,
+            'KalturaKeyManagementPolicy': KalturaKeyManagementPolicy,
             'KalturaAccessControlDrmPolicyAction': KalturaAccessControlDrmPolicyAction,
             'KalturaDrmPolicyBaseFilter': KalturaDrmPolicyBaseFilter,
             'KalturaDrmPolicyListResponse': KalturaDrmPolicyListResponse,

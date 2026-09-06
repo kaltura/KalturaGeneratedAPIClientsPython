@@ -208,6 +208,9 @@ class KalturaVendorServiceFeature(object):
     IMMERSIVE_AGENT_CALL = 21
     IMMERSIVE_AGENT_CHAT = 22
     AVATAR_VOD = 23
+    LLM_MODELS = 24
+    IMMERSIVE_AGENT_EVAL = 25
+    IMMERSIVE_AGENT_PREVIEW = 26
 
     def __init__(self, value):
         self.value = value
@@ -3724,6 +3727,146 @@ class KalturaVendorImmersiveAgentChatCatalogItem(KalturaVendorCatalogItem):
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorImmersiveAgentEvalCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            pricingArray = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            pricingArray,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorImmersiveAgentEvalCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorImmersiveAgentEvalCatalogItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorImmersiveAgentPreviewCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            pricingArray = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            pricingArray,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorImmersiveAgentPreviewCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorImmersiveAgentPreviewCatalogItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
     def __init__(self,
             id = NotImplemented,
@@ -3789,6 +3932,76 @@ class KalturaVendorIntelligentTaggingCatalogItem(KalturaVendorCatalogItem):
     def toParams(self):
         kparams = KalturaVendorCatalogItem.toParams(self)
         kparams.put("objectType", "KalturaVendorIntelligentTaggingCatalogItem")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorLlmModelsCatalogItem(KalturaVendorCatalogItem):
+    def __init__(self,
+            id = NotImplemented,
+            vendorPartnerId = NotImplemented,
+            name = NotImplemented,
+            systemName = NotImplemented,
+            createdAt = NotImplemented,
+            updatedAt = NotImplemented,
+            status = NotImplemented,
+            serviceType = NotImplemented,
+            serviceFeature = NotImplemented,
+            turnAroundTime = NotImplemented,
+            pricing = NotImplemented,
+            pricingArray = NotImplemented,
+            engineType = NotImplemented,
+            sourceLanguage = NotImplemented,
+            allowResubmission = NotImplemented,
+            payPerUse = NotImplemented,
+            vendorData = NotImplemented,
+            stage = NotImplemented,
+            lastBulkUpdateId = NotImplemented,
+            contract = NotImplemented,
+            createdBy = NotImplemented,
+            notes = NotImplemented,
+            partnerId = NotImplemented,
+            defaultReachProfileId = NotImplemented,
+            adminTagsToExclude = NotImplemented):
+        KalturaVendorCatalogItem.__init__(self,
+            id,
+            vendorPartnerId,
+            name,
+            systemName,
+            createdAt,
+            updatedAt,
+            status,
+            serviceType,
+            serviceFeature,
+            turnAroundTime,
+            pricing,
+            pricingArray,
+            engineType,
+            sourceLanguage,
+            allowResubmission,
+            payPerUse,
+            vendorData,
+            stage,
+            lastBulkUpdateId,
+            contract,
+            createdBy,
+            notes,
+            partnerId,
+            defaultReachProfileId,
+            adminTagsToExclude)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItem.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorLlmModelsCatalogItem.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItem.toParams(self)
+        kparams.put("objectType", "KalturaVendorLlmModelsCatalogItem")
         return kparams
 
 
@@ -7044,6 +7257,130 @@ class KalturaVendorImmersiveAgentChatCatalogItemFilter(KalturaVendorCatalogItemF
 
 # @package Kaltura
 # @subpackage Client
+class KalturaVendorImmersiveAgentEvalCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorImmersiveAgentEvalCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorImmersiveAgentEvalCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorImmersiveAgentPreviewCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorImmersiveAgentPreviewCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorImmersiveAgentPreviewCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
 class KalturaVendorIntelligentTaggingCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy = NotImplemented,
@@ -7101,6 +7438,68 @@ class KalturaVendorIntelligentTaggingCatalogItemFilter(KalturaVendorCatalogItemF
     def toParams(self):
         kparams = KalturaVendorCatalogItemFilter.toParams(self)
         kparams.put("objectType", "KalturaVendorIntelligentTaggingCatalogItemFilter")
+        return kparams
+
+
+# @package Kaltura
+# @subpackage Client
+class KalturaVendorLlmModelsCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy = NotImplemented,
+            advancedSearch = NotImplemented,
+            idEqual = NotImplemented,
+            idIn = NotImplemented,
+            idNotIn = NotImplemented,
+            vendorPartnerIdEqual = NotImplemented,
+            vendorPartnerIdIn = NotImplemented,
+            createdAtGreaterThanOrEqual = NotImplemented,
+            createdAtLessThanOrEqual = NotImplemented,
+            updatedAtGreaterThanOrEqual = NotImplemented,
+            updatedAtLessThanOrEqual = NotImplemented,
+            statusEqual = NotImplemented,
+            statusIn = NotImplemented,
+            serviceTypeEqual = NotImplemented,
+            serviceTypeIn = NotImplemented,
+            serviceFeatureEqual = NotImplemented,
+            serviceFeatureIn = NotImplemented,
+            turnAroundTimeEqual = NotImplemented,
+            turnAroundTimeIn = NotImplemented,
+            partnerIdEqual = NotImplemented,
+            catalogItemIdEqual = NotImplemented):
+        KalturaVendorCatalogItemFilter.__init__(self,
+            orderBy,
+            advancedSearch,
+            idEqual,
+            idIn,
+            idNotIn,
+            vendorPartnerIdEqual,
+            vendorPartnerIdIn,
+            createdAtGreaterThanOrEqual,
+            createdAtLessThanOrEqual,
+            updatedAtGreaterThanOrEqual,
+            updatedAtLessThanOrEqual,
+            statusEqual,
+            statusIn,
+            serviceTypeEqual,
+            serviceTypeIn,
+            serviceFeatureEqual,
+            serviceFeatureIn,
+            turnAroundTimeEqual,
+            turnAroundTimeIn,
+            partnerIdEqual,
+            catalogItemIdEqual)
+
+
+    PROPERTY_LOADERS = {
+    }
+
+    def fromXml(self, node):
+        KalturaVendorCatalogItemFilter.fromXml(self, node)
+        self.fromXmlImpl(node, KalturaVendorLlmModelsCatalogItemFilter.PROPERTY_LOADERS)
+
+    def toParams(self):
+        kparams = KalturaVendorCatalogItemFilter.toParams(self)
+        kparams.put("objectType", "KalturaVendorLlmModelsCatalogItemFilter")
         return kparams
 
 
@@ -8840,7 +9239,10 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorExtendedAudioDescriptionCatalogItem': KalturaVendorExtendedAudioDescriptionCatalogItem,
             'KalturaVendorImmersiveAgentCallCatalogItem': KalturaVendorImmersiveAgentCallCatalogItem,
             'KalturaVendorImmersiveAgentChatCatalogItem': KalturaVendorImmersiveAgentChatCatalogItem,
+            'KalturaVendorImmersiveAgentEvalCatalogItem': KalturaVendorImmersiveAgentEvalCatalogItem,
+            'KalturaVendorImmersiveAgentPreviewCatalogItem': KalturaVendorImmersiveAgentPreviewCatalogItem,
             'KalturaVendorIntelligentTaggingCatalogItem': KalturaVendorIntelligentTaggingCatalogItem,
+            'KalturaVendorLlmModelsCatalogItem': KalturaVendorLlmModelsCatalogItem,
             'KalturaVendorMetadataEnrichmentCatalogItem': KalturaVendorMetadataEnrichmentCatalogItem,
             'KalturaVendorModerationCatalogItem': KalturaVendorModerationCatalogItem,
             'KalturaVendorQuizCatalogItem': KalturaVendorQuizCatalogItem,
@@ -8877,7 +9279,10 @@ class KalturaReachClientPlugin(KalturaClientPlugin):
             'KalturaVendorDubbingCatalogItemBaseFilter': KalturaVendorDubbingCatalogItemBaseFilter,
             'KalturaVendorImmersiveAgentCallCatalogItemFilter': KalturaVendorImmersiveAgentCallCatalogItemFilter,
             'KalturaVendorImmersiveAgentChatCatalogItemFilter': KalturaVendorImmersiveAgentChatCatalogItemFilter,
+            'KalturaVendorImmersiveAgentEvalCatalogItemFilter': KalturaVendorImmersiveAgentEvalCatalogItemFilter,
+            'KalturaVendorImmersiveAgentPreviewCatalogItemFilter': KalturaVendorImmersiveAgentPreviewCatalogItemFilter,
             'KalturaVendorIntelligentTaggingCatalogItemFilter': KalturaVendorIntelligentTaggingCatalogItemFilter,
+            'KalturaVendorLlmModelsCatalogItemFilter': KalturaVendorLlmModelsCatalogItemFilter,
             'KalturaVendorMetadataEnrichmentCatalogItemFilter': KalturaVendorMetadataEnrichmentCatalogItemFilter,
             'KalturaVendorModerationCatalogItemFilter': KalturaVendorModerationCatalogItemFilter,
             'KalturaVendorQuizCatalogItemFilter': KalturaVendorQuizCatalogItemFilter,

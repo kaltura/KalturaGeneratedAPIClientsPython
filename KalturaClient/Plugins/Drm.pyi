@@ -29,6 +29,23 @@ from typing import List, IO, Any
 from .Core import *
 from KalturaClient.Base import KalturaObjectBase, KalturaServiceBase
 
+class KalturaDrmKeyManagementPolicy(object):
+    UNKNOWN = 0
+    CLEAR = 1
+    SHARED_KEY = 2
+    ALL_VIDEO = 3
+    SD_HD = 4
+    SD_HD_UHD = 5
+    SD_HD_UHD1_UHD2 = 6
+    SD_HD1_HD2_UHD1_UHD2 = 7
+    SD_HD1_HD2_UHD = 8
+    SDHD1_HD2_UHD = 9
+    SDHD1_HD2_UHD1_UHD2 = 10
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
 class KalturaDrmLicenseExpirationPolicy(object):
     FIXED_DURATION = 1
     ENTRY_SCHEDULING_END = 2
@@ -49,6 +66,14 @@ class KalturaDrmPolicyStatus(object):
 class KalturaDrmProfileStatus(object):
     ACTIVE = 1
     DELETED = 2
+
+    def __init__(self, value: int): ...
+
+    def getValue(self) -> int: ...
+
+class KalturaKeyManagementPolicyObjectType(object):
+    PARTNER = 1
+    ENTRY = 2
 
     def __init__(self, value: int): ...
 
@@ -221,6 +246,14 @@ class KalturaDrmProfile(KalturaObjectBase):
     def getSigningKey(self) -> str: ...
     def setSigningKey(self, newSigningKey: str) -> None: ...
 
+class KalturaKeyManagementPolicy(KalturaObjectBase):
+    keyManagementPolicy: KalturaDrmKeyManagementPolicy
+    def __init__(self,
+            keyManagementPolicy: KalturaDrmKeyManagementPolicy = NotImplemented): ...
+
+    def getKeyManagementPolicy(self) -> KalturaDrmKeyManagementPolicy: ...
+    def setKeyManagementPolicy(self, newKeyManagementPolicy: KalturaDrmKeyManagementPolicy) -> None: ...
+
 class KalturaAccessControlDrmPolicyAction(KalturaRuleAction):
     policyId: int
     def __init__(self,
@@ -383,7 +416,12 @@ class KalturaDrmProfileService(KalturaServiceBase):
 class KalturaDrmLicenseAccessService(KalturaServiceBase):
     def getAccess(self, entryId: str, flavorIds: str, referrer: str) -> KalturaDrmLicenseAccessDetails: ...
 
+class KalturaKeyManagementPolicyService(KalturaServiceBase):
+    def get(self, objectType: int, objectId: str) -> KalturaKeyManagementPolicy: ...
+    def update(self, objectType: int, objectId: str, keyManagementPolicy: KalturaKeyManagementPolicy) -> KalturaKeyManagementPolicy: ...
+
 class KalturaDrmClientPluginServicesProxy:
     drmPolicy: KalturaDrmPolicyService
     drmProfile: KalturaDrmProfileService
     drmLicenseAccess: KalturaDrmLicenseAccessService
+    keyManagementPolicy: KalturaKeyManagementPolicyService
