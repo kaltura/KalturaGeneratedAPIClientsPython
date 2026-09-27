@@ -42,7 +42,7 @@ from ..Base import (
     KalturaServiceBase,
 )
 
-API_VERSION = '23.7.0'
+API_VERSION = '23.8.0'
 
 ########## enums ##########
 # @package Kaltura
@@ -10309,6 +10309,7 @@ class KalturaPartner(KalturaObjectBase):
             htmlPurifierBehaviour = NotImplemented,
             htmlPurifierBaseListUsage = NotImplemented,
             purifyImageContent = NotImplemented,
+            htmlPurifierAllowedTags = NotImplemented,
             fileTypeRestrictionEnabled = NotImplemented):
         KalturaObjectBase.__init__(self)
 
@@ -10629,6 +10630,9 @@ class KalturaPartner(KalturaObjectBase):
         # @var bool
         self.purifyImageContent = purifyImageContent
 
+        # @var str
+        self.htmlPurifierAllowedTags = htmlPurifierAllowedTags
+
         # @var bool
         self.fileTypeRestrictionEnabled = fileTypeRestrictionEnabled
 
@@ -10724,6 +10728,7 @@ class KalturaPartner(KalturaObjectBase):
         'htmlPurifierBehaviour': (KalturaEnumsFactory.createString, "KalturaHTMLPurifierBehaviourType"), 
         'htmlPurifierBaseListUsage': getXmlNodeBool, 
         'purifyImageContent': getXmlNodeBool, 
+        'htmlPurifierAllowedTags': getXmlNodeText, 
         'fileTypeRestrictionEnabled': getXmlNodeBool, 
     }
 
@@ -10783,6 +10788,7 @@ class KalturaPartner(KalturaObjectBase):
         kparams.addStringEnumIfDefined("htmlPurifierBehaviour", self.htmlPurifierBehaviour)
         kparams.addBoolIfDefined("htmlPurifierBaseListUsage", self.htmlPurifierBaseListUsage)
         kparams.addBoolIfDefined("purifyImageContent", self.purifyImageContent)
+        kparams.addStringIfDefined("htmlPurifierAllowedTags", self.htmlPurifierAllowedTags)
         kparams.addBoolIfDefined("fileTypeRestrictionEnabled", self.fileTypeRestrictionEnabled)
         return kparams
 
@@ -11202,6 +11208,12 @@ class KalturaPartner(KalturaObjectBase):
 
     def setPurifyImageContent(self, newPurifyImageContent):
         self.purifyImageContent = newPurifyImageContent
+
+    def getHtmlPurifierAllowedTags(self):
+        return self.htmlPurifierAllowedTags
+
+    def setHtmlPurifierAllowedTags(self, newHtmlPurifierAllowedTags):
+        self.htmlPurifierAllowedTags = newHtmlPurifierAllowedTags
 
     def getFileTypeRestrictionEnabled(self):
         return self.fileTypeRestrictionEnabled
@@ -26628,7 +26640,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             genieIdIn = NotImplemented,
             reachProfileIdIn = NotImplemented,
             isPreview = NotImplemented,
-            streamTypeIn = NotImplemented):
+            streamTypeIn = NotImplemented,
+            reachCatalogItemIdIn = NotImplemented):
         KalturaReportInputBaseFilter.__init__(self,
             fromDate,
             toDate,
@@ -26852,6 +26865,10 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         # @var str
         self.streamTypeIn = streamTypeIn
 
+        # filter by reach catalog item id
+        # @var str
+        self.reachCatalogItemIdIn = reachCatalogItemIdIn
+
 
     PROPERTY_LOADERS = {
         'keywords': getXmlNodeText, 
@@ -26909,6 +26926,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         'reachProfileIdIn': getXmlNodeText, 
         'isPreview': getXmlNodeBool, 
         'streamTypeIn': getXmlNodeText, 
+        'reachCatalogItemIdIn': getXmlNodeText, 
     }
 
     def fromXml(self, node):
@@ -26973,6 +26991,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
         kparams.addStringIfDefined("reachProfileIdIn", self.reachProfileIdIn)
         kparams.addBoolIfDefined("isPreview", self.isPreview)
         kparams.addStringIfDefined("streamTypeIn", self.streamTypeIn)
+        kparams.addStringIfDefined("reachCatalogItemIdIn", self.reachCatalogItemIdIn)
         return kparams
 
     def getKeywords(self):
@@ -27304,6 +27323,12 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
 
     def setStreamTypeIn(self, newStreamTypeIn):
         self.streamTypeIn = newStreamTypeIn
+
+    def getReachCatalogItemIdIn(self):
+        return self.reachCatalogItemIdIn
+
+    def setReachCatalogItemIdIn(self, newReachCatalogItemIdIn):
+        self.reachCatalogItemIdIn = newReachCatalogItemIdIn
 
 
 # @package Kaltura
@@ -50456,6 +50481,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             reachProfileIdIn = NotImplemented,
             isPreview = NotImplemented,
             streamTypeIn = NotImplemented,
+            reachCatalogItemIdIn = NotImplemented,
             application = NotImplemented,
             userIds = NotImplemented,
             playbackContext = NotImplemented,
@@ -50519,7 +50545,8 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             genieIdIn,
             reachProfileIdIn,
             isPreview,
-            streamTypeIn)
+            streamTypeIn,
+            reachCatalogItemIdIn)
 
         # @var str
         self.application = application

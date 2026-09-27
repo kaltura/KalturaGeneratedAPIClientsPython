@@ -298,6 +298,7 @@ class KalturaDistributionProviderType(object):
     PODCAST = "podcastDistribution.PODCAST"
     PUSH_TO_NEWS = "pushToNewsDistribution.PUSH_TO_NEWS"
     QUICKPLAY = "quickPlayDistribution.QUICKPLAY"
+    RAIN_FOCUS = "rainFocusDistribution.RAIN_FOCUS"
     SYNACOR_HBO = "synacorHboDistribution.SYNACOR_HBO"
     TIME_WARNER = "timeWarnerDistribution.TIME_WARNER"
     TVCOM = "tvComDistribution.TVCOM"

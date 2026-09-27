@@ -6265,6 +6265,7 @@ class KalturaPartner(KalturaObjectBase):
     htmlPurifierBehaviour: KalturaHTMLPurifierBehaviourType
     htmlPurifierBaseListUsage: bool
     purifyImageContent: bool
+    htmlPurifierAllowedTags: str
     fileTypeRestrictionEnabled: bool
     def __init__(self,
             id: int = NotImplemented,
@@ -6357,6 +6358,7 @@ class KalturaPartner(KalturaObjectBase):
             htmlPurifierBehaviour: KalturaHTMLPurifierBehaviourType = NotImplemented,
             htmlPurifierBaseListUsage: bool = NotImplemented,
             purifyImageContent: bool = NotImplemented,
+            htmlPurifierAllowedTags: str = NotImplemented,
             fileTypeRestrictionEnabled: bool = NotImplemented): ...
 
     def getId(self) -> int: ...
@@ -6498,6 +6500,8 @@ class KalturaPartner(KalturaObjectBase):
     def setHtmlPurifierBaseListUsage(self, newHtmlPurifierBaseListUsage: bool) -> None: ...
     def getPurifyImageContent(self) -> bool: ...
     def setPurifyImageContent(self, newPurifyImageContent: bool) -> None: ...
+    def getHtmlPurifierAllowedTags(self) -> str: ...
+    def setHtmlPurifierAllowedTags(self, newHtmlPurifierAllowedTags: str) -> None: ...
     def getFileTypeRestrictionEnabled(self) -> bool: ...
     def setFileTypeRestrictionEnabled(self, newFileTypeRestrictionEnabled: bool) -> None: ...
 
@@ -11629,6 +11633,7 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     reachProfileIdIn: str
     isPreview: bool
     streamTypeIn: str
+    reachCatalogItemIdIn: str
     def __init__(self,
             fromDate: int = NotImplemented,
             toDate: int = NotImplemented,
@@ -11688,7 +11693,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
             genieIdIn: str = NotImplemented,
             reachProfileIdIn: str = NotImplemented,
             isPreview: bool = NotImplemented,
-            streamTypeIn: str = NotImplemented): ...
+            streamTypeIn: str = NotImplemented,
+            reachCatalogItemIdIn: str = NotImplemented): ...
 
     def getKeywords(self) -> str: ...
     def setKeywords(self, newKeywords: str) -> None: ...
@@ -11800,6 +11806,8 @@ class KalturaReportInputFilter(KalturaReportInputBaseFilter):
     def setIsPreview(self, newIsPreview: bool) -> None: ...
     def getStreamTypeIn(self) -> str: ...
     def setStreamTypeIn(self, newStreamTypeIn: str) -> None: ...
+    def getReachCatalogItemIdIn(self) -> str: ...
+    def setReachCatalogItemIdIn(self, newReachCatalogItemIdIn: str) -> None: ...
 
 class KalturaReportResponseOptions(KalturaObjectBase):
     delimiter: str
@@ -19117,6 +19125,7 @@ class KalturaEndUserReportInputFilter(KalturaReportInputFilter):
             reachProfileIdIn: str = NotImplemented,
             isPreview: bool = NotImplemented,
             streamTypeIn: str = NotImplemented,
+            reachCatalogItemIdIn: str = NotImplemented,
             application: str = NotImplemented,
             userIds: str = NotImplemented,
             playbackContext: str = NotImplemented,
