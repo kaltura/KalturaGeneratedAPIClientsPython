@@ -155,6 +155,7 @@ class KalturaVendorServiceFeature(object):
     IMMERSIVE_AGENT_EVAL = 25
     IMMERSIVE_AGENT_PREVIEW = 26
     VIDEO_GENERATION = 27
+    VISUAL_DESCRIPTION = 28
 
     def __init__(self, value: int): ...
 
@@ -1871,6 +1872,39 @@ class KalturaVendorVideoGenerationCatalogItem(KalturaVendorCatalogItem):
             adminTagsToExclude: str = NotImplemented): ...
         pass
 
+class KalturaVendorVisualDescriptionCatalogItem(KalturaVendorCatalogItem):
+    maxVideoDuration: int
+    def __init__(self,
+            id: int = NotImplemented,
+            vendorPartnerId: int = NotImplemented,
+            name: str = NotImplemented,
+            systemName: str = NotImplemented,
+            createdAt: int = NotImplemented,
+            updatedAt: int = NotImplemented,
+            status: KalturaVendorCatalogItemStatus = NotImplemented,
+            serviceType: KalturaVendorServiceType = NotImplemented,
+            serviceFeature: KalturaVendorServiceFeature = NotImplemented,
+            turnAroundTime: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            pricing: KalturaVendorCatalogItemPricing = NotImplemented,
+            pricingArray: List[KalturaVendorCatalogItemUnitPricing] = NotImplemented,
+            engineType: KalturaReachVendorEngineType = NotImplemented,
+            sourceLanguage: KalturaCatalogItemLanguage = NotImplemented,
+            allowResubmission: bool = NotImplemented,
+            payPerUse: bool = NotImplemented,
+            vendorData: str = NotImplemented,
+            stage: KalturaVendorCatalogItemStage = NotImplemented,
+            lastBulkUpdateId: int = NotImplemented,
+            contract: str = NotImplemented,
+            createdBy: str = NotImplemented,
+            notes: str = NotImplemented,
+            partnerId: int = NotImplemented,
+            defaultReachProfileId: int = NotImplemented,
+            adminTagsToExclude: str = NotImplemented,
+            maxVideoDuration: int = NotImplemented): ...
+
+    def getMaxVideoDuration(self) -> int: ...
+    def setMaxVideoDuration(self, newMaxVideoDuration: int) -> None: ...
+
 class KalturaAlignmentVendorTaskData(KalturaVendorTaskDataCaptionAsset):
     textTranscriptAssetId: str
     jsonTranscriptAssetId: str
@@ -3077,6 +3111,31 @@ class KalturaVendorVideoAnalysisCatalogItemFilter(KalturaVendorCatalogItemFilter
         pass
 
 class KalturaVendorVideoGenerationCatalogItemFilter(KalturaVendorCatalogItemFilter):
+    def __init__(self,
+            orderBy: str = NotImplemented,
+            advancedSearch: KalturaSearchItem = NotImplemented,
+            idEqual: int = NotImplemented,
+            idIn: str = NotImplemented,
+            idNotIn: str = NotImplemented,
+            vendorPartnerIdEqual: int = NotImplemented,
+            vendorPartnerIdIn: str = NotImplemented,
+            createdAtGreaterThanOrEqual: int = NotImplemented,
+            createdAtLessThanOrEqual: int = NotImplemented,
+            updatedAtGreaterThanOrEqual: int = NotImplemented,
+            updatedAtLessThanOrEqual: int = NotImplemented,
+            statusEqual: KalturaVendorCatalogItemStatus = NotImplemented,
+            statusIn: str = NotImplemented,
+            serviceTypeEqual: KalturaVendorServiceType = NotImplemented,
+            serviceTypeIn: str = NotImplemented,
+            serviceFeatureEqual: KalturaVendorServiceFeature = NotImplemented,
+            serviceFeatureIn: str = NotImplemented,
+            turnAroundTimeEqual: KalturaVendorServiceTurnAroundTime = NotImplemented,
+            turnAroundTimeIn: str = NotImplemented,
+            partnerIdEqual: int = NotImplemented,
+            catalogItemIdEqual: int = NotImplemented): ...
+        pass
+
+class KalturaVendorVisualDescriptionCatalogItemFilter(KalturaVendorCatalogItemFilter):
     def __init__(self,
             orderBy: str = NotImplemented,
             advancedSearch: KalturaSearchItem = NotImplemented,
